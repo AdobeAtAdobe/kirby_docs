@@ -773,9 +773,11 @@
 							"path": "AdobeAtAdobe/kirby_docs/master/acpdr/catalog/operations/update_transform_by_id.md",
 							"title": "update_transform_by_id"
 						}
-					]
+					],
+					"title": "operations"
 				}
-			]
+			],
+			"title": "catalog"
 		}
 	]
 }

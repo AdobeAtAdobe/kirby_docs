@@ -198,7 +198,7 @@ buildTree = function(es) {
             if(typeof currentItem !== "undefined"){
                 currentCollection = currentItem.pages;
             }else{
-                var newItem = {"importedFileName":currentDepth[i],"pages":[]};
+                var newItem = {"importedFileName":currentDepth[i],"pages":[],"title":currentDepth[i]};
                 currentCollection.push(newItem);
                 currentCollection = newItem.pages;
             }
