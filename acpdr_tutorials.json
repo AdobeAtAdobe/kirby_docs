@@ -1,8 +1,8 @@
 {
-	"name": "THIS_IS_WHERE_YOUR_MANIFEST_NAME_GOES",
+	"name": "ACP_Data_Tutorials",
 	"version": "1.0.0",
-	"description": "manifest description",
-	"author": "Bucky Wizzlecheeks",
+	"description": "ACP Data Tutorials",
+	"author": "David Benge",
 	"view_type": "mdbook",
 	"meta_keywords": "defaultkeyword,defaultkeyword2",
 	"meta_description": "default description",
@@ -11,52 +11,28 @@
 	"base_path": "https://raw.githubusercontent.com",
 	"pages": [
 		{
-			"importedFileName": "get_data_to_unified_profile_tutorial",
-			"pages": [
-				{
 					"importedFileName": "get_data_to_unified_profile_tutorial",
 					"pages": [],
 					"path": "AdobeAtAdobe/kirby_docs/master/acpdr/tutorials/get_data_to_unified_profile_tutorial/get_data_to_unified_profile_tutorial.md",
 					"title": "get data to unified profile tutorial"
-				}
-			],
-			"title": "get data to unified profile tutorial"
-		},
+				},
 		{
-			"importedFileName": "data_access_tutorial",
-			"pages": [
-				{
 					"importedFileName": "data_access_tutorial",
 					"pages": [],
 					"path": "AdobeAtAdobe/kirby_docs/master/acpdr/tutorials/data_access_tutorial/data_access_tutorial.md",
 					"title": "data access tutorial"
-				}
-			],
-			"title": "data access tutorial"
-		},
+				},
 		{
-			"importedFileName": "authenticate_to_acp_tutorial",
-			"pages": [
-				{
 					"importedFileName": "authenticate_to_acp_tutorial",
 					"pages": [],
 					"path": "AdobeAtAdobe/kirby_docs/master/acpdr/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md",
 					"title": "authenticate to acp tutorial"
-				}
-			],
-			"title": "authenticate to acp tutorial"
-		},
+				},
 		{
-			"importedFileName": "creating_a_dataset_tutorial",
-			"pages": [
-				{
 					"importedFileName": "creating_a_dataset_tutorial",
 					"pages": [],
 					"path": "AdobeAtAdobe/kirby_docs/master/acpdr/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md",
 					"title": "creating a dataset tutorial"
 				}
-			],
-			"title": "creating a dataset tutorial"
-		}
 	]
 }
