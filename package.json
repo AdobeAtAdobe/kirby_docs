@@ -1,0 +1,21 @@
+{
+  "name": "kirby_docs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:AdobeAtAdobe/kirby_docs.git",
+  "license": "Apache2",
+  "scripts": {
+    "build": "gulp build"
+  },
+  "devDependencies": {
+    "app-root-path": "^2.0.1",
+    "event-stream": "^3.3.4",
+    "gulp": "^4.0.0",
+    "gulp-clean-dest": "^0.2.0",
+    "gulp-debug": "^3.2.0",
+    "gulp-util": "^3.0.8",
+    "path": "^0.12.7"
+  },
+  "dependencies": {},
+  "private": true
+}

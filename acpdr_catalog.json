@@ -1,0 +1,781 @@
+{
+	"name": "THIS_IS_WHERE_YOUR_MANIFEST_NAME_GOES",
+	"version": "1.0.0",
+	"description": "manifest description",
+	"author": "Bucky Wizzlecheeks",
+	"view_type": "mdbook",
+	"meta_keywords": "defaultkeyword,defaultkeyword2",
+	"meta_description": "default description",
+	"publish_date": "19/03/2018",
+	"show_edit_github_banner": false,
+	"base_path": "https://raw.githubusercontent.com",
+	"pages": [
+		{
+			"importedFileName": "catalog",
+			"pages": [
+				{
+					"importedFileName": "definitions",
+					"pages": [
+						{
+							"importedFileName": "account",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\account.md",
+							"title": "account"
+						},
+						{
+							"importedFileName": "availableDates",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\availableDates.md",
+							"title": "availableDates"
+						},
+						{
+							"importedFileName": "batch",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\batch.md",
+							"title": "batch"
+						},
+						{
+							"importedFileName": "connection",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\connection.md",
+							"title": "connection"
+						},
+						{
+							"importedFileName": "connector",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\connector.md",
+							"title": "connector"
+						},
+						{
+							"importedFileName": "contacts",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\contacts.md",
+							"title": "contacts"
+						},
+						{
+							"importedFileName": "credentials",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\credentials.md",
+							"title": "credentials"
+						},
+						{
+							"importedFileName": "dataSet",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\dataSet.md",
+							"title": "dataSet"
+						},
+						{
+							"importedFileName": "dataSetCredentials",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\dataSetCredentials.md",
+							"title": "dataSetCredentials"
+						},
+						{
+							"importedFileName": "dataSetFile",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\dataSetFile.md",
+							"title": "dataSetFile"
+						},
+						{
+							"importedFileName": "dataSetView",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\dataSetView.md",
+							"title": "dataSetView"
+						},
+						{
+							"importedFileName": "data_types",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\data_types.md",
+							"title": "data_types"
+						},
+						{
+							"importedFileName": "dependencies",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\dependencies.md",
+							"title": "dependencies"
+						},
+						{
+							"importedFileName": "documents",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\documents.md",
+							"title": "documents"
+						},
+						{
+							"importedFileName": "duleLabelResonse",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\duleLabelResonse.md",
+							"title": "duleLabelResonse"
+						},
+						{
+							"importedFileName": "errors",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\errors.md",
+							"title": "errors"
+						},
+						{
+							"importedFileName": "health-dependencies",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\health-dependencies.md",
+							"title": "health-dependencies"
+						},
+						{
+							"importedFileName": "health-detailed",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\health-detailed.md",
+							"title": "health-detailed"
+						},
+						{
+							"importedFileName": "healthcheck",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\healthcheck.md",
+							"title": "healthcheck"
+						},
+						{
+							"importedFileName": "relatedObjects",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\relatedObjects.md",
+							"title": "relatedObjects"
+						},
+						{
+							"importedFileName": "resourceItem",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\resourceItem.md",
+							"title": "resourceItem"
+						},
+						{
+							"importedFileName": "serviceResources",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\serviceResources.md",
+							"title": "serviceResources"
+						},
+						{
+							"importedFileName": "transform",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\transform.md",
+							"title": "transform"
+						},
+						{
+							"importedFileName": "xdm",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\xdm.md",
+							"title": "xdm"
+						},
+						{
+							"importedFileName": "xdmExtension",
+							"pages": [],
+							"path": "acpdr\\catalog\\definitions\\xdmExtension.md",
+							"title": "xdmExtension"
+						}
+					],
+					"path": "acpdr\\catalog\\definitions.md",
+					"title": "definitions"
+				},
+				{
+					"importedFileName": "overview",
+					"pages": [],
+					"path": "acpdr\\catalog\\overview.md",
+					"title": "overview"
+				},
+				{
+					"importedFileName": "paths",
+					"pages": [],
+					"path": "acpdr\\catalog\\paths.md",
+					"title": "paths"
+				},
+				{
+					"importedFileName": "security",
+					"pages": [],
+					"path": "acpdr\\catalog\\security.md",
+					"title": "security"
+				},
+				{
+					"importedFileName": "operations",
+					"pages": [
+						{
+							"importedFileName": "create_or_update_custom_object",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\create_or_update_custom_object.md",
+							"title": "create_or_update_custom_object"
+						},
+						{
+							"importedFileName": "create_or_update_extension_to_object",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\create_or_update_extension_to_object.md",
+							"title": "create_or_update_extension_to_object"
+						},
+						{
+							"importedFileName": "delete_account_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\delete_account_by_id.md",
+							"title": "delete_account_by_id"
+						},
+						{
+							"importedFileName": "delete_batch_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\delete_batch_by_id.md",
+							"title": "delete_batch_by_id"
+						},
+						{
+							"importedFileName": "delete_connection_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\delete_connection_by_id.md",
+							"title": "delete_connection_by_id"
+						},
+						{
+							"importedFileName": "delete_data_set_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\delete_data_set_by_id.md",
+							"title": "delete_data_set_by_id"
+						},
+						{
+							"importedFileName": "delete_data_set_file_by_data_set_id_and_data_set_view_id_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\delete_data_set_file_by_data_set_id_and_data_set_view_id_by_id.md",
+							"title": "delete_data_set_file_by_data_set_id_and_data_set_view_id_by_id"
+						},
+						{
+							"importedFileName": "delete_data_set_file_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\delete_data_set_file_by_id.md",
+							"title": "delete_data_set_file_by_id"
+						},
+						{
+							"importedFileName": "delete_data_set_file_by_search",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\delete_data_set_file_by_search.md",
+							"title": "delete_data_set_file_by_search"
+						},
+						{
+							"importedFileName": "delete_data_set_view_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\delete_data_set_view_by_id.md",
+							"title": "delete_data_set_view_by_id"
+						},
+						{
+							"importedFileName": "delete_inputs_by_transform_id_and_data_set_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\delete_inputs_by_transform_id_and_data_set_id.md",
+							"title": "delete_inputs_by_transform_id_and_data_set_id"
+						},
+						{
+							"importedFileName": "delete_outputs_by_transform_id_and_data_set_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\delete_outputs_by_transform_id_and_data_set_id.md",
+							"title": "delete_outputs_by_transform_id_and_data_set_id"
+						},
+						{
+							"importedFileName": "delete_sample_data_set_file_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\delete_sample_data_set_file_by_id.md",
+							"title": "delete_sample_data_set_file_by_id"
+						},
+						{
+							"importedFileName": "delete_sample_data_set_file_by_search",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\delete_sample_data_set_file_by_search.md",
+							"title": "delete_sample_data_set_file_by_search"
+						},
+						{
+							"importedFileName": "delete_sample_file_by_data_set_id_and_data_set_view_id_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\delete_sample_file_by_data_set_id_and_data_set_view_id_by_id.md",
+							"title": "delete_sample_file_by_data_set_id_and_data_set_view_id_by_id"
+						},
+						{
+							"importedFileName": "delete_transform_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\delete_transform_by_id.md",
+							"title": "delete_transform_by_id"
+						},
+						{
+							"importedFileName": "get_accounts",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_accounts.md",
+							"title": "get_accounts"
+						},
+						{
+							"importedFileName": "get_account_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_account_by_id.md",
+							"title": "get_account_by_id"
+						},
+						{
+							"importedFileName": "get_all_custom_objects",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_all_custom_objects.md",
+							"title": "get_all_custom_objects"
+						},
+						{
+							"importedFileName": "get_batch",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_batch.md",
+							"title": "get_batch"
+						},
+						{
+							"importedFileName": "get_batch_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_batch_by_id.md",
+							"title": "get_batch_by_id"
+						},
+						{
+							"importedFileName": "get_catalog_detailed_healthcheck",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_catalog_detailed_healthcheck.md",
+							"title": "get_catalog_detailed_healthcheck"
+						},
+						{
+							"importedFileName": "get_catalog_healthcheck",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_catalog_healthcheck.md",
+							"title": "get_catalog_healthcheck"
+						},
+						{
+							"importedFileName": "get_children_by_data_set_view_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_children_by_data_set_view_id.md",
+							"title": "get_children_by_data_set_view_id"
+						},
+						{
+							"importedFileName": "get_connections",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_connections.md",
+							"title": "get_connections"
+						},
+						{
+							"importedFileName": "get_connection_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_connection_by_id.md",
+							"title": "get_connection_by_id"
+						},
+						{
+							"importedFileName": "get_connectors",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_connectors.md",
+							"title": "get_connectors"
+						},
+						{
+							"importedFileName": "get_connector_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_connector_by_id.md",
+							"title": "get_connector_by_id"
+						},
+						{
+							"importedFileName": "get_credentials_by_data_set_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_credentials_by_data_set_id.md",
+							"title": "get_credentials_by_data_set_id"
+						},
+						{
+							"importedFileName": "get_custom_object",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_custom_object.md",
+							"title": "get_custom_object"
+						},
+						{
+							"importedFileName": "get_custom_objects",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_custom_objects.md",
+							"title": "get_custom_objects"
+						},
+						{
+							"importedFileName": "get_data_sets",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_data_sets.md",
+							"title": "get_data_sets"
+						},
+						{
+							"importedFileName": "get_data_sets_by_connection_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_data_sets_by_connection_id.md",
+							"title": "get_data_sets_by_connection_id"
+						},
+						{
+							"importedFileName": "get_data_set_batches_summary",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_data_set_batches_summary.md",
+							"title": "get_data_set_batches_summary"
+						},
+						{
+							"importedFileName": "get_data_set_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_data_set_by_id.md",
+							"title": "get_data_set_by_id"
+						},
+						{
+							"importedFileName": "get_data_set_files",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_data_set_files.md",
+							"title": "get_data_set_files"
+						},
+						{
+							"importedFileName": "get_data_set_files_by_data_set_id_and_data_set_view_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_data_set_files_by_data_set_id_and_data_set_view_id.md",
+							"title": "get_data_set_files_by_data_set_id_and_data_set_view_id"
+						},
+						{
+							"importedFileName": "get_data_set_file_by_data_set_id_and_data_set_view_id_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_data_set_file_by_data_set_id_and_data_set_view_id_by_id.md",
+							"title": "get_data_set_file_by_data_set_id_and_data_set_view_id_by_id"
+						},
+						{
+							"importedFileName": "get_data_set_file_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_data_set_file_by_id.md",
+							"title": "get_data_set_file_by_id"
+						},
+						{
+							"importedFileName": "get_data_set_views",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_data_set_views.md",
+							"title": "get_data_set_views"
+						},
+						{
+							"importedFileName": "get_data_set_views_by_data_set_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_data_set_views_by_data_set_id.md",
+							"title": "get_data_set_views_by_data_set_id"
+						},
+						{
+							"importedFileName": "get_data_set_view_by_data_set_id_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_data_set_view_by_data_set_id_by_id.md",
+							"title": "get_data_set_view_by_data_set_id_by_id"
+						},
+						{
+							"importedFileName": "get_data_set_view_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_data_set_view_by_id.md",
+							"title": "get_data_set_view_by_id"
+						},
+						{
+							"importedFileName": "get_dule_labels",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_dule_labels.md",
+							"title": "get_dule_labels"
+						},
+						{
+							"importedFileName": "get_extension_to_object",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_extension_to_object.md",
+							"title": "get_extension_to_object"
+						},
+						{
+							"importedFileName": "get_inputs_by_transform_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_inputs_by_transform_id.md",
+							"title": "get_inputs_by_transform_id"
+						},
+						{
+							"importedFileName": "get_inputs_by_transform_id_and_data_set_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_inputs_by_transform_id_and_data_set_id.md",
+							"title": "get_inputs_by_transform_id_and_data_set_id"
+						},
+						{
+							"importedFileName": "get_obects_in_namespace",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_obects_in_namespace.md",
+							"title": "get_obects_in_namespace"
+						},
+						{
+							"importedFileName": "get_obect_in_namespace",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_obect_in_namespace.md",
+							"title": "get_obect_in_namespace"
+						},
+						{
+							"importedFileName": "get_outputs_by_transform_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_outputs_by_transform_id.md",
+							"title": "get_outputs_by_transform_id"
+						},
+						{
+							"importedFileName": "get_outputs_by_transform_id_and_data_set_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_outputs_by_transform_id_and_data_set_id.md",
+							"title": "get_outputs_by_transform_id_and_data_set_id"
+						},
+						{
+							"importedFileName": "get_sample_data_set_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_sample_data_set_by_id.md",
+							"title": "get_sample_data_set_by_id"
+						},
+						{
+							"importedFileName": "get_sample_data_set_files",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_sample_data_set_files.md",
+							"title": "get_sample_data_set_files"
+						},
+						{
+							"importedFileName": "get_sample_files_by_data_set_id_and_data_set_view_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_sample_files_by_data_set_id_and_data_set_view_id.md",
+							"title": "get_sample_files_by_data_set_id_and_data_set_view_id"
+						},
+						{
+							"importedFileName": "get_service_resources",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_service_resources.md",
+							"title": "get_service_resources"
+						},
+						{
+							"importedFileName": "get_settings",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_settings.md",
+							"title": "get_settings"
+						},
+						{
+							"importedFileName": "get_stats_by_connector_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_stats_by_connector_id.md",
+							"title": "get_stats_by_connector_id"
+						},
+						{
+							"importedFileName": "get_transforms",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_transforms.md",
+							"title": "get_transforms"
+						},
+						{
+							"importedFileName": "get_transforms_by_data_set_id_and_data_set_view_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_transforms_by_data_set_id_and_data_set_view_id.md",
+							"title": "get_transforms_by_data_set_id_and_data_set_view_id"
+						},
+						{
+							"importedFileName": "get_transform_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\get_transform_by_id.md",
+							"title": "get_transform_by_id"
+						},
+						{
+							"importedFileName": "patch_account_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\patch_account_by_id.md",
+							"title": "patch_account_by_id"
+						},
+						{
+							"importedFileName": "patch_batch_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\patch_batch_by_id.md",
+							"title": "patch_batch_by_id"
+						},
+						{
+							"importedFileName": "patch_connection_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\patch_connection_by_id.md",
+							"title": "patch_connection_by_id"
+						},
+						{
+							"importedFileName": "patch_data_set_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\patch_data_set_by_id.md",
+							"title": "patch_data_set_by_id"
+						},
+						{
+							"importedFileName": "patch_data_set_file_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\patch_data_set_file_by_id.md",
+							"title": "patch_data_set_file_by_id"
+						},
+						{
+							"importedFileName": "patch_data_set_view_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\patch_data_set_view_by_id.md",
+							"title": "patch_data_set_view_by_id"
+						},
+						{
+							"importedFileName": "patch_inputs_by_transform_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\patch_inputs_by_transform_id.md",
+							"title": "patch_inputs_by_transform_id"
+						},
+						{
+							"importedFileName": "patch_outputs_by_transform_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\patch_outputs_by_transform_id.md",
+							"title": "patch_outputs_by_transform_id"
+						},
+						{
+							"importedFileName": "patch_sample_data_set_file_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\patch_sample_data_set_file_by_id.md",
+							"title": "patch_sample_data_set_file_by_id"
+						},
+						{
+							"importedFileName": "patch_transform_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\patch_transform_by_id.md",
+							"title": "patch_transform_by_id"
+						},
+						{
+							"importedFileName": "post_account",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\post_account.md",
+							"title": "post_account"
+						},
+						{
+							"importedFileName": "post_account_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\post_account_by_id.md",
+							"title": "post_account_by_id"
+						},
+						{
+							"importedFileName": "post_batch",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\post_batch.md",
+							"title": "post_batch"
+						},
+						{
+							"importedFileName": "post_batch_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\post_batch_by_id.md",
+							"title": "post_batch_by_id"
+						},
+						{
+							"importedFileName": "post_connection",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\post_connection.md",
+							"title": "post_connection"
+						},
+						{
+							"importedFileName": "post_connection_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\post_connection_by_id.md",
+							"title": "post_connection_by_id"
+						},
+						{
+							"importedFileName": "post_custom_object",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\post_custom_object.md",
+							"title": "post_custom_object"
+						},
+						{
+							"importedFileName": "post_data_set",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\post_data_set.md",
+							"title": "post_data_set"
+						},
+						{
+							"importedFileName": "post_data_set_file",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\post_data_set_file.md",
+							"title": "post_data_set_file"
+						},
+						{
+							"importedFileName": "post_data_set_file_by_data_set_id_and_data_set_view_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\post_data_set_file_by_data_set_id_and_data_set_view_id.md",
+							"title": "post_data_set_file_by_data_set_id_and_data_set_view_id"
+						},
+						{
+							"importedFileName": "post_data_set_view",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\post_data_set_view.md",
+							"title": "post_data_set_view"
+						},
+						{
+							"importedFileName": "post_data_set_view_by_data_set_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\post_data_set_view_by_data_set_id.md",
+							"title": "post_data_set_view_by_data_set_id"
+						},
+						{
+							"importedFileName": "post_extension_to_object",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\post_extension_to_object.md",
+							"title": "post_extension_to_object"
+						},
+						{
+							"importedFileName": "post_sample_data_set_file",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\post_sample_data_set_file.md",
+							"title": "post_sample_data_set_file"
+						},
+						{
+							"importedFileName": "post_sample_file_by_data_set_id_and_data_set_view_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\post_sample_file_by_data_set_id_and_data_set_view_id.md",
+							"title": "post_sample_file_by_data_set_id_and_data_set_view_id"
+						},
+						{
+							"importedFileName": "post_service_resources",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\post_service_resources.md",
+							"title": "post_service_resources"
+						},
+						{
+							"importedFileName": "post_transform",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\post_transform.md",
+							"title": "post_transform"
+						},
+						{
+							"importedFileName": "remove_customer_extension",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\remove_customer_extension.md",
+							"title": "remove_customer_extension"
+						},
+						{
+							"importedFileName": "remove_custom_object",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\remove_custom_object.md",
+							"title": "remove_custom_object"
+						},
+						{
+							"importedFileName": "update_account_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\update_account_by_id.md",
+							"title": "update_account_by_id"
+						},
+						{
+							"importedFileName": "update_batch_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\update_batch_by_id.md",
+							"title": "update_batch_by_id"
+						},
+						{
+							"importedFileName": "update_connection_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\update_connection_by_id.md",
+							"title": "update_connection_by_id"
+						},
+						{
+							"importedFileName": "update_data_set_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\update_data_set_by_id.md",
+							"title": "update_data_set_by_id"
+						},
+						{
+							"importedFileName": "update_data_set_file_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\update_data_set_file_by_id.md",
+							"title": "update_data_set_file_by_id"
+						},
+						{
+							"importedFileName": "update_data_set_view_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\update_data_set_view_by_id.md",
+							"title": "update_data_set_view_by_id"
+						},
+						{
+							"importedFileName": "update_sample_data_set_file_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\update_sample_data_set_file_by_id.md",
+							"title": "update_sample_data_set_file_by_id"
+						},
+						{
+							"importedFileName": "update_transform_by_id",
+							"pages": [],
+							"path": "acpdr\\catalog\\operations\\update_transform_by_id.md",
+							"title": "update_transform_by_id"
+						}
+					]
+				}
+			]
+		}
+	]
+}
