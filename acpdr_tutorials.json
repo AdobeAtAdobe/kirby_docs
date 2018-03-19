@@ -19,7 +19,7 @@
 						{
 							"importedFileName": "authenticate_to_acp_tutorial",
 							"pages": [],
-							"path": "acpdr\\tutorials\\authenticate_to_acp_tutorial\\authenticate_to_acp_tutorial.md",
+							"path": "AdobeAtAdobe/kirby_docs/master/acpdr/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md",
 							"title": "authenticate_to_acp_tutorial"
 						}
 					]
@@ -30,7 +30,7 @@
 						{
 							"importedFileName": "creating_a_dataset_tutorial",
 							"pages": [],
-							"path": "acpdr\\tutorials\\creating_a_dataset_tutorial\\creating_a_dataset_tutorial.md",
+							"path": "AdobeAtAdobe/kirby_docs/master/acpdr/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md",
 							"title": "creating_a_dataset_tutorial"
 						}
 					]
@@ -41,7 +41,7 @@
 						{
 							"importedFileName": "data_access_tutorial",
 							"pages": [],
-							"path": "acpdr\\tutorials\\data_access_tutorial\\data_access_tutorial.md",
+							"path": "AdobeAtAdobe/kirby_docs/master/acpdr/tutorials/data_access_tutorial/data_access_tutorial.md",
 							"title": "data_access_tutorial"
 						}
 					]
@@ -52,7 +52,7 @@
 						{
 							"importedFileName": "get_data_to_unified_profile_tutorial",
 							"pages": [],
-							"path": "acpdr\\tutorials\\get_data_to_unified_profile_tutorial\\get_data_to_unified_profile_tutorial.md",
+							"path": "AdobeAtAdobe/kirby_docs/master/acpdr/tutorials/get_data_to_unified_profile_tutorial/get_data_to_unified_profile_tutorial.md",
 							"title": "get_data_to_unified_profile_tutorial"
 						}
 					]

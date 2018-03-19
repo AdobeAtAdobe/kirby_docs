@@ -30,8 +30,7 @@ appRoot = require('app-root-path'),
 path = require('path');
 var appRootPath = appRoot.path;
 var manifest = {};
-
-var test;
+var ascPathPrefix = "AdobeAtAdobe/kirby_docs/master/";
 
 gulp.task('default', defaultTask);
 gulp.task('acsImport', acsImport);
@@ -156,8 +155,8 @@ pagesHasObject = function(pageCollection,importedFileNameToMatch) {
     for(var pi = 0; pi < pageCollection.length; pi++){
         if(!foundObject){
             //does it exist
-            log("checking for existing on ",pageCollection[pi]);
-            log("does " + pageCollection[pi].importedFileName + " match "+ importedFileNameToMatch);
+            //log("checking for existing on ",pageCollection[pi]);
+            //log("does " + pageCollection[pi].importedFileName + " match "+ importedFileNameToMatch);
             if(pageCollection[pi].importedFileName === importedFileNameToMatch){
                 //log("MATCH");
                 foundObject = pageCollection[pi];
@@ -170,6 +169,7 @@ pagesHasObject = function(pageCollection,importedFileNameToMatch) {
 
 buildTree = function(es) {
     return es.map(function(file, cb) {
+        log(" ============================START============================= ");
 
         var filename = path.parse(file.path).name;
         log("filename " + filename);
@@ -203,10 +203,14 @@ buildTree = function(es) {
                 currentCollection = newItem.pages;
             }
         }
-        currentCollection.push({"importedFileName":filename,"pages":[],"path":relPath,"title":filename});
+
+        //clean rel path
+        relPath = relPath.replace(/\\/g,"/");
+        currentCollection.push({"importedFileName":filename,"pages":[],"path":ascPathPrefix + relPath,"title":filename});
 
         log("file.path = " + file.path);
         log(" relPath " + relPath);
+        log(" ============================END============================= ");
         
         return cb();
     });
