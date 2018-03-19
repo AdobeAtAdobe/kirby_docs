@@ -192,13 +192,15 @@ buildTree = function(es) {
         var currentItem;
 
         //build the sub tree for item
-        for(var i = 1; i < currentDepth.length; i++){
+        var newItem;
+        for(var i = 2; i < currentDepth.length; i++){
             currentItem = pagesHasObject(currentCollection,currentDepth[i]);
             //get for first level
             if(typeof currentItem !== "undefined"){
                 currentCollection = currentItem.pages;
             }else{
-                var newItem = {"importedFileName":currentDepth[i],"pages":[],"title":currentDepth[i]};
+                var title = currentDepth[i].replace(/_/g, ' '); /* pretty up title, remove underscore and replace with space*/
+                newItem = {"importedFileName":currentDepth[i],"pages":[],"title":title};
                 currentCollection.push(newItem);
                 currentCollection = newItem.pages;
             }
@@ -206,7 +208,8 @@ buildTree = function(es) {
 
         //clean rel path
         relPath = relPath.replace(/\\/g,"/");
-        currentCollection.push({"importedFileName":filename,"pages":[],"path":ascPathPrefix + relPath,"title":filename});
+        var title = filename.replace(/_/g, ' '); /* pretty up title, remove underscore and replace with space*/
+        currentCollection.push({"importedFileName":filename,"pages":[],"path":ascPathPrefix + relPath,"title":title});
 
         log("file.path = " + file.path);
         log(" relPath " + relPath);
