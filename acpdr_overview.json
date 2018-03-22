@@ -1,38 +1,39 @@
 {
-	"name": "ACP_Overview",
+	"name": "acp_architectural_overview",
 	"version": "1.0.0",
-	"description": "ACP Overview",
-	"author": "David Benge",
-	"view_type": "mdview",
-	"meta_keywords": "defaultkeyword,defaultkeyword2",
-	"meta_description": "default description",
-	"publish_date": "19/03/2018",
+	"description": "ACP Architectural Overview",
+	"author": "Emily Walpole",
+	"view_type": "mdbook",
+	"meta_keywords": "ACP,Architecture,Adobe ACP",
+	"meta_description": "Adobe Cloud Platform Architectural Overview",
+	"publish_date": "22/03/2018",
 	"show_edit_github_banner": false,
-	"base_path": "https://raw.githubusercontent.com",
+	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr/narrative/technical_overview",
 	"pages": [
-		{
-					"importedFileName": "get_data_to_unified_profile_tutorial",
+            {
 					"pages": [],
-					"path": "AdobeAtAdobe/kirby_docs/master/acpdr/tutorials/get_data_to_unified_profile_tutorial/get_data_to_unified_profile_tutorial.md",
-					"title": "get data to unified profile tutorial"
-				},
-		{
-					"importedFileName": "data_access_tutorial",
+					"path": "/catalog_architectural_overview/catalog_architectural_overview.md",
+					"title": "Catalog Architectural Overview"
+	    },
+            {
 					"pages": [],
-					"path": "AdobeAtAdobe/kirby_docs/master/acpdr/tutorials/data_access_tutorial/data_access_tutorial.md",
-					"title": "data access tutorial"
-				},
-		{
-					"importedFileName": "authenticate_to_acp_tutorial",
+					"path": "/data_access_architectural_overview/data_access_architectural_overview.md",
+					"title": "Data Access Architectural Overview"
+	    },
+            {
 					"pages": [],
-					"path": "AdobeAtAdobe/kirby_docs/master/acpdr/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md",
-					"title": "authenticate to acp tutorial"
-				},
-		{
-					"importedFileName": "creating_a_dataset_tutorial",
+					"path": "/ingest_architectural_overview/ingest_architectural_overview.md",
+					"title": "Data Ingest Architectural Overview"
+	    },
+            {
 					"pages": [],
-					"path": "AdobeAtAdobe/kirby_docs/master/acpdr/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md",
-					"title": "creating a dataset tutorial"
-				}
+					"path": "/unified_profile_architectural_overview/unified_profile_architectural_overview.md",
+					"title": "Unified Profile Architectural Overview"
+	    },
+            {
+					"pages": [],
+					"path": "/xdm_registry_architectural_overview/xdm_registry_architectural_overview.md",
+					"title": "XDM Registry Architectural Overview"
+	    }
 	]
 }
