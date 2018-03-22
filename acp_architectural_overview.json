@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"description": "ACP Architectural Overview",
 	"author": "Jeff Hanson",
-	"view_type": "mdbook",
+	"view_type": "mdview",
 	"meta_keywords": "ACP,Architecture,Adobe ACP",
 	"meta_description": "Adobe Cloud Platform Architectural Overview",
 	"publish_date": "22/03/2018",
@@ -14,31 +14,6 @@
 					"pages": [],
 					"path": "/acp_architectural_overview/ACP-architecture-overview.md",
 					"title": "ACP Architectural Overview"
-	    },
-            {
-					"pages": [],
-					"path": "/catalog_architectural_overview/catalog_architectural_overview.md",
-					"title": "Catalog Architectural Overview"
-	    },
-            {
-					"pages": [],
-					"path": "/data_access_architectural_overview/data_access_architectural_overview.md",
-					"title": "Data Access Architectural Overview"
-	    },
-            {
-					"pages": [],
-					"path": "/ingest_architectural_overview/ingest_architectural_overview.md",
-					"title": "Data Ingest Architectural Overview"
-	    },
-            {
-					"pages": [],
-					"path": "/unified_profile_architectural_overview/unified_profile_architectural_overview.md",
-					"title": "Unified Profile Architectural Overview"
-	    },
-            {
-					"pages": [],
-					"path": "/xdm_registry_architectural_overview/xdm_registry_architectural_overview.md",
-					"title": "XDM Registry Architectural Overview"
 	    }
 	]
 }
