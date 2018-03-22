@@ -58,6 +58,13 @@ function acsImport(done) {
     .pipe(cleanDest('acpdr/tutorials'))
     .pipe(gulp.dest('acpdr/tutorials'));
     done();
+
+    /* move in technical_overview */
+    gulp.src('../documentation/api-specification/markdown/narrative/technical_overview/acp_architectural_overview/**/*.+(jpg|jpeg|gif|png|md)')
+    .pipe(debug())
+    .pipe(cleanDest('acpdr/acp_architectural_overview'))
+    .pipe(gulp.dest('acpdr/acp_architectural_overview'));
+    done();
 }
 
 function acsBuildCatalogManifest(done) {
