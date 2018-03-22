@@ -4,22 +4,13 @@ info:
   version: "1.0.0"
   title: "Data Access API"
   description: "Data Access API for platform data access and egress"
-
-schemes:
-  - "https"
-
+  
 host: "platform-int.adobe.io"
 basePath: "/data/foundation/export"
 
 tags:
   - name: "dataAccess"
     description: "API's for data access on Platform"
-
-securityDefinitions:
-  Bearer:
-    type: "apiKey"
-    name: "Authorization"
-    in: "header"
 
 paths:
   /files/{dataSetFileId}:
