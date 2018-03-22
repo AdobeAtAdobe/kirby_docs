@@ -18,13 +18,6 @@ info:
     name: Catalog Team.
 basePath: /data/foundation/catalog
 host: platform-int.adobe.io
-schemes:
-  - https
-securityDefinitions:
-  Bearer:
-    type: apiKey
-    name: Authorization
-    in: header
 consumes:
   - application/json
 produces:
