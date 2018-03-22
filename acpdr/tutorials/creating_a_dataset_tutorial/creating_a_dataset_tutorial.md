@@ -1,8 +1,16 @@
-# Tutorial - Creating and Populating Dataset
+# Tutorial - Creating and Populating a Dataset with a File
 
 ## 1. Objective
 
-This document will give a tutorial on how to extend an existing XDM schema with custom properties. From there, we will create a new Dataset and Batch. Lastly, we will upload the files and signal to the server that the Batch has been completed. For verification, we will read back the data from the dataset using data access APIs.
+This document is intended to provide a tutorial on creating and populating a customer dataset using a file. The steps required to perform this operation are listed below:
+* Extend an existing XDM schema with custom properties
+* Create a new Dataset using the updated schema
+* Create a Batch for uploading data into the new Dataset
+* Upload the files to the batch using the Bulk Ingestion API
+* Signal to the server that the Batch has been completed
+* Verify that the operation was successful by reading back the data in the dataset using Data Access APIs
+
+Data can also be ingested via a connector. The tutorial to create and populate a dataset via a connector can be found [here](https://git.corp.adobe.com/experience-platform/documentation/blob/master/api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/creating_a_connector_tutorial.md)
 
 ### 1.1. Audience
 This document is written for users who need to understand the Adobe Cloud Platform and have to integrate the platform with customer-owned or third party systems. Users include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
@@ -16,7 +24,6 @@ Terms of service : https://www.adobe.com/legal/terms.html
 
 ### 1.4 URI Scheme
 *Host* : platform.adobe.io  
-*BasePath* : /data/foundation/import/  
 *Schemes* : HTTPS
 
 ### 1.5. About the Docs
@@ -27,18 +34,24 @@ The HTML rendition of this documentation is kept up-to-date on a per commit basi
 
 ## 2. Datasets from a Schema
 
+There are two ways data can be ingested into a dataset. The first is batch ingestion via file upload and the second is [ingestion via setting up a connector](https://git.corp.adobe.com/experience-platform/documentation/blob/master/api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/creating_a_connector_tutorial.md). This tutorial focuses on ingesting data using a file.
+
 ### 2.1. Prerequisites
 
 Follow this [Tutorial](https://git.corp.adobe.com/experience-platform/documentation/blob/960b25b46a7b473b3e202111a1804e259687f3ec/api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
 
-Once we have the following values we can move on to the next section:
+From the tutorial you should now have the following values:
 * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
 * `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
 * `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
 
-### 2.2 Extending the standard Schema
+### 2.2. Creating Dataset and Ingest File<a name="2_2_Header"></a>
 
-The `Person` entity is under the `core.Profile` model. The Profile model is an abstraction of an individual that contains all the relevant information that an organization maintains of a person. The Person entity is a schema that describes the qualities of the person. For example their name, gender, and birthday. We will be extending the core 'Person' entity with custom properties of `HairColor`.
+We will begin with creating a custom dataset by extending the `Profile` XDM schema and populating it by uploading a file through the Bulk Ingestion API.
+
+#### 2.2.1. Extending the standard Schema
+
+The `Person` entity is under the `core.Profile` model. The Profile model is an abstraction of an individual that contains all the relevant information that an organization maintains of a person. The Person entity is a schema that describes the qualities of the person. For example their name, gender, and birthday. We will be extending the core 'Person' entity with the custom property `HairColor`.
 
 You can use the following API call via terminal to create a custom object. The response body will indicate the path where the schema is stored.
 
@@ -161,7 +174,7 @@ curl -X GET "https://platform.adobe.io/data/foundation/catalog/xdms/core/Person"
 The `HairColor` extension is now shown under the `properties` key of `Person`. By extending the `Person` entity here, any datasets within the same IMS ORG with the parent schema (E.g. `Profile`) will also inherit this newly extended property. Additionally if a user in the same IMS Org extended the `Person` entity with another property (ex. HairLength) existing Datasets with schemas that have the `Person` entity will also gain the `HairLength` property.
 
 
-#### 2.4.1 Creating a Dataset<a name="2_4_1_Header"></a>
+#### 2.2.2. Creating a Dataset<a name="2_2_2_Header"></a>
 
 After extending the `Person` entity we can now create a dataset with the parent schema `Profile`. Remember that this parent schema will include the `HairColor` extended property. We can create the dataset using the following API call.  
 
@@ -206,7 +219,7 @@ We are using the `Profile` schema for this dataset. Other schemas one could use 
 
 `{DATASET_ID}`: The ID of the dataset that was created. We will use this ID when creating a batch in the next section.
 
-#### 2.4.2 Creating a Batch
+#### 2.2.3. Creating a Batch
 
 Before data can be added to a dataset, it must be linked to a batch, which will later be uploaded into a specified dataset.
 
@@ -260,9 +273,9 @@ The response gives the batch ID which will be used in subsequent calls to upload
 `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration
 
 
-#### 2.4.3 File Upload
+#### 2.2.4. File Upload
 
-After successfully creating a new batch for uploading, files can be then be uploaded to a specific dataset. Note that in [2.4.1 Creating a Dataset](#2_4_1_Header) we specified the format of our data to be a parquet file. The files you upload must be in the same format which you specified.
+After successfully creating a new batch for uploading, files can be then be uploaded to a specific dataset. Note that in [2.3 Creating a Dataset](#2_2_2_Header) we specified the format of our data to be a parquet file. The files you upload must be in the same format which you specified.
 
 If the original file being uploaded is greater than 512 MB, it will need to be broken up into 512 MB chunks and uploaded one at a time.  Each 512 MB chunk can be uploaded to a dataset in the same batch by repeating this step (2.4.3) for each file, using the same batch ID.
 
@@ -290,7 +303,7 @@ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}
 #Status 200 OK, with empty response
 ```
 
-#### 2.4.4 Signal Batch Completion
+#### 2.2.5. Signal Batch Completion
 
 After all data files have been uploaded to the batch, it can be signaled for promotion.  By doing this, the server knows to start creating Catalog DataSetFile entries for the promoted files and associate them with the Batch generated above. The Catalog Batch is marked successful which triggers any downstream flows that can then work on the now available data.  
 
@@ -315,7 +328,7 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/[BATCH_ID
 #Status 200 OK, with empty response
 ```
 
-### 2.5 Read data from the dataset
+#### 2.2.6. Read data from the dataset
 
 With the batch ID you can use the Data Access APIs to get a list of files in the batch that you uploaded previously. The response will return an array containing a list of files IDs which reference the files in the batch. Next the files can be downloaded with the Data Access APIs. The name, size in bytes, and a link to download the file or folder will be returned.
 
