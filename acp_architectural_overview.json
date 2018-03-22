@@ -8,12 +8,12 @@
 	"meta_description": "Adobe Cloud Platform Architectural Overview",
 	"publish_date": "22/03/2018",
 	"show_edit_github_banner": false,
-	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr/narrative/technical_overview/acp_architectural_overview",
+	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr/narrative/technical_overview",
 	"pages": [
 	    {
 					"pages": [],
-					"path": "ACP-architecture-overview.md",
-					"title": "Architecture Overview"
+					"path": "/acp_architectural_overview/ACP-architecture-overview.md",
+					"title": "ACP Architectural Overview"
 	    }
 	]
 }
