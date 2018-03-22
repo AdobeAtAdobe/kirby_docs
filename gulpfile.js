@@ -47,13 +47,13 @@ function acsImport(done) {
      * https://git.corp.adobe.com/experience-platform/documentation
      */
     /* move in foundation catalog */
-    gulp.src('../documentation/api-specification/markdown/apis/foundation/catalog/markdown/**/*.md')
+    gulp.src('../documentation/api-specification/markdown/apis/foundation/catalog/markdown/**/*.+(jpg|jpeg|gif|png|md)')
     .pipe(debug())
     .pipe(cleanDest('acpdr/catalog'))
     .pipe(gulp.dest('acpdr/catalog'))
 
     /* move in tutorials */
-    gulp.src('../documentation/api-specification/markdown/narrative/tutorials/**/*.md')
+    gulp.src('../documentation/api-specification/markdown/narrative/tutorials/**/*.+(jpg|jpeg|gif|png|md)')
     .pipe(debug())
     .pipe(cleanDest('acpdr/tutorials'))
     .pipe(gulp.dest('acpdr/tutorials'));
