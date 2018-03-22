@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"description": "ACP Architectural Overview",
 	"author": "Jeff Hanson",
-	"view_type": "mdview",
+	"view_type": "mdbook",
 	"meta_keywords": "ACP,Architecture,Adobe ACP",
 	"meta_description": "Adobe Cloud Platform Architectural Overview",
 	"publish_date": "22/03/2018",
