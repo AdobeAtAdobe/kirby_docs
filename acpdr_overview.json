@@ -8,32 +8,37 @@
 	"meta_description": "Adobe Cloud Platform Architectural Overview",
 	"publish_date": "22/03/2018",
 	"show_edit_github_banner": false,
-	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr/narrative/technical_overview",
+	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr/narrative",
 	"pages": [
             {
 					"pages": [],
-					"path": "catalog_architectural_overview/catalog_architectural_overview.md",
+					"path": "technical_overview/catalog_architectural_overview/catalog_architectural_overview.md",
 					"title": "Catalog Architectural Overview"
 	    },
             {
 					"pages": [],
-					"path": "data_access_architectural_overview/data_access_architectural_overview.md",
+					"path": "technical_overview/data_access_architectural_overview/data_access_architectural_overview.md",
 					"title": "Data Access Architectural Overview"
 	    },
             {
 					"pages": [],
-					"path": "ingest_architectural_overview/ingest_architectural_overview.md",
+					"path": "technical_overview/ingest_architectural_overview/ingest_architectural_overview.md",
 					"title": "Data Ingest Architectural Overview"
 	    },
             {
 					"pages": [],
-					"path": "unified_profile_architectural_overview/unified_profile_architectural_overview.md",
+					"path": "technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md",
 					"title": "Unified Profile Architectural Overview"
 	    },
             {
 					"pages": [],
-					"path": "xdm_registry_architectural_overview/xdm_registry_architectural_overview.md",
+					"path": "technical_overview/xdm_registry_architectural_overview/xdm_registry_architectural_overview.md",
 					"title": "XDM Registry Architectural Overview"
+	    },
+            {
+					"pages": [],
+					"path": "integration_guides/etl_integration_guide/etl_integration_guide.md",
+					"title": "Data integration patterns for ETL Tools"
 	    }
 	]
 }
