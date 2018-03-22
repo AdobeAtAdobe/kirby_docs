@@ -1,7 +1,7 @@
 {
-	"name": "acp_architectural_overview",
+	"name": "acpdr_overview",
 	"version": "1.0.0",
-	"description": "ACP Architectural Overview",
+	"description": "ACP Services Overview",
 	"author": "Emily Walpole",
 	"view_type": "mdbook",
 	"meta_keywords": "ACP,Architecture,Adobe ACP",
