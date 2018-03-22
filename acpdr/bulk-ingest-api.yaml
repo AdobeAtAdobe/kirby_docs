@@ -6,16 +6,9 @@ info:
       name: Grp-Siphon-Core
 basePath: /
 host: bulk-ingestion-dev-va7.dev.cloud.adobe.io
-schemes:
-  - https
 swagger: "2.0"
 tags:
 - name: "Ingest Batch"
-securityDefinitions:
-  Bearer:
-    type: apiKey
-    name: Authorization
-    in: header
 paths:
   /batches:
     post:
