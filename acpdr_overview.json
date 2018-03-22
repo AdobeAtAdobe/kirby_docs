@@ -12,27 +12,27 @@
 	"pages": [
             {
 					"pages": [],
-					"path": "/catalog_architectural_overview/catalog_architectural_overview.md",
+					"path": "catalog_architectural_overview/catalog_architectural_overview.md",
 					"title": "Catalog Architectural Overview"
 	    },
             {
 					"pages": [],
-					"path": "/data_access_architectural_overview/data_access_architectural_overview.md",
+					"path": "data_access_architectural_overview/data_access_architectural_overview.md",
 					"title": "Data Access Architectural Overview"
 	    },
             {
 					"pages": [],
-					"path": "/ingest_architectural_overview/ingest_architectural_overview.md",
+					"path": "ingest_architectural_overview/ingest_architectural_overview.md",
 					"title": "Data Ingest Architectural Overview"
 	    },
             {
 					"pages": [],
-					"path": "/unified_profile_architectural_overview/unified_profile_architectural_overview.md",
+					"path": "unified_profile_architectural_overview/unified_profile_architectural_overview.md",
 					"title": "Unified Profile Architectural Overview"
 	    },
             {
 					"pages": [],
-					"path": "/xdm_registry_architectural_overview/xdm_registry_architectural_overview.md",
+					"path": "xdm_registry_architectural_overview/xdm_registry_architectural_overview.md",
 					"title": "XDM Registry Architectural Overview"
 	    }
 	]
