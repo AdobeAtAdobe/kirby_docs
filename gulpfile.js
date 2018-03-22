@@ -47,10 +47,10 @@ function acsImport(done) {
      * https://git.corp.adobe.com/experience-platform/documentation
      */
     /* move in foundation catalog */
-    gulp.src('../documentation/api-specification/markdown/apis/foundation/catalog/markdown/**/*.+(jpg|jpeg|gif|png|md)')
-    .pipe(debug())
-    .pipe(cleanDest('acpdr/catalog'))
-    .pipe(gulp.dest('acpdr/catalog'))
+    //gulp.src('../documentation/api-specification/markdown/apis/foundation/catalog/markdown/**/*.+(jpg|jpeg|gif|png|md)')
+    //.pipe(debug())
+    //.pipe(cleanDest('acpdr/catalog'))
+    //.pipe(gulp.dest('acpdr/catalog'))
 
     /* move in tutorials */
     gulp.src('../documentation/api-specification/markdown/narrative/tutorials/**/*.+(jpg|jpeg|gif|png|md)')
@@ -60,10 +60,10 @@ function acsImport(done) {
     done();
 
     /* move in technical_overview */
-    gulp.src('../documentation/api-specification/markdown/narrative/technical_overview/acp_architectural_overview/**/*.+(jpg|jpeg|gif|png|md)')
+    gulp.src('../documentation/api-specification/markdown/narrative/**/*.+(jpg|jpeg|gif|png|md)')
     .pipe(debug())
-    .pipe(cleanDest('acpdr/acp_architectural_overview'))
-    .pipe(gulp.dest('acpdr/acp_architectural_overview'));
+    .pipe(cleanDest('acpdr/narrative'))
+    .pipe(gulp.dest('acpdr/narrative'));
     done();
 }
 
