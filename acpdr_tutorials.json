@@ -11,18 +11,6 @@
 	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr/tutorials",
 	"pages": [
 		{
-					"importedFileName": "get_data_to_unified_profile_tutorial",
-					"pages": [],
-					"path": "get_data_to_unified_profile_tutorial/get_data_to_unified_profile_tutorial.md",
-					"title": "Get Data to Unified Profile"
-				},
-		{
-					"importedFileName": "data_access_tutorial",
-					"pages": [],
-					"path": "data_access_tutorial/data_access_tutorial.md",
-					"title": "Data Access"
-				},
-		{
 					"importedFileName": "authenticate_to_acp_tutorial",
 					"pages": [],
 					"path": "authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md",
@@ -34,11 +22,23 @@
 					"path": "creating_a_dataset_tutorial/creating_a_dataset_tutorial.md",
 					"title": "Configuring a Dataset"
 				},
-				{
+		{
 					"importedFileName": "creating_a_connector_tutorial",
 					"pages": [],
 					"path": "creating_a_connector_tutorial/creating_a_connector_tutorial.md",
 					"title": "Configuring a Connector"
+				},
+		{
+					"importedFileName": "get_data_to_unified_profile_tutorial",
+					"pages": [],
+					"path": "get_data_to_unified_profile_tutorial/get_data_to_unified_profile_tutorial.md",
+					"title": "Get Data to Unified Profile"
+				},
+		{
+					"importedFileName": "data_access_tutorial",
+					"pages": [],
+					"path": "data_access_tutorial/data_access_tutorial.md",
+					"title": "Data Access"
 				}
 	]
 }
