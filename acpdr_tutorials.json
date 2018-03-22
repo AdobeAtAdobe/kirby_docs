@@ -14,25 +14,25 @@
 					"importedFileName": "get_data_to_unified_profile_tutorial",
 					"pages": [],
 					"path": "get_data_to_unified_profile_tutorial/get_data_to_unified_profile_tutorial.md",
-					"title": "get data to unified profile tutorial"
+					"title": "Get Data to Unified Profile Tutorial"
 				},
 		{
 					"importedFileName": "data_access_tutorial",
 					"pages": [],
 					"path": "data_access_tutorial/data_access_tutorial.md",
-					"title": "data access tutorial"
+					"title": "Data Access Tutorial"
 				},
 		{
 					"importedFileName": "authenticate_to_acp_tutorial",
 					"pages": [],
 					"path": "authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md",
-					"title": "authenticate to acp tutorial"
+					"title": "Authenticate to ACP Tutorial"
 				},
 		{
 					"importedFileName": "creating_a_dataset_tutorial",
 					"pages": [],
 					"path": "creating_a_dataset_tutorial/creating_a_dataset_tutorial.md",
-					"title": "creating a dataset tutorial"
+					"title": "Creating a Dataset Tutorial"
 				}
 	]
 }
