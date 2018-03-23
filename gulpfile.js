@@ -64,14 +64,14 @@ function acsImport(done) {
     //.pipe(gulp.dest('acpdr/catalog'))
 
     /* move in tutorials */
-    gulp.src('../documentation/api-specification/markdown/narrative/tutorials/**/*.+(jpg|jpeg|gif|png|md)')
+    gulp.src('../documentation/api-specification/markdown/narrative/tutorials/**/*.+(jpg|jpeg|gif|png|md|PNG|MD|JPEG|JPG|GIF)')
     .pipe(debug())
     .pipe(cleanDest('acpdr/tutorials'))
     .pipe(gulp.dest('acpdr/tutorials'));
     done();
 
     /* move in technical_overview */
-    gulp.src('../documentation/api-specification/markdown/narrative/**/*.+(jpg|jpeg|gif|png|md)')
+    gulp.src('../documentation/api-specification/markdown/narrative/**/*.+(jpg|jpeg|gif|png|md|PNG|MD|JPEG|JPG|GIF)')
     .pipe(debug())
     .pipe(cleanDest('acpdr/narrative'))
     .pipe(gulp.dest('acpdr/narrative'));
