@@ -43,6 +43,17 @@ function defaultTask(done) {
 }
 
 function acsImport(done) {
+    /***
+     * add in yaml
+     * 
+     * https://git.corp.adobe.com/experience-platform/catalog/raw/master/api/swagger/swagger.yaml
+     * https://git.corp.adobe.com/experience-platform/data-access-api/raw/master/specs/data-access-api.yaml
+     * https://git.corp.adobe.com/experience-platform/bulk-ingest-api/raw/master/spec/swagger.yaml
+     * 
+     * need to strip out schema and auth
+     */
+
+
     /* move in the files 
      * https://git.corp.adobe.com/experience-platform/documentation
      */
