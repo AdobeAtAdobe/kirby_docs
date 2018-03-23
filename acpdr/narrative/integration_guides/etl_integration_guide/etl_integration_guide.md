@@ -1,10 +1,8 @@
-**Beta Release**
-
-> <img src="media/image1.png" width="58" height="86" />
+**Preview Release**
 
 **Adobe Cloud Platform**
 
-Updated on March 19<sup>th</sup> 2018
+Updated on March 23<sup>th</sup> 2018
 
 Data integration patterns for ETL tools
 =============================
