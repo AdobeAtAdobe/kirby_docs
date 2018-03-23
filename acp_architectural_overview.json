@@ -12,7 +12,7 @@
 	"pages": [
 	    {
 					"pages": [],
-					"path": "/acp_architectural_overview/ACP-architecture-overview.md",
+					"path": "acp_architectural_overview/ACP-architecture-overview.md",
 					"title": "ACP Architectural Overview"
 	    }
 	]
