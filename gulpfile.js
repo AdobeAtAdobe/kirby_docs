@@ -117,7 +117,19 @@ gulp.task('acs-move-markdown', function() {
     .pipe(gulp.dest('acpdr/api-specification/markdown'));
 });
 
-gulp.task('acsImport',gulp.series('clone-documents','pull-new-documents','acs-move-catalog','acs-move-tutorials','acs-move-markdown','add-new-acp-documents','commit-new-acp-documents','push-new-acp-documents', function(done) {
+gulp.task('pull-kirby-documents', done => {
+    git.pull('origin', 'master',function(err,stdout){
+        if (err){
+            console.log('pull-kirby-documents error',err);
+            done();
+        }else{
+            console.log('pull-kirby-documents',stdout);
+            done();
+        }
+    });
+})
+
+gulp.task('acsImport',gulp.series('clone-documents','pull-new-documents','acs-move-catalog','acs-move-tutorials','acs-move-markdown','pull-kirby-documents','add-new-acp-documents','commit-new-acp-documents','push-new-acp-documents', function(done) {
     console.log('acsImport...');
     /* move in the files 
      * https://git.corp.adobe.com/experience-platform/documentation
