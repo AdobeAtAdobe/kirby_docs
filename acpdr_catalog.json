@@ -17,13 +17,18 @@
 		},
 		{
 			"pages": [],
-			"path": "acpdr/data-access-api.yaml",
-			"title": "Data Access API"
+			"path": "acpdr/bulk-ingest-api.yaml",
+			"title": "Bulk Ingestion Service"
 		},
 		{
 			"pages": [],
-			"path": "acpdr/bulk-ingest-api.yaml",
-			"title": "Bulk Ingest API"
+			"path": "acpdr/data-access-api.yaml",
+			"title": "Data Access Service"
+		},
+		{
+			"pages": [],
+			"path": "acpdr/profile-access.yaml",
+			"title": "Unified Profile Service"
 		}
 
 	]

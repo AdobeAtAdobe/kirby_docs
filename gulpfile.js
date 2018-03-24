@@ -17,7 +17,14 @@
  *  not my circus, not my monkeys
  * 
  *  this gulp script helps move around git files from one repo to another and build a kirby starting manifest 
- *
+ * 
+ * ACP yaml location ref
+ * profile-access.yaml = https://git.corp.adobe.com/raw/experience-platform/profile-access/master/docs/api/swagger.yaml
+ *  
+ * yaml always remove these elements to remove unwanted UI bits - this is a work around until we can make our own views in swagger ui and host them in AEM 6.4
+ * remove the schemes block
+ * schemes:
+ * - http
  */
 
 var gulp = require('gulp'),
