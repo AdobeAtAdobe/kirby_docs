@@ -27,13 +27,19 @@ log = require('gulp-util').log,
 gutil = require('gulp-util'),
 es = require('event-stream'),
 appRoot = require('app-root-path'),
-path = require('path');
+path = require('path'),
+run = require('gulp-run')
+path = require('path'),
+runSequence = require('run-sequence'),
+git = require('gulp-git');
+
+var cwd = new run.Command('cwd');
 var appRootPath = appRoot.path;
 var manifest = {};
 var ascPathPrefix = "AdobeAtAdobe/kirby_docs/master/";
 
 gulp.task('default', defaultTask);
-gulp.task('acsImport', acsImport);
+//gulp.task('acsImport', acsImport);
 gulp.task('acsBuildCatalogManifest', acsBuildCatalogManifest);
 gulp.task('acsBuildTutorialsManifest', acsBuildTutorialsManifest);
 
@@ -42,23 +48,98 @@ function defaultTask(done) {
   done();
 }
 
-function acsImport(done) {
-    /* move in the files 
-     * https://git.corp.adobe.com/experience-platform/documentation
-     */
+gulp.task('clone-documents', done => {
+    git.clone('git@git.corp.adobe.com:experience-platform/documentation.git',{cwd: "../"},function(err){
+        if (err){
+            console.log('clone-documents error',err);
+            done();
+        }else{
+            done();
+        }
+    });
+})
+
+gulp.task('pull-new-documents', done => {
+    git.pull('origin', 'master',{cwd: "../documentation/"},function(err,stdout){
+        if (err){
+            console.log('pulling new documents error',err);
+            done();
+        }else{
+            console.log('pulling new documents',stdout);
+            done();
+        }
+    });
+})
+
+gulp.task('add-new-acp-documents', function() {
+    return gulp.src('.')
+    .pipe(git.add())
+})
+
+gulp.task('commit-new-acp-documents', function() {
+    return gulp.src('.')
+      .pipe(git.commit((new Date).toISOString()));
+});
+
+gulp.task('push-new-acp-documents', done => {
+    git.push('origin', 'master',function(err,stdout){
+        if (err){
+            console.log('pulling new documents error',err);
+            done();
+        }else{
+            console.log('pulling new documents',stdout);
+            done();
+        }
+    });
+});
+
+gulp.task('acs-move-catalog', function() {
     /* move in foundation catalog */
-    gulp.src('../documentation/api-specification/markdown/apis/foundation/catalog/markdown/**/*.md')
+    return gulp.src('../documentation/api-specification/markdown/apis/foundation/catalog/markdown/**/*.md')
     .pipe(debug())
     .pipe(cleanDest('acpdr/catalog'))
-    .pipe(gulp.dest('acpdr/catalog'))
+    .pipe(gulp.dest('acpdr/catalog'));
+});
 
+gulp.task('acs-move-tutorials', function() {
     /* move in tutorials */
-    gulp.src('../documentation/api-specification/markdown/narrative/tutorials/**/*.md')
+    return gulp.src('../documentation/api-specification/markdown/narrative/tutorials/**/*.md')
     .pipe(debug())
     .pipe(cleanDest('acpdr/tutorials'))
     .pipe(gulp.dest('acpdr/tutorials'));
+});
+
+gulp.task('acs-move-markdown', function() {
+    /* move in tutorials */
+    return gulp.src('../documentation/api-specification/markdown/**/*.md')
+    .pipe(debug())
+    .pipe(cleanDest('acpdr/api-specification/markdown'))
+    .pipe(gulp.dest('acpdr/api-specification/markdown'));
+});
+
+gulp.task('acsImport',gulp.series('clone-documents','pull-new-documents','acs-move-catalog','acs-move-tutorials','acs-move-markdown','add-new-acp-documents','commit-new-acp-documents','push-new-acp-documents', function(done) {
+    console.log('acsImport...');
+    /* move in the files 
+     * https://git.corp.adobe.com/experience-platform/documentation
+     */
+      
+    /* move in foundation catalog */
+    //gulp.src('../documentation/api-specification/markdown/apis/foundation/catalog/markdown/**/*.md')
+    //.pipe(debug())
+    //.pipe(cleanDest('acpdr/catalog'))
+    //.pipe(gulp.dest('acpdr/catalog'))
+
+    /* move in tutorials */
+    //gulp.src('../documentation/api-specification/markdown/narrative/tutorials/**/*.md')
+    //.pipe(debug())
+    //.pipe(cleanDest('acpdr/tutorials'))
+    //.pipe(gulp.dest('acpdr/tutorials'));
     done();
-}
+
+    //run('git add .');
+    //run('git commit -m "test"');
+    //run('git push');
+}))
 
 function acsBuildCatalogManifest(done) {
     /* build a manifest */
