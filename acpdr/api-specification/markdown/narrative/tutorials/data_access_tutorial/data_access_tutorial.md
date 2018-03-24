@@ -185,12 +185,12 @@ Now that we have the ID of the batch that we're looking for, we can use the Data
 ##### Request
 GET /batches/{BATCH_ID}/files
 
-``` SHELL
+```shell
 curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/files \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
-```
+  ```
 * `BATCH_ID`: Batch identifier of the batch that we are trying to access.  
 * `ACCESS_TOKEN`: Token provided after authentication.  
 * `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
