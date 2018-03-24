@@ -20,11 +20,18 @@
  * 
  * ACP yaml location ref
  * profile-access.yaml = https://git.corp.adobe.com/raw/experience-platform/profile-access/master/docs/api/swagger.yaml
+ * catalog.yaml = https://git.corp.adobe.com/experience-platform/catalog/raw/master/api/swagger/swagger.yaml
+ * data-access-api.yaml = https://git.corp.adobe.com/experience-platform/data-access-api/raw/master/specs/data-access-api.yaml
+ * profile-access.yaml = https://git.corp.adobe.com/experience-platform/bulk-ingest-api/raw/master/spec/swagger.yaml
  *  
  * yaml always remove these elements to remove unwanted UI bits - this is a work around until we can make our own views in swagger ui and host them in AEM 6.4
  * remove the schemes block
  * schemes:
  * - http
+ * 
+ * remove this too
+ * securityDefinitions: {}
+ * 
  */
 
 var gulp = require('gulp'),

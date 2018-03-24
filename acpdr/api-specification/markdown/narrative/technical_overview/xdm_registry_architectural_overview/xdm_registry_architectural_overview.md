@@ -1,4 +1,4 @@
-# XDM Registry Technical Overview
+# XDM Registry Overview
 
 ## 1. Overview
 This document provides a technical overview for using the XDM Registry in Adobe Cloud Platform outlining why and what Experience Data Model (XDM) is and how it is used in common workflows through the API.
@@ -7,15 +7,15 @@ This document provides a technical overview for using the XDM Registry in Adobe 
 This document is written for users who need to understand the Adobe Cloud Platform and want to integrate the platform with customer-owned or third party systems. Users include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
 
 ### 1.2. Version Information
-Version: Beta  
+*Version*: Beta  
 
 ### 1.3. License Information
 *Terms of service* : https://www.adobe.com/legal/terms.html
 
 ### 1.4. URI Scheme
-Host : platform.adobe.io  
-BasePath : /data/foundation/catalog/xdms/  
-Schemes : HTTPS  
+*Host* : platform.adobe.io  
+*BasePath* : /data/foundation/catalog/xdms/  
+*Schemes* : HTTPS  
 
 ### 1.5. About the Docs
 The HTML rendition of this documentation is kept up-to-date on a per commit basis and can therefore change without announcement. If you require a persistent version of the documentation, it is recommended that you seek out the PDF rendition.

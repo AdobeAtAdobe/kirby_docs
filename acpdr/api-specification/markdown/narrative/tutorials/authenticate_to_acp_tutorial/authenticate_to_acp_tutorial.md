@@ -1,11 +1,19 @@
-# Tutorial - Authenticate to ACP for APIs
+# Tutorial: Authenticating and accessing Adobe Cloud Platform APIs
 
 ## 1. Objective
 
-This tutorial will cover the steps on how to gain access to making Adobe Cloud Platform API calls starting with creating an Adobe ID account to generating your access token used to authenticate API calls.
+This tutorial will cover the steps on how to gain access to making Adobe Cloud Platform API calls starting with creating your access token used to authenticate API calls. The steps that will be explained in this tutorial are:
+
+* (optional) Create an AdobeID
+* Grant access to the Organization and Adobe Cloud Platform using Adobe Admin Console
+* Creating the required public and private certificates
+* Logging into Adobe I/O Console
+* Creating a new Integration
+* Authenticating
+* Calling a platform API
 
 ### 1.1. Audience
-This document is written for users who need to understand the Adobe Cloud Platform and have to integrate the platform with customer-owned or third party systems. Users include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
+This document is written for users who need to understand Adobe Cloud Platform and have to integrate the platform with customer-owned or third party systems. Users include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
 
 ### 1.2. Version Information
 *Version* : Beta
@@ -15,9 +23,9 @@ This document is written for users who need to understand the Adobe Cloud Platfo
 
 
 ### 1.4. URI Scheme
-Host : platform.adobe.io  
-BasePath : /data/foundation/import/  
-Schemes : HTTPS  
+*Host* : __platform.adobe.io__  
+*BasePath* : __/data/foundation/import/__  
+*Schemes* : __HTTPS__  
 
 ### 1.5. About the Docs
 The HTML rendition of this documentation is kept up-to-date on a per commit basis and can therefore change without announcement. If you require a persistent version of the documentation, it is recommended that you seek out the PDF rendition.
@@ -33,13 +41,13 @@ We will be going through the steps of authentication through the creation of an 
 
 ### 2.1. Prerequisites
 * A registered Adobe ID account
-* Administrative Rights for a IMS Organization
-* User of an IMS Organization
+* the Adobe ID account must have been added to an Organization with access to "Adobe Cloud Platform"
+* Administrative Rights (System Administrator) for an IMS Organization
 
 
 #### 2.1.1 A registered Adobe ID account
 
-Account can be created with the following steps:
+If you don't have an Adobe ID yet, you can create one with the following steps:
 
 1. Navigate to [Adobe Console](https://console.adobe.io)
 2. Click on the *Get an Adobe ID* link
@@ -47,15 +55,15 @@ Account can be created with the following steps:
 
 #### 2.1.2 Administrative Rights for a IMS Organization
 
- Administrative rights can be granted to you by another administrator using [Adobe Customer Admin UI](https://adminconsole.adobe.com/). You will need administrative rights to add yourself as a user to an IMS Organization.  You will also need admin rights to create an integration in the Experience Cloud Data Services but don't worry about that until section 2.2.3.
+ Administrative rights can be granted to you by another administrator using [Adobe Admin Console UI](https://adminconsole.adobe.com/). You will need administrative rights to add yourself as a user to an IMS Organization.  You will also need admin rights to create an integration for Adobe Cloud Platform -  Data Services.
 
  ![](add_user_as_admin.png)
 
 #### 2.1.3 User of an IMS Organization
 
-Once as an administrator, you can add yourself to the IMS Organization as a user:
+Once as an administrator, you (or another Administrator)can add yourself to the Organization as a user:
 
-1. Navigate to [Adobe Customer Admin UI](https://adminconsole.adobe.com/)
+1. Navigate to [Adobe AdminConsole UI](https://adminconsole.adobe.com/)
 2. Click on *Assign Users* for the IMS Organization you wish to join
 ![](assign_user.png)
 3. Enter the email assigned to your Adobe ID
@@ -65,13 +73,14 @@ Once as an administrator, you can add yourself to the IMS Organization as a user
 ### 2.2. One Time Setup
 
 The following steps will only need to be done once:
+
 * Create Certificate
 * Log into adobe.io Dev Portal
 * Create Integration
 * Copy Down Access Values
 
 
- Once your have your certificate, integration, and access values, you will be able to reuse them in future authentications. We will go over each step in detail below.
+Once your have your certificate, integration, and access values, you will be able to reuse them in future authentications. We will go over each step in detail below.
 
 #### 2.2.1. Create Certificate
 
@@ -113,13 +122,13 @@ The `certificate_pub.crt` certificate will later be uploaded to the Adobe IO Con
 
 Your private key file named `private.key` will be used later to sign your JWT token.
 
-#### 2.2.2. Log into adobe.io Dev Portal
+#### 2.2.2. Log into adobe.io Developer Portal: console.adobe.io
 
-Navigate to the [Adobe Console](https://console.adobe.io/integrations) and sign in with your Adobe ID.  
+Navigate to the [Adobe I/O Console](https://console.adobe.io/) and sign in with your Adobe ID.  
 
 #### 2.2.3. Create Integration
 
-You will be taken to the Integrations page. An *Integration* is a service account that is created for a specific IMS Organization. You will only be allowed to make calls for the IMS Organization for which the Integration is created in.
+You will be taken to the Integrations page. An *Integration* is a service account that is created for the selected IMS Organization (If you are associated with multiple Organizations, you can select the appropriate Organization from the drop-down). You will only be allowed to make calls for the IMS Organization for which the Integration is created in.
 
 From this page we want to create a *New Integration*.
 
@@ -154,7 +163,7 @@ Copy down the values for `{API KEY}`, `{IMS ORG}` which is the Organization ID, 
 
 ### 2.3. Authentication For Each Session
 
-The end goal is to generate your `{ACCESS_TOKEN}` which will be used to authenticate your API calls. The access token is added into the authorization header in every API call you make in the Adobe Cloud Platform.  This action will need to be done every-time the access token expires which is every 24 hours.
+The end goal is to generate your `{ACCESS_TOKEN}` which will be used to authenticate your API calls. The access token is added into the authorization header in every API call you make to Adobe Cloud Platform.  This action will need to be done every-time the access token expires which is every 24 hours.
 
 #### 2.3.1. Create JWT
 
@@ -206,14 +215,14 @@ It should return something like this.
 ```JSON
 {
   "token_type":"bearer",
-  "access_token":"eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ.eyJpZCI6IjE1MjAzMDU0ODY5MDhfYzMwM2JkODMtMWE1My00YmRiLThhNjctMWY4ZDhhNDJiNTE1X3VlMSIsImNsaWVudF9pZCI6ImYwNjY2Y2M4ZGVhNzQ1MWNiYzQ2ZmI2MTVkMzY1YzU0IiwidXNlcl9pZCI6IjA0ODUzMkMwNUE5ODg2QUQwQTQ5NDEzOUB0ZWNoYWNjdC5hZG9iZS5jb20iLCJzdGF0ZSI6IntcInNlc3Npb25cIjpcImh0dHBzOi8vaW1zLW5hMS1zdGcxLmFkb2JlbG9naW4uY29tL2ltcy9zZXNzaW9uL3YxL05UZzJZemM1TVdFdFlXWTNaUzAwT1RWaUxUZ3lPVFl0WkdWbU5EUTVOelprT0dFeUxTMHdORGcxTXpKRE1EVkJPVGc0TmtGRU1FRTBPVFF4TXpsQWRHVmphR0ZqWTNRdVlXUnZZbVV1WTI5dFwifSIsInR5cGUiOiJhY2Nlc3NfdG9rZW4iLCJhcyI6Imltcy1uYTEtc3RnMSIsImZnIjoiU0hRUlJUQ0ZTWFJJTjdSQjVVQ09NQ0lBWVU9PT09PT0iLCJtb2kiOiJhNTYwOWQ5ZiIsImMiOiJMeksySTBuZ2F2M1BhWWIxV0J3d3FRPT0iLCJleHBpcmVzX2luIjoiODY0MDAwMDAiLCJzY29wZSI6Im9wZW5pZCxzZXNzaW9uLEFkb2JlSUQscmVhZF9vcmdhbml6YXRpb25zLGFkZGl0aW9uYWxfaW5mby5wcm9qZWN0ZWRQcm9kdWN0Q29udGV4dCIsImNyZWF0ZWRfYXQiOiIxNTIwMzA1NDg2OTA4In0.EBgpw0JyKVzbjIBmH6fHDZUvJpvNG8xf8HUHNCK2l-dnVJqXxdi0seOk_kjVodkIa3evC54V560N60vi_mzt7gef-g954VH6l3gFh6XQ7yqRJD2LMW7G1lhQGhga4hrQCnJlfSQoztvIp9hkar9Zcu-MYgyEB5UlwK3KtB3elu7vJGk35F3T9OnqVL4PFj0Ix6zcuN_4gikgQgmtoUgrVIjuXULinbtu9Bkmdf7so9FvhapUd5ZTUTTMrAfJ36gEOQPqsuzlu9oUQaYTAn8v4B9TgoS0Paslo6WIksc4f_rSVWsbO6_TSUqIOi0e_RyL6GkMBA1ELA-Dkgbs-jUdkw",
+  "access_token":"eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LT2VyIiwiYWxnIjoiUlMyNTYifQ.eyJpZCI6IjE1MjAzMDU0ODY5MDhfYzMwM2JkODMtMWE1My00YmRiLThhNjctMWDhhNDJiNTE1X3VlMSIsImNsaWVudF9pZCI6ImYwNjY2Y2M4ZGVhNzQ1MWNiYzQ2ZmI2MTVkMzY1YzU0IiwidXNlcl9pZCI6IjA0ODUzMkMwNUE5ODg2QUQwQTQ5NDEzOUB0ZWNoYWNjdC5hZG9iZS5jb20iLCJzdGF0ZSI6IntcInNlc3Npb25cIjpcImh0dHBzOi8vaW1zLW5hMS1zdGcxLmFkb2JlbG9naW4uY29tL2ltcy9zZXNzaW9uL3YxL05UZzJZemM1TVdFdFlXWTNaUzAwT1RWaUxUZ3lPVFl0WkdWbU5EUTVOelprT0dFeUxTMHdORGcxTXpKRPVGc0TmtGRU1FRTBPVFF4TXpsQWRHVmphR0ZqWTNRdVlXUnZZbVV1WTI5dFwifSIsInR5cGUiOiJhY2Nlc3NfdG9rZW4iLCJhcyI6Imltcy1uYTEtc3RnMSIsImZnIjoiU0hRUlJUQ0ZTWFJJTjdSQjVVQ09NQ0lBWVU9PT09PT0iLCJtb2kiOiJhNTYwOWQ5ZiIsImMiOiJMeksySTBuZ2F2M1BhWWIxV0J3d3FRPT0iLCJleHBpcmVzX2luIjoiODY0MDAwMDAiLCJzY29wZSI6Im9wZW5pZCxzZXNzaW9uLEFkb2JlSUQscmVhZF9vcmdhbml6YXRpb25zLGFkZGl0aW9uYWxfaW5mby5wcm9qZWN0ZWRQcm9kdWN0Q29udGV4dCIsImNyZWF0ZWRfYXQiOiIxNTIwMzA1NDg2OTA4In0.EBgpw0JyKVzbjIBmH6fHDZUvJpvNG8xf8HUHNCK2l-dnVJqXxdi0seOk_kjVodkIa3evC54V560N60vi_mzt7gef-g954VH6l3gFh6XQ7yqRJD2LMW7G1lhQGhga4hrQCnJlfSQoztvIp9hkar9Zcu-MYgyEB5UlwK3KtB3elu7vJGk35F3T9OnqVL4PFj0Ix6zcuN_4gikgQgmtoUjuXULinbtu9Bkmdf7so9FvhapUd5ZTUTTMrAfJ36gEOQPqsuzlu9oUQaYTAn8v4B9TgoS0Paslo6WIksc4f_rSVWsbO6_TSUqIOi0e_RyL6GkMBA1ELA-Dkgbs-jUdkw",
   "expires_in":86399947
 }
 ```
 
 Your access token is the value under the `access_token` key. Note this access token will expire in 86399947 milliseconds or 24 hours.
 
-You are now ready to make API requests in the Adobe Cloud Platform!
+You are now ready to make API requests in Adobe Cloud Platform!
 
 #### 2.3.3. Testing Access Code
 

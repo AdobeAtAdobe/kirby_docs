@@ -1,8 +1,8 @@
-# Unified Profile Architectural Overview
+# Unified Profile Overview
 
 ## 1. Overview
 
-Adobe Unified Profile Service (UPS) provides a Unified, 360° Consumer Profile that enables marketers to drive coordinated, consistent and relevant experiences with their audiences across channels. With Unified Profile, you have one place to go to get a holistic view of your entire user base aggregated across all systems, as well as actionable timestamped account of every event they've had in any of your systems, when you need it.
+the Unified Profile Service (UPS) in Adobe Cloud Platform provides a Unified, 360° Consumer Profile that enables marketers to drive coordinated, consistent and relevant experiences with their audiences across channels. With Unified Profile, you have one place to go to get a holistic view of your entire user base aggregated across all systems, as well as actionable timestamped account of every event they've had in any of your systems, when you need it.
 
 ![Unified Profile In Action](up-in-action.png)
 
@@ -10,18 +10,32 @@ Adobe Unified Profile Service (UPS) provides a Unified, 360° Consumer Profile t
 
 This document is aimed at technical personas and should be a useful tool for all users that need to:
 
-* Consume the Adobe Cloud Platform APIs
-* Understand the Adobe Cloud Platform Architecture
-* Understand how the Unified Profile works with the Adobe Cloud Platform
-* Architect integrations between customer-owned and 3rd party systems and the Adobe Cloud Platform
+* Consume Adobe Cloud Platform APIs
+* Understand Adobe Cloud Platform Architecture
+* Understand how the Unified Profile works with Adobe Cloud Platform
+* Architect integrations between customer-owned and 3rd party systems and Adobe Cloud Platform
 
-### 1.2 Unified Profile in the Adobe Cloud Platform
+### 1.2 Version Information
+*Version* : Beta
+
+### 1.3 License Information
+*Terms of service* : https://www.adobe.com/legal/terms.html
+
+### 1.4 URI Scheme
+*Host* : __platform.adobe.io__  
+*BasePath* : __/data/core/up/__   
+*Schemes* : __HTTPS__ 
+
+### 1.5 About the Docs
+The HTML rendition of this documentation is kept up-to-date on a per commit basis and can therefore change without announcement. If you require a persistent version of the documentation, it is recommended that you seek out the PDF rendition.
+
+### 1.6 Unified Profile in Adobe Cloud Platform
 
 Unified Profile provides cohesion of data across any standardized DataSets you choose to onboard.
 
 ![Unified Profile In Action](up-in-acp.png)
 
-### 1.3 Using the API
+### 1.7 Using the API
 
 This document describes interacting with Profile Services using Adobe's Platform APIs. See the [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for information on how to access these services.
 
@@ -29,11 +43,11 @@ This document describes interacting with Profile Services using Adobe's Platform
 
 ## 2. Ingesting XDM Data
 
-UP maintains XDM data in the Profile Store which can be synced via batch or stream ingestion. 
+UPS maintains XDM data in the Profile Store which can be updated via batch or stream ingestion. 
 
 ### 2.1 Batch Ingestion
 
-XDM data can be ingested from batch data being ingested by Data Catalog Services. 
+XDM data can be ingested into the Unified Profile Service from batch data being [ingested](../allservices.html.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md) by Data Catalog Service. 
 
 Both enablement and configuration for ingestion by Unified Profile are handled by a Tag on a DataSet, named specifically "unifiedProfile". The following is an example Patch request adding the `unifiedProfile` Tag, where the `enabled` property set to true enables the DataSet for ingestion into UPS. As Unified Profile can contain a number of identifiers from possibly several different systems, identifying the primary identifier is handled using a query string specifying which value in the XDM schema to use. The `identityField` Tag property names the location in the XDM schema of the primary identity field; `endUserIds.mcId.id` in the example below. (Note that the `identityField` will be deprecated once XDM adds support for it)
 
@@ -51,13 +65,9 @@ Body:
 }
 ```
 
-### 2.2 Streaming Ingestion
-
-The Profile Service can ingest streaming data via Adobe Pipeline. The user interface for this functionality will be available in upcoming releases. In the interim, please email us at [mogarg@adobe.com](mailto:mogarg@adobe.com) for enabling this for your use case.
-
 ---
 
-## 3. Accessing Unified Profiles
+## 3. Accessing Profiles in the Unified Profile Service
 
 Access a Unified Profile as it is stored on the hub. 
 
@@ -328,7 +338,7 @@ Predicates are run against stored XDM data and the data streaming in from variou
 
 #### 4.2.1 Create a Segment Job
 
-A Segment Job is a queued process of running one or more Predicates against your ACP XDM data which either builds or rebuilds the Audience for each Segment. 
+A Segment Job is a queued process of running one or more Predicates against your Adobe Cloud Platform XDM data which either builds or rebuilds the Audience for each Segment. 
 
 __Example request to create a Segment Job:__
 
@@ -398,6 +408,4 @@ Example Response:
 }
 ```
 
-### 4.3 Scan Your Audience
 
-Use the Scan API to get the fields for your purpose.

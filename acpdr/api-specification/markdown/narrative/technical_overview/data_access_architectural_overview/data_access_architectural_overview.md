@@ -1,7 +1,7 @@
-# Data Access Architectural Overview
+# Data Access git aOverview
 
 ## 1. Overview
-The Data Access API provides users with a REST interface to access ingested data on Adobe Cloud Platform.
+The Data Access API provides users with a REST interface to access ingested data in Adobe Cloud Platform.
 
 ### 1.1 Audience
 This document is aimed at technical personas and should be a useful tool for all users that need to consume the Adobe Cloud Platform APIs, understand the Adobe Cloud Platform architecture, or architect integrations between customer-owned and 3rd party systems with the Adobe Cloud Platform.
@@ -15,9 +15,9 @@ Personas Include: Data Engineers, Data Architects, Data Scientists, App Develope
 *Terms of service* : https://www.adobe.com/legal/terms.html
 
 ### 1.4 URI Scheme
-*Host* : platform.adobe.io   
-*BasePath* : /data/foundation/export/  
-*Schemes* : HTTPS  
+*Host* : __platform.adobe.io__   
+*BasePath* : __/data/foundation/export/__  
+*Schemes* : __HTTPS__  
 
 ### 1.5 About the Docs
 The HTML rendition of this documentation is kept up-to-date on a per commit basis and can therefore change without announcement. If you require a persistent version of the documentation, it is recommended that you seek out the PDF rendition.
@@ -25,20 +25,16 @@ The HTML rendition of this documentation is kept up-to-date on a per commit basi
 ---
 
 ## 2 What is Data Access API?
-The Data Access API supports Adobe Cloud Platform by providing users with a REST interface focused on the discoverability and accessibility of ingested datasets within the Data Platform.
-
-![Data Access Architectural](egress_architecture.png)
-
-Emphasis on Access flexibility and dataset egress gives users a lot of flexibility in terms of what, how, and when one wants to consume. By using the Data Access API, it allows different personas such as Developers and Data Scientists to focus on the logistics of the business problems in front of them, rather than struggle with the retrieval of Datasets from a Data Source.
+The Data Access API supports Adobe Cloud Platform by providing users with a REST interface focused on the discoverability and accessibility of ingested datasets within Adobe Cloud Platform.
 
 
 ## 3 API Specification Reference
-The Swagger API reference documentation can be found [here](https://git.corp.adobe.com/pages/experience-platform/api-specification/#/)
+The Swagger API reference documentation can be found [here](../apireference.html#!acpdr/data-access-api.yaml)
 
 
 ## 4 High-level Architecture Diagram
 ![High Level Architecture Diagram](architectural_diagram_2.png)
-(TODO: Diagram may be too detailed for March release. Will also need to remove non-user facing terminology)
+
 
 ## 5 Common Use Cases
 The Data Access API supports a multitude of common use cases in order to streamline data access and discovery:
@@ -231,7 +227,7 @@ Contents of the file
 ```
 
 ## 6 Additional Code Samples
-Please refer to the tutorial [How to Query Data via Data Access API](../../tutorials/data_access_tutorial/data_access_tutorial.md)
+Please refer to the tutorial [How to Query Data via Data Access API](../alltutorials.html#!api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md)
 
 
 ## 7 Terminology

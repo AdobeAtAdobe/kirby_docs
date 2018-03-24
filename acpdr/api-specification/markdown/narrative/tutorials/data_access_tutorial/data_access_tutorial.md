@@ -1,10 +1,15 @@
 # How to Query Data via Data Access API
 
 ## 1 Objective
-In this step by step tutorial, we will focus on how to locate, access, and download data stored within a dataset using the Adobe Cloud Platform Data Access API. This article will also go into some of the unique features of the Data Access API, such as Paging and Partial Downloads.
+In this step by step tutorial, we will focus on how to locate, access, and download data stored within a dataset using Adobe Cloud Platform Data Access API. This article will also go into some of the unique features of the Data Access API, such as Paging and Partial Downloads. The steps that will be explained in this tutorial are:
+
+* Locating the data
+* Retrieving the files belonging to a batch
+* Accessing the file and downloading the data
+
 
 ### 1.1 Audience
-This document is aimed at technical personas and should be a useful tool for all users that need to consume the Adobe Cloud Platform APIs, understand the Adobe Cloud Platform architecture, or architect integrations between customer-owned and 3rd party systems with the Adobe Cloud Platform.
+This document is aimed at technical personas and should be a useful tool for all users that need to consume Adobe Cloud Platform APIs, understand Adobe Cloud Platform architecture, or architect integrations between customer-owned and 3rd party systems with Adobe Cloud Platform.
 
 Personas Include: Data Engineers, Data Architects, Data Scientists, App Developers
 
@@ -15,9 +20,9 @@ Personas Include: Data Engineers, Data Architects, Data Scientists, App Develope
 *Terms of service* : https://www.adobe.com/legal/terms.html
 
 ### 1.4 URI Scheme
-*Host* : platform.adobe.io   
-*BasePath* : /data/foundation/export/  
-*Schemes* : HTTPS  
+*Host* : __platform.adobe.io__   
+*BasePath* : __/data/foundation/export/__  
+*Schemes* : __HTTPS__  
 
 ### 1.5 About the Docs
 The HTML rendition of this documentation is kept up-to-date on a per commit basis and can therefore change without announcement. If you require a persistent version of the documentation, it is recommended that you seek out the PDF rendition.
@@ -26,13 +31,10 @@ The HTML rendition of this documentation is kept up-to-date on a per commit basi
 
 ## Prerequisites
 
-* A valid [IMS Access Token](https://wiki.corp.adobe.com/display/DMSArchitecture/Tutorial%3A+How+to+Obtain+Your+API+Access+Token) (ACCESS_TOKEN)
+* A valid [Access Token](../alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) (ACCESS_TOKEN)
 * API key (API_KEY)
 * IMS Organization Id (IMS_ORG)
-* Knowledge of creating and populating a dataset. See [Create and populate a dataset](tutorial_creating_a_dataset.md)
-* Access to the following components:
-    * Catalog
-    * Data Access
+* Knowledge of creating and populating a dataset. See [Create and populate a dataset](../alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
 
 ---
 
@@ -42,8 +44,6 @@ This tutorial will follow the steps indicated in the sequence diagram below to g
 
 We will begin by retrieving information regarding batches and files using the Catalog API. The Data Access API will then allow us to access and download these files over HTTP, either in full, or via partial downloads.
 
-(TODO) Should I remove the 'GET /catalog/dataSets' portion from the sequence diagram? It does not look like dataSet is used within Data Access API
-
 ---
 
 ## 1 Locating The Data
@@ -52,7 +52,7 @@ Before we can begin to use the Data Access API, you'll need to identify the loca
 1. GET /batches : Returns a list of batches under your organization (batchID)
 2. GET /dataSetFiles : Returns a list of files under your organization(fileID)
 
-For more information regarding the Catalog API, please refer to the [TODO: Catalog API Reference](TODO)
+For more information regarding the Catalog API, please refer to the [API Reference](apireference.html#!acpdr/catalog.yaml)
 
 
 ### 1.1 Retrieving a list of batches under your IMS Organization
@@ -118,7 +118,7 @@ curl -X GET https://platform.adobe.io/data/foundation/catalog/batches?createdAft
 ``` JSON
 {
     "{BATCH_ID_3}": {
-        "imsOrg": "EDCE5A655A5E73FF0A494113@AdobeOrg",
+        "imsOrg": "EDCE5XXXXXXXXXX494113@AdobeOrg",
         "created": 1521053542579,
         "createdClient": "acp_foundation_push",
         "createdUser": "acp_foundation_push@AdobeID",
@@ -174,7 +174,7 @@ curl -X GET https://platform.adobe.io/data/foundation/catalog/batches?createdAft
 }
 ```
 
-A full list of parameters and filters can be found in the [Catalog API Reference Documentation](https://git.corp.adobe.com/pages/experience-platform/api-specification/#/default/get_batch)
+A full list of parameters and filters can be found in the [Catalog API Reference Documentation](apireference.html#!acpdr/catalog.yaml)
 
 ---
 

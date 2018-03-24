@@ -1,7 +1,7 @@
-# Data Ingestion Technical Overview
+# Bulk Ingestion Overview
 
 ## 1. Overview
-The Data ingestion service APIs enable clients to push batch data into the Adobe Cloud Platform. This document will cover the Bulk Ingestion API.  
+The Bulk Ingestion service APIs enable clients to push batch data into the Adobe Cloud Platform. This document will cover the Bulk Ingestion API.  
 
 ### 1.1 Audience
 This document is aimed at technical personas and should be a useful tool for all users that need to consume the Adobe Cloud Platform APIs, understand the Adobe Cloud Platform architecture, or architect integrations between customer-owned and 3rd party systems with the Adobe Cloud Platform.  
@@ -15,9 +15,9 @@ Personas Include: Data Engineers, Data Architects, Data Scientists, App Develope
 *Terms of service* : https://www.adobe.com/legal/terms.html
 
 ### 1.4 URI Scheme
-*Host* : platform.adobe.io   
-*BasePath* : /data/foundation/import/  
-*Schemes* : HTTPS  
+*Host* : __platform.adobe.io__    
+*BasePath* : __/data/foundation/import/__  
+*Schemes* : __HTTPS__  
 
 ### 1.5 About the Docs
 The HTML rendition of this documentation is kept up-to-date on a per commit basis and can therefore change without announcement. If you require a persistent version of the documentation, it is recommended that you seek out the PDF rendition.
@@ -25,20 +25,21 @@ The HTML rendition of this documentation is kept up-to-date on a per commit basi
 ---
 
 ## 2. Understanding the API
-The Data Ingestion API are necessary for clients to be able to push batch data into the Adobe Cloud Platform.  Data being uploaded can either be ad hoc (eg. profile data from a CRM system) or data that fits into a known data model that is registered in the XDM registry.
+The Data Ingestion API are necessary for clients to be able to push batch data into the Adobe Cloud Platform.  Data being uploaded can either be ad hoc (eg. profile data from a CRM system) or data that conforms to a known schema that is registered in the XDM registry.
 
 ![Data Ingestion Patterns](data_ingest_architecture.png)
 
 ## 3. API Specification Reference
-The Swagger API reference documentation can be found [here](https://git.corp.adobe.com/pages/experience-platform/api-specification/#/)
+The Swagger API reference documentation can be found [here](../apireference.html#!acpdr/bulk-ingest-api.yaml)
 
 ## 4. Using the API
 The most common operation of the Data Ingestion API is to upload (ingest) data onto the Adobe Cloud platform. This is accomplished through creating a new batch (a unit of data that consists of one or more files to be ingested as a single unit), uploading files to a specified dataset that matches the data's XDM schema, and signaling the end of the batch. The following tutorial will follow this three step process to upload new batches into a pre-existing dataset.
 
 ### 4.1 Data Ingestion Pre-requisites
-- Data to upload must be in .parquet format
+- Data to upload must be in [.parquet](http://parquet.apache.org/documentation/latest/) format
 - Individual data files must not exceed 512 MB in size
-- Data format must match the schema of the dataset being uploaded into
+- A [Dataset created in Data Catalog] (../allservices.html.html#!api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md)
+- Contents of the parquet file must match (a subset of) the schema of the dataset being uploaded into
 - Have your unique Access Token, given after authentication
 
 ### 4.2 Creating a Batch
@@ -112,7 +113,7 @@ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}
 **FILE_NAME:** Name of file as it will be seen in the dataset.  
 **IMS_ORG:** Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
 **ACCESS_TOKEN:** Token provided after authentication.  
-**FILE_PATH_AND_NAME:** The path and filename of the file to be uploaded into the dataset.  
+**FILE\_PATH\_AND_NAME:** The path and filename of the file to be uploaded into the dataset.  
 
 #### Response
 ```JSON
@@ -162,7 +163,7 @@ curl -X PATCH "https://platform.adobe.io/data/foundation/import/batches/{BATCH_I
 **FILE_NAME:** Name of file as it will be seen in the dataset.  
 **IMS_ORG:** Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
 **ACCESS_TOKEN:** Token provided after authentication.  
-**FILE_PATH_AND_NAME:** The path and filename of the file to be uploaded into the dataset.  
+**FILE\_PATH\_AND_NAME:** The path and filename of the file to be uploaded into the dataset.  
 **CONTENT_RANGE:** The range of bytes of the file being uploaded with this request. (ex. 0-82/164)
 
 #### Response
