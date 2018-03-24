@@ -3,21 +3,16 @@ info:
   version: 1.0.0
   title: Catalog Service RESTful API Resource.
   description: >-
-    Catalog service API for client registration. Administrative use only.
+    Catalog Service API documentation
 
     Notes:
-
-    * When trying out the APIs, get your tokens from IMS stage and prefix it
-    with 'Bearer'.
-
+    
     * All requests with a payload in the request body (i.e., POST, PUT, and
-    PATCH calls) must include the header 'Content-Type: application/json'.  This
-    UI automatically supplies that header when using the 'Try it out' button,
-    but calling clients must take care to supply it for themselves.
+    PATCH calls) must include the header 'Content-Type: application/json'.
   contact:
     name: Catalog Team.
 basePath: /data/foundation/catalog
-host: platform-int.adobe.io
+host: platform.adobe.io
 consumes:
   - application/json
 produces:

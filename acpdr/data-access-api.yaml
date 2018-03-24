@@ -3,9 +3,15 @@ swagger: "2.0"
 info:
   version: "1.0.0"
   title: "Data Access API"
-  description: "Data Access API for platform data access and egress"
+  description: >- 
+    Data Access API for Adobe Cloud Platform data access and egress
 
-host: "platform-int.adobe.io"
+    Notes:
+
+    * All requests with a payload in the request body (i.e., POST, PUT, and
+    PATCH calls) must include the header 'Content-Type: application/json'.
+
+host: "platform.adobe.io"
 basePath: "/data/foundation/export"
 
 tags:

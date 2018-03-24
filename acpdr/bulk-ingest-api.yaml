@@ -1,11 +1,18 @@
 ---
 info:
-  title: Bulk Ingestion API
+  title: Bulk Ingestion Service RESTful API Resource
   version: v2
+  description: >-
+    Bulk Ingestion Service API Documentation
+
+    Notes:
+
+    * All requests with a payload in the request body (i.e., POST, PUT, and
+    PATCH calls) must include the header 'Content-Type: application/json'.
   contact:
-      name: Grp-Siphon-Core
-basePath: /
-host: bulk-ingestion-dev-va7.dev.cloud.adobe.io
+      name: Siphon Team
+basePath: /data/foundation/import/
+host: platform.adobe.io
 swagger: "2.0"
 tags:
 - name: "Ingest Batch"
