@@ -4,7 +4,7 @@ info:
   version: "1.0.0"
   title: "Data Access API"
   description: "Data Access API for platform data access and egress"
-  
+
 host: "platform-int.adobe.io"
 basePath: "/data/foundation/export"
 
