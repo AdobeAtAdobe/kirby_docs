@@ -72,7 +72,7 @@ gulp.task('pull-new-documents', done => {
 })
 
 gulp.task('add-new-acp-documents', function() {
-    return gulp.src('.')
+    return gulp.src('./*')
     .pipe(git.add())
 })
 
@@ -118,12 +118,12 @@ gulp.task('acs-move-markdown', function() {
 });
 
 gulp.task('pull-kirby-documents', done => {
-    git.pull('origin', 'master',function(err,stdout){
+    git.pull('origin', 'master',function(err){
         if (err){
             console.log('pull-kirby-documents error',err);
             done();
         }else{
-            console.log('pull-kirby-documents',stdout);
+            console.log('pull-kirby-documents done');
             done();
         }
     });
