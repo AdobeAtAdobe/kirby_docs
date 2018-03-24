@@ -95,7 +95,7 @@ gulp.task('push-new-acp-documents', done => {
 
 gulp.task('acs-move-catalog', function() {
     /* move in foundation catalog */
-    return gulp.src('../documentation/api-specification/markdown/apis/foundation/catalog/markdown/**/*.md')
+    return gulp.src('../documentation/api-specification/markdown/apis/foundation/catalog/markdown/**/*.{png,gif,jpg,md,PNG,GIF,JPG,MD}')
     .pipe(debug())
     .pipe(cleanDest('acpdr/catalog'))
     .pipe(gulp.dest('acpdr/catalog'));
@@ -103,7 +103,7 @@ gulp.task('acs-move-catalog', function() {
 
 gulp.task('acs-move-tutorials', function() {
     /* move in tutorials */
-    return gulp.src('../documentation/api-specification/markdown/narrative/tutorials/**/*.md')
+    return gulp.src('../documentation/api-specification/markdown/narrative/tutorials/**/*.{png,gif,jpg,md,PNG,GIF,JPG,MD}')
     .pipe(debug())
     .pipe(cleanDest('acpdr/tutorials'))
     .pipe(gulp.dest('acpdr/tutorials'));
@@ -111,7 +111,7 @@ gulp.task('acs-move-tutorials', function() {
 
 gulp.task('acs-move-markdown', function() {
     /* move in tutorials */
-    return gulp.src('../documentation/api-specification/markdown/**/*.md')
+    return gulp.src('../documentation/api-specification/markdown/**/*.{png,gif,jpg,md,PNG,GIF,JPG,MD}')
     .pipe(debug())
     .pipe(cleanDest('acpdr/api-specification/markdown'))
     .pipe(gulp.dest('acpdr/api-specification/markdown'));
