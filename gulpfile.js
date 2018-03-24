@@ -78,7 +78,7 @@ gulp.task('add-new-acp-documents', function() {
 
 gulp.task('commit-new-acp-documents', function() {
     return gulp.src('.')
-      .pipe(git.commit((new Date).toISOString()));
+      .pipe(git.commit('auto import ' + (new Date).toISOString()));
 });
 
 gulp.task('push-new-acp-documents', done => {
@@ -134,23 +134,7 @@ gulp.task('acsImport',gulp.series('clone-documents','pull-new-documents','acs-mo
     /* move in the files 
      * https://git.corp.adobe.com/experience-platform/documentation
      */
-      
-    /* move in foundation catalog */
-    //gulp.src('../documentation/api-specification/markdown/apis/foundation/catalog/markdown/**/*.md')
-    //.pipe(debug())
-    //.pipe(cleanDest('acpdr/catalog'))
-    //.pipe(gulp.dest('acpdr/catalog'))
-
-    /* move in tutorials */
-    //gulp.src('../documentation/api-specification/markdown/narrative/tutorials/**/*.md')
-    //.pipe(debug())
-    //.pipe(cleanDest('acpdr/tutorials'))
-    //.pipe(gulp.dest('acpdr/tutorials'));
     done();
-
-    //run('git add .');
-    //run('git commit -m "test"');
-    //run('git push');
 }))
 
 function acsBuildCatalogManifest(done) {
