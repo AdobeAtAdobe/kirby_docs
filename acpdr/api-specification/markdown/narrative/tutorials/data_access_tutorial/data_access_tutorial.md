@@ -62,7 +62,7 @@ Using the Catalog API, you can return a list of batches under your organization.
 ##### Request
 GET /batches
 
-``` SHELL
+```shell
 curl -X GET https://platform.adobe.io/data/foundation/catalog/batches/ \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
