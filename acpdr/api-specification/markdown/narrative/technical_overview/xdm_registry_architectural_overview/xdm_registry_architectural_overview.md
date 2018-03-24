@@ -1,10 +1,10 @@
 # XDM Registry Technical Overview
 
 ## 1. Overview
-This document gives a technical overview for using the XDM Registry with Adobe Cloud Platform outlining why and what XDM is and how it is used in common workflows through the API.
+This document provides a technical overview for using the XDM Registry in Adobe Cloud Platform outlining why and what Experience Data Model (XDM) is and how it is used in common workflows through the API.
 
 ## 1.1. Audience
-This document is written for users who need to understand the Adobe Cloud Platform and have to integrate the platform with customer-owned or third party systems. Users include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
+This document is written for users who need to understand the Adobe Cloud Platform and want to integrate the platform with customer-owned or third party systems. Users include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
 
 ### 1.2. Version Information
 Version: Beta  
@@ -14,7 +14,7 @@ Version: Beta
 
 ### 1.4. URI Scheme
 Host : platform.adobe.io  
-BasePath : /data/foundation/import/  
+BasePath : /data/foundation/catalog/xdms/  
 Schemes : HTTPS  
 
 ### 1.5. About the Docs
@@ -24,38 +24,31 @@ The HTML rendition of this documentation is kept up-to-date on a per commit basi
 
 ## 2. Understanding XDM
 
-The Experience Data Model (XDM) is the ecosystem where customer experience data is represented using a standard model. These standard models will enable easier integration of data from all our Adobe solutions and external sources. After the data is ingested and transformed to the schemas, XDM allows the sharing of this data in an agile and normalized setting within the Adobe Cloud Platform and its services. XDM offers single-source data management focused on the creation, storage, retrieval and manipulation of data.
+The Experience Data Model (XDM) is the ecosystem where customer experience data is represented using a standard data model. These standard models will enable easier integration of data from all our Adobe solutions and external sources. After the data is ingested and transformed to standard schemas, XDM allows the sharing of this data in an agile and normalized setting within the Adobe Cloud Platform and its services. XDM offers single-source data management focused on the creation, storage, retrieval and manipulation of data. The customer data model consists of standard schemas from the XDM, which can be extended by the customer and schemas created by the customer (Customer Extended Schemas)
 
-### 2.1. Why XDM
 
-![](xdm_big_picture.png)
-
-As Adobe moves towards a platform-based architecture, we need to have a standard model representing the data that is communicated between different teams and different solutions. As a customer or partner, it will also be beneficial to use the common definitions as they work within the Adobe Cloud. This eases their workflow as they can populate the schemas they defined with CSV or Parquet files, streaming solution data, and third party platform connectors.
-
-### 2.2. What is XDM used for
+### 2.1. What is XDM used for
 
 ![](xdm_architectural.png)
 
-The main purpose of gathering this data is understanding what that data means and then utilizing this data to understand customers and users. Some marketing actions may involving having to match products to customers, manage promotional channels, manage distribution channels, and conduct market research. Many existing marketing products are built to focus on solving a particular solution. Over time, these products all shared common concepts which were used and named similarly but data was not easily exported and shared between them since the definitions were all different in some way.
+The main purpose of gathering this data is understanding what that data means and then utilizing this data to understand customers and users. Some marketing actions may involving having to match products to consumers, manage promotional channels, manage distribution channels, conduct market research and understand consumer intend. Many existing marketing products are built to focus on solving a particular solution. Over time, these products all shared common concepts which were used and named similarly but data was not easily exported and shared between them since the definitions were all different in some way.
 
 ---
 
 ## 3. How to Use XDM
-The full resource for API calls can be found in the [swagger documentation](https://git.corp.adobe.com/pages/experience-platform/api-specification/#/)
+The full resource for API calls can be found in the [swagger documentation](../apireference.html#!acpdr/catalog.yaml)
 
-XDM uses a hierarchical model to store data. Customers start with an Adobe released *core* schema definition or a customer managed custom extension as the parent. The core XDM models and entities (core.Address, model.Profile, model.Touchpoint etc.) are shared with all the customers of the platform. All the root artifacts are inherited by all the IMS Organization (IMS Org) containers and all the containers below the IMS Org level containers. An IMS Organization represents the customer. For this example the IMS Org Nike. As Adobe releases new XDM artifacts, all the IMS Orgs underneath the root container get the updates automatically.
+XDM uses a hierarchical structure to store data. Customers start with an Adobe released *core* schema definition or a customer extended schema as the parent. The core XDM schemas and sub-schemas (core.Address, Profile, ExperienceEvent etc.) are shared with all the tentants of the platform. All the root artifacts are inherited by all theOrganization containers (IMS Org). An IMS Organization represents the customer. For this example the IMS Org Acme Corp. As Adobe releases new XDM artifacts, all the IMS Orgs underneath the root container get the updates automatically.
 
-The following diagram outlines this hierarchical model. IMS Organization **Nike** is a inherits all the core XDM entities and models. (`_customer` is a variable that represents the IMS Org). Nike has many branches in different countries so they would create an extension namespace under their IMS Org: `nikeus` and `nikeeu`. Both of these namespaces will have all extensions created in the IMS Org parent.
+IMS Organization **Acme Corp** inherits all the core XDM entities and models. (`_customer` is a variable that represents the IMS Org). Acme Corp has many branches in different countries so they would create an extension namespace under their IMS Org: `Acme Corp US` and `Acme Corp EU`. Both of these namespaces will have all extensions created in the IMS Org parent.
 
-![](XDM_On_Hierarchical.png)
-
-A **model** is an abstract definition of real-world objects such as *Profile*, *Touchpoint*, or *Asset*. Models are the highest level element and have fields called **entities**. **Entities** are named collections of facts such as *Age*, *hairColor*, or *Address*. The data within the **entities** are called **fields** and they can be scalar or an array of items as defined by the general JSON-schema [documentation](https://www.w3schools.com/js/js_json_datatypes.asp).
+A **schema** is an abstract definition of real-world objects such as *Profile*, *ExperienceEvent*, or *Asset*. Schemas are the highest level element and can have sub-schemas are named collections of facts such as *Age*, *hairColor*, or *Address*. The data within the **sub-schemas** are called **fields** and they can be scalar or an array of items as defined by the general JSON-schema [documentation](https://www.w3schools.com/js/js_json_datatypes.asp).
 
 ### 3.1. XDM Profile
 
 ![](core_profile.png)
 
-Let's look at one of the main models in XDM. The XDM Profile schema is a collection of attributes describing a person (Address, Person, Phone Number). Profiles can be identified or partially-identified. Profiles that are highly identified may contain personal information such as name, gender, date of birth, location, and contact information. In contrast, a profile that is partially-identified will have anonymous behavior signals such as browser cookies. Over time, these profiles can become more identifiable as content regarding preferences and interests towards brands are gathered and stored in the profile.
+Let's look at one of the main Schemas in XDM. The XDM Profile schema is a collection of attributes describing a person (Address, Person, Phone Number). Profiles can be identified or partially-identified. Profiles that are highly identified may contain personal information such as name, gender, date of birth, location, and contact information. In contrast, a profile that is partially-identified will have anonymous behavior signals such as browser cookies. Over time, these profiles can become more identifiable as content regarding preferences and interests towards brands are gathered and stored in the profile.
 
 Through the API we can get the `Profile` JSON object.
 
@@ -74,7 +67,7 @@ curl -X GET \
 `{namespace}`: The base namespace. This will be `core` or `model`.  
 `{objectName}`: Name of the entity we want to extend.  
 `{extensionNS}`: Name of the extension namespace we want to put the extension in. An example of this is a company branch.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration, provided in https://console.adobe.io.  
 `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration  
 `{ACCESS_TOKEN}`: Token provided after authentication  
 
@@ -222,14 +215,19 @@ The `Profile` model object is in the response below. The entities are listed und
 
 One issue with normalization of data using a standard data model is incompatibility with data which can not be translated. This untranslated data may be unsuitable for the design schema of a specific data platform and will prevent sharing of the data.
 
-Extensions solve this issue by allowing customizable data. Personalized data can be ingested into the XDM in an [uncomplicated way (not linked yet)](https://git.corp.adobe.com/experience-platform/documentation/blob/3e423446f4263e358e20d4528b6c291ffed831c9/api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md) so that the data can then be shared. The extensible XDM schema is scalable with the data representation requirements of customers via the [Adobe XDM Registry](https://github.com/adobe/xdm/blob/master/docs/reference/README.md).
+Extensions solve this issue by allowing customizable data. Personalized data can be [ingested](allservices.html.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md) into the XDM so that the data can then be shared. 
 
 There are ways the data models can be extended:
-* Extending an existing XDM schema with new custom properties
-* Extending XDM through new schemas.
+* Extending an existing XDM schema with new custom fields
+* Extending XDM through new sub-schemas.
 
-Lets look at these extensions using the `core.Profile` schema:
+There are three different levels to extend XDM
 
+Level | Method
+------ | ------
+XDM Standard | The overall XDM standard data model is available as Open Source on https://github.com/adobe/xdm. Every individual and organization is welcome to contribute. The Schemas and fields in the standard apply to all customers within Adobe Cloud Platform. Periodically the XDM Registry is refreshed with updated Schemas from this Open Source repository
+Vendor extension | Independent Software Vendors can add their own extensions to the XDM Registry. These are extensions that do not apply to all customers, but only to a subset of customers that are using the specific vendor solution. Adobe Experience Cloud specific extensions are also expressed as as Vendor extension
+Customer extension | Customer specific extension that only apply to the specific tenant. A customer extension is automatically created when a customer extends schemas in the XDM Registry
 
 #### 3.2.1 Extending XDM Schemas With Custom Properties
 
@@ -237,7 +235,7 @@ The first type of extension is extending an existing base type with additional f
 
 **Example**  
 
-The core `Person` has the following fields by default.
+The core `Person` has the following fields:
 
 ![](person.png)
 
@@ -272,7 +270,7 @@ curl -X POST "https://platform.adobe.io/data/foundation/catalog/xdms/core/Person
 
 `{namespace}`: The base namespace. This will be `core` or `model`.  
 `{objectName}`: Name of the entity we want to extend.  
-`{extensionNS}`: Name of the extension namespace we want to put the extension in. An example of this is a company branch.  
+`{extensionNS}`: Name of the extension namespace we want to put the extension in. An example of this is a company branch.  (in this case `CustomerCompany`).   
 `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
 `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration  
 `{ACCESS_TOKEN}`: Token provided after authentication  
@@ -417,7 +415,7 @@ Note that the third-party XDM extension is added into the `_customer` namespace.
 The second type of extension is creating a new schema object. This is useful for when a user wants a new child object or entity under the parent schema.
 
 **Example**  
-An airline company wants a schema to store data for their flights. There is no existing `Flights` schema so they will create a custom one. They want this to extend the base `Profile` schema as a new entity. Within the entity they want to store information about flight ID, flight number and carrier name. These will be the fields for the entity `Flights`.
+An airline company wants a schema to store data for their flights. There is no existing `Flights` schema so they will create a custom one. Within the schema they want to store information about flight ID, flight number and carrier name. These will be the fields for the schema `Flights`.
 
 You can use the following API call in your terminal to create the `Flights` object. The response body will be where the schema is stored.
 
@@ -520,7 +518,7 @@ curl -X GET
 
 Another important schema in XDM is the ExperienceEvent schema.
 
-The ExperienceEvent schema schema is used to capture events that are altering one or more entities. Some examples of entities include physical address, email address, and geo. The main information being captured and stored is the information about the observation and when it occurs. Events are either implicit or explicit. Implicit events involve changes that occur without human interaction like scheduled email sending of newsletters, battery voltage reaching a certain threshold, or a person entering a proximity sensor. Explicit events involve direct observation of human action during the session.
+The ExperienceEvent schema schema is used to capture events that are altering one or more fields or sub-schemas. Some examples of entities include physical address, email address, and geo. The main information being captured and stored is the information about the observation and when it occurs. Events are either implicit or explicit. Implicit events involve changes that occur without human interaction like scheduled email sending of newsletters, battery voltage reaching a certain threshold, or a person entering a proximity sensor. Explicit events involve direct observation of human action during the session.
 
 
 ```SHELL

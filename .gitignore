@@ -6,4 +6,3 @@ yarn.lock
 dist
 .tscache
 *.tmp.txt
-test/site/libs

@@ -28,20 +28,16 @@ gutil = require('gulp-util'),
 es = require('event-stream'),
 appRoot = require('app-root-path'),
 path = require('path'),
-run = require('gulp-run')
 path = require('path'),
-runSequence = require('run-sequence'),
 git = require('gulp-git');
 
-var cwd = new run.Command('cwd');
 var appRootPath = appRoot.path;
 var manifest = {};
 var ascPathPrefix = "AdobeAtAdobe/kirby_docs/master/";
 
 gulp.task('default', defaultTask);
-//gulp.task('acsImport', acsImport);
-gulp.task('acsBuildCatalogManifest', acsBuildCatalogManifest);
-gulp.task('acsBuildTutorialsManifest', acsBuildTutorialsManifest);
+gulp.task('acpBuildCatalogManifest', acpBuildCatalogManifest);
+gulp.task('acpBuildTutorialsManifest', acpBuildTutorialsManifest);
 
 function defaultTask(done) {
   // place code for your default task here
@@ -72,7 +68,7 @@ gulp.task('pull-new-documents', done => {
 })
 
 gulp.task('add-new-acp-documents', function() {
-    return gulp.src('./*.{png,gif,jpg,md,PNG,GIF,JPG,MD}')
+    return gulp.src('./**/*.{png,gif,jpg,md,PNG,GIF,JPG,MD,js,yaml,json}')
     .pipe(git.add())
 })
 
@@ -93,23 +89,7 @@ gulp.task('push-new-acp-documents', done => {
     });
 });
 
-gulp.task('acs-move-catalog', function() {
-    /* move in foundation catalog */
-    return gulp.src('../documentation/api-specification/markdown/apis/foundation/catalog/markdown/**/*.{png,gif,jpg,md,PNG,GIF,JPG,MD}')
-    .pipe(debug())
-    .pipe(cleanDest('acpdr/catalog'))
-    .pipe(gulp.dest('acpdr/catalog'));
-});
-
-gulp.task('acs-move-tutorials', function() {
-    /* move in tutorials */
-    return gulp.src('../documentation/api-specification/markdown/narrative/tutorials/**/*.{png,gif,jpg,md,PNG,GIF,JPG,MD}')
-    .pipe(debug())
-    .pipe(cleanDest('acpdr/tutorials'))
-    .pipe(gulp.dest('acpdr/tutorials'));
-});
-
-gulp.task('acs-move-markdown', function() {
+gulp.task('acp-move-markdown', function() {
     /* move in tutorials */
     return gulp.src('../documentation/api-specification/markdown/**/*.{png,gif,jpg,md,PNG,GIF,JPG,MD}')
     .pipe(debug())
@@ -129,15 +109,15 @@ gulp.task('pull-kirby-documents', done => {
     });
 })
 
-gulp.task('acsImport',gulp.series('clone-documents','pull-new-documents','acs-move-markdown','pull-kirby-documents','add-new-acp-documents','commit-new-acp-documents','push-new-acp-documents', function(done) {
-    console.log('acsImport...');
+gulp.task('acpImport',gulp.series('clone-documents','pull-new-documents','acp-move-markdown','pull-kirby-documents','add-new-acp-documents','commit-new-acp-documents','push-new-acp-documents', function(done) {
+    console.log('acpImport...');
     /* move in the files 
      * https://git.corp.adobe.com/experience-platform/documentation
      */
     done();
 }))
 
-function acsBuildCatalogManifest(done) {
+function acpBuildCatalogManifest(done) {
     /* build a manifest */
     return Promise.all([
         new Promise(function(resolve, reject) {
@@ -159,7 +139,7 @@ function acsBuildCatalogManifest(done) {
     done();
 }
 
-function acsBuildTutorialsManifest(done) {
+function acpBuildTutorialsManifest(done) {
     /* build a manifest */
     return Promise.all([
         new Promise(function(resolve, reject) {
