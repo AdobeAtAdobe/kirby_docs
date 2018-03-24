@@ -72,7 +72,7 @@ gulp.task('pull-new-documents', done => {
 })
 
 gulp.task('add-new-acp-documents', function() {
-    return gulp.src('./*')
+    return gulp.src('./*.{png,gif,jpg,md,PNG,GIF,JPG,MD}')
     .pipe(git.add())
 })
 
@@ -129,7 +129,7 @@ gulp.task('pull-kirby-documents', done => {
     });
 })
 
-gulp.task('acsImport',gulp.series('clone-documents','pull-new-documents','acs-move-catalog','acs-move-tutorials','acs-move-markdown','pull-kirby-documents','add-new-acp-documents','commit-new-acp-documents','push-new-acp-documents', function(done) {
+gulp.task('acsImport',gulp.series('clone-documents','pull-new-documents','acs-move-markdown','pull-kirby-documents','add-new-acp-documents','commit-new-acp-documents','push-new-acp-documents', function(done) {
     console.log('acsImport...');
     /* move in the files 
      * https://git.corp.adobe.com/experience-platform/documentation

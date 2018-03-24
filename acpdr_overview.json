@@ -12,32 +12,32 @@
 	"pages": [
             {
 					"pages": [],
-					"path": "narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md",
+					"path": "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md",
 					"title": "Catalog Architectural Overview"
 	    },
             {
 					"pages": [],
-					"path": "narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md",
+					"path": "api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md",
 					"title": "Data Ingest Architectural Overview"
 	    },
 	    {
 					"pages": [],
-					"path": "narrative/technical_overview/xdm_registry_architectural_overview/xdm_registry_architectural_overview.md",
+					"path": "api-specification/markdown/narrative/technical_overview/xdm_registry_architectural_overview/xdm_registry_architectural_overview.md",
 					"title": "XDM Registry Architectural Overview"
 	    },
             {
 					"pages": [],
-					"path": "narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md",
+					"path": "api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md",
 					"title": "Data Access Architectural Overview"
 	    },
             {
 					"pages": [],
-					"path": "narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md",
+					"path": "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md",
 					"title": "Unified Profile Architectural Overview"
 	    },
             {
 					"pages": [],
-					"path": "narrative/integration_guides/etl_integration_guide/etl_integration_guide.md",
+					"path": "api-specification/markdown/narrative/integration_guides/etl_integration_guide/etl_integration_guide.md",
 					"title": "Data Integration Patterns for ETL Tools"
 	    }
 	]
