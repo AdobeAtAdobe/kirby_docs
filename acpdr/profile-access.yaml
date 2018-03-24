@@ -323,7 +323,6 @@ paths:
             $ref: '#/definitions/VersionResponse'
         '503':
           description: Service unavailable
-securityDefinitions: {}
 definitions:
   ModelObjectEntity:
     type: object
