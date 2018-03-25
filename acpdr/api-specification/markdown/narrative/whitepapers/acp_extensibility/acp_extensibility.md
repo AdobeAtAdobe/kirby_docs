@@ -30,24 +30,19 @@ The openness and breadth offered by ACP’s open API lets you construct a soluti
 Adobe Cloud Platform consists of multiple components. Adobe Cloud Platform’s multilayer model provides a complete infrastructure on which to build your own custom solutions: 
 
 * Data Foundation
-* Query Service
-* Machine Learning
-* Unified Profile, Identity, and Edge
+* Machine Learning Framework
+* Experience Cloud Profile Services
 
 ![Alt Image Text](acp_overview.png "Overview")
 
 ### Data Foundation
 The Data Foundation layer gives developers the power to manage standard schemas, ingest data, manage datasets, apply DULE metadata, and access data. To make the best use of these capabilities, it’s vital that customer data be imported into Adobe Cloud Platform in a standardized format that enables ACP to interpret it and apply analysis to it. Adobe’s format for this purpose is the Experience Data Model (XDM), a format for representing the data for the Experience Business: customer data in standardized fields. Using XDM, you can create a Customer Data Model representing all your customer data, in however many datasets you have from whatever data sources you use. You can take advantage of a number of third-party Extract-Transform-Load (ETL) solutions to import into ACP’s Experience Data Lake. The data stored in the Data Lake can come from Adobe solutions like Adobe Analytics, Adobe Target, or Adobe Audience Manager, third-party connectors (Microsoft Dynamics, Salesforce, S3 and other), or be ingested through the available APIs.
 
-
-### Query Service
-Using the Query Service, you can query your data in the Experience Data Lake. Use any SQL-compliant reporting engine and connect it to Adobe Cloud Platform. Your queries are executed in a highly scalable compute environment that allows you to run complex queries across a large amount of data and multiple datasets. 
-
-### Machine Learning
+### Machine Learning Framework
 The Machine Learning Framework offers predefined machine learning models you can leverage in your own solutions, as well as the capability to custom-develop your own models. Through feature development, transforming your data in predefined schemas for machine learning, you can extract valuable insights from customer behavior: understanding their interactions and intentions. In combination with other attributes of the consumer’s profile, it creates a 360-degree view of the customer.
 
-### Unified Profile, Identity and Edge
-These services work together to enable you to build and activate audiences based on a complete profile of your customers’ attributes and behavior:
+### Experience Cloud Profile Services 
+This includes the Unified Profile, Identity and Edge Services.  These services work together to enable you to build and activate audiences based on a complete profile of your customers’ attributes and behavior:
 
 * Unified Profile: Profile serves as a central data store for your customers’ attributes and interactions, deciphering the customer’s behavior across multiple touchpoints and enabling Adobe solutions and your integrations to leverage the complete picture of the customer, which  can be used to identify interests and preferences, predict behavior, and  deliver personalized experiences.
 * Unified Identity: stitches together the identity of the consumer across various touchpoints. It spans domains from unauthenticated to authenticated interactions with your brand across to build an identity graph that connects with the customer’s 360-degree profile that represents their behavior and interests.
@@ -63,10 +58,12 @@ Service name	| Description
 XDM Registry	|Manages a library of the available XDM standard schemas as well as tenant-specific schemas and extensions
 Catalog |	Manages the metadata for the datasets created in the tenant, data lineage, and policies associated with them
 Data Ingestion	| APIs and connectors to bring data into platform, either in batch or streaming fashion
-DULE	| Manages data usage labels for registered datasets and enforces the usage labels as data travels through Adobe Cloud Platform
+Governance	| Manages data usage labels for registered datasets and enforces the usage labels as data travels through Adobe Cloud Platform
 Data Access |	Provides access to the content of registered datasets for data export
 Unified Profile	| Creates a single 360-degree view of the consumer. The profile is populated with information provided in Adobe Cloud Platform datasets and can be consumed by any service, either using point lookups or segmentation queries. 
 Unified Identity	| Every consumer can be identified in a number of different ways, ranging from anonymous identities like a cookie, to an authenticated identity like a CRM ID. The Identity service provides identity stitching and identity resolution.
+
+Some additional detail in a couple of these services:
 
 ### XDM Registry
 Adobe is providing a standard data model for the experience business: Experience Data Model (XDM). The XDM Registry operationalizes XDM and  other industry-standard schemas and customer-extended schemas. Working with a standard data model brings direct value to customers because they don’t have to label, transform, and match their fields for every individual operation. The XDM Registry also gives an overview of available vendor extensions for the various standard schemas and industry-specific use cases and verticalized solutions. A customer can create their own unique data model (Customer Data Model) according to their business needs ; either by creating his own schemas or by extending the available standard schemas already available in the XDM Registry.
