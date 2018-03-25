@@ -34,7 +34,7 @@ Adobe Cloud Platform consists of multiple components. Adobe Cloud Platform’s m
 * Machine Learning
 * Unified Profile, Identity, and Edge
 
-![Alt Image Text](image010.png "Overview")
+![Alt Image Text](acp_overview.png "Overview")
 
 ### Data Foundation
 The Data Foundation layer gives developers the power to manage standard schemas, ingest data, manage datasets, apply DULE metadata, and access data. To make the best use of these capabilities, it’s vital that customer data be imported into Adobe Cloud Platform in a standardized format that enables ACP to interpret it and apply analysis to it. Adobe’s format for this purpose is the Experience Data Model (XDM), a format for representing the data for the Experience Business: customer data in standardized fields. Using XDM, you can create a Customer Data Model representing all your customer data, in however many datasets you have from whatever data sources you use. You can take advantage of a number of third-party Extract-Transform-Load (ETL) solutions to import into ACP’s Experience Data Lake. The data stored in the Data Lake can come from Adobe solutions like Adobe Analytics, Adobe Target, or Adobe Audience Manager, third-party connectors (Microsoft Dynamics, Salesforce, S3 and other), or be ingested through the available APIs.
