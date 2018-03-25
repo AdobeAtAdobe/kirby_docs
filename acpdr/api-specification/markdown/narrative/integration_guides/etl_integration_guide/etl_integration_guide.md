@@ -4,7 +4,7 @@
 
 Updated on March 23<sup>th</sup> 2018
 
-Data integration patterns for ETL tools
+Data integration patterns for ETL tools (ISVs)
 =============================
 
 Partners are key to the success of the Adobe Cloud Platform (ACP), and the
