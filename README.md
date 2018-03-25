@@ -10,11 +10,6 @@ This project has one task at the moment and that is to expose some effort that l
 * after cloning change to the project directory kirby_docs
 * now run npm install
 * make sure you have gulp installed
-* now try to run with this command ```gulp acsImport``` (if your goal is importing ACP documentation)
+* now try to run with this command ```gulp acpImport``` (if your goal is importing ACP documentation)
 
-then run ```gulp acsImport``` that moves in just the files you need
-
-then run ```gulp acsBuildCatalogManifest``` to make the catalog manifest
-
-then run ```gulp acsBuildTutorialsManifest``` to make the tutorials manifest
 
