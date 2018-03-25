@@ -1,4 +1,4 @@
-# Data Access git aOverview
+# Data Access Overview
 
 ## 1. Overview
 The Data Access API provides users with a REST interface to access ingested data in Adobe Cloud Platform.
