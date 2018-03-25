@@ -5,4 +5,4 @@ build
 yarn.lock
 dist
 .tscache
-*.tmp.txt
+*.tmp.txtgit 
