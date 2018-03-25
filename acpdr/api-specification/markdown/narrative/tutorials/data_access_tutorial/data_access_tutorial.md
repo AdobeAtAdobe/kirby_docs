@@ -75,7 +75,7 @@ curl -X GET https://platform.adobe.io/data/foundation/catalog/batches/ \
 
 
 ##### Response
-``` JSON
+```json
 {
     "{BATCH_ID_1}": {
         "imsOrg": "EDCE5A655A5E73FF0A494113@AdobeOrg",
@@ -103,7 +103,7 @@ Oftentimes, filters are required to zero in on a particular batch in order to re
 ##### Request
 GET /batches?createdAfter={START_TIMESTAMP}&dataSet={DATASET_ID}&sort=desc:created"
 
-``` SHELL
+```shell
 curl -X GET https://platform.adobe.io/data/foundation/catalog/batches?createdAfter={START_TIMESTAMP}&dataSet={DATASET_ID}&orderBy=desc:created \  
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
@@ -115,7 +115,7 @@ curl -X GET https://platform.adobe.io/data/foundation/catalog/batches?createdAft
 * `desc:created` will sort the response by the order they were created in descending order
 
 ##### Response
-``` JSON
+```json
 {
     "{BATCH_ID_3}": {
         "imsOrg": "EDCE5XXXXXXXXXX494113@AdobeOrg",
@@ -190,7 +190,7 @@ curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
-  ```
+```
 * `BATCH_ID`: Batch identifier of the batch that we are trying to access.  
 * `ACCESS_TOKEN`: Token provided after authentication.  
 * `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
@@ -198,7 +198,7 @@ curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/
 
 
 ##### Response
-``` JSON
+```json
 {
     "data": [
         {
@@ -237,7 +237,7 @@ Using the unique file ID, the data access API can then be used to access the spe
 ##### Request
 GET /files/{dataSetFileId}
 
-``` SHELL
+```shell
 curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID} \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
@@ -249,7 +249,7 @@ Depending on whether the file pointed to by the ID is an individual file or a di
 ##### Case 1 : Response points to a single file
 
 ##### Response
-``` JSON
+```json
 {
   "data": [
     {
@@ -275,7 +275,7 @@ Depending on whether the file pointed to by the ID is an individual file or a di
 ##### Case 2 : Response points to a directory
 
 ##### Response
-``` JSON
+```json
 {
   "data": [
     {
@@ -324,7 +324,7 @@ The metadata of a file can be retrieved by making a HEAD request. This will retu
 ##### Request
 HEAD /files/{dataSetFileId}?path={fileName}
 
-``` SHELL
+```shell
 curl -X HEAD https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?path={FILE_NAME} \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
@@ -347,7 +347,7 @@ The Data Access API can also be used to access the contents of a file.
 ##### Request
 GET /files/{dataSetFileId}?path={file_name}
 
-``` SHELL
+```shell
 curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?path={FILE_NAME} \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
@@ -358,7 +358,7 @@ curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?pat
 * `FILE_NAME` is the file name (E.g. profiles.parquet)
 
 ##### Response
-```JSON
+```json
 [file contents]
 ```
 
@@ -375,7 +375,7 @@ Responses within the Data Access API are paginated. By default, the number of en
 ##### Request
 GET /batches/{BATCH_ID}/files
 
-``` SHELL
+```shell
 curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/files?start={OFFSET}&limit={LIMIT} \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
@@ -387,7 +387,7 @@ curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/
 * `LIMIT` controls how many results gets returned in the result array (E.g. limit=0)
 
 ##### Response:
-``` JSON
+```json
 {
     "data": [
         {
@@ -437,7 +437,7 @@ The HEAD example in [Section 4](#HEAD_METADATA) gives the size of a specific fil
 ##### Request
 GET /files/{dataSetFileId}?path={file_name}
 
-``` SHELL
+```shell
 curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?path={FILE_NAME} \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
@@ -456,7 +456,7 @@ curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?pat
   * Content-type: application/parquet
   * Content-Range: bytes 0-99/249058
 * Body:
-```JSON
+```json
 [First 100 bytes of file]
 ```
 
