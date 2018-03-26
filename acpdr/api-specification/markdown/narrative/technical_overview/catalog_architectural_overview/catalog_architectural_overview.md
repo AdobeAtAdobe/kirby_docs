@@ -60,7 +60,7 @@ GET /dataSets/58ed485dee812c05a7cfc8d0?expansion=transforms
 
 > Multiple fields can be specified as a comma-delimited list, such as `expansion=transforms,files`
 
-__Example Data Catalog Service response, demonstrating the use of the `expansion` request parameter:__
+__Example Data Catalog Service response, demonstrating the result of the `expansion` request parameter:__
 
 ```JSON
 {
@@ -226,8 +226,6 @@ __Example Catalog Response:__
 ```
 
 > Be aware that because of the nature of multi-request you will need to verify the code of each individual request and not rely on the standard HTTP status code passed to the browser.  It is possible for a single sub-request to return a 404 (for example a GET done on an invalid resource) but the actual HTTP response to still be a 200.  
-
-
 
 ---
 

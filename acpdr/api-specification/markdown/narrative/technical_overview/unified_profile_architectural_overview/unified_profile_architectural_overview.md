@@ -49,7 +49,7 @@ UPS maintains XDM data in the Profile Store which can be updated via batch or st
 
 XDM data can be ingested into the Unified Profile Service from batch data being [ingested](../allservices.html.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md) and managed by Data Catalog Service. 
 
-Both enablement and configuration for ingestion by Unified Profile are handled by a Tag on a DataSet, named specifically "unifiedProfile". The following is an example Patch request adding the `unifiedProfile` Tag, where the `enabled` property set to true enables the DataSet for ingestion into UPS. As Unified Profile can contain a number of identifiers from possibly several different systems, identifying the primary identifier is handled using a query string specifying which value in the XDM schema to use. The `identityField` Tag property names the location in the XDM schema of the primary identity field; `endUserIds.mcId.id` in the example below. (Note that the `identityField` will be deprecated once XDM adds support for it)
+Both enablement and configuration for ingestion by Unified Profile are handled by a Tag on a DataSet, named specifically "unifiedProfile". The following is an example Patch request adding the `unifiedProfile` Tag, where the `enabled` property set to true enables the DataSet for ingestion into UPS. As Unified Profile can contain a number of identifiers from possibly several different systems, identifying the primary identifier is handled using a query string specifying which value in the XDM schema to use. The `identityField` Tag property names the location in the XDM schema of the primary identity field; `identities.id` in the example below. (Note that the `identityField` will be deprecated once XDM adds support for it)
 
 __Example Data Catalog Service request - Add Unified Profile configuration tag:__
 
@@ -60,7 +60,7 @@ Body:
 
 {
     "tags" :  {
-        "unifiedProfile": ["enabled:true", "identityField:endUserIds.mcId.id"]
+        "unifiedProfile": ["enabled:true", "identityField:identities.id"]
     }
 }
 ```
@@ -78,19 +78,13 @@ The following example demonstrates the use of the `fields` parameter to limit th
 ___Example Unified Profile Service request for a Unified Profile:___
 
 ```
-GET /data/core/ups/models/profile/5a7d26e92a6e55000086d459?fields=endUserIds.mcId.id,person.firstName,person.lastName,emails.address
+GET /data/core/ups/models/profile/5a7d26e92a6e55000086d459?fields=person.firstName,person.lastName,emails.address
 ```
 
 ___Example response (given example request):___
 
 ```
 {
-  "endUserIds":
-    {
-      "mcId": {
-        "id": "5a7d26e92a6e55000086d459"
-      }
-    },
   "person": {
     "firstName": "Paul",
     "lastName": "Pennington"
@@ -407,5 +401,7 @@ Example Response:
     }
 }
 ```
+
+
 
 
