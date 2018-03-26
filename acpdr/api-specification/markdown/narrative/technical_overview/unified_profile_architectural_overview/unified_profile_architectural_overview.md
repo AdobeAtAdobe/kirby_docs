@@ -51,6 +51,8 @@ XDM data can be ingested into the Unified Profile Service from batch data being 
 
 Both enablement and configuration for ingestion by Unified Profile are handled by a Tag on a DataSet, named specifically "unifiedProfile". The following is an example Patch request adding the `unifiedProfile` Tag, where the `enabled` property set to true enables the DataSet for ingestion into UPS. As Unified Profile can contain a number of identifiers from possibly several different systems, identifying the primary identifier is handled using a query string specifying which value in the XDM schema to use. The `identityField` Tag property names the location in the XDM schema of the primary identity field; `identities.id` in the example below. (Note that the `identityField` will be deprecated once XDM adds support for it)
 
+> If the value named by `identityField` is in an array, the first element in the array will be used
+
 __Example Data Catalog Service request - Add Unified Profile configuration tag:__
 
 ```
