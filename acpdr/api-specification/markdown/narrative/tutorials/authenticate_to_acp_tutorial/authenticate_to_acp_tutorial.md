@@ -16,7 +16,7 @@ This tutorial will cover the steps on how to gain access to making Adobe Cloud P
 This document is written for users who need to understand Adobe Cloud Platform and have to integrate the platform with customer-owned or third party systems. Users include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
 
 ### 1.2. Version Information
-*Version* : Beta
+*Version* : Preview
 
 ### 1.3. License Information
 *Terms of service* : https://www.adobe.com/legal/terms.html

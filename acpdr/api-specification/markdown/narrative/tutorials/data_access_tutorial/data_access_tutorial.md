@@ -14,7 +14,7 @@ This document is aimed at technical personas and should be a useful tool for all
 Personas Include: Data Engineers, Data Architects, Data Scientists, App Developers
 
 ### 1.2 Version Information
-*Version* : Beta
+*Version* : Preview
 
 ### 1.3 License Information
 *Terms of service* : https://www.adobe.com/legal/terms.html

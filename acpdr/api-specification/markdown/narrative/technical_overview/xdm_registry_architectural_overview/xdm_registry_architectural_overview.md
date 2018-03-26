@@ -7,7 +7,7 @@ This document provides a technical overview for using the XDM Registry in Adobe 
 This document is written for users who need to understand the Adobe Cloud Platform and want to integrate the platform with customer-owned or third party systems. Users include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
 
 ### 1.2. Version Information
-*Version*: Beta  
+*Version*: Preview  
 
 ### 1.3. License Information
 *Terms of service* : https://www.adobe.com/legal/terms.html

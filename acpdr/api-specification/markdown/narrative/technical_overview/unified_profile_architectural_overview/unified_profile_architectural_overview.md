@@ -16,7 +16,7 @@ This document is aimed at technical personas and should be a useful tool for all
 * Architect integrations between customer-owned and 3rd party systems and Adobe Cloud Platform
 
 ### 1.2 Version Information
-*Version* : Beta
+*Version* : Preview
 
 ### 1.3 License Information
 *Terms of service* : https://www.adobe.com/legal/terms.html
