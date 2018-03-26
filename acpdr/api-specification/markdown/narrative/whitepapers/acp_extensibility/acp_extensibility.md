@@ -1,4 +1,3 @@
-
 # Adobe Cloud Platform - Data Services - Overview
 
 
@@ -61,7 +60,7 @@ Data Ingestion	| APIs and connectors to bring data into platform, either in batc
 Governance	| Manages data usage labels for registered datasets and enforces the usage labels as data travels through Adobe Cloud Platform
 Data Access |	Provides access to the content of registered datasets for data export
 Unified Profile	| Creates a single 360-degree view of the consumer. The profile is populated with information provided in Adobe Cloud Platform datasets and can be consumed by any service, either using point lookups or segmentation queries. 
-Unified Identity	| Every consumer can be identified in a number of different ways, ranging from anonymous identities like a cookie, to an authenticated identity like a CRM ID. The Identity service provides identity stitching and identity resolution.
+Unified Identity	| Every consumer can be identified in a number of different ways, ranging from unknown identities like a cookie, to an authenticated identity like a CRM ID. The Identity service provides identity stitching and identity resolution.
 
 Some additional detail in a couple of these services:
 

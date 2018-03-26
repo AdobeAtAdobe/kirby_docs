@@ -37,7 +37,7 @@ This document describes interacting with Data Catalog Services using Adobe's Pla
 
 ### 2.1 Specify Multiple IDs
 
-Often it desirable to request a specific collection of objects based on their IDs.  Rather than making one request per object, Data Catalog Service provides a simple shortcut for requesting multiple objects of the same type with a single query with the use of comma-separated IDs.
+Often it's desirable to request a specific collection of objects based on their IDs.  Rather than making one request per object, Data Catalog Service provides a simple shortcut for requesting multiple objects of the same type with a single query with the use of comma-separated IDs.
 
 __Example Catalog Service request, demonstrating a multi-object request:__
 
