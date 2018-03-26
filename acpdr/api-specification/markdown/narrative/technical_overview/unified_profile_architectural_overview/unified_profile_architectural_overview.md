@@ -2,7 +2,7 @@
 
 ## 1. Overview
 
-the Unified Profile Service (UPS) in Adobe Cloud Platform provides a Unified, 360° Consumer Profile that enables marketers to drive coordinated, consistent and relevant experiences with their audiences across channels. With Unified Profile, you have one place to go to get a holistic view of your entire user base aggregated across all systems, as well as actionable timestamped account of every event they've had in any of your systems, when you need it.
+The Unified Profile Service (UPS) in Adobe Cloud Platform provides a Unified, 360° Consumer Profile that enables marketers to drive coordinated, consistent and relevant experiences with their audiences across channels. With Unified Profile, you have one place to go to get a holistic view of your entire user base aggregated across all systems, as well as actionable timestamped account of every event they've had in any of your systems, when you need it.
 
 ![Unified Profile In Action](up-in-action.png)
 
@@ -47,7 +47,7 @@ UPS maintains XDM data in the Profile Store which can be updated via batch or st
 
 ### 2.1 Batch Ingestion
 
-XDM data can be ingested into the Unified Profile Service from batch data being [ingested](../allservices.html.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md) by Data Catalog Service. 
+XDM data can be ingested into the Unified Profile Service from batch data being [ingested](../allservices.html.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md) and managed by Data Catalog Service. 
 
 Both enablement and configuration for ingestion by Unified Profile are handled by a Tag on a DataSet, named specifically "unifiedProfile". The following is an example Patch request adding the `unifiedProfile` Tag, where the `enabled` property set to true enables the DataSet for ingestion into UPS. As Unified Profile can contain a number of identifiers from possibly several different systems, identifying the primary identifier is handled using a query string specifying which value in the XDM schema to use. The `identityField` Tag property names the location in the XDM schema of the primary identity field; `endUserIds.mcId.id` in the example below. (Note that the `identityField` will be deprecated once XDM adds support for it)
 
@@ -126,7 +126,7 @@ Your first step is to define the rules for the segment, which is to create the S
 
 #### 4.1.1 Create a Predicate
 
-Create a Predicate which can then be run by ID or name against XDM data to build your Audience - those XDM objects which qualified for the rule. Predicates are queries built using PQL; a query language designed to build conditions which can be applied to XDM data.
+Create a Predicate which can then be run by ID or name against XDM data to build your Audience - those XDM objects which qualified for the rule. Predicates are queries built using PQL; a query language designed to build conditions which can be applied to XDM data.  The examples listed below reference a q# shorthand for more detailed examples in section 4.1.2 further in the document. 
 
 * Queries may be over Profile-only (e.g. q1), ExperienceEvent-only (e.g. q5), or a combination of Profile and ExperienceEvent (q11).
 * Queries can contain variables, which allow conditions over multiple objects to be specified (e.g. q10: two orders within a two-week period).
