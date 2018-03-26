@@ -25,7 +25,7 @@ The HTML rendition of this documentation is kept up-to-date on a per commit basi
 ---
 
 ## 2. Understanding the API
-The Data Ingestion API are necessary for clients to be able to push batch data into the Adobe Cloud Platform.  Data being uploaded can either be ad hoc (eg. profile data from a CRM system) or data that conforms to a known schema that is registered in the XDM registry.
+The Data Ingestion API is necessary for clients to be able to push batch data into the Adobe Cloud Platform.  Data being uploaded can either be ad hoc (eg. profile data from a CRM system) or data that conforms to a known schema that is registered in the XDM registry.
 
 ![Data Ingestion Patterns](data_ingest_architecture.png)
 
@@ -144,7 +144,7 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID
 ```
 
 ### 4.3.2.2 Large File Upload - Upload Subsequent Parts
-After the file has been created, all subsequent chunks can be uploaded by making repeated PATCH requests, one for every piece of the file.  
+After the file has been created, all subsequent chunks can be uploaded by making repeated PATCH requests, one for each piece of the file.  
 
 #### Request
 PATCH /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}

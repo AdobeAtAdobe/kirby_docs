@@ -49,7 +49,7 @@ GET /dataSets/5601dc3ee91c55aa3834b607,0ad0554e4fa033861780c2962e,...
 
 The Data Catalog manages objects that are interrelated. Some fields are returned in XDM responses as an abbreviated representation of an underlying list of values by default. These are prefixed with @, such as `@/dataSets/58ed485dee812c05a7cfc8d0/views/58ed4a86215b2f0c215a4539/files`. This is an example of an expandable field which could be returned in its full detailed form using the `expansions` request parameter. 
 
-For example, a query for a particular DataSet yields a record that contains several expandable fields. You would like to retrieve detailed, expanded list of all Transforms.
+For example, a query for a particular DataSet yields a record that contains several expandable fields and you would like to retrieve detailed, expanded list of all Transforms.
 
 
 __Example Data Catalog Service request, demonstrating requesting Transforms be expanded:__
@@ -104,7 +104,7 @@ __Example Data Catalog Service response, demonstrating the use of the `expansion
 
 While PATCH is a well known method for REST services, there are a few notes about how it operates in Data Catalog. The distinction between PUT and PATCH is an important one, as PUT will replace the entire resource with the presented payload, and PATCH will simply modify only the fields provided in the request. One of the most common mistakes to make with Data Catalog is to use PUT when the desired action requires PATCH.  
 
-Data Catalog Services supports two methods for PATCH. If you pass a subset of the object you are PATCHing the Data Catalog Service will only alter the fields present in the object body.
+Data Catalog Services supports two methods for PATCH. If you pass a subset of the object you are PATCHing the Data Catalog Service; this will only alter the fields present in the object body.
 
 ```
 PATCH /dataSets/123456
@@ -131,7 +131,7 @@ content-type: application/json-patch+json
 
 ### 2.4 Batching Data Catalog Requests - Transactional API
 
-This is not to be confused with the Batch object supported by Data Catalog. Rather, this API satifies a use-case offering a multi-request method that not only allows for multiple requests to be made on a single connection, but if those requests are modifications/additions to catalog we will __transactionally__ roll-back all changes if any one change fails.
+This is not to be confused with the Batch object supported by Data Catalog. Rather, this API satisfies a use-case offering a multi-request method that not only allows for multiple requests to be made on a single connection, but if those requests are modifications/additions to the catalog, all changes will __transactionally__ roll-back if any one change fails.
 
 The API signature is a POST on the root API: 
 
@@ -225,7 +225,7 @@ __Example Catalog Response:__
 ]
 ```
 
-> Be aware that because of the nature of multi-request you will need to verify the code of each individual request and not rely on the standard HTTP status code passed to the browser.  It is very possible for a single sub-request to return a 404 (for example a GET done on an invalid resource) but the actual HTTP response to still be a 200.  
+> Be aware that because of the nature of multi-request you will need to verify the code of each individual request and not rely on the standard HTTP status code passed to the browser.  It is possible for a single sub-request to return a 404 (for example a GET done on an invalid resource) but the actual HTTP response to still be a 200.  
 
 
 
