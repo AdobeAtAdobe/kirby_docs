@@ -31,7 +31,7 @@ Adobe Cloud Platform consists of multiple components. Adobe Cloud Platform’s m
 
 * Data Foundation
 * Machine Learning Framework
-* Experience Cloud Profile Services
+* Unified Profile Service
 
 ![Alt Image Text](acp_overview.png "Overview")
 
@@ -41,7 +41,7 @@ The Data Foundation layer gives developers the power to manage standard schemas,
 ### Machine Learning Framework
 The Machine Learning Framework offers predefined machine learning models you can leverage in your own solutions, as well as the capability to custom-develop your own models. Through feature development, transforming your data in predefined schemas for machine learning, you can extract valuable insights from customer behavior: understanding their interactions and intentions. In combination with other attributes of the consumer’s profile, it creates a 360-degree view of the customer.
 
-### Experience Cloud Profile Services 
+### Unified Profile Services
 This includes the Unified Profile, Identity and Edge Services.  These services work together to enable you to build and activate audiences based on a complete profile of your customers’ attributes and behavior:
 
 * Unified Profile: Profile serves as a central data store for your customers’ attributes and interactions, deciphering the customer’s behavior across multiple touchpoints and enabling Adobe solutions and your integrations to leverage the complete picture of the customer, which  can be used to identify interests and preferences, predict behavior, and  deliver personalized experiences.
