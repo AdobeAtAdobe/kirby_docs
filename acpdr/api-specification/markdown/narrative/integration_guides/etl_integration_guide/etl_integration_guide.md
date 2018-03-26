@@ -1750,19 +1750,6 @@ deferred data will be similar to snapshot data. In every execution of
 the ETL transform, the source data will be union with deferred data and
 sent for processing.
 
-Appendix
-========
-
-Workflow Diagram
-----------------
-
-<embed src="media/image15.tmp" width="621" height="497" />
-----------------------------------------------------------
-
-Figure - Hi Resolution Workflow diagram<span
-id="Contact_and_Legal_Information" class="anchor"><span id="_bookmark7"
-class="anchor"><span id="_Toc493166403"
-class="anchor"></span></span></span>
 
 Contact and Legal Information
 =============================
