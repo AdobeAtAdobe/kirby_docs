@@ -47,7 +47,7 @@ function defaultTask(done) {
 
 //Only clone the specific branch here
 gulp.task('clone-documents', done => {
-    git.clone(REPOSITORY,{args:'-b ' + BRANCH}, function(err){
+    git.clone(REPOSITORY,{args:'-b ' + BRANCH, cwd:'../../'}, function(err){
         if (err){
             console.log('ERROR ' + PRODUCT_NAME + ' Cloning Documents',err);
             done();
@@ -60,7 +60,7 @@ gulp.task('clone-documents', done => {
 
 //Pull only the specific branch
 gulp.task('pull-new-documents', done => {
-    git.pull('origin',BRANCH,{cwd: "./analytics_services_devportal/"},function(err,stdout){
+    git.pull('origin',BRANCH,{cwd: "../../analytics_services_devportal/"},function(err,stdout){
         if (err){
             console.log('ERROR ' + PRODUCT_NAME + ' Pulling New Documents',err);
             done();
@@ -93,13 +93,13 @@ gulp.task('push-new-documents', done => {
     });
 });
 
-//gulp.task('move-markdown', function() {
-//    /* move in tutorials */
-////    return gulp.src('../documentation/api-specification/markdown/**/*.{png,gif,jpg,md,PNG,GIF,JPG,MD}')
-////    .pipe(debug())
-////    .pipe(cleanDest('acpdr/api-specification/markdown'))
-////    .pipe(gulp.dest('acpdr/api-specification/markdown'));
-//});
+gulp.task('move-markdown', function() {
+    /* move in tutorials */
+    return gulp.src('../../analytics_services_devportal/reference-guide/markdown/**/*.{png,gif,jpg,md,PNG,GIF,JPG,MD}')
+    .pipe(debug())
+    .pipe(cleanDest('analytics_services_devportal/reference-guide/markdown'))
+    .pipe(gulp.dest('analytics_services_devportal/reference-guide/markdown'));
+});
 
 gulp.task('pull-kirby-documents', done => {
     git.pull('origin', 'master',function(err){
@@ -113,7 +113,7 @@ gulp.task('pull-kirby-documents', done => {
     });
 })
 
-gulp.task('docsImport',gulp.series('clone-documents','pull-new-documents','pull-kirby-documents','add-new-documents','commit-new-documents',function(done) {
+gulp.task('docsImport',gulp.series('clone-documents','pull-new-documents','pull-kirby-documents','move-markdown','add-new-documents','commit-new-documents','push-new-documents',function(done) {
     console.log(PRODUCT_NAME + ' Docs Import...');
     done();
 }))
