@@ -78,7 +78,7 @@ gulp.task('add-new-documents', function() {
 
 gulp.task('commit-new-documents', function() {
     return gulp.src('.')
-      .pipe(git.commit('Auto Import ' + PRODUCT_NAME + (new Date).toISOString()));
+      .pipe(git.commit('Auto Import ' + PRODUCT_NAME + ' ' + (new Date).toISOString()));
 });
 
 gulp.task('push-new-documents', done => {
