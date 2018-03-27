@@ -72,7 +72,7 @@ gulp.task('pull-new-documents', done => {
 })
 
 gulp.task('add-new-documents', function() {
-    return gulp.src('../analytics/*')
+    return gulp.src('../analytics/**/*')
     .pipe(git.add())
 })
 
