@@ -1,0 +1,35 @@
+{
+	"name": "ACP_data_services_swagger",
+	"version": "1.0.0",
+	"description": "Data services swagger book",
+	"author": "David Benge",
+	"view_type": "swaggerbook",
+	"meta_keywords": "defaultkeyword,defaultkeyword2",
+	"meta_description": "default description",
+	"publish_date": "19/03/2018",
+	"show_edit_github_banner": false,
+	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master",
+	"pages": [
+		{
+			"pages": [],
+			"path": "acpdr/catalog.yaml",
+			"title": "Catalog Service"
+		},
+		{
+			"pages": [],
+			"path": "acpdr/bulk-ingest-api.yaml",
+			"title": "Bulk Ingestion Service"
+		},
+		{
+			"pages": [],
+			"path": "acpdr/data-access-api.yaml",
+			"title": "Data Access Service"
+		},
+		{
+			"pages": [],
+			"path": "acpdr/profile-access.yaml",
+			"title": "Unified Profile Service"
+		}
+
+	]
+}
