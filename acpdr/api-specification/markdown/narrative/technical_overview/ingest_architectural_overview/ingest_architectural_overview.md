@@ -28,14 +28,13 @@ The HTML rendition of this documentation is kept up-to-date on a per commit basi
 The Data Ingestion API is necessary for clients to be able to push batch data into the Adobe Cloud Platform.  Data being uploaded can either be ad hoc (eg. profile data from a CRM system) or data that conforms to a known schema that is registered in the XDM registry.
 
 ## 3. API Specification Reference
-The Swagger API reference documentation can be found [here](../apireference.html#!acpdr/bulk-ingest-api.yaml)
+The Swagger API reference documentation can be found [here](../../api-reference.html#!acpdr/bulk-ingest-api.yaml)
 
 ## 4. Using the API
 The most common operation of the Data Ingestion API is to upload (ingest) data onto the Adobe Cloud platform. This is accomplished through creating a new batch (a unit of data that consists of one or more files to be ingested as a single unit), uploading files to a specified dataset that matches the data's XDM schema, and signaling the end of the batch. The following tutorial will follow this three step process to upload new batches into a pre-existing dataset.
 
 ### 4.1 Data Ingestion Pre-requisites
 - Data to upload must be in [.parquet](http://parquet.apache.org/documentation/latest/) format
-- Individual data files must not exceed 512 MB in size
 - A [Dataset created in Data Catalog] (../allservices.html.html#!api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md)
 - Contents of the parquet file must match (a subset of) the schema of the dataset being uploaded into
 - Have your unique Access Token, given after authentication
@@ -90,7 +89,7 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
 ### 4.3 File Upload
 After successfully creating a new batch for uploading, files can be then be uploaded to a specific dataset.  
 
-If the file is smaller than 512MB, it can be uploaded in a single chunk, which is covered in **4.3.1**. If the original file being uploaded is greater than 512 MB, it will need to be broken up into 512 MB chunks, before being ingested, and uploaded one file at a time. Uploading a larger file is covered in **4.3.2**
+If the file is smaller than 512MB, it can be uploaded in a single chunk, which is covered in **4.3.1**. If the original file being uploaded is greater than 512 MB, it is recommended to be broken up into 512 MB chunks, before being ingested, and uploaded one file at a time. Uploading a larger file is covered in **4.3.2**
 
 ### 4.3.1 Small File Upload
 Once a batch is created, data can be uploaded to a pre-existing dataset.  The file being uploaded must match the XDM schema of the dataset it will be uploaded into.
