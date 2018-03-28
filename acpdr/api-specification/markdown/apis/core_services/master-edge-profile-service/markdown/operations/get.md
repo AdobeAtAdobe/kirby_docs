@@ -70,6 +70,7 @@ json :
   "selector" : "person.gender,addresses.city,phoneNumbers.number",
   "ttl" : 86400,
   "replicationPolicy" : "PROACTIVE",
+  "dataCenters" : [ "string" ],
   "id" : "111-222-333-444",
   "modelName" : "profile",
   "_links" : "object"

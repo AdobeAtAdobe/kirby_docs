@@ -7,6 +7,7 @@ Projections are an edge "view" of the full profile data managed by the Unified P
 |Name|Description|Schema|
 |---|---|---|
 |**_links**  <br>*optional*|**Example** : `"object"`|[_links](#projectionconfig-links)|
+|**dataCenters**  <br>*optional*|A list of identifiers of the data centers where the projection should be replicated. If the property is missing or its value is an empty list, then the projection will be replicated to all data centers.  <br>**Example** : `[ "string" ]`|< string > array|
 |**id**  <br>*optional*|The id of the profile projection configuration  <br>**Example** : `"111-222-333-444"`|string|
 |**modelName**  <br>*optional*|The xdm model associated with the profile projection configuration  <br>**Example** : `"profile"`|string|
 |**replicationPolicy**  <br>*optional*|A policy defining the behaviour of data replication from the hub to the edges.  <br>**Example** : `"PROACTIVE"`|enum (PROACTIVE, REACTIVE)|
