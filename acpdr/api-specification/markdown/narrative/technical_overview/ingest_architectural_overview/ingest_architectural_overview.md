@@ -89,7 +89,7 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
 ### 4.3 File Upload
 After successfully creating a new batch for uploading, files can be then be uploaded to a specific dataset.  
 
-If the file is smaller than 512MB, it can be uploaded in a single chunk, which is covered in **4.3.1**. If the original file being uploaded is greater than 512 MB, it is recommended to be broken up into 512 MB chunks, before being ingested, and uploaded one file at a time. Uploading a larger file is covered in **4.3.2**
+You should be able to upload files using the Small File Upload API but if your files are too large and you start seeing gateway limits being hit(e.g. timeouts, request body size exceeded, etc.) you can switch over to the Large File Upload API, upload the file in chunks and stitch it together in the end via the Large File Upload Complete API call.
 
 ### 4.3.1 Small File Upload
 Once a batch is created, data can be uploaded to a pre-existing dataset.  The file being uploaded must match the XDM schema of the dataset it will be uploaded into.
@@ -118,7 +118,7 @@ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}
 ```
 
 ### 4.3.2.1 Large File Upload - Create File
-To upload a file larger than 512 MB, the file must be split into smaller chunks and uploaded one at a time.
+To upload a large file, the file must be split into smaller chunks and uploaded one at a time.
 
 #### Request
 POST /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}?action=initialize
