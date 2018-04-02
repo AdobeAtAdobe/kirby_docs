@@ -20,6 +20,32 @@ Returns updated user json with status
 #### Body parameter
 *Name* : body  
 *Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+User Details to be updated
+
+*Name* : body  
+*Flags* : required  
 *Type* : [UserInfo](../definitions/UserInfo.md#userinfo)
 
 

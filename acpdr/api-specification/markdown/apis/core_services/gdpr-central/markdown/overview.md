@@ -18,7 +18,7 @@ The GDPR core service is a proposed service to
 
 
 ### URI scheme
-*Host* : gdprcentralservice-Dev-va7.dev.cloud.adobe.io  
+*Host* : platform-int.adobe.io  
 *BasePath* : /  
 *Schemes* : HTTPS
 

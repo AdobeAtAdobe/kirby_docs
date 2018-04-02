@@ -12,9 +12,33 @@ Returns details of a product.
 
 #### Parameters
 
-|Type|Name|Schema|
-|---|---|---|
-|**Path**|**productName**  <br>*required*|string|
+|Type|Name|Description|Schema|
+|---|---|---|---|
+|**Path**|**productName**  <br>*required*|ProductName to fetch details|string|
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
 
 
 #### Responses
@@ -38,6 +62,13 @@ Returns details of a product.
 ##### Request path
 ```
 /data/privacy/gdpr/products/string
+```
+
+
+##### Request body
+```
+json :
+{ }
 ```
 
 

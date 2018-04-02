@@ -12,9 +12,33 @@ Returns details of a user.
 
 #### Parameters
 
-|Type|Name|Schema|
-|---|---|---|
-|**Path**|**userId**  <br>*required*|string|
+|Type|Name|Description|Schema|
+|---|---|---|---|
+|**Path**|**userId**  <br>*required*|User id for details|string|
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
 
 
 #### Responses
@@ -38,6 +62,13 @@ Returns details of a user.
 ##### Request path
 ```
 /data/privacy/gdpr/users/string
+```
+
+
+##### Request body
+```
+json :
+{ }
 ```
 
 

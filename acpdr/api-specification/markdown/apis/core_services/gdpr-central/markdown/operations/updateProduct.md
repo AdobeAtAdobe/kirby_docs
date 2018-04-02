@@ -12,9 +12,33 @@ Returns updated product json with status
 
 #### Parameters
 
-|Type|Name|Schema|
-|---|---|---|
-|**Path**|**productName**  <br>*required*|string|
+|Type|Name|Description|Schema|
+|---|---|---|---|
+|**Path**|**productName**  <br>*required*|productName to update|string|
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
 
 
 #### Body parameter

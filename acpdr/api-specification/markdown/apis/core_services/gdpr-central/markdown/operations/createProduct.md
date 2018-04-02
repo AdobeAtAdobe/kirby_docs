@@ -13,6 +13,32 @@ Returns added product json with status
 #### Body parameter
 *Name* : body  
 *Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+Product details which needs to be added
+
+*Name* : body  
+*Flags* : required  
 *Type* : [Product](../definitions/Product.md#product)
 
 

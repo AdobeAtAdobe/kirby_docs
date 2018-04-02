@@ -13,6 +13,30 @@ An authenticated user can submit requests for Access or delete of their privacy 
 #### Body parameter
 *Name* : body  
 *Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
 *Type* : [A GDPR Request model](../definitions/A_GDPR_Request_model.md#a-gdpr-request-model)
 
 
@@ -64,7 +88,7 @@ json :
       "value" : "string",
       "type" : "string",
       "namespaceId" : 0,
-      "deletedClientSide" : true
+      "isDeletedClientSide" : true
     } ]
   } ],
   "exclude" : [ "string" ]
@@ -94,7 +118,7 @@ json :
           "value" : "string",
           "type" : "string",
           "namespaceId" : 0,
-          "deletedClientSide" : true
+          "isDeletedClientSide" : true
         } ]
       },
       "companyContexts" : [ {
@@ -119,7 +143,8 @@ json :
           },
           "errorCode" : "string"
         } ]
-      }
+      },
+      "processedDate" : "string"
     } ],
     "lastUpdatedBy" : "string",
     "timeRequested" : "string",

@@ -10,6 +10,30 @@ GET /data/privacy/gdpr/users
 Returns a complete list of all users with details.
 
 
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
 #### Responses
 
 |HTTP Code|Description|Schema|
@@ -31,6 +55,13 @@ Returns a complete list of all users with details.
 ##### Request path
 ```
 /data/privacy/gdpr/users
+```
+
+
+##### Request body
+```
+json :
+{ }
 ```
 
 

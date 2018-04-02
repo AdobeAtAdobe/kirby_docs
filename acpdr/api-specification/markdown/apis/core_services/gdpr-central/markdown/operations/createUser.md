@@ -13,6 +13,32 @@ Returns added user json with status
 #### Body parameter
 *Name* : body  
 *Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+User details to be added
+
+*Name* : body  
+*Flags* : required  
 *Type* : [UserInfo](../definitions/UserInfo.md#userinfo)
 
 

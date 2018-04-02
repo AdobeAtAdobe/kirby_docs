@@ -55,7 +55,7 @@ json :
       "value" : "string",
       "type" : "string",
       "namespaceId" : 0,
-      "deletedClientSide" : true
+      "isDeletedClientSide" : true
     } ]
   } ],
   "exclude" : [ "string" ]

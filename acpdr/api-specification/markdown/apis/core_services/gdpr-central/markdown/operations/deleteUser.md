@@ -12,9 +12,33 @@ Returns deleted user json with status
 
 #### Parameters
 
-|Type|Name|Schema|
-|---|---|---|
-|**Path**|**userId**  <br>*required*|string|
+|Type|Name|Description|Schema|
+|---|---|---|---|
+|**Path**|**userId**  <br>*required*|User id to delete|string|
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
 
 
 #### Responses
@@ -38,6 +62,13 @@ Returns deleted user json with status
 ##### Request path
 ```
 /data/privacy/gdpr/users/string
+```
+
+
+##### Request body
+```
+json :
+{ }
 ```
 
 

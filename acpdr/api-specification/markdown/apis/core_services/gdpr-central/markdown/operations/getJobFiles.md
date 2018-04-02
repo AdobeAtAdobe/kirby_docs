@@ -17,6 +17,30 @@ Returns list of files uploaded for {jobId}
 |**Path**|**jobId**  <br>*required*|string|
 
 
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
+#### Body parameter
+*Name* : body  
+*Flags* : optional  
+*Type* : string
+
+
 #### Responses
 
 |HTTP Code|Description|Schema|
@@ -37,6 +61,13 @@ Returns list of files uploaded for {jobId}
 ##### Request path
 ```
 /data/privacy/gdpr/files/string
+```
+
+
+##### Request body
+```
+json :
+{ }
 ```
 
 
