@@ -27,6 +27,8 @@ The HTML rendition of this documentation is kept up-to-date on a per commit basi
 ## 2. Understanding the API
 The Data Ingestion API is necessary for clients to be able to push batch data into the Adobe Cloud Platform.  Data being uploaded can either be ad hoc (eg. profile data from a CRM system) or data that conforms to a known schema that is registered in the XDM registry.
 
+![Bulk Data Ingestion](Bulk-Ingest.png)
+
 ## 3. API Specification Reference
 The Swagger API reference documentation can be found [here](../../api-reference.html#!acpdr/bulk-ingest-api.yaml)
 
