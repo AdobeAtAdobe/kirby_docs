@@ -68,6 +68,9 @@
 <a name="ref-serviceresources"></a>
 ### [serviceResources](definitions/serviceResources.md#serviceresources)
 
+<a name="ref-subschema"></a>
+### [subSchema](definitions/subSchema.md#subschema)
+
 <a name="ref-transform"></a>
 ### [transform](definitions/transform.md#transform)
 

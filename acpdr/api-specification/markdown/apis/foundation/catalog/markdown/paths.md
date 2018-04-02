@@ -278,6 +278,9 @@
 <a name="ref-get_obects_in_namespace"></a>
 ### [List all objects of that namespace.](operations/get_obects_in_namespace.md#get_obects_in_namespace)
 
+<a name="ref-post_to_get_subschema"></a>
+### [Gets the subschema of an XDM object.](operations/post_to_get_subschema.md#post_to_get_subschema)
+
 <a name="ref-get_obect_in_namespace"></a>
 ### [Returns specific object for that namespace.](operations/get_obect_in_namespace.md#get_obect_in_namespace)
 
