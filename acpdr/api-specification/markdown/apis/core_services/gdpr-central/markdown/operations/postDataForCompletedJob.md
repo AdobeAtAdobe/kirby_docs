@@ -18,30 +18,6 @@ Returns File upload status and error object
 |**Path**|**solutionName**  <br>*required*|string|
 
 
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
 #### Responses
 
 |HTTP Code|Description|Schema|
@@ -62,13 +38,6 @@ Returns File upload status and error object
 ##### Request path
 ```
 /data/privacy/gdpr/files/string/string
-```
-
-
-##### Request body
-```
-json :
-{ }
 ```
 
 

@@ -8,6 +8,7 @@ Org Status Response Object
 |---|---|---|
 |**actionStatusList**  <br>*optional*|Action's Status  <br>**Example** : `[ "[actionstatus](#actionstatus)" ]`|< [ActionStatus](ActionStatus.md#actionstatus) > array|
 |**requests**  <br>*optional*|Requests  <br>**Example** : `[ "[storedprovisioningrequest](#storedprovisioningrequest)" ]`|< [StoredProvisioningRequest](StoredProvisioningRequest.md#storedprovisioningrequest) > array|
+|**status**  <br>*optional*|Status  <br>**Example** : `"string"`|string|
 
 
 

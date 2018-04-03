@@ -10,28 +10,11 @@ GET /data/privacy/gdpr/products
 Returns a complete list of all products with details.
 
 
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
+#### Parameters
 
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
+|Type|Name|Description|Schema|
+|---|---|---|---|
+|**Header**|**methodArgumentName**  <br>*optional*|Some info.|string|
 
 
 #### Responses
@@ -58,10 +41,10 @@ Returns a complete list of all products with details.
 ```
 
 
-##### Request body
+##### Request header
 ```
 json :
-{ }
+"string"
 ```
 
 

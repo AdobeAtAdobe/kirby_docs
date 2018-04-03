@@ -13,30 +13,6 @@ GET /data/privacy/gdpr/{jobId}
 |**Path**|**jobId**  <br>*required*|jobId|string|
 
 
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
 #### Responses
 
 |HTTP Code|Description|Schema|
@@ -65,13 +41,6 @@ GET /data/privacy/gdpr/{jobId}
 ##### Request path
 ```
 /data/privacy/gdpr/string
-```
-
-
-##### Request body
-```
-json :
-{ }
 ```
 
 

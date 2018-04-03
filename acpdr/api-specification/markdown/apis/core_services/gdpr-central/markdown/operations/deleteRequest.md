@@ -17,30 +17,6 @@ Not In Use : Delete GDPR request for specified jobId
 |**Path**|**jobId**  <br>*required*|jobId|string|
 
 
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
 #### Responses
 
 |HTTP Code|Description|Schema|
@@ -69,13 +45,6 @@ Not In Use : Delete GDPR request for specified jobId
 ##### Request path
 ```
 /data/privacy/gdpr/string
-```
-
-
-##### Request body
-```
-json :
-{ }
 ```
 
 

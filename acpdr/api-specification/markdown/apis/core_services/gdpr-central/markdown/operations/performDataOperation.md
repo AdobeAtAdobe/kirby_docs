@@ -13,30 +13,6 @@ An authenticated user can submit requests for Access or delete of their privacy 
 #### Body parameter
 *Name* : body  
 *Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
 *Type* : [A GDPR Request model](../definitions/A_GDPR_Request_model.md#a-gdpr-request-model)
 
 
