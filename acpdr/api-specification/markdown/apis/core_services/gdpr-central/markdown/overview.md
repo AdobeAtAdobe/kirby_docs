@@ -28,8 +28,8 @@ The GDPR core service is a proposed service to
 * GDPR Central Service Health Check
 * GDPR Files Management Service
 * GDPR Product Management CRUD API
-* GDPR User Management CRUD API
 * GDPR central API
+* dataprivacygdpr
 * jacoco
 
 
