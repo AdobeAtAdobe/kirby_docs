@@ -14,31 +14,11 @@ Returns details of a product.
 
 |Type|Name|Description|Schema|
 |---|---|---|---|
-|**Path**|**productName**  <br>*required*|ProductName to fetch details|string|
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
+|**Header**|**Authorization**  <br>*required*|Bearer XXXXX|string|
+|**Header**|**Content-Type**  <br>*required*|application/json|string|
+|**Header**|**x-api-key**  <br>*required*|acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io|string|
+|**Header**|**x-gw-ims-org-id**  <br>*required*|XXXXX47E56F59C747FXXXXX@AdobeOrg|string|
+|**Path**|**productName**  <br>*required*|Product Name for details|string|
 
 
 #### Responses
@@ -54,7 +34,7 @@ Returns details of a product.
 
 #### Tags
 
-* GDPR Admin product management service
+* GDPR Product Management CRUD API
 
 
 #### Example HTTP request
@@ -65,10 +45,10 @@ Returns details of a product.
 ```
 
 
-##### Request body
+##### Request header
 ```
 json :
-{ }
+"string"
 ```
 
 

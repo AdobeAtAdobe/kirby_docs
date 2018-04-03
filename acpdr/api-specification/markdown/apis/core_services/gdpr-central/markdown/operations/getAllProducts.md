@@ -14,7 +14,10 @@ Returns a complete list of all products with details.
 
 |Type|Name|Description|Schema|
 |---|---|---|---|
-|**Header**|**methodArgumentName**  <br>*optional*|Some info.|string|
+|**Header**|**Authorization**  <br>*required*|Bearer XXXXX|string|
+|**Header**|**Content-Type**  <br>*required*|application/json|string|
+|**Header**|**x-api-key**  <br>*required*|acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io|string|
+|**Header**|**x-gw-ims-org-id**  <br>*required*|XXXXX47E56F59C747FXXXXX@AdobeOrg|string|
 
 
 #### Responses
@@ -30,7 +33,7 @@ Returns a complete list of all products with details.
 
 #### Tags
 
-* GDPR Admin product management service
+* GDPR Product Management CRUD API
 
 
 #### Example HTTP request

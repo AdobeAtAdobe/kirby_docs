@@ -10,32 +10,18 @@ POST /data/privacy/gdpr/products
 Returns added product json with status
 
 
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
+#### Parameters
+
+|Type|Name|Description|Schema|
+|---|---|---|---|
+|**Header**|**Authorization**  <br>*required*|Bearer XXXXX|string|
+|**Header**|**Content-Type**  <br>*required*|application/json|string|
+|**Header**|**x-api-key**  <br>*required*|acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io|string|
+|**Header**|**x-gw-ims-org-id**  <br>*required*|XXXXX47E56F59C747FXXXXX@AdobeOrg|string|
 
 
 #### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-*Name* : body  
-*Flags* : optional  
-*Type* : string
-
-
-#### Body parameter
-Product details which needs to be added
+Product details for creating record
 
 *Name* : body  
 *Flags* : required  
@@ -55,7 +41,7 @@ Product details which needs to be added
 
 #### Tags
 
-* GDPR Admin product management service
+* GDPR Product Management CRUD API
 
 
 #### Example HTTP request
@@ -63,6 +49,13 @@ Product details which needs to be added
 ##### Request path
 ```
 /data/privacy/gdpr/products
+```
+
+
+##### Request header
+```
+json :
+"string"
 ```
 
 

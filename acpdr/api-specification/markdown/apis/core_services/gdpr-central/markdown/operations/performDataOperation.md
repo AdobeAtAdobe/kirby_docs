@@ -10,9 +10,21 @@ POST /data/privacy/gdpr
 An authenticated user can submit requests for Access or delete of their privacy data
 
 
+#### Parameters
+
+|Type|Name|Description|Schema|
+|---|---|---|---|
+|**Header**|**Authorization**  <br>*required*|Bearer XXXXX|string|
+|**Header**|**Content-Type**  <br>*required*|application/json|string|
+|**Header**|**x-api-key**  <br>*required*|acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io|string|
+|**Header**|**x-gw-ims-org-id**  <br>*required*|XXXXX47E56F59C747FXXXXX@AdobeOrg|string|
+
+
 #### Body parameter
+JSON file or valid JSON to submit requests
+
 *Name* : body  
-*Flags* : optional  
+*Flags* : required  
 *Type* : [A GDPR Request model](../definitions/A_GDPR_Request_model.md#a-gdpr-request-model)
 
 
@@ -37,7 +49,7 @@ An authenticated user can submit requests for Access or delete of their privacy 
 
 #### Tags
 
-* GDPR central service
+* GDPR central API
 
 
 #### Example HTTP request
@@ -45,6 +57,13 @@ An authenticated user can submit requests for Access or delete of their privacy 
 ##### Request path
 ```
 /data/privacy/gdpr
+```
+
+
+##### Request header
+```
+json :
+"string"
 ```
 
 
