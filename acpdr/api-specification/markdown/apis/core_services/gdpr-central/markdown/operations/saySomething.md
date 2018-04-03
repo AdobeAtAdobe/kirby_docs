@@ -12,13 +12,9 @@ The message is read from the properties
 
 #### Parameters
 
-|Type|Name|Description|Schema|
-|---|---|---|---|
-|**Header**|**Authorization**  <br>*required*|Authorization|string|
-|**Header**|**Content-Type**  <br>*required*|application/json|string|
-|**Header**|**x-api-key**  <br>*required*|IMS Client id which is whitelisted and subscribed to consume services on adobe.io|string|
-|**Header**|**x-gw-ims-org-id**  <br>*required*|Org ID associated with logged in user|string|
-|**Query**|**status**  <br>*required*||integer (int32)|
+|Type|Name|Schema|
+|---|---|---|
+|**Query**|**status**  <br>*required*|integer (int32)|
 
 
 #### Responses
@@ -42,13 +38,6 @@ The message is read from the properties
 ##### Request path
 ```
 /data/privacy/gdpr/ping
-```
-
-
-##### Request header
-```
-json :
-"string"
 ```
 
 
