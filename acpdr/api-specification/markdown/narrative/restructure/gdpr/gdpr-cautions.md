@@ -14,4 +14,6 @@
 
 * Tell Data Subjects on a “delete” request that they must opt out of cross-site advertising (customer owns the method for doing this, we provide the ad-tech opt-out code) 
 
-* Remind Data Subjects, GDPR requests must be issued from each device in which they are interested 
+* Remind Data Subjects, GDPR requests must be issued from each device in which they are interested
+
+* As a processor, Adobe processes whatever IDs controllers send us. If controllers do not send us Adobe related IDs, we don’t return anything. However, we encourage them to send us IDs we can process using the JS tag.

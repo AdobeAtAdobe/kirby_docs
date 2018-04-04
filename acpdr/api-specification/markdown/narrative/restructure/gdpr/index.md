@@ -1,12 +1,19 @@
-# GDPR
-[GDPR Whitepaper](gdpr-whitepaper.md)
+# Adobe Cloud Platform Developer Documentation
 
-[GDPR Federal/Overarching Positioning](gdpr-positioning.md)
+[ACP Overview](acp/ACP_Overview.md)
 
-[GDPR Use-Cases](use-cases)
+[ACP Architecture Overview](acp/ACP-architecture-overview.md)
 
-[GDPR FAQ](gdpr-faq.md)
+[APIs](apis/introduction.md)
 
-[GDPR Terminology](gdpr-terminology.md)
+[DULE](dule)
 
-[GDPR Sample Code](sample-code)
+[GDPR](gdpr)
+
+[ETL](ETL/Adobe-partner-connectors.md)
+
+[Release Notes](release-notes/index.md)
+
+[Recipes](recipes/introduction.md)
+
+[XDM](xdm/introduction.md)
