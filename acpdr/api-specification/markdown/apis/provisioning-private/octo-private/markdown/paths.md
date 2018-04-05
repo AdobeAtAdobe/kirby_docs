@@ -35,6 +35,12 @@
 <a name="ref-returns-job-payload"></a>
 ### [Returns a Job Payload](operations/Returns_Job_Payload.md#returns-job-payload)
 
+<a name="ref-get-list-of-service-principals-by-filter-pattern"></a>
+### [Returns service principals info](operations/Get_list_of_service_principals_by_filter_pattern.md#get-list-of-service-principals-by-filter-pattern)
+
+<a name="ref-get_service_principals_read"></a>
+### [Returns service principals info](operations/get_service_principals_read.md#get_service_principals_read)
+
 <a name="ref-create-a-subscription"></a>
 ### [Creates a Subscription](operations/Create_a_Subscription.md#create-a-subscription)
 
@@ -64,6 +70,9 @@
 
 <a name="ref-get_job_status"></a>
 ### [Returns environment status based on a job id](operations/get_job_status.md#get_job_status)
+
+<a name="ref-get_octo_ping"></a>
+### [Octo Ping Api](operations/get_octo_ping.md#get_octo_ping)
 
 <a name="ref-updates-scale-set-based-on-azure-subscription-id-resource-group-scale-set-name"></a>
 ### [Updates Azure scale sets capacity](operations/Updates_scale_set_based_on_azure_subscription_id_resource_group_scale_set_name.md#updates-scale-set-based-on-azure-subscription-id-resource-group-scale-set-name)

@@ -51,11 +51,9 @@ json :
 json :
 [ {
   "id" : 0,
-  "imsClient" : "string",
-  "type" : "string",
-  "url" : "string",
-  "environment" : "string",
+  "serviceName" : "string",
   "status" : "string",
+  "scope" : "string",
   "timeCreated" : 0,
   "timeUpdated" : 0
 } ]

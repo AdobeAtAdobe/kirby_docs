@@ -1,8 +1,8 @@
 
-<a name="returns-all-ims-services"></a>
-### Returns a list of IMS Services
+<a name="get-list-of-service-principals-by-filter-pattern"></a>
+### Returns service principals info
 ```
-GET /admin/imsService
+GET /admin/servicePrincipals
 ```
 
 
@@ -14,14 +14,17 @@ GET /admin/imsService
 |**Header**|**Authorization**  <br>*required*|Bearer [ access_token ]|string|
 |**Header**|**x-api-key**  <br>*required*|API Key|string|
 |**Header**|**x-gw-ims-org-id**  <br>*required*|IMS Org Id|string|
+|**Query**|**filter_by_name**  <br>*required*|Service Principal name filter pattern|string|
 
 
 #### Responses
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**200**|Success|< [IMS Service Response Model](../definitions/IMS_Service_Response_Model.md#ims-service-response-model) > array|
-|**400**|Unable to process the request|No Content|
+|**200**|Service Principals found in Octo DB|No Content|
+|**400**|Service Principals lookup failed|No Content|
+|**403**|Failed authentication|No Content|
+|**404**|Service Principals not found in Octo DB|No Content|
 
 
 #### Tags
@@ -33,7 +36,7 @@ GET /admin/imsService
 
 ##### Request path
 ```
-/admin/imsService
+/admin/servicePrincipals
 ```
 
 
@@ -44,19 +47,12 @@ json :
 ```
 
 
-#### Example HTTP response
-
-##### Response 200
+##### Request query
 ```
 json :
-[ {
-  "id" : 0,
-  "serviceName" : "string",
-  "status" : "string",
-  "scope" : "string",
-  "timeCreated" : 0,
-  "timeUpdated" : 0
-} ]
+{
+  "filter_by_name" : "string"
+}
 ```
 
 

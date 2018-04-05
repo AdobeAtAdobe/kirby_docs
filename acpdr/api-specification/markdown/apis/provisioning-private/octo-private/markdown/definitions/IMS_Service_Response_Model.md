@@ -4,14 +4,12 @@
 
 |Name|Description|Schema|
 |---|---|---|
-|**environment**  <br>*required*|Health Check Environment  <br>**Example** : `"string"`|string|
 |**id**  <br>*optional*|**Example** : `0`|integer|
-|**imsClient**  <br>*required*|IMS Client  <br>**Example** : `"string"`|string|
-|**status**  <br>*required*|Health Check Status  <br>**Example** : `"string"`|string|
+|**scope**  <br>*required*|IMS Scope  <br>**Example** : `"string"`|string|
+|**serviceName**  <br>*required*|IMS Service Name  <br>**Example** : `"string"`|string|
+|**status**  <br>*required*|IMS Status  <br>**Example** : `"string"`|string|
 |**timeCreated**  <br>*required*|Time Created  <br>**Example** : `0`|integer|
 |**timeUpdated**  <br>*required*|Time Updated  <br>**Example** : `0`|integer|
-|**type**  <br>*required*|Health Check Type  <br>**Example** : `"string"`|string|
-|**url**  <br>*required*|Health Check URL  <br>**Example** : `"string"`|string|
 
 
 
