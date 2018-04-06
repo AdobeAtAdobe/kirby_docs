@@ -12,10 +12,10 @@ POST /xdms/{namespace}/{objectName}
 |---|---|---|---|
 |**Header**|**x-api-key**  <br>*required*|The API key belonging to the calling client.|string|
 |**Header**|**x-gw-ims-org-id**  <br>*required*|The owning IMS organization identifier.|string|
-|**Path**|**namespace**  <br>*required*|The base namespace ("model" or "core").|string|
+|**Path**|**namespace**  <br>*required*|Filter by the base namespace ("model" or "core").|string|
 |**Path**|**objectName**  <br>*required*|Name of custom object.|string|
 |**Query**|**excludeExtension**  <br>*optional*|Set to true to exclude extensions.|boolean|
-|**Query**|**xdmVersion**  <br>*optional*|The version of the base XDM schemas that are being requested|string|
+|**Query**|**xdmVersion**  <br>*optional*|The version of the base XDM schemas that are being requested.|string|
 
 
 #### Body parameter
@@ -31,9 +31,9 @@ The payload JSON that goes in the body of the request.
 |HTTP Code|Description|Schema|
 |---|---|---|
 |**200**|XDM sub-schema response.|object|
-|**400**|bad request|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**400**|Bad request|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes

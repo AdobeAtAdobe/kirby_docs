@@ -1,6 +1,6 @@
 
 <a name="post_data_set_view"></a>
-### Saves a new DataSetView.
+### Saves a new dataSetView.
 ```
 POST /dataSetViews
 ```
@@ -15,11 +15,11 @@ POST /dataSetViews
 
 
 #### Body parameter
-Data set view to be posted.
+DataSetView to be posted.
 
 *Name* : dataSetView  
 *Flags* : required  
-*Type* : [dataSetView](../definitions/dataSetView.md#datasetview)
+*Type* : [dataSetViewRequest](../definitions/dataSetViewRequest.md#datasetviewrequest)
 
 
 #### Responses
@@ -28,9 +28,9 @@ Data set view to be posted.
 |---|---|---|
 |**201**|Array[ @/dataSetViews/dataSetViewId ]  <br>**Headers** :   <br>`Location` (string) : The URI of the newly created resource.|< string > array|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**403**|Forbidden|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes
@@ -69,8 +69,6 @@ json :
 ```
 json :
 {
-  "version" : "string",
-  "imsOrg" : "string",
   "dataSetId" : "string",
   "aspect" : "string",
   "observableSchema" : "object",
@@ -83,18 +81,37 @@ json :
     "type" : "string"
   } ],
   "sdsVersion" : "string",
-  "fields" : [ "object" ],
+  "fields" : [ {
+    "dataType" : {
+      "type" : "string",
+      "precision" : 0.0,
+      "scale" : 0.0,
+      "subType" : {
+        "type" : "string",
+        "precision" : 0.0,
+        "scale" : 0.0,
+        "subType" : "...",
+        "subFields" : "...",
+        "keyType" : "string",
+        "valueType" : "..."
+      },
+      "subFields" : "...",
+      "keyType" : "string",
+      "valueType" : "..."
+    },
+    "name" : "string",
+    "definition" : "object",
+    "meta" : "object",
+    "dule" : "object"
+  } ],
   "storageType" : "string",
   "basePath" : "string",
   "isCached" : true,
+  "transforms" : "string",
+  "files" : "string",
   "fileDescription" : "object",
   "partitions" : [ "string" ],
   "saveStrategy" : "string",
-  "created" : 0,
-  "updated" : 0,
-  "createdClient" : "string",
-  "createdUser" : "string",
-  "updatedUser" : "string",
   "schema" : "string"
 }
 ```

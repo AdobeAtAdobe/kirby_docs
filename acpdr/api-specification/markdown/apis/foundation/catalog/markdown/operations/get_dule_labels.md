@@ -19,12 +19,12 @@ GET /dataSets/{id}/dule
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**200**|The DULE labels assocated with the dataset.|[duleLabelResonse](../definitions/duleLabelResonse.md#dulelabelresonse)|
+|**200**|The DULE labels assocated with the dataset.|[duleLabelResponse](../definitions/duleLabelResponse.md#dulelabelresponse)|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
+|**403**|Forbidden|No Content|
 |**404**|Not found|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Produces

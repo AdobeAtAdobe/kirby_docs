@@ -1,6 +1,6 @@
 
 <a name="post_batch_by_id"></a>
-### Creates a new Batch with a specified ID.
+### Creates a new Batch with a specified Id.
 ```
 POST /batches/{id}
 ```
@@ -20,7 +20,7 @@ Batch to be created.
 
 *Name* : batch  
 *Flags* : required  
-*Type* : [batch](../definitions/batch.md#batch)
+*Type* : [batchRequest](../definitions/batchRequest.md#batchrequest)
 
 
 #### Responses
@@ -29,9 +29,9 @@ Batch to be created.
 |---|---|---|
 |**201**|Array[ @/batches/batchId ]  <br>**Headers** :   <br>`Location` (string) : The URI of the newly created resource.|< string > array|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**403**|Forbidden|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes
@@ -70,12 +70,6 @@ json :
 ```
 json :
 {
-  "imsOrg" : "string",
-  "created" : 0,
-  "createdClient" : "string",
-  "createdUser" : "string",
-  "updatedUser" : "string",
-  "updated" : 0,
   "started" : 0,
   "completed" : 0,
   "status" : "string",
@@ -87,7 +81,6 @@ json :
     "description" : "string"
   } ],
   "size" : 0,
-  "version" : "string",
   "availableDates" : "object",
   "relatedObjects" : [ {
     "type" : "string",

@@ -13,7 +13,7 @@ GET /xdms/{namespace}/{objectName}/_customer/{extensionNS}
 |**Header**|**x-api-key**  <br>*required*|The API key belonging to the calling client.|string|
 |**Header**|**x-gw-ims-org-id**  <br>*required*|The owning IMS organization identifier.|string|
 |**Path**|**extensionNS**  <br>*required*|The extension namespace.|string|
-|**Path**|**namespace**  <br>*required*|The base namespace ("model" or "core").|string|
+|**Path**|**namespace**  <br>*required*|Filter by the base namespace ("model" or "core").|string|
 |**Path**|**objectName**  <br>*required*|Name of custom object.|string|
 |**Query**|**expansion**  <br>*optional*|Set to 'xdm' to expand XDM schema.|string|
 
@@ -22,10 +22,10 @@ GET /xdms/{namespace}/{objectName}/_customer/{extensionNS}
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**200**|Return extension to object in the namespace.|[xdmExtension](../definitions/xdmExtension.md#xdmextension)|
+|**200**|Return extension to object in the namespace.|[xdmExtensionResponse](../definitions/xdmExtensionResponse.md#xdmextensionresponse)|
 |**404**|not found|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Produces

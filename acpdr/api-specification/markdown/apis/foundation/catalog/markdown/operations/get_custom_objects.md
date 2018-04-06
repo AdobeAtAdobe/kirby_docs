@@ -25,8 +25,8 @@ GET /xdms/_customer/{extensionNS}
 |---|---|---|
 |**200**|Array[ @/xdms/_customer/{extensionNS}/{objectName} ]|< string > array|
 |**404**|not found|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Produces

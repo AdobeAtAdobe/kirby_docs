@@ -10,7 +10,6 @@ PUT /transforms/{id}
 
 |Type|Name|Description|Schema|
 |---|---|---|---|
-|**Header**|**E-tag**  <br>*optional*|Set to verify the right version of document to be modified by matching the version.|string|
 |**Header**|**if-match**  <br>*optional*|Set to verify the right version of document to be modified by matching the updated date.|string|
 |**Header**|**x-api-key**  <br>*required*|The API key belonging to the calling client.|string|
 |**Header**|**x-gw-ims-org-id**  <br>*required*|The owning IMS organization identifier.|string|
@@ -18,11 +17,11 @@ PUT /transforms/{id}
 
 
 #### Body parameter
-transform field(s) to be updated.
+Transform field(s) to be updated.
 
 *Name* : transform  
 *Flags* : required  
-*Type* : [transform](../definitions/transform.md#transform)
+*Type* : [transformRequest](../definitions/transformRequest.md#transformrequest)
 
 
 #### Responses
@@ -31,9 +30,9 @@ transform field(s) to be updated.
 |---|---|---|
 |**200**|Array[ @/transforms/transformId ]|< string > array|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**403**|Forbidden|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes
@@ -72,16 +71,8 @@ json :
 ```
 json :
 {
-  "version" : "string",
-  "imsOrg" : "string",
   "inputs" : [ "object" ],
   "outputs" : [ "object" ],
-  "dataSetId" : "string",
-  "created" : 0,
-  "createdClient" : "string",
-  "createdUser" : "string",
-  "updatedUser" : "string",
-  "updated" : 0,
   "name" : "string",
   "body" : "string",
   "language" : "string",

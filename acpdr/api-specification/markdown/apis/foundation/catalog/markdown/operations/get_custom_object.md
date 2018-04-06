@@ -21,10 +21,10 @@ GET /xdms/_customer/{extensionNS}/{objectName}
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**200**|Returns the custom object.|[xdmExtension](../definitions/xdmExtension.md#xdmextension)|
+|**200**|Returns the custom object.|[xdmExtensionResponse](../definitions/xdmExtensionResponse.md#xdmextensionresponse)|
 |**404**|not found|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Produces

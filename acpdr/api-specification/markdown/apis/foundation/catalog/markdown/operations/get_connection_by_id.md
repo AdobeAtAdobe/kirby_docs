@@ -19,12 +19,12 @@ GET /connections/{id}
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**200**|connections response|< string, [connection](../definitions/connection.md#connection) > map|
+|**200**|Connections response. The response also includes a reference to linked datasets.|< string, [connectionResponse](../definitions/connectionResponse.md#connectionresponse) > map|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
+|**403**|Forbidden|No Content|
 |**404**|Not found|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Produces
@@ -59,7 +59,25 @@ json :
 ##### Response 200
 ```
 json :
-"object"
+{
+  "56a1c00e9f8e2c53284add34" : {
+    "connector" : "dfa",
+    "name" : "connection_1",
+    "enabled" : true,
+    "version" : "1.0.0",
+    "created" : 1453441038288,
+    "updated" : 1453441038288,
+    "createdClient" : "MCDPCatalogServiceStage",
+    "imsOrg" : "4F3BB22C5631222A7F000101@AdobeOrg",
+    "dataSets" : "@/connections/56a1c00e9f8e2c53284add34/dataSets",
+    "statsCache" : {
+      "earliestAvailableData" : null,
+      "latestAvailableData" : null,
+      "lastSuccess" : null,
+      "recentFailure" : null
+    }
+  }
+}
 ```
 
 

@@ -20,7 +20,7 @@ Data set to be posted
 
 *Name* : dataSet  
 *Flags* : required  
-*Type* : [dataSet](../definitions/dataSet.md#dataset)
+*Type* : [dataSetRequest](../definitions/dataSetRequest.md#datasetrequest)
 
 
 #### Responses
@@ -29,9 +29,9 @@ Data set to be posted
 |---|---|---|
 |**201**|Array[ @/dataSets/dataSetId ]  <br>**Headers** :   <br>`Location` (string) : The URI of the newly created resource.|< string > array|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**403**|Forbidden|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes
@@ -79,18 +79,10 @@ json :
 ```
 json :
 {
-  "version" : "string",
-  "imsOrg" : "string",
-  "isPublic" : true,
   "connectorId" : "string",
   "connectionId" : "string",
   "name" : "string",
   "description" : "string",
-  "created" : 0,
-  "updated" : 0,
-  "createdClient" : "string",
-  "createdUser" : "string",
-  "updatedUser" : "string",
   "namespace" : "string",
   "tags" : {
     "string" : [ "string" ]
@@ -100,6 +92,44 @@ json :
   "lastBatchStatus" : "string",
   "lastSuccessfulBatch" : "string",
   "lastFailedBatch" : "string",
+  "aspect" : "string",
+  "observableSchema" : "object",
+  "status" : "string",
+  "requestStartDate" : "string",
+  "editable" : true,
+  "dependencies" : [ {
+    "dataSetId" : "string",
+    "dataSetViewId" : "string",
+    "type" : "string"
+  } ],
+  "fields" : [ {
+    "dataType" : {
+      "type" : "string",
+      "precision" : 0.0,
+      "scale" : 0.0,
+      "subType" : {
+        "type" : "string",
+        "precision" : 0.0,
+        "scale" : 0.0,
+        "subType" : "...",
+        "subFields" : "...",
+        "keyType" : "string",
+        "valueType" : "..."
+      },
+      "subFields" : "...",
+      "keyType" : "string",
+      "valueType" : "..."
+    },
+    "name" : "string",
+    "definition" : "object",
+    "meta" : "object",
+    "dule" : "object"
+  } ],
+  "basePath" : "string",
+  "fileDescription" : "object",
+  "partitions" : [ "string" ],
+  "saveStrategy" : "string",
+  "schema" : "string",
   "dule" : "object",
   "dataSourceId" : 0
 }

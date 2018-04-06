@@ -1,6 +1,6 @@
 
 <a name="get_credentials_by_data_set_id"></a>
-### Fetches credentials for the given DataSet.
+### Fetches credentials for the given dataSet.
 ```
 GET /dataSets/{id}/credentials
 ```
@@ -20,11 +20,11 @@ GET /dataSets/{id}/credentials
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**200**|credential response|[dataSetCredentials](../definitions/dataSetCredentials.md#datasetcredentials)|
+|**200**|Creadential object given dataSet.|[dataSetCredentials](../definitions/dataSetCredentials.md#datasetcredentials)|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**403**|Forbidden|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes

@@ -23,11 +23,11 @@ GET /xdms/_customer
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**200**|custom xdm objects response|< string, [xdm](../definitions/xdm.md#xdm) > map|
-|**403**|forbidden|No Content|
+|**200**|custom xdm objects response|[xdm](../definitions/xdm.md#xdm)|
+|**403**|Forbidden|No Content|
 |**404**|not found|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Produces
@@ -75,7 +75,22 @@ json :
 ##### Response 200
 ```
 json :
-"object"
+{
+  "version" : "string",
+  "created" : 0,
+  "updated" : 0,
+  "createdClient" : "string",
+  "updatedUser" : "string",
+  "imsOrg" : "string",
+  "schemaId" : "string",
+  "title" : "string",
+  "type" : "string",
+  "description" : "string",
+  "key" : [ "string" ],
+  "properties" : "object",
+  "state" : "string",
+  "xdmType" : "string"
+}
 ```
 
 

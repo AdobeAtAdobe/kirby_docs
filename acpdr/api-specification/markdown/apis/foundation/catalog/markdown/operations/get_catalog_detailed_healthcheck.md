@@ -1,9 +1,16 @@
 
 <a name="get_catalog_detailed_healthcheck"></a>
-### Catalog healthcheck report with dependencies. Used by monitoring services and dashboards.
+### Catalog healthcheck report with dependencies. Used by monitoring services and dashboards.On local the URI should be /catalog/health-detailed.
 ```
-GET /catalog/health-detailed
+GET /health-detailed
 ```
+
+
+#### Parameters
+
+|Type|Name|Description|Schema|
+|---|---|---|---|
+|**Query**|**api_key**  <br>*required*|API key for request.|string|
 
 
 #### Responses
@@ -12,7 +19,7 @@ GET /catalog/health-detailed
 |---|---|---|
 |**200**|healthcheck response|[health-detailed](../definitions/health-detailed.md#health-detailed)|
 |**503**|service unavailable|No Content|
-|**default**|unexpected error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Produces
@@ -31,7 +38,16 @@ GET /catalog/health-detailed
 
 ##### Request path
 ```
-/catalog/health-detailed
+/health-detailed
+```
+
+
+##### Request query
+```
+json :
+{
+  "api_key" : "string"
+}
 ```
 
 
@@ -44,7 +60,8 @@ json :
   "status" : true,
   "dependencies" : [ {
     "service" : "string",
-    "status" : true
+    "status" : true,
+    "duration" : 0
   } ]
 }
 ```

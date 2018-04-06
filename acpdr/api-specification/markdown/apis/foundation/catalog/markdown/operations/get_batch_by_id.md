@@ -20,12 +20,12 @@ Fetches Batches by ID.
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**200**|batch response|< string, [batch](../definitions/batch.md#batch) > map|
+|**200**|Batch object for given batchId.|< string, [batchResponse](../definitions/batchResponse.md#batchresponse) > map|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
+|**403**|Forbidden|No Content|
 |**404**|Not found|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Produces
@@ -69,7 +69,61 @@ json :
 ##### Response 200
 ```
 json :
-"object"
+{
+  "5911f88ae2f4bf657c5a8cb5" : {
+    "imsOrg" : "4F3BB22C5631222A7F000101@AdobeOrg",
+    "created" : 1494349962314,
+    "createdClient" : "MCDPCatalogServiceStage",
+    "createdUser" : "MCDPCatalogServiceStage@AdobeID",
+    "updatedUser" : "MCDPCatalogServiceStage@AdobeID",
+    "updated" : 1494349963467,
+    "status" : "success",
+    "errors" : [ {
+      "code" : "err-1494349963436"
+    } ],
+    "version" : "1.0.3",
+    "availableDates" : {
+      "startDate" : 1337,
+      "endDate" : 4000
+    },
+    "relatedObjects" : [ {
+      "type" : "batch",
+      "id" : "foo_batch"
+    }, {
+      "type" : "connection",
+      "id" : "foo_connection"
+    }, {
+      "type" : "connector",
+      "id" : "foo_connector"
+    }, {
+      "type" : "dataSet",
+      "id" : "foo_dataSet"
+    }, {
+      "type" : "dataSetView",
+      "id" : "foo_dataSetView"
+    }, {
+      "type" : "dataSetFile",
+      "id" : "foo_dataSetFile"
+    }, {
+      "type" : "expressionBlock",
+      "id" : "foo_expressionBlock"
+    }, {
+      "type" : "service",
+      "id" : "foo_service"
+    }, {
+      "type" : "serviceDefinition",
+      "id" : "foo_serviceDefinition"
+    } ],
+    "metrics" : {
+      "foo" : 1337
+    },
+    "tags" : {
+      "foo_bar" : [ "stuff" ],
+      "bar_foo" : [ "woo", "baz" ],
+      "foo/bar/foo-bar" : [ "weehaw", "wee:haw" ]
+    }
+  }
+}
 ```
 
 

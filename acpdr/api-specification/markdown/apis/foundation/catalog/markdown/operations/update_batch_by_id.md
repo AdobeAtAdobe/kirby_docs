@@ -10,7 +10,6 @@ PUT /batches/{id}
 
 |Type|Name|Description|Schema|
 |---|---|---|---|
-|**Header**|**E-tag**  <br>*optional*|Set to verify the right version of document to be modified by matching the version.|string|
 |**Header**|**if-match**  <br>*optional*|Set to verify the right version of document to be modified by matching the updated date.|string|
 |**Header**|**x-api-key**  <br>*required*|The API key belonging to the calling client.|string|
 |**Header**|**x-gw-ims-org-id**  <br>*required*|The owning IMS organization identifier.|string|
@@ -22,7 +21,7 @@ Data set field(s) to be updated.
 
 *Name* : batch  
 *Flags* : required  
-*Type* : [batch](../definitions/batch.md#batch)
+*Type* : [batchRequest](../definitions/batchRequest.md#batchrequest)
 
 
 #### Responses
@@ -31,10 +30,10 @@ Data set field(s) to be updated.
 |---|---|---|
 |**200**|Array[ @/batches/batchId ]|< string > array|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
+|**403**|Forbidden|No Content|
 |**404**|Not found|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes
@@ -73,12 +72,6 @@ json :
 ```
 json :
 {
-  "imsOrg" : "string",
-  "created" : 0,
-  "createdClient" : "string",
-  "createdUser" : "string",
-  "updatedUser" : "string",
-  "updated" : 0,
   "started" : 0,
   "completed" : 0,
   "status" : "string",
@@ -90,7 +83,6 @@ json :
     "description" : "string"
   } ],
   "size" : 0,
-  "version" : "string",
   "availableDates" : "object",
   "relatedObjects" : [ {
     "type" : "string",

@@ -24,8 +24,8 @@ GET /
 |---|---|---|
 |**200**|serviceResources|[serviceResources](../definitions/serviceResources.md#serviceresources)|
 |**404**|Not found|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Produces

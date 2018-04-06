@@ -21,7 +21,7 @@ The payload JSON that goes in the body of the request.
 
 *Name* : payload  
 *Flags* : required  
-*Type* : [xdmExtension](../definitions/xdmExtension.md#xdmextension)
+*Type* : [xdmExtensionRequest](../definitions/xdmExtensionRequest.md#xdmextensionrequest)
 
 
 #### Responses
@@ -29,9 +29,9 @@ The payload JSON that goes in the body of the request.
 |HTTP Code|Description|Schema|
 |---|---|---|
 |**201**|Array[ @/xdms/_customer/{extensionNS}/{objectName} ]  <br>**Headers** :   <br>`Location` (string) : The URI of the newly created resource.|< string > array|
-|**400**|bad request|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**400**|Bad request|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes
@@ -70,12 +70,6 @@ json :
 ```
 json :
 {
-  "version" : "string",
-  "created" : 0,
-  "updated" : 0,
-  "createdClient" : "string",
-  "updatedUser" : "string",
-  "imsOrg" : "string",
   "schemaId" : "string",
   "title" : "string",
   "type" : "string",

@@ -19,12 +19,12 @@ GET /accounts/{id}
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**200**|account response.|< string, [account](../definitions/account.md#account) > map|
+|**200**|account response.|< string, [accountResponse](../definitions/accountResponse.md#accountresponse) > map|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
+|**403**|Forbidden|No Content|
 |**404**|Not found|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Produces
@@ -59,7 +59,29 @@ json :
 ##### Response 200
 ```
 json :
-"object"
+{
+  "597650bf4b358a650c6127bb" : {
+    "connector" : "salesforce",
+    "version" : "1.0.0",
+    "created" : 1500926143359,
+    "updated" : 1500926143359,
+    "createdClient" : "MCDPCatalogServiceStage",
+    "createdUser" : "MCDPCatalogServiceStage@AdobeID",
+    "updatedUser" : "MCDPCatalogServiceStage@AdobeID",
+    "imsOrg" : "4F3BB22C5631222A7F000101@AdobeOrg",
+    "params" : {
+      "username" : "foo",
+      "password" : {
+        "value" : "XXXXXXX",
+        "isSecret" : true
+      },
+      "securityToken" : {
+        "value" : "XXXXXXX",
+        "isSecret" : true
+      }
+    }
+  }
+}
 ```
 
 

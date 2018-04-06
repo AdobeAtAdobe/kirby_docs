@@ -1,9 +1,16 @@
 
 <a name="get_catalog_healthcheck"></a>
-### Catalog healthcheck report. Used by monitoring services and dashboards.
+### Catalog healthcheck report. Used by monitoring services and dashboards. On local the URI is /catalog/health.
 ```
-GET /catalog/health
+GET /health
 ```
+
+
+#### Parameters
+
+|Type|Name|Description|Schema|
+|---|---|---|---|
+|**Query**|**api_key**  <br>*required*|API key for request.|string|
 
 
 #### Responses
@@ -12,7 +19,7 @@ GET /catalog/health
 |---|---|---|
 |**200**|healthcheck response|[healthcheck](../definitions/healthcheck.md#healthcheck)|
 |**503**|service unavailable|No Content|
-|**default**|unexpected error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Produces
@@ -24,7 +31,16 @@ GET /catalog/health
 
 ##### Request path
 ```
-/catalog/health
+/health
+```
+
+
+##### Request query
+```
+json :
+{
+  "api_key" : "string"
+}
 ```
 
 

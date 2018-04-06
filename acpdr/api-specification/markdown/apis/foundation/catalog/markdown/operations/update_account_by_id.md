@@ -10,7 +10,6 @@ PUT /accounts/{id}
 
 |Type|Name|Description|Schema|
 |---|---|---|---|
-|**Header**|**E-tag**  <br>*optional*|Set to verify the right version of document to be modified by matching the version.|string|
 |**Header**|**if-match**  <br>*optional*|Set to verify the right version of document to be modified by matching the updated date.|string|
 |**Header**|**x-api-key**  <br>*required*|The API key belonging to the calling client.|string|
 |**Header**|**x-gw-ims-org-id**  <br>*required*|The owning IMS organization identifier.|string|
@@ -18,11 +17,11 @@ PUT /accounts/{id}
 
 
 #### Body parameter
-Account field(s) to be updated
+Account field(s) to be updated.
 
 *Name* : account  
 *Flags* : required  
-*Type* : [account](../definitions/account.md#account)
+*Type* : [accountRequest](../definitions/accountRequest.md#accountrequest)
 
 
 #### Responses
@@ -31,9 +30,9 @@ Account field(s) to be updated
 |---|---|---|
 |**200**|Array[ @/accounts/accountId ]|< string > array|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**403**|Forbidden|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes
@@ -74,12 +73,6 @@ json :
 {
   "connector" : "string",
   "description" : "string",
-  "version" : "string",
-  "created" : 0,
-  "updated" : 0,
-  "createdClient" : "string",
-  "createdUser" : "string",
-  "imsOrg" : "string",
   "params" : "object"
 }
 ```

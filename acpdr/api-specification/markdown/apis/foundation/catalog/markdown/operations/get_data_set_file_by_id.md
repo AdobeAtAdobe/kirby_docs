@@ -19,12 +19,12 @@ GET /dataSetFiles/{id}
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**200**|connections response|< string, [dataSetFile](../definitions/dataSetFile.md#datasetfile) > map|
+|**200**|connections response|< string, [dataSetFileResponse](../definitions/dataSetFileResponse.md#datasetfileresponse) > map|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
+|**403**|Forbidden|No Content|
 |**404**|Not found|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Produces
@@ -59,7 +59,22 @@ json :
 ##### Response 200
 ```
 json :
-"object"
+{
+  "5abd49645591445e1ba04f87" : {
+    "version" : "1.0.0",
+    "created" : 1522354532905,
+    "updated" : 1522354532905,
+    "imsOrg" : "4F3BB22C5631222A7F000101@AdobeOrg",
+    "dataSetViewId" : "5ab54170864cf0267448ead5",
+    "createdClient" : "acp_foundation_catalog",
+    "createdUser" : "acp_foundation_catalog@AdobeID",
+    "updatedUser" : "acp_foundation_catalog@AdobeID",
+    "availableDates" : {
+      "startDate" : 4444,
+      "endDate" : 5555
+    }
+  }
+}
 ```
 
 

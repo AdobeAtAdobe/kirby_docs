@@ -21,9 +21,9 @@ DELETE /xdms/_customer/{extensionNS}/{objectName}
 |HTTP Code|Description|Schema|
 |---|---|---|
 |**200**|Array[ @/xdms/_customer/{extensionNS}/{objectName} ]|No Content|
-|**404**|not found|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**404**|Not found|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Produces

@@ -28,9 +28,9 @@ See: https://wiki.corp.adobe.com/pages/viewpage.action?spaceKey=DMSArchitecture&
 |---|---|---|
 |**201**|Array[ @/resource/resourceId ]  <br>**Headers** :   <br>`Location` (string) : The URI of the newly created resource.|< string > array|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**403**|Forbidden|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes

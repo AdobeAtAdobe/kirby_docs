@@ -19,7 +19,7 @@ Transform to be posted
 
 *Name* : transform  
 *Flags* : required  
-*Type* : [transform](../definitions/transform.md#transform)
+*Type* : [transformRequest](../definitions/transformRequest.md#transformrequest)
 
 
 #### Responses
@@ -28,9 +28,9 @@ Transform to be posted
 |---|---|---|
 |**201**|Array[ @/transforms/transformId ]  <br>**Headers** :   <br>`Location` (string) : The URI of the newly created resource.|< string > array|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**403**|Forbidden|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes
@@ -69,16 +69,8 @@ json :
 ```
 json :
 {
-  "version" : "string",
-  "imsOrg" : "string",
   "inputs" : [ "object" ],
   "outputs" : [ "object" ],
-  "dataSetId" : "string",
-  "created" : 0,
-  "createdClient" : "string",
-  "createdUser" : "string",
-  "updatedUser" : "string",
-  "updated" : 0,
   "name" : "string",
   "body" : "string",
   "language" : "string",

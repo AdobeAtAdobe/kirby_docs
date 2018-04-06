@@ -26,12 +26,12 @@ GET /dataSets/{id}/ingestBatchSummary
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**200**|batch summary object|No Content|
+|**200**|Batch summary object for given dataSetId.|[batchResponse](../definitions/batchResponse.md#batchresponse)|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
+|**403**|Forbidden|No Content|
 |**404**|Not found|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Produces
@@ -72,6 +72,55 @@ json :
   "property" : "string",
   "start" : 0,
   "tags" : "string"
+}
+```
+
+
+#### Example HTTP response
+
+##### Response 200
+```
+json :
+{
+  "imsOrg" : "string",
+  "created" : 0,
+  "createdClient" : "string",
+  "createdUser" : "string",
+  "updatedUser" : "string",
+  "updated" : 0,
+  "started" : 0,
+  "completed" : 0,
+  "status" : "string",
+  "recordCount" : 0,
+  "failedRecordCount" : 0,
+  "errors" : [ {
+    "code" : "string",
+    "rows" : [ "string" ],
+    "description" : "string"
+  } ],
+  "size" : 0,
+  "version" : "string",
+  "availableDates" : "object",
+  "relatedObjects" : [ {
+    "type" : "string",
+    "id" : "string",
+    "tag" : "string",
+    "status" : "string",
+    "errors" : [ {
+      "code" : "string",
+      "rows" : [ "string" ],
+      "description" : "string"
+    } ],
+    "metrics" : {
+      "string" : 0
+    }
+  } ],
+  "metrics" : {
+    "string" : 0
+  },
+  "tags" : {
+    "string" : [ "string" ]
+  }
 }
 ```
 

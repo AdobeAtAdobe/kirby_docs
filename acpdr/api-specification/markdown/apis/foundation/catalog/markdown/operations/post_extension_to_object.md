@@ -13,7 +13,7 @@ POST /xdms/{namespace}/{objectName}/_customer/{extensionNS}
 |**Header**|**x-api-key**  <br>*required*|The API key belonging to the calling client.|string|
 |**Header**|**x-gw-ims-org-id**  <br>*required*|The owning IMS organization identifier.|string|
 |**Path**|**extensionNS**  <br>*required*|The extension namespace.|string|
-|**Path**|**namespace**  <br>*required*|The base namespace ("model" or "core").|string|
+|**Path**|**namespace**  <br>*required*|Filter by the base namespace ("model" or "core").|string|
 |**Path**|**objectName**  <br>*required*|Name of custom object.|string|
 
 
@@ -22,7 +22,7 @@ The payload JSON that goes in the body of the request.
 
 *Name* : payload  
 *Flags* : required  
-*Type* : [xdmExtension](../definitions/xdmExtension.md#xdmextension)
+*Type* : [xdmExtensionRequest](../definitions/xdmExtensionRequest.md#xdmextensionrequest)
 
 
 #### Responses
@@ -31,8 +31,8 @@ The payload JSON that goes in the body of the request.
 |---|---|---|
 |**201**|Array[ @/xdms/{namespace}/{objectName}/_customer/{extensionNS} ]  <br>**Headers** :   <br>`Location` (string) : The URI of the newly created resource.|< string > array|
 |**400**|bad request|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes
@@ -71,12 +71,6 @@ json :
 ```
 json :
 {
-  "version" : "string",
-  "created" : 0,
-  "updated" : 0,
-  "createdClient" : "string",
-  "updatedUser" : "string",
-  "imsOrg" : "string",
   "schemaId" : "string",
   "title" : "string",
   "type" : "string",

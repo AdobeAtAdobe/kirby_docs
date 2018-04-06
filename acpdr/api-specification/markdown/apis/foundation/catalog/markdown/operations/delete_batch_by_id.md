@@ -19,12 +19,12 @@ DELETE /batches/{id}
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**200**|@/batches/batchId|string|
+|**200**|Array[ @/batches/batchId ]|< string > array|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
+|**403**|Forbidden|No Content|
 |**404**|Not found|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes
@@ -64,7 +64,7 @@ json :
 ##### Response 200
 ```
 json :
-"string"
+[ "string" ]
 ```
 
 

@@ -19,18 +19,18 @@ Connection to be posted.
 
 *Name* : connection  
 *Flags* : required  
-*Type* : [connection](../definitions/connection.md#connection)
+*Type* : [connectionRequest](../definitions/connectionRequest.md#connectionrequest)
 
 
 #### Responses
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**201**|Array[ @/connection/connectionId ]  <br>**Headers** :   <br>`Location` (string) : The URI of the newly created resource.|< string > array|
+|**201**|Array[ @/connections/connectionId ]  <br>**Headers** :   <br>`Location` (string) : The URI of the newly created resource.|< string > array|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**403**|Forbidden|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes
@@ -74,12 +74,6 @@ json :
   "name" : "string",
   "description" : "string",
   "enabled" : true,
-  "version" : "string",
-  "created" : 0,
-  "updated" : 0,
-  "createdClient" : "string",
-  "createdUser" : "string",
-  "updatedUser" : "string",
   "attributes" : "object",
   "dependencies" : [ "string" ],
   "imsOrg" : "string",

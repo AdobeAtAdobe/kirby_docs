@@ -19,7 +19,7 @@ Data set file to be posted.
 
 *Name* : dataSetFile  
 *Flags* : required  
-*Type* : [dataSetFile](../definitions/dataSetFile.md#datasetfile)
+*Type* : [dataSetFileRequest](../definitions/dataSetFileRequest.md#datasetfilerequest)
 
 
 #### Responses
@@ -28,9 +28,9 @@ Data set file to be posted.
 |---|---|---|
 |**201**|Array[ @/dataSets/dataSetFileId ]  <br>**Headers** :   <br>`Location` (string) : The URI of the newly created resource.|< string > array|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**403**|Forbidden|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes
@@ -69,16 +69,9 @@ json :
 ```
 json :
 {
-  "version" : "string",
   "folderName" : "string",
   "batchId" : "string",
-  "created" : 0,
-  "updated" : 0,
-  "imsOrg" : "string",
   "dataSetViewId" : "string",
-  "createdClient" : "string",
-  "createdUser" : "string",
-  "updatedUser" : "string",
   "records" : 0,
   "size" : 0,
   "isValid" : true,

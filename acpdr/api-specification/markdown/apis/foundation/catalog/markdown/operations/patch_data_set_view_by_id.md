@@ -10,7 +10,6 @@ PATCH /dataSetViews/{id}
 
 |Type|Name|Description|Schema|
 |---|---|---|---|
-|**Header**|**E-tag**  <br>*optional*|Set to verify the right version of document to be modified by matching the version.|string|
 |**Header**|**if-match**  <br>*optional*|Set to verify the right version of document to be modified by matching the updated date.|string|
 |**Header**|**x-api-key**  <br>*required*|The API key belonging to the calling client.|string|
 |**Header**|**x-gw-ims-org-id**  <br>*required*|The owning IMS organization identifier.|string|
@@ -22,7 +21,7 @@ Data set view field(s) to be updated.
 
 *Name* : dataSetView  
 *Flags* : required  
-*Type* : [dataSetView](../definitions/dataSetView.md#datasetview)
+*Type* : [dataSetViewPatchRequest](../definitions/dataSetViewPatchRequest.md#datasetviewpatchrequest)
 
 
 #### Responses
@@ -31,10 +30,10 @@ Data set view field(s) to be updated.
 |---|---|---|
 |**200**|Array[ @/dataSetViews/{dataSetViewId} ]|< string > array|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
+|**403**|Forbidden|No Content|
 |**404**|Not found|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes
@@ -69,8 +68,6 @@ json :
 ```
 json :
 {
-  "version" : "string",
-  "imsOrg" : "string",
   "dataSetId" : "string",
   "aspect" : "string",
   "observableSchema" : "object",
@@ -83,18 +80,37 @@ json :
     "type" : "string"
   } ],
   "sdsVersion" : "string",
-  "fields" : [ "object" ],
+  "fields" : [ {
+    "dataType" : {
+      "type" : "string",
+      "precision" : 0.0,
+      "scale" : 0.0,
+      "subType" : {
+        "type" : "string",
+        "precision" : 0.0,
+        "scale" : 0.0,
+        "subType" : "...",
+        "subFields" : "...",
+        "keyType" : "string",
+        "valueType" : "..."
+      },
+      "subFields" : "...",
+      "keyType" : "string",
+      "valueType" : "..."
+    },
+    "name" : "string",
+    "definition" : "object",
+    "meta" : "object",
+    "dule" : "object"
+  } ],
   "storageType" : "string",
   "basePath" : "string",
   "isCached" : true,
+  "transforms" : "string",
+  "files" : "string",
   "fileDescription" : "object",
   "partitions" : [ "string" ],
   "saveStrategy" : "string",
-  "created" : 0,
-  "updated" : 0,
-  "createdClient" : "string",
-  "createdUser" : "string",
-  "updatedUser" : "string",
   "schema" : "string"
 }
 ```

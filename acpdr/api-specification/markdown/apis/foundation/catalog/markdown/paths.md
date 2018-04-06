@@ -24,7 +24,7 @@
 ### [Updates an existing Account by ID.](operations/update_account_by_id.md#update_account_by_id)
 
 <a name="ref-delete_account_by_id"></a>
-### [Deletes a Account by ID.](operations/delete_account_by_id.md#delete_account_by_id)
+### [Deletes an Account by ID.](operations/delete_account_by_id.md#delete_account_by_id)
 
 <a name="ref-patch_account_by_id"></a>
 ### [Updates specified attributes of an existing Account.](operations/patch_account_by_id.md#patch_account_by_id)
@@ -36,7 +36,7 @@
 ### [Fetches a list of Batches.](operations/get_batch.md#get_batch)
 
 <a name="ref-post_batch_by_id"></a>
-### [Creates a new Batch with a specified ID.](operations/post_batch_by_id.md#post_batch_by_id)
+### [Creates a new Batch with a specified Id.](operations/post_batch_by_id.md#post_batch_by_id)
 
 <a name="ref-get_batch_by_id"></a>
 ### [GET /batches/{id}](operations/get_batch_by_id.md#get_batch_by_id)
@@ -49,12 +49,6 @@
 
 <a name="ref-patch_batch_by_id"></a>
 ### [Updates specified attributes of an existing Batch.](operations/patch_batch_by_id.md#patch_batch_by_id)
-
-<a name="ref-get_catalog_healthcheck"></a>
-### [Catalog healthcheck report. Used by monitoring services and dashboards.](operations/get_catalog_healthcheck.md#get_catalog_healthcheck)
-
-<a name="ref-get_catalog_detailed_healthcheck"></a>
-### [Catalog healthcheck report with dependencies. Used by monitoring services and dashboards.](operations/get_catalog_detailed_healthcheck.md#get_catalog_detailed_healthcheck)
 
 <a name="ref-post_connection"></a>
 ### [Saves a new Connection.](operations/post_connection.md#post_connection)
@@ -111,7 +105,7 @@
 ### [Updates specified attributes of an existing DataSetFile.](operations/patch_data_set_file_by_id.md#patch_data_set_file_by_id)
 
 <a name="ref-post_data_set_view"></a>
-### [Saves a new DataSetView.](operations/post_data_set_view.md#post_data_set_view)
+### [Saves a new dataSetView.](operations/post_data_set_view.md#post_data_set_view)
 
 <a name="ref-get_data_set_views"></a>
 ### [Fetches a list of DataSetViews.](operations/get_data_set_views.md#get_data_set_views)
@@ -150,7 +144,7 @@
 ### [Updates specified attributes of an existing DataSet.](operations/patch_data_set_by_id.md#patch_data_set_by_id)
 
 <a name="ref-get_credentials_by_data_set_id"></a>
-### [Fetches credentials for the given DataSet.](operations/get_credentials_by_data_set_id.md#get_credentials_by_data_set_id)
+### [Fetches credentials for the given dataSet.](operations/get_credentials_by_data_set_id.md#get_credentials_by_data_set_id)
 
 <a name="ref-get_dule_labels"></a>
 ### [Returns the DULE labels associated with a dataset.](operations/get_dule_labels.md#get_dule_labels)
@@ -159,7 +153,7 @@
 ### [Retrieves summarized stats for a DataSet's batches. Default time window: last seven days.](operations/get_data_set_batches_summary.md#get_data_set_batches_summary)
 
 <a name="ref-post_data_set_view_by_data_set_id"></a>
-### [Creates a new DataSetView for this DataSet.](operations/post_data_set_view_by_data_set_id.md#post_data_set_view_by_data_set_id)
+### [Creates a new DataSetView for this dataSet.](operations/post_data_set_view_by_data_set_id.md#post_data_set_view_by_data_set_id)
 
 <a name="ref-get_data_set_views_by_data_set_id"></a>
 ### [Lists DataSetViews for this DataSet.](operations/get_data_set_views_by_data_set_id.md#get_data_set_views_by_data_set_id)
@@ -168,52 +162,25 @@
 ### [Adds DataSetFile to a particular DataSetView for this DataSet.](operations/post_data_set_file_by_data_set_id_and_data_set_view_id.md#post_data_set_file_by_data_set_id_and_data_set_view_id)
 
 <a name="ref-get_data_set_files_by_data_set_id_and_data_set_view_id"></a>
-### [Lists the DataSetFiles for a particular DataSetView for this DataSet.](operations/get_data_set_files_by_data_set_id_and_data_set_view_id.md#get_data_set_files_by_data_set_id_and_data_set_view_id)
+### [Lists the dataSetFiles for a particular dataSetView for this dataSet.](operations/get_data_set_files_by_data_set_id_and_data_set_view_id.md#get_data_set_files_by_data_set_id_and_data_set_view_id)
 
 <a name="ref-get_data_set_file_by_data_set_id_and_data_set_view_id_by_id"></a>
-### [Fetches a DataSetFile for a particular DataSetView for this DataSet.](operations/get_data_set_file_by_data_set_id_and_data_set_view_id_by_id.md#get_data_set_file_by_data_set_id_and_data_set_view_id_by_id)
+### [Fetches a dataSetFile for a particular dataSetView for this dataSet.](operations/get_data_set_file_by_data_set_id_and_data_set_view_id_by_id.md#get_data_set_file_by_data_set_id_and_data_set_view_id_by_id)
 
 <a name="ref-delete_data_set_file_by_data_set_id_and_data_set_view_id_by_id"></a>
 ### [Removes a DataSetFile for a particular DataSetView for this DataSet.](operations/delete_data_set_file_by_data_set_id_and_data_set_view_id_by_id.md#delete_data_set_file_by_data_set_id_and_data_set_view_id_by_id)
 
-<a name="ref-delete_sample_file_by_data_set_id_and_data_set_view_id_by_id"></a>
-### [Removes a sample File for a particular DataSetView for this DataSet.](operations/delete_sample_file_by_data_set_id_and_data_set_view_id_by_id.md#delete_sample_file_by_data_set_id_and_data_set_view_id_by_id)
-
-<a name="ref-post_sample_file_by_data_set_id_and_data_set_view_id"></a>
-### [Adds DataSetFile to a particular DataSetView for this DataSet.](operations/post_sample_file_by_data_set_id_and_data_set_view_id.md#post_sample_file_by_data_set_id_and_data_set_view_id)
-
-<a name="ref-get_sample_files_by_data_set_id_and_data_set_view_id"></a>
-### [Lists the sample DataSetFiles for a particular DataSetView for this DataSet.](operations/get_sample_files_by_data_set_id_and_data_set_view_id.md#get_sample_files_by_data_set_id_and_data_set_view_id)
-
 <a name="ref-get_transforms_by_data_set_id_and_data_set_view_id"></a>
-### [Lists the Transforms for a particular DataSetView for this DataSet.](operations/get_transforms_by_data_set_id_and_data_set_view_id.md#get_transforms_by_data_set_id_and_data_set_view_id)
+### [Lists the Transforms for a particular dataSetView for this dataSet.](operations/get_transforms_by_data_set_id_and_data_set_view_id.md#get_transforms_by_data_set_id_and_data_set_view_id)
 
 <a name="ref-get_data_set_view_by_data_set_id_by_id"></a>
 ### [Fetches a particular DataSetView for this DataSet.](operations/get_data_set_view_by_data_set_id_by_id.md#get_data_set_view_by_data_set_id_by_id)
 
-<a name="ref-post_sample_data_set_file"></a>
-### [Saves new sample DataSetFile.](operations/post_sample_data_set_file.md#post_sample_data_set_file)
+<a name="ref-get_catalog_healthcheck"></a>
+### [Catalog healthcheck report. Used by monitoring services and dashboards. On local the URI is /catalog/health.](operations/get_catalog_healthcheck.md#get_catalog_healthcheck)
 
-<a name="ref-get_sample_data_set_files"></a>
-### [Fetches a list of DataSetFiles.](operations/get_sample_data_set_files.md#get_sample_data_set_files)
-
-<a name="ref-delete_sample_data_set_file_by_search"></a>
-### [Deletes a DataSetFile based on a search criteria.](operations/delete_sample_data_set_file_by_search.md#delete_sample_data_set_file_by_search)
-
-<a name="ref-get_sample_data_set_by_id"></a>
-### [Fetches a sample DataSetFile by ID.](operations/get_sample_data_set_by_id.md#get_sample_data_set_by_id)
-
-<a name="ref-update_sample_data_set_file_by_id"></a>
-### [Updates an existing DataSetFile by ID.](operations/update_sample_data_set_file_by_id.md#update_sample_data_set_file_by_id)
-
-<a name="ref-delete_sample_data_set_file_by_id"></a>
-### [Deletes a sample DataSetFile by ID.](operations/delete_sample_data_set_file_by_id.md#delete_sample_data_set_file_by_id)
-
-<a name="ref-patch_sample_data_set_file_by_id"></a>
-### [Updates specified attributes of an existing DataSetFile.](operations/patch_sample_data_set_file_by_id.md#patch_sample_data_set_file_by_id)
-
-<a name="ref-get_settings"></a>
-### [Catalog service API for sharing application settings with clients.](operations/get_settings.md#get_settings)
+<a name="ref-get_catalog_detailed_healthcheck"></a>
+### [Catalog healthcheck report with dependencies. Used by monitoring services and dashboards.On local the URI should be /catalog/health-detailed.](operations/get_catalog_detailed_healthcheck.md#get_catalog_detailed_healthcheck)
 
 <a name="ref-post_transform"></a>
 ### [Saves a new Transform.](operations/post_transform.md#post_transform)

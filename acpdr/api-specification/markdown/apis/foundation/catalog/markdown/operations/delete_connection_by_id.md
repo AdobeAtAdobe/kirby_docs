@@ -21,10 +21,10 @@ DELETE /connections/{id}
 |---|---|---|
 |**200**|Array[ @/connections/connectionId ]|< string > array|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
+|**403**|Forbidden|No Content|
 |**404**|Not found|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes

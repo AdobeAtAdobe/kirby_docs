@@ -19,18 +19,18 @@ Account to be posted.
 
 *Name* : account  
 *Flags* : required  
-*Type* : [account](../definitions/account.md#account)
+*Type* : [accountRequest](../definitions/accountRequest.md#accountrequest)
 
 
 #### Responses
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**201**|Array[ @/account/accountId ]  <br>**Headers** :   <br>`Location` (string) : The URI of the newly created resource.|< string > array|
+|**201**|Array[ @/accounts/accountId ]  <br>**Headers** :   <br>`Location` (string) : The URI of the newly created resource.|< string > array|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**403**|Forbidden|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Consumes
@@ -71,12 +71,6 @@ json :
 {
   "connector" : "string",
   "description" : "string",
-  "version" : "string",
-  "created" : 0,
-  "updated" : 0,
-  "createdClient" : "string",
-  "createdUser" : "string",
-  "imsOrg" : "string",
   "params" : "object"
 }
 ```

@@ -19,12 +19,12 @@ GET /transforms/{id}
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**200**|services response|< string, [transform](../definitions/transform.md#transform) > map|
+|**200**|Transform object for given transformId.|< string, [transformResponse](../definitions/transformResponse.md#transformresponse) > map|
 |**400**|Bad request|No Content|
-|**403**|forbidden|No Content|
+|**403**|Forbidden|No Content|
 |**404**|Not found|No Content|
-|**500**|internal server error|No Content|
-|**default**|unexpected error|No Content|
+|**500**|Internal server error|No Content|
+|**default**|Unexpected error|No Content|
 
 
 #### Produces
@@ -59,7 +59,23 @@ json :
 ##### Response 200
 ```
 json :
-"object"
+{
+  "5abac7063998860540c7b848" : {
+    "version" : "1.0.5",
+    "imsOrg" : "4F3BB22C5631222A7F000101@AdobeOrg",
+    "created" : 1522190086195,
+    "createdClient" : "acp_foundation_catalog",
+    "createdUser" : "acp_foundation_catalog@AdobeID",
+    "updatedUser" : "acp_foundation_catalog@AdobeID",
+    "updated" : 1522190612384,
+    "codeUrl" : "git://example.com/foo/bar/something.git",
+    "args" : [ "--context_param profile_dsv_in0.inputPath=${CATALOG.DSV.5ab540d0864cf0267448ead4.inputFiles}" ],
+    "inputs" : [ ],
+    "outputs" : [ {
+      "dataSet" : "@/dataSets/123456"
+    } ]
+  }
+}
 ```
 
 
