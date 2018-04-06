@@ -75,6 +75,7 @@ json :
   },
   "createdAt" : "2017-09-07T18:17:19Z",
   "updatedAt" : "2017-09-07T18:17:19Z",
+  "expireAt" : "2017-09-07T18:17:19Z",
   "userId" : "Compute@AdobeID",
   "status" : "string",
   "message" : "string"

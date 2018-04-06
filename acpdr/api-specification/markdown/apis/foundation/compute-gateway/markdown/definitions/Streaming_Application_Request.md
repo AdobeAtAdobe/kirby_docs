@@ -16,6 +16,7 @@
 |**jar**  <br>*required*|Location of the jar containing used to run the job  <br>**Example** : `"https://aphatakstorageeast.blob.core.windows.net/campaign/spark-examples_2.11-2.1.0.jar"`|string|
 |**name**  <br>*required*|The name of the Spark Job. Note:Spaces in name will be replaced with _.  <br>**Example** : `"SparkPi"`|string|
 |**numExecutors**  <br>*optional*|The number of executors to launch.Default value: 1  <br>**Example** : `1`|integer (int32)|
+|**ports**  <br>*optional*|Provide a way to specify custom ports and healthCheck information  <br>**Example** : `"[appport](#appport)"`|[AppPort](AppPort.md#appport)|
 |**sparkConf**  <br>*optional*|A map containing key value pairs containing Spark configuration properties  <br>**Example** : `"[sample_spark_properties](#sample_spark_properties)"`|[sample_spark_properties](sample_spark_properties.md#sample_spark_properties)|
 |**tags**  <br>*optional*|A map containing key value pairs containing user specified tags  <br>**Example** : `"[sample_tags](#sample_tags)"`|[sample_tags](sample_tags.md#sample_tags)|
 |**userId**  <br>*optional*|The userId of submitter  <br>**Example** : `"ACP@Adobe.com"`|string|

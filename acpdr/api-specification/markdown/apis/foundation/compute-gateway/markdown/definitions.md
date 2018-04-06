@@ -5,11 +5,20 @@
 <a name="ref-app"></a>
 ### [App](definitions/App.md#app)
 
+<a name="ref-appport"></a>
+### [AppPort](definitions/AppPort.md#appport)
+
+<a name="ref-apptasks"></a>
+### [AppTasks](definitions/AppTasks.md#apptasks)
+
 <a name="ref-cluster-creation-request"></a>
 ### [Cluster Creation Request](definitions/Cluster_Creation_Request.md#cluster-creation-request)
 
 <a name="ref-cluster-details"></a>
 ### [Cluster Details](definitions/Cluster_Details.md#cluster-details)
+
+<a name="ref-healthcheck"></a>
+### [HealthCheck](definitions/HealthCheck.md#healthcheck)
 
 <a name="ref-job"></a>
 ### [Job](definitions/Job.md#job)

@@ -72,7 +72,22 @@ json :
   },
   "clusterId" : "38b60713-68df-4b34-9030-bb85a5447bcd",
   "userId" : "ACP@Adobe.com",
-  "cmd" : "string"
+  "cmd" : "string",
+  "ports" : {
+    "port" : 0,
+    "sparkUI" : true,
+    "healthCheck" : {
+      "gracePeriodSeconds" : 300,
+      "intervalSeconds" : 60,
+      "maxConsecutiveFailures" : 3,
+      "path" : "/path/to/health",
+      "protocol" : "HTTP",
+      "timeoutSeconds" : 20,
+      "delaySeconds" : 15,
+      "ignoreHttp1xx" : false
+    },
+    "name" : "http port"
+  }
 }
 ```
 
@@ -105,13 +120,32 @@ json :
     },
     "clusterId" : "38b60713-68df-4b34-9030-bb85a5447bcd",
     "userId" : "ACP@Adobe.com",
-    "cmd" : "string"
+    "cmd" : "string",
+    "ports" : {
+      "port" : 0,
+      "sparkUI" : true,
+      "healthCheck" : {
+        "gracePeriodSeconds" : 300,
+        "intervalSeconds" : 60,
+        "maxConsecutiveFailures" : 3,
+        "path" : "/path/to/health",
+        "protocol" : "HTTP",
+        "timeoutSeconds" : 20,
+        "delaySeconds" : 15,
+        "ignoreHttp1xx" : false
+      },
+      "name" : "http port"
+    }
   },
   "createdAt" : "2017-09-07T18:17:19Z",
   "updatedAt" : "2017-09-07T18:17:19Z",
   "userId" : "user1",
   "status" : "string",
-  "message" : "Task ran successfully"
+  "message" : "Task ran successfully",
+  "tasks" : [ {
+    "host" : "10.11.20.11",
+    "ports" : "[12345,12346]"
+  } ]
 }
 ```
 
