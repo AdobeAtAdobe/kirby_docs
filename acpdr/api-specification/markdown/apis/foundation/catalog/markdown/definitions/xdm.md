@@ -8,7 +8,6 @@
 |**createdClient**  <br>*optional*  <br>*read-only*|The ID of the IMS client that created this XDM object.  <br>**Example** : `"string"`|string|
 |**description**  <br>*optional*|**Example** : `"string"`|string|
 |**imsOrg**  <br>*optional*|The owning IMS organization identifier.  <br>**Example** : `"string"`|string|
-|**key**  <br>*optional*|Primary keys for the custom XDM object  <br>**Example** : `[ "string" ]`|< string > array|
 |**properties**  <br>*optional*|**Example** : `"object"`|object|
 |**schemaId**  <br>*optional*|**Example** : `"string"`|string|
 |**state**  <br>*optional*|**Example** : `"string"`|string|

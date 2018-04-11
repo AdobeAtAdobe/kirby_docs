@@ -8,7 +8,6 @@
 |**createdClient**  <br>*optional*  <br>*read-only*|The ID of the IMS client that created this xdm extension.  <br>**Example** : `"string"`|string|
 |**description**  <br>*required*|**Example** : `"string"`|string|
 |**imsOrg**  <br>*optional*|The owning IMS organization identifier.  <br>**Example** : `"string"`|string|
-|**key**  <br>*optional*|Primary keys for the custom XDM object  <br>**Example** : `[ "string" ]`|< string > array|
 |**properties**  <br>*required*|**Example** : `"object"`|object|
 |**schemaId**  <br>*optional*|**Example** : `"string"`|string|
 |**title**  <br>*optional*|**Example** : `"string"`|string|

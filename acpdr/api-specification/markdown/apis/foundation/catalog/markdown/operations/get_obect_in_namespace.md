@@ -83,7 +83,6 @@ json :
   "title" : "string",
   "type" : "string",
   "description" : "string",
-  "key" : [ "string" ],
   "properties" : "object",
   "state" : "string",
   "xdmType" : "string"
