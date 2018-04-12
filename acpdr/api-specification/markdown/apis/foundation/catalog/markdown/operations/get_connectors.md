@@ -19,6 +19,7 @@ GET /connectors
 |**Query**|**maxConnections**  <br>*optional*|Filter by the maximum number of connections a customer (IMS Org) can create of this type.|integer|
 |**Query**|**name**  <br>*optional*|Filter by the name of this Connector.|string|
 |**Query**|**orderBy**  <br>*optional*|Sort parameter and direction for sorting the response. Ex. orderBy=asc:created,updated. This was previously called sort.|string|
+|**Query**|**properties**  <br>*optional*|A comma separated whitelist of top-level object properties to be returned in the response. Used to cut down the number of properties and amount of data returned in the response bodies.|string|
 |**Query**|**property**  <br>*optional*|Regex used to filter objects in the response. Ex. property=name~^test.|string|
 |**Query**|**start**  <br>*optional*|Returns results from a specific offset of objects. This was previously called offset. Ex. start=3.|integer|
 |**Query**|**type**  <br>*optional*|Filter by the ingest type for this Connector.|string|
@@ -76,6 +77,7 @@ json :
   "maxConnections" : 0,
   "name" : "string",
   "orderBy" : "string",
+  "properties" : "string",
   "property" : "string",
   "start" : 0,
   "type" : "string",

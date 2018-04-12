@@ -24,6 +24,7 @@ GET /connections
 |**Query**|**name**  <br>*optional*|Filter by the user-facing name of this Connection.|string|
 |**Query**|**orderBy**  <br>*optional*|Sort parameter and direction for sorting the response. Ex. orderBy=asc:created,updated. This was previously called sort.|string|
 |**Query**|**parentConnectionId**  <br>*optional*|Used in cases where global/shared data is managed by this connection. The parent connection performs the ETL/Mapping jobs, and this child connection represents a customer's membership and visibility into the parent. This query param will filter all connectors by the parentConnectorId value.|string|
+|**Query**|**properties**  <br>*optional*|A comma separated whitelist of top-level object properties to be returned in the response. Used to cut down the number of properties and amount of data returned in the response bodies.|string|
 |**Query**|**property**  <br>*optional*|Regex used to filter objects in the response. Ex. property=name~^test.|string|
 |**Query**|**start**  <br>*optional*|Returns results from a specific offset of objects. This was previously called offset. Ex. start=3.|integer|
 |**Query**|**updated**  <br>*optional*|Filter by the Unix timestamp (in milliseconds) for the time of last modification.|integer (int64)|
@@ -86,6 +87,7 @@ json :
   "name" : "string",
   "orderBy" : "string",
   "parentConnectionId" : "string",
+  "properties" : "string",
   "property" : "string",
   "start" : 0,
   "updated" : 0,

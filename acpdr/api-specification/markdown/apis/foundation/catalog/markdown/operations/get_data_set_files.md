@@ -23,6 +23,7 @@ GET /dataSetFiles
 |**Query**|**isValid**  <br>*optional*|True if the file can still be used. False if the file was part of a batch that was mistakenly uploaded or incorrect, and should no longer be considered. This query param can be used to filter all files with isValid field value.|boolean|
 |**Query**|**limit**  <br>*optional*|Limit response to a specified number of objects. Ex. limit=10|integer|
 |**Query**|**orderBy**  <br>*optional*|Sort parameter and direction for sorting the response. Ex. orderBy=asc:created,updated. This was previously called sort.|string|
+|**Query**|**properties**  <br>*optional*|A comma separated whitelist of top-level object properties to be returned in the response. Used to cut down the number of properties and amount of data returned in the response bodies.|string|
 |**Query**|**property**  <br>*optional*|Regex used to filter objects in the response. Ex. property=name~^test.|string|
 |**Query**|**records**  <br>*optional*|Filter by the number of records/rows/transactions contained in file represented by this DataSetFile.|integer (int64)|
 |**Query**|**size**  <br>*optional*|Filter by the size for the file in bytes.|integer (int64)|
@@ -86,6 +87,7 @@ json :
   "isValid" : true,
   "limit" : 0,
   "orderBy" : "string",
+  "properties" : "string",
   "property" : "string",
   "records" : 0,
   "size" : 0,

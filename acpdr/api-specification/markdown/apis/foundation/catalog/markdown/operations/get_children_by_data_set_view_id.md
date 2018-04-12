@@ -25,6 +25,7 @@ GET /dataSetViews/{id}/children
 |**Query**|**limit**  <br>*optional*|Limit response to a specified number of objects. Ex. limit=10|integer|
 |**Query**|**name**  <br>*optional*|The name of this DataSetView.|string|
 |**Query**|**orderBy**  <br>*optional*|Sort parameter and direction for sorting the response. Ex. orderBy=asc:created,updated. This was previously called sort.|string|
+|**Query**|**properties**  <br>*optional*|A comma separated whitelist of top-level object properties to be returned in the response. Used to cut down the number of properties and amount of data returned in the response bodies.|string|
 |**Query**|**property**  <br>*optional*|Regex used to filter objects in the response. Ex. property=name~^test.|string|
 |**Query**|**saveStrategy**  <br>*optional*|Denotes save strategy for this dataset.|string|
 |**Query**|**sdsVersion**  <br>*optional*|The semantic version of the SDS this view (and it's transforms) are compatible with.|string|
@@ -90,6 +91,7 @@ json :
   "limit" : 0,
   "name" : "string",
   "orderBy" : "string",
+  "properties" : "string",
   "property" : "string",
   "saveStrategy" : "string",
   "sdsVersion" : "string",

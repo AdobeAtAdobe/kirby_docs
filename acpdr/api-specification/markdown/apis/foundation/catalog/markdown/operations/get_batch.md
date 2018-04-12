@@ -29,6 +29,8 @@ GET /batches
 |**Query**|**failedRecordCount**  <br>*optional*|Filter by the number of records that could not be processed in this Batch.|integer (int64)|
 |**Query**|**limit**  <br>*optional*|Limit response to a specified number of objects. Ex. limit=10|integer|
 |**Query**|**orderBy**  <br>*optional*|Sort parameter and direction for sorting the response. Ex. orderBy=asc:created,updated. This was previously called sort.|string|
+|**Query**|**properties**  <br>*optional*|A comma separated whitelist of top-level object properties to be returned in the response. Used to cut down the number of properties and amount of data returned in the response bodies.|string|
+|**Query**|**properties**  <br>*optional*|A comma separated whitelist of top-level object properties to be returned in the response. Used to cut down the number of properties and amount of data returned in the response bodies.|string|
 |**Query**|**property**  <br>*optional*|Regex used to filter objects in the response. Ex. property=name~^test.|string|
 |**Query**|**recordCount**  <br>*optional*|Filter by the total number of data records (rows/documents) processed in this Batch.|integer (int64)|
 |**Query**|**size**  <br>*optional*|Number of bytes processed in this Batch.|integer (int64)|
@@ -103,6 +105,7 @@ json :
   "failedRecordCount" : 0,
   "limit" : 0,
   "orderBy" : "string",
+  "properties" : "string",
   "property" : "string",
   "recordCount" : 0,
   "size" : 0,
