@@ -1,5 +1,7 @@
 # Adobe GDPR Positioning
 
+On May 25, 2018, the European Union’s General Data Protection Regulation (GDPR) will go into effect. We believe this presents a new opportunity for companies to strengthen their brand loyalty by focusing on consumer privacy while delivering amazing experiences. Think of it as experiential privacy - having privacy be a key part of the customer experience, through relevant privacy notices presented in context and choices that are on brand. For more information, please refer to [GDPR and Your Business](https://www.adobe.com/privacy/general-data-protection-regulation.html).
+
 The [General Data Protection Regulation (GDPR)](gdpr-terminology.html#GDPR) will come into full effect on May 25, 2018. Adobe is already working towards compliance with the new requirements. As compliance will be a shared responsibility with your enterprise, we look forward to partnering with you to address any new obligations for data governance and privacy by design features.
 
 **Is Adobe a Controller or Processor when it provides products and services to you?**
@@ -12,11 +14,11 @@ As the [data controller](gdpr-terminology.html#Data_Controller), you will determ
 
 If you use Adobe Creative Cloud or Adobe Document Cloud hosted services, you may upload content which includes [personal data](gdpr-terminology.html#PII) – for example, forms, contracts, photos and artwork containing people. Adobe's Creative Cloud and Document Cloud hosted services include the storage of this [personal data](gdpr-terminology.html#PII).
 
-If you use Adobe Marketing Cloud solutions, Adobe may host [personal data](gdpr-terminology.html#PII) for you depending on the solutions you use and the information you choose to send to your Adobe Marketing Cloud account. For a detailed list of examples, see  [https://www.adobe.com/privacy/marketing-cloud.html#collect](https://www.adobe.com/privacy/marketing-cloud.html#collect).
+If you use Adobe Experience Cloud solutions, Adobe may host [personal data](gdpr-terminology.html#PII) for you depending on the solutions you use and the information you choose to send to your Adobe Experience Cloud account. For a detailed list of examples, see  [https://www.adobe.com/privacy/marketing-cloud.html#collect](https://www.adobe.com/privacy/marketing-cloud.html#collect).
 
 **What is Adobe doing towards compliance?**
 
-Adobe either already meets, or is working towards meeting, the obligations set out for [data processors](gdpr-terminology.html#Data_Processor).  For example:
+Adobe either already meets, or is working towards meeting, the obligations set out for [data processors](gdpr-terminology.html#Data_Processor). For example:
 
 * [*Privacy by Design*](gdpr-terminology.html#Privacy_by_Design)
  - We have a long-standing practice of incorporating [Privacy by Design](gdpr-terminology.html#Privacy_by_Design) in the development of our products and services. For example, we provide the capability in Adobe Analytics, Adobe Audience Manager, and Adobe Target to obfuscate IP addresses and allow individual level opt-outs.

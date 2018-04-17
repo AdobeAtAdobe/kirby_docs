@@ -4,7 +4,7 @@
 
 The General Data Protection Regulation (GDPR) framework from Adobe that provides a common, centralized, facility that allows Adobe customers to manage (access and delete) their personal data that is used by the Adobe Cloud Platform (ACP). The framework includes a UI for selecting and creating requests, a business layer (API) that will govern all data flowing in and out of ACP, and a facility to store, audit, and log information.
 
-Every Adobe application and platform does presently or will offer a solution that provides a [Data Subject](../gdpr-terminology.html#DataSubject) with access to all [personally identifiable information (PII)](../gdpr-terminology.html#PII) in human-readable form upon request of a Customer. Each Adobe application and platform works in conjunction with the Adobe GDPR framework to maintain an audit trail of each request and associated compliance adherence.
+Every Adobe application and platform does presently or will offer a solution that provides a [Data Subject](../gdpr-terminology.html#DataSubject) with access to all [personally identifiable information (PII)](../gdpr-terminology.html#PII) in human-readable form upon request of a Customer. Each Adobe application and platform works in conjunction with the Adobe GDPR API to maintain an audit trail of each request and associated compliance adherence.
 
 Each solution facilitates access to the PII of a Data Subject by an Adobe tool accompanied by processes for the intake and delivery of a request
 
@@ -18,9 +18,9 @@ If your integration needs to access content or a service on behalf of an end use
 
 For service-to-service integrations, you will also need a JSON Web Token (JWT) that encapsulates your client credentials and authenticates the identity of your integration. You exchange the JWT for the OAuth token that authorizes access. See [Adobe I/O Authentication Overview](http://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for detailed instructions.
 
-## GDPR Business Services
+## GDPR API
 
-The Adobe GDPR business-service framework revolves around consuming and producing event messages, audit logging, and information gathering. The framework interacts with [IMS](../gdpr-terminology.html#IMS) for service token retrieval, as well as managing message encryption and decryption. The GDPR framework provides a REST API layer for `access`, `delete`, and `status` requests (see [API reference](TBD)).
+The Adobe GDPR API revolves around consuming and producing event messages, audit logging, and information gathering. The API interacts with [IMS](../gdpr-terminology.html#IMS) for service token retrieval, as well as managing message encryption and decryption. The GDPR API provides a REST interface for `access`, `delete`, and `status` requests (see [API reference](TBD)).
 
 [TODO: gather all IDs](gdpr-id-onboarding)
 
@@ -104,7 +104,7 @@ The raw JSON request for the example shown in Listing 1 will look similar to the
 ```
 **Listing 2:** Adobe GDPR raw `status` request
 
-In Listing 2, The `action` field is a collection of desired actions (`access`, `delete`, and `status`), and may be different for each client in the request. The `key` is a client identifier to wrap the various namespace entries, and is used to qualify job IDs returned in the response data. Clients may have 1 or more namespaces and this format allows for varying numbers of identifiers as outlined in the following section.
+In Listing 2, The `action` field is a collection of desired actions (`access`, `delete`, and `status`), and may be different for each client in the request. The `key` is a client identifier to wrap the various namespace entries, and is used to qualify job IDs returned in the response data. Clients may have one or more namespaces and this format allows for varying numbers of identifiers as outlined in the following section.
 
 Listing 3 shows an example of a successful `status` request.
 
