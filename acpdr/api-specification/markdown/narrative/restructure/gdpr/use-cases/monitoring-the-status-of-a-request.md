@@ -2,21 +2,23 @@
 
 ## Introduction
 
-The General Data Protection Regulation (GDPR) framework from Adobe that provides a common, centralized, facility that allows Adobe customers to manage (access and delete) their personal data that is used by the Adobe Cloud Platform (ACP). The framework includes a UI for selecting and creating requests, a business layer (API) that will govern all data flowing in and out of ACP, and a facility to store, audit, and log information.
+The General Data Protection Regulation (GDPR) framework from Adobe that provides a common, centralized, facility that allows Adobe customers to manage (access and delete) their personal data that is used by the Adobe Experience Cloud (AEC). The cloud platform includes an API for selecting and creating requests, an API that will govern all data flowing in and out of AEC, and a facility to store, audit, and log information.
 
-Every Adobe application and platform does presently or will offer a solution that provides a [Data Subject](../gdpr-terminology.html#DataSubject) with access to all [personally identifiable information (PII)](../gdpr-terminology.html#PII) in human-readable form upon request of a Customer. Each Adobe application and platform works in conjunction with the Adobe GDPR API to maintain an audit trail of each request and associated compliance adherence.
+Every Adobe solution and API does presently or will offer a solution that provides a [Data Subject](../gdpr-terminology.html#DataSubject) with access to all [personal data](../gdpr-terminology.html#PII) in human-readable form upon request of a customer. Each Adobe solution and API works in conjunction with the Adobe GDPR API to maintain an audit trail of each request and associated compliance adherence.
 
-Each solution facilitates access to the PII of a Data Subject by an Adobe tool accompanied by processes for the intake and delivery of a request
+Each solution facilitates access to the personal data of a Data Subject using an Adobe API.
 
 ## Onboarding Your API Client
 
-Any ACP API, such as Adobe's GDPR framework, that accesses a service or content on behalf of an end user authenticates uses the OAuth and JSON Web Token (JWT) standards.
+Any AEC API, such as Adobe's GDPR framework, that accesses a service or content on behalf of an end user authenticates uses the OAuth and JSON Web Token (JWT) standards.
 
-An ACP API client application must be registered through the [Adobe I/O Console](https://console.adobe.io/). The I/O Console is where you can generate an API Key, an important requirement to obtain client credentials.
+An AEC API client application must be registered through the [Adobe I/O Console](https://console.adobe.io/). The I/O Console is where you can generate an API Key, an important requirement to obtain client credentials.
 
-If your integration needs to access content or a service on behalf of an end user, that user must be authenticated as well. Your integration will need to pass the OAuth token granted by the Adobe IMS.
+If your integration needs to access content or an API on behalf of an end user, that user must be authenticated as well. Your integration will need to pass an OAuth token granted by the Adobe IMS.
 
 For service-to-service integrations, you will also need a JSON Web Token (JWT) that encapsulates your client credentials and authenticates the identity of your integration. You exchange the JWT for the OAuth token that authorizes access. See [Adobe I/O Authentication Overview](http://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for detailed instructions.
+
+See [GDPR ID Onboarding](./gdpr-id-onboarding) for more information.
 
 ## GDPR API
 
