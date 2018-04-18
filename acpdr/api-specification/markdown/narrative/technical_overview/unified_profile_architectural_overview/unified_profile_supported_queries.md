@@ -1,6 +1,8 @@
 # Unified Profile Overview
 
-## Supported PQL Queries
+## Supported PQL Query Types
+
+The following are examples demonstrating the use of PQL's supported operators, functions and other features.
 
 <a id="pql-q1"></a>
 __Q1 - People with a US address__ 
