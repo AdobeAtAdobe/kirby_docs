@@ -18,7 +18,7 @@ If your integration needs to access content or an API on behalf of an end user, 
 
 For service-to-service integrations, you will also need a JSON Web Token (JWT) that encapsulates your client credentials and authenticates the identity of your integration. You exchange the JWT for the OAuth token that authorizes access. See [Adobe I/O Authentication Overview](http://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for detailed instructions.
 
-See [GDPR ID Onboarding](./gdpr-id-onboarding) for more information.
+See [GDPR ID Onboarding](gdpr-id-onboarding.md) for more information.
 
 ## GDPR API
 
