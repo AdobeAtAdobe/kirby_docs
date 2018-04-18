@@ -167,7 +167,7 @@ Unified Profile Segmentation behaves on/with the following components:
 Segmentation is supported for XDM Profile and ExperienceEvent schemas, with plans to expand to include additional schemas in the future. Segmentation is handled in the steps described by the remainder of this section. In summary, the following tasks are involved in Segmentation and are detailed in this section:
 
 * __Develop a Predicate__ - Determine and design the criteria that objects must meet to qualify for your Segment, and write the query representation of those rules
-* __Preview and Estimate Your Audience__ - As a step in the iterations of writing and testing your Predicate, Process your Predicate in a summary mode, gleaning information summarizing your Audience as well as the progress of the asynchronous Preview Job
+* __Estimate and Preview Your Audience__ - As a step in the iterations of writing and testing your Predicate, Process your Predicate in a summary mode, gleaning information summarizing your Audience as well as the progress of the asynchronous Preview Job
 * __Segment Your Audience__ - Create a reusable Predicate and use Segment Jobs to keep that Audience current and relevant
 * __Get Results__ - Using the Scan API, persist Audience members to a Profile DataSet
 
@@ -236,33 +236,33 @@ Example Response:
 
 You can find a list of supported PQL query examples [here](unified_profile_supported_queries.md), and more detailed information covering the Profile Query Language [here](unified_profile_pql.md).
 
-### 4.2 Preview and Estimate Your Audience
+### 4.2 Estimate and Preview Your Audience
 
 The Preview API allows for a direct path between Predicate query and the qualifying/relevant Audience. This is useful in testing your Predicate expression as you build it, or for one-time queries. You can find a list of supported PQL queries and more information [here](unified_profile_supported_queries.md).
 
 Previewing an audience consists of creating and initializing a Preview Session which is used to send Predicate expressions for asynchronous processing. 
 
-#### 4.2.1 Preview Audience - Step 1:  Create a Preview Session
+#### 4.2.1 Estimate and Preview Audience - Step 1:  Create a Preview Session
 
 Create an interactive Session for performing Preview operations using the `POST https://platform.adobe.io/data/core/ups/previewsession` API call. The state of the Preview Session will be `STARTING`.
 
-#### 4.2.2 Preview Audience - Step 2: Wait for Completion
+#### 4.2.2 Estimate and Preview Audience - Step 2: Wait for Completion
 
 Creating a Session is an asynchronous operation. Poll using the `GET https://platform.adobe.io/data/core/ups/previewsession/{previewSessionId}` API call for status using the `previewSessionId` returned from Step 1. You may initialize the Session once the it has reached the state `READY_TO_INITIALIZE`. 
 
-#### 4.2.3 Preview Audience - Step 3: Initialize a Session
+#### 4.2.3 Estimate and Preview Audience - Step 3: Initialize a Session
 
 Use the `POST https://platform.adobe.io/data/core/ups/previewsession/{previewSessionId}/initialize` API call to initialize the Preview Session when it has reached the `READY_TO_INITIALIZE` state. 
 
-#### 4.2.4 Preview Audience - Step 4: Wait for Completion
+#### 4.2.4 Estimate and Preview Audience - Step 4: Wait for Completion
 
 While initializing, the Preview Session will be in the `BUSY` state. Poll using the `GET https://platform.adobe.io/data/core/ups/previewsession/{previewSessionId}` API call for status until the Preview Session reaches the `READY` state.  
 
-#### 4.2.5 Preview Audience - Step 5: Submit Preview Jobs
+#### 4.2.5 Estimate and Preview Audience - Step 5: Submit Preview Jobs
 
 With an initialized Session, you are able to submit a PQL expression for evaluation using the `POST https://platform.adobe.io/data/core/ups/preview/{previewSessionId}` API call, passing a Predicate query and the model against which to run it. The response of this call provides the IDs required to poll for state and retrieve the resulting Audience using the `GET https://platform.adobe.io/data/core/ups//preview/{previewSessionId}/execution/{previewExecutionId}` call. This call supports the use of You can includes a `previewExecutionId` which can be used to poll for execution state.
 
-#### 4.2.6 Preview Audience - Step 6: Iteratively Estimate and Wait for Completion
+#### 4.2.6 Estimate and Preview Audience - Step 6: Iteratively Estimate and Wait for Completion
 
 Poll using the `GET https://platform.adobe.io/data/core/ups/preview/{previewSessionId}/execution/{previewExecutionId}` API call. When the response of this call report a `state` of "RESULT_READY", results can be gleaned from the `results` in the response. 
 
@@ -285,7 +285,7 @@ __Example Preview Job Estimate:__
 }
 ``` 
 
-#### 4.2.7 Preview Audience - Step 7: Read Results
+#### 4.2.7 Estimate and Preview Audience - Step 7: Read Results
 
 When the response of the `GET https://platform.adobe.io/data/core/ups/preview/{previewSessionId}/execution/{previewExecutionId}` API call shows a `state` of "RESULT_READY", you are able to access the results. Preview results are returned in an abbreviated form; providing IDs and links to retrieve each object. Results are paginated, where `next` and `prev` associated links (provided as `_links` in the response) provide the means by which to traverse back and forth through the pages.
 
@@ -328,7 +328,7 @@ Example Response:
 }
 ```
 
-#### 4.2.8 Preview Audience - Step 8: Delete the Preview Execution
+#### 4.2.8 Estimate and Preview Audience - Step 8: Delete the Preview Execution
 
 You can submit several Predicates for processing (starting with step 5) using the same Preview Session, but you must delete the Preview Execution prior to submitting subsequent queries.
 
