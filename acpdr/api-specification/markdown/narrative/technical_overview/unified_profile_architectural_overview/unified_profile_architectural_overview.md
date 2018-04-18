@@ -47,7 +47,7 @@ UPS maintains XDM data in the Profile Store which can be updated via batch or st
 
 ### 2.1 Batch Ingestion of Profile XDM DataSets
 
-XDM data can be ingested into the Unified Profile Service based on and triggered by batch data being [ingested](../allservices.html.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md) and managed by Data Catalog Service. 
+XDM data can be ingested into the Unified Profile Service based on and triggered by batch data being [ingested](../ingest_architectural_overview/ingest_architectural_overview.md) and managed by Data Catalog Service. 
 
 Both enablement and configuration for ingestion by Unified Profile are handled by a Tag on a DataSet, named specifically "unifiedProfile". The following is an example Patch request adding the "unifiedProfile" Tag, where the `enabled` property set to true enables the DataSet for ingestion into UPS. The `identityField` Tag property names the location in the XDM schema of the primary identity field; `identities.id` in the example below. Dot-notation is used to specify attributes within a hierarchy. For more information, see information on PQL [here](unified_profile_pql.md). 
 
@@ -175,15 +175,15 @@ Segmentation is supported for XDM Profile and ExperienceEvent schemas, with plan
 
 A Predicate encapsulates the complete set of criteria that define a specific Audience, written as a query in Adobe's proprietary Profile Query Language (PQL) specifically designed for building queries on XDM data. The following summarizes PQL, though more in-depth detail can be found [here](unified_profile_pql.md). In the context of this section, to develop the Predicate is to compose the PQL query describing the desired Audience.
 
-* Queries may be over Profile-only (e.g. [q1](unified_profile_supported_queries.md#pql-q1)), ExperienceEvent-only (e.g. [q5](unified_profile_supported_queries.md#pql-q5)), or a combination of Profile and ExperienceEvent ([q11](unified_profile_supported_queries.md#pql-q11)).
-* Queries can contain variables, which simplify or make clearer a single field or a composite value resulting from a calculation or condition (e.g. [q10](unified_profile_supported_queries.md#pql-q10): two orders within a two-week period).
+* Queries may be over Profile-only (e.g. [q1](unified_profile_supported_queries.md#q1)), ExperienceEvent-only (e.g. [q5](unified_profile_supported_queries.md#q5)), or a combination of Profile and ExperienceEvent ([q11](unified_profile_supported_queries.md#q11)).
+* Queries can contain variables, which simplify or make clearer a single field or a composite value resulting from a calculation or condition (e.g. [q10](unified_profile_supported_queries.md#q10): two orders within a two-week period).
 * Operators/functions:
-  * Boolean operators (and, or, not) - e.g. [q2](unified_profile_supported_queries.md#pql-q2).
+  * Boolean operators (and, or, not) - e.g. [q2](unified_profile_supported_queries.md#q2).
   * Equality, inequality (=, !=)
-  * Numerical comparisons (<, >, <=, >=) - e.g. [q1](unified_profile_supported_queries.md#pql-q1), [q3](unified_profile_supported_queries.md#pql-q3).
-  * Time series conditions: occurs - e.g. [q7](unified_profile_supported_queries.md#pql-q7), [q10](unified_profile_supported_queries.md#pql-q10).
-  * Others: like, in - e.g. [q2](unified_profile_supported_queries.md#pql-q2), [q4](unified_profile_supported_queries.md#pql-q4).
-  * Set formation over variable definitions: {} - e.g. [q6](unified_profile_supported_queries.md#pql-q6)-[q11](unified_profile_supported_queries.md#pql-q11).
+  * Numerical comparisons (<, >, <=, >=) - e.g. [q1](unified_profile_supported_queries.md#q1), [q3](unified_profile_supported_queries.md#q3).
+  * Time series conditions: occurs - e.g. [q7](unified_profile_supported_queries.md#q7), [q10](unified_profile_supported_queries.md#q10).
+  * Others: like, in - e.g. [q2](unified_profile_supported_queries.md#q2), [q4](unified_profile_supported_queries.md#q4).
+  * Set formation over variable definitions: {} - e.g. [q6](unified_profile_supported_queries.md#q6)-[q11](unified_profile_supported_queries.md#q11).
   * Count
 
 

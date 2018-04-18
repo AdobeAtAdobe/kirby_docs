@@ -4,8 +4,8 @@
 
 The following are examples demonstrating the use of PQL's supported operators, functions and other features.
 
-<a id="pql-q1"></a>
-__Q1 - People with a US address__ 
+### Q1 
+__People with a US address__
 
 ```
 {                             
@@ -15,42 +15,43 @@ __Q1 - People with a US address__
 }
 ```
 
-<a id="pql-q1.1"></a>
-__Q1.1 - People with a home address__
+### Q1a
+__People with a home address__
 
 ```
 { 
-    "name": "q1.1",
+    "name": "q1a",
     "description": "Profiles which have a home address",
     "query": "homeAddress" 
 }
 ```
 
 
-<a id="pql-q1.2"></a>
-__Q1.2 - People whose home address has a country specified__	
+### Q1b 
+__People whose home address has a country specified__	
 
 ```
 { 
-    "name": "q1.2",
+    "name": "q1b",
     "description": "Profiles for which have a home address with specified country",
     "query": "homeAddress.countryISO" 
 }
 ```
 
-<a id="pql-q1.3"></a>
-__Q1.3 - People whose home and work addresses are in the same country__
+
+### Q1c 
+__People whose home and work addresses are in the same country__
 
 ```
 { 
-    "name": "q1.3",
+    "name": "q1c",
     "description": "Profiles whose home address is in the same country as their work address",
     "query": "homeAddress.countryISO = workAddress.countryISO" 
 }
 ```
 
-<a id="pql-q2"></a>
-__Q2 - People with home addresses in California or Oregon__
+### Q2 
+__People with home addresses in California or Oregon__
 
 ```
 { 
@@ -59,9 +60,8 @@ __Q2 - People with home addresses in California or Oregon__
     "query": "homeAddress.countryISO = \"US\" and homeAddress.stateProvinceISO in [\"CA\", \"OR\"]" 
 }
 ```
-
-<a id="pql-q3"></a>
-__Q3 - People whose work and home addresses are in different states__
+### Q3 
+__People whose work and home addresses are in different states__
 
 ```
 { 
@@ -71,8 +71,8 @@ __Q3 - People whose work and home addresses are in different states__
 }
 ```
 
-<a id="pql-q4"></a>
-__Q4 - People with a *.edu email extension__
+### Q4 
+__People with an *.edu email extension__
 
 ```
 { 
@@ -82,8 +82,8 @@ __Q4 - People with a *.edu email extension__
 }
 ```
 
-<a id="pql-q5"></a>
-__Q5 - People who viewed Photoshop__ 
+### Q5 
+__People who viewed Photoshop__ 
 
 ```
 { 
@@ -94,8 +94,8 @@ __Q5 - People who viewed Photoshop__
 ```
 
 
-<a id="pql-q6"></a>
-__Q6 - Cart abandonment__
+### Q6 
+__People who abandoned one cart__
 
 ```
 { 
@@ -105,8 +105,8 @@ __Q6 - Cart abandonment__
 }
 ```
 
-<a id="pql-q7"></a>
-__Q7 - Abandonment of multiple carts__	
+### Q7 
+__People who abandoned multiple carts__
 
 ```
 { 
@@ -116,8 +116,8 @@ __Q7 - Abandonment of multiple carts__
 }
 ```
 
-<a id="pql-q8"></a>
-__Q8 - People who have placed an order__
+### Q8 
+__People who have placed an order__
 
 ```
 { 
@@ -126,20 +126,19 @@ __Q8 - People who have placed an order__
     "query": "{ xEvent.commerce.order }" 
 }
 ```
-
-<a id="pql-q8.1"></a>
-__Q8.1 - People who have placed an order where a purchase ID for that order exists__
+### Q8a 
+__People who have placed an order where a purchase ID for that order exists__
 
 ```
 { 
-    "name": "q8.1",
+    "name": "q8a",
     "description": "Profiles who have placed an order in a commerce store with a purchase id",
     "query": "{ xEvent.commerce.order.purchaseId != \"\" }" 
 }
 ```
 
-<a id="pql-q9"></a>
-__Q9 - People whose order contains a Photoshop product__
+### Q9 
+__People whose order contains a Photoshop product__
 
 ```
 { 
@@ -149,8 +148,8 @@ __Q9 - People whose order contains a Photoshop product__
 }
 ```
 
-<a id="pql-q10"></a>
-__Q10 - People who have ordered twice in two weeks__
+### Q10 
+__People who have ordered twice in two weeks__
 
 ```
 { 
@@ -160,8 +159,8 @@ __Q10 - People who have ordered twice in two weeks__
 }
 ```
 
-<a id="pql-q11"></a>
-__Q11 - Customers with US addresses who've ordered twice in a two-week period__
+### Q11 
+__Customers with US addresses who've ordered twice in a two-week period__
 
 ```
 { 
