@@ -37,17 +37,7 @@ Figure 1 is a high-level workflow diagram showing the sequence of events for an 
 
 As shown in Figure 1, a Data Subject issues a request to the Data Controller (the Adobe GDPR API). The Data Controller passes the request to the Experience Cloud and a response is return through the chain of requestors.
 
-Each GDPR API request must either specify a request type and/or invoke a specific HTTP verb (GET, POST, etc.). The following section illustrates the various Adobe GDPR API request types.
-
-## REST request types
-
-The Adobe GDPR API request types are listed below:
-
-| API Name | Method type | Path | Description | Input parameters | Response |
-| -------- | ----------- | ---- | ----------- | ---------------- | -------- |
-| Access/Delete | POST | /data/privacy/gdpr | Create one or many ACCESS/DELETE requests to retrieve or delete all data corresponding to the provided user id's | **Header:**<br/><br/>x-gw-ims-org-id: <org ID originating request><br/><br/>x-api-key: <application key for Adobe IO><br/>Authorization: Bearer <token><br/><br/>Content-Type: application/json<br/><br/>Body: See JSON body below | 202 Accepted<br/><br/>400 - Bad request - if the JSON body fails to process properly<br/><br/>500 - Server error - unforeseen service issues |
-| Status | GET | /data/privacy/gdpr/{jobId} | Retrieve the status of a job | **Header:**<br/><br/>x-gw-ims-org-id: <org ID originating request><br/><br/>x-api-key: <application key for Adobe IO><br/>Authorization: Bearer <token><br/><br/>Content-Type: application/json<br/><br/>**Path parameters:**<br/><br/>jobId - returned from an Access/Delete request<br/><br/>**Query parameters:**<br/><br/>data (true/false - default false) includes all additional request and response data received to this point | 200 success - JSON body with data regarding the status of the job<br/><br/>404 Not Found<br/>406 Not acceptable - format not supported<br/><br/>500 - Server error - unforeseen service issues |
-| Status (all) | GET | /data/privacy/gdpr/ | Retrieve all job statuses for the requesting user<br/><br/>Possibly return all resources in the case of an internal CSR request to help with others' requests | **Header:**<br/><br/>x-gw-ims-org-id: <org ID originating request><br/><br/>x-api-key: <application key for Adobe IO><br/><br/>Authorization: Bearer <token><br/><br/>Content-Type: application/json<br/><br/>**Query parameters (optional):**<br/><br/>data - (true/false - default false) includes all additional request and response data received to this point<br/><br/>start - day to begin job search<br/><br/>end - day to end job search<br/>page - page to return<br/><br/>limit - number of records per page<br/><br/>groupBy - (organization, jobId) | 200 success - JSON body with records from audit table<br/><br/>204 success - no records are found in the given context<br/><br/>406 Not acceptable - format not supported<br/><br/>500 - Server error - unforeseen service issues |
+Each GDPR API request must either specify a request type and/or invoke a specific HTTP verb (GET, POST, etc.). Appendix A illustrates the various Adobe GDPR API request types.
 
 The resource path for all requests to the GDPR API is: `/data/privacy/gdpr`.
 
@@ -98,7 +88,7 @@ The JSON payload (*HTTP POST* data) for the request shown in Listing 1 will look
 
 In Listing 2, The `action` field is a collection of desired actions (`access`, `delete`, and `status`), and may be different for each client in the request. The `key` is a client identifier to wrap the various namespace entries, and is used to qualify job IDs returned in the response data. Clients may have one or more namespaces and this format allows for varying numbers of identifiers.
 
-Namespace qualifiers (types) help categorize the data values that a customer is using to identify a user. The *namespace* key must exist for every individual data value submitted that relates to a given user. The *type* value in the *namespace* block must contain one of the qualifiers shown in the *Namespace Qualifers* table in the appendix.
+Namespace qualifiers (types) help categorize the data values that a customer is using to identify a user. The *namespace* key must exist for every individual data value submitted that relates to a given user. The *type* value in the *namespace* block must contain one of the qualifiers shown in the *Namespace Qualifers* table in Appendix B.
 
 Responses from GDPR API requests use a JSON payload consisting of either success data or error data.
 
@@ -307,7 +297,17 @@ Listing 6 shows a typical example of a response payload from a `status` request 
 
 Listing 6: Response payload from a `status` request with a job ID
 
-## Appendix
+## Appendix A
+
+## Adobe GDPR API REST Request Types
+
+| API Name | Method type | Path | Description | Input parameters | Response |
+| -------- | ----------- | ---- | ----------- | ---------------- | -------- |
+| Access/Delete | POST | /data/privacy/gdpr | Create one or many ACCESS/DELETE requests to retrieve or delete all data corresponding to the provided user id's | **Header:**<br/><br/>x-gw-ims-org-id: <org ID originating request><br/><br/>x-api-key: <application key for Adobe IO><br/>Authorization: Bearer <token><br/><br/>Content-Type: application/json<br/><br/>Body: See JSON body below | 202 Accepted<br/><br/>400 - Bad request - if the JSON body fails to process properly<br/><br/>500 - Server error - unforeseen service issues |
+| Status | GET | /data/privacy/gdpr/{jobId} | Retrieve the status of a job | **Header:**<br/><br/>x-gw-ims-org-id: <org ID originating request><br/><br/>x-api-key: <application key for Adobe IO><br/>Authorization: Bearer <token><br/><br/>Content-Type: application/json<br/><br/>**Path parameters:**<br/><br/>jobId - returned from an Access/Delete request<br/><br/>**Query parameters:**<br/><br/>data (true/false - default false) includes all additional request and response data received to this point | 200 success - JSON body with data regarding the status of the job<br/><br/>404 Not Found<br/>406 Not acceptable - format not supported<br/><br/>500 - Server error - unforeseen service issues |
+| Status (all) | GET | /data/privacy/gdpr/ | Retrieve all job statuses for the requesting user<br/><br/>Possibly return all resources in the case of an internal CSR request to help with others' requests | **Header:**<br/><br/>x-gw-ims-org-id: <org ID originating request><br/><br/>x-api-key: <application key for Adobe IO><br/><br/>Authorization: Bearer <token><br/><br/>Content-Type: application/json<br/><br/>**Query parameters (optional):**<br/><br/>data - (true/false - default false) includes all additional request and response data received to this point<br/><br/>start - day to begin job search<br/><br/>end - day to end job search<br/>page - page to return<br/><br/>limit - number of records per page<br/><br/>groupBy - (organization, jobId) | 200 success - JSON body with records from audit table<br/><br/>204 success - no records are found in the given context<br/><br/>406 Not acceptable - format not supported<br/><br/>500 - Server error - unforeseen service issues |
+
+## Appendix B
 
 ### Namespace Qualifiers
 
