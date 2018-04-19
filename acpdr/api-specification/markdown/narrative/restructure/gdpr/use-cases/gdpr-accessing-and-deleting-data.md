@@ -33,7 +33,7 @@ Figure 1 is a high-level workflow diagram showing the sequence of events for an 
 ![GDPR Access Use Case](../images/gdpr-access-use-case.png)
 **Figure 1:** Sequence of events for an `access` request
 
-As shown in Figure 1, a Data Subject issues a request to the Data Controller (the Adobe GDPR API). The Data Controller passes the request to the Experience Cloud and a response is return through the chain of requestors.
+As shown in Figure 1, a Data Subject issues a request to the Data Controller (the Adobe GDPR API). The Data Controller passes the request to the Experience Cloud and a response is returned through the chain of requestors.
 
 ### GDPR API Requests and Responses
 
@@ -146,14 +146,14 @@ Listing 4 shows the JSON response payload for an unsuccessful `access` request.
 ```
 **Listing 4:** Payload for an *error* response returned for an unsuccessful GDPR `access` request
 
-Once a job ID is obtained, it can be used to retrieve details about the job started from a previous `access` or `delete` request. A `status` request to the API with a jobId value embedded in the URI is shown in Listing 5.
+Once a job ID is obtained, it can be used to retrieve details about the job started from a previous `access` or `delete` request. A `status` request containing a `jobId` value is shown in Listing 5.
 
 ```
 /data/privacy/gdpr/{jobId}
 ```
-**Listing 5:** GDPR `status` request payload
+**Listing 5:** GDPR `status` request
 
-Listing 5 illustrates that the GDPR `status` API request uses the same URI as an `access` or `delete` request with one exception - the ID of a specific job is appended to the URI. If the job ID is not specified, details about all jobs for the authenticated integration is returned.
+Listing 5 illustrates how the GDPR `status` API request uses the same URI as an `access` or `delete` request with one exception - the ID of a specific job is appended to the URI. If the job ID is not specified, details about all jobs for the authenticated integration is returned.
 
 Listing 6 shows a typical example of a response payload from a `status` request that specified a job ID.
 
