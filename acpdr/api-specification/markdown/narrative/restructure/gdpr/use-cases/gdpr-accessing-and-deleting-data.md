@@ -2,27 +2,25 @@
 
 ## Introduction
 
-The General Data Protection Regulation (GDPR) framework from Adobe that provides a common, centralized, facility that allows Adobe customers to manage (access and delete) their personal data that is used by the Adobe Experience Cloud (AEC). The cloud platform includes an API for selecting and creating requests, an API that will govern all data flowing in and out of AEC, and a facility to store, audit, and log information.
+The General Data Protection Regulation (GDPR) framework from Adobe provides a robust API that enables Adobe customers to manage (access and delete) their personal data used by the Adobe Experience Cloud (AEC). In addition to an API for accessing and deleting data, AEC includes internal facilities that govern all data flowing in and out of AEC, and facilities to store, and audit and log information.
 
-Every Adobe solution and API does presently or will offer a solution that provides a [Data Subject](../gdpr-terminology.html#DataSubject) with access to all [personal data](../gdpr-terminology.html#PII) in human-readable form upon request of a customer. Each Adobe solution and API works in conjunction with the Adobe GDPR API to maintain an audit trail of each request and associated compliance adherence.
-
-Each solution facilitates access to the personal data of a Data Subject using an Adobe API.
+Every Adobe solution does presently or will offer services that enable a [Data Subject](../gdpr-terminology.html#DataSubject) with access to all [personal data](../gdpr-terminology.html#PII) in human-readable form upon request. Each Adobe solution works with the Adobe GDPR API to maintain an audit trail of each request and associated compliance adherence.
 
 ## Onboarding Your API Client
 
-Any AEC API, such as Adobe's GDPR framework, that accesses a service or content on behalf of an end user authenticates uses the OAuth and JSON Web Token (JWT) standards.
+Any AEC API, such as Adobe's GDPR API, that accesses a service or content on behalf of an end user, authenticates using the OAuth and JSON Web Token (JWT) standards.
 
-An AEC API client application must be registered through the [Adobe I/O Console](https://console.adobe.io/). The I/O Console is where you can generate an API Key, an important requirement to obtain client credentials.
+An AEC API client integration must be registered through the [Adobe I/O Console](https://console.adobe.io/). The I/O Console is where you can generate an API Key, an important requirement to obtaining client credentials.
 
-If your integration needs to access content or an API on behalf of an end user, that user must be authenticated as well. Your integration will need to pass an OAuth token granted by the Adobe IMS.
+If your integration needs to access content or an API on behalf of an end user, that user must be authenticated as well. Your integration will need to pass an OAuth token granted by the Adobe [Identity Management System (IMS)](../gdpr-terminology.html#IMS).
 
 For service-to-service integrations, you will also need a JSON Web Token (JWT) that encapsulates your client credentials and authenticates the identity of your integration. You exchange the JWT for the OAuth token that authorizes access. See [Adobe I/O Authentication Overview](http://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for detailed instructions.
 
-See [GDPR ID Onboarding](gdpr-id-onboarding.md) for more information.
+For more information about onboarding your integration (API client), see [GDPR ID Onboarding](gdpr-id-onboarding.md).
 
 ## GDPR API
 
-The Adobe GDPR API revolves around consuming and producing event messages, audit logging, and information gathering. The API interacts with [IMS](../gdpr-terminology.html#IMS) for service token retrieval, as well as managing message encryption and decryption.
+The Adobe GDPR API revolves around consuming and producing event messages, audit logging, and information gathering. The API interacts with IMS for service token retrieval, as well as managing message encryption and decryption.
 
 All GDPR API requests are REST-based with JSON used as the payload for requests and responses.
 
@@ -37,11 +35,11 @@ Figure 1 is a high-level workflow diagram showing the sequence of events for an 
 
 As shown in Figure 1, a Data Subject issues a request to the Data Controller (the Adobe GDPR API). The Data Controller passes the request to the Experience Cloud and a response is return through the chain of requestors.
 
-Each GDPR API request must either specify a request type and/or invoke a specific HTTP verb (GET, POST, etc.). [Appendix A](#appendix_a) illustrates the various Adobe GDPR API request types.
+### GDPR API Requests and Responses
+
+Each GDPR API request must either specify a request type in its request payload and/or invoke a specific HTTP verb (GET, POST, etc.). [Appendix A](#appendix_a) illustrates the various Adobe GDPR API request types.
 
 The resource path for all requests to the GDPR API is: `/data/privacy/gdpr`.
-
-### Example
 
 Listing 1 is an example of an Adobe, GDPR API `access` request URI.
 
@@ -50,6 +48,8 @@ Listing 1 is an example of an Adobe, GDPR API `access` request URI.
 ```
 
 **Listing 1:** Adobe GDPR `access` request example
+
+An `access` request to the GDPR API, as shown in Listing 1, will retrieve details of one or more IDs for an authenticated user or integration.
 
 The JSON payload (*HTTP POST* data) for the request shown in Listing 1 will look similar to Listing 2.
 
@@ -84,13 +84,13 @@ The JSON payload (*HTTP POST* data) for the request shown in Listing 1 will look
     ]
 }
 ```
-**Listing 2:** Adobe GDPR raw `access` request example
+**Listing 2:** Adobe GDPR API `access` request payload
 
-In Listing 2, The `action` field is a collection of desired actions (`access`, `delete`, and `status`), and may be different for each client in the request. The `key` is a client identifier to wrap the various namespace entries, and is used to qualify job IDs returned in the response data. Clients may have one or more namespaces and this format allows for varying numbers of identifiers.
+In Listing 2, The `action` field is a collection of desired request types (`access` or `delete`), and may be different for each ID in the request. The `key` is an entity identifier that encapsulates associated IDs, which are represented by job IDs returned in the response data. Clients may have more than one ID.
 
-Namespace qualifiers (types) help categorize the data values that a customer is using to identify a user. The *namespace* key must exist for every individual data value submitted that relates to a given user. The *type* value in the *namespace* block must contain one of the qualifiers shown in the *Namespace Qualifers* table in [Appendix B](#appendix_b).
+Namespace qualifiers (types) help categorize the data values used to identify entities. The *namespace* key must exist for every individual data value submitted that relates to a given ID. The *type* value in the *namespace* block must contain one of the qualifiers shown in the *Namespace Qualifers* table in [Appendix B](#appendix_b).
 
-Responses from GDPR API requests use a JSON payload consisting of either success data or error data.
+Responses from GDPR API requests are formatted as JSON payloads (objects) consisting of either success data or error data.
 
 Listing 3 shows the JSON payload returned from a successful `access` request.
 
@@ -116,9 +116,9 @@ Listing 3 shows the JSON payload returned from a successful `access` request.
     }
 }
 ```
-**Listing 3:** Payload for a *success* response returned for a GDPR `access` request
+**Listing 3:** Payload for a *success* response from a GDPR API `access` request
 
-Note the `jobId` value in the response shown in Listing 3. This value is used for subsequent API requests to retrieve the status of the `access` request.
+Note the `jobId` value in the response shown in Listing 3. This value is used for subsequent API requests to retrieve the status of the `access` request represented by the jobID value.
 
 Listing 4 shows the JSON response payload for an unsuccessful `access` request.
 
@@ -144,18 +144,18 @@ Listing 4 shows the JSON response payload for an unsuccessful `access` request.
     }
 }
 ```
-**Listing 4:** Payload for an *error* response returned for a GDPR `access` request
+**Listing 4:** Payload for an *error* response returned for an unsuccessful GDPR `access` request
 
-Once the JobId is obtained, it can be used to gather deeper information about the job started from a previous `access` or `delete` request. A call to the API with the JobId value in the URI is shown in Listing 5.
+Once a job ID is obtained, it can be used to retrieve details about the job started from a previous `access` or `delete` request. A `status` request to the API with a jobId value embedded in the URI is shown in Listing 5.
 
 ```
 /data/privacy/gdpr/{jobId}
 ```
 **Listing 5:** GDPR `status` request payload
 
-Listing 5 illustrates that the GDPR `status` API request uses the same URI as an `access` or `delete` request with one exception - the ID of a specific job is appended to the URI.
+Listing 5 illustrates that the GDPR `status` API request uses the same URI as an `access` or `delete` request with one exception - the ID of a specific job is appended to the URI. If the job ID is not specified, details about all jobs for the authenticated integration is returned.
 
-Listing 6 shows a typical example of a response payload from a `status` request that includes a job ID.
+Listing 6 shows a typical example of a response payload from a `status` request that specified a job ID.
 
 ```
 {
@@ -296,6 +296,12 @@ Listing 6 shows a typical example of a response payload from a `status` request 
 ```
 
 Listing 6: Response payload from a `status` request with a job ID
+
+## Summary
+
+The GDPR framework from Adobe provides a powerful API that enables Adobe customers to access and delete their personal data used by the Adobe Experience Cloud. In addition to an API, the internal facilities of the Adobe Experience Cloud govern incoming and outgoing personal data, store data, and audit and log information.
+
+Every Adobe solution and API does presently or will offer a solution that provides access to all [personal data](../gdpr-terminology.html#PII) upon request.
 
 <a name="appendix_a" id="appendix_a"></a>
 ## Appendix A
