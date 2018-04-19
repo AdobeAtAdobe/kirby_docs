@@ -24,8 +24,6 @@ See [GDPR ID Onboarding](gdpr-id-onboarding.md) for more information.
 
 The Adobe GDPR API revolves around consuming and producing event messages, audit logging, and information gathering. The API interacts with [IMS](../gdpr-terminology.html#IMS) for service token retrieval, as well as managing message encryption and decryption. The GDPR API provides a REST interface for `access`, `delete`, and `status` requests (see [API reference](TBD)).
 
-[TODO: gather all IDs](gdpr-id-onboarding)
-
 Below is a high-level workflow diagram showing the sequence of events for a `status` request.
 
 ![GDPR Status Use Case](../images/gdpr-status-use-case.png)
