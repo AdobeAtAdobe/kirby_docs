@@ -88,7 +88,7 @@ The JSON payload (*HTTP POST* data) for the request shown in Listing 1 will look
 
 In Listing 2, The `action` field is a collection of desired request types (`access` or `delete`), and may be different for each ID in the request. The `key` is an entity identifier that encapsulates associated IDs, which are represented by job IDs returned in the response data. Clients may have more than one ID.
 
-Namespace qualifiers (types) help categorize the data values used to identify entities. The *namespace* key must exist for every individual data value submitted that relates to a given ID. The *type* value in the *namespace* block must contain one of the qualifiers shown in the *Namespace Qualifers* table in [Appendix B](#appendix_b).
+Namespace qualifiers (types) help categorize the data values used to identify entities. The *namespace* key must exist for every individual data value submitted that relates to a given ID. The *type* value in the *namespace* block must contain one of the qualifiers shown in the *Namespace Qualifiers* table in [Appendix B](#appendix_b).
 
 Responses from GDPR API requests are formatted as JSON payloads (objects) consisting of either success data or error data.
 
@@ -118,7 +118,7 @@ Listing 3 shows the JSON payload returned from a successful `access` request.
 ```
 **Listing 3:** Payload for a *success* response from a GDPR API `access` request
 
-Note the `jobId` value in the response shown in Listing 3. This value is used for subsequent API requests to retrieve the status of the `access` request represented by the jobID value.
+Note the `jobId` value in the response shown in Listing 3. This value is used for subsequent API requests to retrieve the status of the `access` request represented by the `jobID` value.
 
 Listing 4 shows the JSON response payload for an unsuccessful `access` request.
 
