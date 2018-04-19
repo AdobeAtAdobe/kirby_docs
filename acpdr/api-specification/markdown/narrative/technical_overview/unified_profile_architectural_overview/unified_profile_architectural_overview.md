@@ -531,5 +531,5 @@ Response:
 }
 ```
  
-With the `viewId`, you are able to use the Data Access SDK to read data. Data Access SDK is an official SDK provided by Platform foundation to read any data present inside a valid DataSet. For more information on using the Data Access SDK, [see the tutorial](../alltutorials.html#!api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md), [samples](https://git.corp.adobe.com/experience-platform/data-access-sdk-sample) or [see the project on GitHub](https://git.corp.adobe.com/experience-platform/data-access-sdk). 
+With the `viewId`, you are able to use the Data Access SDK to read data. Data Access SDK is an official SDK provided by Platform foundation to read any data present inside a valid DataSet. For more information on using the Data Access SDK, [see the tutorial](../../alltutorials.html#!api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md), [samples](https://git.corp.adobe.com/experience-platform/data-access-sdk-sample) or [see the project on GitHub](https://git.corp.adobe.com/experience-platform/data-access-sdk). 
  
