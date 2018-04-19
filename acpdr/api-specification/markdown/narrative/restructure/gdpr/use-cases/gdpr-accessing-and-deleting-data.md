@@ -22,31 +22,46 @@ See [GDPR ID Onboarding](gdpr-id-onboarding.md) for more information.
 
 ## GDPR API
 
-The Adobe GDPR API revolves around consuming and producing event messages, audit logging, and information gathering. The API interacts with [IMS](../gdpr-terminology.html#IMS) for service token retrieval, as well as managing message encryption and decryption. The GDPR API provides a REST interface for `access`, `delete`, and `status` requests (see [API reference](TBD)).
+The Adobe GDPR API revolves around consuming and producing event messages, audit logging, and information gathering. The API interacts with [IMS](../gdpr-terminology.html#IMS) for service token retrieval, as well as managing message encryption and decryption.
 
-Below is a high-level workflow diagram showing the sequence of events for an `access` request.
+All GDPR API requests are REST-based with JSON used as the payload for requests and responses.
+
+## GDPR API Requests
+
+The GDPR API provides a REST interface for `access`, `delete`, and `status` requests (see [API reference](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html)).
+
+Figure 1 is a high-level workflow diagram showing the sequence of events for an `access` request.
 
 ![GDPR Access Use Case](../images/gdpr-access-use-case.png)
+**Figure 1:** Sequence of events for an `access` request
 
-## Adobe GDPR Access Request
+As shown in Figure 1, a Data Subject issues a request to the Data Controller (the Adobe GDPR API). The Data Controller passes the request to the Experience Cloud and a response is return through the chain of requestors.
 
-### Example
+Each GDPR API request must either specify a request type and/or invoke a specific HTTP verb (GET, POST, etc.). The following section illustrates the various Adobe GDPR API request types.
 
-Listing 1 illustrates an example of an Adobe GDPR `access` request.
+## REST request types
 
-The basic functionality of the API supports GDPR access (GET) or delete (DELETE) requests.
-
-Authentication
-The authentication through Adobe.IO requires a valid IMS access token (user) and access to an API key, which will be provided by the application owners, as defined in their Adobe IO services.
-
-REST request types
-The resource path for all requests to the service is: /data/privacy/gdpr.  The following method types are listed below:
+The Adobe GDPR API request types are listed below:
 
 | API Name | Method type | Path | Description | Input parameters | Response |
 | -------- | ----------- | ---- | ----------- | ---------------- | -------- |
-| Access/Delete | POST | /data/privacy/gdpr | Create one or many ACCESS/DELETE requests to retrieve or delete all data corresponding to the provided user id's | Header: x-gw-ims-org-id: <org ID originating request><br/>x-api-key: <application key for Adobe IO><br/>Authorization: Bearer <token><br/>Content-Type: application/json<br/>Body: See JSON body below | 202 Accepted<br/>400 - Bad request - if the JSON body fails to process properly<br/>500 - Server error - unforeseen service issues |
-| Status | GET | /data/privacy/gdpr/{jobId} | Retrieve the status of a job | Header: x-gw-ims-org-id: <org ID originating request><br/>x-api-key: <application key for Adobe IO><br/>Authorization: Bearer <token><br/>Content-Type: application/json<br/>Path parameters:<br/>jobId - returned from an Access/Delete request<br/>Query parameters:<br/>data (true/false - default false) includes all additional request and response data received to this point | 200 success - JSON body with data regarding the status of the job<br/>404 Not Found<br/>406 Not acceptable - format not supported<br/>500 - Server error - unforeseen service issues |
-| Status (all) | GET | /data/privacy/gdpr/ | Retrieve all job statuses for the requesting user<br/><br/>Possibly return all resources in the case of an internal CSR request to help with others' requests | Header:<br/>x-gw-ims-org-id: <org ID originating request><br/>x-api-key: <application key for Adobe IO><br/>Authorization: Bearer <token><br/>Content-Type: application/json<br/>Query parameters (optional):<br/>data - (true/false - default false) includes all additional request and response data received to this point<br/>start - day to begin job search<br/>end - day to end job search<br/>page - page to return<br/>limit - number of records per page<br/>groupBy - (organization, jobId) | 200 success - JSON body with records from audit table<br/>204 success - no records are found in the given context<br/>406 Not acceptable - format not supported<br/>500 - Server error - unforeseen service issues |
+| Access/Delete | POST | /data/privacy/gdpr | Create one or many ACCESS/DELETE requests to retrieve or delete all data corresponding to the provided user id's | **Header:**<br/><br/>x-gw-ims-org-id: <org ID originating request><br/><br/>x-api-key: <application key for Adobe IO><br/>Authorization: Bearer <token><br/><br/>Content-Type: application/json<br/><br/>Body: See JSON body below | 202 Accepted<br/><br/>400 - Bad request - if the JSON body fails to process properly<br/><br/>500 - Server error - unforeseen service issues |
+| Status | GET | /data/privacy/gdpr/{jobId} | Retrieve the status of a job | **Header:**<br/><br/>x-gw-ims-org-id: <org ID originating request><br/><br/>x-api-key: <application key for Adobe IO><br/>Authorization: Bearer <token><br/><br/>Content-Type: application/json<br/><br/>**Path parameters:**<br/><br/>jobId - returned from an Access/Delete request<br/><br/>**Query parameters:**<br/><br/>data (true/false - default false) includes all additional request and response data received to this point | 200 success - JSON body with data regarding the status of the job<br/><br/>404 Not Found<br/>406 Not acceptable - format not supported<br/><br/>500 - Server error - unforeseen service issues |
+| Status (all) | GET | /data/privacy/gdpr/ | Retrieve all job statuses for the requesting user<br/><br/>Possibly return all resources in the case of an internal CSR request to help with others' requests | **Header:**<br/><br/>x-gw-ims-org-id: <org ID originating request><br/><br/>x-api-key: <application key for Adobe IO><br/><br/>Authorization: Bearer <token><br/><br/>Content-Type: application/json<br/><br/>**Query parameters (optional):**<br/><br/>data - (true/false - default false) includes all additional request and response data received to this point<br/><br/>start - day to begin job search<br/><br/>end - day to end job search<br/>page - page to return<br/><br/>limit - number of records per page<br/><br/>groupBy - (organization, jobId) | 200 success - JSON body with records from audit table<br/><br/>204 success - no records are found in the given context<br/><br/>406 Not acceptable - format not supported<br/><br/>500 - Server error - unforeseen service issues |
+
+The resource path for all requests to the GDPR API is: `/data/privacy/gdpr`.
+
+### Example
+
+Listing 1 is an example of an Adobe, GDPR API `access` request URI.
+
+```
+/data/privacy/gdpr/
+```
+
+**Listing 1:** Adobe GDPR `access` request example
+
+The JSON payload (*HTTP POST* data) for the request shown in Listing 1 will look similar to Listing 2.
 
 ```json
 {
@@ -81,9 +96,13 @@ The resource path for all requests to the service is: /data/privacy/gdpr.  The f
 ```
 **Listing 2:** Adobe GDPR raw `access` request example
 
-In Listing 2, The `action` field is a collection of desired actions (`access`, `delete`, and `status`), and may be different for each client in the request. The `key` is a client identifier to wrap the various namespace entries, and is used to qualify job IDs returned in the response data. Clients may have one or more namespaces and this format allows for varying numbers of identifiers as outlined in the following section.
+In Listing 2, The `action` field is a collection of desired actions (`access`, `delete`, and `status`), and may be different for each client in the request. The `key` is a client identifier to wrap the various namespace entries, and is used to qualify job IDs returned in the response data. Clients may have one or more namespaces and this format allows for varying numbers of identifiers.
 
-Listing 3 shows an example of a successful `access` request.
+Namespace qualifiers (types) help categorize the data values that a customer is using to identify a user. The *namespace* key must exist for every individual data value submitted that relates to a given user. The *type* value in the *namespace* block must contain one of the qualifiers shown in the *Namespace Qualifers* table in the appendix.
+
+Responses from GDPR API requests use a JSON payload consisting of either success data or error data.
+
+Listing 3 shows the JSON payload returned from a successful `access` request.
 
 ```json
 {
@@ -107,11 +126,11 @@ Listing 3 shows an example of a successful `access` request.
     }
 }
 ```
-**Listing 3:** Adobe GDPR raw `access` request success response
+**Listing 3:** Payload for a *success* response returned for a GDPR `access` request
 
 Note the `jobId` value in the response shown in Listing 3. This value is used for subsequent API requests to retrieve the status of the `access` request.
 
-Listing 4 shows an example of an unsuccessful `access` request.
+Listing 4 shows the JSON response payload for an unsuccessful `access` request.
 
 ```json
 {
@@ -135,19 +154,170 @@ Listing 4 shows an example of an unsuccessful `access` request.
     }
 }
 ```
-**Listing 4:** Adobe GDPR raw `access` request error response
+**Listing 4:** Payload for an *error* response returned for a GDPR `access` request
 
-## Namespace Types
+Once the JobId is obtained, it can be used to gather deeper information about the job started from a previous `access` or `delete` request. A call to the API with the JobId value in the URI is shown in Listing 5.
 
-Namespace types categorize unique data that a customer uses to identify a service client. The `type` values specified in the `userIDs` array must contain one of the following qualifiers:
+```
+/data/privacy/gdpr/{jobId}
+```
+**Listing 5:** GDPR `status` request payload
+
+Listing 5 illustrates that the GDPR `status` API request uses the same URI as an `access` or `delete` request with one exception - the ID of a specific job is appended to the URI.
+
+Listing 6 shows a typical example of a response payload from a `status` request that includes a job ID.
+
+```
+{
+    "jobs": [
+        {
+            "jobId": "ca9d14fc-1dbb-4206-84bb-5b62dfca31d5",
+            "requestId": 43,
+            "ticketNumber": "12345",
+            "customer": {
+                "user": {
+                    "key": "David Smith",
+                    "action": [
+                        "delete"
+                    ],
+                    "userIDs": [
+                        {
+                            "namespace": "email",
+                            "value": "dsmith@acme.com",
+                            "type": "standard",
+                        }
+                    ]
+                },
+                "companyContexts": [
+                    {
+                        "namespace": "imsOrgID",
+                        "value": "123456789@AdobeOrg"
+                    }
+                ]
+            },
+            "productResponses": [
+                {
+                    "product": "Analytics",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted"
+                    }
+                },
+                {
+                    "product": "Audience Manager",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted"
+                    }
+                },
+                {
+                    "product": "AdCloud",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted"
+                    }
+                },
+                {
+                    "product": "Profile Service",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted"
+                    }
+                },
+                {
+                    "product": "Experience Platform",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted"
+                    }
+                },
+                {
+                    "product": "Experience Manager",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted"
+                    }
+                },
+                {
+                    "product": "Social",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted"
+                    }
+                },
+                {
+                    "product": "Campaign",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted"
+                    }
+                },
+                {
+                    "product": "Mobile",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted"
+                    }
+                },
+                {
+                    "product": "Device Graph",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted"
+                    }
+                },
+                {
+                    "product": "Target",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted"
+                    }
+                },
+                {
+                    "product": "CRS",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted"
+                    }
+                }
+            ],
+            "lastUpdatedBy": "GDPRCentralService",
+            "timeRequested": "03/12/2018 6:03 PM",
+            "submittedBy": "023B0101A342C@AdobeID",
+            "gdprStatusResponse": {
+                "statusCode": 2,
+                "statusMessage": "processing"
+            }
+        }
+    ]
+}
+```
+
+Listing 6: Response payload from a `status` request with a job ID
+
+## Appendix
+
+### Namespace Qualifiers
 
 | Qualifier | Definition |
 | --------- | ---------- |
-| dpsc | A custom field type for DPS mappings, which support a set of three standard namespaces. |
-| analytics | A custom namespace that is mapped internally in Analytics, not in the namespace service. This will be passed in directly as specified by the original request, without a namespace ID |
-| target | A custom namespace that is understood internally by Target, not in the namespace service. This will be passed in directly as specified by the original request, without a namespace ID |
-| unregistered | A freeform string that is not defined in the namespace service and will be taken "as is". Any solution that handles these kinds of namespaces will check against them and handle if appropriate for the company context and data set. No namespace ID will be provided. |
-| custom | A unique namespace created in the context of an organization, not shared across the Experience Cloud. The value represents the friendly name ("name" field) to be searched for. Namespace ID will be provided. |
-| namespaceId | Indicates the value is the actual ID of the namespace that was created or mapped through the namespace service. |
-| integrationCode | Integration code - similar to "custom", but specifically defined as the integration code of a datasource to be searched for. Namespace ID will be provided. |
 | standard | One of the standard namespaces defined globally, not tied to an individual organization data set (e.g. email, phone number, etc.). Namespace ID will be provided. |
+| custom | A unique namespace created in the context of an organization, not shared across the Experience Cloud. The value represents the friendly name ("name" field) to be searched for. Namespace ID will be provided. |
+| integrationCode | Integration code - similar to "custom", but specifically defined as the integration code of a datasource to be searched for. Namespace ID will be provided. |
+| namespaceId | Indicates the value is the actual ID of the namespace that was created or mapped through the namespace service. |
+| unregistered | A freeform string that is not defined in the namespace service and will be taken "as is". Any solution that handles these kinds of namespaces will check against them and handle if appropriate for the company context and data set. No namespace ID will be provided. |
+| analytics | A custom namespace that is mapped internally in Analytics, not in the namespace service. This will be passed in directly as specified by the original request, without a namespace ID |
+| dpsc | A custom field type for DPS mappings, which support a set of three standard namespaces. |
+| target | A custom namespace that is understood internally by Target, not in the namespace service. This will be passed in directly as specified by the original request, without a namespace ID |
