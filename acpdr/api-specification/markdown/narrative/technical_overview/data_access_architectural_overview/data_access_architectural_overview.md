@@ -227,7 +227,7 @@ Contents of the file
 ```
 
 ## 6 Additional Code Samples
-Please refer to the tutorial [How to Query Data via Data Access API](../alltutorials.html#!api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md)
+Please refer to the tutorial [How to Query Data via Data Access API](../../tutorials/data_access_tutorial/data_access_tutorial.md).
 
 
 ## 7. Terminology
