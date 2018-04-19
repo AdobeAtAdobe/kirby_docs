@@ -1,4 +1,4 @@
-# Accessing Personal Data by a Data Subject
+# Accessing and Deleting Personal Data by a Data Subject
 
 ## Introduction
 
@@ -34,39 +34,19 @@ Below is a high-level workflow diagram showing the sequence of events for an `ac
 
 Listing 1 illustrates an example of an Adobe GDPR `access` request.
 
-```java
-GDPRCentralServiceApi apiInstance = new GDPRCentralServiceApi();
-AGDPRRequestModel body = new AGDPRRequestModel();
+The basic functionality of the API supports GDPR access (GET) or delete (DELETE) requests.
 
-ACompanyContextModel companyContextsItem = new ACompanyContextModel();
-companyContextsItem.setNamespace("imsOrgID");
-companyContextsItem.setValue("123456789@AdobeOrg");
+Authentication
+The authentication through Adobe.IO requires a valid IMS access token (user) and access to an API key, which will be provided by the application owners, as defined in their Adobe IO services.
 
-body.addCompanyContextsItem(companyContextsItem);
+REST request types
+The resource path for all requests to the service is: /data/privacy/gdpr.  The following method types are listed below:
 
-AModelForUsers usersItem = new AModelForUsers();
-usersItem.setKey("David Smith");
-usersItem.addActionItem("access");
-
-UserId userId = new UserId();
-userId.setNamespace("emails");
-userId.setType("standard");
-userId.setValue("dsmith@acme.com");
-usersItem.addUserIDsItem(userId);
-
-body.addUsersItem(usersItem);
-
-try {
-    List<AGDPRRequestModel> result = apiInstance.performDataOperation(body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling GDPRCentralServiceApi#performDataOperation");
-    e.printStackTrace();
-}
-```
-**Listing 1:** Adobe GDPR `access` request example
-
-The raw JSON request for the example shown in Listing 1 will look similar to the example shown in Listing 2.
+| API Name | Method type | Path | Description | Input parameters | Response |
+| -------- | ----------- | ---- | ----------- | ---------------- | -------- |
+| Access/Delete | POST | /data/privacy/gdpr | Create one or many ACCESS/DELETE requests to retrieve or delete all data corresponding to the provided user id's | Header: x-gw-ims-org-id: <org ID originating request><br/>x-api-key: <application key for Adobe IO><br/>Authorization: Bearer <token><br/>Content-Type: application/json<br/>Body: See JSON body below | 202 Accepted<br/>400 - Bad request - if the JSON body fails to process properly<br/>500 - Server error - unforeseen service issues |
+| Status | GET | /data/privacy/gdpr/{jobId} | Retrieve the status of a job | Header: x-gw-ims-org-id: <org ID originating request><br/>x-api-key: <application key for Adobe IO><br/>Authorization: Bearer <token><br/>Content-Type: application/json<br/>Path parameters:<br/>jobId - returned from an Access/Delete request<br/>Query parameters:<br/>data (true/false - default false) includes all additional request and response data received to this point | 200 success - JSON body with data regarding the status of the job<br/>404 Not Found<br/>406 Not acceptable - format not supported<br/>500 - Server error - unforeseen service issues |
+| Status (all) | GET | /data/privacy/gdpr/ | Retrieve all job statuses for the requesting user<br/><br/>Possibly return all resources in the case of an internal CSR request to help with others' requests | Header:<br/>x-gw-ims-org-id: <org ID originating request><br/>x-api-key: <application key for Adobe IO><br/>Authorization: Bearer <token><br/>Content-Type: application/json<br/>Query parameters (optional):<br/>data - (true/false - default false) includes all additional request and response data received to this point<br/>start - day to begin job search<br/>end - day to end job search<br/>page - page to return<br/>limit - number of records per page<br/>groupBy - (organization, jobId) | 200 success - JSON body with records from audit table<br/>204 success - no records are found in the given context<br/>406 Not acceptable - format not supported<br/>500 - Server error - unforeseen service issues |
 
 ```json
 {
