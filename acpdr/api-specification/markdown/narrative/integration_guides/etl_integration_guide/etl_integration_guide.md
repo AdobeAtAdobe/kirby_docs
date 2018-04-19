@@ -2,7 +2,7 @@
 
 **Adobe Cloud Platform**
 
-Updated on March 23<sup>th</sup> 2018
+Updated on March 23<sup>rd</sup> 2018
 
 Data integration patterns for ETL tools (ISVs)
 =============================
