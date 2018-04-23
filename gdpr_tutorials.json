@@ -1,0 +1,38 @@
+{
+	"name": "gdpr_tutorials",
+	"version": "1.0.0",
+	"description": "GDPR Tutorials",
+	"author": "Emily Walpole",
+	"view_type": "mdbook",
+	"meta_keywords": "Adobe, GDPR, General, Data, Protection, Regulation, Tutorials",
+	"meta_description": "General Data Protection Regulation Tutorials",
+	"publish_date": "22/04/2018",
+	"show_edit_github_banner": false,
+	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr/api-specification/markdown/narrative/restructure/gdpr",
+	"pages": [{
+			"pages": [],
+			"path": "use-cases/gdpr-accessing-and-deleting-data.md",
+			"title": "Accessing and Deleting Personal Data by a Data Subject"
+		},
+    {
+			"pages": [],
+			"path": "use-cases/gdpr-id-onboarding.md",
+			"title": "Adobe API Onboarding and Finding Your Organizational IDs"
+		},
+    {
+			"pages": [],
+			"path": "gathering-your-ids.md",
+			"title": "Gathering your IDs"
+		},
+    {
+			"pages": [],
+			"path": "gdpr-cautions.md",
+			"title": "Adobe GDPR Cautions"
+		},
+    {
+			"pages": [],
+			"path": "gdpr-whitepaper.md",
+			"title": "Adobe Experience Cloud and GDPR"
+		}
+  ]
+}
