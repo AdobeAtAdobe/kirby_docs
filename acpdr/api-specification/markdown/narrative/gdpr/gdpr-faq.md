@@ -6,13 +6,13 @@ The GDPR was approved and adopted by the EU Parliament in April 2016. The regula
 
 **Who does the GDPR affect?**
 
-The GDPR not only applies to organisations located within the EU but it will also apply to organisations located outside of the EU if they offer goods or services to, or monitor the behaviour of, EU [Data Subjects](gdpr-terminology.html#Data_Subject). It applies to all companies processing and holding the [Personal Data or Personally Identifiable Information (PII)](gdpr-terminology.html#PII) of [Data Subjects](gdpr-terminology.html#Data_Subject) residing in the European Union, regardless of the company's location.
+The GDPR not only applies to organisations located within the EU but it will also apply to organisations located outside of the EU if they offer goods or services to, or monitor the behaviour of, EU [Data Subjects](gdpr-terminology.html#Data_Subject). It applies to all companies processing and holding the [Personal Data](gdpr-terminology.html#PII) of [Data Subjects](gdpr-terminology.html#Data_Subject) residing in the European Union, regardless of the company's location.
 
 **What are the penalties for non-compliance?**
 
 Organizations can be fined up to 4% of annual global turnover for breaching GDPR or €20 Million. This is the maximum fine that can be imposed for the most serious infringements e.g.not having sufficient customer consent to process data or violating the core of [Privacy by Design](gdpr-terminology.html#Privacy_by_Design) concepts. There is a tiered approach to fines e.g. a company can be fined 2% for not having their records in order (article 28), not notifying the supervising authority and [Data Subject](gdpr-terminology.html#Data_Subject) about a breach or not conducting impact assessment. It is important to note that these rules apply to both [Data Controllers](gdpr-terminology.html#Data_Controller) and [Data Processor](gdpr-terminology.html#Data_Processor) - meaning 'clouds' will not be exempt from GDPR enforcement.
 
-**What constitutes [Personal Data or Personally Identifiable Information (PII)](gdpr-terminology.html#PII)?**
+**What constitutes [Personal Data](gdpr-terminology.html#PII)?**
 
 Any information related to a natural person or [Data Subject](gdpr-terminology.html#Data_Subject), that can be used to directly or indirectly identify the person. It can be anything from a name, a photo, an email address, bank details, posts on social networking websites, medical information, or a computer IP address.
 
@@ -20,7 +20,7 @@ Any information related to a natural person or [Data Subject](gdpr-terminology.h
 
 A [Data Controller](gdpr-terminology.html#Data_Controller) is the entity that determines the purposes, conditions and means of the processing of [Personal Data](gdpr-terminology.html#PII), while the [Data Processor](gdpr-terminology.html#Data_Processor) is an entity which processes [Personal Data](gdpr-terminology.html#PII) on behalf of the [Data Controller](gdpr-terminology.html#Data_Controller).
 
-**Do [Delegated_Processors](gdpr-terminology.html#Data_Processor) need 'explicit' or 'unambiguous' [Data Subject](gdpr-terminology.html#Data_Subject) [consent](gdpr-terminology.html#Consent) - and what is the difference?**
+**Do [Data Processors](gdpr-terminology.html#Data_Processor) need 'explicit' or 'unambiguous' [Data Subject](gdpr-terminology.html#Data_Subject) [consent](gdpr-terminology.html#Consent) - and what is the difference?**
 
 The conditions for [consent](gdpr-terminology.html#Consent) have been strengthened, as companies will no longer be able to utilize long illegible terms and conditions full of legalese, as the request for [consent](gdpr-terminology.html#Consent) must be given in an intelligible and easily accessible form, with the purpose for data processing attached to that [consent](gdpr-terminology.html#Consent) - meaning it must be unambiguous. [Consent](gdpr-terminology.html#Consent) must be clear and distinguishable from other matters and provided in an intelligible and easily accessible form, using clear and plain language. It must be as easy to withdraw [consent](gdpr-terminology.html#Consent) as it is to give it.​  Explicit [consent](gdpr-terminology.html#Consent) is required only for processing sensitive [Personal Data](gdpr-terminology.html#PII) - in this context, nothing short of “opt in” will suffice. However, for non-sensitive data, “unambiguous” [consent](gdpr-terminology.html#Consent) will suffice.
 

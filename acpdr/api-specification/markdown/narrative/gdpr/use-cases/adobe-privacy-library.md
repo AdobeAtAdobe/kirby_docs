@@ -35,18 +35,13 @@ The signatures for the functions presented by the Adobe Privacy JavaScript libra
 
 There are multiple installation options for the JavaScript APIs:
 
-* Download the JavaScript Library manually from here: [https://assets.adobedtm.com/experience-cloud/privacy/js/adobeprivacy.bundle.js](https://assets.adobedtm.com/experience-cloud/privacy/js/adobeprivacy.bundle.js)
+* Download the JavaScript Library manually from here: [https://assets.adobedtm.com/experience-cloud/privacy/js/adobeprivacy.bundle.zip](https://assets.adobedtm.com/experience-cloud/privacy/js/adobeprivacy.bundle.zip)
 
-* Include a reference to the script directly on their site by adding the following inside the `<head>` element of your web page(s):
-
-    ```javascript
-    <script type="text/javascript" src="//assets.adobedtm.com/experience-cloud/privacy/js/adobeprivacy.bundle.js"></script>
-    ```
 
 * Install the script via DTM by adding a "Sequential JavaScript Tag"
 * Use the pre-built Launch Extension in Adobe's New Tag Management Offering, ["Launch, by Adobe"](https://www.adobe.com/enterprise/cloud-platform/launch.html)
 
-* Reference the NPM library during your own build process
+
 
 ## Instantiate the AdobePrivacy.js library
 
