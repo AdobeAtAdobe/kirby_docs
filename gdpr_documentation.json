@@ -1,0 +1,39 @@
+{
+	"name": "gdpr_documentation",
+	"version": "1.0.0",
+	"description": "GDPR Documentation",
+	"author": "Emily Walpole",
+	"view_type": "mdbook",
+	"meta_keywords": "Adobe, GDPR, General, Data, Protection, Regulation, Documentation",
+	"meta_description": "General Data Protection Regulation API Documentation",
+	"publish_date": "24/04/2018",
+	"show_edit_github_banner": false,
+	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr/api-specification/markdown/narrative/gdpr",
+	"pages": [
+    {
+			"pages": [],
+			"path": "gdpr-cautions.md",
+			"title": "GDPR Cautions"
+		},
+    {
+			"pages": [],
+			"path": "use-cases/mobile-sdk.md",
+			"title": "GDPR Mobile SDK"
+		},
+    {
+			"pages": [],
+			"path": "gathering-your-ids.md",
+			"title": "Gathering your IDs"
+		},
+    {
+			"pages": [],
+			"path": "gdpr-positioning.md",
+			"title": "GDPR Positioning"
+		},
+    {
+			"pages": [],
+			"path": "gdpr-terminology.md",
+			"title": "GDPR Terminology"
+		}
+  ]
+}
