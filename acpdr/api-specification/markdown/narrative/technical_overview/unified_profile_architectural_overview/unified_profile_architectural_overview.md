@@ -260,7 +260,7 @@ While initializing, the Preview Session will be in the `BUSY` state. Poll using 
 
 #### 4.2.5 Estimate and Preview Audience - Step 5: Submit Preview Jobs
 
-With an initialized Session, you are able to submit a PQL expression for evaluation using the `POST https://platform.adobe.io/data/core/ups/preview/{previewSessionId}` API call, passing a Predicate query and the model against which to run it. The response of this call provides the IDs required to poll for state and retrieve the resulting Audience using the `GET https://platform.adobe.io/data/core/ups//preview/{previewSessionId}/execution/{previewExecutionId}` call. This call supports the use of You can includes a `previewExecutionId` which can be used to poll for execution state.
+With an initialized Session, you are able to submit a PQL expression for evaluation using the `POST https://platform.adobe.io/data/core/ups/preview/{previewSessionId}` API call, passing a Predicate query and the model against which to run it. The response of this call provides the IDs required to poll for state and retrieve the resulting Audience using the `GET https://platform.adobe.io/data/core/ups//preview/{previewSessionId}/execution/{previewExecutionId}` call. 
 
 #### 4.2.6 Estimate and Preview Audience - Step 6: Iteratively Estimate and Wait for Completion
 
