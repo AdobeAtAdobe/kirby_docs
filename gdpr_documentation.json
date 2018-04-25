@@ -12,18 +12,8 @@
 	"pages": [
     {
 			"pages": [],
-			"path": "gdpr-cautions.md",
-			"title": "GDPR Cautions"
-		},
-    {
-			"pages": [],
-			"path": "use-cases/mobile-sdk.md",
-			"title": "GDPR Mobile SDK"
-		},
-    {
-			"pages": [],
-			"path": "gathering-your-ids.md",
-			"title": "Gathering your IDs"
+			"path": "gdpr-whitepaper.md",
+			"title": "Adobe Experience Cloud and GDPR"
 		},
     {
 			"pages": [],
@@ -32,8 +22,39 @@
 		},
     {
 			"pages": [],
+			"path": "use-cases/gdpr-accessing-and-deleting-data.md",
+			"title": "Accessing and Deleting Personal Data by a Data Subject"
+		},
+    {
+			"pages": [],
 			"path": "gdpr-terminology.md",
 			"title": "GDPR Terminology"
+		},
+    {
+			"pages": [],
+			"path": "gathering-your-ids.md",
+			"title": "Gathering your IDs"
+		},
+    {
+			"pages": [],
+			"path": "use-cases/mobile-sdk.md",
+			"title": "GDPR Mobile SDK"
+		},
+    {
+			"pages": [],
+			"path": "gdpr-cautions.md",
+			"title": "GDPR Cautions"
+		},
+    {
+			"pages": [],
+			"path": "use-cases/gdpr-id-onboarding.md",
+			"title": "Adobe API Onboarding and Finding Your Organizational IDs"
+		},
+    {
+			"pages": [],
+			"path": "using-gdpr-ui.md",
+			"title": "Using the GDPR UI"
 		}
+
   ]
 }
