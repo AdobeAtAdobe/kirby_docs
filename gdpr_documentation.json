@@ -8,51 +8,51 @@
 	"meta_description": "General Data Protection Regulation API Documentation",
 	"publish_date": "24/04/2018",
 	"show_edit_github_banner": false,
-	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr/api-specification/markdown/narrative/gdpr/use-cases",
+	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr/api-specification/markdown/narrative/gdpr",
 	"pages": [
     {
 			"pages": [],
-			"path": "../gdpr-whitepaper.md",
+			"path": "gdpr-whitepaper.md",
 			"title": "Adobe Experience Cloud and GDPR"
 		},
     {
 			"pages": [],
-			"path": "../gdpr-positioning.md",
+			"path": "gdpr-positioning.md",
 			"title": "GDPR Positioning"
 		},
     {
 			"pages": [],
-			"path": "./gdpr-accessing-and-deleting-data.md",
+			"path": "use-cases/gdpr-accessing-and-deleting-data.md",
 			"title": "Accessing and Deleting Personal Data by a Data Subject"
 		},
     {
 			"pages": [],
-			"path": "../gdpr-terminology.md",
+			"path": "gdpr-terminology.md",
 			"title": "GDPR Terminology"
 		},
     {
 			"pages": [],
-			"path": "../gathering-your-ids.md",
+			"path": "gathering-your-ids.md",
 			"title": "Gathering your IDs"
 		},
     {
 			"pages": [],
-			"path": "./mobile-sdk.md",
+			"path": "use-cases/mobile-sdk.md",
 			"title": "GDPR Mobile SDK"
 		},
     {
 			"pages": [],
-			"path": "../gdpr-cautions.md",
+			"path": "gdpr-cautions.md",
 			"title": "GDPR Cautions"
 		},
     {
 			"pages": [],
-			"path": "./gdpr-id-onboarding.md",
+			"path": "use-cases/gdpr-id-onboarding.md",
 			"title": "Adobe API Onboarding and Finding Your Organizational IDs"
 		},
     {
 			"pages": [],
-			"path": "../using-gdpr-ui.md",
+			"path": "using-gdpr-ui.md",
 			"title": "Using the GDPR UI"
 		}
 
