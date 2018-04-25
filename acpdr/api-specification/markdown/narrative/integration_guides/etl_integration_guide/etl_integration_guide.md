@@ -2,7 +2,7 @@
 
 **Adobe Cloud Platform**
 
-Updated on March 23<sup>rd</sup> 2018
+Updated on April 25<sup>rd</sup> 2018
 
 Data integration patterns for ETL tools (ISVs)
 =============================
@@ -19,7 +19,7 @@ Cloud Platform.
 In this guide, experts will direct you in creating high-performance, secure connectors for
 Adobe/Partner integration, including implementation of the ACP functions. Building secure connectors allows Adobe and partners to effectively implement both the Adobe Cloud Platform and Partner ETL capabilities.
 
-ETL and ACP Roles during Beta
+Developing ETL integrations for Adobe Cloud Platform
 =============================
 
 This guide shows the general steps to ingest data into Adobe Cloud Platform.
@@ -39,6 +39,7 @@ also exposes common REST-based APIs including:
 
 **For ETL partners**. This guide includes sample ACP API calls for the
 ETL partner when designing a connector.
+A sample reference integration is available as Apache 2.0 license on [Github](https://github.com/adobe/acp-data-services-etl-reference)
 
 <span id="_Toc497952512" class="anchor"><span id="Adobe-ETL.svg"
 class="anchor"><span id="_ETL_Workflow_Examples"
