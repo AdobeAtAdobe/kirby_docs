@@ -31,10 +31,10 @@ The HTML rendition of this documentation is kept up-to-date on a per commit basi
 
 ## Prerequisites
 
-* A valid [Access Token](../alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) (ACCESS_TOKEN)
+* A valid [Access Token](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) (ACCESS_TOKEN)
 * API key (API_KEY)
 * IMS Organization Id (IMS_ORG)
-* Knowledge of creating and populating a dataset. See [Create and populate a dataset](../alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
+* Knowledge of creating and populating a dataset. See [Create and populate a dataset](../creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
 
 ---
 
@@ -75,7 +75,8 @@ curl -X GET https://platform.adobe.io/data/foundation/catalog/batches/ \
 
 
 ##### Response
-```json
+
+```
 {
     "{BATCH_ID_1}": {
         "imsOrg": "EDCE5A655A5E73FF0A494113@AdobeOrg",
@@ -358,7 +359,7 @@ curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?pat
 * `FILE_NAME` is the file name (E.g. profiles.parquet)
 
 ##### Response
-```json
+```
 [file contents]
 ```
 
@@ -456,7 +457,7 @@ curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?pat
   * Content-type: application/parquet
   * Content-Range: bytes 0-99/249058
 * Body:
-```json
+```
 [First 100 bytes of file]
 ```
 

@@ -35,11 +35,11 @@ The HTML rendition of this documentation is kept up-to-date on a per commit basi
 
 ## 2. Datasets from a Schema
 
-There are two ways data can be ingested into a dataset. The first is batch ingestion via file upload and the second is [ingestion via setting up a connector](../alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/creating_a_connector_tutorial.md). This tutorial focuses on ingesting data using a file.
+There are two ways data can be ingested into a dataset. The first is batch ingestion via file upload and the second is [ingestion via setting up a connector](../creating_a_connector_tutorial/creating_a_connector_tutorial.md). This tutorial focuses on ingesting data using a file.
 
 ### 2.1. Prerequisites
 
-Follow this [Tutorial](../alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
+Follow this [Tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
 
 From the tutorial you should now have the following values:
 * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
@@ -100,7 +100,7 @@ In our example we are putting our `Person` object in JSON format into the `{obje
 
 #### Response
 
-```JSON
+```
 @/xdms/core/Person/_customer/CustomerCompany/
 ```
 
@@ -325,7 +325,7 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/[BATCH_ID
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
 
 #### Response
-```JSON
+```
 #Status 200 OK, with empty response
 ```
 
@@ -333,4 +333,4 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/[BATCH_ID
 
 With the batch ID you can use the Data Access APIs to get a list of files in the batch that you uploaded previously. The response will return an array containing a list of files IDs which reference the files in the batch. Next the files can be downloaded with the Data Access APIs. The name, size in bytes, and a link to download the file or folder will be returned.
 
-Detailed steps to do this can be found in the [Data Access Tutorial](../alltutorials.html#!api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md) in sections 2. and 3.  
+Detailed steps to do this can be found in the [Data Access Tutorial](../data_access_tutorial/data_access_tutorial.md) in sections 2. and 3.  
