@@ -24,7 +24,7 @@ The HTML rendition of this documentation is kept up-to-date on a per commit basi
 
 ## 2. Understanding XDM
 
-The Experience Data Model (XDM) is the ecosystem where customer experience data is represented using a standard data model. These standard models will enable easier integration of data from all our Adobe solutions and external sources. After the data is ingested and transformed to standard schemas, XDM allows the sharing of this data in an agile and normalized setting within the Adobe Cloud Platform and its services. XDM offers single-source data management focused on the creation, storage, retrieval and manipulation of data. The customer data model consists of standard schemas from the XDM, which can be extended by the customer and schemas created by the customer (Customer Extended Schemas)
+The Experience Data Model (XDM) is the ecosystem where customer experience data is represented using a standard schemas. These standard schemas will enable easier integration of data from all our Adobe solutions and external sources. After the data is ingested and transformed to standard schemas, XDM allows the sharing of this data in an agile and normalized setting within the Adobe Cloud Platform and its services. XDM offers single-source data management focused on the creation, storage, retrieval and manipulation of data. The customer data model consists of standard schemas from the XDM, which can be extended by the customer and schemas created by the customer. These schema are called Customer Extended Schemas.
 
 
 ### 2.1. What is XDM used for
@@ -73,7 +73,7 @@ curl -X GET \
 
 ##### Response
 
-The `Profile` model object is in the response below. The entities are listed under the `properties` key. In the next section, we will be extending the `Person` entity with new fields and also creating a new entity that can be added to the `Profile` model.
+The `Profile` schema object is in the response below. The entities are listed under the `properties` key. In the next section, we will be extending the `Person` entity with new fields and also creating a new entity that can be added to the `Profile` schema.
 
 ```JSON
 {
@@ -217,7 +217,7 @@ One issue with normalization of data using a standard data model is incompatibil
 
 Extensions solve this issue by allowing customizable data. Personalized data can be [ingested](allservices.html.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md) into the XDM so that the data can then be shared. 
 
-There are ways the data models can be extended:
+There are ways the schemas can be extended:
 * Extending an existing XDM schema with new custom fields
 * Extending XDM through new sub-schemas.
 
@@ -225,13 +225,13 @@ There are three different levels to extend XDM
 
 Level | Method
 ------ | ------
-XDM Standard | The overall XDM standard data model is available as Open Source on https://github.com/adobe/xdm. Every individual and organization is welcome to contribute. The Schemas and fields in the standard apply to all customers within Adobe Cloud Platform. Periodically the XDM Registry is refreshed with updated Schemas from this Open Source repository
+XDM Standard | The overall XDM standard schemas are available as Open Source on https://github.com/adobe/xdm. Every individual and organization is welcome to contribute. The Schemas and fields in the standard apply to all customers within Adobe Cloud Platform. Periodically the XDM Registry is refreshed with updated Schemas from this Open Source repository
 Vendor extension | Independent Software Vendors can add their own extensions to the XDM Registry. These are extensions that do not apply to all customers, but only to a subset of customers that are using the specific vendor solution. Adobe Experience Cloud specific extensions are also expressed as as Vendor extension
 Customer extension | Customer specific extension that only apply to the specific tenant. A customer extension is automatically created when a customer extends schemas in the XDM Registry
 
 #### 3.2.1 Extending XDM Schemas With Custom Properties
 
-The first type of extension is extending an existing base type with additional fields to represent the schema of data that will be ingested and the common use cases of the model.
+The first type of extension is extending an existing base type with additional fields to represent the schema of data that will be ingested and the common use cases of the schema.
 
 **Example**  
 
