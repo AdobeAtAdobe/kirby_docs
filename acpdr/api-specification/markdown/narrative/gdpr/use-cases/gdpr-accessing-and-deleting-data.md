@@ -4,7 +4,7 @@
 
 The General Data Protection Regulation (GDPR) framework from Adobe provides a robust API that enables Adobe customers to manage (access and delete) their personal data used by the Adobe Experience Cloud (AEC). In addition to an API for accessing and deleting data, AEC includes internal facilities that govern all data flowing in and out of AEC, and facilities to store, and audit and log information.
 
-Every Adobe solution does presently or will offer services that enable a [Data Subject](../gdpr-terminology.html#DataSubject) with access to all [personal data](../gdpr-terminology.html#PII) in human-readable form upon request. Each Adobe solution works with the Adobe GDPR API to maintain an audit trail of each request and associated compliance adherence.
+Every Adobe solution does presently or will offer services that enable a [Data Subject](../gdpr-terminology.html#datasubject) with access to all [personal data](../gdpr-terminology.html#personaldata) in human-readable form upon request. Each Adobe solution works with the Adobe GDPR API to maintain an audit trail of each request and associated compliance adherence.
 
 ## Onboarding Your API Client
 
@@ -12,7 +12,7 @@ Any AEC API, such as Adobe's GDPR API, that accesses a service or content on beh
 
 An AEC API client integration must be registered through the [Adobe I/O Console](https://console.adobe.io/). The I/O Console is where you can generate an API Key, an important requirement to obtaining client credentials.
 
-If your integration needs to access content or an API on behalf of an end user, that user must be authenticated as well. Your integration will need to pass an OAuth token granted by the Adobe [Identity Management System (IMS)](../gdpr-terminology.md).
+If your integration needs to access content or an API on behalf of an end user, that user must be authenticated as well. Your integration will need to pass an OAuth token granted by the Adobe [Identity Management System (IMS)](../gdpr-terminology.md#identitymanagementservicesims).
 
 For service-to-service integrations, you will also need a JSON Web Token (JWT) that encapsulates your client credentials and authenticates the identity of your integration. You exchange the JWT for the OAuth token that authorizes access. See [Adobe I/O Authentication Overview](http://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for detailed instructions.
 
@@ -301,9 +301,8 @@ Listing 6: Response payload from a `status` request with a job ID
 
 The GDPR framework from Adobe provides a powerful API that enables Adobe customers to access and delete their personal data used by the Adobe Experience Cloud. In addition to an API, the internal facilities of the Adobe Experience Cloud govern incoming and outgoing personal data, store data, and audit and log information.
 
-Every Adobe solution and API does presently or will offer a solution that provides access to all [personal data](../gdpr-terminology.html#PII) upon request.
+Every Adobe solution and API does presently or will offer a solution that provides access to all [personal data](../gdpr-terminology.html#personaldata) upon request.
 
-<a name="appendix_a" id="appendix_a"></a>
 ## Appendix A
 
 ## Adobe GDPR API REST Request Types
@@ -314,7 +313,6 @@ Every Adobe solution and API does presently or will offer a solution that provid
 | Status | GET | /data/privacy/gdpr/{jobId} | Retrieve the status of a job | **Header:**<br/><br/>x-gw-ims-org-id: <org ID originating request><br/><br/>x-api-key: <application key for Adobe IO><br/>Authorization: Bearer <token><br/><br/>Content-Type: application/json<br/><br/>**Path parameters:**<br/><br/>jobId - returned from an Access/Delete request<br/><br/>**Query parameters:**<br/><br/>data (true/false - default false) includes all additional request and response data received to this point | 200 success - JSON body with data regarding the status of the job<br/><br/>404 Not Found<br/>406 Not acceptable - format not supported<br/><br/>500 - Server error - unforeseen service issues |
 | Status (all) | GET | /data/privacy/gdpr/ | Retrieve all job statuses for the requesting user<br/><br/>Possibly return all resources in the case of an internal CSR request to help with others' requests | **Header:**<br/><br/>x-gw-ims-org-id: <org ID originating request><br/><br/>x-api-key: <application key for Adobe IO><br/><br/>Authorization: Bearer <token><br/><br/>Content-Type: application/json<br/><br/>**Query parameters (optional):**<br/><br/>data - (true/false - default false) includes all additional request and response data received to this point<br/><br/>start - day to begin job search<br/><br/>end - day to end job search<br/>page - page to return<br/><br/>limit - number of records per page<br/><br/>groupBy - (organization, jobId) | 200 success - JSON body with records from audit table<br/><br/>204 success - no records are found in the given context<br/><br/>406 Not acceptable - format not supported<br/><br/>500 - Server error - unforeseen service issues |
 
-<a name="appendix_b" id="appendix_b"></a>
 ## Appendix B
 
 ### Namespace Qualifiers
