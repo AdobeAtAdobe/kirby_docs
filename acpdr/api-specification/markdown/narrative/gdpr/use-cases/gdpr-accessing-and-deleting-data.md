@@ -30,7 +30,7 @@ The GDPR API provides a REST interface for `access`, `delete`, and `status` requ
 
 Figure 1 is a high-level workflow diagram showing the sequence of events for an `access` request.
 
-![GDPR Access Use Case](../images/gdpr-access-use-case.png)
+![GDPR Access Use Case](images/gdpr-access-use-case.png)
 **Figure 1:** Sequence of events for an `access` request
 
 As shown in Figure 1, a Data Subject issues a request to the Data Controller (the Adobe GDPR API). The Data Controller passes the request to the Experience Cloud and a response is returned through the chain of requestors.
