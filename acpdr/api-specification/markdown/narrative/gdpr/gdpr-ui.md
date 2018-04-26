@@ -31,7 +31,7 @@ Currently, the user interface consists of three main screens: 1) the job submiss
 
 This simple UI is for uploading JSON requests to the Adobe GDPR Central Service. You can either drag-and-drop a file or click on the "Upload Request" button to upload up a file.
 
-As you can see, the UI prompts for a ticket ID to be specified, which is primarily for your use. Go ahead and populate this field with a ticket ID you will remember (for the purpose of this lab). If you have an internal ticketing system or other tracking code, this field allows you to link the GDPR request in the API to that specific identifier. Keep in mind that every user in the JSON file will be tagged with this ticket ID.
+As you can see, the UI prompts for a ticket ID. This ID is returned from a  which is primarily for your use. Go ahead and populate this field with a ticket ID you will remember (for the purpose of this lab). If you have an internal ticketing system or other tracking code, this field allows you to link the GDPR request in the API to that specific identifier. Keep in mind that every user in the JSON file will be tagged with this ticket ID.
 
 1. You also have the ability to specify other email addresses for notification. By default, the person submitting the request is always included. However, you may change that as needed, and add multiple email addresses. Go ahead and add/remove a few email addresses – press &lt;TAB&gt; or &lt;ENTER&gt; after each entry to complete each email in the list. The addresses included in this list will receive a copy of any email notifications, which are sent when the job completes, finishes with errors, or times out.
 
