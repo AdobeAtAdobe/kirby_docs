@@ -28,7 +28,7 @@ Here is an example of the ```ADBMobile getAllIdentifiersAsync``` method for Andr
 ```
 Config.getAllIdentifiersAsync(new ConfigCallback<String>() {
      @Override
-     public void call(String identitiesJson) {                
+     public void call(String identitiesJson) {
          Log.d("ADBMobile Identities", identitiesJson);
      }
 });
@@ -53,7 +53,7 @@ You can control whether the Analytics, Target, and Audience Manager activity is 
 The following table describes each privacy status:
 
 | Setting | Description | Value in JSON Config | Value in setPrivacyStatus |
-| ------- | -- | ------ | -------------------- | ------------------------- |
+| ------- | ------ | -------------------- | ------------------------- |
 | Opt in  | - Analytics: Hits are sent<br/>- Target: Mbox requests are sent<br/>- Audience Manager: Signals and ID syncs are sent | optedin | MOBILE_PRIVACY_STATUS_OPT_IN |
 | Opt out  | - Analytics: Hits are discarded<br/>- Target: Mbox requests are not allowed<br/>- Audience Manager: Signals and ID syncs are not allowed | optedout | MOBILE_PRIVACY_STATUS_OPT_OUT |
 | Unknown  | - Analytics: If offline tracking is enabled, hits are saved until the privacy status changes to opt-in (hits are sent) or opt-out (hits are discarded). If offline tracking is not enabled, hits are discarded until the privacy status changes to opt-in<br/>- Target: Mbox requests are sent<br/>- Audience Manager: Signals and ID syncs are sent | optunknown | MOBILE_PRIVACY_STATUS_UNKNOWN |
