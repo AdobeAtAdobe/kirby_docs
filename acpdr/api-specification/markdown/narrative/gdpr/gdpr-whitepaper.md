@@ -64,7 +64,7 @@ There are four principles of GDPR that brands should consider as they review dat
 
 According to GDPR, &quot;personal data&quot; is any information relating to an identified or identifiable natural person (&quot;data subject&quot;). An identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that person.
 
-## Adobe and data governance
+## Adobe and Data Governance
 
 To back up a moment, before diving into Adobe Experience Cloud&#39;s GDPR API, it is worth stating that a key step in GDPR readiness is having a robust data governance framework to help address data protection and privacy.
 
@@ -74,7 +74,7 @@ The Adobe Cloud Platform (ACP) provides an integrated solution that connects a b
 
 Data governance is having a system in place consisting of the people and digital tools required to exercise authority, control and shared decision-making. It means creating a team to control data governance and giving that team the tools they need to govern data effectively and efficiently in real time. It encompasses both the strategies and the technologies required to ensure data and its use complies with the regulations, restrictions, and policies governing that use: data catalogs, data lineage, data usage labeling, data access policies, and more.
 
-## Roles and responsibilities: How Adobe Experience Cloud Supports Brands&#39; GDPR Readiness
+## Roles and responsibilities: How Adobe Experience Cloud supports brands&#39; GDPR readiness
 
 GDPR sets out the obligations for the various parties involved with GDPR readiness. The obligation to meet the GDPR principles regarding data collection (see p.2) falls upon brands, also known as Data Controllers. However, the journey to GDPR readiness is in part shared between Data Controllers (brands), and technology vendors or Data Processors like Adobe Experience Cloud. There are three parties to become familiar with. Each of these parties is defined below within the context of Adobe Experience Cloud.
 
@@ -123,9 +123,9 @@ Adobe Experience Cloud&#39;s GDPR API automates consumer GDPR `access` and `dele
 
 Using the GDPR API involves some up-front preparation on the part of brands. The following section outlines the technical documentation for these preparatory steps, as well as how to submit requests to Adobe Experience Cloud through the API.
 
-## Prepare before the GDPR deadline in 4 steps
+## Prepare Before the GDPR Deadline in 4 Steps
 
-### 1. Review Adobe Experience Cloud Requirements
+### 1. Review Adobe Experience Cloud requirements
 
  Following are the basic requirements you must have in place to implement the GDPR API:
 
@@ -139,7 +139,7 @@ Using the GDPR API involves some up-front preparation on the part of brands. The
 | Inventory all Adobe Experience Cloud products you use and make sure you know if they are connected to your Marketing Cloud Organization ID(s), aka IMS Org ID. If any products are not connected with a Marketing Cloud Organization ID, then note the legacy organizational ID for that product. This is important because a GDPR request needs one or more Marketing Cloud Organization IDs followed by multiple legacy org IDs. You could have multiple Marketing Cloud Organization IDs and if you wish to address data stored under any of those IDs, you must submit a separate request for each Marketing Cloud Organization ID. If a brand only has legacy org IDs and no Marketing Cloud Organization IDs, then you will need to talk to your Customer Success Manager or to Adobe Customer Care to be provisioned with a new Marketing Cloud Organization ID, which will allow you to issue GDPR requests via the API.  |
 | Curate your data in Adobe Application Manager (AAM) if relevant. Organize a process to obtain Data Subject identity mapping to Adobe identifiers when using onboarders or hashing mechanisms; e.g., hashed CRM ID in AAM.  |
 
-### 2. Curate and Label Your Data
+### 2. Curate and label your data
 
 Before sending GDPR requests to Adobe Experience Cloud, you must identify what personal data Adobe Experience Cloud should process and store on your behalf. This involves going into Adobe Experience Cloud products or services in which you house complex data types, e.g., Adobe Analytics, Platform, or Campaign, to identify and label the data types that should be referenced in a GDPR request. This is the Controller&#39;s responsibility because data schemas will vary by customer and Solution.
 
@@ -157,7 +157,7 @@ _Data curation in Adobe Analytics: Creating labels for columns in a fictitious A
 
 Examples of personal data that can be sent to Adobe Experience Cloud include name, email address, certain persistent identifiers, and IP addresses. For a more detailed list of examples, see [https://www.adobe.com/privacy/marketing-cloud.html#collect](https://www.adobe.com/privacy/marketing-cloud.html#collect).
 
-### 3. Set up Your Data Subject User Portal and Deploy Adobe Cloud Experience&#39;s JavaScript Library
+### 3. Set up your Data Subject user portal and deploy Adobe Cloud Experience&#39;s JavaScript Library
 
 The Adobe Experience Cloud JavaScript library (AdobePrivacy.js) is a lightweight JavaScript library that helps you collect different types of Adobe cookies in a format compatible with how our Solutions identify data categories. Controllers can choose to deploy AdobePrivacy.js on the portals where they interact with Data Subjects. AdobePrivacy.js enables you to more easily collect relevant IDs so that you can submit these identities as part of `access` and `delete` requests via the GDPR API. For certain workflows in solutions such as Adobe Advertising Cloud, the JavaScript library completes a GDPR `delete` request within the user&#39;s browser by deleting relevant Adobe cookies on the client side, i.e., from the same browsing session. For more information, see [documentation](https://marketing.adobe.com/resources/help/en_US/gdpr/jsapi/) for the JavaScript library.
 
@@ -198,7 +198,7 @@ Integrating with the GDPR API helps Data Controllers orchestrate data collection
 
 Following are steps to prepare for submitting GDPR requests using HTTP, as well as more detailed information about the GDPR API.
 
-To submit GDPR requests:
+**To submit GDPR requests:**
 
 - Obtain an IMS user access token
 
