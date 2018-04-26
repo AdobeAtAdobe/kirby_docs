@@ -52,6 +52,7 @@ After submitting the file successfully, you may choose to be taken to the Status
   - User key: the key associated with the job ID created from your JSON data in the request
   - And more…
 
+
 - The UI provides the ability to filter on any of the fields by simply typing in the search field. The search is executed against all visible columns, so go ahead and test it out. Experiment with showing and hiding fields and combine it with searching.
 
 - Easily switch back to submit new requests by clicking on the _Submit New Request_ button to the right, or by selecting the tab _Upload Request_ in the top left.
