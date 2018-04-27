@@ -12,11 +12,6 @@
 	"pages": [
 	{
 			"pages": [],
-			"path": "api-specification/markdown/narrative/gdpr/gdpr-faq.md",
-			"title": "GDPR FAQ"
-		},
-	{
-			"pages": [],
 			"path": "api-specification/markdown/narrative/gdpr/use-cases/adobe-privacy-library.md",
 			"title": "The Adobe Privacy JavaScript Library and GDPR"
 		}
