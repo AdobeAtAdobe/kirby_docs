@@ -32,7 +32,7 @@ There are different options for Integrations, based on the type of application o
 
 **For each GDPR API call:**
 
-* A customer must provide one [IMSOrg ID](../gdpr-terminology.md#IMSORGID), which the Experience Cloud validates and authenticates
+* A customer must provide one [IMSOrg ID](../gdpr-terminology.md#imsorgid), which the Experience Cloud validates and authenticates
 * The customer may provide zero or more legacy org IDs, which the Experience Cloud does not validate or authenticate. Experience Cloud relays these org IDs to each subscribed solution to determine whether or not the org ID is relevant to it. If relevant, the solution validates it and authenticates it.
 
 The customer must supply a namespace and other details for each identifier submitted.
