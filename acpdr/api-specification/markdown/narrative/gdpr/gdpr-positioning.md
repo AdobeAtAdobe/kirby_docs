@@ -6,7 +6,7 @@ The General Data Protection Regulation (GDPR) will come into full effect on May 
 
 ## Adobe as a Processor
 
-When Adobe Experience Cloud is providing software and services to an enterprise, Adobe is acting as a data processor for any personal data it processes and stores as part of providing the services. As a data processor, Adobe only processes personal data in accordance with your company's permission and instructions (for example, as set out in your agreement with Adobe).
+When Adobe Experience Cloud is providing software and services to an enterprise, Adobe is acting as a data processor for any personal data it processes and stores as part of providing the services. As a data processor, Adobe only processes personal data in accordance with your company's permission and instructions (for example, as set out in your agreement with Adobe). Adobe reserves the right to charge a fee to process certain GDPR requests, arising from Adobe’s reasonable costs associated with the execution of the request, based on such factors request complexity and request volume.
 
 ## Personal Data Processed by Adobe
 
@@ -38,11 +38,13 @@ We've built an API to process Access and Delete requests on behalf of Controller
 
 ## Consent: Opt-out Management
 
-Every solution and platform at Adobe will be able to help customers comply with their Data Subject's choices. Each solution must adhere to the Adobe Privacy Standards related to opt-out's - specifically:
+Every solution and platform at Adobe will be able to help customers comply with their Data Subject's choices. Each solution must adhere to the Adobe Privacy Standards, including:
 
-* [Adobe's Browser Privacy Controls Standard](https://inside.corp.adobe.com/content/dam/privacy/documents/Standard_Privacy__ProdDev_09.08.01_BrowserPrivacyControls.pdf)
-* [Building Opt-Outs into Adobe Marketing Cloud Products and Services](https://inside.corp.adobe.com/content/dam/privacy/documents/Standard_Privacy__ProdDev_09.08.03_BuidlingOptOuts_MarketingCloud.pdf)
-* Adobe's Policy for Using Cookies or Other Technology to Access Information on a User's Device
+* [Adobe's Privacy Standard](https://www.adobe.com/privacy.html)
+* [Adobe Experience Cloud Privacy](https://www.adobe.com/privacy/marketing-cloud.html)
+* [Controlling Your Data](https://www.adobe.com/privacy/opt-out.html)
+* [Adobe and GDPR](https://www.adobe.com/privacy/general-data-protection-regulation.html)
+* [Adobe's Policy for Using Cookies or Other Technology to Access Information on a User's Device](https://www.adobe.com/privacy/cookies.html)
 
 ## Consent: Opt-in Management
 

@@ -37,7 +37,7 @@ As shown in Figure 1, a Data Subject issues a request to the Data Controller (th
 
 ### GDPR API Requests and Responses
 
-Each GDPR API request must either specify a request type in its request payload and/or invoke a specific HTTP verb (GET, POST, etc.). [Appendix A](#appendix_a) illustrates the various Adobe GDPR API request types.
+Each GDPR API request must either specify a request type in its request payload and/or invoke a specific HTTP verb (GET, POST, etc.). [Appendix A](#appendixa) illustrates the various Adobe GDPR API request types.
 
 The resource path for all requests to the GDPR API is: `/data/privacy/gdpr`.
 
@@ -88,7 +88,7 @@ The JSON payload (*HTTP POST* data) for the request shown in Listing 1 will look
 
 In Listing 2, The `action` field is a collection of desired request types (`access` or `delete`), and may be different for each ID in the request. The `key` is an entity identifier that encapsulates associated IDs, which are represented by job IDs returned in the response data. Clients may have more than one ID.
 
-Namespace qualifiers (types) help categorize the data values used to identify entities. The *namespace* key must exist for every individual data value submitted that relates to a given ID. The *type* value in the *namespace* block must contain one of the qualifiers shown in the *Namespace Qualifiers* table in [Appendix B](#appendix_b).
+Namespace qualifiers (types) help categorize the data values used to identify entities. The *namespace* key must exist for every individual data value submitted that relates to a given ID. The *type* value in the *namespace* block must contain one of the qualifiers shown in the *Namespace Qualifiers* table in [Appendix B](#appendixb).
 
 Responses from GDPR API requests are formatted as JSON payloads (objects) consisting of either success data or error data.
 
