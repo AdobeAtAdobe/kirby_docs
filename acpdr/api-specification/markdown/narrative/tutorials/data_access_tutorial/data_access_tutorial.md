@@ -52,7 +52,7 @@ Before we can begin to use the Data Access API, you'll need to identify the loca
 1. GET /batches : Returns a list of batches under your organization (batchID)
 2. GET /dataSetFiles : Returns a list of files under your organization(fileID)
 
-For more information regarding the Catalog API, please refer to the [API Reference](apireference.html#!acpdr/catalog.yaml)
+For more information regarding the Catalog API, please refer to the [API Reference](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html)
 
 
 ### 1.1 Retrieving a list of batches under your IMS Organization
@@ -175,7 +175,7 @@ curl -X GET https://platform.adobe.io/data/foundation/catalog/batches?createdAft
 }
 ```
 
-A full list of parameters and filters can be found in the [Catalog API Reference Documentation](apireference.html#!acpdr/catalog.yaml)
+A full list of parameters and filters can be found in the [Catalog API Reference Documentation](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html)
 
 ---
 

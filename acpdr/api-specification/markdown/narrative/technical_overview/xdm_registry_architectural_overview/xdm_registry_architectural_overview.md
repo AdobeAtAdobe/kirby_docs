@@ -36,7 +36,7 @@ The main purpose of gathering this data is understanding what that data means an
 ---
 
 ## 3. How to Use XDM
-The full resource for API calls can be found in the [swagger documentation](../apireference.html#!acpdr/catalog.yaml)
+The full resource for API calls can be found in the [swagger documentation](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html)
 
 XDM uses a hierarchical structure to store data. Customers start with an Adobe released *core* schema definition or a customer extended schema as the parent. The core XDM schemas and sub-schemas (core.Address, Profile, ExperienceEvent etc.) are shared with all the tentants of the platform. All the root artifacts are inherited by all theOrganization containers (IMS Org). An IMS Organization represents the customer. For this example the IMS Org Acme Corp. As Adobe releases new XDM artifacts, all the IMS Orgs underneath the root container get the updates automatically.
 
