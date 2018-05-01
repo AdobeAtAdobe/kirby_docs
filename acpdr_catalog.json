@@ -29,7 +29,11 @@
 			"pages": [],
 			"path": "acpdr/profile-access.yaml",
 			"title": "Unified Profile Service"
+		},
+		{
+			"pages": [],
+			"path": "acpdr/id-namespace-api.yaml",
+			"title": "Identity Namespace Service"
 		}
-
 	]
 }
