@@ -2,9 +2,9 @@
 
 ## Introduction
 
-The General Data Protection Regulation (GDPR) framework from Adobe provides a robust API that enables Adobe customers to manage (access and delete) their personal data used by the Adobe Experience Cloud (AEC). In addition to an API for accessing and deleting data, AEC includes internal facilities that govern all data flowing in and out of AEC, and facilities to store, and audit and log information.
+The General Data Protection Regulation (GDPR) framework from Adobe provides a robust API that enables Adobe Customers to manage (access and delete) the personal data of their consumers (Data Subjects) used by the Customer in the Adobe Experience Cloud (AEC). In addition to an API for accessing and deleting data, AEC includes internal facilities that govern data flowing in and out of AEC, and facilities to store, and audit and log information.
 
-Every Adobe solution does presently or will offer services that enable a [Data Subject](../gdpr-terminology.md#datasubject) with access to all [personal data](../gdpr-terminology.md#personaldata) in human-readable form upon request. Each Adobe solution works with the Adobe GDPR API to maintain an audit trail of each request and associated compliance adherence.
+Every Adobe solution does presently or will offer services that enable Customers to fulfill requests from a [Data Subject](../gdpr-terminology.md#datasubject) for access to [personal data](../gdpr-terminology.md#personaldata) in human-readable form upon request from the Customer. Each Adobe solution that supports the API works with the Adobe GDPR API to maintain an audit trail of each request.
 
 ## Onboarding Your API Client
 

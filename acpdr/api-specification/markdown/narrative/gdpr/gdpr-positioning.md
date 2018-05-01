@@ -34,7 +34,7 @@ Adobe either already meets, or is working towards meeting, the obligations set o
 
 ## GDPR API
 
-We've built an API to process Access and Delete requests on behalf of Controllers for their data stored in Experience Cloud.
+We've built an API to help process "access" and "delete" requests on behalf of Controllers for their data stored in Experience Cloud
 
 ## Consent: Opt-out Management
 
