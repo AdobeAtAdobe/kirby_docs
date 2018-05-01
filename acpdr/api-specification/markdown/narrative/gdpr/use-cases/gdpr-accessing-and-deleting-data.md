@@ -88,6 +88,10 @@ The JSON payload (*HTTP POST* data) for the request shown in Listing 1 will look
 
 In Listing 2, The `action` field is a collection of desired request types (`access` or `delete`), and may be different for each ID in the request. The `key` is an entity identifier that encapsulates associated IDs, which are represented by job IDs returned in the response data. Clients may have more than one ID.
 
+Product values are sent in the companyContexts section as "namespace" values, if there is a legacy account that needs to process the request. They are also used to "exclude" certain products from the request as part of an optimization. Allowable product values are shown in [Appendix D](#appendixd).
+
+Notes about the data format in Listing 1 are summarized in the table in [Appendix C](#appendixc).
+
 Namespace qualifiers (types) help categorize the data values used to identify entities. The *namespace* key must exist for every individual data value submitted that relates to a given ID. The *type* value in the *namespace* block must contain one of the qualifiers shown in the *Namespace Qualifiers* table in [Appendix B](#appendixb).
 
 Responses from GDPR API requests are formatted as JSON payloads (objects) consisting of either success data or error data.
@@ -327,3 +331,40 @@ Every Adobe solution and API does presently or will offer a solution that provid
 | analytics | A custom namespace that is mapped internally in Analytics, not in the namespace service. This will be passed in directly as specified by the original request, without a namespace ID |
 | dpsc | A custom field type for DPS mappings, which support a set of three standard namespaces. |
 | target | A custom namespace that is understood internally by Target, not in the namespace service. This will be passed in directly as specified by the original request, without a namespace ID |
+
+## Appendix C
+
+### Format Details
+
+| Name | Data Type | Details |
+| --------- | ---------- | ---------- |
+| companyContexts | JSON array | **\*Required\***<br/><br/>A collection of "namespace" and "value" JSON documents that represent the company context for the request. Primarily, the request requires an IMS organization ID (or Experience Cloud organization ID - formerly Marketing Cloud org ID), but will also support additional solution accounts that may not be linked to the org ID.<br/><br/>&bull; namespace - the qualifier for the value that specifies what kind of company context is being sent in. Will be either *imsOrgId*, or one of the product names (see Product values below) in the case of a legacy customer account<br/><br/>&bull; value - the IMS organization ID, or the legacy account identifier (login company, advertiser ID, etc.)
+| users | JSON array | **\*Required\***<br/><br/>A collection of information to identify the users for the request. This collection may contain one or many user JSON blocks. Inside each user block are fields that identify the user, what kind of action to perform on their behalf, and a collection of identifiers that represent the user in the various Experience Cloud solutions |
+| key | String | **\*Required\***<br/><br/>The way to identify this user in the collection of users. A job ID will be returned for each user key/action combination, so this key will be a way to link the job ID to the collection of IDs for a specific user |
+| action | String array | **\*Required\***<br/><br/>The type of action to be taken on behalf of the user. Either "access" or "delete" or both |
+| expandIds | Boolean | [ true &vert; false ] - **optional** field that represents an optimization for processing the IDs in the solutions (currently only used by Analytics). If omitted, Analytics' default behavior is "false" |
+| priority | String | [ normal &vert; low ] - **optional** field for optimizing requests based on customer need. If an end-user makes the request, and thus the company is required to respond within the 30 day window for GDPR, the priority should always be "normal" (default value if omitted). If the request is being made by systems for cleanup or optimization, it may not need to fall within the time table of a GDPR request by law, thus could be set to "low" to allow other requests to process sooner. |
+| analyticsDeleteMethod | String | [ purge &vert; anonymize ] - **optional** field for specifying how analytics should handle the customer data. By default (if omitted), Analytics will anonymize all data referenced by the given collection of user IDs, thus maintaining data integrity for historical reporting and other functions. Purge will remove the data completely. |
+| userIDs | JSON array | **\*Required\*** - *at least one namespace/value/type combination required per user*<br/><br/>A collection of *namespace, value* and *type* pairs that qualify the user making the GDPR request |
+| namespace | String | The namespace that qualifies the value being sent from the customer to the GDPR API. Examples might include "email", "loyaltyAccount", or "phoneNumber". This value also depends on the type of the namespace (see [Namespace qualifiers](#namespacequalifiers)). For example, "namespaceId" type would indicate the "namespace" should be an ID represented by the datasource ID for the created namespace. |
+| value | String | The value that corresponds to the namespace specified. For a namespace of "email", the value should be a valid email address |
+| type | String | The qualifying type of namespace specified (see [Namespace qualifiers](#namespacequalifiers)) |
+| isDeletedClientSide | Boolean | [ true &vert; false ] - represents action taken against the cookie identifier passed in this section. This is an optimization and should not be added to the request manually, but through the use of the Privacy.JS library |
+| exclude | String array | Given the list of products in the Experience Cloud that are integrated with the GDPR API service, if there are any that should not be processed for this set of users, they can be specified here. This can optimize the amount of work across the Experience Cloud and provide results much quicker if longer running solutions are included here (see [Product values](#appendixd)) |
+
+## Appendix D
+
+### Product Values
+
+```javascript
+product {
+    "Analytics",
+    "AudienceManager",
+    "AdCloud",
+    "CRS",
+    "DPSC"
+    "Social",
+    "Campaign",
+    "Target"
+}
+```
