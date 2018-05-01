@@ -6,7 +6,7 @@ The General Data Protection Regulation (GDPR) will come into full effect on May 
 
 ## Adobe as a Processor
 
-When Adobe Experience Cloud is providing software and services to an enterprise, Adobe is acting as a data processor for any personal data it processes and stores as part of providing the services. As a data processor, Adobe only processes personal data in accordance with your company's permission and instructions (for example, as set out in your agreement with Adobe). Adobe reserves the right to charge a fee to process certain GDPR requests, arising from Adobe’s reasonable costs associated with the execution of the request, based on such factors request complexity and request volume.
+When Adobe Experience Cloud is providing software and services to an enterprise, Adobe is acting as a data processor for any personal data it processes and stores as part of providing the services. As a data processor, Adobe only processes personal data in accordance with your company's permission and instructions (for example, as set out in your agreement with Adobe).
 
 ## Personal Data Processed by Adobe
 
