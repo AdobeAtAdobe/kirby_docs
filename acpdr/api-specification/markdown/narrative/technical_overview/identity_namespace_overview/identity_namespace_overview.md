@@ -189,8 +189,8 @@ Indicating which Identity Namespace under which to categorize your data is a fun
     "id": "some_sys_id",
     "xid": "some_xid",
     "namespace" : {
-      "id": 4233,
-      "code": "foobar1"
+      "id": 56011,
+      "code": "TEST"
     }
   }
 }
