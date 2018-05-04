@@ -6,7 +6,7 @@ The following discusses the features of the Profile Query Language (PQL) and the
 
 ## 2. Purpose of PQL
 
-PQL is a DSL (domain specific lkanguage) whose execution environment is designed to make it easy to query both the CRM and the Time Series Events associated with individual Profiles, so as to be able assign the Profiles to Segments. PQL operates on XDM data on the Profile Store and the Events coming in via the Platform Event pipeline. 
+PQL is a DSL (domain specific language) whose execution environment is designed to make it easy to query both the CRM and the Time Series Events associated with individual Profiles, so as to be able assign the Profiles to Segments. PQL operates on XDM data on the Profile Store and the Events coming in via the Platform Event pipeline. 
 
 ## 3. Elements of PQL
 
@@ -48,14 +48,14 @@ PQL will try to match the RHS type to the LHS type of an expression to the exten
 
 ### 3.2 Operators
 
-Criteria can be structured using operators such as:
+Criteria can be structured using operators such as the following. A list of example queries can be found [here](unified_profile_supported_queries.md).
 
-* Boolean operators (and, or, not) - e.g. q2.
+* Boolean operators (and, or, not) - e.g. [q2](unified_profile_supported_queries.md#q2).
 * Equality, inequality (=, !=)
-* Numerical comparisons (<, >, <=, >=) - e.g. q1, q3.
-* Time series conditions: occurs - e.g. q7, q10.
-* Others: like, in - e.g. q2, q4.
-* Set formation over variable definitions: {} - e.g. q6-q11.
+* Numerical comparisons (<, >, <=, >=) - e.g. [q1](unified_profile_supported_queries.md#q1), [q3](unified_profile_supported_queries.md#q3).
+* Time series conditions: occurs - e.g. [q7](unified_profile_supported_queries.md#q7), [q10](unified_profile_supported_queries.md#q10).
+* Others: like, in - e.g. [q2](unified_profile_supported_queries.md#q2), [q4](unified_profile_supported_queries.md#q4).
+* Set formation over variable definitions: {} - e.g. [q6](unified_profile_supported_queries.md#q6), [q7](unified_profile_supported_queries.md#q7), [q8](unified_profile_supported_queries.md#q8), [q9](unified_profile_supported_queries.md#q9), [q10](unified_profile_supported_queries.md#q10), [q11](unified_profile_supported_queries.md#q11).
 * Count
 
 __Examples of operators in use__
