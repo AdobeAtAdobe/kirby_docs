@@ -270,8 +270,6 @@ During job processing, Estimate information covering the progress of the Preview
 
 __Example Preview Job Estimate:__
 
-> TODO: Explanation needed - what is estimatedSize, standardError, confidenceInterval, profilesReadSoFar, profilesMatchedSoFar...
-
 ```
 {
   "estimatedSize": 0,
