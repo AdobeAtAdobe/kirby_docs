@@ -30,7 +30,7 @@ There are a few namespaces that are pre-defined and available to all customers. 
 | Email        | 6  | Email | &nbsp; |
 | Phone        | 7  | Phone | &nbsp; |
 | Windows AID  | 8  | WAID | &nbsp; |
-| Adobe AMO    | 411 | AMO | alias: Ad Cloud |
+| AdCloud    | 411 | AdCloud | Adobe Advertising Cloud (AKA: TubeMogul, AMO, DCO) |
 | Adobe Target | &nbsp; | TRGT | &nbsp; |
 | Google Ad ID  | 20914 | GAID | &nbsp; |
 | Apple IDFA  | 20915 | IDFA | ID for Advertisers |
