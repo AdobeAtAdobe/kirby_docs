@@ -2,7 +2,7 @@
 
 ## 1. Overview
 
-Delivering right and relevant digital experiences requires a correct and complete identification of your End User. Data aggregated in the Cloud Platform could come from many disparate systems, each of which may have data relevant to a particular user, and each system may represent and identify that single user differently.  In this environment, a "User ID" is only reliable in the context of a specific system of record. 
+User Profile data aggregated in the Cloud Platform could come from many disparate systems, each of which may have data relevant to a particular user, and each system may represent and identify that single user differently.  In this environment, a "User ID" is only reliable in the context of a specific system of record. 
 
 An End User can be identified by a multitude of values, such as:
 
@@ -138,7 +138,7 @@ The following Namespaces are provided for use by all organizations.
 
 ### 2.2 Create a Custom Namespace
 
-Create a new Namespaces under the given company.
+Create a new Namespaces under the given company. For recommendations around creating custom Namespaces, see [the FAQ](../identity_services_architectural_overview/identity_services_faq.md).
 
 __Example Request - Create Namespace__:
 
