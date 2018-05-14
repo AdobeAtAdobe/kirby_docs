@@ -68,5 +68,5 @@
 			"title": "ETL Integration Guide"
 		}
 	],
-	"app2app_map": ["api-specification/markdown/narrative/tutorials/":"/apis/cloudplatform/dataservices/tutorials.html"]
+	"app2app_map": {"api-specification/markdown/narrative/tutorials/":"/apis/cloudplatform/dataservices/tutorials.html"}
 }
