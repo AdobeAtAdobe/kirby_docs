@@ -67,5 +67,6 @@
 			"path": "api-specification/markdown/narrative/integration_guides/etl_integration_guide/etl_integration_guide.md",
 			"title": "ETL Integration Guide"
 		}
-	]
+	],
+	app2app_map: ["api-specification/markdown/narrative/tutorials/":"/apis/cloudplatform/dataservices/tutorials.html"]
 }
