@@ -16,9 +16,9 @@ All GDPR API requests are REST-based with JSON used as the payload for requests 
 
 Below are the required steps for creating your first call into the GDPR API:
 
-1. Gather your data - from a customer request, from the Adobe Privacy JS library, or from your own internal tools, assemble information about the data subject and provide context for the request ([data format](#gdpr-api-post-request-format))
-2. Create your Adobe IO integration to obtain authorization and service access for your organization ([integration](#creating-your-api-integration))
-3. Populate your HTTP headers for full authentication and routing through the Adobe IO Gateway and into the GDPR API ([headers and authorization](#gdpr-headers-and-authorization))
+1. Gather your data - from a customer request, from the Adobe Privacy JS library, or from your own internal tools, assemble information about the data subject and provide context for the request ([data format](#gdprapipostrequestformat))
+2. Create your Adobe IO integration to obtain authorization and service access for your organization ([integration](#creatingyourapiintegration))
+3. Populate your HTTP headers for full authentication and routing through the Adobe IO Gateway and into the GDPR API ([headers and authorization](#gdprheadersandauthorization))
 4. Submit your request using all the data gathered above
 
 ## GDPR API POST request format
@@ -134,7 +134,7 @@ Some notes about the format:
 * The **action** field is a collection of desired actions, one or both of ["access" | "delete"] depending on the user’s request, and may be different for each user in the submission.
 * The combination of **key** and **action** dictate how many "jobs" are created in the service to track. A user key with a single action creates a single job, but a user with both an `access` and `delete` request will generate two separate jobs against that user key. Multiple keys in a file (indicating multiple user ID collections) will generate multiple jobs as well.
 * As mentioned above, users may have 1 or many JSON sub-documents including namespace, value and type that represent their identity in the ExC
-* The namespace and type fields are detailed in the table [Namespace Qualifiers](#namespace-qualifiers) below
+* The namespace and type fields are detailed in the table [Namespace Qualifiers](#namespacequalifiers) below
 
 One key not detailed in the example above:
 * The key **isDeletedClientSide** is a Boolean (true/false) value that is handed in from Adobe's Privacy JS library, indicating the client-side cookie has been deleted. This flag resides at the userID level, as part of the `namespace`, `value` and `type` triumvirate, and should not be added to the request manually as it indicates additional processing work is not needed by some solutions
@@ -143,7 +143,7 @@ One key not detailed in the example above:
 
 The following flags my be specified at the root level (equivalent to the *users* or *companyContexts* keys) and will be applied for the complete set of user data included.
 
-* The **exclude** key is an optional parameter and supports an array of product strings to exclude from your processing. If you only support or integrate with Analytics, you could exclude the addtional products from the request. By default, all supported ExC solutions are included in every request. See [product values](#product-values)
+* The **exclude** key is an optional parameter and supports an array of product strings to exclude from your processing. If you only support or integrate with Analytics, you could exclude the addtional products from the request. By default, all supported ExC solutions are included in every request. See [product values](#productvalues)
 * the **expandIds** key is an optional parameter and supports a boolean value of true|false. optional field that represents an optimization for processing the IDs in the solutions (currently only used by Analytics). If omitted, Analytics' default behavior is "false"
 * The **priority** key is an optional parameter (*normal*|*low*) for optimizing requests based on customer need. If an end-user makes the request, and thus the company is required to respond within the 30 day window for GDPR, the priority should always be *normal* (default value if omitted). If the request is being made by systems for cleanup or optimization, it may not need to fall within the time table of a GDPR request by law, thus could be set to *low* to allow other requests to process sooner.
 * The **analyticsDeleteMethod** is an optional parameter (*purge*|*anonymize*) for specifying how Analytics should handle the customer data. By default (if omitted), all data referenced by the given collection of user IDs is anonymized, thus maintaining data integrity for historical reporting and other functions. Purge will remove the data completely.
@@ -350,10 +350,11 @@ Listing 6 shows a typical example of a response payload from a `status` request 
 As shown above, the response gives additional detail about each solution that is currently performing work on behalf of this job. The following table lists the corresponding status codes and their meaning:
 
 | Status Code | Status Message | Comments |
-| 1 | Complete | Job is complete and (if required) files are uploaded from every products |
-| 2 | Processing | Acknowledgement is received from the Products |
-| 3 | Submitted | Job is submitted to every products |
-| 4 | Expired | Final response is not received from the products before the specified time |
+| ----------- | -------------- | -------- |
+| 1 | Complete | Job is complete and (if required) files are uploaded from every solution |
+| 2 | Processing | Acknowledgement is received from the solution(s) |
+| 3 | Submitted | Job is submitted to every applicable solution |
+| 4 | Expired | Final response is not received from the solution(s) before the specified time |
 
 ### Namespace Qualifiers
 
