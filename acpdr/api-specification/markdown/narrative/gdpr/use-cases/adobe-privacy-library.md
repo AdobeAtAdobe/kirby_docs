@@ -164,3 +164,9 @@ The following code samples show the code to use for common scenarios, if you're 
         "isDeletedClientSide": true
     }
     ```
+
+## Result
+The result of the APIs is a JSON object that contains all the IDs, as well as two required properties that the customer has to fill in after receiving the result:
+
+* **Key** An identifier for the visitor, or the data subject who initiated the GDPR request. This is for tracking purposes only, so the request is tagged. Adobe does not do anything with this property.
+* **Action** One or more actions that the data subject is requesting: access, delete, or both. The type of this property is an array. 
