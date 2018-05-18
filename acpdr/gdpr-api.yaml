@@ -1,0 +1,471 @@
+swagger: '2.0'
+info:
+  description: "The GDPR API is a core service that provides a common,centralized facilitation of GDPR access/delete\n\t\t\t\t\t\t\t\t\trequests for customers. The service consists of an API for creating requests and checking the status of submitted jobs"
+  version: '0.1'
+  title: GDPR API
+host: platform.adobe.io
+basePath: /
+tags:
+  - name: GDPR central API
+paths:
+  /data/privacy/gdpr:
+    get:
+      tags:
+        - GDPR central API
+      summary: Retrieve details of all Jobs for a specific user/organization specified by the user bearer token
+      description: ''
+      operationId: getStatus(all)
+      parameters:
+        - name: x-gw-ims-org-id
+          in: header
+          description: XXXXX47E56F59C747FXXXXX@AdobeOrg - IMS organization ID that the request is being made under. Should match the user's organization and the organization in the JSON payload
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: Bearer [token] - An authorization token for the user making the request. Should have system administrator access to the organization, or be a technical account created through integration with Adobe IO
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+        - name: Content-Type
+          in: header
+          description: application/json
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 'If found, The details of requested jobId is returned.'
+          schema:
+            $ref: '#/definitions/A GDPR Request model'
+        '400':
+          description: Bad Request. The request is malformed
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '401':
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '403':
+          description: Forbidden. That combination of arguments is not allowed.
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '404':
+          description: Not Found. The resource the client is looking for isn't there.
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '405':
+          description: Method Not Allowed. Client sent a request using a HTTP method that the server doesn't support.
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '406':
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '422':
+          description: Unprocessable Entity. Client sent a correct request that contained invalid values for one or more parameters.
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '500':
+          description: Internal Server Error. This is an indicator of a server-side error.
+        '502':
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
+        '503':
+          description: Service Unavailable. This is an indicator of a potential server overload.
+        '504':
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
+    post:
+      tags:
+        - GDPR central API
+      summary: Create an ACCESS or DELETE GDPR requests
+      description: creates a job in the GDPR API for either ACCESS or DELETE for each user included in the JSON POST body
+      operationId: performDataOperation
+      parameters:
+        - in: body
+          name: body
+          description: JSON file or valid JSON to submit requests
+          required: true
+          schema:
+            $ref: '#/definitions/A GDPR Request model'
+        - name: x-gw-ims-org-id
+          in: header
+          description: XXXXX47E56F59C747FXXXXX@AdobeOrg - IMS organization ID that the request is being made under. Should match the user's organization and the organization in the JSON payload
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: Bearer [token] - An authorization token for the user making the request. Should have system administrator access to the organization, or be a technical account created through integration with Adobe IO
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+        - name: Content-Type
+          in: header
+          description: application/json
+          required: true
+          type: string
+      responses:
+        '202':
+          description: Accepted - GDPR requests created successfully
+          schema:
+            $ref: '#/definitions/ResponseEntity'
+        '400':
+          description: Bad Request. The request is malformed
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '401':
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '403':
+          description: Forbidden. That combination of arguments is not allowed.
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '404':
+          description: Not Found. The resource the client is looking for isn't there.
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '405':
+          description: Method Not Allowed. Client sent a request using a HTTP method that the server doesn't support.
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '406':
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '422':
+          description: Unprocessable Entity. Client sent a correct request that contained invalid values for one or more parameters.
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '500':
+          description: Internal Server Error. This is an indicator of a server-side error.
+        '502':
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
+        '503':
+          description: Service Unavailable. This is an indicator of a potential server overload.
+        '504':
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
+  '/data/privacy/gdpr/{jobId}':
+    get:
+      tags:
+        - GDPR central API
+      summary: Retrieve details of JobId specified in request
+      description: ''
+      operationId: getStatus
+      parameters:
+        - name: jobId
+          in: path
+          description: jobId
+          required: true
+          type: string
+        - name: x-gw-ims-org-id
+          in: header
+          description: XXXXX47E56F59C747FXXXXX@AdobeOrg - IMS organization ID that the request is being made under. Should match the user's organization and the organization in the JSON payload
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: Bearer [token] - An authorization token for the user making the request. Should have system administrator access to the organization, or be a technical account created through integration with Adobe IO
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: IMS Client ID (API Key) which is subscribed to consume services on console.adobe.io
+          required: true
+          type: string
+        - name: Content-Type
+          in: header
+          description: application/json
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 'If found, The details of requested jobId is returned.'
+          schema:
+            $ref: '#/definitions/A GDPR Request model'
+        '400':
+          description: Bad Request. The request is malformed
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '401':
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '403':
+          description: Forbidden. That combination of arguments is not allowed.
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '404':
+          description: Not Found. The resource the client is looking for isn't there.
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '405':
+          description: Method Not Allowed. Client sent a request using a HTTP method that the server doesn't support.
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '406':
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '422':
+          description: Unprocessable Entity. Client sent a correct request that contained invalid values for one or more parameters.
+          schema:
+            $ref: '#/definitions/Problem Detail'
+        '500':
+          description: Internal Server Error. This is an indicator of a server-side error.
+        '502':
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
+        '503':
+          description: Service Unavailable. This is an indicator of a potential server overload.
+        '504':
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
+
+definitions:
+  A CompanyContext model:
+    type: object
+    required:
+      - namespace
+      - value
+    properties:
+      namespace:
+        type: string
+      value:
+        type: string
+  A GDPR Request model:
+    type: object
+    required:
+      - companyContexts
+      - users
+    properties:
+      companyContexts:
+        type: array
+        items:
+          $ref: '#/definitions/A CompanyContext model'
+        maxItems: 2147483647
+        minItems: 1
+      users:
+        type: array
+        items:
+          $ref: ''
+        maxItems: 2147483647
+        minItems: 1
+      exclude:
+        type: array
+        items:
+          type: string
+  A GDPR Response model:
+    type: object
+    properties:
+      jobs:
+        type: array
+        items:
+          $ref: '#/definitions/Jobs'
+      errors:
+        $ref: '#/definitions/Problem Detail'
+      meta:
+        $ref: '#/definitions/ServicePageResult'
+      requestStatus:
+        type: integer
+        format: int32
+  Customer:
+    type: object
+    properties:
+      user:
+        $ref: ''
+      companyContexts:
+        type: array
+        items:
+          $ref: ''
+  ErrorResponse:
+    type: object
+    properties:
+      reason:
+        type: string
+      message:
+        type: string
+    xml:
+      name: error
+  Errors:
+    type: object
+    properties:
+      detail:
+        type: string
+      title:
+        type: string
+      errorCategory:
+        type: string
+      errorType:
+        type: string
+      source:
+        $ref: ''
+      errorCode:
+        type: string
+  GDPRRootResponses:
+    type: object
+    properties:
+      product:
+        type: string
+      retryCount:
+        type: integer
+        format: int32
+      productStatusResponse:
+        $ref: '#/definitions/GdprStatusResponse'
+      processedDate:
+        type: string
+  GdprStatusResponse:
+    type: object
+    properties:
+      statusCode:
+        type: integer
+        format: int32
+      statusMessage:
+        type: string
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/Errors'
+  Jobs:
+    type: object
+    properties:
+      customerName:
+        type: string
+      jobId:
+        type: string
+      requestId:
+        type: integer
+        format: int32
+      ticketNumber:
+        type: string
+      isDeleted:
+        type: string
+      lastUpdatedOn:
+        type: string
+      customer:
+        $ref: '#/definitions/Customer'
+      emailId:
+        type: string
+      productResponses:
+        type: array
+        items:
+          $ref: '#/definitions/GDPRRootResponses'
+      lastUpdatedBy:
+        type: string
+      timeRequested:
+        type: string
+      submittedBy:
+        type: string
+      gdprStatusResponse:
+        $ref: '#/definitions/GdprStatusResponse'
+  Problem Detail:
+    type: object
+    properties:
+      errorType:
+        type: string
+        example: 'https://mcloud.io/client-error'
+        description: A URI reference (RFC3986) that identifies the problem type.
+      errorCode:
+        type: integer
+        format: int32
+        example: 4xx
+        description: The HTTP status code generated by the server for this occurrence of the problem.
+      title:
+        type: string
+        example: Client side error
+        description: 'A short, human-readable summary of the problem type.'
+      detail:
+        type: string
+        example: Invalid ID format
+        description: A human-readable explanation specific to this occurrence of the problem.
+    description: 'An error object containing a problem detail, as defined by <a href="https://tools.ietf.org/html/rfc7807">RFC 7807 Problem Details for HTTP APIs</a>. The returned content-type is the <i>application/problem+json</i> media type. When present, this response contains machine-readable details pertaining to the error. Problem details include a <i>type</i>, which is a URI.'
+  ResponseEntity:
+    type: object
+    properties:
+      headers:
+        type: object
+        additionalProperties:
+          type: array
+          items:
+            type: string
+      body:
+        type: object
+      statusCode:
+        type: string
+        enum:
+          - CONTINUE
+          - SWITCHING_PROTOCOLS
+          - PROCESSING
+          - CHECKPOINT
+          - OK
+          - CREATED
+          - ACCEPTED
+          - NON_AUTHORITATIVE_INFORMATION
+          - NO_CONTENT
+          - RESET_CONTENT
+          - PARTIAL_CONTENT
+          - MULTI_STATUS
+          - ALREADY_REPORTED
+          - IM_USED
+          - MULTIPLE_CHOICES
+          - MOVED_PERMANENTLY
+          - FOUND
+          - MOVED_TEMPORARILY
+          - SEE_OTHER
+          - NOT_MODIFIED
+          - USE_PROXY
+          - TEMPORARY_REDIRECT
+          - RESUME_INCOMPLETE
+          - BAD_REQUEST
+          - UNAUTHORIZED
+          - PAYMENT_REQUIRED
+          - FORBIDDEN
+          - NOT_FOUND
+          - METHOD_NOT_ALLOWED
+          - NOT_ACCEPTABLE
+          - PROXY_AUTHENTICATION_REQUIRED
+          - REQUEST_TIMEOUT
+          - CONFLICT
+          - GONE
+          - LENGTH_REQUIRED
+          - PRECONDITION_FAILED
+          - REQUEST_ENTITY_TOO_LARGE
+          - REQUEST_URI_TOO_LONG
+          - UNSUPPORTED_MEDIA_TYPE
+          - REQUESTED_RANGE_NOT_SATISFIABLE
+          - EXPECTATION_FAILED
+          - I_AM_A_TEAPOT
+          - INSUFFICIENT_SPACE_ON_RESOURCE
+          - METHOD_FAILURE
+          - DESTINATION_LOCKED
+          - UNPROCESSABLE_ENTITY
+          - LOCKED
+          - FAILED_DEPENDENCY
+          - UPGRADE_REQUIRED
+          - PRECONDITION_REQUIRED
+          - TOO_MANY_REQUESTS
+          - REQUEST_HEADER_FIELDS_TOO_LARGE
+          - INTERNAL_SERVER_ERROR
+          - NOT_IMPLEMENTED
+          - BAD_GATEWAY
+          - SERVICE_UNAVAILABLE
+          - GATEWAY_TIMEOUT
+          - HTTP_VERSION_NOT_SUPPORTED
+          - VARIANT_ALSO_NEGOTIATES
+          - INSUFFICIENT_STORAGE
+          - LOOP_DETECTED
+          - BANDWIDTH_LIMIT_EXCEEDED
+          - NOT_EXTENDED
+          - NETWORK_AUTHENTICATION_REQUIRED
+  ServicePageResult:
+    type: object
+    properties:
+      totalPages:
+        type: integer
+        format: int32
+      jsonapi:
+        $ref: ''
