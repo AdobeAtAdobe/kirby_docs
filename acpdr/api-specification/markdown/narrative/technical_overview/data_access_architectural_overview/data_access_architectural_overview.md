@@ -29,7 +29,7 @@ The Data Access API supports Adobe Cloud Platform by providing users with a REST
 
 
 ## 3 API Specification Reference
-The Swagger API reference documentation can be found [here](../apireference.html#!acpdr/data-access-api.yaml)
+The Swagger API reference documentation can be found [here](../apireference.html#!acpdr/swagger/data-access-api.yaml)
 
 
 ## 4 High-level Architecture Diagram
