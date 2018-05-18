@@ -12,27 +12,27 @@
 	"pages": [
 		{
 			"pages": [],
-			"path": "acpdr/catalog.yaml",
+			"path": "acpdr/swagger/catalog.yaml",
 			"title": "Catalog Service"
 		},
 		{
 			"pages": [],
-			"path": "acpdr/bulk-ingest-api.yaml",
+			"path": "acpdr/swagger/bulk-ingest-api.yaml",
 			"title": "Bulk Ingestion Service"
 		},
 		{
 			"pages": [],
-			"path": "acpdr/data-access-api.yaml",
+			"path": "acpdr/swagger/data-access-api.yaml",
 			"title": "Data Access Service"
 		},
 		{
 			"pages": [],
-			"path": "acpdr/profile-access.yaml",
+			"path": "acpdr/swagger/profile-access.yaml",
 			"title": "Unified Profile Service"
 		},
 		{
 			"pages": [],
-			"path": "acpdr/id-namespace-api.yaml",
+			"path": "acpdr/swagger/id-namespace-api.yaml",
 			"title": "Identity Namespace Service"
 		}
 	]
