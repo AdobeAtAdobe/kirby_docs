@@ -1,17 +1,17 @@
 
-# GDPR on AEP Overview
+# GDPR on ACP Overview
 
 ## Introduction
 
-Adobe Experience Platform (AEP) supports GDPR `access` and `delete` requests. Customers who are using AEP to store and manage their data can integrate with the Adobe GDPR APIs to submit both `access` and `delete` requests.
+Adobe Cloud Platform (ACP) supports GDPR `access` and `delete` requests. Customers who are using AEP to store and manage their data can integrate with the Adobe GDPR APIs to submit both `access` and `delete` requests.
 
-There are few pre-requisites that first be in place in order to submit requests to AEP.
+There are few pre-requisites that first be in place in order to submit requests to ACP.
 
 ## GDPR Labeling in Platform using API
 
 Customers should first look at their datasets in the platform and decide which of the dataset fields are applicable for GDPR requests. Then customers should add appropriate GDPR labels to the fields using the DatasetAPI.
 
-For example, suppose there exists a dataset in AEP with the fields `id`, `address` and `product purchased`. If a customer deems that `address` should be available for GDPR requests, the customer should label the field with a unique label. These labels can then be specified when submitting `access` and `delete` requests to the GDPR APIs on AEP.
+For example, suppose there exists a dataset in ACP with the fields `id`, `address` and `product purchased`. If a customer deems that `address` should be available for GDPR requests, the customer should label the field with a unique label. These labels can then be specified when submitting `access` and `delete` requests to the GDPR APIs on ACP.
 
 ## Submitting GDPR Requests
 
