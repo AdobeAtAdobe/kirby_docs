@@ -16,7 +16,7 @@ PQL is composed of various basic elements that are combined together to create P
 
 Since PQL is XDM compliant, it will support the types that XDM has. These include basic scalar data types such as String, Double, Int, Boolean, Number, DateLiteral,  object data types and vector data types such as collections or sets. The eventual full set of data types that PQL will support is listed at XDM Data Types. PQL statements themselves will not have declarations of types and the type inferred during execution is currently implicit.
 
-PQL allows the use of dot-notation to access an object and its fields, such `person.firstName`. If the field is referring to another object or a vector of other objects, it is possible to chain the dots in a running dot notation. For example, you could have `metrics.commerce.abandons.value`. Since the XDM structure will largely follow a STAR schema, we don't anticipate many levels of running dots to be required, though the language does support it.
+PQL allows the use of dot-notation to access an object and its fields, such `firstName`. If the field is referring to another object or a vector of other objects, it is possible to chain the dots in a running dot notation. For example, you could have `metrics.commerce.abandons.value`. Since the XDM structure will largely follow a STAR schema, we don't anticipate many levels of running dots to be required, though the language does support it.
 
 #### 3.1.1 Literals
 
@@ -77,7 +77,7 @@ Select expressions can be nested (e.g. `condition1` above may itself contain a s
 
 #### 3.2.2 Select result
 
-When a select expression is evaluated, the result is the set of tuples (V1, V2, X, I ...) which satisfy the conditions within the select expression. A select expression is therefore multi-valued, and hence the count() function can be applied to the result. For example, the following defines profiles which have more than 5 associated ExperienceEvents each of which include more than 2 `productListItems`.:
+When a select expression is evaluated, the result is the set of tuples (V1, V2, X, I ...) which satisfy the conditions within the select expression. A select expression is therefore multi-valued, and hence the count() function can be applied to the result. For example, the following defines profiles which have more than 5 associated ExperienceEvents each of which include more than 2 `productListItems`:
 
 ```
 (select X from xEvent where X.productListItems.count() > 2).count() > 5
@@ -91,7 +91,7 @@ Since the select construct evaluates to a set of tuples, it is possible to run a
 
 Every PQL query is a statement that is composed of expressions that are built together using the features discussed above. PQL allows for compound expressions that are constructed using arbitrary combinations of conjunctions and disjunctions, comparisons etc. These will follow the natural priority of the operators if they are not separated by parentheses. PQL also allows for the use of parentheses to control the evaluation of these expressions. The typical structure of a statement is to have the CRM related portions of the query at the beginning and then have the related ExperienceEvent portions later, possibly within a Select construct.
 
-For CRM statements, since the execution is running in the context of a single user, it is possible to omit the `user` portion in the expressions and refer to the fields directly.
+For CRM statements, since the execution is running in the context of a single user, the root entity `user` is implied and must be omitted from the dot-notation field paths in the statement.
 
 There are various types of statements supported in PQL. They are as follows.
 
@@ -104,9 +104,10 @@ At the basic level, the atomic instructions are either accessors of data in the 
 These combine the basic expressions and allow for boolean expressions, arithmetic expressions and comparison expressions. These comparison expressions support checking for equality and inequality of expressions. The arithmetic expressions support the basic arithmetic operations and the boolean expressions can be combined with 'and' 'or' and 'not' keywords. Some examples are,
 
 ```
-user.age > 35 and
-user.state = "CA"
+age > 35 and
+state = "CA"
 ```
+
 
 #### 3.3.3 Time Expressions
 
@@ -171,14 +172,14 @@ The following describes functions that are available for comparing String litera
   * Boolean: `true` if both strings are not null and the first string starts with the second, `false` otherwise
 * Examples
   * workEmail.address.startsWith("joe")
-    * `true` where `workEmail` = "joe.lean@work.com"
-    * `false` where `workEmail` = "JOE.lean@work.com"
+    * `true` where `workEmail.address` = "joe.lean@work.com"
+    * `false` where `workEmail.address` = "JOE.lean@work.com"
   * workEmail.address.startsWith("joe", true)
-    * `true` where `workEmail` = "joe.lean@work.com"
-    * `false` where `workEmail` = "JOE.lean@work.com"
+    * `true` where `workEmail.address` = "joe.lean@work.com"
+    * `false` where `workEmail.address` = "JOE.lean@work.com"
   * workEmail.address.startsWith("joe", false)
-    * `true` where `workEmail` = "joe.lean@work.com"
-    * `true` where `workEmail` = "JOE.lean@work.com"
+    * `true` where `workEmail.address` = "joe.lean@work.com"
+    * `true` where `workEmail.address` = "JOE.lean@work.com"
 
 ##### doesNotStartWith
 
@@ -190,14 +191,14 @@ The following describes functions that are available for comparing String litera
   * Boolean: `true` if both strings are not null and the first string __does not__ start with the second, `false` otherwise
 * Examples
   * workEmail.address.doesNotStartWith("joe")
-    * `false` where `workEmail` = "joe.lean@work.com"
-    * `true` where `workEmail` = "JOE.lean@work.com"
+    * `false` where `workEmail.address` = "joe.lean@work.com"
+    * `true` where `workEmail.address` = "JOE.lean@work.com"
   * workEmail.address.doesNotStartWith("joe", true)
-    * `false` where `workEmail` = "joe.lean@work.com"
-    * `true` where `workEmail` = "JOE.lean@work.com"
+    * `false` where `workEmail.address` = "joe.lean@work.com"
+    * `true` where `workEmail.address` = "JOE.lean@work.com"
   * workEmail.address.doesNotStartWith("joe", false)
-    * `false` where `workEmail` = "joe.lean@work.com"
-    * `false` where `workEmail` = "JOE.lean@work.com"
+    * `false` where `workEmail.address` = "joe.lean@work.com"
+    * `false` where `workEmail.address` = "JOE.lean@work.com"
 
 ##### endsWith
 
@@ -209,14 +210,14 @@ The following describes functions that are available for comparing String litera
   * Boolean: `true` if both strings are not null and the first string ends with the second, `false` otherwise
 * Examples
   * workEmail.address.endsWith(".edu")
-    * `true` where `workEmail` = "joe.lean@work.edu"
-    * `false` where `workEmail` = "joe.lean@work.EDU"
+    * `true` where `workEmail.address` = "joe.lean@work.edu"
+    * `false` where `workEmail.address` = "joe.lean@work.EDU"
   * workEmail.address.endsWith(".edu", true)
-    * `true` where `workEmail` = "joe.lean@work.edu"
-    * `false` where `workEmail` = "joe.lean@work.EDU"
+    * `true` where `workEmail.address` = "joe.lean@work.edu"
+    * `false` where `workEmail.address` = "joe.lean@work.EDU"
   * workEmail.address.endsWith(".edu", false)
-    * `true` where `workEmail` = "joe.lean@work.edu"
-    * `true` where `workEmail` = "joe.lean@work.EDU"
+    * `true` where `workEmail.address` = "joe.lean@work.edu"
+    * `true` where `workEmail.address` = "joe.lean@work.EDU"
 
 ##### doesNotEndWith
 
@@ -228,14 +229,14 @@ The following describes functions that are available for comparing String litera
   * Boolean: `true` if both strings are not null and the first string __does not__ end with the second, `false` otherwise
 * Examples
   * workEmail.address.doesNotEndWith(".edu")
-    * `false` where `workEmail` = "joe.lean@work.edu"
-    * `true` where `workEmail` = "joe.lean@work.EDU"
+    * `false` where `workEmail.address` = "joe.lean@work.edu"
+    * `true` where `workEmail.address` = "joe.lean@work.EDU"
   * workEmail.address.doesNotEndWith(".edu", true)
-    * `false` where `workEmail` = "joe.lean@work.edu"
-    * `true` where `workEmail` = "joe.lean@work.EDU"
+    * `false` where `workEmail.address` = "joe.lean@work.edu"
+    * `true` where `workEmail.address` = "joe.lean@work.EDU"
   * workEmail.address.doesNotEndWith(".edu", false)
-    * `false` where `workEmail` = "joe.lean@work.edu"
-    * `false` where `workEmail` = "joe.lean@work.EDU"
+    * `false` where `workEmail.address` = "joe.lean@work.edu"
+    * `false` where `workEmail.address` = "joe.lean@work.EDU"
 
 ##### contains
 
@@ -247,14 +248,14 @@ The following describes functions that are available for comparing String litera
   * Boolean: `true` if both strings are not null and the first string contains the second, `false` otherwise.
 * Examples
   * workEmail.address.contains("yahoo")
-    * `true` where `workEmail` = "joe.lean@yahoo.com"
-    * `false` where `workEmail` = "joe.lean@YAHOO.com"
+    * `true` where `workEmail.address` = "joe.lean@yahoo.com"
+    * `false` where `workEmail.address` = "joe.lean@YAHOO.com"
   * workEmail.address.contains("yahoo", true)
-    * `true` where `workEmail` = "joe.lean@yahoo.com"
-    * `false` where `workEmail` = "joe.lean@YAHOO.com"
+    * `true` where `workEmail.address` = "joe.lean@yahoo.com"
+    * `false` where `workEmail.address` = "joe.lean@YAHOO.com"
   * workEmail.address.contains("yahoo", false)
-    * `true` where `workEmail` = "joe.lean@yahoo.com"
-    * `true` where `workEmail` = "joe.lean@YAHOO.com"
+    * `true` where `workEmail.address` = "joe.lean@yahoo.com"
+    * `true` where `workEmail.address` = "joe.lean@YAHOO.com"
 
 ##### doesNotContain
 
@@ -266,14 +267,14 @@ The following describes functions that are available for comparing String litera
   * Boolean: `true` if both strings are not null and the first string __does not__ contain the second, `false` otherwise.
 * Examples
   * workEmail.address.doesNotContain("yahoo")
-    * `false` where `workEmail` = "joe.lean@yahoo.com"
-    * `true` where `workEmail` = "joe.lean@YAHOO.com"
+    * `false` where `workEmail.address` = "joe.lean@yahoo.com"
+    * `true` where `workEmail.address` = "joe.lean@YAHOO.com"
   * workEmail.address.doesNotContain("yahoo", true)
-    * `false` where `workEmail` = "joe.lean@yahoo.com"
-    * `true` where `workEmail` = "joe.lean@YAHOO.com"
+    * `false` where `workEmail.address` = "joe.lean@yahoo.com"
+    * `true` where `workEmail.address` = "joe.lean@YAHOO.com"
   * workEmail.address.doesNotContain("yahoo", false)
-    * `false` where `workEmail` = "joe.lean@yahoo.com"
-    * `false` where `workEmail` = "joe.lean@YAHOO.com"
+    * `false` where `workEmail.address` = "joe.lean@yahoo.com"
+    * `false` where `workEmail.address` = "joe.lean@YAHOO.com"
 
 ##### equals
 
@@ -284,13 +285,13 @@ The following describes functions that are available for comparing String litera
 * Result
   * Boolean: `true` if both strings are not null and the first string equals the second, `false` otherwise
 * Examples
-  * person.firstName.equals("John")
+  * firstName.equals("John")
     * `true` where `firstName` = "John"
     * `false` where `firstName` = "john"
-  * person.firstName.equals("John", true)
+  * firstName.equals("John", true)
     * `true` where `firstName` = "John"
     * `false` where `firstName` = "john"
-  * person.firstName.equals("John", false)
+  * firstName.equals("John", false)
     * `false` where `firstName` = "Johnny"
     * `true` where `firstName` = "John"
     * `true` where `firstName` = "john"
@@ -304,13 +305,13 @@ The following describes functions that are available for comparing String litera
 * Result
   * Boolean: `true` if both strings are not null and the first string __does not__ equal the second, `false` otherwise
 * Examples
-  * person.firstName.notEqualTo("John")
+  * firstName.notEqualTo("John")
     * `false` where `firstName` = "John"
     * `true` where `firstName` = "john"
-  * person.firstName.notEqualTo("John", true)
+  * firstName.notEqualTo("John", true)
     * `false` where `firstName` = "John"
     * `true` where `firstName` = "john"
-  * person.firstName.notEqualTo("John", false)
+  * firstName.notEqualTo("John", false)
     * `true` where `firstName` = "Johnny"
     * `false` where `firstName` = "John"
     * `false` where `firstName` = "john"
