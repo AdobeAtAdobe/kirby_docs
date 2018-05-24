@@ -16,29 +16,33 @@ The Adobe Privacy JavaScript library follows a Plugin architecture where one cor
 
 The signatures for the functions presented by the Adobe Privacy JavaScript library are as follows:
 
-* `retrieveIdentities`
+* **`retrieveIdentities`**
 
     Promise< Object: `{ array: validIDs, array: failedIDs }`>
     callback implementation: function: `callback(Object: { array: validIDs, array: failedIDs })`
 
-* `removeIdentities`
+* **`removeIdentities`**
 
     Promise< Object: `{ array: validIDs, array: failedIDs }`>
     callback implementation: function: `callback(Object: { array: validIDs, array: failedIDs })`
 
-    The `hasBeenDeleted` field for each entry in the `validIDs` array will be marked with `isDeletedClientSide`: true/false, depending on whether this ID has been deleted.
+    Each entry in the validIDs will be marked with `isDeleteClientSide`: true/false, depending on whether this ID has been deleted.
+
+    * **`retrieveThenRemoveIdentities`**
+
+        Promise< Object: `{ array: validIDs, array: failedIDs }`>
+        callback implementation: function: `callback(Object: { array: validIDs, array: failedIDs })`
 
 **Note:**
 
 * AdobePrivacy.js does not submit information to the Experience Cloud Central Service. The customer must do that. This library only provides the IDs that are stored in the browser a that specific visitor.
-* `removeIdentities` only removes identities from the browser for specific Adobe solutions that support it. For example, AAM does not delete the demdex ID that is stored in a 3rd party cookie, but Target deletes the cookies storing their IDs.
+* **`removeIdentities`** and **`retrieveThenRemoveIdentities`** only remove identities from the browser for specific Adobe solutions that support them. For example, AAM does not delete the demdex ID that is stored in a 3rd party cookie, but Target deletes the cookies storing their IDs.
 
 ## Installation
 
-There are multiple installation options for the JavaScript APIs:
+There are multiple options to install the AdobePrivacy library:
 
-* Download the JavaScript Library manually in one of the following ways: 
-  *  Use the Launch Extension under the name `AdobePrivacy`
+  * Use the Launch Extension under the name `AdobePrivacy`
   * Download from [https://assets.adobedtm.com/experience-cloud/privacy/js/adobeprivacy.bundle.zip](https://assets.adobedtm.com/experience-cloud/privacy/js/adobeprivacy.bundle.zip)
 
 * Install the script via DTM by adding a "Sequential JavaScript Tag"
@@ -53,6 +57,8 @@ var adobePrivacy = new AdobePrivacy({ENTER YOUR ADOBE SOLUTIONS SPECIFIC CONFIGU
 ```
 
 ## Supported configurations
+
+* **key**: An ID that identifies your visitor / data subject. This is used for your internal tracking only, Adobe does not use this property. Ex: David Smith, 12353423...
 
 ### Adobe Analytics
 
@@ -75,6 +81,7 @@ var adobePrivacy = new AdobePrivacy({ENTER YOUR ADOBE SOLUTIONS SPECIFIC CONFIGU
 
 **imsOrgID**: Your Organization ID in Adobe
 
+
 ## Code samples
 
 The following code samples show the code to use for common scenarios, if you're not using Launch or DTM.
@@ -84,6 +91,7 @@ The following code samples show the code to use for common scenarios, if you're 
     ```javascript
     var adobePrivacy = new AdobePrivacy({
         imsOrgID: “YOUR_ORG_ID@AdobeOrg",
+        key: "DATA_SUBJECT_ID",
         reportSuite: "Report-Suite-ID",
         trackingServer: "metrics.mycompany.com",
         clientCode: “TARGET_CLIENT_CODE"
@@ -166,7 +174,35 @@ The following code samples show the code to use for common scenarios, if you're 
     ```
 
 ## Result
-The result of the APIs is a JSON object that contains all the IDs, as well as two required properties that the customer has to fill in after receiving the result:
+The result of the APIs is a JSON object that contains all the IDs.
+
+Sample output:
+```javascript
+{
+    "companyContexts": [{
+            "namespace": "imsOrgID",
+            "value": "123456789@AdobeOrg"
+        }
+    ],
+    "users": [{
+        "key": "David Smith",
+        "action": ["access"], // Options: ["access", "delete"]
+        "userIDs": [{
+                "namespace": "email",
+                "value": "dsmith@acme.com",
+                "type": "standard"
+            },
+            {
+                "namespace":"myCustomField",
+                "value":"myCustomId_1234",
+                "type":"unregistered"
+            }
+        ]
+    }]
+}
+```
+
+Two properties worth noting:
 
 * **Key** An identifier for the visitor, or the data subject who initiated the GDPR request. This is for tracking purposes only, so the request is tagged. Adobe does not do anything with this property.
-* **Action** One or more actions that the data subject is requesting: access, delete, or both. The type of this property is an array. 
+* **Action** One or more actions that the data subject is requesting: access, delete, or both. The type of this property is an array.
