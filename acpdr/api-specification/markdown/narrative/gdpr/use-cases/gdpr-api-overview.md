@@ -354,7 +354,8 @@ As shown above, the response gives additional detail about each solution that is
 | 1 | Complete | Job is complete and (if required) files are uploaded from every solution |
 | 2 | Processing | Acknowledgement is received from the solution(s) |
 | 3 | Submitted | Job is submitted to every applicable solution |
-| 4 | Expired | Final response is not received from the solution(s) before the specified time |
+| 4 | Error | Something failed in the processing of the job - more specific information may be obtained by getting individual job details |
+| 5 | Expired | Final response is not received from the solution(s) before the specified time |
 
 ### Namespace Qualifiers
 
