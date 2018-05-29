@@ -2,7 +2,7 @@
 
 **Adobe Cloud Platform**
 
-Updated on May 29<sup>rd</sup> 2018
+Updated on April 25<sup>rd</sup> 2018
 
 Data integration patterns for ETL tools (ISVs)
 =============================
@@ -247,85 +247,21 @@ Design Phase
                 }
             ],
             "fileDescription": {
-                "persisted": false,
-		"format": "parquet",
+                "persisted": false
             },
             "transforms":"@/dataSets/598d6e81b2745f000015edcb/views/598d6e81b2745f000015edcc/transforms",
             "files": "@/dataSets/598d6e81b2745f000015edcb/views/598d6e81b2745f000015edcc/files",
             "children": "@/dataSetViews/598d6e81b2745f000015edcc/children",
-            "schema": "@/xdms/model/Profile",
-            "viewId": "598d6e81b2745f000015edcc",
-			"observableSchema": {
-				"type": "object",
-				"meta:xdmType": "object",
-				"properties": {
-					"personalEmail": {
-						"type": "object",
-						"meta:xdmType": "object",
-						"properties": {
-							"address": {
-								"type": "string",
-								"meta:xdmType": "string",
-								"title": "Address",
-								"description": "The technical address, e.g 'name@domain.com' as commonly defined in RFC2822 and subsequent standards."
-							}
-						}
-					},
-					"homeAddress": {
-						"type": "object",
-						"meta:xdmType": "object",
-						"properties": {
-							"country": {
-								"type": "string",
-								"meta:xdmType": "string",
-								"title": "Country",
-								"description": "The name of the government-administered territory. Other than countryCode, this is a free-form field that can have the country name in any language."
-							},
-							"city": {
-								"type": "string",
-								"meta:xdmType": "string",
-								"title": "City",
-								"description": "The town, city, village or other metropolitan identity of the address."
-							}
-						}
-					}
-				}
-			}
+            "schema": {},
+            "viewId": "598d6e81b2745f000015edcc"
         },
         :
         :
     }
     ```
 
-5.  The *Schema of a dataset* can be found at following places
-    ##### i. Fields (Deprecated)
-	Fields property is deprecated now. This has full schema specified for dataset. In coming releases this will be removed. When a dataset is created with a Schema, Fields property is auto filled with column names and types. One can directly post fields as part of dataset object as well. 
-	
-    ##### ii. Schema
-	This property of dataset has a path pointing to schema in schema registry. The same path can be appended to catlog endpoint to retrieve full schema. Following is the curl call example
-	```
-	curl -X GET "https://platform.adobe.io/data/foundation/catalog/xdms/model/Profile" \
-    -H "accept: application/json" \
-    -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
-    -H "Authorization: Bearer ACCESS_TOKEN" \
-    -H "x-api-key: API_KEY"
-	```
-	The JSON structure of the response is different from existing Fields property and is same as Observable Schema field of Dataset.
-	See point 4 above for observable schema field example.
-	If somebody wants to post dataset with custom schema, they can post schema in schema registry and refer that to dataset post call. More information on XDM and Schema registry can be found [here](https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/xdm_registry_architectural_overview/xdm_registry_architectural_overview.md).
-	
-	##### iii. Observable Schema
-	This field of a dataset has a json structure (matching to XDM schema json) which holds list of columns which are actually there in the data. XDM schemas can be huge and actual data can have a small subset of all columns. This property helps in identifying columns with data.
-	See point 4 above for observable schema field example.
-	Please note that this is currently filled for datasets whose type is set to "parquet".
-    
-	#### Schema for Reading
-	At the time of reading the data from platform, it is recommended that you read the schema from Observable schema (iii above). Since Observable schema represents the columns that are actually there in data, it will make schema generation easier.
-	
-	#### Schema for Mapping Source to Target
-	At the time of mapping, target should display all available columns. It is recommended to read the columns from Schema Registry (ii above). Customer is free to choose which all target columns he wants to map data to. ACP is responsible for updating observable schema once the first batch is successfully written.
-	
-    call from **Data Discovery API ** (Figure 8).
+5.  The *Schema of a dataset* can be retrieved with the following API
+    call from **Data Discovery API **(Figure 8).
 
     #### curl to fetch dataset details for datasetId
     ```
@@ -360,15 +296,897 @@ Design Phase
                 "created": 1516629739180,
                 "updated": 1516629739180,
                 "type": "object",
-                :
-				:
-				:
-				:
-				:
-				:
+                "subFields": [
+                    {
+                        "name": "mcId",
+                        "title": "Identity",
+                        "description": "Identity from identity services which is the fact of being who or what a person or thing is.\n",
+                        "created": 1516629739181,
+                        "updated": 1516629739181,
+                        "type": "object",
+                        "subFields": [
+                            {
+                                "name": "id",
+                                "title": "Identifier",
+                                "type": "string",
+                                "description": "Identity of the consumer in the related namespace."
+                            },
+                            {
+                                "name": "namespace",
+                                "title": "Data source",
+                                "description": "Globally unique identification of a data source.\n",
+                                "created": 1516629739176,
+                                "updated": 1516629739176,
+                                "type": "object",
+                                "subFields": [
+                                    {
+                                        "name": "id",
+                                        "title": "Identifier",
+                                        "type": "integer",
+                                        "description": "Globally unique identifier of the data source.\n"
+                                    },
+                                    {
+                                        "name": "code",
+                                        "title": "Code",
+                                        "type": "string",
+                                        "description": "The namespace code associated with the id attribute and matched up with the AAM data source integration code."
+                                    },
+                                    {
+                                        "name": "tags",
+                                        "title": "Tags",
+                                        "type": "string",
+                                        "description": "Tags are used to indicate how the aliases represented by a given data\nsource should be interpreted by applications using those aliases.\n\nExamples:\n\n* `isAVID`: data sources representing Analytics visitor IDs.\n* `isCRSKey`: data sources representing aliases that should be used as keys in CRS.\n\nTags are set when the data source is created but they are also included in\npipeline messages when referencing a given data source.\n",
+                                        "uniqueItems": true
+                                    }
+                                ],
+                                "xdmVersion": "0.9.2",
+                                "xdmType": "entity",
+                                "_refId": "../core/DataSource"
+                            }
+                        ],
+                        "xdmVersion": "0.9.2",
+                        "xdmType": "entity",
+                        "_refId": "../core/Identity"
+                    },
+                    {
+                        "name": "analytics",
+                        "title": "Identity",
+                        "description": "Identity from identity services which is the fact of being who or what a person or thing is.\n",
+                        "created": 1516629739181,
+                        "updated": 1516629739181,
+                        "type": "object",
+                        "subFields": [
+                            {
+                                "name": "id",
+                                "title": "Identifier",
+                                "type": "string",
+                                "description": "Identity of the consumer in the related namespace."
+                            },
+                            {
+                                "name": "namespace",
+                                "title": "Data source",
+                                "description": "Globally unique identification of a data source.\n",
+                                "created": 1516629739176,
+                                "updated": 1516629739176,
+                                "type": "object",
+                                "subFields": [
+                                    {
+                                        "name": "id",
+                                        "title": "Identifier",
+                                        "type": "integer",
+                                        "description": "Globally unique identifier of the data source.\n"
+                                    },
+                                    {
+                                        "name": "code",
+                                        "title": "Code",
+                                        "type": "string",
+                                        "description": "The namespace code associated with the id attribute and matched up with the AAM data source integration code."
+                                    },
+                                    {
+                                        "name": "tags",
+                                        "title": "Tags",
+                                        "type": "string",
+                                        "description": "Tags are used to indicate how the aliases represented by a given data\nsource should be interpreted by applications using those aliases.\n\nExamples:\n\n* `isAVID`: data sources representing Analytics visitor IDs.\n* `isCRSKey`: data sources representing aliases that should be used as keys in CRS.\n\nTags are set when the data source is created but they are also included in\npipeline messages when referencing a given data source.\n",
+                                        "uniqueItems": true
+                                    }
+                                ],
+                                "xdmVersion": "0.9.2",
+                                "xdmType": "entity",
+                                "_refId": "../core/DataSource"
+                            }
+                        ],
+                        "xdmVersion": "0.9.2",
+                        "xdmType": "entity",
+                        "_refId": "../core/Identity"
+                    },
+                    {
+                        "name": "campaign",
+                        "title": "Identity",
+                        "description": "Identity from identity services which is the fact of being who or what a person or thing is.\n",
+                        "created": 1516629739181,
+                        "updated": 1516629739181,
+                        "type": "object",
+                        "subFields": [
+                            {
+                                "name": "id",
+                                "title": "Identifier",
+                                "type": "string",
+                                "description": "Identity of the consumer in the related namespace."
+                            },
+                            {
+                                "name": "namespace",
+                                "title": "Data source",
+                                "description": "Globally unique identification of a data source.\n",
+                                "created": 1516629739176,
+                                "updated": 1516629739176,
+                                "type": "object",
+                                "subFields": [
+                                    {
+                                        "name": "id",
+                                        "title": "Identifier",
+                                        "type": "integer",
+                                        "description": "Globally unique identifier of the data source.\n"
+                                    },
+                                    {
+                                        "name": "code",
+                                        "title": "Code",
+                                        "type": "string",
+                                        "description": "The namespace code associated with the id attribute and matched up with the AAM data source integration code."
+                                    },
+                                    {
+                                        "name": "tags",
+                                        "title": "Tags",
+                                        "type": "string",
+                                        "description": "Tags are used to indicate how the aliases represented by a given data\nsource should be interpreted by applications using those aliases.\n\nExamples:\n\n* `isAVID`: data sources representing Analytics visitor IDs.\n* `isCRSKey`: data sources representing aliases that should be used as keys in CRS.\n\nTags are set when the data source is created but they are also included in\npipeline messages when referencing a given data source.\n",
+                                        "uniqueItems": true
+                                    }
+                                ],
+                                "xdmVersion": "0.9.2",
+                                "xdmType": "entity",
+                                "_refId": "../core/DataSource"
+                            }
+                        ],
+                        "xdmVersion": "0.9.2",
+                        "xdmType": "entity",
+                        "_refId": "../core/Identity"
+                    },
+                    {
+                        "name": "target",
+                        "title": "Identity",
+                        "description": "Identity from identity services which is the fact of being who or what a person or thing is.\n",
+                        "created": 1516629739181,
+                        "updated": 1516629739181,
+                        "type": "object",
+                        "subFields": [
+                            {
+                                "name": "id",
+                                "title": "Identifier",
+                                "type": "string",
+                                "description": "Identity of the consumer in the related namespace."
+                            },
+                            {
+                                "name": "namespace",
+                                "title": "Data source",
+                                "description": "Globally unique identification of a data source.\n",
+                                "created": 1516629739176,
+                                "updated": 1516629739176,
+                                "type": "object",
+                                "subFields": [
+                                    {
+                                        "name": "id",
+                                        "title": "Identifier",
+                                        "type": "integer",
+                                        "description": "Globally unique identifier of the data source.\n"
+                                    },
+                                    {
+                                        "name": "code",
+                                        "title": "Code",
+                                        "type": "string",
+                                        "description": "The namespace code associated with the id attribute and matched up with the AAM data source integration code."
+                                    },
+                                    {
+                                        "name": "tags",
+                                        "title": "Tags",
+                                        "type": "string",
+                                        "description": "Tags are used to indicate how the aliases represented by a given data\nsource should be interpreted by applications using those aliases.\n\nExamples:\n\n* `isAVID`: data sources representing Analytics visitor IDs.\n* `isCRSKey`: data sources representing aliases that should be used as keys in CRS.\n\nTags are set when the data source is created but they are also included in\npipeline messages when referencing a given data source.\n",
+                                        "uniqueItems": true                                    }
+                                ],
+                                "xdmVersion": "0.9.2",
+                                "xdmType": "entity",
+                                "_refId": "../core/DataSource"
+                            }
+                        ],
+                        "xdmVersion": "0.9.2",
+                        "xdmType": "entity",
+                        "_refId": "../core/Identity"
+                    }
+                ],
+                "xdmVersion": "0.9.2",
+                "xdmType": "entity",
+                "_refId": "../core/EndUserIds"
+            },
+            {
+                "name": "person",
+                "title": "Person",
+                "description": "An individual actor, contact, or owner.",
+                "created": 1516629739184,
+                "updated": 1516629739184,
+                "type": "object",
+                "subFields": [
+                    {
+                        "name": "firstName",
+                        "title": "First name",
+                        "type": "string",
+                        "description": "The personal, or given name."
+                    },
+                    {
+                        "name": "lastName",
+                        "title": "Last name",
+                        "type": "string",
+                        "description": "The inherited family name, surname, patronymic, or matronymic name."
+                    },
+                    {
+                        "name": "middleName",
+                        "title": "Middle name",
+                        "type": "string",
+                        "description": "Middle, alternative, or additional names supplied between the first and last names."
+                    },
+                    {
+                        "name": "courtesyTitle",
+                        "title": "Courtesy title",
+                        "type": "string",
+                        "description": "Normally an abbreviation of a persons *title*, *honorific*, or *salutation*.\nThe `courtesyTitle` is used in front of full or last name in opening texts.\ne.g Mr. Miss. or Dr J. Smith.\n"
+                    },
+                    {
+                        "name": "birthDay",
+                        "title": "Birth day",
+                        "type": "integer",
+                        "description": "The day of the month a person was born (1-31).\nDefault 0 means absence.\n",
+                        "default": 0,
+                        "minimum": 0,
+                        "maximum": 31,
+                        "format": "int8"
+                    },
+                    {
+                        "name": "birthMonth",
+                        "title": "Birth month",
+                        "type": "integer",
+                        "description": "The month of the year a person was born (1-12).\nDefault 0 means absence.\n",
+                        "default": 0,
+                        "minimum": 0,
+                        "maximum": 12,
+                        "format": "int8"
+                    },
+                    {
+                        "name": "birthYear",
+                        "title": "Birth year",
+                        "type": "integer",
+                        "description": "The year a person was born including the century (yyyy, e.g 1983).\nDefault 0 means absence.\n",
+                        "default": 0,
+                        "minimum": 0,
+                        "format": "int16"
+                    },
+                    {
+                        "name": "gender",
+                        "title": "Gender",
+                        "type": "string",
+                        "enumValues": [
+                            {
+                                "unknown": {
+                                    "title": "Unknown"
+                                }
+                            },
+                            {
+                                "male": {
+                                    "title": "Male"
+                                }
+                            },
+                            {
+                                "female": {
+                                    "title": "Female"
+                                }
+                            },
+                            {
+                                "withheld": {
+                                    "title": "Withheld"
+                                }
+                            },
+                            {
+                                "other": {
+                                    "title": "Other"
+                                }
+                            }
+                        ],
+                        "description": "Gender identity of the person.\n",
+                        "default": "unknown"
+                    }
+                ],
+                "xdmVersion": "0.9.2",
+                "xdmType": "entity",
+                "_refId": "../core/Person"
+            },
+            {
+                "name": "addresses",
+                "title": "Addresses",
+				"type": "object",
+				"subFields": [
+					{
+						"name": "primary",
+						"title": "Primary",
+						"type": "boolean",
+						"description": "Primary address indicator.\n\nA Profile can have only one `primary` address at a given point of time.\n"
+					},
+					{
+						"name": "type",
+						"title": "Type",
+						"type": "string",
+						"enumValues": [
+							{
+								"home": {
+									"title": "Home"
+								}
+							},
+							{
+								"work": {
+									"title": "Work"
+								}
+							},
+							{
+								"unknown": {
+									"title": "unknown"
+								}
+							}
+						],
+						"description": "The way the address relates to the person. e.g 'work' or 'home'. Note this is person neutral, all persons will have a common address.type, if it is person specific the relationship attribute should be used e.g address.relationship='residence'"
+					},
+					{
+						"name": "label",
+						"title": "Label",
+						"type": "string",
+						"description": "Free form name of the address."
+					},
+					{
+						"name": "street1",
+						"title": "Street 1",
+						"type": "string",
+						"description": "Primary Street level information, apartment number, street number and street name."
+					},
+					{
+						"name": "street2",
+						"title": "Street 2",
+						"type": "string",
+						"description": "Optional street information second line."
+					},
+					{
+						"name": "street3",
+						"title": "Street 3",
+						"type": "string",
+						"description": "Optional street information third line."
+					},
+					{
+						"name": "street4",
+						"title": "Street 4",
+						"type": "string",
+						"description": "Optional street information fourth line."
+					},
+					{
+						"name": "city",
+						"title": "City",
+						"type": "string",
+						"description": "The town, city, village or other metropolitan identity of the address."
+					},
+					{
+						"name": "region",
+						"title": "Region",
+						"type": "string",
+						"description": "The region, county, or district portion of the address."
+					},
+					{
+						"name": "stateProvince",
+						"title": "State or province",
+						"type": "string",
+						"description": "The state, province, region, territory portion of the address."
+					},
+					{
+						"name": "stateProvinceISO",
+						"title": "State or province ISO code.",
+						"type": "string",
+						"description": "The country subdivision as defined by the second part of [ISO 3166-2](https://www.iso.org/iso-3166-country-codes.html#2012_iso3166-2)\n(without the first part and the hyphen ISO 3166-1 alpha-2).\n\nExample:\n\n* CA: from ISO 3166-2 `US-CA` value designating the state of California in the United States of America.\n* 75: from ISO 3166-2 `FR-75` value designating the metropolitan department of Paris in France.\n\n> NOTE: This value must be combined with countryCodeISO to compose a valid ISO 3166-2 code.\n"
+					},
+					{
+						"name": "postalCode",
+						"title": "Postal code",
+						"type": "string",
+						"description": "The postal code, zip code of other postal ordering for the address. Note, if zip codes are used either the base zip or zip+4 format can be used."
+					},
+					{
+						"name": "country",
+						"title": "Country",
+						"type": "string",
+						"description": "The name of the government-administered territory."
+					},
+					{
+						"name": "countryISO",
+						"title": "Country ISO",
+						"type": "string",
+						"description": "The alpha-2 code of the country as defined by [ISO 3166-1](https://www.iso.org/iso-3166-country-codes.html).",
+						"minLength": 2,
+						"maxLength": 2
+					},
+					{
+						"name": "latitude",
+						"title": "Latitude",
+						"type": "float",
+						"description": "Defines the latitude of the delivery address.",
+						"format": "float"
+					},
+					{
+						"name": "longitude",
+						"title": "Longitude",
+						"type": "float",
+						"description": "Defines the longitude of the delivery address.",
+						"format": "float"
+					},
+					{
+						"name": "status",
+						"title": "Status",
+						"type": "string",
+						"enumValues": [
+							{
+								"active": {
+									"title": "Active"
+								}
+							},
+							{
+								"incomplete": {
+									"title": "Incomplete"
+								}
+							},
+							{
+								"pendingVerification": {
+									"title": "Pending verification"
+								}
+							},
+							{
+								"blacklisted": {
+									"title": "Blacklisted"
+								}
+							},
+							{
+								"blocked": {
+									"title": "Blocked"
+								}
+							}
+						],
+						"description": "An indication as to the ability to use the address.",
+						"default": "active"
+					},
+					{
+						"name": "statusReason",
+						"title": "Status reason",
+						"type": "string",
+						"description": "A description of the current status."
+					},
+					{
+						"name": "lastVerifiedDate",
+						"title": "Last verified date",
+						"type": "string",
+						"format": "date-only",
+						"description": "The date that the address was last verified as still belonging to the person."
+					}
+				]
+            },
+            {
+                "name": "emails",
+                "title": "Emails",
+				"type": "object",
+				"subFields": [
+					{
+						"name": "primary",
+						"title": "Primary",
+						"type": "boolean",
+						"description": "Primary email indicator.\n\nA Profile can have only one `primary` email address at a given point of time.\n"
+					},
+					{
+						"name": "address",
+						"title": "Address",
+						"type": "string",
+						"description": "The technical address, e.g 'name@domain.com' as commonly defined in RFC2822 and subsequent standards."
+					},
+					{
+						"name": "label",
+						"title": "Label",
+						"type": "string",
+						"description": "Additional display information that maybe available, e.g MS Outlook rich address controls display 'John Smith smithjr@company.uk', the 'John Smith' part is data that would be placed in the label."
+					},
+					{
+						"name": "type",
+						"title": "Type",
+						"type": "string",
+						"enumValues": [
+							{
+								"unknown": {
+									"title": "Unknown"
+								}
+							},
+							{
+								"personal": {
+									"title": "Personal"
+								}
+							},
+							{
+								"work": {
+									"title": "Work"
+								}
+							},
+							{
+								"education": {
+									"title": "Education"
+								}
+							}
+						],
+						"description": "The way the account relates to the person. e.g 'work' or 'personal'"
+					},
+					{
+						"name": "status",
+						"title": "Status",
+						"type": "string",
+						"enumValues": [
+							{
+								"active": {
+									"title": "Active"
+								}
+							},
+							{
+								"incomplete": {
+									"title": "Incomplete"
+								}
+							},
+							{
+								"pendingVerification": {
+									"title": "Pending verification"
+								}
+							},
+							{
+								"blacklisted": {
+									"title": "Blacklisted"
+								}
+							},
+							{
+								"blocked": {
+									"title": "Blocked"
+								}
+							}
+						],
+						"description": "An indication as to the ability to use the email address.",
+						"default": "active"
+					},
+					{
+						"name": "statusReason",
+						"title": "Status reason",
+						"type": "string",
+						"description": "A description of the current status."
+					}
+				]
+            },
+            {
+                "name": "phoneNumbers",
+                "title": "Phone numbers",
+				"type": "object",
+				"subFields": [
+					{
+						"name": "primary",
+						"title": "Primary",
+						"type": "boolean",
+						"description": "Primary phone number indicator.\n\nUnlike for Address or EmailAddress, there can be multiple primary phone numbers; one per communication channel.\nThe communication channel is defined by the type:\n\n* `textMessaging`: type = `mobile`\n* `phone`: type = `home` | `work` | `unknown`\n* `fax`: type = `fax`\n"
+					},
+					{
+						"name": "type",
+						"title": "Type",
+						"type": "string",
+						"enumValues": [
+							{
+								"unknown": {
+									"title": "Unknown"
+								}
+							},
+							{
+								"mobile": {
+									"title": "Mobile"
+								}
+							},
+							{
+								"home": {
+									"title": "Home"
+								}
+							},
+							{
+								"work": {
+									"title": "Work"
+								}
+							},
+							{
+								"fax": {
+									"title": "Fax"
+								}
+							}
+						],
+						"description": "The way the phone number relates to the person. e.g 'work' or 'personal'",
+						"default": "unknown"
+					},
+					{
+						"name": "number",
+						"title": "Number",
+						"type": "string",
+						"description": "The phone number. Note the phone number is a string and may include meaningful characters such as brackets (), hyphens - or characters to indicate sub dialing identifiers like extensions x. E.g 1-353(0)18391111 or +613 9403600x1234."
+					},
+					{
+						"name": "extension",
+						"title": "Extension",
+						"type": "string",
+						"description": "The internal dialing number used to call from a private exchange, operator or switchboard."
+					},
+					{
+						"name": "status",
+						"title": "Status",
+						"type": "string",
+						"enumValues": [
+							{
+								"active": {
+									"title": "Active"
+								}
+							},
+							{
+								"incomplete": {
+									"title": "Incomplete"
+								}
+							},
+							{
+								"blacklisted": {
+									"title": "Blacklisted"
+								}
+							},
+							{
+								"blocked": {
+									"title": "Blocked"
+								}
+							}
+						],
+						"description": "An indication as to the ability to use the phone number.",
+						"default": "active"
+					},
+					{
+						"name": "statusReason",
+						"title": "Status reason",
+						"type": "string",
+						"description": "A description of the current status."
+					},
+					{
+						"name": "validity",
+						"title": "Validity",
+						"type": "string",
+						"enumValues": [
+							{
+								"consistent": {
+									"title": "Consistent"
+								}
+							},
+							{
+								"inconsistent": {
+									"title": "Inconsistent"
+								}
+							},
+							{
+								"incomplete": {
+									"title": "Incomplete"
+								}
+							},
+							{
+								"successfullyUsed": {
+									"title": "Successfully used"
+								}
+							}
+						],
+						"description": "A level of technical correctness of the phone number."
+					}
+				]
+            },
+            {
+                "name": "optInOut",
+                "title": "OptInOut",
+                "description": "Describes a users opting in and out preferences for communication by medium and communication type.",
+                "created": 1516629739183,
+                "updated": 1516629739183,
+                "type": "object",
+                "subFields": [
+                    {
+                        "name": "optingEmail",
+                        "title": "Opting email",
+                        "type": "string",
+                        "enumValues": [
+                            {
+                                "notProvided": {
+                                    "title": "Not provided"
+                                }
+                            },
+                            {
+                                "pendingConfirmation": {
+                                    "title": "Pending verification"
+                                }
+                            },
+                            {
+                                "in": {
+                                    "title": "In"
+                                }
+                            },
+                            {
+                                "out": {
+                                    "title": "Out"
+                                }
+                            }
+                        ],
+                        "description": "Preference for Email communication.",
+                        "default": "notProvided"
+                    },
+                    {
+                        "name": "optingPhone",
+                        "title": "Opting phone",
+                        "type": "string",
+                        "enumValues": [
+                            {
+                                "notProvided": {
+                                    "title": "Not provided"
+                                }
+                            },
+                            {
+                                "pendingConfirmation": {
+                                    "title": "Pending verification"
+                                }
+                            },
+                            {
+                                "in": {
+                                    "title": "In"
+                                }
+                            },
+                            {
+                                "out": {
+                                    "title": "Out"
+                                }
+                            }
+                        ],
+                        "description": "Preference for Phone voice communication.",
+                        "default": "notProvided"
+                    },
+                    {
+                        "name": "optingTextMessaging",
+                        "title": "Opting text messaging",
+                        "type": "string",
+                        "enumValues": [
+                            {
+                                "notProvided": {
+                                    "title": "Not provided"
+                                }
+                            },
+                            {
+                                "pendingConfirmation": {
+                                    "title": "Pending verification"
+                                }
+                            },
+                            {
+                                "in": {
+                                    "title": "In"
+                                }
+                            },
+                            {
+                                "out": {
+                                    "title": "Out"
+                                }
+                            }
+                        ],
+                        "description": "Preference for instant Text communication.",
+                        "default": "notProvided"
+                    },
+                    {
+                        "name": "optingFax",
+                        "title": "Opting fax",
+                        "type": "string",
+                        "enumValues": [
+                            {
+                                "notProvided": {
+                                    "title": "Not provided"
+                                }
+                            },
+                            {
+                                "pendingConfirmation": {
+                                    "title": "Pending verification"
+                                }
+                            },
+                            {
+                                "in": {
+                                    "title": "In"
+                                }
+                            },
+                            {
+                                "out": {
+                                    "title": "Out"
+                                }
+                            }
+                        ],
+                        "description": "Preference for Fax communication.",
+                        "default": "notProvided"
+                    },
+                    {
+                        "name": "optingAddress",
+                        "title": "Opting address",
+                        "type": "string",
+                        "enumValues": [
+                            {
+                                "notProvided": {
+                                    "title": "Not provided"
+                                }
+                            },
+                            {
+                                "pendingConfirmation": {
+                                    "title": "Pending verification"
+                                }
+                            },
+                            {
+                                "in": {
+                                    "title": "In"
+                                }
+                            },
+                            {
+                                "out": {
+                                    "title": "Out"
+                                }
+                            }
+                        ],
+                        "description": "Preference for mail address communication.",
+                        "default": "notProvided"
+                    },
+                    {
+                        "name": "optingPushNotification",
+                        "title": "Opting push notification",
+                        "type": "string",
+                        "enumValues": [
+                            {
+                                "notProvided": {
+                                    "title": "Not provided"
+                                }
+                            },
+                            {
+                                "pendingConfirmation": {
+                                    "title": "Pending verification"
+                                }
+                            },
+                            {
+                                "in": {
+                                    "title": "In"
+                                }
+                            },
+                            {
+                                "out": {
+                                    "title": "Out"
+                                }
+                            }
+                        ],
+                        "description": "Preference for push notification.",
+                        "default": "notProvided"
+                    },
+                    {
+                        "name": "globalOptout",
+                        "title": "Global opt-out",
+                        "type": "boolean",
+                        "description": "Do not contact this profile on any communication channel.",
+                        "default": false
+                    }
+                ],
+                "xdmVersion": "0.9.2",
+                "xdmType": "entity",
+                "_refId": "../core/OptInOut"
             }
         ],
-        "fileDescription": {
+            "fileDescription": {
             "persisted": false,
             "format": "parquet"
         },
@@ -376,44 +1194,8 @@ Design Phase
         "files": "@/dataSets/59c93f3da7d0c00000798f68/views/59c93f3da7d0c00000798f69/files",
         "children": "@/dataSetViews/59c93f3da7d0c00000798f69/children",
         "schema": "@/xdms/model/Profile",
-        "viewId": "59c93f3da7d0c00000798f69",
-		"observableSchema": {
-			"type": "object",
-			"meta:xdmType": "object",
-			"properties": {
-				"personalEmail": {
-					"type": "object",
-					"meta:xdmType": "object",
-					"properties": {
-						"address": {
-							"type": "string",
-							"meta:xdmType": "string",
-							"title": "Address",
-							"description": "The technical address, e.g 'name@domain.com' as commonly defined in RFC2822 and subsequent standards."
-						}
-					}
-				},
-				"homeAddress": {
-					"type": "object",
-					"meta:xdmType": "object",
-					"properties": {
-						"country": {
-							"type": "string",
-							"meta:xdmType": "string",
-							"title": "Country",
-							"description": "The name of the government-administered territory. Other than countryCode, this is a free-form field that can have the country name in any language."
-						},
-						"city": {
-							"type": "string",
-							"meta:xdmType": "string",
-							"title": "City",
-							"description": "The town, city, village or other metropolitan identity of the address."
-						}
-					}
-				}
-			}
-		}
-    }
+        "viewId": "59c93f3da7d0c00000798f69"
+        }
     }
     ```
 6.  The ETL application may provide a capability to *preview data* to
@@ -537,6 +1319,25 @@ Design Phase
         "version": "1.0.4",
         :
         :
+
+        "fields": [
+            {
+                "name": "VisitorId",
+                "type": "object",
+                "subFields": [
+                    {
+                    "name": "value",
+                    "type": "string"
+                    },
+                    {
+                    "name": "domain",
+                    "type": "string"
+                    }
+                ]
+            },
+            :
+            :
+        ],
         "fileDescription": {
             "persisted": false,
             "format": "parquet"
@@ -547,11 +1348,9 @@ Design Phase
     }
     ```
 8.  Data will be written to the platform using the **Data Ingestion
-    APIs**.  Writing of data is an asynchronous process. When data is
+    APIs. ** Writing of data is an asynchronous process. When data is
     written to the Adobe Cloud Platform, a batch is created and marked
     as a success only after data is fully written.
-	
-	Data in platform should be written in the form of parquet files.
 
 Execution phase
 ---------------
@@ -747,17 +1546,15 @@ Execution phase
     -H "Authorization:Bearer ACCESS_TOKEN" \
     -H "x-api-key: API_KEY" \
     -H "content-type: application/octet-stream" \
-    -F file=@filename.parquet
+    -F file=@filename.csv
     
     ```
-	
-	Data in platform should be written in the form of parquet files.
 
     ##### Sample response
     ```
     {
        "BATCHID": {
-          "name": "filename.parquet",
+          "name": "filename.csv",
           "sizeInBytes": 281
        }
     }
@@ -985,4 +1782,3 @@ Account Support Manager.
 
 We welcome any suggestions or feedback. Please send comments about the
 product to your Account Support Manager. 
-
