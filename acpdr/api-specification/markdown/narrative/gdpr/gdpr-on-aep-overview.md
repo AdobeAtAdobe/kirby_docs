@@ -33,7 +33,7 @@ The following APIs are used to submit GDPR API requests and to check on the stat
 
 | Request endpoint | Request Payload |
 | ---------------- | --------------- |
-| `/data/privacy/gdpr` | `{`<br/>&emsp;`"companyContexts": [{`<br/>&emsp;&emsp;&emsp;`"namespace": "imsOrgID",`<br/>&emsp;&emsp;&emsp;`"value": "customerxyz@AdobeOrg"`<br/>&emsp;&emsp;`}`<br/>&emsp;`],`<br/>&emsp;`"users": [{`<br/>&emsp;&emsp;`"key": "David Smith",`<br/>&emsp;&emsp;`"action": ["<access or delete>"],`<br/>&emsp;&emsp;`"userIDs": [{`<br/>&emsp;&emsp;&emsp;`"namespace": "gdprAddress",`<br/>&emsp;&emsp;&emsp;`"value": "1212 rocket street",`<br/>&emsp;&emsp;&emsp;`"type": "custom"`<br/>&emsp;&emsp;`}]`<br/>&emsp;`}]`<br/>`}` |
+| `/data/privacy/gdpr` | `{`<br/>&emsp;`"companyContexts": [{`<br/>&emsp;&emsp;&emsp;`"namespace": "imsOrgID",`<br/>&emsp;&emsp;&emsp;`"value": orgId<br/>&emsp;&emsp;`}`<br/>&emsp;`],`<br/>&emsp;`"users": [{`<br/>&emsp;&emsp;`"key": "David Smith",`<br/>&emsp;&emsp;`"action": ["<access>"],`<br/>&emsp;&emsp;`"userIDs": [{`<br/>&emsp;&emsp;&emsp;`"namespace": "gdprAddress",`<br/>&emsp;&emsp;&emsp;`"value": "1212 rocket street",`<br/>&emsp;&emsp;&emsp;`"type": "unregistered"`<br/>&emsp;&emsp;`}]`<br/>&emsp;`}]`<br/>`}` |
 
 ### Retrieve Details of all Previously-Submitted Requests for a Specific Authenticated User
 
