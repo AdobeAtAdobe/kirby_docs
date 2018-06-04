@@ -3,7 +3,7 @@
 
 ## Introduction
 
-Adobe Cloud Platform (ACP) supports GDPR `access` and `delete` requests. Customers who are using AEP to store and manage their data can integrate with the Adobe GDPR APIs to submit both `access` and `delete` requests.
+Adobe Cloud Platform (ACP) supports GDPR `access` and `delete` requests. Customers who are using the Adobe Cloud Platform to store and manage their data can integrate with the Adobe GDPR APIs to submit both `access` and `delete` requests.
 
 There are few pre-requisites that first be in place in order to submit requests to ACP.
 
