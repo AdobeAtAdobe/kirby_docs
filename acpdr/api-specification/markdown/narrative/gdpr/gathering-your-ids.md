@@ -34,8 +34,6 @@ There are a few namespaces that are pre-defined and available to all customers. 
 | Adobe Target | &nbsp; | TRGT | &nbsp; |
 | Google Ad ID  | 20914 | GAID | &nbsp; |
 | Apple IDFA  | 20915 | IDFA | ID for Advertisers |
-| Google Cloud Messaging - Push ID | 20919 | GCM | &nbsp; |
-| Apple Push Notification Service - Push ID | 20920 | APNS | &nbsp; |
 
 ## List Namespaces for a Company
 

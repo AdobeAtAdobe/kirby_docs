@@ -12,7 +12,9 @@ An End User can be identified by a multitude of values, such as:
 * The CRM ID provided during a product purchase
 * Countless others
 
-An Identity Namespace is an indicator of the context from which data originates, such as an email address used to ID your user in your help desk system, or the device ID of the tablet used to browse your gallery. Adobe provides several pre-defined Standard Identity Namespaces including a Namespace for each Adobe solution, as well as for many industry standard solutions such as Google Cloud Messaging (GCM) and Apple Push Notification Service (APNS). Generic Namespaces, such as for "Email" and "Phone" are provided by default. You may also create new Namespaces to represent additional systems and ID types.
+An Identity Namespace is an indicator of the context from which data originates, such as an email address used to ID your user in your help desk system, or the device ID of the tablet used to browse your gallery. 
+Adobe provides several pre-defined Standard Identity Namespaces including a Namespace for each Adobe solution, as well as for many industry standard solutions IDs such as the Windows AID (WAID) and Google Ad ID (GAID). 
+Generic Namespaces, such as for "Email" and "Phone" are provided by default. You may also create new Namespaces to represent additional systems and ID types.
 
 Identity Namespaces also can be configured to imply security and privacy settings enabling compliance with General Data Protection Regulation (GDPR). 
 
@@ -133,8 +135,6 @@ The following Namespaces are provided for use by all organizations.
 |Adobe Target|9|TNTID|Target ID|
 |Google Ad ID|20914|GAID|GAID| 
 |Apple IDFA|20915|IDFA|ID for Advertisers|
-|Google Cloud Messaging - Push ID|20919|GCM|GCM| 
-|Apple Push Notification Service - Push ID|20920|APNS|APNS| 
 
 ### 2.2 Create a Custom Namespace
 

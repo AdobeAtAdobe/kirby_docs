@@ -69,15 +69,15 @@ An example of this data is shown in listing 1 below.
                 {
                     "namespace": "loyaltyAccount",
                     "value": "12AD45FE30R29",
-                    "type": "custom"
+                    "type": "integrationCode"
                 }
             ]
         }
     ],
     "exclude":[],
-    "expandIds":true,
+    "expandIds":false,
     "priority":"normal",
-    "analyticsDeleteMethod":"purge"
+    "analyticsDeleteMethod":"anonymize"
 }
 ```
 **Listing 1:** Adobe GDPR API POST request payload
@@ -144,7 +144,7 @@ One key not detailed in the example above:
 The following flags my be specified at the root level (equivalent to the *users* or *companyContexts* keys) and will be applied for the complete set of user data included.
 
 * The **exclude** key is an optional parameter and supports an array of product strings to exclude from your processing. If you only support or integrate with Analytics, you could exclude the addtional products from the request. By default, all supported ExC solutions are included in every request. See [product values](#productvalues)
-* the **expandIds** key is an optional parameter and supports a boolean value of true|false. optional field that represents an optimization for processing the IDs in the solutions (currently only used by Analytics). If omitted, Analytics' default behavior is "false"
+* the **expandIds** key is an optional parameter and supports a boolean value of true|false. optional field that represents an optimization for processing the IDs in the solutions (currently only used by Analytics). If omitted, Analytics' default behavior is *false*
 * The **priority** key is an optional parameter (*normal*|*low*) for optimizing requests based on customer need. If an end-user makes the request, and thus the company is required to respond within the 30 day window for GDPR, the priority should always be *normal* (default value if omitted). If the request is being made by systems for cleanup or optimization, it may not need to fall within the time table of a GDPR request by law, thus could be set to *low* to allow other requests to process sooner.
 * The **analyticsDeleteMethod** is an optional parameter (*purge*|*anonymize*) for specifying how Analytics should handle the customer data. By default (if omitted), all data referenced by the given collection of user IDs is anonymized, thus maintaining data integrity for historical reporting and other functions. Purge will remove the data completely.
 
