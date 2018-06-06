@@ -1,4 +1,4 @@
-# Tutorial: Creating and Populating a Dataset using a Connector
+# Creating and Populating a Dataset using a Connector
 
 ## 1. Objective
 
