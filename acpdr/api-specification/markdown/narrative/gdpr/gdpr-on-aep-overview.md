@@ -34,7 +34,7 @@ fields: [{
 "name": "address",
 "type": "object",
 "gdpr": [{
-"namespace": "gdprAddress"
+"namespace": "GDPRTest"
 
 }]
 ```
