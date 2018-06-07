@@ -4,7 +4,7 @@
 
 
 
-Employ the Adobe GDPR APIs to submit both `access` and `delete` requests to anonymize data for compliance with the General Data Protection Regulations (GDPR) on the Adobe Cloud Platform (ACP). The following are practices and prerequisites required to submit GDPR requests to the ACP.
+Employ the Adobe GDPR APIs to submit both `access` and `delete` requests to anonymize data to comply with the General Data Protection Regulations (GDPR) on the Adobe Cloud Platform (ACP). The following are practices and prerequisites required to submit GDPR requests to the ACP.
 
 ## GDPR Labeling in Platform using API
 
