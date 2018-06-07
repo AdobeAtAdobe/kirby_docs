@@ -2,7 +2,9 @@
 
 ## Overview
 
-Each device and entity tracked by Experience Cloud is marked by an identity key. It may be a cookie value set under one of Adobe controlled domains, a cookie value under a 3rd-party domain and shared with Adobe, or a 3rd party identifier explicitly provided by the customer in a feed. Identities always exist in a namespace. Namespace identifies the bucket that holds individual identity values. Namespace together with identity is expected to be globally unique. In most case, the Namespace is enough to the cookie domain, or the partner's data-set name that formed the source of identities.
+Each device and entity tracked by Experience Cloud is marked by an identity key. It may be a cookie value set under one of Adobe controlled domains, a cookie value under a 3rd-party domain and shared with Adobe, or a 3rd party identifier explicitly provided by the customer in a feed. 
+
+Identities always exist in a namespace. Namespace identifies the bucket that holds individual identity values. Namespace together with identity is expected to be globally unique. In most cases, the Namespace is enough to the cookie domain, or the partner's data-set name that formed the source of identities.
 
 ## XIDs
 

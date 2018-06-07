@@ -1,17 +1,16 @@
 
 # GDPR on ACP Overview
+===================
 
-## Introduction
 
-Adobe Cloud Platform (ACP) supports GDPR `access` and `delete` requests. Customers who are using the Adobe Cloud Platform to store and manage their data can integrate with the Adobe GDPR APIs to submit both `access` and `delete` requests.
 
-There are few pre-requisites that first be in place in order to submit requests to ACP.
+Employ the Adobe GDPR APIs to submit both `access` and `delete` requests to anonymize data for compliance with the General Data Protection Regulations (GDPR) on the Adobe Cloud Platform (ACP). The following are practices and prerequisites required to submit GDPR requests to the ACP.
 
 ## GDPR Labeling in Platform using API
 
-Customers should first look at their datasets in the platform and decide which of the dataset fields are applicable for GDPR requests. Then customers should add appropriate GDPR labels to the fields using the DatasetAPI.
+First, look at the datasets ingested into your platform and decide the dataset fields applicable to GDPR requests. Then add the appropriate GDPR labels to the fields using the DatasetAPI.
 
-For example, suppose there exists a dataset in ACP with the fields `id`, `address` and `product purchased`. If a customer deems that `address` should be available for GDPR requests, the customer should label the field with a unique label. These labels can then be specified when submitting `access` and `delete` requests to the GDPR APIs on ACP.
+For example, a dataset in ACP includes the fields `id`, `address`, and `product purchased`. If you deem that `address` should be available for GDPR requests, you should label the field with a unique label. These labels can then be specified when submitting `access` and `delete` requests to the GDPR APIs on ACP.
 
 ## Submitting GDPR Requests
 
@@ -21,20 +20,56 @@ All requests are submitted to the following base URL:
 
 `https://platform.adobe.io/data/privacy/gdpr/`
 
-The following APIs are used to submit GDPR API requests and to check on the status of previously-submitted requests.
+The following APIs are used to submit GDPR API requests and to check on the status of submitted requests.
 
 ### Updating an Existing DataSet by ID
 
-| Request endpoint | Request Payload |
-| ---------------- | --------------- |
-| `/dataSets/{id}` | `fields: [{`<br/>&emsp;`"name": "address",`<br/>&emsp;`"type": "object",`<br/>&emsp;`"gdpr": [{`<br/>&emsp;&emsp;`"namespace": "gdprAddress"`<br/>&emsp;`}]`<br/>`}]` |
+**Request endpoint**:  `/dataSets/{id}`
+(*Updates an existing DataSet by ID*)
 
-### Accessing or Deleting Data
+**Request Payload** 
 
-| Request endpoint | Request Payload |
-| ---------------- | --------------- |
-| `/data/privacy/gdpr` | `{`<br/>&emsp;`"companyContexts": [{`<br/>&emsp;&emsp;&emsp;`"namespace": "imsOrgID",`<br/>&emsp;&emsp;&emsp;`"value": orgId<br/>&emsp;&emsp;`}`<br/>&emsp;`],`<br/>&emsp;`"users": [{`<br/>&emsp;&emsp;`"key": "David Smith",`<br/>&emsp;&emsp;`"action": ["<access>"],`<br/>&emsp;&emsp;`"userIDs": [{`<br/>&emsp;&emsp;&emsp;`"namespace": "gdprAddress",`<br/>&emsp;&emsp;&emsp;`"value": "1212 rocket street",`<br/>&emsp;&emsp;&emsp;`"type": "unregistered"`<br/>&emsp;&emsp;`}]`<br/>&emsp;`}]`<br/>`}` |
+``` 
+fields: [{
+"name": "address",
+"type": "object",
+"gdpr": [{
+"namespace": "gdprAddress"
+
+}]
+```
+
+**Note:** The fields are dependent on what you expect to read. If the platform wants to honor “unregistered” namespace types, then this will work. The namespace name and value will be the key for which you’ll qualify the data and search. Your code can look at “unregistered” namespace types.
+ 
+
+
+### Submitting a GDPR request for ACP in the GDPR Central Service
+
+
+**Request endpoint**: `/data/privacy/gdpr`
+
+**Request Payload** 
+
+``` {
+  "companyContexts": [{
+    "namespace": "imsOrgID",
+    "value": orgId
+  }],
+  "users": 
+    "key": "David Smith",
+    "action": ["access"],
+    "userIDs": [{
+      "namespace": "gdprTest",
+      "value": "123",
+      "type": "unregistered"
+    }]
+  }],
+  "exclude": ["Analytics"]
+} 
+```
+**Note:** The “exclude” field is not really necessary, as we send out the job with all solutions in our product list if no exclusion is specified. 
+ 
 
 ### Retrieve Details of all Previously-Submitted Requests for a Specific Authenticated User
 
-`/data/privacy/gdpr`
+`/data/privacy/gdpr` (*Retrieve details of all JobId's for a specific UserId/Logged in Users id*)
