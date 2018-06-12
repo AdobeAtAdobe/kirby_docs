@@ -346,8 +346,12 @@ Design Phase
 	#### Schema for Reading
 	At the time of reading the data from platform, it is recommended that you read the schema from Observable schema (iii above). Since Observable schema represents the columns that are actually there in data, it will make schema generation easier.
 	
+	Note: If Observable schema property is not available in dataset, one can read from Schema registry path defined by "schema" property. If that is not available either, schema mentioned in "fields" property can be used.
+	
 	#### Schema for Mapping Source to Target
 	At the time of mapping, target should display all available columns. It is recommended to read the columns from Schema Registry (ii above). Customer is free to choose which all target columns he wants to map data to. ACP is responsible for updating observable schema once the first batch is successfully written.
+	
+	Note: If Schema registry path defined by "schema" property is not available either, schema mentioned in "fields" property can be used.
 	
     call from **Data Discovery API ** (Figure 8).
 
