@@ -1,14 +1,14 @@
-# Tutorial: Creating and Populating a Dataset using a Connector
+# Setting up the Salesforce Connector
 
 ## 1. Objective
 
-This tutorial provide a tutorial on creating and populating a customer dataset via a connector. The steps required to perform this operation are listed below:
+Create and populate a dataset of customer information using the Salesforce Connector for the Adobe Cloud Platform (ACP). 
 
 * Create Catalog Account Entity  
 * Create Catalog Connection Entity
 * Create Catalog Dataset Entity
 
-The tutorial to create and populate a dataset via a file can be found [here](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
+Instructions to create and populate a dataset via a file can be found [here](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
 
 ### 1.1. Audience
 This document is written for users who need to understand Adobe Cloud Platform and have to integrate the platform with customer-owned or third party systems. Users include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
