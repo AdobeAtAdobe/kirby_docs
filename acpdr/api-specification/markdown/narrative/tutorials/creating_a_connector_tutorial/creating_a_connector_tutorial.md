@@ -1,4 +1,7 @@
-# Tutorial: Creating and Populating a Dataset using a Connector
+# Salesforce Connector for the Adobe Cloud Platform
+Create a dataset from Salesorce data to ingest to the Adobe Cloud Platform. This article instructs software engineers, architects, data scientists, and app developers how to perform Adobe Cloud Platform API calls.
+
+You can ingest Salesforce data into a dataset usings [batch ingestion via file upload](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md) and the second is ingestion via setting up a connector. We will go over the steps to ingest via a connector in this section.
 
 ## 1. Objective
 
@@ -11,7 +14,7 @@ This document is intended to provide a tutorial on creating and populating a cus
 The tutorial to create and populate a dataset via a file can be found [here](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
 
 ### 1.1. Audience
-This document is written for users who need to understand Adobe Cloud Platform and have to integrate the platform with customer-owned or third party systems. Users include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
+This document is written for users who need to understand Adobe Cloud Platform and have to integrate the platform with customer-owned or third-party systems. Users include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
 
 ### 1.2. Version Information
 *Version* : Preview
@@ -21,14 +24,13 @@ Terms of service : https://www.adobe.com/legal/terms.html
 
 
 ### 1.4 URI Scheme
-*Host* : __platform.adobe.io__  
-*Schemes* : __HTTPS__
+*Host* : **platform.adobe.io**  
+*Schemes* : **HTTPS**
 
-### 1.5. About the Docs
+### 1.5. Doc Versions
 
-The HTML rendition of this documentation is kept up-to-date on a per commit basis and can therefore change without announcement. If you require a persistent version of the documentation, it is recommended that you seek out the PDF rendition.
+The HTML version of this documentation is kept up-to-date and can be updated without announcement. If you require a version of documentation specific to your installation, it is recommended that you save the HTML as a PDF and retain it as your working version.
 
----
 
 ## 2. Datasets from a Schema
 
