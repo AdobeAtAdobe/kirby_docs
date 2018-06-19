@@ -2,7 +2,7 @@
 
 ## 1. Objective
 
-This document is intended to provide a tutorial on creating and populating a customer dataset via a connector. The steps required to perform this operation are listed below:
+This article provides steps for creating and populating a customer dataset using the a connector. The steps required to perform this operation are listed below:
 
 * Create Catalog Account Entity  
 * Create Catalog Connection Entity
