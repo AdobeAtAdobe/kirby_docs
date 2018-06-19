@@ -1,7 +1,4 @@
-# Salesforce Connector for the Adobe Cloud Platform
-Create a dataset from Salesorce data to ingest to the Adobe Cloud Platform. This article instructs software engineers, architects, data scientists, and app developers how to perform Adobe Cloud Platform API calls.
-
-You can ingest Salesforce data into a dataset usings [batch ingestion via file upload](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md) and the second is ingestion via setting up a connector. We will go over the steps to ingest via a connector in this section.
+# Connector for the Adobe Cloud Platform
 
 ## 1. Objective
 
