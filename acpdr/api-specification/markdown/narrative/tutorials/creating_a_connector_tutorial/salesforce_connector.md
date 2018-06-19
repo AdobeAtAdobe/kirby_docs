@@ -8,10 +8,10 @@ Create and populate a dataset of customer information using the Salesforce Conne
 * Create Catalog Connection Entity
 * Create Catalog Dataset Entity
 
-Instructions to create and populate a dataset via a file can be found [here](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md).
+Instructions to create and populate a dataset from a file can be found [here](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md).
 
 ### 1.1. Audience
-This document is written for users who need to understand Adobe Cloud Platform and have to integrate the platform with customer-owned or third-party systems. Users include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
+This article helps you understand the Adobe Cloud Platform and integrate the platform with customer-owned or third-party systems. Users of this document include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
 
 ### 1.2. Version Information
 *Version* : Preview
