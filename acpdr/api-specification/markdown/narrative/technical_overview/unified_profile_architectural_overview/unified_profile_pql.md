@@ -16,29 +16,29 @@ PQL is composed of various basic elements that are combined together to create P
 
 Since PQL is XDM compliant, it will support the types that XDM has. These include basic scalar data types such as String, Double, Int, Boolean, Number, DateLiteral,  object data types and vector data types such as collections or sets. The eventual full set of data types that PQL will support is listed at XDM Data Types. PQL statements themselves will not have declarations of types and the type inferred during execution is currently implicit.
 
-PQL allows the use of dot-notation to access an object and its fields, such `firstName`. If the field is referring to another object or a vector of other objects, it is possible to chain the dots in a running dot notation. For example, you could have `metrics.commerce.abandons.value`. Since the XDM structure will largely follow a STAR schema, we don't anticipate many levels of running dots to be required, though the language does support it.
+PQL allows the use of dot-notation to access an object and its fields, such `workEmail.address`. If the field is referring to another object or a vector of other objects, it is possible to chain the dots in a running dot notation. For example, you could have `metrics.commerce.abandons.value`. Since the XDM structure will largely follow a STAR schema, we don't anticipate many levels of running dots to be required, though the language does support it.
 
 #### 3.1.1 Literals
 
 PQL provides support for StringLiteral, DateLiteral, ListLiteral, Number and BooleanLiteral.
 
-__String Literal__
+##### String Literal
 
 This is defined as a string of characters surrounded by double quotes such as "John".
 
-__Date Literal__
+##### Date Literal
 
 This can be a timestamp literal such as 'now' or 'today'.
 
-__List Literal__
+##### List Literal
 
-This is a way of defining a list on the fly using '[' element1 , element2 , ...']'.  Please note that the elements are separated by a comma.
+This is a way of defining a list on the fly using the comma-delimited notation; `[ element1 , element2 , ... ]`.
 
-__Numeric Literal__
+##### Numeric Literal
 
 Can be an UnsignedInt, Decimal or a Scientific Number such as 2.02 E -6.3
 
-__Boolean Literal__
+##### Boolean Literal
 
 These are 'true' and 'false'
 
@@ -108,7 +108,6 @@ age > 35 and
 state = "CA"
 ```
 
-
 #### 3.3.3 Time Expressions
 
 A special kind of expression is supported in PQL which allows the user to query the timestamp attributes of ExperienceEvents. This is known as the "occurs" statement. The syntax of the statement is as follows:
@@ -155,6 +154,33 @@ The `occurs` operator allows you to construct natural sounding queries without h
 stateProvinceISO="MO" and (select X from xEvent where X.timestamp occurs <= 1 month before today)
 ```
 
+##### currentMonth
+
+* Form
+  * currentMonth()
+* Result
+  * Integer: the integer value of the current month, in the range 1 to 12, based on UTC time
+* Examples
+  * __birthMonth = currentMonth()__
+    * `true` for all profiles who have a birthday this month
+    * `false` otherwise
+  * __currentMonth() in [3, 4, 5]__
+    * `true` during the months of March, April, and May
+    * `false` otherwise
+
+##### getMonth
+
+* Form
+  * `timestamp`.getMonth()
+* Arguments
+  * `timestamp` (required): a timestamp-valued expression 
+* Result
+  * Integer: the integer value of the month in which `timestamp` falls, in the range 1 to 12, based on UTC time
+* Examples
+  * __X.timestamp.getMonth() = 3__
+    * `true` for profiles who had a touchpoint in March of any year
+    * `false` otherwise
+
 #### 3.3.4 String Functions
 
 The following describes functions that are available for comparing String literals.
@@ -171,13 +197,13 @@ The following describes functions that are available for comparing String litera
 * Result
   * Boolean: `true` if both strings are not null and the first string starts with the second, `false` otherwise
 * Examples
-  * workEmail.address.startsWith("joe")
+  * __workEmail.address.startsWith("joe")__
     * `true` where `workEmail.address` = "joe.lean@work.com"
     * `false` where `workEmail.address` = "JOE.lean@work.com"
-  * workEmail.address.startsWith("joe", true)
+  * __workEmail.address.startsWith("joe", true)__
     * `true` where `workEmail.address` = "joe.lean@work.com"
     * `false` where `workEmail.address` = "JOE.lean@work.com"
-  * workEmail.address.startsWith("joe", false)
+  * __workEmail.address.startsWith("joe", false)__
     * `true` where `workEmail.address` = "joe.lean@work.com"
     * `true` where `workEmail.address` = "JOE.lean@work.com"
 
@@ -190,13 +216,13 @@ The following describes functions that are available for comparing String litera
 * Result
   * Boolean: `true` if both strings are not null and the first string __does not__ start with the second, `false` otherwise
 * Examples
-  * workEmail.address.doesNotStartWith("joe")
+  * __workEmail.address.doesNotStartWith("joe")__
     * `false` where `workEmail.address` = "joe.lean@work.com"
     * `true` where `workEmail.address` = "JOE.lean@work.com"
-  * workEmail.address.doesNotStartWith("joe", true)
+  * __workEmail.address.doesNotStartWith("joe", true)__
     * `false` where `workEmail.address` = "joe.lean@work.com"
     * `true` where `workEmail.address` = "JOE.lean@work.com"
-  * workEmail.address.doesNotStartWith("joe", false)
+  * __workEmail.address.doesNotStartWith("joe", false)__
     * `false` where `workEmail.address` = "joe.lean@work.com"
     * `false` where `workEmail.address` = "JOE.lean@work.com"
 
@@ -209,13 +235,13 @@ The following describes functions that are available for comparing String litera
 * Result
   * Boolean: `true` if both strings are not null and the first string ends with the second, `false` otherwise
 * Examples
-  * workEmail.address.endsWith(".edu")
+  * __workEmail.address.endsWith(".edu")__
     * `true` where `workEmail.address` = "joe.lean@work.edu"
     * `false` where `workEmail.address` = "joe.lean@work.EDU"
-  * workEmail.address.endsWith(".edu", true)
+  * __workEmail.address.endsWith(".edu", true)__
     * `true` where `workEmail.address` = "joe.lean@work.edu"
     * `false` where `workEmail.address` = "joe.lean@work.EDU"
-  * workEmail.address.endsWith(".edu", false)
+  * __workEmail.address.endsWith(".edu", false)__
     * `true` where `workEmail.address` = "joe.lean@work.edu"
     * `true` where `workEmail.address` = "joe.lean@work.EDU"
 
@@ -228,13 +254,13 @@ The following describes functions that are available for comparing String litera
 * Result
   * Boolean: `true` if both strings are not null and the first string __does not__ end with the second, `false` otherwise
 * Examples
-  * workEmail.address.doesNotEndWith(".edu")
+  * __workEmail.address.doesNotEndWith(".edu")__
     * `false` where `workEmail.address` = "joe.lean@work.edu"
     * `true` where `workEmail.address` = "joe.lean@work.EDU"
-  * workEmail.address.doesNotEndWith(".edu", true)
+  * __workEmail.address.doesNotEndWith(".edu", true)__
     * `false` where `workEmail.address` = "joe.lean@work.edu"
     * `true` where `workEmail.address` = "joe.lean@work.EDU"
-  * workEmail.address.doesNotEndWith(".edu", false)
+  * __workEmail.address.doesNotEndWith(".edu", false)__
     * `false` where `workEmail.address` = "joe.lean@work.edu"
     * `false` where `workEmail.address` = "joe.lean@work.EDU"
 
@@ -247,13 +273,13 @@ The following describes functions that are available for comparing String litera
 * Result
   * Boolean: `true` if both strings are not null and the first string contains the second, `false` otherwise.
 * Examples
-  * workEmail.address.contains("yahoo")
+  * __workEmail.address.contains("yahoo")__
     * `true` where `workEmail.address` = "joe.lean@yahoo.com"
     * `false` where `workEmail.address` = "joe.lean@YAHOO.com"
-  * workEmail.address.contains("yahoo", true)
+  * __workEmail.address.contains("yahoo", true)__
     * `true` where `workEmail.address` = "joe.lean@yahoo.com"
     * `false` where `workEmail.address` = "joe.lean@YAHOO.com"
-  * workEmail.address.contains("yahoo", false)
+  * __workEmail.address.contains("yahoo", false)__
     * `true` where `workEmail.address` = "joe.lean@yahoo.com"
     * `true` where `workEmail.address` = "joe.lean@YAHOO.com"
 
@@ -266,13 +292,13 @@ The following describes functions that are available for comparing String litera
 * Result
   * Boolean: `true` if both strings are not null and the first string __does not__ contain the second, `false` otherwise.
 * Examples
-  * workEmail.address.doesNotContain("yahoo")
+  * __workEmail.address.doesNotContain("yahoo")__
     * `false` where `workEmail.address` = "joe.lean@yahoo.com"
     * `true` where `workEmail.address` = "joe.lean@YAHOO.com"
-  * workEmail.address.doesNotContain("yahoo", true)
+  * __workEmail.address.doesNotContain("yahoo", true)__
     * `false` where `workEmail.address` = "joe.lean@yahoo.com"
     * `true` where `workEmail.address` = "joe.lean@YAHOO.com"
-  * workEmail.address.doesNotContain("yahoo", false)
+  * __workEmail.address.doesNotContain("yahoo", false)__
     * `false` where `workEmail.address` = "joe.lean@yahoo.com"
     * `false` where `workEmail.address` = "joe.lean@YAHOO.com"
 
@@ -285,13 +311,13 @@ The following describes functions that are available for comparing String litera
 * Result
   * Boolean: `true` if both strings are not null and the first string equals the second, `false` otherwise
 * Examples
-  * firstName.equals("John")
+  * __firstName.equals("John")__
     * `true` where `firstName` = "John"
     * `false` where `firstName` = "john"
-  * firstName.equals("John", true)
+  * __firstName.equals("John", true)__
     * `true` where `firstName` = "John"
     * `false` where `firstName` = "john"
-  * firstName.equals("John", false)
+  * __firstName.equals("John", false)__
     * `false` where `firstName` = "Johnny"
     * `true` where `firstName` = "John"
     * `true` where `firstName` = "john"
@@ -305,13 +331,13 @@ The following describes functions that are available for comparing String litera
 * Result
   * Boolean: `true` if both strings are not null and the first string __does not__ equal the second, `false` otherwise
 * Examples
-  * firstName.notEqualTo("John")
+  * __firstName.notEqualTo("John")__
     * `false` where `firstName` = "John"
     * `true` where `firstName` = "john"
-  * firstName.notEqualTo("John", true)
+  * __firstName.notEqualTo("John", true)__
     * `false` where `firstName` = "John"
     * `true` where `firstName` = "john"
-  * firstName.notEqualTo("John", false)
+  * __firstName.notEqualTo("John", false)__
     * `true` where `firstName` = "Johnny"
     * `false` where `firstName` = "John"
     * `false` where `firstName` = "john"
@@ -321,6 +347,62 @@ The following describes functions that are available for comparing String litera
 * The String parameters to the above functions can be any String-valued PQL expressions, including string literals and string-valued XDM property references. As such, these functions can be used to compare an XDM string property to a fixed value, or to compare two XDM string properties.
 * The negative versions are not precisely the negations of the corresponding positive versions, due to how null values are treated.  For instance, an XDM property reference which turns out to be undefined during evaluation will return false for both contains and doesNotContain.
 * __equals__ and __notEqualTo__ are added as string-specific functions in order to support the case sensitivity switch parameter.  `=` and `!=` are maintained in PQL as before for use on any type, and imply case sensitivity when used on strings.
+
+#### 3.3.5 List Functions
+
+The following describes functions that are available for comparing values with a list of literals.
+
+##### in
+
+* Form
+  * `string` in `list of strings`
+  * `integer` in `list of integers`
+  * `double` in `list of doubles`
+* Arguments
+  * `string` (required): where the first parameter is a string, the second parameter is a list of strings which could be a [list literal](#list-literal) or a string array property of an entity which could be referenced using dot-notation. This function is case-sensitive and has no override allowing for case insensitivity.
+  * `integer` (required): where the first parameter is an integer, the second parameter is a list of integers which could be a [list literal](#list-literal) or an integer array property of an entity which could be referenced using dot-notation 
+  * `double` (required): where the first parameter is a double, the second parameter is a list of doubles which could be a [list literal](#list-literal) or a double array property of an entity which could be referenced using dot-notation 
+* Result
+  * Boolean: `true` only if both of the following are true:
+     * both values are not null
+     * the first value is a member of the second value
+* Examples
+  * homeAddress.stateProvinceISO in ["CA", "OR"]
+    * `true` where `homeAddress.stateProvinceISO` = "OR"
+    * `false` where `homeAddress.stateProvinceISO` = "or"
+  * birthMonth in [3, 4, 6] (note: birthMonth is referenced here as a hypothetical custom integer field of an XDM Profile)
+    * `true` where `birthMonth` = March
+    * `false` where `birthMonth` = May
+  * "London" in citiesVisited (note: citiesVisited is referenced here as a hypothetical custom string array field of an XDM Profile)
+    * `true` where `person.citiesVisited` = ["London","Paris","New York"]
+    * `false` where `person.citiesVisited` = ["london","paris","new york"]
+  * homeAddress.city in person.citiesVisited  (note: citiesVisited is referenced here as a hypothetical custom string array field of an XDM Profile)
+
+##### notIn
+
+* Form
+  * `string` notIn `list of strings`
+  * `integer` notIn `list of integers`
+  * `double` notIn `list of doubles`
+* Arguments
+  * `string` (required): where the first parameter is a string, the second parameter is a list of strings which could be a [list literal](#list-literal) or a string array property of an entity which could be referenced using dot-notation. This function is case-sensitive and has no override allowing for case insensitivity.
+  * `integer` (required): where the first parameter is an integer, the second parameter is a list of integers which could be a [list literal](#list-literal) or an integer array property of an entity which could be referenced using dot-notation 
+  * `double` (required): where the first parameter is a double, the second parameter is a list of doubles which could be a [list literal](#list-literal) or a double array property of an entity which could be referenced using dot-notation 
+* Result
+  * Boolean: `true` only if both of the following are true:
+     * both values are not null <!-- QUESTION: documentation states: "Note: Due to condition a) above, notIn is not the exact negation of in" though condition a is the same for both in and notIn -->
+     * the first value does not occur in the list of values represented by the second parameter
+* Examples
+  * homeAddress.stateProvinceISO notIn ["CA", "OR"]
+    * `true` where `homeAddress.stateProvinceISO` = "or"
+    * `false` where `homeAddress.stateProvinceISO` = "OR"
+  * birthMonth notIn [3, 4, 6] (note: birthMonth is referenced here as a hypothetical custom integer field of an XDM Profile)
+    * `true` where `birthMonth` = 5
+    * `false` where `birthMonth` = 3
+  * "London" notIn citiesVisited (note: citiesVisited is referenced here as a hypothetical custom string array field of an XDM Profile)
+    * `true` where `person.citiesVisited` = ["Tokyo","Paris","New York"]
+    * `false` where `person.citiesVisited` = ["London","Paris","New York"]
+  * homeAddress.city notIn person.citiesVisited  (note: citiesVisited is referenced here as a hypothetical custom string array field of an XDM Profile)
 
 ## 4. Language Examples
 
