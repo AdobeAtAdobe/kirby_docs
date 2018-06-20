@@ -82,41 +82,64 @@ Body:
 }
 ```
 
----
+### 2.3 Determining if a DataSet is Enabled in Profile
 
-## 3. Profile Merging
-
-One of the key features of the Unified Profile Service is being able to unify multi-channel data. Unified Profile stores data in "Profile Fragments". A Profile Fragment is a tuple of {ID, Dataset/Datastream} where:
-
-* __Dataset/Datastream__ refers to where the data came from (e.g. Catalog Batch Dataset, Streaming Datastream etc.). Each Dataset/Datastream conforms to exactly one XDM schema
-* __ID__ is the primary identity of the record (e.g. XID in case of Profile XDM)
-
-As Unified Profile ingests data, records within a Profile Fragment are updated at ingest time. However, records across Profile Fragments are merged at access time. There are two parts to access time merge:
-
-* __Identity stitch__ – this is configurable via the graph-type parameter in the APIs
-* __Attribute merge__ – this is configurable via profile merge rules. Catalog Tags are used to define profile merge rules
- 
-### 3.1 Configuring Merge Rules
-
-With regard to Profile merging, the "unifiedProfile" tag is enhanced to include a `priority` property which specifies the priority of a DataSet's Profile values in relation to other DataSets which may contain Fragments for the same Profile. For instance, let's say there is a Profile, ID "QXeHl9oaVfOZH36HEkiF8UqOU08tcmF2aTI", which exists in both DataSetA and DataSetB. If DataSetA has a `priority` of 1 and shows the XDM value for, say, `homeAddress.street1` as "1 Truax Alley" and DataSetB has a `priority` of 2 and the value of the `homeAddress.street1` for the same Profile is "2 Truax Alley", the merged Profile will have a `homeAddress.street1` value of "2 Truax Alley". 
-
-__Example Catalog Tag Configuring DataSet Merge Priority__
+To check if a DataSet has been enabled in UPS, use the Data Catalog Service API to GET the DataSet. A DataSet is enabled if it contains a "unifiedProfile" tag with a colon-delimited property string for "enabledAt". The value of this tuple reports the time after which ingested Profile data would be made accessible via UPS. 
 
 ```
+GET https://platform.adobe.io/data/foundation/catalog/dataSets/{datasetId} HTTP/1.1
+
+Example Response: 
+
 {
-    "tags" : {
-        "unifiedProfile": ["enabled:true", "identityField:endCustomerId.marketingCloud.mcid", "orderField:timestamp", "priority:1"]
+    "5b020a27e7040801dedbf46e": {
+        "version": "1.0.3",
+        "imsOrg": "1BD6382559DF0C130A49422D@AdobeOrg",
+        "name": "Unified Profile Ingestion Test Events DataSet",
+        "created": 1526860327407,
+        "updated": 1526860337773,
+        "createdClient": "AEP_UNIFIED_PROFILE",
+        "createdUser": "AEP_UNIFIED_PROFILE@AdobeID",
+        "updatedUser": "acp_foundation_dataTracker@AdobeID",
+        "namespace": "ACP",
+        "tags": {
+            "unifiedProfile": [
+                "enabled:true",
+                "identityField:endUserIds._vendor.adobe.experience.analytics.id.id",
+                "orderField:timestamp",
+                "relatedModels:test_small_1526860248587",
+                "enabledAt:2018-05-20 23:52:09"
+            ]
+        },
+        "dule": {},
+        "statsCache": {},
+        "lastBatchId": "c134eeb63cc1421ea6baeb6149aeb597",
+        "lastBatchStatus": "success",
+        "lastSuccessfulBatch": "c134eeb63cc1421ea6baeb6149aeb597",
+        "viewId": "5b020a27e7040801dedbf46f",
+        "aspect": "production",
+        "status": "enabled",
     }
 }
 ```
 
+For more details on this and other Data Catalog Service APIs, select the "Catalog" option from the _Select a Spec_ dropdown in the upper right of the [Swagger Specification](https://git.corp.adobe.com/pages/experience-platform/api-specification/).
+
+### 2.4 Working with Ingestion
+
+Once you have enabled a DataSet for UPS and asserted it has been enabled, you can ingest Profile data using the [Bulk Ingestion API](../ingest_architectural_overview/ingest_architectural_overview.md).        
+
+Depending on the size of the data, batches take different amounts of time to ingest. Poll the DataSet for the status of the batch using the `batchId` from ingestion until the `status` in the response indicates completion ("success" or "failure"). A recommended interval is two minutes. For more information on working with Catalog DataSets and Batches, see [Data Catalog Services](../catalog_architectural_overview/catalog_architectural_overview.md). 
+
+After the ingestion is complete, use the Unified Profile Access API to access your Profile data. 
+
 ---
 
-## 4. Accessing Profiles in the Unified Profile Service
+## 3. Accessing Profiles in the Unified Profile Service
 
-This section describes the methods for accessing Unified Profiles as they exist in the Profile Store. 
+This section describes the methods for accessing Unified Profiles as they exist in the Profile Store. For more information, select the "Unified Profile Access API" option from the _Select a Spec_ dropdown in the upper right of the [Swagger Specification](https://git.corp.adobe.com/pages/experience-platform/api-specification/).
 
-### 4.1 Access Unified Profile By Record ID
+### 3.1 Access Unified Profile By Record ID
 
 This operation gets a specified XDM Model Object and retrieves all its properties. 
 
@@ -177,7 +200,7 @@ Example Response:
 }
 ```
 
-#### 4.1.1 Access Merged Profile
+#### 3.1.1 Access Merged Profile
 
 An additional parameter `graph-type` specifies the output type to use to cluster profiles. The following are options:
 
@@ -190,7 +213,7 @@ For more details, refer to the [Unified Identity Service documentation](). -->
 
 <!-- TODO: CORE-11543 What information from this page to include, and how? https://wiki.corp.adobe.com/pages/viewpage.action?pageId=1441927960 -->
 
-### 4.2 Access ExperienceEvents by Profile Record ID
+### 3.2 Access ExperienceEvents by Profile Record ID
 
 Access a paginated list of ExperienceEvents for a given XDM Profile. 
 
@@ -276,6 +299,34 @@ Example Response:
         ...
     }
 }    
+```
+
+---
+
+## 4. Profile Merging
+
+One of the key features of the Unified Profile Service is being able to unify multi-channel data. Unified Profile stores data in "Profile Fragments". A Profile Fragment is a tuple of {ID, Dataset/Datastream} where:
+
+* __Dataset/Datastream__ refers to where the data came from (e.g. Catalog Batch Dataset, Streaming Datastream etc.). Each Dataset/Datastream conforms to exactly one XDM schema
+* __ID__ is the primary identity of the record (e.g. XID in case of Profile XDM)
+
+As Unified Profile ingests data, records within a Profile Fragment are updated at ingest time. However, records across Profile Fragments are merged at access time. There are two parts to access time merge:
+
+* __Identity stitch__ – this is configurable via the graph-type parameter in the APIs
+* __Attribute merge__ – this is configurable via profile merge rules. Catalog Tags are used to define profile merge rules
+ 
+### 4.1 Configuring Merge Rules
+
+With regard to Profile merging, the "unifiedProfile" tag is enhanced to include a `priority` property which specifies the priority of a DataSet's Profile values in relation to other DataSets which may contain Fragments for the same Profile. For instance, let's say there is a Profile, ID "QXeHl9oaVfOZH36HEkiF8UqOU08tcmF2aTI", which exists in both DataSetA and DataSetB. If DataSetA has a `priority` of 1 and shows the XDM value for, say, `homeAddress.street1` as "1 Truax Alley" and DataSetB has a `priority` of 2 and the value of the `homeAddress.street1` for the same Profile is "2 Truax Alley", the merged Profile will have a `homeAddress.street1` value of "2 Truax Alley". 
+
+__Example Catalog Tag Configuring DataSet Merge Priority__
+
+```
+{
+    "tags" : {
+        "unifiedProfile": ["enabled:true", "identityField:endCustomerId.marketingCloud.mcid", "orderField:timestamp", "priority:1"]
+    }
+}
 ```
 
 ---
