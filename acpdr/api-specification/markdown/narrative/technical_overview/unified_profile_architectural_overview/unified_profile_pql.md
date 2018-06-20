@@ -18,27 +18,27 @@ Since PQL is XDM compliant, it will support the types that XDM has. These includ
 
 PQL allows the use of dot-notation to access an object and its fields, such `workEmail.address`. If the field is referring to another object or a vector of other objects, it is possible to chain the dots in a running dot notation. For example, you could have `metrics.commerce.abandons.value`. Since the XDM structure will largely follow a STAR schema, we don't anticipate many levels of running dots to be required, though the language does support it.
 
-#### 3.1.1 Literals
+#### 3.1.1 literals
 
 PQL provides support for StringLiteral, DateLiteral, ListLiteral, Number and BooleanLiteral.
 
-##### String Literal
+##### String literal
 
 This is defined as a string of characters surrounded by double quotes such as "John".
 
-##### Date Literal
+##### Date literal
 
 This can be a timestamp literal such as 'now' or 'today'.
 
-##### List Literal
+##### List literal
 
 This is a way of defining a list on the fly using the comma-delimited notation; `[ element1 , element2 , ... ]`.
 
-##### Numeric Literal
+##### Numeric literal
 
 Can be an UnsignedInt, Decimal or a Scientific Number such as 2.02 E -6.3
 
-##### Boolean Literal
+##### Boolean literal
 
 These are 'true' and 'false'
 
@@ -95,11 +95,11 @@ For CRM statements, since the execution is running in the context of a single us
 
 There are various types of statements supported in PQL. They are as follows.
 
-#### 3.3.1 Basic Expression
+#### 3.3.1 Basic expression
 
 At the basic level, the atomic instructions are either accessors of data in the form of A.B, functions or literals.
 
-#### 3.3.2 Compound Expressions
+#### 3.3.2 Compound expressions
 
 These combine the basic expressions and allow for boolean expressions, arithmetic expressions and comparison expressions. These comparison expressions support checking for equality and inequality of expressions. The arithmetic expressions support the basic arithmetic operations and the boolean expressions can be combined with 'and' 'or' and 'not' keywords. Some examples are,
 
@@ -108,7 +108,7 @@ age > 35 and
 state = "CA"
 ```
 
-#### 3.3.3 Time Expressions
+#### 3.3.3 Time expressions
 
 A special kind of expression is supported in PQL which allows the user to query the timestamp attributes of ExperienceEvents. This is known as the "occurs" statement. The syntax of the statement is as follows:
 
@@ -181,7 +181,7 @@ stateProvinceISO="MO" and (select X from xEvent where X.timestamp occurs <= 1 mo
     * `true` for profiles who had a touchpoint in March of any year
     * `false` otherwise
 
-#### 3.3.4 String Functions
+#### 3.3.4 String functions
 
 The following describes functions that are available for comparing String literals.
 
@@ -404,7 +404,7 @@ The following describes functions that are available for comparing values with a
     * `false` where `person.citiesVisited` = ["London","Paris","New York"]
   * homeAddress.city notIn person.citiesVisited  (note: citiesVisited is referenced here as a hypothetical custom string array field of an XDM Profile)
 
-## 4. Language Examples
+## 4. Language examples
 
 The following are examples of PQL intended to illustrate the structure and capabilities of the language.
 
