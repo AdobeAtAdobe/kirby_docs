@@ -135,17 +135,45 @@ After the ingestion is complete, use the Unified Profile Access API to access yo
 
 ---
 
-## 3. Accessing Profiles in the Unified Profile Service
+## 3. Profile Merging
 
-This section describes the methods for accessing Unified Profiles as they exist in the Profile Store. For more information, select the "Unified Profile Access API" option from the _Select a Spec_ dropdown in the upper right of the [Swagger Specification](https://git.corp.adobe.com/pages/experience-platform/api-specification/).
+One of the key features of the Unified Profile Service is being able to unify multi-channel data. Unified Profile stores data in "Profile Fragments". A Profile Fragment is a tuple of {ID, Dataset/Datastream} where:
 
-### 3.1 Access Unified Profile By Record ID
+* __Dataset/Datastream__ refers to where the data came from (e.g. Catalog Batch Dataset, Streaming Datastream etc.). Each Dataset/Datastream conforms to exactly one XDM schema
+* __ID__ is the primary identity of the record (e.g. XID in case of Profile XDM)
+
+As Unified Profile ingests data, records within a Profile Fragment are updated at ingest time. However, records across Profile Fragments are merged at access time. There are two parts to access time merge:
+
+* __Identity stitch__ – this is configurable via the graph-type parameter in the APIs
+* __Attribute merge__ – this is configurable via profile merge rules. Catalog Tags are used to define profile merge rules
+ 
+### 3.1 Configuring Merge Rules
+
+With regard to Profile merging, the "unifiedProfile" tag is enhanced to include a `priority` property which specifies the priority of a DataSet's Profile values in relation to other DataSets which may contain Fragments for the same Profile. For instance, let's say there is a Profile, ID "QXeHl9oaVfOZH36HEkiF8UqOU08tcmF2aTI", which exists in both DataSetA and DataSetB. If DataSetA has a `priority` of 1 and shows the XDM value for, say, `homeAddress.street1` as "1 Truax Alley" and DataSetB has a `priority` of 2 and the value of the `homeAddress.street1` for the same Profile is "2 Truax Alley", the merged Profile will have a `homeAddress.street1` value of "2 Truax Alley". 
+
+__Example Data Catalog Services request - Add Tag configuring DataSet merge priority:__
+
+```
+{
+    "tags" : {
+        "unifiedProfile": ["enabled:true", "identityField:endCustomerId.marketingCloud.mcid", "orderField:timestamp", "priority:1"]
+    }
+}
+```
+
+---
+
+## 4. Accessing Profiles in the Unified Profile Service
+
+This section describes the methods for accessing Unified Profiles as they exist in the Profile Store. 
+
+### 4.1 Access Unified Profile By Record ID
 
 This operation gets a specified XDM Model Object and retrieves all its properties. 
 
 Key-value XDM Model Objects (e.g. Profile) and Time-series XDM Model Objects (e.g. ExperienceEvent) are retrieved from separate GET calls. 
 
-___Example Unified Profile Service request for a Unified Profile:___
+__Example Unified Profile Service request - Get a Unified Profile by ID:__
 
 ```
 GET https://platform.adobe.io/data/core/ups/models/profile/GU8rb925s2L2fkF55boQKCbliQ8 HTTP/1.1
@@ -200,7 +228,8 @@ Example Response:
 }
 ```
 
-#### 3.1.1 Access Merged Profile
+<a name="graph-types"></a>
+#### 4.1.1 Access Merged Profile
 
 An additional parameter `graph-type` specifies the output type to use to cluster profiles. The following are options:
 
@@ -208,16 +237,14 @@ An additional parameter `graph-type` specifies the output type to use to cluster
 * __pdg__ - Private device graph
 * __psr__ - Proprietary stitched rules
 
-<!-- TODO: Link to Identity Services documentation 
-For more details, refer to the [Unified Identity Service documentation](). -->
+<!-- TODO: CORE-11543 What information from this page to include, and how? https://wiki.corp.adobe.com/pages/viewpage.action?pageId=1441927960 
+     Need more info -->
 
-<!-- TODO: CORE-11543 What information from this page to include, and how? https://wiki.corp.adobe.com/pages/viewpage.action?pageId=1441927960 -->
-
-### 3.2 Access ExperienceEvents by Profile Record ID
+### 4.2 Access ExperienceEvents by Profile Record ID
 
 Access a paginated list of ExperienceEvents for a given XDM Profile. 
 
-___Example Unified Profile Service request for ExperienceEvents for a Unified Profile:___
+__Example Unified Profile Service request - Get ExperienceEvents for a Unified Profile:__
 
 ```
 GET https://platform.adobe.io/data/core/ups/models/profile/5a7d26e92a6e55000086d459/ExperienceEvent HTTP/1.1
@@ -295,38 +322,19 @@ Example Response:
                     }
                 }
             }
+        }
+        ],
+        "page": {
+            "sortField": "timestamp",
+            "sort": "asc",
+            "pageOffset": "2d542d820000593e-045f400000000035-5af4be93e787d301dab86453-1519511589000",
+            "pageSize": 7
         },
-        ...
+        "link": {
+            "next": ""
+        }
     }
 }    
-```
-
----
-
-## 4. Profile Merging
-
-One of the key features of the Unified Profile Service is being able to unify multi-channel data. Unified Profile stores data in "Profile Fragments". A Profile Fragment is a tuple of {ID, Dataset/Datastream} where:
-
-* __Dataset/Datastream__ refers to where the data came from (e.g. Catalog Batch Dataset, Streaming Datastream etc.). Each Dataset/Datastream conforms to exactly one XDM schema
-* __ID__ is the primary identity of the record (e.g. XID in case of Profile XDM)
-
-As Unified Profile ingests data, records within a Profile Fragment are updated at ingest time. However, records across Profile Fragments are merged at access time. There are two parts to access time merge:
-
-* __Identity stitch__ – this is configurable via the graph-type parameter in the APIs
-* __Attribute merge__ – this is configurable via profile merge rules. Catalog Tags are used to define profile merge rules
- 
-### 4.1 Configuring Merge Rules
-
-With regard to Profile merging, the "unifiedProfile" tag is enhanced to include a `priority` property which specifies the priority of a DataSet's Profile values in relation to other DataSets which may contain Fragments for the same Profile. For instance, let's say there is a Profile, ID "QXeHl9oaVfOZH36HEkiF8UqOU08tcmF2aTI", which exists in both DataSetA and DataSetB. If DataSetA has a `priority` of 1 and shows the XDM value for, say, `homeAddress.street1` as "1 Truax Alley" and DataSetB has a `priority` of 2 and the value of the `homeAddress.street1` for the same Profile is "2 Truax Alley", the merged Profile will have a `homeAddress.street1` value of "2 Truax Alley". 
-
-__Example Catalog Tag Configuring DataSet Merge Priority__
-
-```
-{
-    "tags" : {
-        "unifiedProfile": ["enabled:true", "identityField:endCustomerId.marketingCloud.mcid", "orderField:timestamp", "priority:1"]
-    }
-}
 ```
 
 ---
@@ -372,7 +380,7 @@ A Predicate encapsulates the complete set of criteria that define a specific Aud
 
 Predicates are persisted to the Experience Cloud Platform to be referenced by ID. This is helpful in creating a centrally-managed collection of queries to be reused, and simplifying API calls.  
 
-__Example request to create a new Predicate:__
+__Example Unified Profile request - Create a new Predicate:__
 
 ```
 POST https://platform.adobe.io/data/core/ups/segment/predicates HTTP/1.1
@@ -536,7 +544,7 @@ Example Response:
         "progress": "string",
         "predicateIds": "string",
         "predicates": "string",
-        "model": "string",
+        "model": "Profile",
         "computeJobId": 0,
         "dataStart": "string",
         "dataEnd": "string",
@@ -566,12 +574,12 @@ Example Response:
         "progress": "string",
         "predicateIds": "string",
         "predicates": "string",
-        "model": "string",
+        "model": "Profile",
         "computeJobId": 0,
         "dataStart": "string",
         "dataEnd": "string",
         "dataGraphType": "string",
-        "sink": "string",
+        "sink": "Profiles_Segmented",
         "mergeStrategy": "string",
         "creationTime": "2018-03-20T08:24:07.200Z",
         "updateTime": "2018-03-20T08:24:07.200Z"
@@ -617,21 +625,31 @@ Response:
 ]
 ```
 
-> You will use this DataSet ID in other API calls
+> You will use this DataSet ID ("MyIsolatedProfilesDS_Id" in the above example) in other API calls
 
 #### 5.4.2 Scan Audience - Step 2: Generate XDM Profiles for Audience Members
 
-Trigger a Scan Job to persist the Audience Members to the DataSet from above by providing the `datasetId` from Step 1. The result is a DataSet which represents only those Profiles which qualified for the last completed run of the Segment Job. The Segment Job is specified by the value for the `model-name` path variable in the URL below is set to the `model` value used to create the Segment Job, and the `sink` value used is the value to use for the `isMemberOfAudience` attribute of the request.
+Trigger a Scan Job to persist the Audience members to the DataSet from above by providing the `datasetId` from establishing the Audience DataSet in Step 1. A Scan Job is an asynchronous process triggered using a POST to `/jobs` with a request body which defines:
 
-Any members who existed in that DataSet, but did not qualify for the Segment at the time of the last completed run of the Segment Job, will be removed from the DataSet.
+* `datasetId` (__required__) - Indicates the DataSet into which to persist the members meeting the conditions of the related Predicate ("MyIsolatedProfilesDS_Id" from the example above)
+* `model` (__required__) - Names the XDM Schema name of the members. A schema will only be relative to the IMS Org ID specified in API calls, preventing members from other Orgs' data from being accessible
+* `isMemberOfAudience` (__required__) - When creating the Segment Job, you specified a `sink` value, naming the Audience. This value, "Profiles_Segmented" from the example above, is the name to specify for this property
+* `mergeStrategy` - This value determines how to handle multiple representations of the same Audience member <!-- I would like to know the possible values and what they'd mean -->
+* `graphType` - Choose from the options described [above](#graph-types) to specify the output type to use to cluster Audience members 
+* `fields` - You can choose to limit the size of each Audience member by using the `fields` property to limit the data populated within the members in the DataSet. For example, a value of `name,workAddress.city` would result in Profile records which contain only the values of each member's `name` and `workAddress.city`. By default, all merged data is populated
+
+The result of successfully running a Scan Job is a DataSet populated with only those Profiles which qualified for the last completed run of the Segment Job. Any members who existed in that DataSet, but did not qualify for the Segment at the time of the last completed run of the Segment Job, will be removed from the DataSet.
+
+__Example Unified Profile request - Run a Scan Job:__
 
 ```
-POST https://platform.adobe.io/data/core/ups/scan/models/{modelName}/jobs HTTP/1.1
+POST https://platform.adobe.io/data/core/ups/scan/jobs HTTP/1.1
 
 Body:
 
 {
-    "datasetId" : "MyIsolatedProfilesDS"
+    "datasetId" : "MyIsolatedProfilesDS",
+    "model" : "Profile",
     "isMemberOfAudience" : "Profiles_Segmented"
 }
 
