@@ -28,7 +28,8 @@ This document is written for users who need to understand Adobe Cloud Platform a
 *Schemes* : __HTTPS__  
 
 ### 1.5. About the Docs
-The HTML rendition of this documentation is kept up-to-date on a per commit basis and can therefore change without announcement. If you require a persistent version of the documentation, it is recommended that you seek out the PDF rendition.
+
+This document is kept up-to-date and can be updated without announcement.
 
 ---
 

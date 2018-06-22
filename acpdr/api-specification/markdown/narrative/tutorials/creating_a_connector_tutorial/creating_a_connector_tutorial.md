@@ -26,8 +26,7 @@ Terms of service : https://www.adobe.com/legal/terms.html
 
 ### 1.5. Doc Versions
 
-The HTML version of this documentation is kept up-to-date and can be updated without announcement. If you require a version of documentation specific to your installation, it is recommended that you save the HTML as a PDF and retain it as your working version.
-
+This document is kept up-to-date and can be updated without announcement.
 
 ## 2. Datasets from a Schema
 

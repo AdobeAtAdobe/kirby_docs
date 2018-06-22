@@ -44,7 +44,7 @@ This document is aimed at technical personas and should be a useful tool for all
 
 ### 1.5 About the Docs
 
-The HTML rendition of this documentation is kept up-to-date on a per commit basis and can therefore change without announcement. If you require a persistent version of the documentation, it is recommended that you seek out the PDF rendition.
+This document is kept up-to-date and can be updated without announcement.
 
 ### 1.6 Using the API
 
