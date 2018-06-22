@@ -29,6 +29,7 @@ PUT /servicePrincipals
 |**202**|Service principal update request received.|No Content|
 |**400**|Service principal update bad request|No Content|
 |**403**|Failed authentication|No Content|
+|**404**|Service principal not found in Octo DB|No Content|
 
 
 #### Tags

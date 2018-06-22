@@ -1,9 +1,9 @@
-# profileaccess API
+# profilescan API
 
 
 <a name="overview"></a>
 ## Overview
-Access API for Unified Profile service
+Scan API for Unified Profile service
 
 
 ### Version information
@@ -18,7 +18,11 @@ Access API for Unified Profile service
 
 ### Tags
 
-* endcustomers
+* health
+* health-detailed
+* models
+* ping
+* version
 
 
 

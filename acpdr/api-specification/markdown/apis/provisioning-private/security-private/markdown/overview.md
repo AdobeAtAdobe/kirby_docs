@@ -7,7 +7,7 @@ Experience Platform Security Service
 
 
 ### Version information
-*Version* : 0.1
+*Version* : 0.5-SNAPSHOT
 
 
 ### URI scheme

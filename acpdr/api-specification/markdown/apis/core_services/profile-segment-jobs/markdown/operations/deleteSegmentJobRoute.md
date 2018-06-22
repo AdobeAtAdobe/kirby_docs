@@ -2,7 +2,7 @@
 <a name="deletesegmentjobroute"></a>
 ### Deleted the segment job given an id
 ```
-DELETE /jobs/{jobId}
+DELETE /segment/jobs/{segmentJobId}
 ```
 
 
@@ -11,7 +11,7 @@ DELETE /jobs/{jobId}
 |Type|Name|Description|Schema|
 |---|---|---|---|
 |**Header**|**x-gw-ims-org-id**  <br>*required*|IMS Organization ID|string|
-|**Path**|**jobId**  <br>*required*|Segment Job Id|string|
+|**Path**|**segmentJobId**  <br>*required*|Segment Job Id|string|
 
 
 #### Responses
@@ -30,14 +30,14 @@ DELETE /jobs/{jobId}
 
 #### Tags
 
-* jobs
+* segmentjobs
 
 
 #### Example HTTP request
 
 ##### Request path
 ```
-/jobs/12345678
+/segment/jobs/12345678
 ```
 
 

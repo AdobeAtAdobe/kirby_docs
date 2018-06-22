@@ -12,6 +12,7 @@
 |**msg**  <br>*optional*|**Example** : `"string"`|string|
 |**name**  <br>*optional*|**Example** : `"string"`|string|
 |**reason**  <br>*optional*|**Example** : `"string"`|string|
+|**requestId**  <br>*optional*|**Example** : `"string"`|string|
 |**resourceDefinition**  <br>*optional*|**Example** : `"string"`|string|
 |**resourceDefinitionType**  <br>*optional*|**Example** : `"string"`|string|
 |**resourceIdentifier**  <br>*optional*|**Example** : `"string"`|string|

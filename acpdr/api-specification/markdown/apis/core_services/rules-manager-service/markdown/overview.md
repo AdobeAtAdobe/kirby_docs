@@ -18,7 +18,7 @@
 
 
 ### URI scheme
-*Host* : localhost:8080  
+*Host* : https://rulesmanagerservice-DEV-va7.dev.cloud.adobe.io  
 *BasePath* : /
 
 

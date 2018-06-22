@@ -24,7 +24,7 @@ GET /servicePrincipals/{sp_name}
 |**200**|Service principal found|No Content|
 |**400**|Service principal lookup failed|No Content|
 |**403**|Failed authentication|No Content|
-|**404**|Service principal was not found|No Content|
+|**404**|Service principal not found in Octo DB|No Content|
 
 
 #### Tags

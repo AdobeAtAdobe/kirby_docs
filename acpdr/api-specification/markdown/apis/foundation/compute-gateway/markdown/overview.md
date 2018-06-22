@@ -11,7 +11,7 @@ An API to perform compute operations.Please refer to https://wiki.corp.adobe.com
 
 
 ### Contact information
-*Contact* : Grp-Siphon-Core
+*Contact* : Grp-Platform-Compute-Team
 
 
 ### URI scheme
@@ -22,10 +22,10 @@ An API to perform compute operations.Please refer to https://wiki.corp.adobe.com
 
 ### Tags
 
-* Describes health-checks for the Compute Gateway
-* Describes operations performed on Batch Spark jobs
-* Describes operations performed on Spark applications
-* Describes operations performed on clusters
+* ComputeApplications
+* ComputeClusters
+* ComputeHealth
+* ComputeJobs
 
 
 

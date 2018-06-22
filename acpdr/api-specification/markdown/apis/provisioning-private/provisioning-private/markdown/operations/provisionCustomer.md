@@ -103,7 +103,8 @@ json :
     "startDate" : "string",
     "endDate" : "string",
     "recordOwner" : "string"
-  }
+  },
+  "subscriptionId" : "string"
 }
 ```
 
@@ -147,7 +148,8 @@ json :
         "startDate" : "string",
         "endDate" : "string",
         "recordOwner" : "string"
-      }
+      },
+      "subscriptionId" : "string"
     },
     "timestamp" : 0
   },

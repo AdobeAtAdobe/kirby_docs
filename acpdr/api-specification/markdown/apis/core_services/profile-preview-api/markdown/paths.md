@@ -29,6 +29,9 @@
 <a name="ref-getpreviewsessionroute"></a>
 ### [Gets details for a session in which we can perform the Preview Operations](operations/getPreviewSessionRoute.md#getpreviewsessionroute)
 
+<a name="ref-deletepreviewsessionroute"></a>
+### [Deletes a preview session](operations/deletePreviewSessionRoute.md#deletepreviewsessionroute)
+
 <a name="ref-initializepreviewsessionroute"></a>
 ### [Initializes an interactive session with the Profile Specific Helpers through which we can perform the Preview Operations. Intialize only when Session State is READY_TO_INITIALIZE](operations/initializePreviewSessionRoute.md#initializepreviewsessionroute)
 

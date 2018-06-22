@@ -11,8 +11,8 @@
 <a name="ref-createworkflow"></a>
 ### [Create a new workflow](operations/createWorkflow.md#createworkflow)
 
-<a name="ref-getworkflows"></a>
-### [Returns all Workflows for an Ims Org](operations/getWorkflows.md#getworkflows)
+<a name="ref-getworkflowlocations"></a>
+### [Returns all Workflow locations for an Ims Org](operations/getWorkflowLocations.md#getworkflowlocations)
 
 <a name="ref-getworkflowbyid"></a>
 ### [Returns the Workflow](operations/getWorkflowById.md#getworkflowbyid)
@@ -28,6 +28,9 @@
 
 <a name="ref-getworkflowrundetails"></a>
 ### [Get Workflow Run Details](operations/getWorkflowRunDetails.md#getworkflowrundetails)
+
+<a name="ref-triggerworkflowaction"></a>
+### [Stop a Workflow Run](operations/triggerWorkflowAction.md#triggerworkflowaction)
 
 <a name="ref-getworkflowstatus"></a>
 ### [Get Status of Workflow](operations/getWorkflowStatus.md#getworkflowstatus)

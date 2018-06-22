@@ -20,9 +20,6 @@
 <a name="ref-healthcheckresponse"></a>
 ### [HealthCheckResponse](definitions/HealthCheckResponse.md#healthcheckresponse)
 
-<a name="ref-inputstream"></a>
-### [InputStream](definitions/InputStream.md#inputstream)
-
 <a name="ref-metrics"></a>
 ### [Metrics](definitions/Metrics.md#metrics)
 

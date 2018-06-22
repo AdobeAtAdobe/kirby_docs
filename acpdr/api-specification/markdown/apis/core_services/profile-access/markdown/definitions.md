@@ -2,6 +2,9 @@
 <a name="definitions"></a>
 ## Definitions
 
+<a name="ref-errormessage"></a>
+### [ErrorMessage](definitions/ErrorMessage.md#errormessage)
+
 <a name="ref-failedmodelobjectrecord"></a>
 ### [FailedModelObjectRecord](definitions/FailedModelObjectRecord.md#failedmodelobjectrecord)
 
