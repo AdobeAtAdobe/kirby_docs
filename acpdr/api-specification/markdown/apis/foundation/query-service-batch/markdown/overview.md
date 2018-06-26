@@ -15,7 +15,7 @@ XDW API. Note: When trying out the APIs, get your tokens from IMS stage and pref
 
 
 ### URI scheme
-*Host* : queryservicebatch-dev-va7.dev.cloud.adobe.io  
+*Host* : https://platform-int.adobe.io/data/foundation/query  
 *BasePath* : /  
 *Schemes* : HTTPS
 
