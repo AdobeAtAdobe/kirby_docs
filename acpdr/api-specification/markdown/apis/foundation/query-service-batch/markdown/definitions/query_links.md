@@ -24,7 +24,7 @@
 |Name|Description|Schema|
 |---|---|---|
 |**href**  <br>*optional*|Catalog owned URI related to this Dataset.  <br>**Example** : `"string"`|string|
-|**name**  <br>*optional*|Name of the referenced Dataset.  <br>**Example** : `"string"`|string|
+|**id**  <br>*optional*|Id of the created Dataset.  <br>**Example** : `"string"`|string|
 
 <a name="query_links-referenced_datasets"></a>
 **referenced_datasets**
@@ -32,7 +32,7 @@
 |Name|Description|Schema|
 |---|---|---|
 |**href**  <br>*optional*|Catalog owned URI related to this Dataset.  <br>**Example** : `"string"`|string|
-|**name**  <br>*optional*|Name of the referenced Dataset.  <br>**Example** : `"string"`|string|
+|**id**  <br>*optional*|ID of the referenced Dataset.  <br>**Example** : `"string"`|string|
 
 <a name="query_links-soft_delete"></a>
 **soft_delete**
