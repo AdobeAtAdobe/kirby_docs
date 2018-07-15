@@ -71,7 +71,7 @@ Depending on your enterprise data collection strategy, you will decide which fie
 
 ### 3.3 Label Identity Fields
 
-Confirming to the Profile XDM, identities can be labeled by adding them to the `identity` array. For example: 
+Conforming to the Profile XDM, identities can be labeled by adding them to the `identity` array. For example: 
 
 ```JSON
 {
@@ -101,7 +101,7 @@ Confirming to the Profile XDM, identities can be labeled by adding them to the `
 }
 ```
 
-Confirming to the ExperienceEvent XDM, Identities can be labeled by mentioning within `endUserIds`:
+Conforming to the ExperienceEvent XDM, Identities can be labeled by mentioning within `endUserIds`:
 
 ```JSON
 {
