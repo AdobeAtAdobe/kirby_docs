@@ -133,9 +133,10 @@ Confirming to the ExperienceEvent XDM, Identities can be labeled by mentioning w
 ## 4. ECID - an essential tool
 
 Experience cloud ID service’ is Adobe’s client side tool to perform identity management. Three primary functions:
-Ø  Identifies Vistitor 
-Ø  Synchronization with Partners 
-Ø  Feeds pairwise links to connect with offline or other IDs to the graph.
+
+* Identifies Vistitor 
+* Synchronization with Partners 
+* Feeds pairwise links to connect with offline or other IDs to the graph
 
 Identifying your online users requires instrumentizing your site or mobile app with the Experience Cloud ID Service (ECID), which provides a universal and persistent ID that identifies your visitors across all solutions in the Experience Cloud.
  
