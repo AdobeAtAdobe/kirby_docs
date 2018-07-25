@@ -384,6 +384,9 @@ product {
 }
 ```
 
+### Batching and Concurrency
+Adobe allows customers to group multiple GDPR user IDs to process as a single batch request. A batch request has an upper limit of 1000 IDs to process. In the event that customers submit more than 1000 IDs, Adobe will return an error rejecting the batch request. Customers can send multiple concurrent requests.
+
 ## Summary
 
 The General Data Protection Regulation (GDPR) API from Adobe provides a simple set of calls, enabling Adobe Customers to manage (access and delete) the personal data of their consumers (Data Subjects) across Adobe Experience Cloud (ExC) solutions. In addition to APIs for accessing and deleting data, the GDPR API also provides a central audit and logging mechanism to surface job status and results from across the various solutions.
