@@ -107,69 +107,77 @@ In addition to, or instead of, API access, you can choose to integrate with Adob
 So, once your integration has been registered with Adobe I/O Console, how do you actually call Adobe APIs from your integration? It’s as simple as HTTP: your integration issues an HTTP GET request, and the appropriate Adobe API responds via HTTP as well, usually with a JSON object containing the data you asked for. 
 Here’s an example using the Data Access API to download a file. Suppose your integration first found the file using a request to the Catalog API to obtain the file ID, which in this case is `f25a0dd3-rh6h-4ebe-b094`. You could then issue a GET request as a curl command:
 
-```curl -X GET "https://platform.adobe.io/data/foundation/export/files/f25a0dd3-rh6h-4ebe-b094" -H "Authorization: Bearer <access_token>" -H "x-api-key: <api_key>" -H "x-gw-ims-org-id: <IMS_Org_for_caller>"```
+	curl 	-X GET "https://platform.adobe.io/data/foundation/export/files/f25a0dd3-rh6h-4ebe-b094" 
+			-H "Authorization: Bearer <access_token>" -H "x-api-key: <api_key>" 
+			-H "x-gw-ims-org-id: <IMS_Org_for_caller>"
 
 The API would respond with a JSON object, like this:
 
 	{
-   	   "data": [
-   	     {
-   	   "name": "adobe_profiles.csv",
-   	   "length": "2996",
-   	   "_links": {
-   	     "self": {
-   	       "href": "https://platform.adobe.io:443/data/foundation/export/files/\
-   	       f25a0dd3-rh6h-4ebe-b094?path=adobe_profiles.csv"
-   	     }
-   	   }
-  	  }
-  		],
-  		"_page": {
-  	  "limit": 100,
-  	  "count": 1
-  	}
+	  "data": [
+	    {
+	      "name": "adobe_profiles.csv",
+	      "length": "2996",
+	      "_links": {
+	        "self": {
+	          "href":
+	            "https://platform.adobe.io:443/data/foundation/export/files/f25a0dd3-rh6h-4ebe-b094?path=adobe_profiles.csv"
+	        }
+	      }
+	    }
+	  ],
+	  "_page": {
+	    "limit": 100,
+	    "count": 1
+	  }
 	}
+
+
 
 
 Here is another example of a call to the Catalog API to get a list of available datasets:
 
-	curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets" \
-		-H "Authorization: Bearer <access_token>"
-		-H "x-api-key: <api_key>" -H "x-gw-ims-org-id: <IMS_Org_for_caller>"`
+	curl 	-X GET "https://platform.adobe.io/data/foundation/catalog/dataSets" \
+			-H "Authorization: Bearer <access_token>"
+			-H "x-api-key: <api_key>" -H "x-gw-ims-org-id: <IMS_Org_for_caller>"`
 		
 Response
 
 
 	{
-		"598d6e81b2745f000015edcb": {
-			"version": "1.0.0",
-			"imsOrg": "AdobeIMSOrganization@AdobeOrg",
-			"connectorId": "azure-blob",
-			"name": "CredentialsTest",
-			"created": 1502441089391,
-			"updated": 1502441089669,
-			"dule": {},
-			"aspect": "production",
-			"status": "enabled",
-			"fields": [{
-					"name": "name",
-					"type": "string"
-				},
-				{
-					"name": "age",
-					"type": "string"
-				}
-			],
-			"fileDescription": {
-				"persisted": false
-			},
-			"transforms": "@/dataSets/598d6e81b2745f000015edcb/views/598d6e81b2745f000015edcc/transforms",
-			"files": "@/dataSets/598d6e81b2745f000015edcb/views/598d6e81b2745f000015edcc/files",
-			"children": "@/dataSetViews/598d6e81b2745f000015edcc/children",
-			"schema": {},
-			"viewId": "598d6e81b2745f000015edcc"
-		},
-	: }
+	  "598d6e81b2745f000015edcb": {
+	    "version": "1.0.0",
+	    "imsOrg": "AdobeIMSOrganization@AdobeOrg",
+	    "connectorId": "azure-blob",
+	    "name": "CredentialsTest",
+	    "created": 1502441089391,
+	    "updated": 1502441089669,
+	    "dule": {},
+	    "aspect": "production",
+	    "status": "enabled",
+	    "fields": [
+	      {
+	        "name": "name",
+	        "type": "string"
+	      },
+	      {
+	        "name": "age",
+	        "type": "string"
+	      }
+	    ],
+	    "fileDescription": {
+	      "persisted": false
+	    },
+	    "transforms":
+	      "@/dataSets/598d6e81b2745f000015edcb/views/598d6e81b2745f000015edcc/transforms",
+	    "files":
+	      "@/dataSets/598d6e81b2745f000015edcb/views/598d6e81b2745f000015edcc/files",
+	    "children": "@/dataSetViews/598d6e81b2745f000015edcc/children",
+	    "schema": {},
+	    "viewId": "598d6e81b2745f000015edcc"
+	  }
+	}
+
 
 To do a point lookup on the Unified Profile Service:
 
@@ -181,4 +189,4 @@ As you can see, the common procedure is to issue the GET request to the API endp
 
 ## Conclusion
 
-Adobe Cloud Platform provides a rich API surface to allow developers of customers, integration partners, and ISVs to build on and extend the platform’s capabilities. The number of services and capabilities we provide will be built out over time. The website www.adobe.io will provide an one-stop-shop to understand what new capabilities will be available for Adobe Cloud Platform. Use www.adobe.io to access SDKs for all Adobe Cloud solutions.
+Adobe Cloud Platform provides a rich API surface to allow developers of customers, integration partners, and ISVs to build on and extend the platform’s capabilities. The number of services and capabilities we provide will be built out over time. The website [www.adobe.io](https://www.adobe.io) will provide an one-stop-shop to understand what new capabilities will be available for Adobe Cloud Platform. Use [www.adobe.io](https://www.adobe.io) to access SDKs for all Adobe Cloud solutions.
