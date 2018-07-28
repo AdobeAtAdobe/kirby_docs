@@ -1,8 +1,7 @@
 # Setting up an Azure Blob Connector
 
-## 1. Objective
 
-Create and populate a dataset from a Salesforce Object using the Salesforce Connector in Adobe Cloud Platform (ACP). 
+This article helps you build and ingest a dataset from a Microsoft Azure Blob using a connector in the Adobe Cloud Platform (ACP). 
 
 * Create Catalog Account Entity  
 * Create Catalog Connection Entity
@@ -10,25 +9,11 @@ Create and populate a dataset from a Salesforce Object using the Salesforce Conn
 
 Instructions to create and populate a dataset from a file can be found [here](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md).
 
-### 1.1. Audience
-This article helps you understand  Adobe Cloud Platform and integrate the platform with Salesforce CRM. Users of this document include data engineers, data architects, data scientists, and app developers using Adobe I/O who want to perform Adobe Cloud Platform API calls.
-
-### 1.2. Version Information
-*Version* : Preview
-
-### 1.3. License Information
-Terms of service : https://www.adobe.com/legal/terms.html
 
 
-### 1.4 URI Scheme
-*Host* : __platform.adobe.io__  
-*Schemes* : __HTTPS__
+## Datasets from a Schema
 
----
-
-## 2. Datasets from a Schema
-
-There are two ways data can be ingested into a dataset. The first is [batch ingestion via file upload](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md) and the second is ingestion via setting up a connector. The following steps show you how to ingest CRM data using the ACP Salesforce Connector.
+Adobe connectors provide two ways that data can be ingested into a dataset. The first is [batch ingestion via file upload](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md) and the second is ingestion via setting up a connector. The following steps show you how to ingest CRM data using the ACP Azure Blob Connector.
 
 ### 2.1. Prerequisites
 
