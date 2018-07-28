@@ -1,17 +1,24 @@
 # ACP Data Connectors Overview
 
 
-Adobe provides multiple connectors to ingest data from your data sources to the Adobe Cloud Platform (ACP), 
-including 
+Adobe provides multiple connectors to ingest data from your data sources to the Adobe Cloud Platform (ACP), including 
 
 * Microsoft Dynamics 365 
 * Salesforce
 * Amazon S3
 * Azure Blob
 
-<add> 
+This article assists Data Engineers and others to set up connectors for datasets using a variety of ACP connectors or using the ACP user interface.
 
-Data is ingested through the ACP user interface or by employing RESTful APIs. 
+## Data Connection with UI or API 
+
+Data is ingested through the ACP user interface, or by employing RESTful APIs including the:
+
+* Catalog API
+* Bulk Ingestion API
+* Microsoft Dynamics Connector API
+* Salesforce Connector API
+* Amazon S3 Connector API
 
 <what APIs are we using here? Catalog, >
 
@@ -24,7 +31,7 @@ A new set of ACP Connector APIs provide these new features, allowing you to:
 * Provide consistency by using all connector types.
 * Employ credentials before allowing data to persist. 
 
-## Design
+## Adobe Cloud Platform 
 The Adobe Cloud Platform employs various components during data ingestion from third-party source through the Adobe Platform data connectors:
 
 Platform UI/Client
