@@ -11,6 +11,31 @@ Instructions to create and populate a dataset from a file can be found [here](./
 
 
 
+## stuff
+Work to move the connector from POC phase to complete, allowing a customer user to upload a file (via drag-and-drop and CLI upload) to Azure Blob Store. Refer PLAT-801
+
+Finalization of requirements and workflow
+Coordination with Siphon team on file layout
+Implementation and related tests
+Provisioning of other objects (storage containers, Azure functions, Notification Hub?)
+Story: Allow a customer to upload a csv file to their Azure blob container and have a record of this ingestion and schema for further reference thru the pipeline.
+
+Business Value: The customer needs to understand the availability of the ingested data, the source schema. The platform needs to have a record of the data ingested and source schema to help build the ETL template.
+
+Acceptance Criteria:
+1. Ability to register the schema of the incoming file
+2. Ability to register the metadata associated with the file: DataSetName,UserID,IMSOrg, ConnectionParameters
+3. Platform engineer should be able to get the details of the file ingested thru an API Call to catalog.
+
+
+
+
+
+
+
+
+
+
 ## Datasets from a Schema
 
 Adobe connectors provide two ways that data can be ingested into a dataset. The first is [batch ingestion via file upload](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md) and the second is ingestion via setting up a connector. The following steps show you how to ingest CRM data using the ACP Azure Blob Connector.
@@ -437,3 +462,4 @@ Adding a `"delta": {}` in the `"meta"` field indicates the method selected to be
 ```
 
 `{DATASET_ID}`: The ID of the dataset that was created. This can be used in the future to make a request to Catalog to identify the DatasetView ID associated with this dataset.
+
