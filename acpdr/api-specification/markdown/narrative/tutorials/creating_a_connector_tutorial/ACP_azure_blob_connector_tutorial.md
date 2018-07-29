@@ -1,7 +1,7 @@
 # Setting up an Azure Blob Connector
 
 
-This article helps you build and ingest a dataset from a Microsoft Azure Blob using a connector in the Adobe Cloud Platform (ACP). 
+This article helps you build and ingest a dataset from a Microsoft Azure Blob using a connector from the Adobe Cloud Platform (ACP). 
 
 * Create Catalog Account Entity  
 * Create Catalog Connection Entity
@@ -38,7 +38,11 @@ Acceptance Criteria:
 
 ## Datasets from a Schema
 
-Adobe connectors provide two ways that data can be ingested into a dataset. The first is [batch ingestion via file upload](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md) and the second is ingestion via setting up a connector. The following steps show you how to ingest CRM data using the ACP Azure Blob Connector.
+Adobe connectors provide two ways that data can be ingested into a dataset. 
+
+* Use the Batch Ingestion API batch ingestion of delimited files. See  [batch ingestion via file upload](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md). 
+
+The second way is to ingest files by setting up a connector. The following steps show you how to ingest CRM data using the ACP Azure Blob Connector.
 
 ### 2.1. Prerequisites
 
