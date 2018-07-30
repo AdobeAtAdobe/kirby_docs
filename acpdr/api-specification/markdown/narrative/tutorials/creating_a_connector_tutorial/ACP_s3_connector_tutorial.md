@@ -53,9 +53,13 @@ The following are various properties of JSON for creating a dataset.
 
 Property Name | Description
 ------------ | -------------
+<<<<<<< HEAD
+params/datasets/name	| Mandatory. Name of the dataset. 
+=======
 params/datasets/name	| Mandatory. Name of the dataset
+>>>>>>> 65c95ffc4e4079066a30a09176cc48319a4f475b
 params/datasets/tags/* | Optional. Provide tags associated with dataset.
-params/datasets/fields/*	| Conditional. Conditional. Needs to be specified if params/datasets/schema is not defined. This contains information about the schema of files to be ingested. Can be retrieved from schema API call defined below.
+params/datasets/fields/*	| Conditional. Needs to be specified if params/datasets/schema is not defined. This contains information about the schema of files to be ingested. Can be retrieved from schema API call defined below.
 params/datasets/schema	| Conditional. Needs to be specified if params/datasets/fieldsis not specified. This is pointer to the schema in schema registry.
 params/datasets/fileDescription	| Optional. Identify the kind of file to ingest: CSV (default) or parquet
 
