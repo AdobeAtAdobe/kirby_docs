@@ -1,4 +1,4 @@
-# Creating and Populating a Dataset using a Connector
+# Creating and Populating a Dataset using an MS Dynamic Connector
 
 ## 1. Objective
 
@@ -45,26 +45,26 @@ From the tutorial you should now have the following values:
 * `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
 
 
-To set up the Salesforce CRM (Customer Relationship Management) connector, you will also need the following Salesforce CRM credentials:
+To set up the MS Dynamic CRM (Customer Relationship Management) connector, you will also need the following MS Dynamic CRM credentials:
 
-* `{SALESFORCE_USER_NAME}`: Your Salesforce CRM user name
-* `{SALESFORCE_PASSWORD}`: Your Salesforce CRM password
-* `{SALESFORCE_SECURITY_TOKEN}`: Your Salesforce security token. This can be found with the following steps:  
-  1. Go to https://developer.salesforce.com/
-  2. Log in using your Salesforce CRM credentials
+* `{MS Dynamic_USER_NAME}`: Your MS Dynamic CRM user name
+* `{MS Dynamic_PASSWORD}`: Your MS Dynamic CRM password
+* `{MS Dynamic_SECURITY_TOKEN}`: Your MS Dynamic security token. This can be found with the following steps:  
+  1. Go to https://developer.MS Dynamic.com/
+  2. Log in using your MS Dynamic CRM credentials
   3. Click on top right user avatar and select "Settings" link
   4. Now in the "Personal Information" view click on "Reset My Security Token"
   5. You will receive a new security token via email.
 
 With the above values we can move on to the next section:
 
-### 2.2. Ingesting Data from Salesforce Connector<a name="2_3_Header"></a>
+### 2.2. Ingesting Data from MS Dynamic Connector<a name="2_3_Header"></a>
 
-Now we will go through the API request steps required to set up a Salesforce CRM connector which will trigger data ingestion daily. The Salesforce CRM object used will be the `Account` object.
+Now we will go through the API request steps required to set up a MS Dynamic CRM connector which will trigger data ingestion daily. The MS Dynamic CRM object used will be the `Account` object.
 
 #### 2.2.1. Create Catalog Account Entity
 
-First we will create a Salesforce CRM catalog account entity. This request takes a Salesforce User Name, Salesforce Password, and Salesforce Security Token. The response contains the account ID.
+First we will create a MS Dynamic CRM catalog account entity. This request takes a MS Dynamic User Name, MS Dynamic Password, and MS Dynamic Security Token. The response contains the account ID.
 
 #### Request
 POST /connections
@@ -77,27 +77,27 @@ curl -X POST https://platform-int.adobe.io/data/foundation/catalog/accounts/ \
   -H 'Content-Type: application/json' \
   -d '{
   "params": {
-    "username": "{SALESFORCE_USER_NAME}",
+    "username": "{MS Dynamic_USER_NAME}",
     "password": {
-      "value": "{SALESFORCE_PASSWORD}",
+      "value": "{MS Dynamic_PASSWORD}",
       "isSecret": true
     },
     "securityToken": {
-      "value": "{SALESFORCE_SECURITY_TOKEN}",
+      "value": "{MS Dynamic_SECURITY_TOKEN}",
       "isSecret": true
     },
-    "serviceUrl": "login.salesforce.com"
+    "serviceUrl": "login.MS Dynamic.com"
   },
-  "connector": "salesforce"
+  "connector": "MS Dynamic"
 }'
 ```
 
 `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
 `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
-`{SALESFORCE_USER_NAME}`: Your username for Salesforce CRM.  
-`{SALESFORCE_PASSWORD}`: Your password for Salesforce CRM.  
-`{SALESFORCE_SECURITY_TOKEN}`: Your security token for Salesforce CRM.  
+`{MS Dynamic_USER_NAME}`: Your username for MS Dynamic CRM.  
+`{MS Dynamic_PASSWORD}`: Your password for MS Dynamic CRM.  
+`{MS Dynamic_SECURITY_TOKEN}`: Your security token for MS Dynamic CRM.  
 
 #### Response
 ```JSON
@@ -110,7 +110,7 @@ curl -X POST https://platform-int.adobe.io/data/foundation/catalog/accounts/ \
 
 #### 2.2.2. Create Catalog Connection Entity
 
-With our account ID we can now create a Salesforce catalog connection entity. In this request we will state when we want the ingestion to start (`"ingestStart"`) and what frequency we want the ingestion to occur (`"frequency"`). In the following request we will go with the default value of daily ingestion.
+With our account ID we can now create a MS Dynamic catalog connection entity. In this request we will state when we want the ingestion to start (`"ingestStart"`) and what frequency we want the ingestion to occur (`"frequency"`). In the following request we will go with the default value of daily ingestion.
 
 #### Request
 POST /connections
@@ -133,7 +133,7 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/connections/ \
         "minute": "00",
         "dayOfWeek": "*"
         },
-      "connector": "salesforce",
+      "connector": "MS Dynamic",
       "accountId": "{ACCOUNT_ID}"
     }'
 ```
@@ -141,7 +141,7 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/connections/ \
 `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
 `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
-`{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials  
+`{ACCOUNT_ID}`: Account ID generated from your MS Dynamic credentials  
 `{CONNECTION_NAME}`: Name of the connection you are creating.  
 `{INGEST_START}`: Date and time when ingestion is scheduled to start. If time is set to the past (relative to current time) ingestion will begin immediately. Format is `"yyyy-mm-ddThh:mm:ss.000Z"` (E.g. `"2018-03-22T23:59:59.000Z"`)  
 
@@ -154,9 +154,9 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/connections/ \
 
 `{CONNECTION_ID}`: ID of the connector you just created. We will refer to this as {CONNECTION_ID} in future steps.
 
-#### 2.2.3. Get Salesforce CRM Selected Object
+#### 2.2.3. Get MS Dynamic CRM Selected Object
 
-Our next step is to select what Salesforce CRM object to ingest. We can get the entire list of available objects from the Salesforce CRM connection using the following request.
+Our next step is to select what MS Dynamic CRM object to ingest. We can get the entire list of available objects from the MS Dynamic CRM connection using the following request.
 
 #### Request
 GET /connectors/connections/{CONNECTION_ID}/objects
@@ -172,7 +172,7 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
 `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
-`{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials  
+`{ACCOUNT_ID}`: Account ID generated from your MS Dynamic credentials  
 `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
 
 #### Response
@@ -203,9 +203,9 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 ]
 ```
 
-The above object is just a partial response of the actual list of available Salesforce CRM objects. We want to note that the `logicalName` of the objects we want to use . This will be used as the {OBJECT_ID}
+The above object is just a partial response of the actual list of available MS Dynamic CRM objects. We want to note that the `logicalName` of the objects we want to use . This will be used as the {OBJECT_ID}
 
-The next step will be ingesting fields from the `Account` object; however first we need to determine which fields we want from it. We can make the following response to see all fields for a specific Salesforce CRM object.
+The next step will be ingesting fields from the `Account` object; however first we need to determine which fields we want from it. We can make the following response to see all fields for a specific MS Dynamic CRM object.
 
 #### Request
 POST /connectors/connections/{CONNECTION_ID}/object/{OBJECT_ID}/fields
@@ -221,9 +221,9 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
 `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
-`{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials.  
+`{ACCOUNT_ID}`: Account ID generated from your MS Dynamic credentials.  
 `{CONNECTION_ID}`: ID of the connector you created from the previous steps.  
-`{OBJECT_ID}`: Logical Name of the Salesforce Object you want to ingest.  
+`{OBJECT_ID}`: Logical Name of the MS Dynamic Object you want to ingest.  
 
 #### Response  
 
@@ -303,7 +303,7 @@ Users can choose to have all the fields of an object ingested or select only fie
 
 #### 2.2.4. Create Dataset Catalog Entity
 
-The last step is to create the Salesforce CRM dataset catalog entity. The dataset will define the structure of the data that will be ingested from the connection.
+The last step is to create the MS Dynamic CRM dataset catalog entity. The dataset will define the structure of the data that will be ingested from the connection.
 
 #### Request
 POST /datasets
@@ -320,9 +320,9 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/datasets/ \
 `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
 `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
-`{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials.  
+`{ACCOUNT_ID}`: Account ID generated from your MS Dynamic credentials.  
 `{CONNECTION_ID}`: ID of the connector you created from the previous steps.  
-`{OBJECT_ID}`: Logical Name of the Salesforce Object you want to ingest.  
+`{OBJECT_ID}`: Logical Name of the MS Dynamic Object you want to ingest.  
 
 `{JSON_PAYLOAD}`: The dataset to be posted. The example we use in our tutorial is here:
 
@@ -407,14 +407,14 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/datasets/ \
             }
         }
       ],
-      "connectorId": "salesforce",
+      "connectorId": "MS Dynamic",
       "requestStartDate": "2018-02-14 16:06:44",
       "status": "enabled",
       "aspect": "production"
     }
 ```
 
-The `{JSON PAYLOAD}` we are using is the subset of object fields we selected from the previous response to get all fields for the `Account` Salesforce CRM object. This defines which fields that will be populated by the connector on a recurring frequency (E.g. Account Name, Account Site, System Modstamp...).
+The `{JSON PAYLOAD}` we are using is the subset of object fields we selected from the previous response to get all fields for the `Account` MS Dynamic CRM object. This defines which fields that will be populated by the connector on a recurring frequency (E.g. Account Name, Account Site, System Modstamp...).
 
 
 The field `"requestStartDate"` dictates how far in the past (relative to now) should the backfill go. `"requestStartDate"` is always a date in the past. If you want a backfill of 30 days then you have to calculate `now() - 30 days` and enter a valid date time value for this field.
