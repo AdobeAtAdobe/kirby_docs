@@ -1,9 +1,9 @@
 # Setting up an ACP Connector for Amazon S3
 
 
-This article helps you build and ingest a dataset from a Microsoft Amazon S3 using the ACP Amazon S3 Connector from the Adobe Cloud Platform (ACP). 
+This article helps you build and ingest a dataset from an Amazon S3 using the ACP Amazon S3 Connector from the Adobe Cloud Platform (ACP). 
 
-Adobe connectors provide two ways for creating a dataset: 
+Adobe connectors provide two ways to create and ingest a dataset: 
 
 * Use the Batch Ingestion API batch ingestion of delimited files. See  [batch ingestion via file upload](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md). 
 
@@ -34,38 +34,35 @@ curl -X POST https://platform-int.adobe.io/data/foundation/ connectors/account/ 
 -H 'content-type: application/json' -H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg' -d
 
 '{
-   "params": {
-     "s3AccessKey": "<awsAccessKey>",
-     "s3SecretKey": {
-       "value": "<awsSecretAccessKey>",
-       "isSecret": true
-     }
-   },
-   "type": "amazon-s3"
- }'
+  "params": {
+    "connectionString": {
+      "value": "<connection string as retrieved from Azure portal>",
+      "isSecret": true
+    }
+  },
+  "type": "azure-blob-inbound"
+}'
 ```
 ## Step 2: Creating the Connection ID
 Once the account and connection are successfully created, the connection ID can be used to create a dataset. Configure ADF datasets,pipeline, and triggers with a successful POST call.
 
-Note: It is suggested to provide a unique and identifiable name for the dataset. You will be monitoring the ingestion status from the ACP user interface
+Note: It is suggested to provide a unique and identifiable name for the dataset. You will be monitoring the ingestion status from the ACP user interface 
 
 The following are various properties of JSON for creating a dataset.
 
 Property Name | Description
 ------------ | -------------
-<<<<<<< HEAD
 params/datasets/name	| Mandatory. Name of the dataset. 
-=======
-params/datasets/name	| Mandatory. Name of the dataset
->>>>>>> 65c95ffc4e4079066a30a09176cc48319a4f475b
 params/datasets/tags/* | Optional. Provide tags associated with dataset.
 params/datasets/fields/*	| Conditional. Needs to be specified if params/datasets/schema is not defined. This contains information about the schema of files to be ingested. Can be retrieved from schema API call defined below.
 params/datasets/schema	| Conditional. Needs to be specified if params/datasets/fieldsis not specified. This is pointer to the schema in schema registry.
 params/datasets/fileDescription	| Optional. Identify the kind of file to ingest: CSV (default) or parquet
+params/ingestStart	| Optional. When ingestion should start. Default set to current time.
+params/frequency/*	| Optional. Set the frequency to run an ingestion. The default is every 30 mins.
 
 ### Simple Payload Example
-```curl-X POST https: //platform-int.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json'
--H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'-d
+```curl-X POST https: //platform-int.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json' 
+-H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'-d 
 '{
   "params": {
     "datasets": [
@@ -86,7 +83,47 @@ params/datasets/fileDescription	| Optional. Identify the kind of file to ingest:
   }
 }'
 ```
+### Detailed Payload Example
 
+```
+curl-X POST https: //platform-int.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json' 
+-H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'-d 
+'{
+  "params": {
+    "datasets": [
+      {
+        "name": "<DataSetName>",
+        "tags": {
+          "connectors-objectName": [
+            "<object path>" //e.g. blob - "https://storageaccount/container/.../.../..."
+          ]
+        },
+        "fileDescription": {
+            "format": "parquet"
+        },
+        "fields": [
+          {
+            "name": "field1",
+            "type": "string"
+          },
+          {
+            "name": "field2",
+            "type": "string"
+          },
+          {
+            "name": "field3",
+            "type": "string"
+          },
+          {
+            "name": "field4",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+}'
+```
 Schedule API (OPTIONAL - Make this call only if you want to do scheduled ingestion or send a blank json {} as the payload if you want to do a one-time run).
 
 The following configuration will ingest data every 15 minutes.
