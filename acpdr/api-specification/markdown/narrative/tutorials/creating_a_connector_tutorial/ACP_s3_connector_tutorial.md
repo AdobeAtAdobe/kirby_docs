@@ -54,7 +54,7 @@ Property Name | Description
 ------------ | -------------
 params/datasets/name	| Mandatory. Name of the dataset 
 params/datasets/tags/* | Optional. Provide tags associated with dataset.
-params/datasets/fields/*	| Conditional. Needs to be specified if params/datasets/schema is not defined. This contains information about schema of files to be ingested. Can be retrieved from schema API call defined below.
+params/datasets/fields/*	| Conditional. Conditional. Needs to be specified if params/datasets/schema is not defined. This contains information about the schema of files to be ingested. Can be retrieved from schema API call defined below.
 params/datasets/schema	| Conditional. Needs to be specified if params/datasets/fieldsis not specified. This is pointer to the schema in schema registry.
 params/datasets/fileDescription	| Optional. Identify the kind of file to ingest: CSV (default) or parquet
 params/ingestStart	| Optional. When ingestion should start. Default set to current time.
