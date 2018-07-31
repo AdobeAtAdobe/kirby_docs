@@ -1,4 +1,4 @@
-# The ACP Connector for Amazon S3
+# ACP Connector for Amazon S3
 
 
 This article helps you build and ingest a dataset from Amazon S3 using the ACP Amazon S3 Connector from the Adobe Cloud Platform (ACP). 
