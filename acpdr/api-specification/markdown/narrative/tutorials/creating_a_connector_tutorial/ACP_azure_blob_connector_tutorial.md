@@ -17,13 +17,13 @@ Note: Data is ingested into the source schema. The platform needs to have a reco
 
 
 ## Requirements
-* Ability to register the schema of the incoming file
-* Ability to register the metadata associated with the file, such as DataSetName,UserID,IMSOrg, ConnectionParameters
-* Platform data engineer should be able to get the details of the file ingested using an API Call to the Catalog API.
+* Ability to register the schema of the incoming file.
+* Ability to register the metadata associated with the file, such as DataSetName, UserID, IMSOrg, and ConnectionParameters.
+* Platform data engineer should be able to get the details of the file ingested using an API call to the Catalog API.
 
 
 ## Step 1: Set up an ACP account and connection 
-Set up an account for the Azure Blob data connector. Follow this [Tutorial](./alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
+Set up an account for the Azure Blob data connector. Follow this [tutorial](./alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
 
 
 Use the below POST call and provide the imsOrgId, accessToken, and Blob connection string. This single call  provides handles to various operations in the platform.
@@ -55,12 +55,15 @@ Property Name | Description
 params/datasets/name	| Mandatory. Name of the dataset 
 params/datasets/tags/* | Optional. Provide tags associated with dataset.
 params/datasets/fields/*	| Conditional. Needs to be specified if params/datasets/schema is not defined. This contains information about schema of files to be ingested. Can be retrieved from schema API call defined below.
-params/datasets/schema	| Conditional. Needs to be specified if params/datasets/fieldsis not specified. This is pointer to the schema in schema registry.
+params/datasets/schema	| Conditional. Needs to be specified if params/datasets/fieldsis not specified. This is pointer to the schema in the schema registry.
 params/datasets/fileDescription	| Optional. Identify the kind of file to ingest: CSV (default) or parquet
 
+
+
 ### Simple Payload Example
-```curl-X POST https: //platform-int.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json'
--H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'-d
+```
+curl-X POST https: //platform-int.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json'
++-H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'-d
 '{
   "params": {
     "datasets": [
@@ -81,8 +84,7 @@ params/datasets/fileDescription	| Optional. Identify the kind of file to ingest:
   }
 }'
 ```
-
-Schedule API (OPTIONAL - Make this call only if you want to do scheduled ingestion or send a blank json {} as the payload if you want to do a one-time run).
+Note: The Schedule API is optional. Make this call only if you want to schedule the ingestion or send a blank json {} as the payload for a one-time run.
 
 The following configuration will ingest data every 15 minutes.
 
@@ -103,8 +105,7 @@ curl-X POST https: //platform-int.adobe.io/data/foundation/connectors/connection
 ```
 
 ## Step 3: Preview Data
-The status of the data ingestion can be seen from the ACP user interface. 
-Go to the ACP UI and select the dataset created. Additional data can be previewed with the help of preview icon.
+The status of the data ingestion can be seen from the ACP user interface. Go to the ACP UI and select the dataset created. Additional data can be previewed with the help of the preview icon.
 
 <screen shot>
 
@@ -118,7 +119,7 @@ To get list of the Catalog end points, select the Catalog API from the drop-down
 
 < Will you see a batches list> Currently on click datasets, you will not see batches list. This is because of a bug which will be fixed in coming sprint. 
 
-## Default Settings
+### Default Settings
 * For an incremental ingestion, you will have to clean up the data after every ingestion run.
 * Currently, the pipeline run is configured for a delay of 30 minutes between consecutive runs. This will be become configurable in coming sprint.
  <what is the condition of this now>

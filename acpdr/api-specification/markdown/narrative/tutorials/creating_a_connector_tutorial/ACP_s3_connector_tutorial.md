@@ -1,14 +1,15 @@
-# Setting up an ACP Connector for Amazon S3
+# The ACP Connector for Amazon S3
 
 
-This article helps you build and ingest a dataset from an Amazon S3 using the ACP Amazon S3 Connector from the Adobe Cloud Platform (ACP). 
+This article helps you build and ingest a dataset from Amazon S3 using the ACP Amazon S3 Connector from the Adobe Cloud Platform (ACP). 
 
 Adobe connectors provide two ways to create and ingest a dataset: 
 
 * Use the Batch Ingestion API batch ingestion of delimited files. See  [batch ingestion via file upload](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md). 
 
-* Ingest files by setting up a connector. The following steps show you how to ingest CRM data using the ACP Amazon S3 Connector.
+* Ingest files by setting up a connector. The following steps show you how to ingest data using the ACP Amazon S3 Connector.
 
+## Setting up the ACP Connectors for Amazon S3
 
 These steps and API calls are required to configure the data connectors and ingest data into the platform. The APIs allow you to orchestrate data connectors on the Adobe Data Foundation and ingest data into the Adobe Cloud Platform.
 
@@ -16,14 +17,14 @@ These steps and API calls are required to configure the data connectors and inge
 Note: Data is ingested into the source schema. The platform needs to have a record of the data ingested and source schema to help build the ETL template.
 
 
-## Requirements
+### Requirements
 * Ability to register the schema of the incoming file
-* Ability to register the metadata associated with the file, such as DataSetName,UserID,IMSOrg, ConnectionParameters
-* Platform data engineer should be able to get the details of the file ingested using an API Call to the Catalog API.
+* Ability to register the metadata associated with the file, such as DataSetName, UserID, IMSOrg, and ConnectionParameters
+* Platform data engineer should be able to get the details of the file ingested using an API call to the Catalog API.
 
 
-## Step 1: Set up an ACP account and connection 
-Set up an account for the Amazon S3 data connector. Follow this [Tutorial](./alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
+### Step 1: Set up an ACP account and connection 
+Set up an account for the Amazon S3 data connector. Follow this [tutorial](./alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
 
 
 Use the below POST call and provide the imsOrgId, accessToken, and Blob connection string. This single call  provides handles to various operations in the platform.
@@ -35,16 +36,18 @@ curl -X POST https://platform-int.adobe.io/data/foundation/ connectors/account/ 
 
 '{
   "params": {
-    "connectionString": {
-      "value": "<connection string as retrieved from Azure portal>",
-      "isSecret": true
-    }
-  },
-  "type": "azure-blob-inbound"
-}'
++     "s3AccessKey": "<awsAccessKey>",
++     "s3SecretKey": {
++       "value": "<awsSecretAccessKey>",
++       "isSecret": true
++     }
++   },
++   "type": "amazon-s3"
++ }'
 ```
-## Step 2: Creating the Connection ID
-Once the account and connection are successfully created, the connection ID can be used to create a dataset. Configure ADF datasets,pipeline, and triggers with a successful POST call.
+
+### Step 2: Creating the Connection ID
+Once the account and connection are successfully created, the connection ID can be used to create a dataset. You can configure ADF datasets, pipeline, and triggers using a successful POST call.
 
 Note: It is suggested to provide a unique and identifiable name for the dataset. You will be monitoring the ingestion status from the ACP user interface 
 
@@ -57,11 +60,13 @@ params/datasets/tags/* | Optional. Provide tags associated with dataset.
 params/datasets/fields/*	| Conditional. Needs to be specified if params/datasets/schema is not defined. This contains information about the schema of files to be ingested. Can be retrieved from schema API call defined below.
 params/datasets/schema	| Conditional. Needs to be specified if params/datasets/fieldsis not specified. This is pointer to the schema in schema registry.
 params/datasets/fileDescription	| Optional. Identify the kind of file to ingest: CSV (default) or parquet
-params/ingestStart	| Optional. When ingestion should start. Default set to current time.
-params/frequency/*	| Optional. Set the frequency to run an ingestion. The default is every 30 mins.
 
-### Simple Payload Example
-```curl-X POST https: //platform-int.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json' 
+
+#### Simple Payload Example
+```
+curl-X POST https: //platform-int.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json'
+
++-H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'-d 
 -H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'-d 
 '{
   "params": {
@@ -78,47 +83,6 @@ params/frequency/*	| Optional. Set the frequency to run an ingestion. The defaul
             "format": "parquet"
         },
 		"schema":"@/xdms/model/Profile"
-      }
-    ]
-  }
-}'
-```
-### Detailed Payload Example
-
-```
-curl-X POST https: //platform-int.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json' 
--H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'-d 
-'{
-  "params": {
-    "datasets": [
-      {
-        "name": "<DataSetName>",
-        "tags": {
-          "connectors-objectName": [
-            "<object path>" //e.g. blob - "https://storageaccount/container/.../.../..."
-          ]
-        },
-        "fileDescription": {
-            "format": "parquet"
-        },
-        "fields": [
-          {
-            "name": "field1",
-            "type": "string"
-          },
-          {
-            "name": "field2",
-            "type": "string"
-          },
-          {
-            "name": "field3",
-            "type": "string"
-          },
-          {
-            "name": "field4",
-            "type": "string"
-          }
-        ]
       }
     ]
   }
@@ -144,7 +108,7 @@ curl-X POST https: //platform-int.adobe.io/data/foundation/connectors/connection
 }'
 ```
 
-## Step 3: Preview Data
+### Step 3: Preview Data
 The status of the data ingestion can be seen from the ACP user interface. 
 Go to the ACP UI and select the dataset created. Additional data can be previewed with the help of preview icon.
 
@@ -160,13 +124,13 @@ To get list of the Catalog end points, select the Catalog API from the drop-down
 
 < Will you see a batches list> Currently on click datasets, you will not see batches list. This is because of a bug which will be fixed in coming sprint. 
 
-## Default Settings
+#### Default Settings
 * For an incremental ingestion, you will have to clean up the data after every ingestion run.
 * Currently, the pipeline run is configured for a delay of 30 minutes between consecutive runs. This will be become configurable in coming sprint.
- <what is the condition of this now>
+ 
  
 
-# Integrating with ACP APIs
+## Integrating with ACP APIs
 
 <Apart from Create Account and Create Dataset>
 
