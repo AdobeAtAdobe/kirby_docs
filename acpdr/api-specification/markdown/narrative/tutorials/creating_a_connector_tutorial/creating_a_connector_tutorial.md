@@ -28,15 +28,13 @@ Terms of service : https://www.adobe.com/legal/terms.html
 
 ## 2. Datasets from a Schema
 
-There are two ways data can be ingested into a dataset. The first is [batch ingestion via file upload](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md) and the second is ingestion via setting up a connector. 
-
-The following steps show you how to ingest CRM data using the ACP Salesforce Connector.
+There are two ways data can be ingested into a dataset. The first is [batch ingestion via file upload](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md) and the second is ingestion via setting up a connector. The following steps show you how to ingest CRM data using the ACP Salesforce Connector.
 
 For instructions on setting up other connectors, see
 
-* [Amazon S3 Connector](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/ACP_s3_connector_tutorial.md)
-* [Azure Blob Connector](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/ACP_azure_blob_connector_tutorial)
-* [Microsoft Dynamics Connector](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/ACP_dynamic_connector_tutorial.md)
+* [Amazon S3 Connector](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md)
+* [Azure Blob Connector](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md)
+* [Microsoft Dynamics Connector](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md)
 
 
 
