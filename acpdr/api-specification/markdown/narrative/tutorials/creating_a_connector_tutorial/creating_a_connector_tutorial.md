@@ -32,9 +32,9 @@ There are two ways data can be ingested into a dataset. The first is [batch inge
 
 For instructions on setting up other connectors, see
 
-* [Amazon S3 Connector](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md)
-* [Azure Blob Connector](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md)
-* [Microsoft Dynamics Connector](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md)
+* [Amazon S3 Connector] (https://git.corp.adobe.com/experience-platform/documentation/blob/master/api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md)
+* [Azure Blob Connector](https://git.corp.adobe.com/experience-platform/documentation/blob/master/api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md)
+* [Microsoft Dynamics Connector](https://git.corp.adobe.com/experience-platform/documentation/blob/master/api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md)
 
 
 

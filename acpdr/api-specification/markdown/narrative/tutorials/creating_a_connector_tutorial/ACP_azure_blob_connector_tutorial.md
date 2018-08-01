@@ -9,10 +9,7 @@ Adobe connectors provide two ways for creating a dataset:
 
 * Ingest files by setting up a connector. The following steps show you how to ingest CRM data using the ACP Azure Blob Connector.
 
-## Setting up the ACP Connectors for Amazon S3
-
-These steps and API calls are required to configure the data connectors and ingest data into the platform. The APIs allow you to orchestrate data connectors on the Adobe Data Foundation and ingest data into the Adobe Cloud Platform.
-
+## Setting up the ACP Connector for Azure Blob
 
 Note: Data is ingested into the source schema. The platform needs to have a record of the data ingested and source schema to help build the ETL template.
 
