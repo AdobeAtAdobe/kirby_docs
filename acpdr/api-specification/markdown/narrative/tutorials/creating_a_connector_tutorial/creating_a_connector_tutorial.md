@@ -30,12 +30,12 @@ Terms of service : https://www.adobe.com/legal/terms.html
 
 There are two ways data can be ingested into a dataset. The first is [batch ingestion via file upload](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md) and the second is ingestion via setting up a connector. The following steps show you how to ingest CRM data using the ACP Salesforce Connector.
 
-For instructions on setting up other connectors, see
+<!-- For instructions on setting up other connectors, see
 
 * [Amazon S3 Connector](https://git.corp.adobe.com/experience-platform/documentation/blob/master/api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md)
 * [Azure Blob Connector](https://git.corp.adobe.com/experience-platform/documentation/blob/master/api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md)
 * [Microsoft Dynamics Connector](https://git.corp.adobe.com/experience-platform/documentation/blob/master/api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md)
-
+-->
 
 
 ### 2.1. Prerequisites

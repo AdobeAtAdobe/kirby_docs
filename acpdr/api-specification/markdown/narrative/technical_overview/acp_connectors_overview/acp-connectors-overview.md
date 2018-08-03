@@ -3,10 +3,10 @@
 
 Adobe provides multiple connectors to ingest data from your data sources to the Adobe Cloud Platform (ACP), including 
 
-* Microsoft Dynamics 365 
+* Microsoft Dynamics 365
 * Salesforce
 * Amazon S3
-* Azure Blob
+* Microsoft Azure Blob
 
 This article assists Data Engineers and others to set up connectors for datasets using a variety of ACP connectors or using the ACP user interface.
 
