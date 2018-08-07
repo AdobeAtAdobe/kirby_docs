@@ -311,7 +311,7 @@ Data submission formats are detailed below.
             ]
         }
     ],
-    "exclude": ["Analytics"]
+    "include":["Analytics","AudienceManager"]
 }
 ```
 
@@ -320,7 +320,7 @@ Some notes about the format:
 - The &quot;action&quot; field is a collection of desired actions, one or both of [&quot;access&quot; | &quot;delete&quot;], and may be different for each user in the request
 - The &quot;key&quot; is a user identifier to wrap the various namespace entries
 - Users may have 1-many namespaces, and this format allows for varying numbers of identifiers
-- The &quot;exclude&quot; section is optional, but if a specific product should be excluded from GDPR processing (for example, handled elsewhere), it should be included here
+- The &quot;include&quot; section is optional, but if a specific product should be included for GDPR processing, it should be included here
 
 ## Conclusion
 

@@ -64,10 +64,10 @@ fields: [{
       "type": "unregistered"
     }]
   }],
-  "exclude": ["Analytics"]
+  "include":["Analytics","AudienceManager"]
 } 
 ```
-**Note:** The “exclude” field is not really necessary, as we send out the job with all solutions in our product list if no exclusion is specified. 
+**Note:** The “include” field is not really necessary, as we send out the job with all solutions in our product list if no inclusion is specified. 
  
 
 ### Retrieve Details of all Previously-Submitted Requests for a Specific Authenticated User
