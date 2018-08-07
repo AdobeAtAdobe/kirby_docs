@@ -135,9 +135,24 @@ Some notes about the format:
 * The combination of **key** and **action** dictate how many "jobs" are created in the service to track. A user key with a single action creates a single job, but a user with both an `access` and `delete` request will generate two separate jobs against that user key. Multiple keys in a file (indicating multiple user ID collections) will generate multiple jobs as well.
 * As mentioned above, users may have 1 or many JSON sub-documents including namespace, value and type that represent their identity in the ExC
 * The namespace and type fields are detailed in the table [Namespace Qualifiers](#namespacequalifiers) below
+* The number of userIDs under each user while creating jobs for users is limited to 9. For example, the API will support accepting up to 9 userIDs under each user
 
 One key not detailed in the example above:
 * The key **isDeletedClientSide** is a Boolean (true/false) value that is handed in from Adobe's Privacy JS library, indicating the client-side cookie has been deleted. This flag resides at the userID level, as part of the `namespace`, `value` and `type` triumvirate, and should not be added to the request manually as it indicates additional processing work is not needed by some solutions
+
+### Include
+
+The include key is an optional parameter. It supports an array of product strings to include in your processing. If you only support or integrate with Audience Manager, you could include only AudienceManager in your request, which has the effect of excluding all the other products. By default, all supported Experience Cloud solutions are included in every request. 
+
+```json
+
+"include":["Analytics","AudienceManager"],
+
+```
+
+See https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md for Product Values.
+
+If the product you specify as part of an include or exclude key does not match the list of product values, you will receive an error message and the request will fail.
 
 ### Additional flags and options
 
