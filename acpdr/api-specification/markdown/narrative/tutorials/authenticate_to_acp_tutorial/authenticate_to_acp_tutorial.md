@@ -12,25 +12,6 @@ This tutorial will cover the steps on how to gain access to making Adobe Cloud P
 * Authenticating
 * Calling a platform API
 
-### 1.1. Audience
-This document is written for users who need to understand Adobe Cloud Platform and have to integrate the platform with customer-owned or third party systems. Users include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
-
-### 1.2. Version Information
-*Version* : Preview
-
-### 1.3. License Information
-*Terms of service* : https://www.adobe.com/legal/terms.html
-
-
-### 1.4. URI Scheme
-*Host* : __platform.adobe.io__  
-*BasePath* : __/data/foundation/import/__  
-*Schemes* : __HTTPS__  
-
-### 1.5. About the Docs
-
-This document is kept up-to-date and can be updated without announcement.
-
 ---
 
 ## 2. Authenticate to Make API Calls
@@ -125,7 +106,7 @@ Your private key file named `private.key` will be used later to sign your JWT to
 
 #### 2.2.2. Log into adobe.io Developer Portal: console.adobe.io
 
-Navigate to the [Adobe I/O Console](https://console.adobe.io/) and sign in with your Adobe ID.  
+Navigate to the [Adobe I/O Console](https://console.adobe.io/) and sign in with your Adobe ID.
 
 #### 2.2.3. Create Integration
 

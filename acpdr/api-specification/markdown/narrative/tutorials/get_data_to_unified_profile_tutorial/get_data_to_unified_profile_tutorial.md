@@ -4,25 +4,6 @@
 (explain what this document will be about and what topics will be covered,
 get data to unified profile)
 
-### 1.1. Audience
-This document is written for users who need to understand the Adobe Cloud Platform and have to integrate the platform with customer-owned or third party systems. Users include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
-
-### 1.2. Version Information
-*Version* : Beta
-
-### 1.3. License Information
-Terms of service : https://www.adobe.com/legal/terms.html
-
-
-### 1.4 URI Scheme
-*Host* : platform.adobe.io  
-*BasePath* : /data/foundation/import/  
-*Schemes* : HTTPS
-
-### 1.5. About the Docs
-
-This document is kept up-to-date and can be updated without announcement.
-
 ---
 
 ## 2. Get Data to Unified Profile
@@ -52,9 +33,9 @@ curl -X POST "https://platform.adobe.io/data/foundation/catalog/dataSets?request
   -d "{JSON_PAYLOAD}"
 ```
 
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
 
 `{JSON_PAYLOAD}`: Data set to be posted. The example we used in our tutorial is here:
 
@@ -142,10 +123,10 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
 -H "x-api-key : {API_KEY}"
 -d '{"datasetId":"{DATASET_ID}"}'
 ```
-**IMS_ORG:** Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
-**ACCESS_TOKEN:** Token provided after authentication.  
-**API_KEY:** Your specific API key value found in your unique Adobe Cloud Platform integration.  
-**DATASET_ID:** The ID of the dataset to upload the files into.  
+**IMS_ORG:** Your IMS org credentials found in your unique Adobe Cloud Platform integration.
+**ACCESS_TOKEN:** Token provided after authentication.
+**API_KEY:** Your specific API key value found in your unique Adobe Cloud Platform integration.
+**DATASET_ID:** The ID of the dataset to upload the files into.
 
 #### Response
 ```JSON
@@ -167,11 +148,11 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
     "updatedUser": "string"
 }
 ```
-**BATCH_ID:** The ID of the batch that was just created (used in subsequent requests).  
-**IMS_ORG:** Your IMS org specified in the request.  
-**DATASET_ID:** The ID of the dataset to upload the files into.  
+**BATCH_ID:** The ID of the batch that was just created (used in subsequent requests).
+**IMS_ORG:** Your IMS org specified in the request.
+**DATASET_ID:** The ID of the dataset to upload the files into.
 
-After successfully creating a new batch for uploading, files can be then be uploaded to a specific dataset.  
+After successfully creating a new batch for uploading, files can be then be uploaded to a specific dataset.
 
 If the file is smaller than 512MB, it can be uploaded in a single chunk, which we will walk through here. If the original file being uploaded is greater than 512 MB, it will need to be broken up into 512 MB chunks, before being ingested, and uploaded one file at a time. Uploading a larger file is covered in [section 4.3.2.1 of the Data Ingestion Technical Overview](https://git.corp.adobe.com/experience-platform/documentation/blob/master/api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md).
 
@@ -188,12 +169,12 @@ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}
 -H "x-api-key : {API_KEY}" \
 --data-binary "@{FILE_PATH_AND_NAME}.parquet"
 ```
-**BATCH_ID:** The ID of the batch to write files to.  
-**DATASET_ID:** The ID of the dataset to upload the files into.  
-**FILE_NAME:** Name of file as it will be seen in the dataset.  
-**IMS_ORG:** Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
-**ACCESS_TOKEN:** Token provided after authentication.  
-**FILE_PATH_AND_NAME:** The path and filename of the file to be uploaded into the dataset.  
+**BATCH_ID:** The ID of the batch to write files to.
+**DATASET_ID:** The ID of the dataset to upload the files into.
+**FILE_NAME:** Name of file as it will be seen in the dataset.
+**IMS_ORG:** Your IMS org credentials found in your unique Adobe Cloud Platform integration.
+**ACCESS_TOKEN:** Token provided after authentication.
+**FILE_PATH_AND_NAME:** The path and filename of the file to be uploaded into the dataset.
 
 #### Response
 ```JSON

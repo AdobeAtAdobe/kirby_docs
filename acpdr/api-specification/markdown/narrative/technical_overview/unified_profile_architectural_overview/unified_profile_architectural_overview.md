@@ -6,37 +6,14 @@ The Unified Profile Service (UPS) in Adobe Cloud Platform provides a Unified, 36
 
 ![Unified Profile In Action](up-in-action.png)
 
-### 1.1 Audience
 
-This document is aimed at a technical audience and should be a useful tool for all users that need to:
-
-* Consume Adobe Cloud Platform APIs
-* Understand Adobe Cloud Platform Architecture
-* Understand how the Unified Profile works with Adobe Cloud Platform
-* Architect integrations between customer-owned and 3rd party systems and Adobe Cloud Platform
-
-### 1.2 Version Information
-*Version* : Preview
-
-### 1.3 License Information
-*Terms of service* : https://www.adobe.com/legal/terms.html
-
-### 1.4 URI Scheme
-*Host* : __platform.adobe.io__  
-*BasePath* : __/data/core/ups/__   
-*Schemes* : __HTTPS__ 
-
-### 1.5 About the Docs
-
-This document is kept up-to-date and can be updated without announcement.
-
-### 1.6 Unified Profile in Adobe Cloud Platform
+### 1.1 Unified Profile in Adobe Cloud Platform
 
 Unified Profile provides cohesion of data across any standardized DataSets you choose to onboard.
 
 ![Unified Profile In Action](up-in-acp.png)
 
-### 1.7 Using the API
+### 1.2 Using the API
 
 This document describes interacting with UPS using Adobe's Platform APIs. See the [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for information on how to access these services.
 
@@ -44,9 +21,9 @@ This document describes interacting with UPS using Adobe's Platform APIs. See th
 
 ## 2. Ingesting XDM Data
 
-UPS maintains XDM data in the Profile Store which can be updated via batch or stream ingestion. XDM data can be ingested into the Unified Profile Service based on and triggered by batch data being [ingested](../ingest_architectural_overview/ingest_architectural_overview.md) and managed by Data Catalog Service. 
-                                                                                                
-Both enablement and configuration for ingestion by Unified Profile are handled by a Tag on a DataSet, named specifically "unifiedProfile". The Tag is configured with an array of key:value properties providing configuration values. The `identityField` Tag property names the location in the XDM schema of the primary identity field. Dot-notation is used to specify attributes within a hierarchy. The `enabled` property set to true enables the DataSet for ingestion into UPS. 
+UPS maintains XDM data in the Profile Store which can be updated via batch or stream ingestion. XDM data can be ingested into the Unified Profile Service based on and triggered by batch data being [ingested](../ingest_architectural_overview/ingest_architectural_overview.md) and managed by Data Catalog Service.
+
+Both enablement and configuration for ingestion by Unified Profile are handled by a Tag on a DataSet, named specifically "unifiedProfile". The Tag is configured with an array of key:value properties providing configuration values. The `identityField` Tag property names the location in the XDM schema of the primary identity field. Dot-notation is used to specify attributes within a hierarchy. The `enabled` property set to true enables the DataSet for ingestion into UPS.
 
 ### 2.1 Batch Ingestion of Profile XDM DataSets
 
@@ -68,7 +45,7 @@ Body:
 
 ### 2.2 Batch Ingestion of ExperienceEvent XDM DataSets
 
-The following is an example Patch request adding the "unifiedProfile" Tag for an ExperienceEvent DataSet. Time-series data, or ExperienceEvents, are referenced in the context of another XDM Schema. As such, the Tag for enabling ingestion of ExperienceEvents requires an `orderField` which would be used to order query results. Initial releases limit ExperienceEvents to being related to only XDM Profiles, or Extensions of the XDM Profile Schema.    
+The following is an example Patch request adding the "unifiedProfile" Tag for an ExperienceEvent DataSet. Time-series data, or ExperienceEvents, are referenced in the context of another XDM Schema. As such, the Tag for enabling ingestion of ExperienceEvents requires an `orderField` which would be used to order query results. Initial releases limit ExperienceEvents to being related to only XDM Profiles, or Extensions of the XDM Profile Schema.
 
 ```
 PATCH https://platform.adobe.io/data/foundation/catalog/dataSets/5a7d26e92a6e55000086d459 HTTP/1.1
@@ -84,12 +61,12 @@ Body:
 
 ### 2.3 Determining if a DataSet is Enabled in Profile
 
-To check if a DataSet has been enabled in UPS, use the Data Catalog Service API to GET the DataSet. A DataSet is enabled if it contains a "unifiedProfile" tag with a colon-delimited property string for "enabledAt". The value of this tuple reports the time after which ingested Profile data would be made accessible via UPS. 
+To check if a DataSet has been enabled in UPS, use the Data Catalog Service API to GET the DataSet. A DataSet is enabled if it contains a "unifiedProfile" tag with a colon-delimited property string for "enabledAt". The value of this tuple reports the time after which ingested Profile data would be made accessible via UPS.
 
 ```
 GET https://platform.adobe.io/data/foundation/catalog/dataSets/{datasetId} HTTP/1.1
 
-Example Response: 
+Example Response:
 
 {
     "5b020a27e7040801dedbf46e": {
@@ -127,11 +104,11 @@ For more details on this and other Data Catalog Service APIs, select the "Catalo
 
 ### 2.4 Working with Ingestion
 
-Once you have enabled a DataSet for UPS and asserted it has been enabled, you can ingest Profile data using the [Bulk Ingestion API](../ingest_architectural_overview/ingest_architectural_overview.md).        
+Once you have enabled a DataSet for UPS and asserted it has been enabled, you can ingest Profile data using the [Bulk Ingestion API](../ingest_architectural_overview/ingest_architectural_overview.md).
 
-Depending on the size of the data, batches take different amounts of time to ingest. Poll the DataSet for the status of the batch using the `batchId` from ingestion until the `status` in the response indicates completion ("success" or "failure"). A recommended interval is two minutes. For more information on working with Catalog DataSets and Batches, see [Data Catalog Services](../catalog_architectural_overview/catalog_architectural_overview.md). 
+Depending on the size of the data, batches take different amounts of time to ingest. Poll the DataSet for the status of the batch using the `batchId` from ingestion until the `status` in the response indicates completion ("success" or "failure"). A recommended interval is two minutes. For more information on working with Catalog DataSets and Batches, see [Data Catalog Services](../catalog_architectural_overview/catalog_architectural_overview.md).
 
-After the ingestion is complete, use the Unified Profile Access API to access your Profile data. 
+After the ingestion is complete, use the Unified Profile Access API to access your Profile data.
 
 ---
 
@@ -146,10 +123,10 @@ As Unified Profile ingests data, records within a Profile Fragment are updated a
 
 * __Identity stitch__ – this is configurable via the graph-type parameter in the APIs
 * __Attribute merge__ – this is configurable via profile merge rules. Catalog Tags are used to define profile merge rules
- 
+
 ### 3.1 Configuring Merge Rules
 
-With regard to Profile merging, the "unifiedProfile" tag is enhanced to include a `priority` property which specifies the priority of a DataSet's Profile values in relation to other DataSets which may contain Fragments for the same Profile. For instance, let's say there is a Profile, ID "QXeHl9oaVfOZH36HEkiF8UqOU08tcmF2aTI", which exists in both DataSetA and DataSetB. If DataSetA has a `priority` of 1 and shows the XDM value for, say, `homeAddress.street1` as "1 Truax Alley" and DataSetB has a `priority` of 2 and the value of the `homeAddress.street1` for the same Profile is "2 Truax Alley", the merged Profile will have a `homeAddress.street1` value of "2 Truax Alley". 
+With regard to Profile merging, the "unifiedProfile" tag is enhanced to include a `priority` property which specifies the priority of a DataSet's Profile values in relation to other DataSets which may contain Fragments for the same Profile. For instance, let's say there is a Profile, ID "QXeHl9oaVfOZH36HEkiF8UqOU08tcmF2aTI", which exists in both DataSetA and DataSetB. If DataSetA has a `priority` of 1 and shows the XDM value for, say, `homeAddress.street1` as "1 Truax Alley" and DataSetB has a `priority` of 2 and the value of the `homeAddress.street1` for the same Profile is "2 Truax Alley", the merged Profile will have a `homeAddress.street1` value of "2 Truax Alley".
 
 __Example Data Catalog Services request - Add Tag configuring DataSet merge priority:__
 
@@ -165,20 +142,20 @@ __Example Data Catalog Services request - Add Tag configuring DataSet merge prio
 
 ## 4. Accessing Profiles in the Unified Profile Service
 
-This section describes the methods for accessing Unified Profiles as they exist in the Profile Store. 
+This section describes the methods for accessing Unified Profiles as they exist in the Profile Store.
 
 ### 4.1 Access Unified Profile By Record ID
 
-This operation gets a specified XDM Model Object and retrieves all its properties. 
+This operation gets a specified XDM Model Object and retrieves all its properties.
 
-Key-value XDM Model Objects (e.g. Profile) and Time-series XDM Model Objects (e.g. ExperienceEvent) are retrieved from separate GET calls. 
+Key-value XDM Model Objects (e.g. Profile) and Time-series XDM Model Objects (e.g. ExperienceEvent) are retrieved from separate GET calls.
 
 __Example Unified Profile Service request - Get a Unified Profile by ID:__
 
 ```
 GET https://platform.adobe.io/data/core/ups/models/profile/GU8rb925s2L2fkF55boQKCbliQ8 HTTP/1.1
 
-Example Response: 
+Example Response:
 
 {
     "GU8rb925s2L2fkF55boQKCbliQ8,GbZWRW8tXrZ4gABvwzC_gAAAAAAA,A2-s19jafhDickW6PP0c5dpi": {
@@ -237,19 +214,19 @@ An additional parameter `graph-type` specifies the output type to use to cluster
 * __pdg__ - Private device graph
 * __psr__ - Proprietary stitched rules
 
-<!-- TODO: CORE-11543 What information from this page to include, and how? https://wiki.corp.adobe.com/pages/viewpage.action?pageId=1441927960 
+<!-- TODO: CORE-11543 What information from this page to include, and how? https://wiki.corp.adobe.com/pages/viewpage.action?pageId=1441927960
      Need more info -->
 
 ### 4.2 Access ExperienceEvents by Profile Record ID
 
-Access a paginated list of ExperienceEvents for a given XDM Profile. 
+Access a paginated list of ExperienceEvents for a given XDM Profile.
 
 __Example Unified Profile Service request - Get ExperienceEvents for a Unified Profile:__
 
 ```
 GET https://platform.adobe.io/data/core/ups/models/profile/5a7d26e92a6e55000086d459/ExperienceEvent HTTP/1.1
 
-Example Response: 
+Example Response:
 
 {
     "records": [
@@ -334,7 +311,7 @@ Example Response:
             "next": ""
         }
     }
-}    
+}
 ```
 
 ---
@@ -344,7 +321,7 @@ Example Response:
 The cornerstone of your marketing campaign is your audience. Unified Profile Service provides the tools for segmenting your user base into Audiences consisting of members meeting criteria with exactly the precision you require. With segmentation, you can isolate members of your user base by criteria such as:
 
 * Users for whom one week has passed since last making a purchase
-* Users for whom the sum of the purchases is greater than $10,000 
+* Users for whom the sum of the purchases is greater than $10,000
 * Users who have seen a campaign and then clicked on it within 30 minutes, for any 3 of a list of campaigns specified by their campaign id
 
 Unified Profile Segmentation behaves on/with the following components:
@@ -378,7 +355,7 @@ A Predicate encapsulates the complete set of criteria that define a specific Aud
 
 #### 5.1.1 Persist the Predicate
 
-Predicates are persisted to the Experience Cloud Platform to be referenced by ID. This is helpful in creating a centrally-managed collection of queries to be reused, and simplifying API calls.  
+Predicates are persisted to the Experience Cloud Platform to be referenced by ID. This is helpful in creating a centrally-managed collection of queries to be reused, and simplifying API calls.
 
 __Example Unified Profile request - Create a new Predicate:__
 
@@ -418,7 +395,7 @@ You can find a list of supported PQL query examples [here](unified_profile_suppo
 
 The Preview API allows for a direct path between Predicate query and the qualifying/relevant Audience. You can find a list of supported PQL queries and more information [here](unified_profile_supported_queries.md).
 
-Previewing an audience consists of creating and initializing a Preview Session which is used to send Predicate expressions for asynchronous processing. 
+Previewing an audience consists of creating and initializing a Preview Session which is used to send Predicate expressions for asynchronous processing.
 
 #### 5.2.1 Estimate and Preview Audience - Step 1:  Create a Preview Session
 
@@ -426,29 +403,29 @@ Create an interactive Session for performing Preview operations using the `POST 
 
 #### 5.2.2 Estimate and Preview Audience - Step 2: Wait for Completion
 
-Creating a Session is an asynchronous operation. Poll using the `GET https://platform.adobe.io/data/core/ups/previewsession/{previewSessionId}` API call for status using the `previewSessionId` returned from Step 1. You may initialize the Session once the it has reached the state `READY_TO_INITIALIZE`. 
+Creating a Session is an asynchronous operation. Poll using the `GET https://platform.adobe.io/data/core/ups/previewsession/{previewSessionId}` API call for status using the `previewSessionId` returned from Step 1. You may initialize the Session once the it has reached the state `READY_TO_INITIALIZE`.
 
 #### 5.2.3 Estimate and Preview Audience - Step 3: Initialize a Session
 
-Use the `POST https://platform.adobe.io/data/core/ups/previewsession/{previewSessionId}/initialize` API call to initialize the Preview Session when it has reached the `READY_TO_INITIALIZE` state. 
+Use the `POST https://platform.adobe.io/data/core/ups/previewsession/{previewSessionId}/initialize` API call to initialize the Preview Session when it has reached the `READY_TO_INITIALIZE` state.
 
 #### 5.2.4 Estimate and Preview Audience - Step 4: Wait for Completion
 
-While initializing, the Preview Session will be in the `BUSY` state. Poll using the `GET https://platform.adobe.io/data/core/ups/previewsession/{previewSessionId}` API call for status until the Preview Session reaches the `READY` state.  
+While initializing, the Preview Session will be in the `BUSY` state. Poll using the `GET https://platform.adobe.io/data/core/ups/previewsession/{previewSessionId}` API call for status until the Preview Session reaches the `READY` state.
 
 #### 5.2.5 Estimate and Preview Audience - Step 5: Submit Preview Jobs
 
-With an initialized Session, you are able to submit a PQL expression for evaluation using the `POST https://platform.adobe.io/data/core/ups/preview/{previewSessionId}` API call, passing a Predicate query and the model against which to run it. The response of this call provides the IDs required to poll for state and retrieve the resulting Audience using the `GET https://platform.adobe.io/data/core/ups//preview/{previewSessionId}/execution/{previewExecutionId}` call. 
+With an initialized Session, you are able to submit a PQL expression for evaluation using the `POST https://platform.adobe.io/data/core/ups/preview/{previewSessionId}` API call, passing a Predicate query and the model against which to run it. The response of this call provides the IDs required to poll for state and retrieve the resulting Audience using the `GET https://platform.adobe.io/data/core/ups//preview/{previewSessionId}/execution/{previewExecutionId}` call.
 
 #### 5.2.6 Estimate and Preview Audience - Step 6: Iteratively Estimate and Wait for Completion
 
-Poll using the `GET https://platform.adobe.io/data/core/ups/preview/{previewSessionId}/execution/{previewExecutionId}` API call. When the response of this call report a `state` of "RESULT_READY", results can be gleaned from the `results` in the response. 
+Poll using the `GET https://platform.adobe.io/data/core/ups/preview/{previewSessionId}/execution/{previewExecutionId}` API call. When the response of this call report a `state` of "RESULT_READY", results can be gleaned from the `results` in the response.
 
-During job processing, Estimate information covering the progress of the Preview Job and what information has been gleaned of the Segment of the job can be accessed using the `GET https://platform.adobe.io/data/core/ups/estimate/{previewSessionId}/execution/{previewExecutionId}` API call. Job Estimate information is refreshed each 5 minutes during processing. 
+During job processing, Estimate information covering the progress of the Preview Job and what information has been gleaned of the Segment of the job can be accessed using the `GET https://platform.adobe.io/data/core/ups/estimate/{previewSessionId}/execution/{previewExecutionId}` API call. Job Estimate information is refreshed each 5 minutes during processing.
 
 __Example Preview Job Estimate:__
 
-<!-- TODO: Add Example Preview link 
+<!-- TODO: Add Example Preview link
            Explanation needed - what is estimatedSize, standardError, confidenceInterval, profilesReadSoFar, profilesMatchedSoFar -->
 
 ```
@@ -462,7 +439,7 @@ __Example Preview Job Estimate:__
     "preview": "string"
   }
 }
-``` 
+```
 
 #### 5.2.7 Estimate and Preview Audience - Step 7: Read Results
 
@@ -497,7 +474,7 @@ Example Response:
         }
     },
     "XID_ADOBE-MARKETING-CLOUD-ID-1000": {
-        "_href" : "https://platform.adobe.io/data/core/ups/models/profile/XID_ADOBE-MARKETING-CLOUD-ID-1000" 
+        "_href" : "https://platform.adobe.io/data/core/ups/models/profile/XID_ADOBE-MARKETING-CLOUD-ID-1000"
     },
     "_links" : {
         "_self" : "https://platform.adobe.io/data/core/ups/preview?predicate.expression=<expr-1>&limit=1000",
@@ -587,7 +564,7 @@ Example Response:
 }
 ```
 
-Repeat the call to retrieve your Segment Job until the `status` reaches "SUCCEEDED", indicating the job is ready to be run. 
+Repeat the call to retrieve your Segment Job until the `status` reaches "SUCCEEDED", indicating the job is ready to be run.
 
 <a name="scan-api"></a>
 ### 5.4 Scan Your Audience
@@ -598,7 +575,7 @@ The Scan API is used to isolate an Audience built by a Segment Job for access. O
 * __Generate Audience Profiles in DataSet__ - Scan Jobs populate the results of a Segment Job as Profiles in a DataSet
 * __Wait for Audience Profiles to Complete Persisting__ - Scan Jobs are asynchronous. GET a Scan Job until its status indicates completion (its `status` attribute has reached "SUCCEEDED", or "FAILED")
 * __Delete Scan Job__ - It is good practice to delete Scan Jobs unless they are meant to be reused
-* __Read Audience Data__ - Using the Data-Access-SDK, retrieve the Profiles of the members of your Audience 
+* __Read Audience Data__ - Using the Data-Access-SDK, retrieve the Profiles of the members of your Audience
 
 #### 5.4.1 Scan Audience - Step 1: Create or Select Audience DataSet
 
@@ -635,7 +612,7 @@ Trigger a Scan Job to persist the Audience members to the DataSet from above by 
 * `model` (__required__) - Names the XDM Schema name of the members. A schema will only be relative to the IMS Org ID specified in API calls, preventing members from other Orgs' data from being accessible
 * `isMemberOfAudience` (__required__) - When creating the Segment Job, you specified a `sink` value, naming the Audience. This value, "Profiles_Segmented" from the example above, is the name to specify for this property
 * `mergeStrategy` - This value determines how to handle multiple representations of the same Audience member <!-- I would like to know the possible values and what they'd mean -->
-* `graphType` - Choose from the options described [above](#graph-types) to specify the output type to use to cluster Audience members 
+* `graphType` - Choose from the options described [above](#graph-types) to specify the output type to use to cluster Audience members
 * `fields` - You can choose to limit the size of each Audience member by using the `fields` property to limit the data populated within the members in the DataSet. For example, a value of `name,workAddress.city` would result in Profile records which contain only the values of each member's `name` and `workAddress.city`. By default, all merged data is populated
 
 The result of successfully running a Scan Job is a DataSet populated with only those Profiles which qualified for the last completed run of the Segment Job. Any members who existed in that DataSet, but did not qualify for the Segment at the time of the last completed run of the Segment Job, will be removed from the DataSet.
@@ -672,8 +649,8 @@ Response:
 ```
 
 #### 5.4.3 Scan Audience - Step 3: Wait for Scan to Complete
- 
-Iteratively retrieve the Scan Job by the `id` supplied in the `scanJob` JSON note of the GET response until the `status` reaches "SUCCEEDED". 
+
+Iteratively retrieve the Scan Job by the `id` supplied in the `scanJob` JSON note of the GET response until the `status` reaches "SUCCEEDED".
 
 #### 5.4.4 Scan Audience - Step 4: Read Profiles from Audience DataSet
 
@@ -683,8 +660,8 @@ To use the Data-Access-SDK to read data, you must have the `datasetId` of your A
 GET https://platform.adobe.io/data/foundation/catalog/dataSets/{datasetId} HTTP/1.1
 
 Response:
- 
-{ 
+
+{
   "5aa6885ecf70a301dabdfa49": {
      "version": "1.0.1",
      "imsOrg": "1BD6382559DF0C130A49422D@AdobeOrg",
@@ -710,6 +687,6 @@ Response:
   }
 }
 ```
- 
-With the `viewId` from the response, you are able to use the Data Access SDK to read data. Data Access SDK is an official SDK provided by Platform foundation to read any data present inside a valid DataSet. For more information on using the Data Access SDK, [see the tutorial](../../alltutorials.html#!api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md), [samples](https://git.corp.adobe.com/experience-platform/data-access-sdk-sample) or [see the project on GitHub](https://git.corp.adobe.com/experience-platform/data-access-sdk). 
- 
+
+With the `viewId` from the response, you are able to use the Data Access SDK to read data. Data Access SDK is an official SDK provided by Platform foundation to read any data present inside a valid DataSet. For more information on using the Data Access SDK, [see the tutorial](../../alltutorials.html#!api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md), [samples](https://git.corp.adobe.com/experience-platform/data-access-sdk-sample) or [see the project on GitHub](https://git.corp.adobe.com/experience-platform/data-access-sdk).
+

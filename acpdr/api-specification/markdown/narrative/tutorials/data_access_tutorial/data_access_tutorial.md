@@ -7,27 +7,6 @@ In this step by step tutorial, we will focus on how to locate, access, and downl
 * Retrieving the files belonging to a batch
 * Accessing the file and downloading the data
 
-
-### 1.1 Audience
-This document is aimed at technical personas and should be a useful tool for all users that need to consume Adobe Cloud Platform APIs, understand Adobe Cloud Platform architecture, or architect integrations between customer-owned and 3rd party systems with Adobe Cloud Platform.
-
-Personas Include: Data Engineers, Data Architects, Data Scientists, App Developers
-
-### 1.2 Version Information
-*Version* : Preview
-
-### 1.3 License Information
-*Terms of service* : https://www.adobe.com/legal/terms.html
-
-### 1.4 URI Scheme
-*Host* : __platform.adobe.io__   
-*BasePath* : __/data/foundation/export/__  
-*Schemes* : __HTTPS__  
-
-### 1.5 About the Docs
-
-This document is kept up-to-date and can be updated without announcement.
-
 ---
 
 ## Prerequisites
@@ -70,9 +49,9 @@ curl -X GET https://platform.adobe.io/data/foundation/catalog/batches/ \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-* `ACCESS_TOKEN`: Token provided after authentication.  
-* `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+* `ACCESS_TOKEN`: Token provided after authentication.
+* `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
 
 
 ##### Response
@@ -106,7 +85,7 @@ Oftentimes, filters are required to zero in on a particular batch in order to re
 GET /batches?createdAfter={START_TIMESTAMP}&dataSet={DATASET_ID}&sort=desc:created"
 
 ```shell
-curl -X GET https://platform.adobe.io/data/foundation/catalog/batches?createdAfter={START_TIMESTAMP}&dataSet={DATASET_ID}&orderBy=desc:created \  
+curl -X GET https://platform.adobe.io/data/foundation/catalog/batches?createdAfter={START_TIMESTAMP}&dataSet={DATASET_ID}&orderBy=desc:created \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
@@ -193,10 +172,10 @@ curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
-* `BATCH_ID`: Batch identifier of the batch that we are trying to access.  
-* `ACCESS_TOKEN`: Token provided after authentication.  
-* `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+* `BATCH_ID`: Batch identifier of the batch that we are trying to access.
+* `ACCESS_TOKEN`: Token provided after authentication.
+* `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
 
 
 ##### Response
@@ -337,7 +316,7 @@ curl -X HEAD https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?pa
 * `FILE_NAME` is the file name (E.g. profiles.parquet)
 
 ##### Response
-The response header contains the metadata of the queried file:  
+The response header contains the metadata of the queried file:
 * Content-Length which indicates the size of the payload (Bytes)
 * Content-type, which indicates the type of file.
 
@@ -384,7 +363,7 @@ curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-* `BATCH_ID`: Batch identifier of the batch that we are trying to access.  
+* `BATCH_ID`: Batch identifier of the batch that we are trying to access.
 * `OFFSET` is the specified index to start the result array (E.g. start=1)
 * `LIMIT` controls how many results gets returned in the result array (E.g. limit=0)
 
@@ -424,7 +403,7 @@ curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/
 
 The response will contain a single file element in the data array (limit = 1). Since the offset is set to 0, the very first file in the result array will get returned. The next link within the response will have the url to the next page of responses with the offset set to 1.
 
-* `{FILE_ID_1}`: the file id of the first file that gets returned  
+* `{FILE_ID_1}`: the file id of the first file that gets returned
 * `data > _links > self > href`: url to access the first file
 * `_links > next > href` url to access the next page
 

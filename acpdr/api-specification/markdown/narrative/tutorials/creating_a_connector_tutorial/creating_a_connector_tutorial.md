@@ -2,27 +2,13 @@
 
 ## 1. Objective
 
-Create and populate a dataset using the a connector in the Adobe Cloud Platform (ACP). 
+Create and populate a dataset using the a connector in the Adobe Cloud Platform (ACP).
 
-* Create Catalog Account Entity  
+* Create Catalog Account Entity
 * Create Catalog Connection Entity
 * Create Catalog Dataset Entity
 
 Instructions to create and populate a dataset from a file can be found [here](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md).
-
-### 1.1. Audience
-This article helps you understand the Adobe Cloud Platform and integrate the platform using a connector. Users of this document include data engineers, data architects, data scientists, and app developers using Adobe I/O who want to perform Adobe Cloud Platform API calls.
-
-### 1.2. Version Information
-*Version* : Preview
-
-### 1.3. License Information
-Terms of service : https://www.adobe.com/legal/terms.html
-
-
-### 1.4 URI Scheme
-*Host* : __platform.adobe.io__  
-*Schemes* : __HTTPS__
 
 ---
 
@@ -53,7 +39,7 @@ To set up the ACP Salesforce Connector, you will also need the following Salesfo
 
 * `{SALESFORCE_USER_NAME}`: Your Salesforce CRM user name
 * `{SALESFORCE_PASSWORD}`: Your Salesforce CRM password
-* `{SALESFORCE_SECURITY_TOKEN}`: Your Salesforce security token. This can be found following these steps:  
+* `{SALESFORCE_SECURITY_TOKEN}`: Your Salesforce security token. This can be found following these steps:
   1. Go to https://developer.salesforce.com/
   2. Log in using your Salesforce CRM credentials
   3. Click on top right user avatar and select "Settings" link
@@ -96,12 +82,12 @@ curl -X POST https://platform-int.adobe.io/data/foundation/catalog/accounts/ \
 }'
 ```
 
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
-`{SALESFORCE_USER_NAME}`: Your username for Salesforce CRM.  
-`{SALESFORCE_PASSWORD}`: Your password for Salesforce CRM.  
-`{SALESFORCE_SECURITY_TOKEN}`: Your security token for Salesforce CRM.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+`{SALESFORCE_USER_NAME}`: Your username for Salesforce CRM.
+`{SALESFORCE_PASSWORD}`: Your password for Salesforce CRM.
+`{SALESFORCE_SECURITY_TOKEN}`: Your security token for Salesforce CRM.
 
 #### Response
 ```JSON
@@ -114,7 +100,7 @@ curl -X POST https://platform-int.adobe.io/data/foundation/catalog/accounts/ \
 
 #### 2.2.2. Create Catalog Connection Entity
 
-With an account ID, you can now create a Salesforce Catalog connection entity. In this request you will identify when the ingestion starts (`"ingestStart"`), and the frequency for ingestion to occur (`"frequency"`). 
+With an account ID, you can now create a Salesforce Catalog connection entity. In this request you will identify when the ingestion starts (`"ingestStart"`), and the frequency for ingestion to occur (`"frequency"`).
 
 In the following request, you will enter the default value for daily ingestion and its frequency.
 
@@ -144,12 +130,12 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/connections/ \
     }'
 ```
 
-`{API_KEY}`: Specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMG_ORG}`: IMS org credentials found in your unique Adobe Cloud Platform integration.  
-`{ACCESS_TOKEN}`: Specific bearer token value provided after authentication.   
-`{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials  
-`{CONNECTION_NAME}`: Name of the connection you are creating.  
-`{INGEST_START}`: Date and time when ingestion is scheduled to start. If time is set to the past (relative to current time) ingestion will begin immediately. Format is `"yyyy-mm-ddThh:mm:ss.000Z"` (E.g. `"2018-03-22T23:59:59.000Z"`)  
+`{API_KEY}`: Specific API key value found in your unique Adobe Cloud Platform integration.
+`{IMG_ORG}`: IMS org credentials found in your unique Adobe Cloud Platform integration.
+`{ACCESS_TOKEN}`: Specific bearer token value provided after authentication.
+`{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials
+`{CONNECTION_NAME}`: Name of the connection you are creating.
+`{INGEST_START}`: Date and time when ingestion is scheduled to start. If time is set to the past (relative to current time) ingestion will begin immediately. Format is `"yyyy-mm-ddThh:mm:ss.000Z"` (E.g. `"2018-03-22T23:59:59.000Z"`)
 
 #### Response
 ```JSON
@@ -175,10 +161,10 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
   -H 'Content-Type: application/json' \
 ```
 
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
-`{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+`{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials
 `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
 
 #### Response
@@ -211,7 +197,7 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 
 The above object is just a partial response of the actual list of available Salesforce CRM objects. Note that the `logicalName` of the objects you want to use. This will be used as the {OBJECT_ID}
 
-The next step will be ingesting fields from the `Account` object. However first you need to determine which fields you want from the object. 
+The next step will be ingesting fields from the `Account` object. However first you need to determine which fields you want from the object.
 
 For example, you can return the following response to see all fields for a specific Salesforce CRM object.
 
@@ -226,14 +212,14 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
   -H 'Content-Type: application/json'
 ```
 
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
-`{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials.  
-`{CONNECTION_ID}`: ID of the connector you created from the previous steps.  
-`{OBJECT_ID}`: Logical Name of the Salesforce Object you want to ingest.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+`{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials.
+`{CONNECTION_ID}`: ID of the connector you created from the previous steps.
+`{OBJECT_ID}`: Logical Name of the Salesforce Object you want to ingest.
 
-#### Response  
+#### Response
 
 ```JSON
 [
@@ -305,9 +291,9 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 ]
 ```
 
-Note that the above request is only a segment of the actual response.  
+Note that the above request is only a segment of the actual response.
 
-You can choose to have all the fields of an object ingested or only select the fields you are interested in. 
+You can choose to have all the fields of an object ingested or only select the fields you are interested in.
 
 Here is an example of identifying fields in a request.
 
@@ -327,14 +313,14 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/datasets/ \
   -d '{JSON_PAYLOAD}'
 ```
 
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
-`{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials.  
-`{CONNECTION_ID}`: ID of the connector you created from the previous steps.  
-`{OBJECT_ID}`: Logical Name of the Salesforce Object you want to ingest.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+`{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials.
+`{CONNECTION_ID}`: ID of the connector you created from the previous steps.
+`{OBJECT_ID}`: Logical Name of the Salesforce Object you want to ingest.
 
-`{JSON_PAYLOAD}`: This is the dataset to be posted. 
+`{JSON_PAYLOAD}`: This is the dataset to be posted.
 
 ```JSON
 {
@@ -429,9 +415,9 @@ The `{JSON PAYLOAD}` used is the subset of the object fields you selected from t
 
 The field `"requestStartDate"` dictates how far in the past (relative to now) the back-fill will go. The `"requestStartDate"` field is always a date in the past. If you want a back-fill of 30 days, then you have to calculate `now() - 30 days` and enter a valid date and time value for this field.
 
-The `"connectors-saveStrategy"` field refers to how the data will be ingested. In this example, the Append data instead of Delta or Overwrite was used. 
+The `"connectors-saveStrategy"` field refers to how the data will be ingested. In this example, the Append data instead of Delta or Overwrite was used.
 
-For Append and Delta save strategies, since they are sorted by time, you will also need to decide the value to use in the time-based column if time-based queries take place (such as System Modstamp, Created Date, and Last Modified Date). 
+For Append and Delta save strategies, since they are sorted by time, you will also need to decide the value to use in the time-based column if time-based queries take place (such as System Modstamp, Created Date, and Last Modified Date).
 
 Adding a `"delta": {}` in the `"meta"` field indicates the method selected to be in the time-based column. In the example, the tag into the `"SystemModstamp"` object for the `"JSON_PAYLOAD"` was passed back to the request.
 

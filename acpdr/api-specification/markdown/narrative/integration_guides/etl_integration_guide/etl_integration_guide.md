@@ -1,9 +1,3 @@
-**Preview Release**
-
-**Adobe Cloud Platform**
-
-Updated on May 29<sup>th</sup> 2018
-
 Data integration patterns for ETL tools (ISVs)
 =============================
 
@@ -219,9 +213,9 @@ Design Phase
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization: Bearer ACCESS_TOKEN" \
     -H "x-api-key: API_KEY"
-    
+
     ```
-    >  
+    >
 
     ##### Sample response
     ```
@@ -299,10 +293,10 @@ Design Phase
 
 5.  The *Schema of a dataset* can be found at following places
     ##### i. Fields (Deprecated)
-	Fields property is deprecated and in coming releases this will be removed. When a dataset is created with a Schema, Fields property is auto filled with column names and types. One can directly post fields as part of dataset object as well. 
-	
+	Fields property is deprecated and in coming releases this will be removed. When a dataset is created with a Schema, Fields property is auto filled with column names and types. One can directly post fields as part of dataset object as well.
+
     ##### ii. Schema
-	This property of dataset has a path pointing to schema in schema registry. The same path can be appended to catlog endpoint to retrieve full schema. 
+	This property of dataset has a path pointing to schema in schema registry. The same path can be appended to catlog endpoint to retrieve full schema.
 	From a dataset GET request, one can find schema in json response body
 	```
 	{
@@ -325,7 +319,7 @@ Design Phase
     -H "Authorization: Bearer ACCESS_TOKEN" \
     -H "x-api-key: API_KEY"
 	```
-	
+
 	Following is the curl call example to get specific schema. We can optionally pass query parameter "xdmVersion" as 0.9.7 or 0.9.9 to get version specific XDM.
 	```
 	curl -X GET "https://platform.adobe.io/data/foundation/catalog/xdms/context/Profile" \
@@ -337,22 +331,22 @@ Design Phase
 	The JSON structure of the response is different from existing Fields property and is same as Observable Schema field of Dataset.
 	See point 4 above for observable schema field example.
 	If somebody wants to post dataset with custom schema, they can post schema in schema registry and refer that to dataset post call. More information on XDM and Schema registry can be found [here](https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/xdm_registry_architectural_overview/xdm_registry_architectural_overview.md).
-	
+
 	##### iii. Observable Schema
 	This field of a dataset has a json structure (matching to XDM schema json) which holds list of columns which are actually there in the data. XDM schemas can be huge and actual data can have a small subset of all columns. This property helps in identifying columns with data.
 	See point 4 above for observable schema field example.
 	Please note that this is currently filled for datasets whose type is set to "parquet".
-    
+
 	#### Schema for Reading
 	At the time of reading the data from platform, it is recommended that you read the schema from Observable schema (iii above). Since Observable schema represents the columns that are actually there in data, it will make schema generation easier.
-	
+
 	Note: If Observable schema property is not available in dataset, one can read from Schema registry path defined by "schema" property. If that is not available either, schema mentioned in "fields" property can be used.
-	
+
 	#### Schema for Mapping Source to Target
 	At the time of mapping, target should display all available columns. It is recommended to read the columns from Schema Registry (ii above). Customer is free to choose which all target columns he wants to map data to. ACP is responsible for updating observable schema once the first batch is successfully written.
-	
+
 	Note: If Schema registry path defined by "schema" property is not available either, schema mentioned in "fields" property can be used.
-	
+
     call from **Data Discovery API ** (Figure 8).
 
     #### curl to fetch dataset details for datasetId
@@ -362,9 +356,9 @@ Design Phase
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization: Bearer ACCESS_TOKEN" \
     -H "x-api-key: API_KEY"
-    
+
     ```
-    >  
+    >
     ##### Sample response
     ```
     {
@@ -452,7 +446,7 @@ Design Phase
     -   Get dataset details as done in step 5 above. Refer to the
         "files" attribute, it will appear as follows :
 
-    #### Preview data  
+    #### Preview data
     ```
      "files":
     "@/dataSets/59c93f3da7d0c00000798f68/views/59c93f3da7d0c00000798f69/files",
@@ -468,7 +462,7 @@ Design Phase
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization: Bearer ACCESS_TOKEN \
     -H "x-api-key : API_KEY"
-    
+
     ```
     ##### Sample response
     ```
@@ -502,7 +496,7 @@ Design Phase
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization: Bearer ACCESS_TOKEN \
     -H "x-api-key : API_KEY"
-    
+
     ```
     ##### Sample response
     ```
@@ -527,7 +521,7 @@ Design Phase
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization: Bearer ACCESS_TOKEN" \
     -H "x-api-key : API_KEY"
-    
+
     ```
     ##### Sample response
     ```
@@ -554,9 +548,9 @@ Design Phase
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization: Bearer ACCESS\_TOKEN \
     -H "x-api-key : API_KEY"
-    
+
     ```
-    >  
+    >
 
     ##### Sample response
     ```
@@ -578,7 +572,7 @@ Design Phase
     APIs**.  Writing of data is an asynchronous process. When data is
     written to the Adobe Cloud Platform, a batch is created and marked
     as a success only after data is fully written.
-	
+
 	Data in platform should be written in the form of parquet files.
 
 Execution phase
@@ -602,7 +596,7 @@ Execution phase
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization:Bearer ACCESS_TOKEN" \
     -H "x-api-key : API_KEY"
-    
+
     ````
     ##### Sample response
     ```
@@ -630,7 +624,7 @@ Execution phase
     }
     ```
     Now take out dataset files belonging to these batches using below call
-    
+
     #### Curl request to get files out of a batch
     ```
      curl -X GET https://platform.adobe.io/data/foundation/export/batches/BATCHID1/files \
@@ -638,7 +632,7 @@ Execution phase
      -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
      -H "Authorization:Bearer ACCESS_TOKEN" \
      -H "x-api-key : API_KEY"
-     
+
     ```
     ##### Sample response
     ```
@@ -680,9 +674,9 @@ Execution phase
     }
     ```
     -   limit and count above helps in pagination on dataset files level.
-    
+
     Now we will iterate over individual file via _link > self > href
-    
+
     #### Curl to access file metadata
     ```
     curl -X GET https://platform.adobe.io/data/foundation/export/files/DATASETFILEID1 \
@@ -714,9 +708,9 @@ Execution phase
     }
     ```
     -   limit and count above helps in pagination on physical file level.
-    
+
     Now we will list content of file by using link under _links > self > href
-    
+
     #### Curl to access file content
     ```
     curl -X GET https://platform.adobe.io/data/foundation/export/files/DATASETFILEID1?path=filename1.csv \
@@ -724,7 +718,7 @@ Execution phase
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization:Bearer ACCESS_TOKEN" \
     -H "x-api-key : API_KEY"
-    
+
     ```
     ##### Sample Response
     ```
@@ -747,7 +741,7 @@ Execution phase
      -H "Authorization:Bearer ACCESS_TOKEN" \
      -H "x-api-key : API_KEY" \
      --data-binary '{"datasetId":"DATASETID"}'
-     
+
     ```
     ##### Sample response
     ```
@@ -776,9 +770,9 @@ Execution phase
     -H "x-api-key: API_KEY" \
     -H "content-type: application/octet-stream" \
     -F file=@filename.parquet
-    
+
     ```
-	
+
 	Data in platform should be written in the form of parquet files.
 
     ##### Sample response
@@ -803,7 +797,7 @@ Execution phase
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization:Bearer ACCESS_TOKEN" \
     -H "x-api-key : API_KEY"
-    
+
     ```
     ##### Sample response
     ```
@@ -815,7 +809,7 @@ Execution phase
 
 5.  In next transformation execution (likely by schedule or event
     invocation), the ETL will start requesting the data from the
-    previously-saved timestamp and all data going forward.  
+    previously-saved timestamp and all data going forward.
 
     Before running new tasks the ETL tool, you must ensure that the last
     batch was successfully completed. The **Data Discovery API**
@@ -1012,4 +1006,4 @@ Account Support Manager.
 **Feedback**
 
 We welcome any suggestions or feedback. Please send comments about the
-product to your Account Support Manager. 
+product to your Account Support Manager.

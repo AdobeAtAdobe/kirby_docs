@@ -3,24 +3,6 @@
 ## 1. Overview
 This document provides a technical overview for using the XDM Registry in Adobe Cloud Platform outlining why and what Experience Data Model (XDM) is and how it is used in common workflows through the API.
 
-## 1.1. Audience
-This document is written for users who need to understand the Adobe Cloud Platform and want to integrate the platform with customer-owned or third party systems. Users include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
-
-### 1.2. Version Information
-*Version*: Preview  
-
-### 1.3. License Information
-*Terms of service* : https://www.adobe.com/legal/terms.html
-
-### 1.4. URI Scheme
-*Host* : platform.adobe.io  
-*BasePath* : /data/foundation/catalog/xdms/  
-*Schemes* : HTTPS  
-
-### 1.5. About the Docs
-
-This document is kept up-to-date and can be updated without announcement.
-
 ---
 
 ## 2. Understanding XDM
@@ -65,12 +47,12 @@ curl -X GET \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-`{namespace}`: The base namespace. This will be `core` or `model`.  
-`{objectName}`: Name of the entity we want to extend.  
-`{extensionNS}`: Name of the extension namespace we want to put the extension in. An example of this is a company branch.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration, provided in https://console.adobe.io.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration  
-`{ACCESS_TOKEN}`: Token provided after authentication  
+`{namespace}`: The base namespace. This will be `core` or `model`.
+`{objectName}`: Name of the entity we want to extend.
+`{extensionNS}`: Name of the extension namespace we want to put the extension in. An example of this is a company branch.
+`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration, provided in https://console.adobe.io.
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration
+`{ACCESS_TOKEN}`: Token provided after authentication
 
 ##### Response
 
@@ -216,7 +198,7 @@ The `Profile` schema object is in the response below. The entities are listed un
 
 One issue with normalization of data using a standard data model is incompatibility with data which can not be translated. This untranslated data may be unsuitable for the design schema of a specific data platform and will prevent sharing of the data.
 
-Extensions solve this issue by allowing customizable data. Personalized data can be [ingested](allservices.html.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md) into the XDM so that the data can then be shared. 
+Extensions solve this issue by allowing customizable data. Personalized data can be [ingested](allservices.html.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md) into the XDM so that the data can then be shared.
 
 There are ways the schemas can be extended:
 * Extending an existing XDM schema with new custom fields
@@ -234,7 +216,7 @@ Customer extension | Customer specific extension that only apply to the specific
 
 The first type of extension is extending an existing base type with additional fields to represent the schema of data that will be ingested and the common use cases of the schema.
 
-**Example**  
+**Example**
 
 The core `Person` has the following fields:
 
@@ -242,7 +224,7 @@ The core `Person` has the following fields:
 
 A customer manages cosmetics products and would like to add a hair color field to the `Person` entity. The `Person` entity is under the `core.Profile`
 
-##### Request  
+##### Request
 
 The following API call will add the *Hair Color* field.
 ```
@@ -269,12 +251,12 @@ curl -X POST "https://platform.adobe.io/data/foundation/catalog/xdms/core/Person
      }"
 ```
 
-`{namespace}`: The base namespace. This will be `core` or `model`.  
-`{objectName}`: Name of the entity we want to extend.  
-`{extensionNS}`: Name of the extension namespace we want to put the extension in. An example of this is a company branch.  (in this case `CustomerCompany`).   
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration  
-`{ACCESS_TOKEN}`: Token provided after authentication  
+`{namespace}`: The base namespace. This will be `core` or `model`.
+`{objectName}`: Name of the entity we want to extend.
+`{extensionNS}`: Name of the extension namespace we want to put the extension in. An example of this is a company branch.  (in this case `CustomerCompany`).
+`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration
+`{ACCESS_TOKEN}`: Token provided after authentication
 
 
 ##### Response
@@ -283,14 +265,14 @@ curl -X POST "https://platform.adobe.io/data/foundation/catalog/xdms/core/Person
 Array[ @/xdms/core/Person/_customer/CustomerCompany ]
 ```
 
-This is what the `Person` entity will look like now.  
+This is what the `Person` entity will look like now.
 
 ![](extended_person.png)
 
 You can use the following call to retrieve the specific HairColor extension under the `Person` entity under the `_customer` namespace and `CustomerCompany` extension namespace
 
 
-##### Request  
+##### Request
 ```
 GET /xdms/{namespace}/{objectName}/_customer/{extensionNS}/
 ```
@@ -301,12 +283,12 @@ curl -X GET  https://platform.adobe.io/data/foundation/catalog/xdms/core/Person/
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-`{namespace}`: The base namespace. This will be `core` or `model`.  
-`{objectName}`: Name of the entity we want to extend.  
-`{extensionNS}`: Name of the extension namespace we want to put the extension in. An example of this is a company branch.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration  
-`{ACCESS_TOKEN}`: Token provided after authentication  
+`{namespace}`: The base namespace. This will be `core` or `model`.
+`{objectName}`: Name of the entity we want to extend.
+`{extensionNS}`: Name of the extension namespace we want to put the extension in. An example of this is a company branch.
+`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration
+`{ACCESS_TOKEN}`: Token provided after authentication
 
 
 ##### Response
@@ -336,7 +318,7 @@ This is how your extension payload is stored in `properties` of the `Person` ent
 
 Now lets look at the bigger picture at the `Person` entity.
 
-##### Request  
+##### Request
 ```
 GET /xdms/{namespace}/{objectName}
 ```
@@ -348,11 +330,11 @@ curl -X GET \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-`{namespace}`: The base namespace. This will be `core` or `model`.  
-`{objectName}`: Name of the entity we want to extend.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration  
-`{ACCESS_TOKEN}`: Token provided after authentication  
+`{namespace}`: The base namespace. This will be `core` or `model`.
+`{objectName}`: Name of the entity we want to extend.
+`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration
+`{ACCESS_TOKEN}`: Token provided after authentication
 
 ##### Response
 
@@ -415,7 +397,7 @@ Note that the third-party XDM extension is added into the `_customer` namespace.
 
 The second type of extension is creating a new schema object. This is useful for when a user wants a new child object or entity under the parent schema.
 
-**Example**  
+**Example**
 An airline company wants a schema to store data for their flights. There is no existing `Flights` schema so they will create a custom one. Within the schema they want to store information about flight ID, flight number and carrier name. These will be the fields for the schema `Flights`.
 
 You can use the following API call in your terminal to create the `Flights` object. The response body will be where the schema is stored.
@@ -457,11 +439,11 @@ curl -X POST "https://platform.adobe.io/data/foundation/catalog/xdms/_customer/d
     }"
 ```
 
-`{objectName}`: Name of the entity we want to extend.  
+`{objectName}`: Name of the entity we want to extend.
 `{extensionNS}`: Name of the extension namespace we want to put the extension in.
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration  
-`{ACCESS_TOKEN}`: Token provided after authentication  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration
+`{ACCESS_TOKEN}`: Token provided after authentication
 
 ##### Response
 
