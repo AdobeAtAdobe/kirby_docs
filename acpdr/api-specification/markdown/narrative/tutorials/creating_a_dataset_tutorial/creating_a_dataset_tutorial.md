@@ -11,7 +11,7 @@ This document is intended to provide a tutorial on creating and populating a cus
 * Signal to the server that the Batch has been completed
 * Verify that the operation was successful by reading back the data in the dataset using Data Access APIs
 
-Data can also be ingested via a connector. The tutorial to create and populate a dataset via a connector can be found [here](https://git.corp.adobe.com/experience-platform/documentation/blob/master/api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/creating_a_connector_tutorial.md)
+Data can also be ingested via a connector. The tutorial to create and populate a dataset via a connector can be found [here](../creating_a_connector_tutorial/creating_a_connector_tutorial.md).
 
 ---
 

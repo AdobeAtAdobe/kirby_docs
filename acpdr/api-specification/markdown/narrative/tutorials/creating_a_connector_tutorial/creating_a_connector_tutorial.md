@@ -8,13 +8,13 @@ Create and populate a dataset using the a connector in the Adobe Cloud Platform 
 * Create Catalog Connection Entity
 * Create Catalog Dataset Entity
 
-Instructions to create and populate a dataset from a file can be found [here](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md).
+Instructions to create and populate a dataset from a file can be found [here](../creating_a_dataset_tutorial/creating_a_dataset_tutorial.md).
 
 ---
 
 ## 2. Datasets from a Schema
 
-There are two ways data can be ingested into a dataset. The first is [batch ingestion via file upload](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md) and the second is ingestion via setting up a connector. The following steps show you how to ingest CRM data using the ACP Salesforce Connector.
+There are two ways data can be ingested into a dataset. The first is [batch ingestion via file upload](../creating_a_dataset_tutorial/creating_a_dataset_tutorial.md) and the second is ingestion via setting up a connector. The following steps show you how to ingest CRM data using the ACP Salesforce Connector.
 
 <!-- For instructions on setting up other connectors, see
 
@@ -26,7 +26,7 @@ There are two ways data can be ingested into a dataset. The first is [batch inge
 
 ### 2.1. Prerequisites
 
-Follow this [guide](./alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to make API calls.
+Follow this [guide](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to make API calls.
 
 After setting up authorization, you should now have the following values:
 

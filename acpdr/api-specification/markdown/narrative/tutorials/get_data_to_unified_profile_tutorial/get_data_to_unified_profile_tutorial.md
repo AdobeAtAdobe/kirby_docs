@@ -9,7 +9,7 @@ get data to unified profile)
 ## 2. Get Data to Unified Profile
 
 ### 2.1. Prerequisites
-Follow this [Tutorial](https://git.corp.adobe.com/experience-platform/documentation/blob/960b25b46a7b473b3e202111a1804e259687f3ec/api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
+Follow this [Tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
 
 Once we have the following values we can move on to the next section:
 * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
