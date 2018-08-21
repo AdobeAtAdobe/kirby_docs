@@ -101,7 +101,7 @@ Conforming to the Profile XDM, identities can be labeled by adding them to the `
 }
 ```
 
-Conforming to the ExperienceEvent XDM, Identities can be labeled by mentioning within `endUserIds`:
+Conforming to the ExperienceEvent XDM, identities can be labeled by mentioning within `endUserIds`:
 
 ```JSON
 {
@@ -132,7 +132,7 @@ Conforming to the ExperienceEvent XDM, Identities can be labeled by mentioning w
 
 ## 4. ECID - an essential tool
 
-Experience Cloud ID service is Adobe’s client side tool to perform identity management. Three primary functions:
+Experience Cloud ID service is Adobe’s client side tool to perform identity management. ECID serves the following primary functions:
 
 * Identifies visitors 
 * Facilitates synchronization with partners 
