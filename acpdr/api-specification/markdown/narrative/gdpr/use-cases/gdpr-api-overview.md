@@ -118,7 +118,8 @@ The “users” section of the JSON payload is a collection of users (one or man
            {
                "namespace": "email",
                "value": "ajones@acme.com",
-               "type": "standard"
+               "type": "standard",
+               "isDeletedClientSide": false
            }, 
            {
                "namespace": "loyaltyAccount",
