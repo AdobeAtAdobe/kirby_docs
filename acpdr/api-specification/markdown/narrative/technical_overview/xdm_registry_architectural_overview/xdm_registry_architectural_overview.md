@@ -41,7 +41,7 @@ GET /xdms/{namespace}/{objectName}
 ```
 ```SHELL
 curl -X GET \
-  https://platform.adobe.io/data/foundation/catalog/xdms/model/Profile/ \
+  https://platform.adobe.io/data/foundation/catalog/xdms/context/profile/ \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
@@ -60,102 +60,239 @@ The `Profile` schema object is in the response below. The entities are listed un
 
 ```JSON
 {
-    "created": 1520455236419,
-    "updated": 1520455236419,
+    "created": 1529354713137,
+    "updated": 1529354713137,
     "title": "Profile",
     "type": "object",
     "description": "XDM Profiles are a singular representation of the attributes of identified and\npartially identified persons. Profiles that are highly identified maybe used for\npersonal communications or highly targeted engagements and can contain detailed\npersonal information such as names, gender, date of birth, locations, and contact\ninformation like phone numbers and email addresses. Profiles may range to the\nother end of the identification spectrum where only anonymous behavioral signals\nare being observed and the amount of identification is simple browser cookies.\nIn this latter case, the sparse Profile data is useful to build more knowledge\non the interests and preferences of the anonymous profile, and over time can\nbecome richer as the person interacting with brand becomes more engaged and\nultimately signs-on to notifications, subscriptions, purchases and other\nconnections with the brand that enrich and fill out the profile.\n\nXDM Profile can contain personal information, identification information, contact\ndetails and communication preferences. Over time XDM Profile will expand to cater\nfor other Profile data such as preference, propensities and other attributes.\n\n",
     "properties": {
+        "repositoryCreatedBy": {
+            "title": "Created by User Identifier",
+            "type": "string",
+            "description": "User id who has created the entity.\n",
+            "meta:xdmType": "string",
+            "meta:xdmField": "xdm:repositoryCreatedBy"
+        },
+        "repositoryLastModifiedBy": {
+            "title": "Modified by User Identifier",
+            "type": "string",
+            "description": "User id who last modified the entity.\nAt creation time, `modifiedByUser` is set as `createdByUser`.\n",
+            "meta:xdmType": "string",
+            "meta:xdmField": "xdm:repositoryLastModifiedBy"
+        },
+        "createdByBatchID": {
+            "title": "Created by Batch Identifier",
+            "type": "string",
+            "format": "uri",
+            "description": "The Data Set Files in Catalog Services which has been originating the creation of the entity.\n",
+            "meta:xdmType": "string",
+            "meta:xdmField": "xdm:createdByBatchID"
+        },
+        "modifiedByBatchID": {
+            "title": "Modified by Batch Identifier",
+            "type": "string",
+            "format": "uri",
+            "description": "The last Data Set Files in Catalog Services which has modified the entity.\nAt creation time, `modifiedByBatchID` is set as `createdByBatchID`.\n",
+            "meta:xdmType": "string",
+            "meta:xdmField": "xdm:modifiedByBatchID"
+        },
+        "_repo": {
+            "type": "object",
+            "properties": {
+                "createDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "examples": [
+                        "2004-10-23T12:00:00-06:00"
+                    ],
+                    "description": "The server date and time when the resource was created in the repository, such as when an asset file is first uploaded or a directory is created by the server as the parent of a new asset. The Date Time property should conform to ISO 8601 standard. An example form is \"2004-10-23T12:00:00-06:00\".",
+                    "meta:xdmType": "date-time",
+                    "meta:xdmField": "repo:createDate"
+                },
+                "lastModifiedDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "examples": [
+                        "2004-10-23T12:00:00-06:00"
+                    ],
+                    "description": "The server date and time when the resource was most recently modified in the repository, such as when a new version of an asset is uploaded or a directory's child resource is added or removed. The Date Time property should conform to ISO 8601 standard. An example form is \"2004-10-23T12:00:00-06:00\".",
+                    "meta:xdmType": "date-time",
+                    "meta:xdmField": "repo:lastModifiedDate"
+                }
+            }
+        },
         "identities": {
             "title": "All User Identities",
             "type": "array",
-            "items": {
-                "$ref": "../core/Identity"
-            },
             "minItems": 1,
-            "description": "Array of Identities. Condensed, normalized encapsulation of all end user identifiers."
+            "description": "Array of Identities. Condensed, normalized encapsulation of all end user identifiers.",
+            "meta:xdmType": "array",
+            "items": {
+                "$ref": "context/identity"
+            },
+            "meta:xdmField": "xdm:identities"
         },
         "person": {
             "title": "Person",
-            "$ref": "../core/Person",
-            "description": "An individual actor, contact, or owner.\n"
+            "$ref": "context/person",
+            "description": "An individual actor, contact, or owner.\n",
+            "meta:xdmField": "xdm:person"
         },
         "homeAddress": {
             "title": "Home Address",
-            "$ref": "../core/Address",
-            "description": "A home postal address.\n"
+            "$ref": "common/address",
+            "description": "A home postal address.\n",
+            "meta:xdmField": "xdm:homeAddress"
         },
         "workAddress": {
             "title": "Work Address",
-            "$ref": "../core/Address",
-            "description": "A work postal address.\n"
+            "$ref": "common/address",
+            "description": "A work postal address.\n",
+            "meta:xdmField": "xdm:workAddress"
         },
         "personalEmail": {
             "title": "Personal Email",
-            "$ref": "../core/EmailAddress",
-            "description": "A personal email address.\n"
+            "$ref": "context/emailaddress",
+            "description": "A personal email address.\n",
+            "meta:xdmField": "xdm:personalEmail"
         },
         "workEmail": {
             "title": "Work Email",
-            "$ref": "../core/EmailAddress",
-            "description": "A work email address.\n"
+            "$ref": "context/emailaddress",
+            "description": "A work email address.\n",
+            "meta:xdmField": "xdm:workEmail"
         },
         "homePhone": {
             "title": "Home Phone",
-            "$ref": "../core/PhoneNumber",
-            "description": "Home phone number.\n"
+            "$ref": "context/phonenumber",
+            "description": "Home phone number.\n",
+            "meta:xdmField": "xdm:homePhone"
         },
         "workPhone": {
             "title": "Work Phone",
-            "$ref": "../core/PhoneNumber",
-            "description": "Work phone number.\n"
+            "$ref": "context/phonenumber",
+            "description": "Work phone number.\n",
+            "meta:xdmField": "xdm:workPhone"
         },
         "mobilePhone": {
             "title": "Mobile Phone",
-            "$ref": "../core/PhoneNumber",
-            "description": "Mobile phone number.\n"
+            "$ref": "context/phonenumber",
+            "description": "Mobile phone number.\n",
+            "meta:xdmField": "xdm:mobilePhone"
+        },
+        "faxPhone": {
+            "title": "Fax Phone",
+            "$ref": "context/phonenumber",
+            "description": "Fax phone number.\n",
+            "meta:xdmField": "xdm:faxPhone"
         },
         "optInOut": {
             "title": "OptInOut",
-            "$ref": "../core/OptInOut",
-            "description": "Describes a users opting in and out preferences for communication by medium\nand communication type.\n"
+            "$ref": "context/optinout",
+            "description": "Describes a users opting in and out preferences for communication by medium\nand communication type.\n",
+            "meta:xdmField": "xdm:optInOut"
         },
         "pushNotificationTokens": {
             "title": "Push Notification Tokens",
             "type": "array",
             "description": "Push notification tokens are used to communicate with applications that\nare installed on devices or SaaS application accounts.\n",
+            "meta:xdmType": "array",
             "items": {
-                "$ref": "../core/PushNotificationToken"
-            }
+                "$ref": "context/pushnotificationtoken"
+            },
+            "meta:xdmField": "xdm:pushNotificationTokens"
         },
-        "orgUnitId": {
-            "title": "Organizational Unit Identifier",
+        "orgUnit": {
+            "title": "Organizational Unit",
+            "$ref": "common/orgunit",
+            "description": "The unit within the organization owning the profile. This can be used to reference the organization details maintained in another dataset.",
+            "meta:xdmField": "xdm:orgUnit"
+        },
+        "geoUnit": {
+            "title": "Geographical Unit",
+            "$ref": "common/geounit",
+            "description": "The geographical unit within the organization owning the profile. This can be used to reference the geographical information maintained in another dataset.",
+            "meta:xdmField": "xdm:geoUnit"
+        },
+        "preferredLanguage": {
+            "title": "Preferred Language",
             "type": "string",
-            "description": "The unit ID within the organization owning the profile. This ID can be used to reference the organization details maintained in another dataset."
+            "pattern": "^(((([A-Za-z]{2,3}(-([A-Za-z]{3}(-[A-Za-z]{3}){0,2}))?)|[A-Za-z]{4}|[A-Za-z]{5,8})(-([A-Za-z]{4}))?(-([A-Za-z]{2}|[0-9]{3}))?(-([A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(-([0-9A-WY-Za-wy-z](-[A-Za-z0-9]{2,8})+))*(-(x(-[A-Za-z0-9]{1,8})+))?)|(x(-[A-Za-z0-9]{1,8})+)|((en-GB-oed|i-ami|i-bnn|i-default|i-enochian|i-hak|i-klingon|i-lux|i-mingo|i-navajo|i-pwn|i-tao|i-tay|i-tsu|sgn-BE-FR|sgn-BE-NL|sgn-CH-DE)|(art-lojban|cel-gaulish|no-bok|no-nyn|zh-guoyu|zh-hakka|zh-min|zh-min-nan|zh-xiang)))$",
+            "examples": [
+                "en-GB",
+                "de-DE",
+                "yue-HK"
+            ],
+            "description": "Describes the preferred system of communication used by the profile. Language codes are expressed in BCP 47 format.",
+            "meta:xdmType": "string",
+            "meta:xdmField": "xdm:preferredLanguage"
         },
-        "geoUnitId": {
-            "title": "Geographical Unit Identifier",
+        "timeZone": {
+            "title": "Time Zone",
             "type": "string",
-            "description": "The geographical unit ID within the organization owning the profile. This ID can be used to reference the geographical information maintained in another dataset."
+            "examples": [
+                "America/Barbados",
+                "Antarctica/Davis",
+                "Asia/Calcutta"
+            ],
+            "description": "Describes which time zone the profile is present in, most frequently/the time zone preferred by the profile. Time zones are expressed according to the IETF tz database: https://www.ietf.org/timezones/tzdb-2016i/tz-link.htm",
+            "meta:xdmType": "string",
+            "meta:xdmField": "xdm:timeZone"
         },
-        "audit": {
-            "title": "Audit",
-            "$ref": "../core/AuditTrail"
+        "profilePictureLink": {
+            "title": "Profile Picture Link",
+            "type": "string",
+            "description": "Link to profile's picture",
+            "meta:xdmType": "string",
+            "meta:xdmField": "xdm:profilePictureLink"
+        },
+        "emailFormat": {
+            "title": "Email Format",
+            "type": "string",
+            "description": "Email format preferred by the profile. This can be rich text/plain text",
+            "meta:enum": {
+                "html": "Rich text",
+                "plaintext": "Plain text"
+            },
+            "meta:xdmType": "string",
+            "meta:xdmField": "xdm:emailFormat"
         },
         "organizations": {
             "title": "Organizations",
             "type": "array",
+            "meta:xdmType": "array",
             "items": {
-                "type": "string"
-            }
+                "type": "string",
+                "meta:xdmType": "string"
+            },
+            "meta:xdmField": "xdm:organizations"
         },
         "subscriptions": {
             "title": "Subscriptions",
             "type": "array",
             "description": "Subscriptions that this profile is entitled to including terminated, expired or exhausted subscriptions.",
+            "meta:xdmType": "array",
             "items": {
-                "$ref": "../core/Subscription"
-            }
+                "$ref": "context/subscription"
+            },
+            "meta:xdmField": "xdm:subscriptions"
+        },
+        "testProfile": {
+            "title": "Test Profile",
+            "type": "boolean",
+            "description": "Indicates the `profile` record is for use in testing/verification purposes and should not be automatically included in normal operation(s).",
+            "default": false,
+            "meta:xdmType": "boolean",
+            "meta:xdmField": "xdm:testProfile"
+        },
+        "segments": {
+            "title": "Segment Membership",
+            "type": "array",
+            "meta:xdmType": "array",
+            "items": {
+                "$ref": "context/segmentmembership"
+            },
+            "meta:xdmField": "xdm:segments"
         },
         "_customer": {
             "type": "object",
@@ -188,10 +325,15 @@ The `Profile` schema object is in the response below. The entities are listed un
             }
         }
     },
-    "id": "model/Profile",
-    "xdmVersion": "0.9.7",
-    "xdmType": "model"
+    "$id": "context/profile",
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "xdmVersion": "0.9.9.2",
+    "meta:extends": [
+        "external/repo/commmon"
+    ],
+    "id": "context/profile"
 }
+
 ```
 
 ### 3.2. Extensions
@@ -232,7 +374,7 @@ POST /xdms/{namespace}/{objectName}/_customer/{extensionNS}
 ```
 
 ```SHELL
-curl -X POST "https://platform.adobe.io/data/foundation/catalog/xdms/core/Person/_customer/CustomerCompany"
+curl -X POST "https://platform.adobe.io/data/foundation/catalog/xdms/context/person/_customer/CustomerCompany"
 -H "accept: application/json" \
 -H "x-api-key: {API_KEY}" \
 -H "x-gw-ims-org-id: {IMG_ORG}" -H "Authorization: Bearer {ACCESS_TOKEN}" \
@@ -262,7 +404,7 @@ curl -X POST "https://platform.adobe.io/data/foundation/catalog/xdms/core/Person
 ##### Response
 
 ```
-Array[ @/xdms/core/Person/_customer/CustomerCompany ]
+Array[ @/xdms/context/person/_customer/CustomerCompany ]
 ```
 
 This is what the `Person` entity will look like now.
@@ -277,7 +419,7 @@ You can use the following call to retrieve the specific HairColor extension unde
 GET /xdms/{namespace}/{objectName}/_customer/{extensionNS}/
 ```
 ```SHELL
-curl -X GET  https://platform.adobe.io/data/foundation/catalog/xdms/core/Person/_customer/CustomerCompany/ \
+curl -X GET  https://platform.adobe.io/data/foundation/catalog/xdms/context/person/_customer/CustomerCompany/ \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
@@ -324,7 +466,7 @@ GET /xdms/{namespace}/{objectName}
 ```
 ```SHELL
 curl -X GET \
-  https://platform.adobe.io/data/foundation/catalog/xdms/core/Person/ \
+  https://platform.adobe.io/data/foundation/catalog/xdms/context/person/ \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
@@ -383,7 +525,7 @@ The `Person` entity will now look like this.
             }
         }
     },
-    "id": "core/Person",
+    "id": "context/person",
     "xdmVersion": "0.9.7",
     "xdmType": "entity"
 }
@@ -506,7 +648,7 @@ The ExperienceEvent schema schema is used to capture events that are altering on
 
 ```SHELL
 curl -X GET \
-  https://platform.adobe.io/data/foundation/catalog/xdms/model/ExperienceEvent/ \
+  https://platform.adobe.io/data/foundation/catalog/xdms/context/experienceevent/ \
   -H 'Authorization: Bearer <YOUR_ACCESS_TOKEN>' \
   -H 'x-api-key: <YOUR_CLIENT_ID>' \
   -H 'x-gw-ims-org-id: <YOUR_ORGANIZATION_ID>'
@@ -515,96 +657,150 @@ curl -X GET \
 
 ```JSON
 {
-    "created": 1520455236419,
-    "updated": 1520455236419,
+    "created": 1529354713026,
+    "updated": 1529354713026,
     "title": "ExperienceEvent",
     "type": "object",
     "description": "The core ExperienceEvent XDM is used to capture observations that are altering one or more related XDMs/entities. The ExperienceEvent captures information about the observation taking place and when it is occurring. It is critical for time domain analytics as it allows observation and analysis of changes that occur in windows of time and comparison with other windows of time to track trends. ExperienceEvent are either explicit or implicit. Explicit events are direct observations of a human action taking place during a session. Implicit events are events that are being raised without a direct human action. Examples of implicit events are scheduled email sending of newsletters, battery voltage reaching a certain threshold, a person entering into range of a proximity sensor. While not all events are easily categorized across all data sources, it is extremely valuable to harmonize similar events into similar types for processing where possible, and the XDM specifications does this by defining a set of enumerated **type** attribute values with specific semantic meanings. Where possible events must be constrained to these enumerated values to facilitate interoperability.",
     "properties": {
-        "id": {
+        "_id": {
             "title": "Identifier",
             "type": "string",
-            "description": "The unique identifier for the ExperienceEvent."
+            "format": "uri",
+            "description": "The unique identifier for the ExperienceEvent.",
+            "meta:xdmType": "string",
+            "meta:xdmField": "@id"
         },
         "dataSource": {
             "title": "Data Source",
-            "$ref": "../core/DataSource",
-            "description": "Globally unique identification of a data source."
+            "$ref": "data/datasource",
+            "description": "Globally unique identification of a data source.",
+            "meta:xdmField": "xdm:dataSource"
         },
         "timestamp": {
             "title": "Timestamp",
-            "type": "number",
-            "format": "int64",
-            "description": "The timestamp when the first event of the touchpoint occurred. Milliseconds since midnight of January 1, 1970.",
-            "minimum": 1,
-            "maximum": 9223372036854770000
+            "type": "string",
+            "format": "date-time",
+            "description": "The time when the first event of the interaction occurred.",
+            "meta:xdmType": "date-time",
+            "meta:xdmField": "xdm:timestamp"
         },
-        "endUserIds": {
+        "receivedTimestamp": {
+            "title": "Received Timestamp",
+            "type": "string",
+            "format": "date-time",
+            "description": "The time at which this interaction was received by a server.",
+            "meta:xdmType": "date-time",
+            "meta:xdmField": "xdm:receivedTimestamp"
+        },
+        "endUserIDs": {
             "title": "End User IDs",
-            "$ref": "../core/EndUserIds",
-            "description": "Condensed, normalized encapsulation of all end user identifiers.\n"
-        },
-        "metrics": {
-            "title": "Metrics",
-            "$ref": "../core/Metrics",
-            "description": "The metrics for actions performed during this observation."
+            "$ref": "context/enduserids",
+            "description": "Condensed, normalized encapsulation of all end user identifiers.\n",
+            "meta:xdmField": "xdm:endUserIDs"
         },
         "environment": {
             "title": "Environment",
-            "$ref": "../core/Environment",
-            "description": "Information about the surrounding situation the event observation occurred in, specifically detailing transitory information such as the network or software versions."
+            "$ref": "context/environment",
+            "description": "Information about the surrounding situation the event observation occurred in, specifically detailing transitory information such as the network or software versions.",
+            "meta:xdmField": "xdm:environment"
         },
         "productListItems": {
             "title": "Product List Items",
             "type": "array",
             "description": "A list of items representing a product selected by a customer with specific options and pricing that are for that usage context at a specific point of time and may differ from the product record.",
+            "meta:xdmType": "array",
             "items": {
-                "$ref": "../core/ProductListItem"
-            }
+                "$ref": "content/productlistitem"
+            },
+            "meta:xdmField": "xdm:productListItems"
         },
         "device": {
             "title": "Device",
-            "$ref": "../core/Device",
-            "description": "An identified Device/Application or Device/Browser instance that is trackable across sessions, normally by cookies."
+            "$ref": "context/device",
+            "description": "An identified Device/Application or Device/Browser instance that is trackable across sessions, normally by cookies.",
+            "meta:xdmField": "xdm:device"
         },
         "commerce": {
             "title": "Commerce",
-            "$ref": "../core/Commerce",
-            "description": "The commerce specific data related to this interaction."
+            "$ref": "context/commerce",
+            "description": "The commerce specific data related to this interaction.",
+            "meta:xdmField": "xdm:commerce"
         },
         "application": {
             "title": "Application",
-            "$ref": "../core/Application",
-            "description": "The application related to the event observation. It could be either the application targeted by the event like the send of a push notification or the application originating the event such as a click, or a login."
+            "$ref": "context/application",
+            "description": "The application related to the event observation. It could be either the application targeted by the event like the send of a push notification or the application originating the event such as a click, or a login.",
+            "meta:xdmField": "xdm:application"
         },
         "search": {
             "title": "Search",
-            "$ref": "../core/Search",
-            "description": "The information related to web or mobile search."
+            "$ref": "context/search",
+            "description": "The information related to web or mobile search.",
+            "meta:xdmField": "xdm:search"
         },
         "web": {
             "title": "Web",
-            "$ref": "../core/Web",
-            "description": "The information related to web page and link of the ExperienceEvent."
+            "$ref": "context/webinfo",
+            "description": "The information related to web page and link of the ExperienceEvent.",
+            "meta:xdmField": "xdm:web"
+        },
+        "directMarketing": {
+            "title": "Direct Marketing",
+            "$ref": "context/direct-marketing",
+            "description": "The events and properties related to direct/outbound marketing such as email, direct mail, texts and in-app notifications.",
+            "meta:xdmField": "xdm:directMarketing"
         },
         "marketing": {
             "title": "Marketing",
-            "$ref": "../core/Marketing",
-            "description": "The information related to marketing activities that are active with the touchpoint."
+            "$ref": "context/marketing",
+            "description": "The information related to marketing activities that are active with the touchpoint.",
+            "meta:xdmField": "xdm:marketing"
         },
-        "locationContext": {
-            "title": "Location Context",
-            "$ref": "../core/LocationContext",
-            "description": "The transient circumstances related to the observation. Examples include locale specific information such as weather, local time, traffic, day of the week, workday vs. holiday, working hours."
+        "placeContext": {
+            "title": "Place Context",
+            "$ref": "context/placecontext",
+            "description": "The transient circumstances related to the observation. Examples include locale specific information such as weather, local time, traffic, day of the week, workday vs. holiday, working hours.",
+            "meta:xdmField": "xdm:placeContext"
         },
-        "_vendor": {
-            "title": "Vendor Extensions",
-            "$ref": "../_vendor/ExperienceEvent",
-            "description": "Vendor extensions to ExperienceEvent"
+        "channel": {
+            "title": "Experience Channel",
+            "description": "The experience channel related to this ExperienceEvent.",
+            "$ref": "channels/channel",
+            "meta:xdmField": "xdm:channel"
+        },
+        "advertising": {
+            "title": "Advertising",
+            "$ref": "context/advertising",
+            "description": "The information related to advertising activity related to the experience event",
+            "meta:xdmField": "xdm:advertising"
         }
-    },
-    "id": "model/ExperienceEvent",
-    "xdmVersion": "0.9.7",
-    "xdmType": "model"
+    }
+    "required": [
+        "_id",
+        "timestamp",
+        "endUserIDs"
+    ],
+    "$id": "context/experienceevent",
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "xdmVersion": "0.9.9.2"
 }
+
 ```
+## 4. XDM Data Types
+As shown in the examples above, a formal schema is defined using the JSON schema standard that describes what the data should look
+like when formatted as JSON. Because we have XDM data that may exist in other serialization formats, the schemas also exposes a field level 
+attribute named "meta:xdmType" which describes the base data type being represented. This base data type is what should be used in other 
+serialization formats as described by the table below.
+
+|XDM Type<br>(meta:xdmType)|JSON<br>(JSON Schema)|Parquet<br>(type/annotation)|Spark SQL|Java|Scala|.NET|CosmosDB|MongoDB|Aerospike|Protobuf 2
+|---|---|---|---|---|---|---|---|---|---|---|
+|string|type:string|BYTE_ARRAY/UTF8|StringType|java.lang.String|String|Stystem.String|String|string|String|string
+|number|type:number|DOUBLE|DoubleType|java.lang.Double|Double|System.Double|Number|double|Double|double
+|long|type:integer<br>maiximum:2^53+1<br>minimum:-2^53+1|INT64|LongType|java.lang.Long|Long|System.Int64|Number|long|Integer|int64
+|int|type:integer<br>maiximum:2^31<br>minimum:-2^31|INT32/INT_32|IntegerType|java.lang.Integer|Int|System.Int32|Number|int|Integer|int32
+|short|type:integer<br>maiximum:2^15<br>minimum:-2^15|INT32/INT_16|ShortType|java.lang.Short|Short|System.Int16|Number|int|Integer|int32
+|byte|type:integer<br>maiximum:2^7<br>minimum:-2^7|INT32/INT_8|ByteType|java.lang.Short|Byte|System.SByte|Number|int|Integer|int32
+|boolean|type:boolean|BOOLEAN|BooleanType|java.lang.Boolean|Boolean|System.Boolean|Boolean|bool|Integer|Integer|bool
+|date|type:string<br>format:date<br>(RFC 3339, section 5.6)|INT32/DATE|DateType|java.util.Date|java.util.Date|System.DateTime|String|date|Integer<br>(unix millis)|int64<br>(unix millis)
+|date-time|type:string<br>format:date-time<br>(RFC 3339, section 5.6)|INT64/TIMESTAMP_MILLIS|TimestampType|java.util.Date|java.util.Date|System.DateTime|String|timestamp|Integer<br>(unix millis)|int64<br>(unix millis)

@@ -186,8 +186,7 @@ Design Phase
     ingestion using a standard connector or push-service connector.
 
 2.  In the ACP user interface, the partner creates the output dataset by
-    either selecting the Profile, Event or other custom Experience Data
-    Models (XDMs).
+    either selecting the Profile, Experience Event or other schemas in the XDM Registry.
 
 3.  In the ETL tool, the partner will start designing their mapping
     transforms after configuring the appropriate connection (using
@@ -196,7 +195,7 @@ Design Phase
     Integration Guide).
 
 4.  Using the source of data for mapping, a list of all available
-    datasets can be fetched using **Data Discovery APIs**.
+    datasets can be fetched using **Data Discovery APIs** (Figure 6).
 
     > **Note**: Partners will also have to specify a time stamp filter
     > marking the date to ingest data and offset - what should be the window
@@ -247,47 +246,21 @@ Design Phase
             "transforms":"@/dataSets/598d6e81b2745f000015edcb/views/598d6e81b2745f000015edcc/transforms",
             "files": "@/dataSets/598d6e81b2745f000015edcb/views/598d6e81b2745f000015edcc/files",
             "children": "@/dataSetViews/598d6e81b2745f000015edcc/children",
-            "schema": "@/xdms/context/Profile",
+            "schema": "@/xdms/context/profile",
             "viewId": "598d6e81b2745f000015edcc",
             "observableSchema": {
                 "type": "object",
                 "meta:xdmType": "object",
                 "properties": {
-                    "personalEmail": {
-                        "type": "object",
-                        "meta:xdmType": "object",
-                        "properties": {
-                            "address": {
-                                "type": "string",
-                                "meta:xdmType": "string",
-                                "title": "Address",
-                                "description": "The technical address, e.g 'name@domain.com' as commonly defined in RFC2822 and subsequent standards."
-                            }
-                        }
+                    "name": {
+                        "type": "string",
                     },
-                    "homeAddress": {
-                        "type": "object",
-                        "meta:xdmType": "object",
-                        "properties": {
-                            "country": {
-                                "type": "string",
-                                "meta:xdmType": "string",
-                                "title": "Country",
-                                "description": "The name of the government-administered territory. Other than countryCode, this is a free-form field that can have the country name in any language."
-                            },
-                            "city": {
-                                "type": "string",
-                                "meta:xdmType": "string",
-                                "title": "City",
-                                "description": "The town, city, village or other metropolitan identity of the address."
-                            }
-                        }
+                    "age": {
+                        "type": "string",
                     }
                 }
             }
-        },
-        :
-        :
+        }
     }
     ```
 
@@ -360,84 +333,65 @@ Design Phase
     ```
     >
     ##### Sample response
+
     ```
     {
-    "59c93f3da7d0c00000798f68": {
-        "version": "1.0.4",
-        "imsOrg": "AdobeIMSOrganization@AdobeOrg",
-        "name": "ProfileOutput01",
-        "created": 1506361139256,
-        "updated": 1508475975514,
-        "createdClient": "CLIENT_ID",
-        "createdUser": "CLIENT_USER_ID@AdobeID",
-        "updatedUser": "CLIENT_USER_ID@AdobeID",
-        "dule": {},
-        "aspect": "production",
-        "status": "enabled",
-        "fields": [
-            {
-                "name": "endUserIds",
-                "title": "End User IDs",
-                "description": "Condensed, normalized encapsulation of all end user identifiers. NOTE: At least one of the fields is required.\n",
-                "created": 1516629739180,
-                "updated": 1516629739180,
-                "type": "object",
-                :
-				:
-				:
-				:
-				:
-				:
-            }
-        ],
-        "fileDescription": {
-            "persisted": false,
-            "format": "parquet"
-        },
-        "transforms": "@/dataSets/59c93f3da7d0c00000798f68/views/59c93f3da7d0c00000798f69/transforms",
-        "files": "@/dataSets/59c93f3da7d0c00000798f68/views/59c93f3da7d0c00000798f69/files",
-        "children": "@/dataSetViews/59c93f3da7d0c00000798f69/children",
-        "schema": "@/xdms/context/Profile",
-        "viewId": "59c93f3da7d0c00000798f69",
-        "observableSchema": {
+           "598d6e81b2745f000015edcb": {
+            :
+            :
+            "observableSchema": {
                 "type": "object",
                 "meta:xdmType": "object",
                 "properties": {
-                    "personalEmail": {
-                        "type": "object",
-                        "meta:xdmType": "object",
-                        "properties": {
-                            "address": {
-                                "type": "string",
-                                "meta:xdmType": "string",
-                                "title": "Address",
-                                "description": "The technical address, e.g 'name@domain.com' as commonly defined in RFC2822 and subsequent standards."
-                            }
-                        }
+                    "name": {
+                        "type": "string",
                     },
-                    "homeAddress": {
-                        "type": "object",
-                        "meta:xdmType": "object",
-                        "properties": {
-                            "country": {
-                                "type": "string",
-                                "meta:xdmType": "string",
-                                "title": "Country",
-                                "description": "The name of the government-administered territory. Other than countryCode, this is a free-form field that can have the country name in any language."
-                            },
-                            "city": {
-                                "type": "string",
-                                "meta:xdmType": "string",
-                                "title": "City",
-                                "description": "The town, city, village or other metropolitan identity of the address."
-                            }
-                        }
+                    "age": {
+                        "type": "string",
                     }
                 }
             }
+            :
+            :
         }
     }
     ```
+    
+    This property of a Dataset has a json structure (matching the XDM schema json) which contains the fields that are present in the data written to disk. 
+    XDM schemas can be large and actual data can have a small subset of all columns. This is the schema you would use if
+    reading the data or presenting a list of fields that are available to read/map from.
+
+    Note - The observedSchema is currently populated only when the schema attribute above is used. 
+
+    ##### ii. fields (deprecated)
+    ```
+    {
+           "598d6e81b2745f000015edcb": {
+            :
+            :
+            "fields": [
+                {
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "name": "age",
+                    "type": "string"
+                }
+            ],
+            :
+            :
+        }
+    }
+    ```
+    
+    The fields property is deprecated and temporarily available for backwards compatibility. 
+    It should only be used if the schema property from above is NOT populated. 
+    If used, the fields property represents the schema for both reading and writing.   
+    
+    Note - The JSON structure of the fields attribute is different from the standard JSON schema format used by the registry and the observedSchema values.
+	
+	
 6.  The ETL application may provide a capability to *preview data* to
     the ETL Data Engineer. The **Data Access APIs** will be used to with
     the specified "limit" on the data (Figure 9). There are various API
@@ -533,7 +487,7 @@ Design Phase
     4,Orion,Weber,1990-04-17,male,orion.weber@planetone.tn,,192 Pine Street,STAPLETON,AL,36578,USA,30.74,-87.79,false,false,false,orion.weber,2017-03-31 06:51:54
     5,Dorthary,Murphy,1950-03-27,female,dorthary0.murphy@outlook.com,122-742-4590,730 Hickory Lane,BROWNSTOWN,IN,47220,USA,38.88,-86.04,true,false,true,dorthary.murphy,2017-03-31 03:41:33
     ```
-7.  The destination component as output of transformed data, the Data
+8.  The destination component as output of transformed data, the Data
     Engineer will choose an Output Dataset (Figure 12). The XDM schema
     is associated with the output Dataset. The data to be written will
     be identified by the file description part of dataset entity from
@@ -543,7 +497,7 @@ Design Phase
 
     #### File description from data set
     ```
-    $ curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets/DatasetId" \
+    $ curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets/<dataset id>" \
     -H "accept: application/json" \
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization: Bearer ACCESS\_TOKEN \
@@ -568,7 +522,7 @@ Design Phase
         }
     }
     ```
-8.  Data will be written to the platform using the **Data Ingestion
+9.  Data will be written to the platform using the **Data Ingestion
     APIs**.  Writing of data is an asynchronous process. When data is
     written to the Adobe Cloud Platform, a batch is created and marked
     as a success only after data is fully written.
