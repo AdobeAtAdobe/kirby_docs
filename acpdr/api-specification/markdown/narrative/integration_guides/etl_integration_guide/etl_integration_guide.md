@@ -717,7 +717,7 @@ Execution phase
     #### Write to dataset
     Multiple files can be posted in a batch until it is promoted.
     ```
-    $ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/BATCHID/datasets/DATASETID/files/filename.csv" \
+    $ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/BATCHID/datasets/DATASETID/files/filename.parquet" \
     -H "accept: application/json" \
     -H "x-gw-ims-org-id:AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization:Bearer ACCESS_TOKEN" \
@@ -793,6 +793,60 @@ Execution phase
         "availableDates": {}
     }
     ```
+    
+    New tasks can be schedule if the previous batch (2 above) was success. Individual batch status can be retrieved from **Data Discovery API**.
+    The **BATCHID** used is the same that was returned while creation of batch (2 above).
+    
+    #### Curl to get Last batch status by Id
+     ```
+     curl -X GET "https://platform.adobe.io/data/foundation/catalog/batches/BATCHID" \
+     -H "accept: application/json" \
+     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
+     -H "Authorization:Bearer ACCESS_TOKEN" \
+     -H "x-api-key : X-API-KEY"
+     ```
+    
+    ##### Sample response For Success
+    ```
+    "BATCHID": {
+        "imsOrg": "AdobeIMSOrganization@AdobeOrg",
+        "created": xxxx,
+        "createdClient": "CLIENT_ID",
+        "createdUser": "CLIENT_USER_ID@AdobeID",
+        "updatedUser": "CLIENT_USER_ID@AdobeID",
+        "updated": xxxx,
+        "status": "success",
+        "errors": [],
+        "version": "1.0.1",
+        "availableDates": {}
+    }
+    ``` 
+    
+    In case of failure the **errors** can be extracted from the response and surfaced on the ETL
+    tool as error message.
+        
+    ##### Sample response For Failure
+    ```
+    "BATCHID": {
+        "imsOrg": "AdobeIMSOrganization@AdobeOrg",
+        "created": xxxx,
+        "createdClient": "CLIENT_ID",
+        "createdUser": "CLIENT_USER_ID@AdobeID",
+        "updatedUser": "CLIENT_USER_ID@AdobeID",
+        "updated": xxxx,
+        "status": "failure",
+        "errors": [
+            {
+                "code": "200",
+                "description": "Error in validating schema for file: 'adl://dataLake.azuredatalakestore.net/connectors-dev/stage/BATCHID/dataSetId/contact.csv' with errorMessage=adl://dataLake.azuredatalakestore.net/connectors-dev/stage/BATCHID/dataSetId/contact.csv is not a Parquet file. expected magic number at tail [80, 65, 82, 49] but found [57, 98, 55, 10] and errorType=java.lang.RuntimeException",
+                "rows": []
+            }
+        ],
+        "version": "1.0.1",
+        "availableDates": {}
+    ```    
+    
+    
 
 Incremental vs Snapshot Data, and Events vs Profiles
 ----------------------------------------------------

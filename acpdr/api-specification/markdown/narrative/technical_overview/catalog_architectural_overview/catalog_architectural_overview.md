@@ -23,7 +23,7 @@ Often it's desirable to request a specific collection of objects based on their 
 __Example Catalog Service request, demonstrating a multi-object request:__
 
 ```
-GET /dataSets/5601dc3ee91c55aa3834b607,0ad0554e4fa033861780c2962e,...
+GET /dataSets/5601dc3ee91c55aa3834b607,0ad0554e4fa033861780c2962e,…
 ```
 
 ### 2.2 Expansions
