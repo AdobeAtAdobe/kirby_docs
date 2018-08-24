@@ -44,12 +44,12 @@ POST /xdms/{namespace}/{objectName}/_customer/{extensionNS}
 
 
 ```SHELL
-curl -X POST "https://platform.adobe.io/data/foundation/catalog/xdms/core/Person/_customer/CustomerCompany" /
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' /
-  -H 'x-api-key: {CLIENT_ID}' /
-  -H 'x-gw-ims-org-id: {IMS_ORG}' /
-  -H "content-type: application/json" /
-  -d "{JSON_PAYLOAD}"
+curl -X POST 'https://platform.adobe.io/data/foundation/catalog/xdms/core/Person/_customer/CustomerCompany' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {CLIENT_ID}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'content-type: application/json' \
+  -d '{JSON_PAYLOAD}'
 ```
 
 
@@ -93,10 +93,10 @@ We can verify our extension by querying `Person` entity object using a separate 
 GET /xdms/{namespace}/{objectName}
 
 ```SHELL
-curl -X GET "https://platform.adobe.io/data/foundation/catalog/xdms/core/Person" /
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' /
-  -H 'x-api-key: {CLIENT_ID}' /
-  -H 'x-gw-ims-org-id: {IMS_ORG}' /
+curl -X GET 'https://platform.adobe.io/data/foundation/catalog/xdms/core/Person' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {CLIENT_ID}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 `{namespace}`: The base namespace. (E.g. core)
 `{objectName}`: Name of the entity we want to extend.
@@ -166,13 +166,13 @@ After extending the `Person` entity we can now create a dataset with the parent 
 POST /dataSets
 
 ```SHELL
-curl -X POST "https://platform.adobe.io/data/foundation/catalog/dataSets?requestDataSource=true" /
-  -H "accept: application/json" /
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' /
-  -H 'x-api-key: {CLIENT_ID}' /
-  -H 'x-gw-ims-org-id: {IMS_ORG}' /
-  -H "content-type: application/json" /
-  -d "{JSON_PAYLOAD}"
+curl -X POST 'https://platform.adobe.io/data/foundation/catalog/dataSets?requestDataSource=true' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {CLIENT_ID}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'content-type: application/json' \
+  -d '{JSON_PAYLOAD}'
 ```
 
 `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
@@ -210,12 +210,13 @@ Before data can be added to a dataset, it must be linked to a batch, which will 
 POST /batches
 
 ```SHELL
-curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
--H "accept: application/json" \
--H "x-gw-ims-org-id: {IMS_ORG}" \
--H "Authorization: Bearer {ACCESS_TOKEN}" \
--H "x-api-key : {API_KEY}"
--d '{"datasetId":"{DATASET_ID}"}'
+curl -X POST 'https://platform.adobe.io/data/foundation/import/batches' \
+  -H 'accept: application/json' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key : {API_KEY}'
+  -H 'content-type: application/json' \
+  -d '{"datasetId":"{DATASET_ID}"}'
 ```
 `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
@@ -267,11 +268,12 @@ If the original file being uploaded is greater than 512 MB, it will need to be b
 PUT /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
 
 ```SHELL
-curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.parquet" \
--H "content-type: application/octet-stream" \
--H "x-gw-ims-org-id: {IMG_ORG}" \
--H "Authorization: Bearer {ACCESS_TOKEN}" \
---data-binary "@{FILE_PATH_AND_NAME}.parquet"
+curl -X PUT 'https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.parquet' \
+  -H 'content-type: application/octet-stream' \
+  -H 'x-api-key : {API_KEY}'
+  -H 'x-gw-ims-org-id: {IMG_ORG}' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  --data-binary '@{FILE_PATH_AND_NAME}.parquet'
 ```
 
 `{BATCH_ID}`: The ID of the batch that was just created (used in subsequent calls).
@@ -280,6 +282,7 @@ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}
 `{FILE_NAME}` Name of file as it will be seen in the dataset.
 `{FILE_PATH_AND_NAME}`: The path and filename of the file to be uploaded into the dataset.
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
 
 #### Response
 ```
@@ -295,10 +298,10 @@ POST /batches/{BATCH_ID}?actions=PROMOTE
 
 
 ```SHELL
-curl -X POST "https://platform.adobe.io/data/foundation/import/batches/[BATCH_ID]?action=PROMOTE" \
--H "x-gw-ims-org-id: {IMG_ORG}" \
--H "Authorization: Bearer {ACCESS_TOKEN}" \
--H "x-api-key : {API_KEY}"
+curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=COMPLETE" \
+  -H 'x-api-key : {API_KEY}'
+  -H 'x-gw-ims-org-id: {IMG_ORG}' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}'
 ```
 
 `{BATCH_ID}`: The ID of the batch that was just created (used in subsequent calls).

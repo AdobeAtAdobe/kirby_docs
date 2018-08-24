@@ -186,7 +186,7 @@ We can use `curl` to generate your access token. If you do not have `curl` insta
 Once `curl` is installed, you will need to swap the fields in the following command with your own {API_KEY}, {CLIENT_SECRET}, and {JWT_TOKEN}.
 
 ```SHELL
-curl -X POST \ "https://ims-na1.adobelogin.com/ims/exchange/jwt/" \
+curl -X POST "https://ims-na1.adobelogin.com/ims/exchange/jwt/" \
   -F "client_id={API_KEY}" \
   -F "client_secret={CLIENT_SECRET}" \
   -F "jwt_token={JWT_TOKEN}"
@@ -217,29 +217,29 @@ curl -X GET "https://platform.adobe.io/data/foundation/catalog/xdms/core/" \
   -H "x-gw-ims-org-id: {YOUR_IMS_ORG}"
 ```
 
-  If no error is returned and a large JSON object is returned then your `access_token` is working!
+If no error is returned and a large JSON object is returned then your `access_token` is working!
 
-  ```JSON
-  {
-      "Address": {
-          "created": 1520268294987,
-          "updated": 1520268294987,
-          "title": "Address",
-          "type": "object",
-          "description": "A postal address. Address could relate to a persons home, work, preferred store location etc.",
-          "properties": {
-              "primary": {
-                  "title": "Primary",
-                  "type": "boolean",
-                  "description": "Primary address indicator. A Profile can have only one `primary` address at a given point of time.\n"
-              },
-              "..."
+```JSON
+{
+    "Address": {
+        "created": 1520268294987,
+        "updated": 1520268294987,
+        "title": "Address",
+        "type": "object",
+        "description": "A postal address. Address could relate to a persons home, work, preferred store location etc.",
+        "properties": {
+            "primary": {
+                "title": "Primary",
+                "type": "boolean",
+                "description": "Primary address indicator. A Profile can have only one `primary` address at a given point of time.\n"
             },
-          "..."
-        },
-      "..."
-    }
-  ```
+            "..."
+          },
+        "..."
+      },
+    "..."
+  }
+```
 
 #### 2.3.4. Using Postman for JWT Authentication and API calls
 [Postman](https://www.getpostman.com/) is a popular tool to work with REST based APIs. This [Medium post](https://medium.com/adobetech/using-postman-for-jwt-authentication-on-adobe-i-o-7573428ffe7f) describes how you can setup postman to automatically perform JWT authentication and use it to consume Adobe Cloud Platform APIs
@@ -943,5 +943,3 @@ $ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/BATCHID
 
 ```
 #Status 200 OK, with empty response
-
-
