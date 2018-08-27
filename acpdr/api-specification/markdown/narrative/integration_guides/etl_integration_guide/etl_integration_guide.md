@@ -265,75 +265,95 @@ Design Phase
     ```
 
 5.  The *Schema of a dataset* can be found at following places
-    ##### i. Fields (Deprecated)
-	Fields property is deprecated and in coming releases this will be removed. When a dataset is created with a Schema, Fields property is auto filled with column names and types. One can directly post fields as part of dataset object as well.
-
-    ##### ii. Schema
-	This property of dataset has a path pointing to schema in schema registry. The same path can be appended to catlog endpoint to retrieve full schema.
-	From a dataset GET request, one can find schema in json response body
-	```
-	{
-        "598d6e81b2745f000015edcb": {
-			:
-			:
-            children": "@/dataSetViews/598d6e81b2745f000015edcc/children",
-            "schema": "@/xdms/context/Profile",
-            "viewId": "598d6e81b2745f000015edcc",
-			:
-			:
-		}
-	}
-	```
-	List of schemas can be obtained by following curl. We can optionally pass query parameter "xdmVersion" as 0.9.7 or 0.9.9 to get version specific list.
-	```
-	curl -X GET "https://platform.adobe.io/data/foundation/catalog/xdms" \
-    -H "accept: application/json" \
-    -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
-    -H "Authorization: Bearer ACCESS_TOKEN" \
-    -H "x-api-key: API_KEY"
-	```
-
-	Following is the curl call example to get specific schema. We can optionally pass query parameter "xdmVersion" as 0.9.7 or 0.9.9 to get version specific XDM.
-	```
-	curl -X GET "https://platform.adobe.io/data/foundation/catalog/xdms/context/Profile" \
-    -H "accept: application/json" \
-    -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
-    -H "Authorization: Bearer ACCESS_TOKEN" \
-    -H "x-api-key: API_KEY"
-	```
-	The JSON structure of the response is different from existing Fields property and is same as Observable Schema field of Dataset.
-	See point 4 above for observable schema field example.
-	If somebody wants to post dataset with custom schema, they can post schema in schema registry and refer that to dataset post call. More information on XDM and Schema registry can be found [here](https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/xdm_registry_architectural_overview/xdm_registry_architectural_overview.md).
-
-	##### iii. Observable Schema
-	This field of a dataset has a json structure (matching to XDM schema json) which holds list of columns which are actually there in the data. XDM schemas can be huge and actual data can have a small subset of all columns. This property helps in identifying columns with data.
-	See point 4 above for observable schema field example.
-	Please note that this is currently filled for datasets whose type is set to "parquet".
-
-	#### Schema for Reading
-	At the time of reading the data from platform, it is recommended that you read the schema from Observable schema (iii above). Since Observable schema represents the columns that are actually there in data, it will make schema generation easier.
-
-	Note: If Observable schema property is not available in dataset, one can read from Schema registry path defined by "schema" property. If that is not available either, schema mentioned in "fields" property can be used.
-
-	#### Schema for Mapping Source to Target
-	At the time of mapping, target should display all available columns. It is recommended to read the columns from Schema Registry (ii above). Customer is free to choose which all target columns he wants to map data to. ACP is responsible for updating observable schema once the first batch is successfully written.
-
-	Note: If Schema registry path defined by "schema" property is not available either, schema mentioned in "fields" property can be used.
-
-    call from **Data Discovery API ** (Figure 8).
-
-    #### curl to fetch dataset details for datasetId
+    ##### i. schema
     ```
-    $ curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets/DATASET_ID" \
-    -H "accept: application/json" \
-    -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
-    -H "Authorization: Bearer ACCESS_TOKEN" \
-    -H "x-api-key: API_KEY"
-
+    {
+       "598d6e81b2745f000015edcb": {
+         :
+         :
+           "schema": "@/xdms/context/person",
+         :
+         :
+       }
+    }
     ```
-    >
-    ##### Sample response
+    
+    This property of a Dataset contains an API link pointing to an external definition in the schema registry. The registry schema represents the list of all **potential
+    fields** that could be used and not the fields that are used (see observableSchema below). This is the schema you use when you need
+    to present the user with a list of available fields that can be written to.
 
+    The schema value is a link to the /xdms route under the /catalog API. Retrieving the actual schema requires a second API request as follows:
+    ```
+      curl -X GET "https://platform.adobe.io/data/foundation/catalog/xdms/context/person?expansion=xdm" \
+      -H "accept: application/json" \
+      -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
+      -H "Authorization: Bearer ACCESS_TOKEN" \
+      -H "x-api-key: API_KEY"
+    ``` 
+    Note - the "expansion=xdm" is an optional parameter that tells the API to fully expand and in-line any referenced schemas. 
+    You will likely always do this when presenting a list of all potential fields.
+    
+	Sample /xdms response:
+    ```JSON
+    {
+        "$id": "https://ns.adobe.com/xdm/context/person"
+        "title": "Person",
+        "type": "object",
+        "description": "An individual person. May represent a person acting in various roles, such as a customer, contact, or owner.",
+        "properties": {
+            "birthDay": {
+                "title": "Birth day",
+                "type": "integer",
+                "description": "The day of the month a person was born (1-31).",
+                "minimum": 1,
+                "maximum": 31,
+                "meta:xdmType": "byte",
+                "meta:xdmField": "xdm:birthDay"
+            },
+            "birthMonth": {
+                "title": "Birth month",
+                "type": "integer",
+                "description": "The month of the year a person was born (1-12).",
+                "minimum": 1,
+                "maximum": 12,
+                "meta:xdmType": "byte",
+                "meta:xdmField": "xdm:birthMonth"
+            },
+            "birthYear": {
+                "title": "Birth year",
+                "type": "integer",
+                "description": "The year a person was born including the century (yyyy, e.g 1983).",
+                "minimum": 1,
+                "maximum": 32767,
+                "meta:xdmType": "short",
+                "meta:xdmField": "xdm:birthYear"
+            },
+            "gender": {
+                "title": "Gender",
+                "type": "string",
+                "enum": [
+                    "male",
+                    "female",
+                    "not_specified",
+                    "non_specific"
+                ],
+                "meta:enum": {
+                    "male": "Male",
+                    "female": "Female",
+                    "not_specified": "Not Specified",
+                    "non_specific": "Nonspecific"
+                },
+                "description": "Gender identity of the person.\n",
+                "default": "not_specified",
+                "meta:xdmType": "string",
+                "meta:xdmField": "xdm:gender"
+            }
+        }
+    }
+    ```
+    Important - The JSON schema that is returned describes the structure and field level "type", "format", "minimum", "maximum" the represents data serialized as JSON. If using a serialization format other then JSON for ingestion, you should use data types that match the
+    meta:xdmType as described in **Section 4** of the [XDM Registry Overview Guide](https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/xdm_registry_architectural_overview/xdm_registry_architectural_overview.md).
+    ##### iii. observableSchema
     ```
     {
            "598d6e81b2745f000015edcb": {
@@ -357,9 +377,11 @@ Design Phase
     }
     ```
     
-    This property of a Dataset has a json structure (matching the XDM schema json) which contains the fields that are present in the data written to disk. 
-    XDM schemas can be large and actual data can have a small subset of all columns. This is the schema you would use if
-    reading the data or presenting a list of fields that are available to read/map from.
+    This property of a Dataset has a json structure (matching the XDM schema json) which contains the fields that where 
+    present in the incoming input files. 
+    When writing data to the platform, a user is not required to use every field from the
+    target schema. Instead they should supply only those fields that are used. 
+    This is the schema you would use if reading the data or presenting a list of fields that are available to read/map from.
 
     Note - The observedSchema is currently populated only when the schema attribute above is used. 
 
@@ -390,7 +412,6 @@ Design Phase
     If used, the fields property represents the schema for both reading and writing.   
     
     Note - The JSON structure of the fields attribute is different from the standard JSON schema format used by the registry and the observedSchema values.
-	
 	
 6.  The ETL application may provide a capability to *preview data* to
     the ETL Data Engineer. The **Data Access APIs** will be used to with
