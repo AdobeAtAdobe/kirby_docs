@@ -158,13 +158,13 @@ While in your integration's detail page, navigate to the *JWT* tab. Your page sh
 View the contents of your `private.key` file that we generated previously using a text editor or terminal
 
 ```shell
-$ cat private.key
+cat private.key
 ```
 
 Your output will look something like this:
 
 ```shell
-$ cat private.key
+cat private.key
 -----BEGIN PRIVATE KEY-----
 MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCYjPj18NrVlmrc
 H+YUTuwWrlHTiPfkBGM0P1HbIOdwrlSTCmPhmaNNG5+mEiULJLWlrhQpx/7uQVNW
@@ -255,7 +255,7 @@ Stores information about existing datasets that you may read or write to.
 
 #### sample fetch of available datasets
 ```shell
-$ curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets" \
+curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets" \
     -H "accept:application/json" \
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization: Bearer ACCESS_TOKEN" \
@@ -321,7 +321,7 @@ $ curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets" \
 
 #### sample fetch to get a specific dataset
 ```shell
-$ curl -X GET
+curl -X GET
 "https://platform.adobe.io/data/foundation/catalog/dataSets/598d6e81b2745f000015edcb" \
     -H "accept:application/json" \
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
@@ -333,7 +333,7 @@ The registry stores the reusable schemas that may be associated with platform da
 
 ##### sample fetch of the "context/profile" schema from above dataset
 ```shell
-$ curl -X GET
+curl -X GET
 "https://platform.adobe.io/data/foundation/catalog/xdms/context/profile?expansion=true" \
     -H "accept:application/json" \
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
@@ -656,7 +656,7 @@ Provides users the interface to access their data on the platform.
 ##### sample request to list files associated with a dataset - refer to the 'files' attribute of a dataset
 
 ```shell
-$ curl -X GET \
+curl -X GET \
 "https://platform.adobe.io/data/foundation/catalog/dataSets/59c93f3da7d0c00000798f68/views/59c93f3da7d0c00000798f69/files" \
     -H "accept: application/json" \
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
@@ -690,7 +690,7 @@ $ curl -X GET \
 
 #### curl to fetch file details
 ```shell
-$ curl -X GET "https://platform.adobe.io/data/foundation/export/files/28146732-2af7-41c6-9d4a-95fb3334216b" \
+curl -X GET "https://platform.adobe.io/data/foundation/export/files/28146732-2af7-41c6-9d4a-95fb3334216b" \
     -H "accept: application/json" \
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization: Bearer ACCESS_TOKEN \
@@ -715,7 +715,7 @@ $ curl -X GET "https://platform.adobe.io/data/foundation/export/files/28146732-2
         data from the **Data Access API**
 
 ```shell
-$ curl -X GET \
+curl -X GET \
 "https://platform.adobe.io/data/foundation/export/files/28146732-2af7-41c6-9d4a-95fb3334216b?path=webProfileSmall.csv" \
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization: Bearer ACCESS_TOKEN" \
@@ -738,7 +738,7 @@ longitude,optin_email,optin_mobile,optin_address,username,created
 This will give you all batches between start time and end time, sorted by the order they were created.
 
 ```shell
-$ curl -X GET \
+curl -X GET \
 "https://platform.adobe.io/data/foundation/catalog/batches?dataSet=<DATASETID>&createdAfter=START_TIMESTAMP&createdBefore=END_TIMESTAMP&sort=desc:created" \
     -H "accept: application/json" \
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
@@ -775,7 +775,7 @@ Now take out dataset files belonging to these batches using below call
 
 ##### curl request to get files out of a batch
 ```shell
-$ curl -X GET https://platform.adobe.io/data/foundation/export/batches/BATCHID1/files \
+curl -X GET https://platform.adobe.io/data/foundation/export/batches/BATCHID1/files \
     -H 'authorization: Bearer ACCESS_TOKEN' \
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization:Bearer ACCESS_TOKEN" \
@@ -827,7 +827,7 @@ Now we will iterate over individual file via _link.self.href
 
 ##### curl to access file metadata
 ```shell
-$ curl -X GET https://platform.adobe.io/data/foundation/export/files/DATASETFILEID1 \
+curl -X GET https://platform.adobe.io/data/foundation/export/files/DATASETFILEID1 \
     -H 'authorization: Bearer ACCESS_TOKEN' \
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization:Bearer ACCESS_TOKEN" \
@@ -861,7 +861,7 @@ Now we will list content of file by using link under _links > self > href
 
 #### curl to access file content
 ```shell
-$ curl -X GET https://platform.adobe.io/data/foundation/export/files/DATASETFILEID1?path=filename1.csv \
+curl -X GET https://platform.adobe.io/data/foundation/export/files/DATASETFILEID1?path=filename1.csv \
     -H 'authorization: Bearer ACCESS_TOKEN' \
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization:Bearer ACCESS_TOKEN" \
@@ -881,7 +881,7 @@ Pushes data to the ACP with Data Ingestion APIs.
 
 #### create a batch
 ```shell
-$ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
+curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
     -H "accept: application/json" \
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization:Bearer ACCESS_TOKEN" \
@@ -908,7 +908,7 @@ $ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
 #### write to dataset
 Multiple files can be posted in a batch until it is promoted.
 ```shell
-$ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/BATCHID/datasets/DATASETID/files/filename.csv" \
+curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/BATCHID/datasets/DATASETID/files/filename.csv" \
     -H "accept: application/json" \
     -H "x-gw-ims-org-id:AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization:Bearer ACCESS_TOKEN" \
@@ -933,7 +933,7 @@ Data will first land on the Adobe Cloud Platform staging location and then will 
 
 #### curl to mark batch upload complete
 ```shell
-$ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/BATCHID?action=COMPLETE" \
+curl -X POST "https://platform.adobe.io/data/foundation/import/batches/BATCHID?action=COMPLETE" \
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization:Bearer ACCESS_TOKEN" \
     -H "x-api-key : API_KEY"
