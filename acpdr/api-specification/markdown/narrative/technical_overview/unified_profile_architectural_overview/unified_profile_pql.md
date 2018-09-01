@@ -53,8 +53,7 @@ PQL includes the "select" operator, which allows the construction of sets of mat
 ```
 select
     V1 from <object1>.<arrayField1> where <condition1>,
-    V2 from <object2>.<arrayField2> where <condition2>,
-    ...
+    V2 from <object2>.<arrayField2> where <condition2>
 ```
 
 For example, the following selects profiles which contain at least one ExperienceEvent which occurred before today and which contains a `productListItem` with SKU equal to "PS":
@@ -271,7 +270,7 @@ The following describes functions that are available for comparing String litera
   * `string1`.contains(`string2`, `boolean`)
 * Arguments - same as [__startsWith__](#startsWith)
 * Result
-  * Boolean: `true` if both strings are not null and the first string contains the second, `false` otherwise.
+  * Boolean: `true` if both strings are not null and the first string contains the second, `false` otherwise
 * Examples
   * __workEmail.address.contains("yahoo")__
     * `true` where `workEmail.address` = "joe.lean@yahoo.com"
@@ -290,7 +289,7 @@ The following describes functions that are available for comparing String litera
   * `string1`.doesNotContain(`string2`, `boolean`)
 * Arguments - same as [__startsWith__](#startsWith)
 * Result
-  * Boolean: `true` if both strings are not null and the first string __does not__ contain the second, `false` otherwise.
+  * Boolean: `true` if both strings are not null and the first string __does not__ contain the second, `false` otherwise
 * Examples
   * __workEmail.address.doesNotContain("yahoo")__
     * `false` where `workEmail.address` = "joe.lean@yahoo.com"
@@ -342,13 +341,184 @@ The following describes functions that are available for comparing String litera
     * `false` where `firstName` = "John"
     * `false` where `firstName` = "john"
 
+##### matches
+
+* Form
+  * `string1` matches `string2`
+* Arguments
+  * `string1` (required): the string to perform the check on
+  * `string2` (required): the regular expression to match against the first string.
+* Result
+  * Boolean: `true` if both strings are not null and the first string matches the second according to the normal rules of regular expression matching
+* Examples
+  * __firstName matches "John"__
+    * `true` where `firstName` = "John"
+    * `true` where `firstName` = "JOHN"
+    * `true` where `firstName` = "Johnny"
+    * `true` where `firstName` = "UpJohn"
+  * __person.firstName matches "(?i)john"__ (the inclusion of "(?i)" at the start of the regular expression specifies case insensitive matching)
+    * `true` where `firstName` = "John"
+    * `true` where `firstName` = "JOHN"
+    * `false` where `firstName` = "Johnny"
+    * `false` where `firstName` = "UpJohn"
+  * __person.firstName matches "^John"__
+    * `true` where `firstName` = "John"
+    * `false` where `firstName` = "JOHN"
+    * `true` where `firstName` = "Johnny"
+    * `false` where `firstName` = "UpJohn"
+  * __person.firstName matches "John$"__
+    * `true` where `firstName` = "John"
+    * `false` where `firstName` = "JOHN"
+    * `false` where `firstName` = "Johnny"
+    * `true` where `firstName` = "UpJohn"
+  * __person.firstName matches "J.hn"__
+    * `true` where `firstName` = "John"
+    * `false` where `firstName` = "JOHN"
+    * `true` where `firstName` = "Johnny"
+    * `true` where `firstName` = "UpJohn"
+    * `true` where `firstName` = "Jahn"
+  * person.firstName matches "^J.*n$"
+    * `true` where `firstName` = "John"
+    * `false` where `firstName` = "JOHN"
+    * `true` where `firstName` = "Jonathan"
+    * `false` where `firstName` = "Johnny"
+    * `false` where `firstName` = "UpJohn"
+    * `true` where `firstName` = "Jahn"
+
+
 ##### Notes on String functions
 
-* The String parameters to the above functions can be any String-valued PQL expressions, including string literals and string-valued XDM property references. As such, these functions can be used to compare an XDM string property to a fixed value, or to compare two XDM string properties.
-* The negative versions are not precisely the negations of the corresponding positive versions, due to how null values are treated.  For instance, an XDM property reference which turns out to be undefined during evaluation will return false for both contains and doesNotContain.
-* __equals__ and __notEqualTo__ are added as string-specific functions in order to support the case sensitivity switch parameter.  `=` and `!=` are maintained in PQL as before for use on any type, and imply case sensitivity when used on strings.
+* The String parameters to the above functions can be any String-valued PQL expressions, including string literals and string-valued XDM property references. As such, these functions can be used to compare an XDM string property to a fixed value, or to compare two XDM string properties
+* The negative versions are not precisely the negations of the corresponding positive versions, due to how null values are treated.  For instance, an XDM property reference which turns out to be undefined during evaluation will return false for both contains and doesNotContain
+* __equals__ and __notEqualTo__ are added as string-specific functions in order to support the case sensitivity switch parameter.  `=` and `!=` are maintained in PQL as before for use on any type, and imply case sensitivity when used on strings
 
-#### 3.3.5 List Functions
+#### 3.3.5 Arithmetic Functions
+
+##### + (addition)
+
+* Form
+  * `numericExpression1` + `numericExpression2`
+* Arguments
+  * `numericExpression1` (required):  A literal value or expression which resolves as a number
+  * `numericExpression2` (required):  A literal value or expression which resolves as a number
+* Result
+  * Numeric: the sum of the values of the two argument expressions
+* Examples
+  * __select X from xEvent where X.commerce.checkouts.value + X.commerce.cartAbandons.value > 1__
+
+##### * (multiplication)
+
+* Form
+  * `numericExpression1` * `numericExpression2`
+* Arguments
+  * `numericExpression1` (required):  A literal value or expression which resolves as a number
+  * `numericExpression2` (required):  A literal value or expression which resolves as a number
+* Result
+  * Numeric: the product of the values of the two argument expressions
+* Examples
+  * __select X from xEvent where X.commerce.checkouts.value * X.commerce.cartAbandons.value > 1__
+
+##### - (subtraction)
+
+* Form
+  `numericExpression1` - `numericExpression2`
+* Arguments
+  * `numericExpression1` (required):  A literal value or expression which resolves as a number
+  * `numericExpression2` (required):  A literal value or expression which resolves as a number
+* Result
+  * Numeric: the result of subtracting the value of the second argument expression from the value of the first
+* Examples
+  * __select X from xEvent where X.commerce.checkouts.value - X.commerce.cartAbandons.value > 1__
+
+##### / (division)
+
+* Form
+  * `numericExpression1` / `numericExpression2`
+* Arguments
+  * `numericExpression1` (required):  A literal value or expression which resolves as a number
+  * `numericExpression2` (required):  A literal value or expression which resolves as a number
+* Result
+  * Numeric: the result of dividing the value of the first argument expression by the value of the second.  If the value of the second expression is 0, null is returned.  In PQL execution, null values propagate upwards in the expression tree, until a boolean position is reached, at which point the null value is cast to false.  So, for example, the expression intField1/intField2 > 5 would evaluate to false if intField2 had value 0 on the profile in question.
+* Examples
+  * __select X from xEvent where X.commerce.checkouts.value / X.commerce.cartAbandons.value > 1__
+
+#### 3.3.6 Aggregation Functions
+
+##### sum
+
+* Form
+  * sum `numericExpression1` over `numericExpression2`
+* Arguments
+  * `numericExpression1` (required): An expression which resolves to a numeric value when applied to the elements represented by `numericExpression2`. This expression can reference any of the one or more elements represented by `numericExpression2`
+  * `numericExpression2` (required): PQL statement resolving as entities to use in `numericExpression1`) to sum, in the form `<V1> from <arrayExpr1>`
+* Result
+  * Numeric: the sum of the specified field across the records returned by the records returned by `numericExpression2`, or 0 if no records containing a non-zero value for the specified field are found
+* Examples
+  * __sum X.commerce.order.priceTotal over X from xEvent__
+  * __sum X.commerce.order.priceTotal over X from xEvent where X.commerce.order.currencyCode = "USD"__
+  * __(sum X.commerce.order.priceTotal over X from xEvent where X.commerce.order.currencyCode = "USD") > 1000__
+  * __(sum X.commerce.order.priceTotal + Y.commerce.order.priceTotal over X from xEvent where X.commerce.order, Y from xEvent where Y.commerce.order and Y.timestamp occurs < 2 weeks after X.timestamp) > 1000__
+
+The sum function also supports a simpler form which can be used for cases when `numericExpression2` resolves as a numeric array, rather than an array of elements having specific fields to sum. This is demonstrated by the following:
+
+__sum X from integerArray where X > 0__
+
+##### average
+
+* Form
+  * average `numericExpression` over `numericExpression2`
+* Arguments
+  * `numericExpression1` (required): An expression which resolves to a numeric value when applied to the elements represented by `numericExpression2`. This expression can reference any of the one or more elements represented by `numericExpression2`
+  * `numericExpression2` (required): PQL statement resolving as entities to use in `numericExpression1`) to average, in the form `<V1> from <arrayExpr1>`
+* Result
+  * Numeric: the average of the specified field across the records returned by the records returned by `numericExpression2`, or null if no records containing a non-null value for the specified field are found
+* Examples
+  * __average X.commerce.order.priceTotal over X from xEvent__
+  * __average X.commerce.order.priceTotal over X from xEvent where X.commerce.order.currencyCode = "USD"__
+  * __(average X.commerce.order.priceTotal over X from xEvent where X.commerce.order.currencyCode = "USD") > 1000__
+  * __(average X.commerce.order.priceTotal + Y.commerce.order.priceTotal over X from xEvent where X.commerce.order, Y from xEvent where Y.commerce.order and Y.timestamp occurs < 2 weeks after X.timestamp) > 1000__
+
+The average function also supports a simpler form which can be used for cases when `numericExpression2` resolves as a numeric array, rather than an array of elements having specific fields to average. This is demonstrated by the following:
+
+__average X from integerArray where X > 0__
+
+##### min
+* Form
+  * min `numericExpression` over `numericExpression2`
+* Arguments
+  * `numericExpression1` (required): An expression which resolves to a numeric value when applied to the elements represented by `numericExpression2`. This expression can reference any of the one or more elements represented by `numericExpression2`
+  * `numericExpression2` (required): PQL statement resolving as entities to use in `numericExpression1`) to min, in the form `<V1> from <arrayExpr1>`
+* Result
+  * Numeric: the min of the specified field across the records returned by the records returned by `numericExpression2`, or null if no records containing a non-null value for the specified field are found
+* Examples
+  * __min X.commerce.order.priceTotal over X from xEvent__
+  * __min X.commerce.order.priceTotal over X from xEvent where X.commerce.order.currencyCode = "USD"__
+  * __(min X.commerce.order.priceTotal over X from xEvent where X.commerce.order.currencyCode = "USD") > 1000__
+  * __(min X.commerce.order.priceTotal + Y.commerce.order.priceTotal over X from xEvent where X.commerce.order, Y from xEvent where Y.commerce.order and Y.timestamp occurs < 2 weeks after X.timestamp) > 1000__
+
+The min function also supports a simpler form which can be used for cases when `numericExpression2` resolves as a numeric array, rather than an array of elements having specific fields for which to get the min value. This is demonstrated by the following:
+
+__min X from integerArray where X > 0__
+
+##### max
+* Form
+  * max `numericExpression` over `numericExpression2`
+* Arguments
+  * `numericExpression1` (required): An expression which resolves to a numeric value when applied to the elements represented by `numericExpression2`. This expression can reference any of the one or more elements represented by `numericExpression2`
+  * `numericExpression2` (required): PQL statement resolving as entities to use in `numericExpression1`) to max, in the form `<V1> from <arrayExpr1>`
+* Result
+  * Numeric: the max of the specified field across the records returned by the records returned by `numericExpression2`, or null if no records containing a non-null value for the specified field are found
+* Examples
+  * __max X.commerce.order.priceTotal over X from xEvent__
+  * __max X.commerce.order.priceTotal over X from xEvent where X.commerce.order.currencyCode = "USD"__
+  * __(max X.commerce.order.priceTotal over X from xEvent where X.commerce.order.currencyCode = "USD") > 1000__
+  * __(max X.commerce.order.priceTotal + Y.commerce.order.priceTotal over X from xEvent where X.commerce.order, Y from xEvent where Y.commerce.order and Y.timestamp occurs < 2 weeks after X.timestamp) > 1000__
+
+The max function also supports a simpler form which can be used for cases when `numericExpression2` resolves as a numeric array, rather than an array of elements having specific fields for which to get the max value. This is demonstrated by the following:
+
+__max X from integerArray where X > 0__
+
+#### 3.3.7 List Functions
 
 The following describes functions that are available for comparing values with a list of literals.
 
@@ -359,7 +529,7 @@ The following describes functions that are available for comparing values with a
   * `integer` in `list of integers`
   * `double` in `list of doubles`
 * Arguments
-  * `string` (required): where the first parameter is a string, the second parameter is a list of strings which could be a [list literal](#list-literal) or a string array property of an entity which could be referenced using dot-notation. This function is case-sensitive and has no override allowing for case insensitivity.
+  * `string` (required): where the first parameter is a string, the second parameter is a list of strings which could be a [list literal](#list-literal) or a string array property of an entity which could be referenced using dot-notation. This function is case-sensitive and has no override allowing for case insensitivity
   * `integer` (required): where the first parameter is an integer, the second parameter is a list of integers which could be a [list literal](#list-literal) or an integer array property of an entity which could be referenced using dot-notation 
   * `double` (required): where the first parameter is a double, the second parameter is a list of doubles which could be a [list literal](#list-literal) or a double array property of an entity which could be referenced using dot-notation 
 * Result
@@ -367,16 +537,16 @@ The following describes functions that are available for comparing values with a
      * both values are not null
      * the first value is a member of the second value
 * Examples
-  * homeAddress.stateProvinceISO in ["CA", "OR"]
+  * __homeAddress.stateProvinceISO in ["CA", "OR"]__
     * `true` where `homeAddress.stateProvinceISO` = "OR"
     * `false` where `homeAddress.stateProvinceISO` = "or"
-  * birthMonth in [3, 4, 6] (note: birthMonth is referenced here as a hypothetical custom integer field of an XDM Profile)
+  * __birthMonth in [3, 4, 6]__ (note: birthMonth is referenced here as a hypothetical custom integer field of an XDM Profile)
     * `true` where `birthMonth` = March
     * `false` where `birthMonth` = May
-  * "London" in citiesVisited (note: citiesVisited is referenced here as a hypothetical custom string array field of an XDM Profile)
+  * __"London" in citiesVisited__ (note: citiesVisited is referenced here as a hypothetical custom string array field of an XDM Profile)
     * `true` where `person.citiesVisited` = ["London","Paris","New York"]
     * `false` where `person.citiesVisited` = ["london","paris","new york"]
-  * homeAddress.city in person.citiesVisited  (note: citiesVisited is referenced here as a hypothetical custom string array field of an XDM Profile)
+  * __homeAddress.city in person.favoriteCities__  (note: favoriteCities is referenced here as a hypothetical custom string array field of an XDM Person)
 
 ##### notIn
 
@@ -385,24 +555,54 @@ The following describes functions that are available for comparing values with a
   * `integer` notIn `list of integers`
   * `double` notIn `list of doubles`
 * Arguments
-  * `string` (required): where the first parameter is a string, the second parameter is a list of strings which could be a [list literal](#list-literal) or a string array property of an entity which could be referenced using dot-notation. This function is case-sensitive and has no override allowing for case insensitivity.
-  * `integer` (required): where the first parameter is an integer, the second parameter is a list of integers which could be a [list literal](#list-literal) or an integer array property of an entity which could be referenced using dot-notation 
-  * `double` (required): where the first parameter is a double, the second parameter is a list of doubles which could be a [list literal](#list-literal) or a double array property of an entity which could be referenced using dot-notation 
+  * `string` (required): where the first parameter is a string, the second parameter is a list of strings which could be a [list literal](#list-literal) or a string array property of an entity which could be referenced using dot-notation. This function is case-sensitive and has no override allowing for case insensitivity
+  * `integer` (required): where the first parameter is an integer, the second parameter is a list of integers which could be a [list literal](#list-literal) or an integer array property of an entity which could be referenced using dot-notation
+  * `double` (required): where the first parameter is a double, the second parameter is a list of doubles which could be a [list literal](#list-literal) or a double array property of an entity which could be referenced using dot-notation
 * Result
   * Boolean: `true` only if both of the following are true:
      * both values are not null <!-- QUESTION: documentation states: "Note: Due to condition a) above, notIn is not the exact negation of in" though condition a is the same for both in and notIn -->
      * the first value does not occur in the list of values represented by the second parameter
 * Examples
-  * homeAddress.stateProvinceISO notIn ["CA", "OR"]
+  * __homeAddress.stateProvinceISO notIn ["CA", "OR"]__
     * `true` where `homeAddress.stateProvinceISO` = "or"
     * `false` where `homeAddress.stateProvinceISO` = "OR"
-  * birthMonth notIn [3, 4, 6] (note: birthMonth is referenced here as a hypothetical custom integer field of an XDM Profile)
+  * __birthMonth notIn [3, 4, 6]__ (note: birthMonth is referenced here as a hypothetical custom integer field of an XDM Profile)
     * `true` where `birthMonth` = 5
     * `false` where `birthMonth` = 3
-  * "London" notIn citiesVisited (note: citiesVisited is referenced here as a hypothetical custom string array field of an XDM Profile)
-    * `true` where `person.citiesVisited` = ["Tokyo","Paris","New York"]
-    * `false` where `person.citiesVisited` = ["London","Paris","New York"]
-  * homeAddress.city notIn person.citiesVisited  (note: citiesVisited is referenced here as a hypothetical custom string array field of an XDM Profile)
+
+##### intersects
+
+Determine if two lists have one or more intersections.
+
+* Form
+  * `list1`.intersects(`list2`)
+* Arguments
+  * `list1` (required): An expression which evaluates to a list/array or a list literal
+  * `list2` (required): An expression which evaluates to a list/array or a list literal
+* Result
+  * Boolean: `true` only if both of the following are true:
+    * both arguments evaluate to values which are are not null and are lists or arrays
+    * the values have at least one item in common
+* Examples
+  *  __person.favoriteColors.intersects(["red", "blue", "green"])__ (note: favoriteColors is referenced here as a hypothetical custom list field of an XDM Person)
+    * `true` where `person.favoriteColors` = ["orange", "blue", "brown"] 
+    * `false` where `person.favoriteColors` = ["yellow", "violet"] 
+  * __not(person.citiesVisited.intersects(person.favoriteCities))__
+
+##### intersection
+
+* Form
+  * `list1`.intersection(`list2`)
+* Arguments
+  * `list1` (required): An expression which evaluates to a list/array or a list literal
+  * `list2` (required): An expression which evaluates to a list/array or a list literal
+* Result
+  * List: list of values found in common among both list arguments, or null if there are no intersections detected
+* Examples
+  * __person.favoriteColors.intersection(["red", "blue", "green"]).count() > 1__  (note: favoriteColors is referenced here as a hypothetical custom list field of an XDM Person)
+    * `["blue"]` where `person.favoriteColors` = ["orange", "blue", "brown"] 
+    * `null` where `person.favoriteColors` = ["yellow", "violet"] 
+  * __person.citiesVisited.intersection(person.favoriteCities).count() > 1__
 
 ## 4. Language examples
 

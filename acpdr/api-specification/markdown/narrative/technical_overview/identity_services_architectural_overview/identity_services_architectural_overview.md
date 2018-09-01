@@ -27,51 +27,20 @@ Customer/Partner IMS Org Id as created in Adobe's customer onboarding process. F
 
 ## 3. Ingesting XDM Data to Identity Graph
 
-### 3.1 Tag DataSet
+### 3.1 Decide on Identity Fields
 
-UIS maintains XDM data in the Identity graph which can be updated via batch or stream ingestion. XDM data can be ingested into the User Identity Service based on and triggered by batch data being [ingested](../ingest_architectural_overview/ingest_architectural_overview.md) and managed by Data Catalog Service.
-
-Enablement for ingestion by Identity graph is handled by a Tag on a DataSet, named specifically "unifiedIdentity".
-
-```
-PATCH https://platform.adobe.io/data/foundation/catalog/dataSets/5a7d26e92a6e55000086d459 HTTP/1.1
-
-Body:
-
-{
-    "tags" :  {
-        "unifiedIdentity": ["enabled:true"]
-    }
-}
-```
-
-Most use cases require data to be in both profiles and identity. Below tags enable your data to be ingested to both Profiles and Identity.
-
-```
-PATCH https://platform.adobe.io/data/foundation/catalog/dataSets/5a7d26e92a6e55000086d459 HTTP/1.1
-
-Body:
-
-{
-    "tags" :  {
-        "unifiedProfile": ["enabled:true", "identityField:identities.id"],
-        "unifiedIdentity": ["enabled:true"]
-    }
-}
-```
-
-### 3.2 Decide on Identity Fields
-
-Depending on your enterprise data collection strategy, you will decide which fields you want to mark as Identity.
+Depending on your enterprise data collection strategy, you will decide which fields you want to mark as identity.
+Some examples could be:
 
 * A Telecom company prefers ‘Phone Number’ in both offline and online data sets
 * A retail company relies on ‘Email address’ in offline data sets and MCID in online data sets (because of high percentage of anonymous visitors)
 * A bank prefers ‘Loyalty #’ in offline data sets and ‘login ID’ in online data sets (because 90% users are authenticated)
 * Companies like Adobe prefer ‘GUID’ which is their own proprietary ID
 
-### 3.3 Label Identity Fields
+### 3.2 Label Identity Fields
 
-Conforming to the Profile XDM, identities can be labeled by adding them to the `identity` array. For example: 
+
+When ingesting data conforming to the Profile XDM schema, specify the relevant IDs by adding them to the `identities` array. For example: 
 
 ```JSON
 {
@@ -101,7 +70,7 @@ Conforming to the Profile XDM, identities can be labeled by adding them to the `
 }
 ```
 
-Conforming to the ExperienceEvent XDM, identities can be labeled by mentioning within `endUserIds`:
+For data conforming to the ExperienceEvent XDM schema, identities can be provided as an entry in `endUserIds`:
 
 ```JSON
 {
@@ -129,6 +98,41 @@ Conforming to the ExperienceEvent XDM, identities can be labeled by mentioning w
   }
 }
 ```
+
+### 3.3 Tag DataSet
+
+UIS maintains XDM data in the identity graph which can be updated via batch or stream ingestion. XDM data can be ingested into the UIS based on and triggered by batch data being [ingested](../ingest_architectural_overview/ingest_architectural_overview.md) and managed by [Data Catalog Service](../catalog_architectural_overview/catalog_architectural_overview.md).
+
+Enablement for ingestion by identity graph is handled by a tag on a DataSet, named specifically "unifiedIdentity".
+
+```
+PATCH https://platform.adobe.io/data/foundation/catalog/dataSets/5a7d26e92a6e55000086d459 HTTP/1.1
+
+Body:
+
+{
+    "tags" :  {
+        "unifiedIdentity": ["enabled:true"]
+    }
+}
+```
+
+Most use cases require data to be used by both [Unified Profile Services](../unified_profile_architectural_overview/unified_profile_architectural_overview.md) and UIS. Below is an example of adding tags enable your data to be ingested to both systems.
+
+```
+PATCH https://platform.adobe.io/data/foundation/catalog/dataSets/5a7d26e92a6e55000086d459 HTTP/1.1
+
+Body:
+
+{
+    "tags" :  {
+        "unifiedProfile": ["enabled:true", "identityField:identities.id"],
+        "unifiedIdentity": ["enabled:true"]
+    }
+}
+```
+
+For more information on using and working with namespaces, review the Identity Namespace documentation [here](../identity_namespace_overview/identity_namespace_overview.md).
 
 ## 4. ECID - an essential tool
 
