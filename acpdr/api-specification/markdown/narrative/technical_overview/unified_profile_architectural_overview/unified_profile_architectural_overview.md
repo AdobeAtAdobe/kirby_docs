@@ -767,7 +767,7 @@ Example response:
 #### 5.4.2 Export Audience - Step 2: Generate XDM Profiles for Audience Members
 
 Trigger an Export Job to persist the audience members to the dataset from above by providing the `datasetId` from establishing the audience dataset in Step 1. 
-A Export Job is an asynchronous process triggered using a `POST` to `https://platform.adobe.io/data/core/ups/export/jobs` with a request body which defines:
+An Export Job is an asynchronous process triggered using a `POST` to `https://platform.adobe.io/data/core/ups/export/jobs` with a request body which defines:
 
 * `destination` (__required__) - Indicates the dataset into which to persist the members meeting the conditions of the related definition ("MyIsolatedProfilesDS_Id" from the example above)
 * `model` (__required__) - Names the XDM schema name of the members. A schema will only be relative to the IMS Org ID specified in API calls, preventing members from other Orgs' data from being accessible
