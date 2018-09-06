@@ -137,7 +137,8 @@ Where:
                     "id": "89149270342662559642753730269986316601",
                     "namespace": {
                         "code": "ecid"
-                    }
+                    },
+                    "primary": "true"
                 },
                 {
                     "id": "janedoe@example.com",
@@ -213,7 +214,8 @@ Let's look using the identities we used previously:
         "id": "89149270342662559642753730269986316601",
         "namespace": {
             "code": "ecid"
-        }
+        },
+        "primary": "true"
     },
     {
         "id": "janedoe@example.com",
@@ -279,7 +281,8 @@ An example of a successful response can be seen below. As you can see, this is t
                     "_id": "89149270342662559642753730269986316601",
                     "namespace": {
                         "code": "ecid"
-                    }
+                    },
+                    "primary": "true"
                 },
                 {
                     "_id": "janedoe@example.com",
