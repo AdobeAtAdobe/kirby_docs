@@ -15,23 +15,23 @@
  *
  *  Created by: David bEnGe
  *  not my circus, not my monkeys
- * 
- *  this gulp script helps move around git files from one repo to another and build a kirby starting manifest 
- * 
+ *
+ *  this gulp script helps move around git files from one repo to another and build a kirby starting manifest
+ *
  * ACP yaml location ref
  * profile-access.yaml = https://git.corp.adobe.com/raw/experience-platform/profile-access/master/docs/api/swagger.yaml
  * catalog.yaml = https://git.corp.adobe.com/experience-platform/catalog/raw/master/api/swagger/swagger.yaml
  * data-access-api.yaml = https://git.corp.adobe.com/experience-platform/data-access-api/raw/master/specs/data-access-api.yaml
  * profile-access.yaml = https://git.corp.adobe.com/experience-platform/bulk-ingest-api/raw/master/spec/swagger.yaml
- *  
+ *
  * yaml always remove these elements to remove unwanted UI bits - this is a work around until we can make our own views in swagger ui and host them in AEM 6.4
  * remove the schemes block
  * schemes:
  * - http
- * 
+ *
  * remove this too
  * securityDefinitions: {}
- * 
+ *
  */
 
 var gulp = require('gulp'),
@@ -61,7 +61,7 @@ function defaultTask(done) {
 gulp.task('clone-documents', done => {
     git.clone('git@git.corp.adobe.com:experience-platform/documentation.git',{cwd: "../"},function(err){
         if (err){
-            console.log('clone-documents error',err);
+            console.log('clone-documents error', err);
             done();
         }else{
             done();
@@ -81,8 +81,26 @@ gulp.task('pull-new-documents', done => {
     });
 })
 
+
+gulp.task('pull-new-staging-documents', done => {
+    git.pull('origin', 'staging',{cwd: "../documentation/"},function(err,stdout){
+        if (err){
+            console.log('pulling new staging documents error',err);
+            done();
+        }else{
+            console.log('pulling new staging documents',stdout);
+            done();
+        }
+    });
+})
+
 gulp.task('add-new-acp-documents', function() {
     return gulp.src('./acpdr/*')
+    .pipe(git.add())
+})
+
+gulp.task('add-new-acp-staging-documents', function() {
+    return gulp.src('./acpdr-staging/*')
     .pipe(git.add())
 })
 
@@ -91,13 +109,30 @@ gulp.task('commit-new-acp-documents', function() {
       .pipe(git.commit('auto import ' + (new Date).toISOString()));
 });
 
+gulp.task('commit-new-acp-staging-documents', function() {
+    return gulp.src('.')
+      .pipe(git.commit('auto import ' + (new Date).toISOString()));
+});
+
 gulp.task('push-new-acp-documents', done => {
     git.push('origin', 'master',function(err,stdout){
         if (err){
-            console.log('pulling new documents error',err);
+            console.log('pushing new documents error',err);
             done();
         }else{
-            console.log('pulling new documents',stdout);
+            console.log('pushing new documents',stdout);
+            done();
+        }
+    });
+});
+
+gulp.task('push-new-acp-staging-documents', done => {
+    git.push('origin', 'master',function(err,stdout){
+        if (err){
+            console.log('pushing new documents error',err);
+            done();
+        }else{
+            console.log('pushing new documents',stdout);
             done();
         }
     });
@@ -109,6 +144,14 @@ gulp.task('acp-move-markdown', function() {
     .pipe(debug())
     .pipe(cleanDest('acpdr/api-specification/markdown'))
     .pipe(gulp.dest('acpdr/api-specification/markdown'));
+});
+
+gulp.task('acp-move-staging-markdown', function() {
+    /* move in tutorials */
+    return gulp.src('../documentation/api-specification/markdown/**/*.{png,gif,jpg,md,PNG,GIF,JPG,MD}')
+    .pipe(debug())
+    .pipe(cleanDest('acpdr-staging/api-specification/markdown'))
+    .pipe(gulp.dest('acpdr-staging/api-specification/markdown'));
 });
 
 gulp.task('pull-kirby-documents', done => {
@@ -125,7 +168,15 @@ gulp.task('pull-kirby-documents', done => {
 
 gulp.task('acpImport',gulp.series('clone-documents','pull-new-documents','pull-kirby-documents','acp-move-markdown','add-new-acp-documents','commit-new-acp-documents','push-new-acp-documents', function(done) {
     console.log('acpImport...');
-    /* move in the files 
+    /* move in the files
+     * https://git.corp.adobe.com/experience-platform/documentation
+     */
+    done();
+}))
+
+gulp.task('acpStagingImport',gulp.series('clone-documents','pull-new-staging-documents','pull-kirby-documents','acp-move-staging-markdown','add-new-acp-staging-documents','commit-new-acp-staging-documents','push-new-acp-staging-documents', function(done) {
+    console.log('acpImport...');
+    /* move in the files
      * https://git.corp.adobe.com/experience-platform/documentation
      */
     done();
@@ -148,8 +199,8 @@ function acpBuildCatalogManifest(done) {
         return stringToFile('acpdr_catalog.json', JSON.stringify(manifest, null, '\t'))
         .pipe(gulp.dest('./'));
     })
-    
-    //log(JSON.stringify(manifest)); 
+
+    //log(JSON.stringify(manifest));
     done();
 }
 
@@ -170,8 +221,8 @@ function acpBuildTutorialsManifest(done) {
         return stringToFile('acpdr_tutorials.json', JSON.stringify(manifest, null, '\t'))
         .pipe(gulp.dest('./'));
     })
-    
-    //log(JSON.stringify(manifest)); 
+
+    //log(JSON.stringify(manifest));
     done();
 }
 
@@ -182,10 +233,10 @@ function getMMDDYY(targetDate) {
     var yyyy = targetDate.getFullYear();
     if(dd<10){
         dd='0'+dd;
-    } 
+    }
     if(mm<10){
         mm='0'+mm;
-    } 
+    }
     return dd+'/'+mm+'/'+yyyy;
 }
 
@@ -247,7 +298,7 @@ buildTree = function(es) {
         log("appRootPath " + appRootPath);
 
         var relPath = file.path.replace(appRootPath,"").substring(1);
-        
+
         var filenameBreakPath;
         var currentDepth;
         if(process.platform === "win32"){
@@ -285,7 +336,7 @@ buildTree = function(es) {
         log("file.path = " + file.path);
         log(" relPath " + relPath);
         log(" ============================END============================= ");
-        
+
         return cb();
     });
   };
