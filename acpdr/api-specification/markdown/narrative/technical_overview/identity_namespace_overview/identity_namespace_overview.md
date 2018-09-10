@@ -1,4 +1,4 @@
-[Swagger](../../../../../acpdr/swagger/id-namespace-api.yaml)
+[Swagger](../../../../../swagger/id-namespace-api.yaml)
 
 # Identity Namespace Overview
 
