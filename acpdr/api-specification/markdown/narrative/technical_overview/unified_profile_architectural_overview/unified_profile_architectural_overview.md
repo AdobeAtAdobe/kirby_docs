@@ -26,7 +26,7 @@ Both enablement and configuration for ingestion by Unified Profile are handled b
 
 ### 2.1 Batch Ingestion of Profile XDM DataSets
 
-The following is an example `PATCH` request adding the "unifiedProfile" Tag, where the record's ID is set to the value of the `identities.id` field. `identities` is an array in the XDM Profile schema. `identities.id`, then, will resolve to the `id` property of the first element in that array.
+The following is an example `PATCH` request adding the "unifiedProfile" Tag to a dataset using the dataset ID. The resulting profile ID is set to the value of the `identities.id` field. `identities` is an array in the XDM Profile schema. `identities.id`, then, will resolve to the `id` property of the first element in that array.
 
 __Example Data Catalog Service request - Add Unified Profile configuration Tag:__
 
@@ -45,7 +45,7 @@ Example body:
 
 ### 2.2 Batch Ingestion of ExperienceEvent XDM DataSets
 
-The following is an example `PATCH` request adding the "unifiedProfile" Tag for an ExperienceEvent dataset. 
+The following is an example `PATCH` request adding the "unifiedProfile" Tag for an ExperienceEvent dataset using the `datasetId`. 
 Initial releases limit ExperienceEvents to being related to only XDM Profiles, or extensions of the XDM Profile schema.    
 
 ```
@@ -63,12 +63,12 @@ Example body:
 
 ### 2.3 Determining if a DataSet is Enabled in Profile
 
-To check if a dataset has been enabled in UPS, use the Data Catalog Service API to `GET` the dataset. 
+To check if a dataset has been enabled in UPS, use the Data Catalog Service API to `GET` the dataset using the `datasetId`. 
 A dataset is enabled if it contains a `unifiedProfile` Tag with a colon-delimited property string for `enabledAt`. 
 The value of this tuple reports the time after which ingested Profile data would be made accessible via UPS. 
 
 ```
-GET https://platform.adobe.io/data/foundation/catalog/dataSets/{datasetId} HTTP/1.1
+GET https://platform.adobe.io/data/foundation/catalog/dataSets/5b020a27e7040801dedbf46e HTTP/1.1
 
 Example response: 
 
@@ -112,6 +112,45 @@ Once you have enabled a dataset for UPS and asserted it has been enabled, you ca
 
 Depending on the size of the data, batches take different amounts of time to ingest. 
 Poll the dataset for the status of the batch using the `batchId` from ingestion until the `status` in the response indicates completion ("success" or "failure"). 
+
+__Example request for batch status__
+
+```
+GET https://platform-stage.adobe.io/data/foundation/catalog/batches?batch=5b7129a879323401ef2a6486 HTTP/1.1 
+```
+
+__Example response__
+
+```
+{
+   "5b7129a879323401ef2a6486": {
+       "imsOrg": "F47E32E75AB004490A49403E@AdobeOrg",
+       "created": 1534142888068,
+       "createdClient": "acp_core_unifiedProfile_feeds",
+       "createdUser": "acp_core_unifiedProfile_feeds@AdobeID",
+       "updatedUser": "acp_core_unifiedProfile_feeds@AdobeID",
+       "updated": 1534142955152,
+       "replay": {},
+       "status": "success",
+       "errors": [],
+       "version": "1.0.3",
+       "availableDates": {},
+       "relatedObjects": [
+           {
+               "type": "batch",
+               "id": "29285e08378f4a41827e7e70fb7cb8f0"
+           }
+       ],
+       "metrics": {
+           "startTime": 1534142943819,
+           "endTime": 1534142951760,
+           "recordsRead": 108,
+           "recordsWritten": 108
+       }
+   }
+}
+```
+
 A recommended interval is two minutes. 
 For more information on working with Catalog datasets and batches, see [Data Catalog Services](../catalog_architectural_overview/catalog_architectural_overview.md). 
 
