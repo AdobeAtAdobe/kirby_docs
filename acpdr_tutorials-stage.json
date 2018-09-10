@@ -50,12 +50,6 @@
 					"title": "Configuring a Connector"
 				},
 				{
-					"importedFileName": "ansible_pql",
-					"pages": [],
-					"path": "end-user/markdown/ansible_overview/ansible_ui.md",
-					"title": "Ansible + PQL"
-				},
-				{
 					"importedFileName": "data_access_tutorial",
 					"pages": [],
 					"path": "api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md",
