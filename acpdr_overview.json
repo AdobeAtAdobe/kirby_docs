@@ -50,11 +50,6 @@
 			"pages": [
 				{
 					"pages": [],
-					"path": "api-specification/markdown/narrative/technical_overview/identity_namespace_overview/identity_services_api.md",
-					"title": "Identity Services API"
-				},
-				{
-					"pages": [],
 					"path": "api-specification/markdown/narrative/technical_overview/identity_namespace_overview/identity_namespace_overview.md",
 					"title": "Identity Namespace"
 				},
