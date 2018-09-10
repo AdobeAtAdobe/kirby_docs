@@ -174,12 +174,20 @@ gulp.task('acp-move-markdown', function() {
     .pipe(gulp.dest('acpdr/api-specification/markdown'));
 });
 
-gulp.task('acp-move-staging-markdown', function() {
+gulp.task('acp-move-staging-api-spec-markdown', function() {
     /* move in tutorials */
     return gulp.src('../staging-documentation/api-specification/markdown/**/*.{png,gif,jpg,md,PNG,GIF,JPG,MD}')
     .pipe(debug())
     .pipe(cleanDest('acpdr/api-specification/markdown'))
     .pipe(gulp.dest('acpdr/api-specification/markdown'));
+});
+
+gulp.task('acp-move-staging-end-user-markdown', function() {
+    /* move in tutorials */
+    return gulp.src('../staging-documentation/end-user/markdown/**/*.{png,gif,jpg,md,PNG,GIF,JPG,MD}')
+    .pipe(debug())
+    .pipe(cleanDest('acpdr/end-user/markdown'))
+    .pipe(gulp.dest('acpdr/end-user/markdown'));
 });
 
 gulp.task('add-new-acp-documents', function() {
@@ -234,7 +242,7 @@ gulp.task('acpImport',gulp.series('clone-documents','pull-new-documents','checko
     done();
 }))
 
-gulp.task('acpStagingImport',gulp.series('clone-staging-documents','pull-new-staging-documents','checkout-staging','pull-kirby-staging-documents','acp-move-staging-markdown', 'add-new-acp-staging-documents','commit-new-acp-staging-documents','push-new-acp-staging-documents', function(done) {
+gulp.task('acpStagingImport',gulp.series('clone-staging-documents','pull-new-staging-documents','checkout-staging','pull-kirby-staging-documents','acp-move-staging-api-spec-markdown', 'acp-move-staging-end-user-markdown', 'add-new-acp-staging-documents','commit-new-acp-staging-documents','push-new-acp-staging-documents', function(done) {
     console.log('acpStagingImport...');
     /* move in the files
      * https://git.corp.adobe.com/experience-platform/documentation
