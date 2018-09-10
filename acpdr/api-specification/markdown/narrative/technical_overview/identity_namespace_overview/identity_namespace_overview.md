@@ -1,3 +1,5 @@
+[Swagger](../../../../../swagger/id-namespace-api.yaml)
+
 # Identity Namespace Overview
 
 ## 1. Overview
