@@ -22,13 +22,45 @@
 		},
 		{
 			"pages": [],
-			"path": "api-specification/markdown/narrative/technical_overview/xdm_registry_architectural_overview/xdm_registry_architectural_overview.md",
-			"title": "XDM Registry"
+			"path": "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md",
+			"title": "Data Connectors"
 		},
 		{
 			"pages": [],
 			"path": "api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md",
 			"title": "Data Access"
+		},		
+		{
+			"pages": [
+				{
+					"pages": [],
+					"path": "end-user/markdown/xdm_schema_design_principles/schema_principles.md",
+					"title": "Schema Design Principles and Best Practices"
+				},
+				{
+					"pages": [],
+					"path": "end-user/markdown/acp_standard_schemas/acp_standard_schemas.md",
+					"title": "Adobe Cloud Platform: Using Standard Schemas"
+				},
+				{
+					"pages": [],
+					"path": "end-user/markdown/xdm_schema_design_principles/xdm_field_dictionary.md",
+					"title": "Experience Data Model: Field Dictionary"
+				},
+				{
+					"pages": [],
+					"path": "api-specification/markdown/narrative/technical_overview/xdm_registry_architectural_overview/xdm_registry_architectural_overview.md",
+					"title": "XDM Registry"
+				},
+				{
+					"pages": [],
+					"path": "end-user/markdown/acp_schema_registry/acp_schema_registry.md",
+					"title": "Adobe Cloud Platform: Schema Registry Developer Guide"
+				}	
+	
+			],
+			"path": "end-user/markdown/xdm_schema_design_principles/schema_principles.md",
+			"title": "XDM"
 		},
 		{
 			"pages": [
@@ -41,6 +73,12 @@
 					"pages": [],
 					"path": "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md",
 					"title": "Unified Profile Supported Queries"
+				},
+				{
+					"importedFileName": "ansible_pql",
+					"pages": [],
+					"path": "end-user/markdown/ansible_overview/ansible_ui.md",
+					"title": "Data Services Segment Builder"
 				}
 			],
 			"path": "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md",
@@ -66,38 +104,6 @@
 			"pages": [],
 			"path": "api-specification/markdown/narrative/integration_guides/etl_integration_guide/etl_integration_guide.md",
 			"title": "ETL Integration Guide"
-		},
-		{
-			"pages": [
-				{
-					"pages": [],
-					"path": "end-user/markdown/xdm_schema_design_principles/schema_principles.md",
-					"title": "Technical Overview: Schemas"
-				},
-				{
-					"pages": [],
-					"path": "end-user/markdown/acp_standard_schemas/acp_standard_schemas.md",
-					"title": "Technical Overview: Platform and Schema Use (XDM)"
-				},
-				{
-					"pages": [],
-					"path": "end-user/markdown/xdm_schema_design_principles/xdm_field_dictionary.md",
-					"title": "Technical Overview: Field Dictionary"
-				},
-				{
-					"pages": [],
-					"path": "end-user/markdown/acp_schema_registry/acp_schema_registry.md",
-					"title": "Technical Overview: XDM Registry Developer Guide"
-				}	
-	
-			],
-			"path": "end-user/markdown/xdm_schema_design_principles/schema_principles.md",
-			"title": "XDM"
-		},
-		{
-			"pages": [],
-			"path": "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md",
-			"title": "Data Connectors"
 		}
 	],
 	"app2app_map": {"api-specification/markdown/narrative/tutorials/":"/apis/cloudplatform/dataservices/tutorials/alltutorials.html"}
