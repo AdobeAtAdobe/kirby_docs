@@ -2,7 +2,7 @@
 <a name="getprofile"></a>
 ### Retrieve the profile associated with the id.
 ```
-GET /data/core/ups/models/Profile/{id}
+GET /data/core/ups/models/{model}/{id}
 ```
 
 
@@ -15,6 +15,7 @@ GET /data/core/ups/models/Profile/{id}
 |**Header**|**x-gw-ims-org-id**  <br>*required*|IMS Organization ID|string|
 |**Header**|**x-request-id**  <br>*optional*|Optional header that may be used for debugging purposes when investigating issues with a client flow. The same ID can be used to identify a single request to the service from a flow. A new ID should be created for each request.|string|
 |**Path**|**id**  <br>*required*|The id used for profile retrieval|string|
+|**Path**|**model**  <br>*required*|The XDM model / schema used of the profile being retrieved|string|
 |**Query**|**fields**  <br>*optional*|Comma separated list strings used for filtering|string|
 
 
@@ -49,7 +50,7 @@ GET /data/core/ups/models/Profile/{id}
 
 ##### Request path
 ```
-/data/core/ups/models/Profile/111-222-333
+/data/core/ups/models/profile/GbMCQm-uOYBLtxhNbYHfZqq6GPMi
 ```
 
 

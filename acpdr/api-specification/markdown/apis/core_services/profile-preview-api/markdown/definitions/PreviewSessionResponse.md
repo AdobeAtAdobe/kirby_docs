@@ -4,8 +4,8 @@
 
 |Name|Description|Schema|
 |---|---|---|
-|**previewSessionId**  <br>*required*|**Example** : `0`|integer (int32)|
-|**status**  <br>*required*|**Example** : `"string"`|string|
+|**previewSessionId**  <br>*optional*|Id of the session in which the queries will be executed  <br>**Example** : `0`|integer (int32)|
+|**status**  <br>*optional*|State of the session  <br>**Example** : `"string"`|string|
 
 
 

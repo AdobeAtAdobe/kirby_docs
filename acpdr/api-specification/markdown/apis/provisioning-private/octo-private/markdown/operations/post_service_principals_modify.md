@@ -26,9 +26,10 @@ POST /servicePrincipals
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**202**|Service principal create request received.|No Content|
+|**202**|Service principal create request received|No Content|
 |**400**|Service principal create bad request|No Content|
 |**403**|Failed authentication|No Content|
+|**409**|Service principal already exists|No Content|
 
 
 #### Tags

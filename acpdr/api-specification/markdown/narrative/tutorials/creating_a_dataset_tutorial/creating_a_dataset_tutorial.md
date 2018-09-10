@@ -11,25 +11,7 @@ This document is intended to provide a tutorial on creating and populating a cus
 * Signal to the server that the Batch has been completed
 * Verify that the operation was successful by reading back the data in the dataset using Data Access APIs
 
-Data can also be ingested via a connector. The tutorial to create and populate a dataset via a connector can be found [here](https://git.corp.adobe.com/experience-platform/documentation/blob/master/api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/creating_a_connector_tutorial.md)
-
-### 1.1. Audience
-This document is written for users who need to understand Adobe Cloud Platform and have to integrate the platform with customer-owned or third party systems. Users include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
-
-### 1.2. Version Information
-*Version* : Preview
-
-### 1.3. License Information
-Terms of service : https://www.adobe.com/legal/terms.html
-
-
-### 1.4. URI Scheme
-*Host* : __platform.adobe.io__  
-*Schemes* : __HTTPS__
-
-### 1.5. About the Docs
-
-The HTML rendition of this documentation is kept up-to-date on a per commit basis and can therefore change without announcement. If you require a persistent version of the documentation, it is recommended that you seek out the PDF rendition.
+Data can also be ingested via a connector. The tutorial to create and populate a dataset via a connector can be found [here](../creating_a_connector_tutorial/creating_a_connector_tutorial.md).
 
 ---
 
@@ -62,26 +44,26 @@ POST /xdms/{namespace}/{objectName}/_customer/{extensionNS}
 
 
 ```SHELL
-curl -X POST "https://platform.adobe.io/data/foundation/catalog/xdms/core/Person/_customer/CustomerCompany" /
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' /
-  -H 'x-api-key: {CLIENT_ID}' /
-  -H 'x-gw-ims-org-id: {IMS_ORG}' /
-  -H "content-type: application/json" /
-  -d "{JSON_PAYLOAD}"
+curl -X POST 'https://platform.adobe.io/data/foundation/catalog/xdms/core/Person/_customer/CustomerCompany' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {CLIENT_ID}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'content-type: application/json' \
+  -d '{JSON_PAYLOAD}'
 ```
 
 
 In our example we are putting our `Person` object in JSON format into the `{objectName}` field, `core` in the `{namespace}` field and `default` in the `{extensionNS}` field. This is because we want to extend the core `Person` entity in the IMS Org's namespace. Modifying this core entity will reflect also for all other datasets that use the `Person` entity. Lastly `default` refers to the extension namespace which is used for different branches of a company. In this case we are using `default` as an example.
 
 
-`{namespace}`: The base namespace. (E.g. core)  
-`{objectName}`: Name of the entity we want to extend.  
-`{extensionNS}`: Name of the extension namespace we want to put the extension in. (E.g. company branch)  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
+`{namespace}`: The base namespace. (E.g. core)
+`{objectName}`: Name of the entity we want to extend.
+`{extensionNS}`: Name of the extension namespace we want to put the extension in. (E.g. company branch)
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
 
-`{JSON_PAYLOAD}`: Data set to be posted. The example we use in our tutorial is here:  
+`{JSON_PAYLOAD}`: Data set to be posted. The example we use in our tutorial is here:
 
 ```JSON
 {
@@ -104,23 +86,23 @@ In our example we are putting our `Person` object in JSON format into the `{obje
 @/xdms/core/Person/_customer/CustomerCompany/
 ```
 
-We can verify our extension by querying `Person` entity object using a separate API call.  
+We can verify our extension by querying `Person` entity object using a separate API call.
 
 #### Request
 
 GET /xdms/{namespace}/{objectName}
 
 ```SHELL
-curl -X GET "https://platform.adobe.io/data/foundation/catalog/xdms/core/Person" /
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' /
-  -H 'x-api-key: {CLIENT_ID}' /
-  -H 'x-gw-ims-org-id: {IMS_ORG}' /
+curl -X GET 'https://platform.adobe.io/data/foundation/catalog/xdms/core/Person' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {CLIENT_ID}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
-`{namespace}`: The base namespace. (E.g. core)  
-`{objectName}`: Name of the entity we want to extend.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
+`{namespace}`: The base namespace. (E.g. core)
+`{objectName}`: Name of the entity we want to extend.
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
 
 #### Response
 
@@ -177,25 +159,25 @@ The `HairColor` extension is now shown under the `properties` key of `Person`. B
 
 #### 2.2.2. Creating a Dataset<a name="2_2_2_Header"></a>
 
-After extending the `Person` entity we can now create a dataset with the parent schema `Profile`. Remember that this parent schema will include the `HairColor` extended property. We can create the dataset using the following API call.  
+After extending the `Person` entity we can now create a dataset with the parent schema `Profile`. Remember that this parent schema will include the `HairColor` extended property. We can create the dataset using the following API call.
 
 #### Request
 
 POST /dataSets
 
 ```SHELL
-curl -X POST "https://platform.adobe.io/data/foundation/catalog/dataSets?requestDataSource=true" /
-  -H "accept: application/json" /
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' /
-  -H 'x-api-key: {CLIENT_ID}' /
-  -H 'x-gw-ims-org-id: {IMS_ORG}' /
-  -H "content-type: application/json" /
-  -d "{JSON_PAYLOAD}"
+curl -X POST 'https://platform.adobe.io/data/foundation/catalog/dataSets?requestDataSource=true' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {CLIENT_ID}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'content-type: application/json' \
+  -d '{JSON_PAYLOAD}'
 ```
 
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
 
 `{JSON_PAYLOAD}`: Data set to be posted. The example we used in our tutorial is here:
 
@@ -228,17 +210,18 @@ Before data can be added to a dataset, it must be linked to a batch, which will 
 POST /batches
 
 ```SHELL
-curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
--H "accept: application/json" \
--H "x-gw-ims-org-id: {IMS_ORG}" \
--H "Authorization: Bearer {ACCESS_TOKEN}" \
--H "x-api-key : {API_KEY}"  
--d '{"datasetId":"{DATASET_ID}"}'
+curl -X POST 'https://platform.adobe.io/data/foundation/import/batches' \
+  -H 'accept: application/json' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key : {API_KEY}'
+  -H 'content-type: application/json' \
+  -d '{"datasetId":"{DATASET_ID}"}'
 ```
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
 `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
-`{DATASET_ID}`: The ID of the dataset to upload the files into.  
+`{DATASET_ID}`: The ID of the dataset to upload the files into.
 
 
 #### Response
@@ -270,7 +253,7 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
 
 The response gives the batch ID which will be used in subsequent calls to upload files to and signal for promotion.
 
-`{BATCH_ID}`: The ID of the batch that was just created (used in subsequent calls).  
+`{BATCH_ID}`: The ID of the batch that was just created (used in subsequent calls).
 `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration
 
 
@@ -282,22 +265,24 @@ If the original file being uploaded is greater than 512 MB, it will need to be b
 
 #### Request
 
-PUT /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}  
+PUT /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
 
 ```SHELL
-curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.parquet" \
--H "content-type: application/octet-stream" \
--H "x-gw-ims-org-id: {IMG_ORG}" \
--H "Authorization: Bearer {ACCESS_TOKEN}" \
---data-binary "@{FILE_PATH_AND_NAME}.parquet"
+curl -X PUT 'https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.parquet' \
+  -H 'content-type: application/octet-stream' \
+  -H 'x-api-key : {API_KEY}'
+  -H 'x-gw-ims-org-id: {IMG_ORG}' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  --data-binary '@{FILE_PATH_AND_NAME}.parquet'
 ```
 
-`{BATCH_ID}`: The ID of the batch that was just created (used in subsequent calls).  
+`{BATCH_ID}`: The ID of the batch that was just created (used in subsequent calls).
 `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration
-`{DATASET_ID}`: The ID of the dataset to upload the files into.  
-`{FILE_NAME}` Name of file as it will be seen in the dataset.  
-`{FILE_PATH_AND_NAME}`: The path and filename of the file to be uploaded into the dataset.  
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.    
+`{DATASET_ID}`: The ID of the dataset to upload the files into.
+`{FILE_NAME}` Name of file as it will be seen in the dataset.
+`{FILE_PATH_AND_NAME}`: The path and filename of the file to be uploaded into the dataset.
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
 
 #### Response
 ```
@@ -306,23 +291,23 @@ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}
 
 #### 2.2.5. Signal Batch Completion
 
-After all data files have been uploaded to the batch, it can be signaled for promotion.  By doing this, the service knows to start creating Catalog DataSetFile entries for the promoted files and associate them with the Batch generated above. The Catalog Batch is marked successful which triggers any downstream flows that can then work on the now available data.  
+After all data files have been uploaded to the batch, it can be signaled for promotion.  By doing this, the service knows to start creating Catalog DataSetFile entries for the promoted files and associate them with the Batch generated above. The Catalog Batch is marked successful which triggers any downstream flows that can then work on the now available data.
 
 #### Request
 POST /batches/{BATCH_ID}?actions=PROMOTE
 
 
 ```SHELL
-curl -X POST "https://platform.adobe.io/data/foundation/import/batches/[BATCH_ID]?action=PROMOTE" \
--H "x-gw-ims-org-id: {IMG_ORG}" \
--H "Authorization: Bearer {ACCESS_TOKEN}" \
--H "x-api-key : {API_KEY}"
+curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=COMPLETE" \
+  -H 'x-api-key : {API_KEY}'
+  -H 'x-gw-ims-org-id: {IMG_ORG}' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}'
 ```
 
-`{BATCH_ID}`: The ID of the batch that was just created (used in subsequent calls).  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration  
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
+`{BATCH_ID}`: The ID of the batch that was just created (used in subsequent calls).
+`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
 
 #### Response
 ```
@@ -333,4 +318,4 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/[BATCH_ID
 
 With the batch ID you can use the Data Access APIs to get a list of files in the batch that you uploaded previously. The response will return an array containing a list of files IDs which reference the files in the batch. Next the files can be downloaded with the Data Access APIs. The name, size in bytes, and a link to download the file or folder will be returned.
 
-Detailed steps to do this can be found in the [Data Access Tutorial](../data_access_tutorial/data_access_tutorial.md) in sections 2. and 3.  
+Detailed steps to do this can be found in the [Data Access Tutorial](../data_access_tutorial/data_access_tutorial.md) in sections 2. and 3.

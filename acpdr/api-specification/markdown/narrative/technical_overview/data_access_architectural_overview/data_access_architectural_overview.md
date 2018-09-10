@@ -3,25 +3,6 @@
 ## 1. Overview
 The Data Access API provides users with a REST interface to access ingested data in Adobe Cloud Platform.
 
-### 1.1 Audience
-This document is aimed at technical personas and should be a useful tool for all users that need to consume the Adobe Cloud Platform APIs, understand the Adobe Cloud Platform architecture, or architect integrations between customer-owned and 3rd party systems with the Adobe Cloud Platform.
-
-Personas Include: Data Engineers, Data Architects, Data Scientists, App Developers
-
-### 1.2 Version Information
-*Version* : Preview
-
-### 1.3 License Information
-*Terms of service* : https://www.adobe.com/legal/terms.html
-
-### 1.4 URI Scheme
-*Host* : __platform.adobe.io__   
-*BasePath* : __/data/foundation/export/__  
-*Schemes* : __HTTPS__  
-
-### 1.5 About the Docs
-The HTML rendition of this documentation is kept up-to-date on a per commit basis and can therefore change without announcement. If you require a persistent version of the documentation, it is recommended that you seek out the PDF rendition.
-
 ---
 
 ## 2 What is Data Access API?
@@ -29,7 +10,7 @@ The Data Access API supports Adobe Cloud Platform by providing users with a REST
 
 
 ## 3 API Specification Reference
-The Swagger API reference documentation can be found [here](../apireference.html#!acpdr/data-access-api.yaml)
+The Swagger API reference documentation can be found [here](../apireference.html#!acpdr/swagger/data-access-api.yaml)
 
 
 ## 4 High-level Architecture Diagram
@@ -58,10 +39,10 @@ curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-* `BATCH_ID`: The ID of the batch to retrieve from  
-* `ACCESS_TOKEN`: Token provided after authentication.  
-* `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+* `BATCH_ID`: The ID of the batch to retrieve from
+* `ACCESS_TOKEN`: Token provided after authentication.
+* `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
 
 #### Response
 ```JSON
@@ -104,9 +85,9 @@ curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/
 
 The data array returned contains a list of all files within the specified batch. Each file returned has its own unique ID (file ID) contained within the dataSetFileId field. This unique ID can then be used to access or download the file.
 
-* `FILE_ID_1`: The file ID of the first file in the specified batch  
-* `FILE_ID_2`: The file ID of the second file in the specified batch   
-* `_link > self > href`: The url to access the file  
+* `FILE_ID_1`: The file ID of the first file in the specified batch
+* `FILE_ID_2`: The file ID of the second file in the specified batch
+* `_link > self > href`: The url to access the file
 
 
 
@@ -127,9 +108,9 @@ curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID} \
 ```
 
 * `FILE_ID`: The ID of the file to access
-* `ACCESS_TOKEN`: Token provided after authentication.  
-* `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+* `ACCESS_TOKEN`: Token provided after authentication.
+* `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
 
 #### Response (Case 1 : Response points to a single file)
 ```JSON
@@ -140,7 +121,7 @@ curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID} \
       "length": "{LENGTH}",
       "_links": {
         "self": {
-          "href": "https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?path={FILE_NAME}"        
+          "href": "https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?path={FILE_NAME}"
         }
       }
     }
@@ -216,9 +197,9 @@ curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?pat
 
 * `FILE_ID`: The ID of the file within a dataset
 * `FILE_NAME`: The full name of the file (E.g. profiles.csv)
-* `ACCESS_TOKEN`: Token provided after authentication.  
-* `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+* `ACCESS_TOKEN`: Token provided after authentication.
+* `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
 
 #### Response
 

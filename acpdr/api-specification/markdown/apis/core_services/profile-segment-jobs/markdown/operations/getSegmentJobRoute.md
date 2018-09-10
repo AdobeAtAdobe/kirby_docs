@@ -2,7 +2,7 @@
 <a name="getsegmentjobroute"></a>
 ### Returns the Profile Segment Job
 ```
-GET /jobs/{jobId}
+GET /segment/jobs/{segmentJobId}
 ```
 
 
@@ -11,7 +11,7 @@ GET /jobs/{jobId}
 |Type|Name|Description|Schema|
 |---|---|---|---|
 |**Header**|**x-gw-ims-org-id**  <br>*required*|IMS Organization ID|string|
-|**Path**|**jobId**  <br>*required*|Segment Job Id|string|
+|**Path**|**segmentJobId**  <br>*required*|Segment Job Id|string|
 
 
 #### Responses
@@ -31,14 +31,14 @@ GET /jobs/{jobId}
 
 #### Tags
 
-* jobs
+* segmentjobs
 
 
 #### Example HTTP request
 
 ##### Request path
 ```
-/jobs/12345678
+/segment/jobs/12345678
 ```
 
 
@@ -68,7 +68,7 @@ json :
     "computeJobId" : 0,
     "dataStart" : "string",
     "dataEnd" : "string",
-    "dataGraphType" : "string",
+    "graphType" : "string",
     "sink" : "string",
     "mergeStrategy" : "string",
     "creationTime" : "string",

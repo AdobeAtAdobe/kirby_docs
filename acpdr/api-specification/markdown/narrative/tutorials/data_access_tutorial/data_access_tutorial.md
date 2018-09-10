@@ -7,29 +7,9 @@ In this step by step tutorial, we will focus on how to locate, access, and downl
 * Retrieving the files belonging to a batch
 * Accessing the file and downloading the data
 
-
-### 1.1 Audience
-This document is aimed at technical personas and should be a useful tool for all users that need to consume Adobe Cloud Platform APIs, understand Adobe Cloud Platform architecture, or architect integrations between customer-owned and 3rd party systems with Adobe Cloud Platform.
-
-Personas Include: Data Engineers, Data Architects, Data Scientists, App Developers
-
-### 1.2 Version Information
-*Version* : Preview
-
-### 1.3 License Information
-*Terms of service* : https://www.adobe.com/legal/terms.html
-
-### 1.4 URI Scheme
-*Host* : __platform.adobe.io__   
-*BasePath* : __/data/foundation/export/__  
-*Schemes* : __HTTPS__  
-
-### 1.5 About the Docs
-The HTML rendition of this documentation is kept up-to-date on a per commit basis and can therefore change without announcement. If you require a persistent version of the documentation, it is recommended that you seek out the PDF rendition.
-
 ---
 
-## Prerequisites
+## 1.1 Prerequisites
 
 * A valid [Access Token](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) (ACCESS_TOKEN)
 * API key (API_KEY)
@@ -38,7 +18,7 @@ The HTML rendition of this documentation is kept up-to-date on a per commit basi
 
 ---
 
-## Sequence Diagram
+## 1.2 Sequence Diagram
 This tutorial will follow the steps indicated in the sequence diagram below to go over the main functionalities of the Data Access API.
 ![](sequence_diagram.png)
 
@@ -46,7 +26,7 @@ We will begin by retrieving information regarding batches and files using the Ca
 
 ---
 
-## 1 Locating The Data
+## 2 Locating The Data
 Before we can begin to use the Data Access API, you'll need to identify the location of the data that you want to work on. Using the Catalog API, we can browse an organization's metadata and retrieve the id of a batch or file that we wish want to access. To that end, two endpoints within the Catalog API are of interest:
 
 1. GET /batches : Returns a list of batches under your organization (batchID)
@@ -55,7 +35,7 @@ Before we can begin to use the Data Access API, you'll need to identify the loca
 For more information regarding the Catalog API, please refer to the [API Reference](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html)
 
 
-### 1.1 Retrieving a list of batches under your IMS Organization
+### 2.1 Retrieving a list of batches under your IMS Organization
 
 Using the Catalog API, you can return a list of batches under your organization.
 
@@ -63,20 +43,20 @@ Using the Catalog API, you can return a list of batches under your organization.
 GET /batches
 
 ```shell
-curl -X GET https://platform.adobe.io/data/foundation/catalog/batches/ \
+curl -X GET 'https://platform.adobe.io/data/foundation/catalog/batches/' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-* `ACCESS_TOKEN`: Token provided after authentication.  
-* `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+* `ACCESS_TOKEN`: Token provided after authentication.
+* `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
 
 
 ##### Response
 
-```
+```json
 {
     "{BATCH_ID_1}": {
         "imsOrg": "EDCE5A655A5E73FF0A494113@AdobeOrg",
@@ -97,7 +77,7 @@ curl -X GET https://platform.adobe.io/data/foundation/catalog/batches/ \
 
 The response will include a list of all the batches under the organization ID. The batch identifer is represented by the unique key of each result within the response. In the response above, this refers to `{BATCH_ID_1}` and `{BATCH_ID_2}`.
 
-### 1.2. Filtering the list of batches
+### 2.2. Filtering the list of batches
 
 Oftentimes, filters are required to zero in on a particular batch in order to retrieve relevant data for a particular use case. Parameters can be added to the `GET /batches` request in order to filter the returned response. The request below will return all batches created after a specified time, within a particular data set, sorted by when they were created.
 
@@ -105,7 +85,7 @@ Oftentimes, filters are required to zero in on a particular batch in order to re
 GET /batches?createdAfter={START_TIMESTAMP}&dataSet={DATASET_ID}&sort=desc:created"
 
 ```shell
-curl -X GET https://platform.adobe.io/data/foundation/catalog/batches?createdAfter={START_TIMESTAMP}&dataSet={DATASET_ID}&orderBy=desc:created \  
+curl -X GET 'https://platform.adobe.io/data/foundation/catalog/batches?createdAfter={START_TIMESTAMP}&dataSet={DATASET_ID}&orderBy=desc:created' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
@@ -179,7 +159,7 @@ A full list of parameters and filters can be found in the [Catalog API Reference
 
 ---
 
-## 2. Retrieve a list of all files belonging to a particular batch
+## 3. Retrieve a list of all files belonging to a particular batch
 
 Now that we have the ID of the batch that we're looking for, we can use the Data Access API to get a list of files belonging to a particular batch.
 
@@ -187,15 +167,15 @@ Now that we have the ID of the batch that we're looking for, we can use the Data
 GET /batches/{BATCH_ID}/files
 
 ```shell
-curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/files \
+curl -X GET 'https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/files' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
-* `BATCH_ID`: Batch identifier of the batch that we are trying to access.  
-* `ACCESS_TOKEN`: Token provided after authentication.  
-* `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+* `BATCH_ID`: Batch identifier of the batch that we are trying to access.
+* `ACCESS_TOKEN`: Token provided after authentication.
+* `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
 
 
 ##### Response
@@ -231,7 +211,7 @@ In the response above:
 
 ---
 
-### 3. Access a file using File ID
+### 4. Access a file using File ID
 
 Using the unique file ID, the data access API can then be used to access the specific details of the file, including its name, size in bytes, and a link to download it.
 
@@ -239,7 +219,7 @@ Using the unique file ID, the data access API can then be used to access the spe
 GET /files/{dataSetFileId}
 
 ```shell
-curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID} \
+curl -X GET 'https://platform.adobe.io/data/foundation/export/files/{FILE_ID}' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
@@ -319,14 +299,14 @@ We can see that a directory containing two files have been returned. In this sce
 
 ---
 
-### 4. Retrieving metadata using File ID <a name="HEAD_METADATA"></a>
+### 5. Retrieving metadata using File ID <a name="HEAD_METADATA"></a>
 The metadata of a file can be retrieved by making a HEAD request. This will return the file's metadata headers, including its size in bytes and file format.
 
 ##### Request
 HEAD /files/{dataSetFileId}?path={fileName}
 
 ```shell
-curl -X HEAD https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?path={FILE_NAME} \
+curl -I 'https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?path={FILE_NAME}' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
@@ -336,20 +316,20 @@ curl -X HEAD https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?pa
 * `FILE_NAME` is the file name (E.g. profiles.parquet)
 
 ##### Response
-The response header contains the metadata of the queried file:  
+The response header contains the metadata of the queried file:
 * Content-Length which indicates the size of the payload (Bytes)
 * Content-type, which indicates the type of file.
 
 ---
 
-### 5. Access the contents of a file
+### 6. Access the contents of a file
 The Data Access API can also be used to access the contents of a file.
 
 ##### Request
 GET /files/{dataSetFileId}?path={file_name}
 
 ```shell
-curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?path={FILE_NAME} \
+curl -X GET 'https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?path={FILE_NAME}' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
@@ -365,7 +345,7 @@ curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?pat
 
 ---
 
-### 6. Pagination
+### 7. Pagination
 
 Responses within the Data Access API are paginated. By default, the number of entries per page is 100. Paging parameters can be used to modify the default behavior.
 
@@ -377,13 +357,13 @@ Responses within the Data Access API are paginated. By default, the number of en
 GET /batches/{BATCH_ID}/files
 
 ```shell
-curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/files?start={OFFSET}&limit={LIMIT} \
+curl -X GET 'https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/files?start={OFFSET}&limit={LIMIT}' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-* `BATCH_ID`: Batch identifier of the batch that we are trying to access.  
+* `BATCH_ID`: Batch identifier of the batch that we are trying to access.
 * `OFFSET` is the specified index to start the result array (E.g. start=1)
 * `LIMIT` controls how many results gets returned in the result array (E.g. limit=0)
 
@@ -423,14 +403,14 @@ curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/
 
 The response will contain a single file element in the data array (limit = 1). Since the offset is set to 0, the very first file in the result array will get returned. The next link within the response will have the url to the next page of responses with the offset set to 1.
 
-* `{FILE_ID_1}`: the file id of the first file that gets returned  
+* `{FILE_ID_1}`: the file id of the first file that gets returned
 * `data > _links > self > href`: url to access the first file
 * `_links > next > href` url to access the next page
 
 
 ---
 
-### 7. Partial File Downloads
+### 8. Partial File Downloads
 The Data Access API allows for downloading files in chunks. A range header can be specified during a GET /files/{FILE_ID} request to download a specific range of bytes from a file. If the range is not specified, the API will download the entire file by default.
 
 The HEAD example in [Section 4](#HEAD_METADATA) gives the size of a specific file in bytes.
@@ -439,11 +419,11 @@ The HEAD example in [Section 4](#HEAD_METADATA) gives the size of a specific fil
 GET /files/{dataSetFileId}?path={file_name}
 
 ```shell
-curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?path={FILE_NAME} \
+curl -X GET 'https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?path={FILE_NAME}' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H "Range: bytes=0-99"
+  -H 'Range: bytes=0-99'
 ```
 
 * `FILE_ID` is the file's identifier

@@ -35,11 +35,11 @@
 <a name="ref-returns-job-payload"></a>
 ### [Returns a Job Payload](operations/Returns_Job_Payload.md#returns-job-payload)
 
-<a name="ref-get-list-of-service-principals-by-filter-pattern"></a>
-### [Returns service principals info](operations/Get_list_of_service_principals_by_filter_pattern.md#get-list-of-service-principals-by-filter-pattern)
+<a name="ref-returns-service-principal"></a>
+### [Returns a List of All Service Principals from DB](operations/Returns_Service_Principal.md#returns-service-principal)
 
-<a name="ref-get_service_principals_read"></a>
-### [Returns service principals info](operations/get_service_principals_read.md#get_service_principals_read)
+<a name="ref-returns-service-principal"></a>
+### [Returns a Service Principal](operations/Returns_Service_Principal.md#returns-service-principal)
 
 <a name="ref-create-a-subscription"></a>
 ### [Creates a Subscription](operations/Create_a_Subscription.md#create-a-subscription)
@@ -88,6 +88,15 @@
 
 <a name="ref-get_service_principals_read"></a>
 ### [Returns service principals info](operations/get_service_principals_read.md#get_service_principals_read)
+
+<a name="ref-post_service_principals_role_assignments"></a>
+### [Add Service Principal Role Assignment](operations/post_service_principals_role_assignments.md#post_service_principals_role_assignments)
+
+<a name="ref-delete_service_principals_role_assignments"></a>
+### [Delete Service Principal Role Assignment](operations/delete_service_principals_role_assignments.md#delete_service_principals_role_assignments)
+
+<a name="ref-get_service_principals_role_assignments_read"></a>
+### [Returns service principals info](operations/get_service_principals_role_assignments_read.md#get_service_principals_role_assignments_read)
 
 <a name="ref-get_scale_sets_read"></a>
 ### [Returns Azure scale sets capacity](operations/get_scale_sets_read.md#get_scale_sets_read)

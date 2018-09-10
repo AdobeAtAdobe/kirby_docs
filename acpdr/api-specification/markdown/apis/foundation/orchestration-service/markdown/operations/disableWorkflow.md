@@ -22,7 +22,7 @@ Disables a workflow. Disabled workflows cannot be scheduled or triggered
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**200**|OK|No Content|
+|**204**|No Content|No Content|
 |**400**|Bad Request|string|
 |**401**|Unauthorized access.|No Content|
 |**500**|Internal Server Error|No Content|

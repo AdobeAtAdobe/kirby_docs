@@ -8,10 +8,11 @@ POST /previewsession/{sessionId}/initialize
 
 #### Parameters
 
-|Type|Name|Description|Schema|
-|---|---|---|---|
-|**Header**|**x-gw-ims-org-id**  <br>*required*|IMS Client Id|string|
-|**Path**|**sessionId**  <br>*required*|Preview Session Id.|string|
+|Type|Name|Description|Schema|Default|
+|---|---|---|---|---|
+|**Header**|**x-gw-ims-org-id**  <br>*required*|IMS Client Id|string||
+|**Header**|**x-use-sample**  <br>*optional*|Run on full collection|string|`"true"`|
+|**Path**|**sessionId**  <br>*required*|Preview Session Id.|string||
 
 
 #### Body parameter
@@ -54,7 +55,7 @@ modelName: XDM Model on which we are going to run our queries.
 ##### Request header
 ```
 json :
-"southwest@adobe.com"
+"true"
 ```
 
 

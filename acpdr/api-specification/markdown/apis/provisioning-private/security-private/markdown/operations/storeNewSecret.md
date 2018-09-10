@@ -20,7 +20,7 @@ Secret to Store
 
 *Name* : body  
 *Flags* : required  
-*Type* : [SecretStoreRequest](../definitions/SecretStoreRequest.md#secretstorerequest)
+*Type* : [SecretRequest](../definitions/SecretRequest.md#secretrequest)
 
 
 #### Responses
@@ -66,7 +66,8 @@ json :
 ```
 json :
 {
-  "secret" : "P4$$vv0r|)"
+  "secret" : "P4$$vv0r|)",
+  "secretUrl" : "https://test.vault.azure.net/secrets/SECRETNAME"
 }
 ```
 

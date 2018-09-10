@@ -1,6 +1,6 @@
 
 <a name="putmodelobjectroute"></a>
-### Puts XDM Model objects into the Unified Profile Store.
+### Puts XDM Model objects into Unified Profile Store.
 ```
 PUT /{model}
 ```
@@ -10,7 +10,7 @@ PUT /{model}
 
 |Type|Name|Description|Schema|
 |---|---|---|---|
-|**Header**|**x-gw-ims-org-id**  <br>*required*|IMS Client Id|string|
+|**Header**|**x-gw-ims-org-id**  <br>*required*|IMS Organization ID|string|
 |**Path**|**model**  <br>*required*|Name of XDM model. Case in-sensitive.|string|
 
 
@@ -26,10 +26,10 @@ List of XDM Model objects to be put. Each should be in Json format.
 
 |HTTP Code|Description|Schema|
 |---|---|---|
-|**200**|Objects created successfully.|No Content|
-|**403**|You are forbidden to make this request.|No Content|
-|**422**|Failed to create the objects.|[FailedModelObjectRecord](../definitions/FailedModelObjectRecord.md#failedmodelobjectrecord)|
-|**503**|Service unavailable|No Content|
+|**200**|XDM Model objects created successfully.|< [ModelObjectEntity](../definitions/ModelObjectEntity.md#modelobjectentity) > array|
+|**403**|You are forbidden to make this request.|[ErrorMessage](../definitions/ErrorMessage.md#errormessage)|
+|**422**|Failed to create XDM Model objects|[FailedModelObjectRecord](../definitions/FailedModelObjectRecord.md#failedmodelobjectrecord)|
+|**503**|Service Unavailable|No Content|
 
 
 #### Consumes
@@ -58,7 +58,7 @@ List of XDM Model objects to be put. Each should be in Json format.
 ##### Request header
 ```
 json :
-"123@AdobeOrg"
+"1BD6382559DF0C130A49422D@AdobeOrg"
 ```
 
 
@@ -78,11 +78,42 @@ json :
 
 #### Example HTTP response
 
+##### Response 200
+```
+json :
+[ {
+  "recordId" : "string",
+  "timestamp" : "string",
+  "sourceId" : "string",
+  "record" : {
+    "string" : 0.0
+  }
+} ]
+```
+
+
+##### Response 403
+```
+json :
+{
+  "errorCode" : "string",
+  "errorMessage" : "string"
+}
+```
+
+
 ##### Response 422
 ```
 json :
 {
-  "record" : "object",
+  "record" : {
+    "recordId" : "string",
+    "timestamp" : "string",
+    "sourceId" : "string",
+    "record" : {
+      "string" : 0.0
+    }
+  },
   "failedReason" : "string"
 }
 ```

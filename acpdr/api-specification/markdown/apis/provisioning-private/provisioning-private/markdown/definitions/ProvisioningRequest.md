@@ -9,6 +9,7 @@ Provisioning API Request Object
 |**customer**  <br>*optional*|Customer Information  <br>**Example** : `"[customer](#customer)"`|[Customer](Customer.md#customer)|
 |**entitlement**  <br>*optional*|Entitlement  <br>**Example** : `"[entitlement](#entitlement)"`|[Entitlement](Entitlement.md#entitlement)|
 |**reports**  <br>*optional*|Reports  <br>**Example** : `"[reports](#reports)"`|[Reports](Reports.md#reports)|
+|**subscriptionId**  <br>*optional*|**Example** : `"string"`|string|
 
 
 

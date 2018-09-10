@@ -2,7 +2,7 @@
 <a name="postsegmentjobroute"></a>
 ### Posts a Profile Segment Job
 ```
-POST /jobs
+POST /segment/jobs
 ```
 
 
@@ -26,7 +26,7 @@ dataStart - Start timestamp to process to evaluate this predicate if XDM Model O
 
 dataEnd - End timestamp to process to evaluate this predicate if XDM Model Object contains time series events also. If this attribute is missing, this job would consider the data Unified Profile Service has till the time of execution of the job.
 
-dataGraphType - Graph Type you want to get the cluster from. Possible values are (coop - graph built by using coop data, pdg - private device graph, psr - propriatery stiched rules)
+dgraphType - Graph Type you want to get the cluster from. Possible values are (coop - graph built by using coop data, pdg - private device graph, psr - propriatery stiched rules)
 
 sink - sink is where results of segmentation job is published as and when they are computed. This is comma separated list of the locations of the fields in the profile store which need to be updated with the segmentation result. There needs to exactly one entry per predicate in this list.
 
@@ -59,7 +59,7 @@ sink - sink is where results of segmentation job is published as and when they a
 
 ##### Request path
 ```
-/jobs
+/segment/jobs
 ```
 
 
@@ -80,7 +80,7 @@ json :
   "model" : "string",
   "dataStart" : "string",
   "dataEnd" : "string",
-  "dataGraphType" : "string",
+  "graphType" : "string",
   "sink" : "string"
 }
 ```
@@ -105,7 +105,7 @@ json :
     "computeJobId" : 0,
     "dataStart" : "string",
     "dataEnd" : "string",
-    "dataGraphType" : "string",
+    "graphType" : "string",
     "sink" : "string",
     "mergeStrategy" : "string",
     "creationTime" : "string",

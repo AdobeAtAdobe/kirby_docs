@@ -10,25 +10,6 @@ The Data Catalog serves on the Adobe Cloud Platform as the system of record for 
 * What errors occurred during processing?
 * If successful, how much data was processed?
 
-### 1.1 Audience
-
-This document is aimed at technical personas and should be a useful tool for all users that need to:
-
-* Consume the Adobe Cloud Platform APIs
-* Understand the Adobe Cloud Platform Architecture
-* Understand how Data Catalog Services work on the Adobe Cloud Platform
-* Architect integrations between customer-owned and 3rd party systems and the Adobe Cloud Platform
-
-### 1.2 URI Scheme
-
-*Host* : __platform.adobe.io__   
-*BasePath* : __/data/foundation/catalog/__  
-*Schemes* : __HTTPS__  
-
-### 1.3 About the Docs
-
-The HTML rendition of this documentation is kept up-to-date on a per commit basis and can therefore change without announcement. If you require a persistent version of the documentation, it is recommended that you seek out the PDF rendition.
-
 ---
 
 ## 2. Using the Data Catalog API
@@ -42,12 +23,12 @@ Often it's desirable to request a specific collection of objects based on their 
 __Example Catalog Service request, demonstrating a multi-object request:__
 
 ```
-GET /dataSets/5601dc3ee91c55aa3834b607,0ad0554e4fa033861780c2962e,...
+GET /dataSets/5601dc3ee91c55aa3834b607,0ad0554e4fa033861780c2962e,…
 ```
 
 ### 2.2 Expansions
 
-The Data Catalog manages objects that are interrelated. Some fields are returned in XDM responses as an abbreviated representation of an underlying list of values by default. These are prefixed with @, such as `@/dataSets/58ed485dee812c05a7cfc8d0/views/58ed4a86215b2f0c215a4539/files`. This is an example of an expandable field which could be returned in its full detailed form using the `expansions` request parameter. 
+The Data Catalog manages objects that are interrelated. Some fields are returned in XDM responses as an abbreviated representation of an underlying list of values by default. These are prefixed with @, such as `@/dataSets/58ed485dee812c05a7cfc8d0/views/58ed4a86215b2f0c215a4539/files`. This is an example of an expandable field which could be returned in its full detailed form using the `expansions` request parameter.
 
 For example, a query for a particular DataSet yields a record that contains several expandable fields and you would like to retrieve detailed, expanded list of all Transforms.
 
@@ -102,7 +83,7 @@ __Example Data Catalog Service response, demonstrating the result of the `expans
 
 ### 2.3 PUT vs PATCH
 
-While PATCH is a well known method for REST services, there are a few notes about how it operates in Data Catalog. The distinction between PUT and PATCH is an important one, as PUT will replace the entire resource with the presented payload, and PATCH will simply modify only the fields provided in the request. One of the most common mistakes to make with Data Catalog is to use PUT when the desired action requires PATCH.  
+While PATCH is a well known method for REST services, there are a few notes about how it operates in Data Catalog. The distinction between PUT and PATCH is an important one, as PUT will replace the entire resource with the presented payload, and PATCH will simply modify only the fields provided in the request. One of the most common mistakes to make with Data Catalog is to use PUT when the desired action requires PATCH.
 
 Data Catalog Services supports two methods for PATCH. If you pass a subset of the object you are PATCHing the Data Catalog Service; this will only alter the fields present in the object body.
 
@@ -133,7 +114,7 @@ content-type: application/json-patch+json
 
 This is not to be confused with the Batch object supported by Data Catalog. Rather, this API satisfies a use-case offering a multi-request method that not only allows for multiple requests to be made on a single connection, but if those requests are modifications/additions to the catalog, all changes will __transactionally__ roll-back if any one change fails.
 
-The API signature is a POST on the root API: 
+The API signature is a POST on the root API:
 
 __Data Catalog Service Request:__
 
@@ -153,7 +134,7 @@ Where the POST body is an array of objects containing the information needed to 
             "id": "56c62ca67b8f2a643b6c1ae8",
             "dataSetViewId": "6af287f491059dea782709da6b"
         }
-    }, 
+    },
     {
         "id": "secondObjectId",
         "resource": "/dataSetFiles/56c62ca67b8f2a643b6c1ae8",
@@ -174,7 +155,7 @@ Requests are executed in order and values returned from a previous call are made
            "type": "raw",
            "name": "firstdataset"
        }
-   }, 
+   },
    {
        "id": "secondObjectId",
        "resource": "/dataSetViews",
@@ -225,13 +206,13 @@ __Example Catalog Response:__
 ]
 ```
 
-> Be aware that because of the nature of multi-request you will need to verify the code of each individual request and not rely on the standard HTTP status code passed to the browser.  It is possible for a single sub-request to return a 404 (for example a GET done on an invalid resource) but the actual HTTP response to still be a 200.  
+> Be aware that because of the nature of multi-request you will need to verify the code of each individual request and not rely on the standard HTTP status code passed to the browser.  It is possible for a single sub-request to return a 404 (for example a GET done on an invalid resource) but the actual HTTP response to still be a 200.
 
 ---
 
 ## 3. Components
 
-The Data Catalog Service is an orchestration between the following components: 
+The Data Catalog Service is an orchestration between the following components:
 
 |Object|JSON Schema|Definition|
 |---|---|---|
@@ -249,7 +230,7 @@ The Data Catalog Service is an orchestration between the following components:
 
 ## 4. Data Discovery
 
-Data Catalog Services offers a robust set of options for accessing your data. The following describe modifiers to services which access data. 
+Data Catalog Services offers a robust set of options for accessing your data. The following describe modifiers to services which access data.
 
 ### 4.1 Filtering
 
@@ -263,7 +244,7 @@ GET /dataSets/58ed485dee812c05a7cfc8d0?tags=tagname:tagvalue
 
 #### 4.1.1 Filtering by Property
 
-Certain APIs allow filtering by property. The table below lists the operations supported. 
+Certain APIs allow filtering by property. The table below lists the operations supported.
 
 |Operation|Description|
 |---|---|
@@ -281,7 +262,7 @@ __Examples:__
 |GET /dataSets?property=version>1.0.0|Returns only data sets whose version are greater than 1.0.0|
 
 > The `name` property supports the use of the wildcard `*` character within, or as, the search string. Wildcards match empty/no character, such that the the search string `te*st` will match the value "test". Asterisks are escaped using "**" (double asterisk), to represent a single asterisks as a literal string in your search string.
-  
+
 ### 4.2. Data Range Queries
 
 Some Data Catalog APIs have query parameters that allow ranged queries, most often in the case of dates. Each service will indicate which attributes are allowed. When additional params are added on to a query, the operation is assumed to be additive (AND).
@@ -291,7 +272,7 @@ __Range Queries:__
 ```
 // Get Batches created in August
 GET /batches?createdAfter=1501545600000&createdBefore=1504137600000
- 
+
 // Get Batches with data that is related to August
 GET /batches?startAfter=1501545600000&endBefore=1504137600000
 ```
@@ -334,7 +315,7 @@ Alternatively, you can send in a `Range` header to indicate what objects you wan
 
 ### 4.4 Sorting
 
-Sorting the response collections is done by making a request with the `orderBy` query parameter. The value is two-part, with the first part being the direction, the delimiter (a colon “:” character), followed by the field to be sorted by. If the direction is not specified, the default direction is taken to be ascending. 
+Sorting the response collections is done by making a request with the `orderBy` query parameter. The value is two-part, with the first part being the direction, the delimiter (a colon “:” character), followed by the field to be sorted by. If the direction is not specified, the default direction is taken to be ascending.
 
 __Data Catalog Service Request:__
 
@@ -346,14 +327,14 @@ GET /dataSet?orderBy=created,desc:updated
 
 ### 4.5 Mixed Examples
 
-As a reminder, additional conditions are assumed to be ANDed with others on the request. 
+As a reminder, additional conditions are assumed to be ANDed with others on the request.
 
 __Example multi-factor queries:__
 
 ```
 // Get a list of DataSets recently created by me.
 GET /dataSets?sort=desc:created&createdUser=foobar@AdobeID
- 
+
 // Get a list of failed Batches in August, sorted by creation date.
 GET /batches?createdAfter=1501545600000&createdBefore=1504137600000&sort=desc:created&status=failure
 ```
@@ -366,7 +347,7 @@ Adobe Data Catalog provides visibility into the success of your data ingestions 
 
 ### 5.1 Assert Object Version
 
-It is good practice to use object versioning to prevent the type of data corruption that occurs when multiple threads save an object near-simultaneously. API calls to get a single object, as should be the case when getting an object to perform an update, will include the version of the object retrieved as response header `E-Tag`. Adding that version as a response header named `If-Match` in your PUT calls will result in the update only succeeding if the version is still the same, preventing data collission. 
+It is good practice to use object versioning to prevent the type of data corruption that occurs when multiple threads save an object near-simultaneously. API calls to get a single object, as should be the case when getting an object to perform an update, will include the version of the object retrieved as response header `E-Tag`. Adding that version as a response header named `If-Match` in your PUT calls will result in the update only succeeding if the version is still the same, preventing data collission.
 
 |Header|Value|Description|
 |---|---|---|
@@ -400,7 +381,7 @@ __Example uses of tags:__
 ```
 # Assume this object is created:
 POST /dataSets
-  
+
 {
     "type":"master",
     "name":"Test Master DataSet with Tags",
@@ -409,16 +390,16 @@ POST /dataSets
         "customTag2_SomeString":["bar"]
     }
 }
- 
+
 # Filter down to DataSets that contain a single tag with a particular value:
 GET /dataSets?tags=customTag1_SomeId:223344
-  
+
 # Filter down to DataSets that contain both tag/value combinations:
 GET /dataSets?tags=customTag1_SomeId:223344,customTag2_SomeString:bar
-  
+
 # By tag value:
 GET /dataSets?tags=customTag2_SomeString:bar*
-  
+
 # By tag existence:
 GET /dataSets?tags=customTag1_SomeId:*
 ```
@@ -433,7 +414,7 @@ __Example DELETE Request/Response:__
 
 ```
 DELETE /dataSetFiles?batchId=12345ABCD12345
-  
+
 Response: 200
 [
     "@/dataSetFiles/678222A2233385221DF"

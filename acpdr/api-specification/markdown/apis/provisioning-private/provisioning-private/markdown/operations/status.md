@@ -2,7 +2,7 @@
 <a name="status"></a>
 ### Fetch the status of deployment for a given imsOrgId
 ```
-GET /provisioning/status/{imsOrgId}
+GET /provisioning/status
 ```
 
 
@@ -16,7 +16,8 @@ Get all status for an imsOrg
 |---|---|---|---|---|
 |**Header**|**Authorization**  <br>*required*|IMS Service Token|string|`""`|
 |**Header**|**x-gw-ims-authorization**  <br>*required*|Gateway Service Token|string|`""`|
-|**Path**|**imsOrgId**  <br>*required*||string||
+|**Header**|**x-gw-ims-org-id**  <br>*optional*||string|`""`|
+|**Query**|**request**  <br>*optional*||string||
 
 
 #### Responses
@@ -41,7 +42,7 @@ Get all status for an imsOrg
 
 ##### Request path
 ```
-/provisioning/status/string
+/provisioning/status
 ```
 
 
@@ -52,6 +53,15 @@ json :
 ```
 
 
+##### Request query
+```
+json :
+{
+  "request" : "string"
+}
+```
+
+
 #### Example HTTP response
 
 ##### Response 200
@@ -59,7 +69,8 @@ json :
 json :
 {
   "status" : "string",
-  "requests" : [ {
+  "subscriptionId" : "string",
+  "request" : {
     "id" : "string",
     "imsOrgId" : "string",
     "stored" : {
@@ -87,10 +98,11 @@ json :
         "startDate" : "string",
         "endDate" : "string",
         "recordOwner" : "string"
-      }
+      },
+      "subscriptionId" : "string"
     },
     "timestamp" : 0
-  } ],
+  },
   "actionStatusList" : [ {
     "imsOrgId" : "string",
     "name" : "string",
@@ -104,9 +116,10 @@ json :
     "responseCode" : 0,
     "reason" : "string",
     "attempts" : 0,
+    "requestId" : "string",
+    "id" : "string",
     "created" : 0,
-    "updated" : 0,
-    "id" : "string"
+    "updated" : 0
   } ]
 }
 ```

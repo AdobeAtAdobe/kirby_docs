@@ -20,7 +20,4 @@
 <a name="ref-secretresponse"></a>
 ### [SecretResponse](definitions/SecretResponse.md#secretresponse)
 
-<a name="ref-secretstorerequest"></a>
-### [SecretStoreRequest](definitions/SecretStoreRequest.md#secretstorerequest)
-
 

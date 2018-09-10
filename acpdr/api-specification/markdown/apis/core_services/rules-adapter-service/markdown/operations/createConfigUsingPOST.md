@@ -2,7 +2,7 @@
 <a name="createconfigusingpost"></a>
 ### Create client config
 ```
-POST /system/config/
+POST /rulesadapter/system/config/
 ```
 
 
@@ -47,7 +47,7 @@ clientConfigDto
 
 ##### Request path
 ```
-/system/config/
+/rulesadapter/system/config/
 ```
 
 

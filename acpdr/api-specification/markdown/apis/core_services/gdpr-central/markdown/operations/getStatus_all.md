@@ -76,6 +76,7 @@ json :
     } ]
   } ],
   "exclude" : [ "string" ]
+  "include" : [ "string" ]
 }
 ```
 

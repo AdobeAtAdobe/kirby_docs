@@ -2,7 +2,7 @@
 <a name="getestimatestatusroute"></a>
 ### Gets result of the Estimate Job. Updated every 5 Seconds as the Job is running.
 ```
-GET /estimate/{previewQueryId}
+GET /estimate/{sessionId}/execution/{previewExecutionId}
 ```
 
 
@@ -11,7 +11,9 @@ GET /estimate/{previewQueryId}
 |Type|Name|Description|Schema|
 |---|---|---|---|
 |**Header**|**x-gw-ims-org-id**  <br>*required*|IMS Client Id|string|
-|**Path**|**previewQueryId**  <br>*required*|Preview Job Id.|string|
+|**Path**|**previewExecutionId**  <br>*required*|Preview Execution Id.|string|
+|**Path**|**sessionId**  <br>*required*|Preview Session Id.|string|
+|**Query**|**previewQueryId**  <br>*required*|Preview Job Id.|string|
 
 
 #### Responses
@@ -38,7 +40,7 @@ GET /estimate/{previewQueryId}
 
 ##### Request path
 ```
-/estimate/123421
+/estimate/123421/execution/42
 ```
 
 
@@ -46,6 +48,15 @@ GET /estimate/{previewQueryId}
 ```
 json :
 "southwest@adobe.com"
+```
+
+
+##### Request query
+```
+json :
+{
+  "previewQueryId" : "ce775645-e8ca-41e2-a74f-5729fe478ef0"
+}
 ```
 
 
@@ -60,6 +71,8 @@ json :
   "confidenceInterval" : "string",
   "profilesReadSoFar" : 0,
   "profilesMatchedSoFar" : 0,
+  "totalRows" : 0,
+  "state" : "string",
   "_links" : {
     "preview" : "string"
   }

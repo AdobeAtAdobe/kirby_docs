@@ -7,8 +7,8 @@
 |**computeJobId**  <br>*required*|**Example** : `0`|integer (int64)|
 |**creationTime**  <br>*required*|**Example** : `"string"`|string (date-time)|
 |**dataEnd**  <br>*required*|**Example** : `"string"`|string|
-|**dataGraphType**  <br>*required*|**Example** : `"string"`|string|
 |**dataStart**  <br>*required*|**Example** : `"string"`|string|
+|**graphType**  <br>*required*|**Example** : `"string"`|string|
 |**id**  <br>*optional*|**Example** : `0.0`|number|
 |**imsOrgId**  <br>*required*|**Example** : `"string"`|string|
 |**mergeStrategy**  <br>*required*|**Example** : `"string"`|string|

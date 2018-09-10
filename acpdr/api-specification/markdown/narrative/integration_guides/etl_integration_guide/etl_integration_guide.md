@@ -1,9 +1,3 @@
-**Preview Release**
-
-**Adobe Cloud Platform**
-
-Updated on April 25<sup>rd</sup> 2018
-
 Data integration patterns for ETL tools (ISVs)
 =============================
 
@@ -192,8 +186,7 @@ Design Phase
     ingestion using a standard connector or push-service connector.
 
 2.  In the ACP user interface, the partner creates the output dataset by
-    either selecting the Profile, Event or other custom Experience Data
-    Models (XDMs).
+    either selecting the Profile, Experience Event or other schemas in the XDM Registry.
 
 3.  In the ETL tool, the partner will start designing their mapping
     transforms after configuring the appropriate connection (using
@@ -202,7 +195,7 @@ Design Phase
     Integration Guide).
 
 4.  Using the source of data for mapping, a list of all available
-    datasets can be fetched using **Data Discovery APIs**.
+    datasets can be fetched using **Data Discovery APIs** (Figure 6).
 
     > **Note**: Partners will also have to specify a time stamp filter
     > marking the date to ingest data and offset - what should be the window
@@ -219,9 +212,9 @@ Design Phase
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization: Bearer ACCESS_TOKEN" \
     -H "x-api-key: API_KEY"
-    
+
     ```
-    >  
+    >
 
     ##### Sample response
     ```
@@ -247,957 +240,179 @@ Design Phase
                 }
             ],
             "fileDescription": {
-                "persisted": false
+                "persisted": false,
+                "format": "parquet",
             },
             "transforms":"@/dataSets/598d6e81b2745f000015edcb/views/598d6e81b2745f000015edcc/transforms",
             "files": "@/dataSets/598d6e81b2745f000015edcb/views/598d6e81b2745f000015edcc/files",
             "children": "@/dataSetViews/598d6e81b2745f000015edcc/children",
-            "schema": {},
-            "viewId": "598d6e81b2745f000015edcc"
-        },
-        :
-        :
-    }
-    ```
-
-5.  The *Schema of a dataset* can be retrieved with the following API
-    call from **Data Discovery API **(Figure 8).
-
-    #### curl to fetch dataset details for datasetId
-    ```
-    $ curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets/DATASET_ID" \
-    -H "accept: application/json" \
-    -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
-    -H "Authorization: Bearer ACCESS_TOKEN" \
-    -H "x-api-key: API_KEY"
-    
-    ```
-    >  
-    ##### Sample response
-    ```
-    {
-    "59c93f3da7d0c00000798f68": {
-        "version": "1.0.4",
-        "imsOrg": "AdobeIMSOrganization@AdobeOrg",
-        "name": "ProfileOutput01",
-        "created": 1506361139256,
-        "updated": 1508475975514,
-        "createdClient": "CLIENT_ID",
-        "createdUser": "CLIENT_USER_ID@AdobeID",
-        "updatedUser": "CLIENT_USER_ID@AdobeID",
-        "dule": {},
-        "aspect": "production",
-        "status": "enabled",
-        "fields": [
-            {
-                "name": "endUserIds",
-                "title": "End User IDs",
-                "description": "Condensed, normalized encapsulation of all end user identifiers. NOTE: At least one of the fields is required.\n",
-                "created": 1516629739180,
-                "updated": 1516629739180,
+            "schema": "@/xdms/context/profile",
+            "viewId": "598d6e81b2745f000015edcc",
+            "observableSchema": {
                 "type": "object",
-                "subFields": [
-                    {
-                        "name": "mcId",
-                        "title": "Identity",
-                        "description": "Identity from identity services which is the fact of being who or what a person or thing is.\n",
-                        "created": 1516629739181,
-                        "updated": 1516629739181,
-                        "type": "object",
-                        "subFields": [
-                            {
-                                "name": "id",
-                                "title": "Identifier",
-                                "type": "string",
-                                "description": "Identity of the consumer in the related namespace."
-                            },
-                            {
-                                "name": "namespace",
-                                "title": "Data source",
-                                "description": "Globally unique identification of a data source.\n",
-                                "created": 1516629739176,
-                                "updated": 1516629739176,
-                                "type": "object",
-                                "subFields": [
-                                    {
-                                        "name": "id",
-                                        "title": "Identifier",
-                                        "type": "integer",
-                                        "description": "Globally unique identifier of the data source.\n"
-                                    },
-                                    {
-                                        "name": "code",
-                                        "title": "Code",
-                                        "type": "string",
-                                        "description": "The namespace code associated with the id attribute and matched up with the AAM data source integration code."
-                                    },
-                                    {
-                                        "name": "tags",
-                                        "title": "Tags",
-                                        "type": "string",
-                                        "description": "Tags are used to indicate how the aliases represented by a given data\nsource should be interpreted by applications using those aliases.\n\nExamples:\n\n* `isAVID`: data sources representing Analytics visitor IDs.\n* `isCRSKey`: data sources representing aliases that should be used as keys in CRS.\n\nTags are set when the data source is created but they are also included in\npipeline messages when referencing a given data source.\n",
-                                        "uniqueItems": true
-                                    }
-                                ],
-                                "xdmVersion": "0.9.2",
-                                "xdmType": "entity",
-                                "_refId": "../core/DataSource"
-                            }
-                        ],
-                        "xdmVersion": "0.9.2",
-                        "xdmType": "entity",
-                        "_refId": "../core/Identity"
+                "meta:xdmType": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
                     },
-                    {
-                        "name": "analytics",
-                        "title": "Identity",
-                        "description": "Identity from identity services which is the fact of being who or what a person or thing is.\n",
-                        "created": 1516629739181,
-                        "updated": 1516629739181,
-                        "type": "object",
-                        "subFields": [
-                            {
-                                "name": "id",
-                                "title": "Identifier",
-                                "type": "string",
-                                "description": "Identity of the consumer in the related namespace."
-                            },
-                            {
-                                "name": "namespace",
-                                "title": "Data source",
-                                "description": "Globally unique identification of a data source.\n",
-                                "created": 1516629739176,
-                                "updated": 1516629739176,
-                                "type": "object",
-                                "subFields": [
-                                    {
-                                        "name": "id",
-                                        "title": "Identifier",
-                                        "type": "integer",
-                                        "description": "Globally unique identifier of the data source.\n"
-                                    },
-                                    {
-                                        "name": "code",
-                                        "title": "Code",
-                                        "type": "string",
-                                        "description": "The namespace code associated with the id attribute and matched up with the AAM data source integration code."
-                                    },
-                                    {
-                                        "name": "tags",
-                                        "title": "Tags",
-                                        "type": "string",
-                                        "description": "Tags are used to indicate how the aliases represented by a given data\nsource should be interpreted by applications using those aliases.\n\nExamples:\n\n* `isAVID`: data sources representing Analytics visitor IDs.\n* `isCRSKey`: data sources representing aliases that should be used as keys in CRS.\n\nTags are set when the data source is created but they are also included in\npipeline messages when referencing a given data source.\n",
-                                        "uniqueItems": true
-                                    }
-                                ],
-                                "xdmVersion": "0.9.2",
-                                "xdmType": "entity",
-                                "_refId": "../core/DataSource"
-                            }
-                        ],
-                        "xdmVersion": "0.9.2",
-                        "xdmType": "entity",
-                        "_refId": "../core/Identity"
-                    },
-                    {
-                        "name": "campaign",
-                        "title": "Identity",
-                        "description": "Identity from identity services which is the fact of being who or what a person or thing is.\n",
-                        "created": 1516629739181,
-                        "updated": 1516629739181,
-                        "type": "object",
-                        "subFields": [
-                            {
-                                "name": "id",
-                                "title": "Identifier",
-                                "type": "string",
-                                "description": "Identity of the consumer in the related namespace."
-                            },
-                            {
-                                "name": "namespace",
-                                "title": "Data source",
-                                "description": "Globally unique identification of a data source.\n",
-                                "created": 1516629739176,
-                                "updated": 1516629739176,
-                                "type": "object",
-                                "subFields": [
-                                    {
-                                        "name": "id",
-                                        "title": "Identifier",
-                                        "type": "integer",
-                                        "description": "Globally unique identifier of the data source.\n"
-                                    },
-                                    {
-                                        "name": "code",
-                                        "title": "Code",
-                                        "type": "string",
-                                        "description": "The namespace code associated with the id attribute and matched up with the AAM data source integration code."
-                                    },
-                                    {
-                                        "name": "tags",
-                                        "title": "Tags",
-                                        "type": "string",
-                                        "description": "Tags are used to indicate how the aliases represented by a given data\nsource should be interpreted by applications using those aliases.\n\nExamples:\n\n* `isAVID`: data sources representing Analytics visitor IDs.\n* `isCRSKey`: data sources representing aliases that should be used as keys in CRS.\n\nTags are set when the data source is created but they are also included in\npipeline messages when referencing a given data source.\n",
-                                        "uniqueItems": true
-                                    }
-                                ],
-                                "xdmVersion": "0.9.2",
-                                "xdmType": "entity",
-                                "_refId": "../core/DataSource"
-                            }
-                        ],
-                        "xdmVersion": "0.9.2",
-                        "xdmType": "entity",
-                        "_refId": "../core/Identity"
-                    },
-                    {
-                        "name": "target",
-                        "title": "Identity",
-                        "description": "Identity from identity services which is the fact of being who or what a person or thing is.\n",
-                        "created": 1516629739181,
-                        "updated": 1516629739181,
-                        "type": "object",
-                        "subFields": [
-                            {
-                                "name": "id",
-                                "title": "Identifier",
-                                "type": "string",
-                                "description": "Identity of the consumer in the related namespace."
-                            },
-                            {
-                                "name": "namespace",
-                                "title": "Data source",
-                                "description": "Globally unique identification of a data source.\n",
-                                "created": 1516629739176,
-                                "updated": 1516629739176,
-                                "type": "object",
-                                "subFields": [
-                                    {
-                                        "name": "id",
-                                        "title": "Identifier",
-                                        "type": "integer",
-                                        "description": "Globally unique identifier of the data source.\n"
-                                    },
-                                    {
-                                        "name": "code",
-                                        "title": "Code",
-                                        "type": "string",
-                                        "description": "The namespace code associated with the id attribute and matched up with the AAM data source integration code."
-                                    },
-                                    {
-                                        "name": "tags",
-                                        "title": "Tags",
-                                        "type": "string",
-                                        "description": "Tags are used to indicate how the aliases represented by a given data\nsource should be interpreted by applications using those aliases.\n\nExamples:\n\n* `isAVID`: data sources representing Analytics visitor IDs.\n* `isCRSKey`: data sources representing aliases that should be used as keys in CRS.\n\nTags are set when the data source is created but they are also included in\npipeline messages when referencing a given data source.\n",
-                                        "uniqueItems": true                                    }
-                                ],
-                                "xdmVersion": "0.9.2",
-                                "xdmType": "entity",
-                                "_refId": "../core/DataSource"
-                            }
-                        ],
-                        "xdmVersion": "0.9.2",
-                        "xdmType": "entity",
-                        "_refId": "../core/Identity"
+                    "age": {
+                        "type": "string",
                     }
-                ],
-                "xdmVersion": "0.9.2",
-                "xdmType": "entity",
-                "_refId": "../core/EndUserIds"
-            },
-            {
-                "name": "person",
-                "title": "Person",
-                "description": "An individual actor, contact, or owner.",
-                "created": 1516629739184,
-                "updated": 1516629739184,
-                "type": "object",
-                "subFields": [
-                    {
-                        "name": "firstName",
-                        "title": "First name",
-                        "type": "string",
-                        "description": "The personal, or given name."
-                    },
-                    {
-                        "name": "lastName",
-                        "title": "Last name",
-                        "type": "string",
-                        "description": "The inherited family name, surname, patronymic, or matronymic name."
-                    },
-                    {
-                        "name": "middleName",
-                        "title": "Middle name",
-                        "type": "string",
-                        "description": "Middle, alternative, or additional names supplied between the first and last names."
-                    },
-                    {
-                        "name": "courtesyTitle",
-                        "title": "Courtesy title",
-                        "type": "string",
-                        "description": "Normally an abbreviation of a persons *title*, *honorific*, or *salutation*.\nThe `courtesyTitle` is used in front of full or last name in opening texts.\ne.g Mr. Miss. or Dr J. Smith.\n"
-                    },
-                    {
-                        "name": "birthDay",
-                        "title": "Birth day",
-                        "type": "integer",
-                        "description": "The day of the month a person was born (1-31).\nDefault 0 means absence.\n",
-                        "default": 0,
-                        "minimum": 0,
-                        "maximum": 31,
-                        "format": "int8"
-                    },
-                    {
-                        "name": "birthMonth",
-                        "title": "Birth month",
-                        "type": "integer",
-                        "description": "The month of the year a person was born (1-12).\nDefault 0 means absence.\n",
-                        "default": 0,
-                        "minimum": 0,
-                        "maximum": 12,
-                        "format": "int8"
-                    },
-                    {
-                        "name": "birthYear",
-                        "title": "Birth year",
-                        "type": "integer",
-                        "description": "The year a person was born including the century (yyyy, e.g 1983).\nDefault 0 means absence.\n",
-                        "default": 0,
-                        "minimum": 0,
-                        "format": "int16"
-                    },
-                    {
-                        "name": "gender",
-                        "title": "Gender",
-                        "type": "string",
-                        "enumValues": [
-                            {
-                                "unknown": {
-                                    "title": "Unknown"
-                                }
-                            },
-                            {
-                                "male": {
-                                    "title": "Male"
-                                }
-                            },
-                            {
-                                "female": {
-                                    "title": "Female"
-                                }
-                            },
-                            {
-                                "withheld": {
-                                    "title": "Withheld"
-                                }
-                            },
-                            {
-                                "other": {
-                                    "title": "Other"
-                                }
-                            }
-                        ],
-                        "description": "Gender identity of the person.\n",
-                        "default": "unknown"
-                    }
-                ],
-                "xdmVersion": "0.9.2",
-                "xdmType": "entity",
-                "_refId": "../core/Person"
-            },
-            {
-                "name": "addresses",
-                "title": "Addresses",
-				"type": "object",
-				"subFields": [
-					{
-						"name": "primary",
-						"title": "Primary",
-						"type": "boolean",
-						"description": "Primary address indicator.\n\nA Profile can have only one `primary` address at a given point of time.\n"
-					},
-					{
-						"name": "type",
-						"title": "Type",
-						"type": "string",
-						"enumValues": [
-							{
-								"home": {
-									"title": "Home"
-								}
-							},
-							{
-								"work": {
-									"title": "Work"
-								}
-							},
-							{
-								"unknown": {
-									"title": "unknown"
-								}
-							}
-						],
-						"description": "The way the address relates to the person. e.g 'work' or 'home'. Note this is person neutral, all persons will have a common address.type, if it is person specific the relationship attribute should be used e.g address.relationship='residence'"
-					},
-					{
-						"name": "label",
-						"title": "Label",
-						"type": "string",
-						"description": "Free form name of the address."
-					},
-					{
-						"name": "street1",
-						"title": "Street 1",
-						"type": "string",
-						"description": "Primary Street level information, apartment number, street number and street name."
-					},
-					{
-						"name": "street2",
-						"title": "Street 2",
-						"type": "string",
-						"description": "Optional street information second line."
-					},
-					{
-						"name": "street3",
-						"title": "Street 3",
-						"type": "string",
-						"description": "Optional street information third line."
-					},
-					{
-						"name": "street4",
-						"title": "Street 4",
-						"type": "string",
-						"description": "Optional street information fourth line."
-					},
-					{
-						"name": "city",
-						"title": "City",
-						"type": "string",
-						"description": "The town, city, village or other metropolitan identity of the address."
-					},
-					{
-						"name": "region",
-						"title": "Region",
-						"type": "string",
-						"description": "The region, county, or district portion of the address."
-					},
-					{
-						"name": "stateProvince",
-						"title": "State or province",
-						"type": "string",
-						"description": "The state, province, region, territory portion of the address."
-					},
-					{
-						"name": "stateProvinceISO",
-						"title": "State or province ISO code.",
-						"type": "string",
-						"description": "The country subdivision as defined by the second part of [ISO 3166-2](https://www.iso.org/iso-3166-country-codes.html#2012_iso3166-2)\n(without the first part and the hyphen ISO 3166-1 alpha-2).\n\nExample:\n\n* CA: from ISO 3166-2 `US-CA` value designating the state of California in the United States of America.\n* 75: from ISO 3166-2 `FR-75` value designating the metropolitan department of Paris in France.\n\n> NOTE: This value must be combined with countryCodeISO to compose a valid ISO 3166-2 code.\n"
-					},
-					{
-						"name": "postalCode",
-						"title": "Postal code",
-						"type": "string",
-						"description": "The postal code, zip code of other postal ordering for the address. Note, if zip codes are used either the base zip or zip+4 format can be used."
-					},
-					{
-						"name": "country",
-						"title": "Country",
-						"type": "string",
-						"description": "The name of the government-administered territory."
-					},
-					{
-						"name": "countryISO",
-						"title": "Country ISO",
-						"type": "string",
-						"description": "The alpha-2 code of the country as defined by [ISO 3166-1](https://www.iso.org/iso-3166-country-codes.html).",
-						"minLength": 2,
-						"maxLength": 2
-					},
-					{
-						"name": "latitude",
-						"title": "Latitude",
-						"type": "float",
-						"description": "Defines the latitude of the delivery address.",
-						"format": "float"
-					},
-					{
-						"name": "longitude",
-						"title": "Longitude",
-						"type": "float",
-						"description": "Defines the longitude of the delivery address.",
-						"format": "float"
-					},
-					{
-						"name": "status",
-						"title": "Status",
-						"type": "string",
-						"enumValues": [
-							{
-								"active": {
-									"title": "Active"
-								}
-							},
-							{
-								"incomplete": {
-									"title": "Incomplete"
-								}
-							},
-							{
-								"pendingVerification": {
-									"title": "Pending verification"
-								}
-							},
-							{
-								"blacklisted": {
-									"title": "Blacklisted"
-								}
-							},
-							{
-								"blocked": {
-									"title": "Blocked"
-								}
-							}
-						],
-						"description": "An indication as to the ability to use the address.",
-						"default": "active"
-					},
-					{
-						"name": "statusReason",
-						"title": "Status reason",
-						"type": "string",
-						"description": "A description of the current status."
-					},
-					{
-						"name": "lastVerifiedDate",
-						"title": "Last verified date",
-						"type": "string",
-						"format": "date-only",
-						"description": "The date that the address was last verified as still belonging to the person."
-					}
-				]
-            },
-            {
-                "name": "emails",
-                "title": "Emails",
-				"type": "object",
-				"subFields": [
-					{
-						"name": "primary",
-						"title": "Primary",
-						"type": "boolean",
-						"description": "Primary email indicator.\n\nA Profile can have only one `primary` email address at a given point of time.\n"
-					},
-					{
-						"name": "address",
-						"title": "Address",
-						"type": "string",
-						"description": "The technical address, e.g 'name@domain.com' as commonly defined in RFC2822 and subsequent standards."
-					},
-					{
-						"name": "label",
-						"title": "Label",
-						"type": "string",
-						"description": "Additional display information that maybe available, e.g MS Outlook rich address controls display 'John Smith smithjr@company.uk', the 'John Smith' part is data that would be placed in the label."
-					},
-					{
-						"name": "type",
-						"title": "Type",
-						"type": "string",
-						"enumValues": [
-							{
-								"unknown": {
-									"title": "Unknown"
-								}
-							},
-							{
-								"personal": {
-									"title": "Personal"
-								}
-							},
-							{
-								"work": {
-									"title": "Work"
-								}
-							},
-							{
-								"education": {
-									"title": "Education"
-								}
-							}
-						],
-						"description": "The way the account relates to the person. e.g 'work' or 'personal'"
-					},
-					{
-						"name": "status",
-						"title": "Status",
-						"type": "string",
-						"enumValues": [
-							{
-								"active": {
-									"title": "Active"
-								}
-							},
-							{
-								"incomplete": {
-									"title": "Incomplete"
-								}
-							},
-							{
-								"pendingVerification": {
-									"title": "Pending verification"
-								}
-							},
-							{
-								"blacklisted": {
-									"title": "Blacklisted"
-								}
-							},
-							{
-								"blocked": {
-									"title": "Blocked"
-								}
-							}
-						],
-						"description": "An indication as to the ability to use the email address.",
-						"default": "active"
-					},
-					{
-						"name": "statusReason",
-						"title": "Status reason",
-						"type": "string",
-						"description": "A description of the current status."
-					}
-				]
-            },
-            {
-                "name": "phoneNumbers",
-                "title": "Phone numbers",
-				"type": "object",
-				"subFields": [
-					{
-						"name": "primary",
-						"title": "Primary",
-						"type": "boolean",
-						"description": "Primary phone number indicator.\n\nUnlike for Address or EmailAddress, there can be multiple primary phone numbers; one per communication channel.\nThe communication channel is defined by the type:\n\n* `textMessaging`: type = `mobile`\n* `phone`: type = `home` | `work` | `unknown`\n* `fax`: type = `fax`\n"
-					},
-					{
-						"name": "type",
-						"title": "Type",
-						"type": "string",
-						"enumValues": [
-							{
-								"unknown": {
-									"title": "Unknown"
-								}
-							},
-							{
-								"mobile": {
-									"title": "Mobile"
-								}
-							},
-							{
-								"home": {
-									"title": "Home"
-								}
-							},
-							{
-								"work": {
-									"title": "Work"
-								}
-							},
-							{
-								"fax": {
-									"title": "Fax"
-								}
-							}
-						],
-						"description": "The way the phone number relates to the person. e.g 'work' or 'personal'",
-						"default": "unknown"
-					},
-					{
-						"name": "number",
-						"title": "Number",
-						"type": "string",
-						"description": "The phone number. Note the phone number is a string and may include meaningful characters such as brackets (), hyphens - or characters to indicate sub dialing identifiers like extensions x. E.g 1-353(0)18391111 or +613 9403600x1234."
-					},
-					{
-						"name": "extension",
-						"title": "Extension",
-						"type": "string",
-						"description": "The internal dialing number used to call from a private exchange, operator or switchboard."
-					},
-					{
-						"name": "status",
-						"title": "Status",
-						"type": "string",
-						"enumValues": [
-							{
-								"active": {
-									"title": "Active"
-								}
-							},
-							{
-								"incomplete": {
-									"title": "Incomplete"
-								}
-							},
-							{
-								"blacklisted": {
-									"title": "Blacklisted"
-								}
-							},
-							{
-								"blocked": {
-									"title": "Blocked"
-								}
-							}
-						],
-						"description": "An indication as to the ability to use the phone number.",
-						"default": "active"
-					},
-					{
-						"name": "statusReason",
-						"title": "Status reason",
-						"type": "string",
-						"description": "A description of the current status."
-					},
-					{
-						"name": "validity",
-						"title": "Validity",
-						"type": "string",
-						"enumValues": [
-							{
-								"consistent": {
-									"title": "Consistent"
-								}
-							},
-							{
-								"inconsistent": {
-									"title": "Inconsistent"
-								}
-							},
-							{
-								"incomplete": {
-									"title": "Incomplete"
-								}
-							},
-							{
-								"successfullyUsed": {
-									"title": "Successfully used"
-								}
-							}
-						],
-						"description": "A level of technical correctness of the phone number."
-					}
-				]
-            },
-            {
-                "name": "optInOut",
-                "title": "OptInOut",
-                "description": "Describes a users opting in and out preferences for communication by medium and communication type.",
-                "created": 1516629739183,
-                "updated": 1516629739183,
-                "type": "object",
-                "subFields": [
-                    {
-                        "name": "optingEmail",
-                        "title": "Opting email",
-                        "type": "string",
-                        "enumValues": [
-                            {
-                                "notProvided": {
-                                    "title": "Not provided"
-                                }
-                            },
-                            {
-                                "pendingConfirmation": {
-                                    "title": "Pending verification"
-                                }
-                            },
-                            {
-                                "in": {
-                                    "title": "In"
-                                }
-                            },
-                            {
-                                "out": {
-                                    "title": "Out"
-                                }
-                            }
-                        ],
-                        "description": "Preference for Email communication.",
-                        "default": "notProvided"
-                    },
-                    {
-                        "name": "optingPhone",
-                        "title": "Opting phone",
-                        "type": "string",
-                        "enumValues": [
-                            {
-                                "notProvided": {
-                                    "title": "Not provided"
-                                }
-                            },
-                            {
-                                "pendingConfirmation": {
-                                    "title": "Pending verification"
-                                }
-                            },
-                            {
-                                "in": {
-                                    "title": "In"
-                                }
-                            },
-                            {
-                                "out": {
-                                    "title": "Out"
-                                }
-                            }
-                        ],
-                        "description": "Preference for Phone voice communication.",
-                        "default": "notProvided"
-                    },
-                    {
-                        "name": "optingTextMessaging",
-                        "title": "Opting text messaging",
-                        "type": "string",
-                        "enumValues": [
-                            {
-                                "notProvided": {
-                                    "title": "Not provided"
-                                }
-                            },
-                            {
-                                "pendingConfirmation": {
-                                    "title": "Pending verification"
-                                }
-                            },
-                            {
-                                "in": {
-                                    "title": "In"
-                                }
-                            },
-                            {
-                                "out": {
-                                    "title": "Out"
-                                }
-                            }
-                        ],
-                        "description": "Preference for instant Text communication.",
-                        "default": "notProvided"
-                    },
-                    {
-                        "name": "optingFax",
-                        "title": "Opting fax",
-                        "type": "string",
-                        "enumValues": [
-                            {
-                                "notProvided": {
-                                    "title": "Not provided"
-                                }
-                            },
-                            {
-                                "pendingConfirmation": {
-                                    "title": "Pending verification"
-                                }
-                            },
-                            {
-                                "in": {
-                                    "title": "In"
-                                }
-                            },
-                            {
-                                "out": {
-                                    "title": "Out"
-                                }
-                            }
-                        ],
-                        "description": "Preference for Fax communication.",
-                        "default": "notProvided"
-                    },
-                    {
-                        "name": "optingAddress",
-                        "title": "Opting address",
-                        "type": "string",
-                        "enumValues": [
-                            {
-                                "notProvided": {
-                                    "title": "Not provided"
-                                }
-                            },
-                            {
-                                "pendingConfirmation": {
-                                    "title": "Pending verification"
-                                }
-                            },
-                            {
-                                "in": {
-                                    "title": "In"
-                                }
-                            },
-                            {
-                                "out": {
-                                    "title": "Out"
-                                }
-                            }
-                        ],
-                        "description": "Preference for mail address communication.",
-                        "default": "notProvided"
-                    },
-                    {
-                        "name": "optingPushNotification",
-                        "title": "Opting push notification",
-                        "type": "string",
-                        "enumValues": [
-                            {
-                                "notProvided": {
-                                    "title": "Not provided"
-                                }
-                            },
-                            {
-                                "pendingConfirmation": {
-                                    "title": "Pending verification"
-                                }
-                            },
-                            {
-                                "in": {
-                                    "title": "In"
-                                }
-                            },
-                            {
-                                "out": {
-                                    "title": "Out"
-                                }
-                            }
-                        ],
-                        "description": "Preference for push notification.",
-                        "default": "notProvided"
-                    },
-                    {
-                        "name": "globalOptout",
-                        "title": "Global opt-out",
-                        "type": "boolean",
-                        "description": "Do not contact this profile on any communication channel.",
-                        "default": false
-                    }
-                ],
-                "xdmVersion": "0.9.2",
-                "xdmType": "entity",
-                "_refId": "../core/OptInOut"
+                }
             }
-        ],
-            "fileDescription": {
-            "persisted": false,
-            "format": "parquet"
-        },
-        "transforms": "@/dataSets/59c93f3da7d0c00000798f68/views/59c93f3da7d0c00000798f69/transforms",
-        "files": "@/dataSets/59c93f3da7d0c00000798f68/views/59c93f3da7d0c00000798f69/files",
-        "children": "@/dataSetViews/59c93f3da7d0c00000798f69/children",
-        "schema": "@/xdms/model/Profile",
-        "viewId": "59c93f3da7d0c00000798f69"
         }
     }
     ```
+
+5.  The *Schema of a dataset* can be found at following places
+    ##### i. schema
+    ```
+    {
+       "598d6e81b2745f000015edcb": {
+         :
+         :
+           "schema": "@/xdms/context/person",
+         :
+         :
+       }
+    }
+    ```
+    
+    This property of a Dataset contains an API link pointing to an external definition in the schema registry. The registry schema represents the list of all **potential
+    fields** that could be used and not the fields that are used (see observableSchema below). This is the schema you use when you need
+    to present the user with a list of available fields that can be written to.
+
+    The schema value is a link to the /xdms route under the /catalog API. Retrieving the actual schema requires a second API request as follows:
+    ```
+      curl -X GET "https://platform.adobe.io/data/foundation/catalog/xdms/context/person?expansion=xdm" \
+      -H "accept: application/json" \
+      -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
+      -H "Authorization: Bearer ACCESS_TOKEN" \
+      -H "x-api-key: API_KEY"
+    ``` 
+    Note - the "expansion=xdm" is an optional parameter that tells the API to fully expand and in-line any referenced schemas. 
+    You will likely always do this when presenting a list of all potential fields.
+    
+	Sample /xdms response:
+    ```JSON
+    {
+        "$id": "https://ns.adobe.com/xdm/context/person"
+        "title": "Person",
+        "type": "object",
+        "description": "An individual person. May represent a person acting in various roles, such as a customer, contact, or owner.",
+        "properties": {
+            "birthDay": {
+                "title": "Birth day",
+                "type": "integer",
+                "description": "The day of the month a person was born (1-31).",
+                "minimum": 1,
+                "maximum": 31,
+                "meta:xdmType": "byte",
+                "meta:xdmField": "xdm:birthDay"
+            },
+            "birthMonth": {
+                "title": "Birth month",
+                "type": "integer",
+                "description": "The month of the year a person was born (1-12).",
+                "minimum": 1,
+                "maximum": 12,
+                "meta:xdmType": "byte",
+                "meta:xdmField": "xdm:birthMonth"
+            },
+            "birthYear": {
+                "title": "Birth year",
+                "type": "integer",
+                "description": "The year a person was born including the century (yyyy, e.g 1983).",
+                "minimum": 1,
+                "maximum": 32767,
+                "meta:xdmType": "short",
+                "meta:xdmField": "xdm:birthYear"
+            },
+            "gender": {
+                "title": "Gender",
+                "type": "string",
+                "enum": [
+                    "male",
+                    "female",
+                    "not_specified",
+                    "non_specific"
+                ],
+                "meta:enum": {
+                    "male": "Male",
+                    "female": "Female",
+                    "not_specified": "Not Specified",
+                    "non_specific": "Nonspecific"
+                },
+                "description": "Gender identity of the person.\n",
+                "default": "not_specified",
+                "meta:xdmType": "string",
+                "meta:xdmField": "xdm:gender"
+            }
+        }
+    }
+    ```
+    Important - The JSON schema that is returned describes the structure and field level "type", "format", "minimum", "maximum" the represents data serialized as JSON. If using a serialization format other then JSON for ingestion, you should use data types that match the
+    meta:xdmType as described in **Section 4** of the [XDM Registry Overview Guide](https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/xdm_registry_architectural_overview/xdm_registry_architectural_overview.md).
+    ##### iii. observableSchema
+    ```
+    {
+           "598d6e81b2745f000015edcb": {
+            :
+            :
+            "observableSchema": {
+                "type": "object",
+                "meta:xdmType": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                    },
+                    "age": {
+                        "type": "string",
+                    }
+                }
+            }
+            :
+            :
+        }
+    }
+    ```
+    
+    This property of a Dataset has a json structure (matching the XDM schema json) which contains the fields that where 
+    present in the incoming input files. 
+    When writing data to the platform, a user is not required to use every field from the
+    target schema. Instead they should supply only those fields that are used. 
+    This is the schema you would use if reading the data or presenting a list of fields that are available to read/map from.
+
+    Note - The observedSchema is currently populated only when the schema attribute above is used. 
+
+    ##### ii. fields (deprecated)
+    ```
+    {
+           "598d6e81b2745f000015edcb": {
+            :
+            :
+            "fields": [
+                {
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "name": "age",
+                    "type": "string"
+                }
+            ],
+            :
+            :
+        }
+    }
+    ```
+    
+    The fields property is deprecated and temporarily available for backwards compatibility. 
+    It should only be used if the schema property from above is NOT populated. 
+    If used, the fields property represents the schema for both reading and writing.   
+    
+    Note - The JSON structure of the fields attribute is different from the standard JSON schema format used by the registry and the observedSchema values.
+	
 6.  The ETL application may provide a capability to *preview data* to
     the ETL Data Engineer. The **Data Access APIs** will be used to with
     the specified "limit" on the data (Figure 9). There are various API
@@ -1206,7 +421,7 @@ Design Phase
     -   Get dataset details as done in step 5 above. Refer to the
         "files" attribute, it will appear as follows :
 
-    #### Preview data  
+    #### Preview data
     ```
      "files":
     "@/dataSets/59c93f3da7d0c00000798f68/views/59c93f3da7d0c00000798f69/files",
@@ -1222,7 +437,7 @@ Design Phase
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization: Bearer ACCESS_TOKEN \
     -H "x-api-key : API_KEY"
-    
+
     ```
     ##### Sample response
     ```
@@ -1256,7 +471,7 @@ Design Phase
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization: Bearer ACCESS_TOKEN \
     -H "x-api-key : API_KEY"
-    
+
     ```
     ##### Sample response
     ```
@@ -1281,7 +496,7 @@ Design Phase
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization: Bearer ACCESS_TOKEN" \
     -H "x-api-key : API_KEY"
-    
+
     ```
     ##### Sample response
     ```
@@ -1293,7 +508,7 @@ Design Phase
     4,Orion,Weber,1990-04-17,male,orion.weber@planetone.tn,,192 Pine Street,STAPLETON,AL,36578,USA,30.74,-87.79,false,false,false,orion.weber,2017-03-31 06:51:54
     5,Dorthary,Murphy,1950-03-27,female,dorthary0.murphy@outlook.com,122-742-4590,730 Hickory Lane,BROWNSTOWN,IN,47220,USA,38.88,-86.04,true,false,true,dorthary.murphy,2017-03-31 03:41:33
     ```
-7.  The destination component as output of transformed data, the Data
+8.  The destination component as output of transformed data, the Data
     Engineer will choose an Output Dataset (Figure 12). The XDM schema
     is associated with the output Dataset. The data to be written will
     be identified by the file description part of dataset entity from
@@ -1303,14 +518,14 @@ Design Phase
 
     #### File description from data set
     ```
-    $ curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets/DatasetId" \
+    $ curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets/<dataset id>" \
     -H "accept: application/json" \
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization: Bearer ACCESS\_TOKEN \
     -H "x-api-key : API_KEY"
-    
+
     ```
-    >  
+    >
 
     ##### Sample response
     ```
@@ -1319,25 +534,6 @@ Design Phase
         "version": "1.0.4",
         :
         :
-
-        "fields": [
-            {
-                "name": "VisitorId",
-                "type": "object",
-                "subFields": [
-                    {
-                    "name": "value",
-                    "type": "string"
-                    },
-                    {
-                    "name": "domain",
-                    "type": "string"
-                    }
-                ]
-            },
-            :
-            :
-        ],
         "fileDescription": {
             "persisted": false,
             "format": "parquet"
@@ -1347,10 +543,12 @@ Design Phase
         }
     }
     ```
-8.  Data will be written to the platform using the **Data Ingestion
-    APIs. ** Writing of data is an asynchronous process. When data is
+9.  Data will be written to the platform using the **Data Ingestion
+    APIs**.  Writing of data is an asynchronous process. When data is
     written to the Adobe Cloud Platform, a batch is created and marked
     as a success only after data is fully written.
+
+	Data in platform should be written in the form of parquet files.
 
 Execution phase
 ---------------
@@ -1373,7 +571,7 @@ Execution phase
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization:Bearer ACCESS_TOKEN" \
     -H "x-api-key : API_KEY"
-    
+
     ````
     ##### Sample response
     ```
@@ -1401,7 +599,7 @@ Execution phase
     }
     ```
     Now take out dataset files belonging to these batches using below call
-    
+
     #### Curl request to get files out of a batch
     ```
      curl -X GET https://platform.adobe.io/data/foundation/export/batches/BATCHID1/files \
@@ -1409,7 +607,7 @@ Execution phase
      -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
      -H "Authorization:Bearer ACCESS_TOKEN" \
      -H "x-api-key : API_KEY"
-     
+
     ```
     ##### Sample response
     ```
@@ -1451,9 +649,9 @@ Execution phase
     }
     ```
     -   limit and count above helps in pagination on dataset files level.
-    
+
     Now we will iterate over individual file via _link > self > href
-    
+
     #### Curl to access file metadata
     ```
     curl -X GET https://platform.adobe.io/data/foundation/export/files/DATASETFILEID1 \
@@ -1485,9 +683,9 @@ Execution phase
     }
     ```
     -   limit and count above helps in pagination on physical file level.
-    
+
     Now we will list content of file by using link under _links > self > href
-    
+
     #### Curl to access file content
     ```
     curl -X GET https://platform.adobe.io/data/foundation/export/files/DATASETFILEID1?path=filename1.csv \
@@ -1495,7 +693,7 @@ Execution phase
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization:Bearer ACCESS_TOKEN" \
     -H "x-api-key : API_KEY"
-    
+
     ```
     ##### Sample Response
     ```
@@ -1518,7 +716,7 @@ Execution phase
      -H "Authorization:Bearer ACCESS_TOKEN" \
      -H "x-api-key : API_KEY" \
      --data-binary '{"datasetId":"DATASETID"}'
-     
+
     ```
     ##### Sample response
     ```
@@ -1540,21 +738,23 @@ Execution phase
     #### Write to dataset
     Multiple files can be posted in a batch until it is promoted.
     ```
-    $ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/BATCHID/datasets/DATASETID/files/filename.csv" \
+    $ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/BATCHID/datasets/DATASETID/files/filename.parquet" \
     -H "accept: application/json" \
     -H "x-gw-ims-org-id:AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization:Bearer ACCESS_TOKEN" \
     -H "x-api-key: API_KEY" \
     -H "content-type: application/octet-stream" \
-    -F file=@filename.csv
-    
+    -F file=@filename.parquet
+
     ```
+
+	Data in platform should be written in the form of parquet files.
 
     ##### Sample response
     ```
     {
        "BATCHID": {
-          "name": "filename.csv",
+          "name": "filename.parquet",
           "sizeInBytes": 281
        }
     }
@@ -1572,7 +772,7 @@ Execution phase
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
     -H "Authorization:Bearer ACCESS_TOKEN" \
     -H "x-api-key : API_KEY"
-    
+
     ```
     ##### Sample response
     ```
@@ -1584,7 +784,7 @@ Execution phase
 
 5.  In next transformation execution (likely by schedule or event
     invocation), the ETL will start requesting the data from the
-    previously-saved timestamp and all data going forward.  
+    previously-saved timestamp and all data going forward.
 
     Before running new tasks the ETL tool, you must ensure that the last
     batch was successfully completed. The **Data Discovery API**
@@ -1614,6 +814,60 @@ Execution phase
         "availableDates": {}
     }
     ```
+    
+    New tasks can be schedule if the previous batch (2 above) was success. Individual batch status can be retrieved from **Data Discovery API**.
+    The **BATCHID** used is the same that was returned while creation of batch (2 above).
+    
+    #### Curl to get Last batch status by Id
+     ```
+     curl -X GET "https://platform.adobe.io/data/foundation/catalog/batches/BATCHID" \
+     -H "accept: application/json" \
+     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
+     -H "Authorization:Bearer ACCESS_TOKEN" \
+     -H "x-api-key : X-API-KEY"
+     ```
+    
+    ##### Sample response For Success
+    ```
+    "BATCHID": {
+        "imsOrg": "AdobeIMSOrganization@AdobeOrg",
+        "created": xxxx,
+        "createdClient": "CLIENT_ID",
+        "createdUser": "CLIENT_USER_ID@AdobeID",
+        "updatedUser": "CLIENT_USER_ID@AdobeID",
+        "updated": xxxx,
+        "status": "success",
+        "errors": [],
+        "version": "1.0.1",
+        "availableDates": {}
+    }
+    ``` 
+    
+    In case of failure the **errors** can be extracted from the response and surfaced on the ETL
+    tool as error message.
+        
+    ##### Sample response For Failure
+    ```
+    "BATCHID": {
+        "imsOrg": "AdobeIMSOrganization@AdobeOrg",
+        "created": xxxx,
+        "createdClient": "CLIENT_ID",
+        "createdUser": "CLIENT_USER_ID@AdobeID",
+        "updatedUser": "CLIENT_USER_ID@AdobeID",
+        "updated": xxxx,
+        "status": "failure",
+        "errors": [
+            {
+                "code": "200",
+                "description": "Error in validating schema for file: 'adl://dataLake.azuredatalakestore.net/connectors-dev/stage/BATCHID/dataSetId/contact.csv' with errorMessage=adl://dataLake.azuredatalakestore.net/connectors-dev/stage/BATCHID/dataSetId/contact.csv is not a Parquet file. expected magic number at tail [80, 65, 82, 49] but found [57, 98, 55, 10] and errorType=java.lang.RuntimeException",
+                "rows": []
+            }
+        ],
+        "version": "1.0.1",
+        "availableDates": {}
+    ```    
+    
+    
 
 Incremental vs Snapshot Data, and Events vs Profiles
 ----------------------------------------------------
@@ -1781,5 +1035,4 @@ Account Support Manager.
 **Feedback**
 
 We welcome any suggestions or feedback. Please send comments about the
-product to your Account Support Manager. 
-
+product to your Account Support Manager.

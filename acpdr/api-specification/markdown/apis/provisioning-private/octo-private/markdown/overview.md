@@ -22,10 +22,12 @@ Infrastructure Automation Framework
 * admin : Octo Admin Operations
 * admin : Octo Admin Operations
 * admin : Octo Admin Operations
+* admin : Octo Admin Operations
 * default : Default namespace
 * health : Octo Health Checks
 * health : Octo Health Checks
 * health : Octo Health Specific
+* octo : Octo User Operations
 * octo : Octo User Operations
 * octo : Octo User Operations
 * octo : Octo User Operations

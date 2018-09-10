@@ -11,8 +11,8 @@ This service is responsible to manage different segment jobs for unified profile
 
 
 ### URI scheme
-*Host* : platform-INT.adobe.io  
-*BasePath* : /data/core/ups/segment  
+*Host* : localhost:8080  
+*BasePath* : /  
 *Schemes* : HTTP
 
 

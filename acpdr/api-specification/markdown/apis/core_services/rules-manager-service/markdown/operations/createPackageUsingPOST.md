@@ -2,7 +2,7 @@
 <a name="createpackageusingpost"></a>
 ### Create package rules from ARL file
 ```
-POST /rulesets/{imsOrg}/{category}
+POST /rulesets/{category}
 ```
 
 
@@ -10,8 +10,8 @@ POST /rulesets/{imsOrg}/{category}
 
 |Type|Name|Description|Schema|
 |---|---|---|---|
+|**Header**|**x-gw-ims-org-id**  <br>*required*|x-gw-ims-org-id|string|
 |**Path**|**category**  <br>*required*|category|string|
-|**Path**|**imsOrg**  <br>*required*|imsOrg|string|
 
 
 #### Body parameter
@@ -48,7 +48,14 @@ packagerInput
 
 ##### Request path
 ```
-/rulesets/string/string
+/rulesets/string
+```
+
+
+##### Request header
+```
+json :
+"string"
 ```
 
 
@@ -68,10 +75,10 @@ json :
 json :
 {
   "category" : "string",
-  "clientId" : "string",
-  "id" : "string",
+  "imsOrgId" : "string",
   "packageSize" : 0,
   "packageUrl" : "string",
+  "rulesetId" : "string",
   "version" : "string"
 }
 ```

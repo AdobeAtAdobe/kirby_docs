@@ -2,6 +2,9 @@
 <a name="paths"></a>
 ## Paths
 
+<a name="ref-getdegradedstatuslist"></a>
+### [Collects application specific metrics.](operations/getDegradedStatusList.md#getdegradedstatuslist)
+
 <a name="ref-getdependencymap"></a>
 ### [Perform a dependency map creation.](operations/getDependencyMap.md#getdependencymap)
 
