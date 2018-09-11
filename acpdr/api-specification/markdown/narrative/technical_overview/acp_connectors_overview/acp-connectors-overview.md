@@ -15,11 +15,7 @@ ingests your data from Microsoft Azure Blob cloud storage to Adobe Cloud Platfor
 * [Amazon S3 Connector](../../tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md) ingests your data from Amazon S3 cloud storage to Adobe Cloud Platform.  
 
 
-<<<<<<< HEAD
 * [Microsoft Dynamics Connector](../../tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md) lets you set up Microsoft Dynamics CRM data to ingest into the platform on a defined schedule. The Microsoft Dynamics connector also supports backfill data ingestion.
-=======
-* [Microsoft Dynamics Connector](../../tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md) lets you set up Microsoft Dynamics CRM data to ingest into the platform on a defined schedule. Dynamics connector also supports backfill data ingestion.
->>>>>>> staging
 
 * [Salesforce Connector](../../tutorials/creating_a_connector_tutorial/ACP_salesforce_connector_tutorial.md) lets you set up Salesforce CRM data to ingest into the platform on a defined schedule.
 
