@@ -8,15 +8,16 @@ Adobe Cloud Platform (ACP) provides connectors to ingest all of your diverse dat
 
 **ACP Connectors.** Use custom connector APIs and wizards to ingest cloud-based storage and CRM data. These connectors let you authenticate to your storage systems and CRM services, set times for ingestion runs, and manage data ingestion throughput.
 
-* [Tutorial: Azure Blob Connector](../../tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md) ingests your data from Microsoft Azure Blob cloud storage to Adobe Cloud Platform. 
+Tutorials:
+* [Azure Blob Connector](../../tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md) ingests your data from Microsoft Azure Blob cloud storage to Adobe Cloud Platform. 
 
 
-* [Tutorial: Amazon S3 Connector](../../tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md) ingests your data from Amazon S3 cloud storage to Adobe Cloud Platform.  
+* [Amazon S3 Connector](../../tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md) ingests your data from Amazon S3 cloud storage to Adobe Cloud Platform.  
 
 
-* [Tutorial: Microsoft Dynamics Connector](../../tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md) lets you set up Microsoft Dynamics CRM data to ingest into the platform on a defined schedule. The Microsoft Dynamics connector also supports backfill data ingestion.
+* [Microsoft Dynamics Connector](../../tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md) lets you set up Microsoft Dynamics CRM data to ingest into the platform on a defined schedule. The Microsoft Dynamics connector also supports backfill data ingestion.
 
-* [Tutorial: Salesforce Connector](../../tutorials/creating_a_connector_tutorial/ACP_salesforce_connector_tutorial.md) lets you set up Salesforce CRM data to ingest into the platform on a defined schedule.
+* [Salesforce Connector](../../tutorials/creating_a_connector_tutorial/ACP_salesforce_connector_tutorial.md) lets you set up Salesforce CRM data to ingest into the platform on a defined schedule.
 
 ###Important Conditions
 * For incremental ingestion, you will have to clean up data after every ingestion run.
