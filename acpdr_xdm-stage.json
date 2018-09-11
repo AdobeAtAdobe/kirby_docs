@@ -1,0 +1,35 @@
+{
+	"name": "acpdr_xdm_services",
+	"version": "1.0.0",
+	"description": "ACP XDM Services",
+	"author": "Emily Walpole",
+	"view_type": "mdbook",
+	"meta_keywords": "ACP, Services, Adobe ACP, Data Services, XDM",
+	"meta_description": "Adobe Cloud Platform Data Services",
+	"publish_date": "11/09/2018",
+	"show_edit_github_banner": false,
+	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/staging/acpdr",
+	"pages": [	
+				{
+					"pages": [],
+					"path": "end-user/markdown/xdm_schema_design_principles/schema_principles.md",
+					"title": "Schema Design Principles and Best Practices"
+				},
+				{
+					"pages": [],
+					"path": "end-user/markdown/acp_standard_schemas/acp_standard_schemas.md",
+					"title": "Adobe Cloud Platform: Using Standard Schemas"
+				},
+				{
+					"pages": [],
+					"path": "end-user/markdown/xdm_schema_design_principles/xdm_field_dictionary.md",
+					"title": "Experience Data Model: Field Dictionary"
+				},
+				{
+					"pages": [],
+					"path": "end-user/markdown/acp_schema_registry/acp_schema_registry.md",
+					"title": "Adobe Cloud Platform: Schema Registry Developer Guide"
+				}	
+	],
+	"app2app_map": {"api-specification/markdown/narrative/tutorials/":"/apis/cloudplatform/dataservices/tutorials/alltutorials.html", "acpdr/swagger/":"/apis/cloudplatform/dataservices/api-reference.html"}
+}
