@@ -27,7 +27,7 @@
 				},
 				{
 					"pages": [],
-					"path": "pi-specification/markdown/technical_overview/schema_registry/schema_design/xdm_field_dictionary.md",
+					"path": "api-specification/markdown/technical_overview/schema_registry/schema_design/xdm_field_dictionary.md",
 					"title": "Experience Data Model: Field Dictionary"
 				}	
 	],
