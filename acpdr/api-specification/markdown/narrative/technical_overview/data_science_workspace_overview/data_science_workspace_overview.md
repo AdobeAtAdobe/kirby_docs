@@ -21,29 +21,29 @@ A retailer faces many challenges to stay competitive in the current market. One 
 
 ## Data Scientist's Solution
 
-A data scientist's solution is to leverage the wealth of historical data a retailer has access to, to predict future trends and to optimize pricing decisions. We will use past sales data to train our machine learning model and use the model to predict future sale trends. With this, the retailer will be able to have insights to help them when making pricing changes.
+A data scientist's solution is to leverage the wealth of historical data a retailer has access to, to predict future trends, and to optimize pricing decisions. We will use past sales data to train our machine learning model and use the model to predict future sale trends. With this, the retailer will be able to have insights to help them when making pricing changes.
 
 In this overview, we will go over the steps a data scientist would go through to take a dataset and to create a model to predict weekly sales. We will go over the following sections in the Sample Retail Sales Notebook on Adobe Cloud Platform Data Science Workspace:
 * [Setup](#Setup)
-* [Exploring Data](#Exploring_Data)
-* [Feature Engineering](#Feature_Engineering)
-* [Training and Verification](#Training_and_Verification)
+* [Exploring Data](#Exploring-Data)
+* [Feature Engineering](#Feature-Engineering)
+* [Training and Verification](#Training-and-Verification)
 
 ### Adobe Data Science Workspace Notebook
 
 Firstly, we want to create a JupyterLab notebook to open the "Retail Sales" sample notebook. Following the steps done by the data scientist in the notebook will allow us to gain an understanding of a typical workflow.
 
-In the Adobe Cloud Platform UI, click on the Data Science tab in the top menu to take you to the Data Science Workspace. From this page click on the JupyterLab tab which will open the JupyterLab launcher. You should see a page similar to this.
+In the Adobe Cloud Platform UI, click on the Data Science tab in the top menu to take you to the Data Science Workspace. From this page, click on the JupyterLab tab which will open the JupyterLab launcher. You should see a page similar to this.
 
 ![](jupyterlab_launcher.png)
 
-In our tutorial we will be using Python 3 in the Jupyter Notebook to show how to access and explore the data. In the Launcher page there are sample notebooks provided. We will be using the "Retail Sales" sample for Python 3.
+In our tutorial, we will be using Python 3 in the Jupyter Notebook to show how to access and explore the data. In the Launcher page there are sample notebooks provided. We will be using the "Retail Sales" sample for Python 3.
 
 ![](retail_sales.png)
 
 ### Setup
 
-With the Retail Sales notebook opened, the first thing we do is to load the libraries required for our workflow. The follow list will give a short description of what each are used for:
+With the Retail Sales notebook opened, the first thing we do is to load the libraries required for our workflow. The following list will give a short description of what each are used for:
 * **numpy** - scientific computing library that adds support for large, multi-dimensional arrays and matrices
 * **pandas** - library that offers data structures and operations used for data manipulation and analysis
 * **matplotlib.pyplot** - plotting library that provides a MATLAB-like experience when plotting 
@@ -59,7 +59,7 @@ After the libraries are loaded, we can start looking at the data. The following 
 
 ![](read_csv.png)
 
-Pandas' DataFrame data structure is a 2-dimensional labeled data structure. To quickly see the dimensions of our data, we can use the `df.shape`. This returns a tuple that represents the dimensionality of the DataFrame:
+Pandas' DataFrame data structure is a two-dimensional labeled data structure. To quickly see the dimensions of our data, we can use `df.shape`. This returns a tuple that represents the dimensionality of the DataFrame:
 
 ![](df_shape.png)
 
@@ -87,13 +87,13 @@ df.describe()
 
 ![](df_describe.png)
 
-With this, we can see there are 6435 instances for each characteristic. Also statistical information such as mean, standard deviation (std), min, max, and interquartiles are given. This gives us information about the deviation for the data. In the next section we will go over visualization which works together with this information to give us a complete understanding of our data. 
+With this, we can see there are 6435 instances for each characteristic. Additionally, statistical information such as mean, standard deviation (std), min, max, and interquartiles are given. This gives us information about the deviation for the data. In the next section, we will go over visualization which works together with this information to give us a complete understanding of our data. 
 
-Looking at the minimum and maximum values for `store` we can see that there are 45 unique stores the data represents. There are also `storeTypes` which differentiate what a store is. We can see the distribution of `storeTypes` by doing the following:
+Looking at the minimum and maximum values for `store`, we can see that there are 45 unique stores the data represents. There are also `storeTypes` which differentiate what a store is. We can see the distribution of `storeTypes` by doing the following:
 
 ![](df_groupby.png)
 
-This means 22 stores are of `storeType` `A` , 17 are `storeType` `B`, and 6 are `storeType` `C`.
+This means 22 stores are of `storeType A` , 17 are `storeType B`, and 6 are `storeType C`.
 
 #### Visualizing Data
 
@@ -109,11 +109,11 @@ Using our retail dataset from before, we can generate the box and whisker plot f
 
 A box and whisker plot is used to show the distribution of data. The outer lines of the plot show the upper and lower quartiles while the box spans the interquartile range. The line in the box marks the median. Any points of data more than 1.5 times the upper or lower quartile are marked as a circle. These points are considered outliers.
 
-Next we can plot the weekly sales with time. We will only show the output of the first store. The code in the notebook generates 6 plots corresponding to 6 of the 45 stores in our dataset.
+Next, we can plot the weekly sales with time. We will only show the output of the first store. The code in the notebook generates 6 plots corresponding to 6 of the 45 stores in our dataset.
 
 ![](weekly_sales.png)
 
-With this diagram we can compare the weekly sales over a period of 2 years. It is easy to see sale peaks and trough patterns over time.
+With this diagram, we can compare the weekly sales over a period of 2 years. It is easy to see sale peaks and trough patterns over time.
 
 ##### Multivariate Graphs
 
@@ -127,10 +127,10 @@ Notice the diagonal of ones down the center. This shows that when comparing a va
 
 ### Feature Engineering
 
-In this section we will be making modifications to our Retail dataset. We will perform the following operations:
+In this section, we will be making modifications to our Retail dataset. We will perform the following operations:
 * add week and year columns
-* convert storeType to indicator variable
-* convert isHoliday to numeric
+* convert storeType to an indicator variable
+* convert isHoliday to a numeric variable
 * predict weeklySales of next week
 
 #### Add Week and Year Columns
@@ -139,13 +139,13 @@ The current format for date (`2010-02-05`) is hard to differentiate that the dat
 
 ![](date_to_week_year.png)
 
-Now the week and date are as follows.
+Now the week and date are as follows:
 
 ![](date_week_year.png)
 
 #### Convert storeType to Indicator Variable
 
-Next, we want to convert the storeType column to columns representing each `storeType`. There are 3 store types, (`A`, `B`, `C`), so we are creating 3 columns and the value set in each will be boolean where true is set depending on what the `storeType` was.
+Next, we want to convert the storeType column to columns representing each `storeType`. There are 3 store types, (`A`, `B`, `C`), from which we are creating 3 new columns. The value set in each will be a boolean value where a '1' will be set depending on what the `storeType` was and `0` for the other 2 columns.
 
 ![](storeType.png)
 
@@ -160,11 +160,11 @@ The next modification is to change the `isHoliday` boolean to a numerical repres
 
 #### Predict weeklySales of Next Week
 
-Now we want to add previous and future weekly sales to each of our datasets. We are doing this by offsetting our `weeklySales`. Additionally we are calculating the `weeklySales` difference. This is done by subtracting `weeklySales` with the previous week's `weeklySales`.
+Now we want to add previous and future weekly sales to each of our datasets. We are doing this by offsetting our `weeklySales`. Additionally, we are calculating the `weeklySales` difference. This is done by subtracting `weeklySales` with the previous week's `weeklySales`.
 
 ![](weekly_past_future.png)
 
-Since we are shifting `weeklySales` data 45 forwards and 45 backwards to create new columns, the first and last 45 data points will have NaN values. We can remove these points from our dataset by using the `df.dropna()` function which removes all rows that have NaN values.
+Since we are offsetting the `weeklySales` data 45 datasets forwards and 45 datasets backwards to create new columns, the first and last 45 data points will have NaN values. We can remove these points from our dataset by using the `df.dropna()` function which removes all rows that have NaN values.
 
 ![](dropna.png)
 
@@ -201,7 +201,7 @@ For the scoring, we are taking the mean percentage difference between the predic
 
 #### Visualize Predictions
 
-Finally, we will visualize our prediction model with the actual weekly sales values. The blue line represents the actual numbers while the green represents our prediction using gradient boosting. The following code generates 6 plots which represent 6 of the 45 stores in our dataset. Only `Store 1` is shown here:
+Finally, we will visualize our prediction model with the actual weekly sales values. The blue line represents the actual numbers, while the green represents our prediction using Gradient Boosting. The following code generates 6 plots which represent 6 of the 45 stores in our dataset. Only `Store 1` is shown here:
 
 ![](visualize_prediction.png)
 
