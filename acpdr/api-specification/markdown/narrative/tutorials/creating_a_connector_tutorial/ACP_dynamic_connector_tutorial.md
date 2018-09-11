@@ -1,17 +1,17 @@
 # Microsoft Dynamics Connector for Adobe Cloud Platform
 
-The Microsoft Dynamics Connector for Adobe Cloud Platform provides an API and wizard to ingest your Microsoft Dynamics CRM data onto the Adobe Cloud Platform (ACP). The Dynamics connector allows you to:   
+The Microsoft Dynamics Connector for Adobe Cloud Platform provides an API and wizard to ingest your Microsoft Dynamics CRM data onto Adobe Cloud Platform (ACP), allowing you to:   
 
-* Authenticate to your MS Dynamics account. 
+* Authenticate to your Microsoft Dynamics account. 
 * Select one or more datasets from a list of available datasets.
 * Preview a sample of your data for accuracy.
 * Identify each dataset as a lookup file, event, or record.
 * Set a schedule and frequency for ingesting data.
 * Save the connector and modify it as needed.
 
-This article provides steps to set up and configure the MS Dynamics connector through API calls.  
+This article provides steps to set up and configure the Microsoft Dynamics connector through API calls.  
 
-## Setting up the MS Dynamics Connector
+## Setting up the Microsoft Dynamics Connector
 Set up an account to access APIs and provide credentials to create a connector: 
 
 
@@ -29,7 +29,7 @@ After setting up authorization for APIs, these values will be returned:
 * `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
 * `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
 
-### Set up an ACP connection to MS Dynamics
+### Set up an ACP connection to Microsoft Dynamics
 
 You will need the following credentials:
 
@@ -42,15 +42,15 @@ You will need the following credentials:
   4. In the *Personal Information*, select *Reset My Security Token*.
      You will receive a new security token via email.
 
-With authorization to make API calls from the Adobe I/O Gateway and your Dynamics credentials, your next step is to generate a dataset from Dynamics objects. 
+With authorization to make API calls from the Adobe I/O Gateway and your Microsoft Dynamics credentials, your next step is to generate a dataset from the Microsoft Dynamics objects. 
 
-## Setting up the MS Dynamics Connector
-Follow these steps to create a dataset from MS Dynamics and trigger a daily ingestion. 
+## Setting up the Microsoft Dynamics Connector
+Follow these steps to create a dataset from Microsoft Dynamics and trigger a daily ingestion. 
 
 
 #### 1. Create a Catalog Account entity
 
-As a first step, you need to create a Catalog account entity corresponding to your Dynamics CRM credentials. This request requires your MS Dynamics user name, password, and security token. The response to this request includes the *Account ID*.
+As a first step, you need to create a Catalog account entity corresponding to your Microsoft Dynamics CRM credentials. This request requires your Microsoft Dynamics user name, password, and security token. The response to this request includes the *Account ID*.
 
 ##### Request
 
@@ -154,9 +154,9 @@ JSON
 
 `{CONNECTION_ID}`: ID of the connector you just created. 
 
-#### 3. Select an MS Dynamics Object
+#### 3. Select an Microsoft Dynamics Object
 
-Next, select the MS Dynamic CRM object to ingest. You can get the entire list of available objects from the MS Dynamic CRM connection using the following request.
+Next, select the Microsoft Dynamics CRM object to ingest. You can get the entire list of available objects from the MS Dynamic CRM connection using the following request.
 
 ##### Request
 
