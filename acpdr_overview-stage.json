@@ -29,38 +29,6 @@
 			"pages": [],
 			"path": "api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md",
 			"title": "Data Access"
-		},		
-		{
-			"pages": [
-				{
-					"pages": [],
-					"path": "end-user/markdown/xdm_schema_design_principles/schema_principles.md",
-					"title": "Schema Design Principles and Best Practices"
-				},
-				{
-					"pages": [],
-					"path": "end-user/markdown/acp_standard_schemas/acp_standard_schemas.md",
-					"title": "Adobe Cloud Platform: Using Standard Schemas"
-				},
-				{
-					"pages": [],
-					"path": "end-user/markdown/xdm_schema_design_principles/xdm_field_dictionary.md",
-					"title": "Experience Data Model: Field Dictionary"
-				},
-				{
-					"pages": [],
-					"path": "api-specification/markdown/narrative/technical_overview/xdm_registry_architectural_overview/xdm_registry_architectural_overview.md",
-					"title": "XDM Registry"
-				},
-				{
-					"pages": [],
-					"path": "end-user/markdown/acp_schema_registry/acp_schema_registry.md",
-					"title": "Adobe Cloud Platform: Schema Registry Developer Guide"
-				}	
-	
-			],
-			"path": "end-user/markdown/xdm_schema_design_principles/schema_principles.md",
-			"title": "XDM"
 		},
 		{
 			"pages": [
