@@ -1,7 +1,7 @@
 # Tutorial - Package Recipe to Import into the Data Science Workspace
 
 ## Objective
-The objective of this tutorial is to show users how to author a recipe using various options and to import them to the Data Science Workspace. The source options we will cover include Git, Docker, and JAR. The languages for the recipe will be Python, Scala, PySpark, Tensorflow, and R.
+The objective of this tutorial is to show users how to author a recipe using various options and to import them to the Data Science Workspace. The source options we will cover include Git, Docker, and JAR. The languages for the recipe will be Python, <!--Scala, PySpark, -->Tensorflow, and R.
 
 ---
 
@@ -9,8 +9,8 @@ The objective of this tutorial is to show users how to author a recipe using var
 * Install Docker https://docs.docker.com/install/#supported-platforms
 
 Depending on which code base you clone, install the language of that intelligent service:
-* Python, PySpark, Tensorflow - `brew install python`
-* Scala - `brew install sbt`
+* Python, <!---PySpark,--> Tensorflow - `brew install python`
+<!---* Scala - `brew install sbt`-->
 
 
 ## Docker-Based Model Authoring
@@ -21,10 +21,12 @@ From there the Docker image we create will be stored in the Artifactory and can 
 
 Reference example for each intelligent service:
 * [Python](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/recipes/python)
-* [Scala](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/recipes/scala)
-* [PySpark](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/recipes/pyspark)
 * [Tensorflow](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/recipes/tensorflow)
 * [R](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/recipes/r)
+<!---
+* [Scala](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/recipes/scala)
+* [PySpark](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/recipes/pyspark)
+-->
 
 
 ### Building the Artifact for the Intelligent Service
@@ -34,13 +36,16 @@ Depending on which sample you downloaded, there will be a different procedure fo
 This Sample Intelligent Service code performs Sentiment Analysis using the Natural Language Toolkit library (NLTK). First, the training and scoring data is loaded. The training data has values 0.0 which represent negative sentiment and 1.0 which represent positive sentiment. The result of the sentiment analysis done using NLTK will be compared with the scoring data in the future evaluation step to produce a score for your recipe. 
 
 We will go over how to build each one. You can skip ahead to the section you need.
-* [3.1.1 Building Python Sentiment Analysis Intelligent Service](#3.1.1-Building-Python-Sentiment-Analysis-Intelligent-Service)
-* [3.1.2 Building Scala Sentiment Analysis Intelligent Service](#3.1.2-Building-Scala-Sentiment-Analysis-Intelligent-Service)
-* [3.1.3 Building PySpark Sentiment Analysis Intelligent Service](#3.1.3-Building-PySpark-Sentiment-Analysis-Intelligent-Service)
-* [3.1.4 Building Tensorflow Sentiment Analysis Intelligent Service](#3.1.4-Building-Tensorflow-Sentiment-Analysis-Intelligent-Service)
-* [3.1.5 Building R Sentiment Analysis Intelligent Service](#3.1.5-Building-R-Sentiment-Analysis-Intelligent-Service)
+* [Building Python Retail Intelligent Service](#Building-Python-Retail-Intelligent-Service)
+* [Building Tensorflow Perceptron Intelligent Service](#Building-Tensorflow-Perceptron-Intelligent-Service)
+* [Building R Retail Intelligent Service](#Building-R-Retail-Intelligent-Service)
 
-### Building Python Sentiment Analysis Intelligent Service
+<!---
+* [Building Scala Sentiment Analysis Intelligent Service](#Building-Scala-Sentiment-Analysis-Intelligent-Service)
+* [Building PySpark Sentiment Analysis Intelligent Service](#Building-PySpark-Sentiment-Analysis-Intelligent-Service)
+-->
+
+### Building Python Retail Intelligent Service
 
 To get the Python application, we run the following command to clone the Github repository to your local system.
 
@@ -61,15 +66,15 @@ cd recipes/python/
 Now inside the repository, we can run the following commands to create the `.egg` file which consists of project-related metadata files, code and resources which is well-suited to distribution and importing.
 
 ``` BASH
-cd sampleappPython
+cd retail
 python setup.py install
 ```
 
 The `.egg` file is generated in the `dist` folder.
 
-Now you can move on to the next section [3.2.-Create-Dockerfile](#3.2.-Create-Dockerfile)
+Now you can move on to the next section [Create Dockerfile](#Create-Dockerfile)
 
-#### Building Scala Sentiment Analysis Intelligent Service
+<!---#### Building Scala Sentiment Analysis Intelligent Service
 
 To get the Scala application, we run the following command to clone the Github repository to the local system.
 
@@ -92,7 +97,7 @@ sbt clean package publish-local
 
 The generated `.jar` artifact is generated in the `/target/scala-2.11/` folder
 
-Now you can move on to the next section [3.2.-Create-Dockerfile](#3.2.-Create-Dockerfile)
+Now you can move on to the next section [Create Dockerfile](#Create-Dockerfile)
 
 #### Building PySpark Sentiment Analysis Intelligent Service
 
@@ -111,9 +116,9 @@ python setup.py install
 
 The `.egg` file is generated in the `dist` folder.
 
-Now you can move on to the next section [3.2.-Create-Dockerfile](#3.2.-Create-Dockerfile)
-
-#### Building Tensorflow Sentiment Analysis Intelligent Service
+Now you can move on to the next section [Create Dockerfile](#Create-Dockerfile)
+-->
+#### Building Tensorflow Perceptron Intelligent Service
 
 To get the Tensorflow application, we run the following command to clone the Github repository to the local system.
 
@@ -130,24 +135,24 @@ python setup.py install
 
 The `.egg` file is generated in the `dist` folder.
 
-Now you can move on to the next section [3.2.-Create-Dockerfile](#3.2.-Create-Dockerfile)
+Now you can move on to the next section [Create Dockerfile](#Create-Dockerfile)
 
-#### Building R Sentiment Analysis Intelligent Service
+#### Building R Retail Intelligent Service
 
 For R the files needed to create the Docker image are already built in the repository. All we need to do is to clone it. The files are found in `/recipes/R` folder
 
 ``` BASH
 git clone https://github.com/adobe/acp-data-services-dsw-reference.git
-cd recipes/R/
+cd recipes/R/Retail\ -\ GradientBoosting/
 ```
-Now you can move on to the next section [3.2.-Create-Dockerfile](#3.2.-Create-Dockerfile)
+Now you can move on to the next section [Create Dockerfile](#Create-Dockerfile)
 
 ### Create Dockerfile
 
-We will need to create a Dockerfile that first takes the base image, installs dependencies, and copies over the packaged intelligent service we did in section 3.1.x. Since you are using the Sample Intelligent Service, the Dockerfile is provided in the directory. The example for Python is shown below:
+We will need to create a Dockerfile that first takes the base image, installs dependencies, and copies over the packaged intelligent service we did in section [Create Dockerfile](#Create-Dockerfile). Since you are using the Sample Intelligent Service, the Dockerfile is provided in the directory. The example for Python is shown below:
 
 ``` Docker
-FROM docker-experienceplatform-release.dr-uw2.adobeitc.com/sensei-ml-runtime-python:0.0.6
+FROM <docker-runtime-path>
 
 #INSTALL NLTK and other modules needed by application
 RUN /usr/bin/python3.5 -m pip install -U nltk
@@ -165,23 +170,21 @@ COPY pipeline.json /pipeline.json
 The base Python-based image is specified as the `FROM` argument. `RUN` installs NLTK and numpy which are dependencies. `ENV` updates the environment variable for the software the container installs. We are updating the environment variable with the application we build in the previous section.
 
 ### Build Docker Image
-(TODO Currently not available - A location will be created for external users. (PLATML-1593) Rich has a feature in pipeline that supplies docker upload URL and docker token in the create Recipe UI)  
-
 With our Dockerfile, we can build the Docker image. 
 
 ``` BASH
 cd samples/scala/sentiment_analysis
  
 #<artifactory-token> is from the Prerequisites #2 above.
-docker login -u dsutil -p <artifactory-token> docker-data-science-release.dr-uw2.adobeitc.com
-docker login -u dsutil -p <artifactory-token> docker-experienceplatform-release.dr-uw2.adobeitc.com
+docker login -u dsutil -p <artifactory-token> <docker-path>
+docker login -u dsutil -p <artifactory-token> <docker-path>
  
-#  Build the Docker image: e.g., docker build -t docker-data-science-release.dr-uw2.adobeitc.com/kumar-sample-is:1.0 .
-docker build -t docker-data-science-release.dr-uw2.adobeitc.com/<<intelligent-service>>:<<version_tag>> 
+#  Build the Docker image: e.g., docker build -t <docker-path>/sample-scala:1.0 .
+docker build -t <docker-path>/<intelligent-service>:<version_tag> 
 ```
 
 ### Push Docker Image
 
 ``` BASH
-docker push docker-data-science-release.dr-uw2.adobeitc.com/<<intelligent-service>>:<<version_tag>>
+docker push <docker-path>/<intelligent-service>:<version_tag>
 ```
