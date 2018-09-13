@@ -22,11 +22,6 @@
 		},
 		{
 			"pages": [],
-			"path": "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md",
-			"title": "Data Connectors"
-		},
-		{
-			"pages": [],
 			"path": "api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md",
 			"title": "Data Access"
 		},
