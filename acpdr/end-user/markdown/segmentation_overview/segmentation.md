@@ -22,7 +22,7 @@ The data analyst reviews available data in ACP and selects which fields and valu
 Consider a segment defined by an organization's rewards program "Member Rating", a proprietary attribute which isn't part of a standard schema. 
 A data analyst must ensure the XDM schema being used is an extension that includes a field for "Member Rating", and that the values for that field are included in the data being ingested into ACP.
 
-The segment rules themselves, whether created via API or the Segment Builder UI (described in this document), are ultimately defined using Profile Query Language, or PQL. 
+The segment rules themselves, whether created via API or the Segment Builder UI (described in this document), are ultimately defined using Predicate Query Language, or PQL. 
 This is where marketing's conceptual segment 'Men over 50' gets described in the language built to retrieve profiles meeting the criteria (e.g. `person.age > 50 and person.gender = "male"`). 
 If a suitable segment doesn’t already exist, a user can create a new segment.
 
