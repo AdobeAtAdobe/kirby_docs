@@ -43,9 +43,9 @@
 					"title": "Unified Profile Supported Queries"
 				},
 				{
-					"importedFileName": "ansible_pql",
+					"importedFileName": "segmentation_pql",
 					"pages": [],
-					"path": "end-user/markdown/ansible_overview/ansible_ui.md",
+					"path": "end-user/markdown/segmentation_overview/segmentation.md",
 					"title": "Data Services Segment Builder"
 				}
 			],
