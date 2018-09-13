@@ -17,14 +17,15 @@
 		},
 		{
 			"pages": [],
-			"path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md",
-			"title": "Streaming Ingestion"
+			"path": "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md",
+			"title": "Data Connectors"
 		},
 		{
 			"pages": [],
-			"path": "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md",
-			"title": "Data Connectors"
+			"path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md",
+			"title": "Streaming Ingestion"
 		}
+		
 	],
 	"app2app_map": {
 		"api-specification/markdown/narrative/tutorials/": "/apis/cloudplatform/dataservices/tutorials/alltutorials.html",
