@@ -3,6 +3,7 @@
 ## Objective
 In this step by step tutorial, we will consume the APIs which allow us to create a Recipe, an Experiment, Scheduled Experiment Runs, and Trained Models. For a detailed list of API documentation please refer to [this document](../../apis/foundation/platform-ml-api/overview.md).
 
+
 ---
 
 ## Prerequisites
@@ -27,17 +28,17 @@ We will be consuming the APIs to create an Experiment Run for Training and Scori
 
 Here is a list of what we will cover this tutorial:
 
-* [3.1 Creating a Recipe](#3.1-Creating-a-Recipe)
-* [3.2 Creating an Instance](#3.2-Creating-an-Instance)
-* [3.3 Creating an Experiment](#3.3-Creating-an-Experiment)
-    * [3.3.1 Creating a Scheduled Experiment for Training](#3.3.1-Creating-a-Scheduled-Experiment-for-Training)
-    * [3.3.2 Creating a Scheduled Experiment for Scoring](#3.3.2-Creating-a-Scheduled-Experiment-for-Scoring)
-    * [3.3.3 Creating an Experiment Run for Training](#3.3.3-Creating-an-Experiment-Run-for-Training)
-        * [3.3.3.1 Retrieving an Experiment Run Status](#3.3.3.1-Retrieving-an-Experiment-Run-Status)
-        * [3.3.3.2 Retrieving the Trained Model](#3.3.3.2-Retrieving-the-Trained-Model)
-    * [3.4 Creating an Experiment Run for Scoring](#3.4-Creating-an-Experiment-Run-for-Scoring)
-        * [3.4.1 Retrieve an Experiment Run Status for Scheduled Experiment Run](#3.4.1-Retrieve-an-Experiment-Run-Status-for-Scheduled-Experiment-Run)
-* [3.5 Stop and Delete a Scheduled Experiment](#3.5-Stop-and-Delete-a-Scheduled-Experiment)
+* [Creating a Recipe](#Creating-a-Recipe)
+* [Creating an Instance](#Creating-an-Instance)
+* [Creating an Experiment](#Creating-an-Experiment)
+    * [Creating a Scheduled Experiment for Training](#Creating-a-Scheduled-Experiment-for-Training)
+    * [Creating a Scheduled Experiment for Scoring](#Creating-a-Scheduled-Experiment-for-Scoring)
+    * [Creating an Experiment Run for Training](#Creating-an-Experiment-Run-for-Training)
+        * [Retrieving an Experiment Run Status](#Retrieving-an-Experiment-Run-Status)
+        * [Retrieving the Trained Model](#Retrieving-the-Trained-Model)
+    * [Creating an Experiment Run for Scoring](#Creating-an-Experiment-Run-for-Scoring)
+        * [Retrieve an Experiment Run Status for Scheduled Experiment Run](#Retrieve-an-Experiment-Run-Status-for-Scheduled-Experiment-Run)
+* [Stop and Delete a Scheduled Experiment](#Stop-and-Delete-a-Scheduled-Experiment)
 
 
 ### Creating a Recipe

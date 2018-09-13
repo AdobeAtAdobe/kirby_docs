@@ -7,7 +7,9 @@ This developer guide provides an introduction to the Schema Registry (aka XDM Re
 - View a list of existing schemas
 - View a specific schema
 - Extend an existing schema
+- Add fields to an extension
 - Create a new schema
+- Add fields to the new schema
 
 ## Schema Registry
 
@@ -40,7 +42,7 @@ Within the registry, you have access to all of your `_customer` extensions and s
 
 ## Sample API Calls
 
-Below are examples of basic schema registry API calls to view (GET) all XDM schemas, view (GET) a specific schema, update (PUT) an existing schema, and create (PUT) a new schema.
+Below are examples of basic schema registry API calls to view (GET) all XDM schemas, view (GET) a specific schema, update (PUT) an existing schema, create (PUT) a new schema, and update (PUT) that new schema.
 
 A full list of available API calls can be found in the [RESTful API Resource](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html) documentation.
 
@@ -571,7 +573,6 @@ After making the API request below with the provided payload, a new `_customer.r
 ```
 curl -X PUT \
   https://platform.adobe.io/data/foundation/catalog/xdms/context/person/_customer/retail \
-  -H "accept: application/json" \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -754,12 +755,12 @@ curl -X GET \
             "type": "object",
             "properties": {
                 "retail": {
-                    "version": "number",
-                    "created": "number",
-                    "updated": "number",
+                    "version": 1,
+                    "created": 1536339393556,
+                    "updated": 1536692324963,
                     "createdClient": "{API_KEY}",
-                    "updatedUser": "string",
-                    "imsOrg": "{imsOrg}@AdobeOrg",
+                    "updatedUser": "{API_KEY}@AdobeID",
+                    "imsOrg": "{imsOrg}",
                     "extNamespace": "retail",
                     "title": "Custom Retail Fields",
                     "type": "object",
@@ -771,7 +772,6 @@ curl -X GET \
                         },
                         "storeAddress": {
                             "$ref": "common/address",
-                            "meta:xdmField": "xdm:address"
                         }
                     }
                 }
@@ -787,6 +787,171 @@ curl -X GET \
     "meta:xdmType": "object",
     "$schema": "http://json-schema.org/draft-06/schema#",
     "$id": "context/person"
+}
+```
+
+### Adding Fields to an Extension
+
+After an extension has been defined, you may wish to add additional fields to that same extension at a later date. This can be done via the API.
+
+In order to add fields to an extension, you will need to issue two requests to the API. First, you will issue a GET request for the existing extension, then you will issue a PUT request with the extension fields (existing + new) as the payload.
+
+The example below outlines the two-step process for adding fields to the `_customer.retail` extension that we made above to the `Person` standard schema.
+
+#### GET - View the Extension
+
+The first step is to issue a GET request to view the extension as it exists currently.
+
+**API Format**
+
+```
+GET /xdms/{id}/_customer/{extension name}
+```
+- `{extension name}`: The name of the extension you want to add fields to.<br/><br/>
+**Note:** Your organization may have multiple extensions within the `_customer` section of a standard schema. It is important to perform a GET on the specific extension that you wish to add fields to. 
+
+**Request**
+
+The following request returns `_customer.retail` in JSON format, with all attributes of the extension located under `properties`.
+
+```
+curl -X GET \
+  https://platform.adobe.io/data/foundation/catalog/xdms/context/person/_customer/retail \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
+
+**Response**
+
+```JSON
+{
+    "version": "1",
+    "created": 1536339393556,
+    "updated": 1536339393556,
+    "createdClient": "{string}",
+    "updatedUser": "{string}@AdobeID",
+    "imsOrg": "{IMS_ORG}",
+    "extNamespace": "retail",
+    "title": "Custom Retail Fields",
+    "type": "object",
+    "description": "My custom fields for my retail division",
+    "properties": {
+        "storeId": {
+            "type": "string",
+            "meta:xdmType": "string"
+        },
+        "storeAddress": {
+            "$ref": "common/address"
+        }
+    }
+}
+```
+
+#### PUT - Add Fields to the Extension
+
+After confirming that the response from the GET request is the correct extension, you can now add fields to the extension and issue a PUT request.
+
+**Note:** This PUT request is essentially _re-writing_ the existing extension, so it is important that the payload of your PUT request include **ALL** of the fields (old and new) that you wish to have included in the extension.
+
+**API Format**
+
+```
+PUT /xdms/{id}/_customer/{extension name}
+```
+
+**Request**
+
+The request includes the fields that were previously defined (`"storeId"` and `"storeAddress"`), as well as two new fields (`"storePhone"` and `"storeName"`) to be added to the extension.
+
+```
+curl -X PUT \
+  https://platform.adobe.io/data/foundation/catalog/xdms/context/person/_customer/retail \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H "content-type: application/json" \
+  -d "{
+        "type": "object",
+        "title": "Custom Retail Fields",
+        "description": "My custom fields for my retail division",
+        "properties": {
+          "storeId": {
+            "type": "string"
+          },
+          "storeAddress": {
+            "$ref": "/common/address"
+          },
+          "storePhone": {
+            "$ref": "/context/phonenumber"
+          },
+          "storeName": {
+            "type": "string"
+          }
+        }
+     }"
+```
+
+**Response**
+
+The response to the above request shows the path for the schema extension:
+
+```
+[
+    "@/xdms/context/person/_customer/retail"
+]
+```
+
+#### GET - View the Updated Extension
+
+Now that the fields have been added, performing a GET request on the `Person` schema will show the updated `_customer.retail` extension. You can also issue a GET request directly on the extension to see the updated fields, as shown below.
+
+**API Format**
+
+```
+GET /xdms/{id}/_customer/{extension name}
+```
+
+**Request**
+
+```
+curl -X GET \
+  https://platform.adobe.io/data/foundation/catalog/xdms/context/person/_customer/retail \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
+
+**Response**
+
+```JSON
+{
+    "type": "object",
+    "title": "Custom Retail Fields",
+    "description": "My custom fields for my retail division",
+    "properties": {
+        "storeId": {
+            "type": "string",
+            "meta:xdmType": "string"
+        },
+        "storeAddress": {
+            "$ref": "common/address"
+        },
+        "storePhone": {
+            "$ref": "context/phonenumber"
+        },
+        "storeName": {
+            "type": "string",
+            "meta:xdmType": "string"
+        }
+    },
+    "extNamespace": "retail",
+    "version": "2",
+    "created": 1536339393556,
+    "updated": 1536692324963,
+    "createdClient": "{string}",
+    "updatedUser": "{string}@AdobeID",
+    "imsOrg": "{IMS_ORG}"
 }
 ```
 
@@ -819,37 +984,32 @@ curl -X PUT \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -H "content-type: application/json" \
   -d "{ 
-      "title": "Flights", 
-      "type": "object", 
-      "description": "Data for all available flights.", 
-      "properties": { 
-        "flightId": { 
-          "title": "Flight ID",
-          "type": "string", 
-          "description": "The unique ID of the flight."
-          
-        }, 
-        "flightNumber": { 
-          "title": "Flight Number",
-          "type": "string", 
-          "description": "Flight Number provided by the carrier.", 
-          
-        }, 
-        "carrier": { 
-          "title": "Carrier",
-          "type": "string", 
-          "description": "Name of the flight carrier." 
-          
-        },
-        "carrierAddress": {
+        "title": "Flights", 
+        "type": "object", 
+        "description": "Data for all available flights.", 
+        "properties": { 
+          "flightId": { 
+            "title": "Flight ID",
+            "type": "string", 
+            "description": "The unique ID of the flight."
+          }, 
+          "flightNumber": { 
+            "title": "Flight Number",
+            "type": "string", 
+            "description": "Flight Number provided by the carrier." 
+          }, 
+          "carrier": { 
+            "title": "Carrier",
+            "type": "string", 
+            "description": "Name of the flight carrier." 
+          },
+          "carrierAddress": {
             "title": "Carrier Address",
-            "description": "Address of the flight carrier."
+            "description": "Address of the flight carrier.",
             "$ref": "/common/address"
-      }, 
-      "xdmType": "model", 
-      "extNamespace": "default", 
-      "id": "_customer/default/flights"
-    }
+          }
+        }
+      }
 ```
 
 The payload for this request is a JSON Schema object that represents your new schema and is able to use simple scalar field types (string, number, etc.) or fields that act as an entry point into a more complex embedded schema that you reference (using `$ref`). 
@@ -889,6 +1049,227 @@ In order to embed that schema in another schema, the reference would be:
 ```
 "$ref": "/_customer/web/flights"
 ```
+
+### Adding Fields to Your New Schema
+
+After defining a new schema, you may find that you need to add additional fields to it. This can be done through the API following steps similar to those required for adding fields to an extension.
+
+Adding fields to a new schema requires two requests to the API. The first request is to GET the schema in JSON format, the second request is a PUT with all of the schema fields (existing + new) as the payload.
+
+The example below outlines the two-step process for adding new fields to the `Flights` schema we defined above.
+
+#### GET - View the Schema
+
+The first step is to issue a GET request to view the schema as it exists currently.
+
+**API Format**
+
+```
+GET /xdms/_customer/{id}
+```
+
+**Request**
+
+```
+curl -X GET \
+  https://platform.adobe.io/data/foundation/catalog/xdms/_customer/web/flights \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
+
+**Response**
+
+```JSON
+{
+    "title": "Flights",
+    "type": "object",
+    "description": "Data for all available flights.",
+    "properties": {
+        "flightId": {
+            "title": "Flight ID",
+            "type": "string",
+            "description": "The unique ID of the flight.",
+            "meta:xdmType": "string"
+        },
+        "flightNumber": {
+            "title": "Flight Number",
+            "type": "string",
+            "description": "Flight Number provided by the carrier.",
+            "meta:xdmType": "string"
+        },
+        "carrier": {
+            "title": "Carrier",
+            "type": "string",
+            "description": "Name of the flight carrier.",
+            "meta:xdmType": "string"
+        },
+        "carrierAddress": {
+            "title": "Carrier Address",
+            "description": "Address of the flight carrier.",
+            "$ref": "common/address"
+        }
+    },
+    "extNamespace": "web",
+    "imsOrg": "{IMS_ORG}",
+    "createdClient": "{string}",
+    "updatedUser": "{string}@AdobeID",
+    "version": "1",
+    "created": 1536692957370,
+    "updated": 1536692957370,
+    "id": "_customer/web/flights",
+    "meta:altId": "_customer.web.flights",
+    "$id": "_customer/web/flights"
+}
+```
+
+#### PUT - Add Fields to the Schema
+
+After confirming that the response from the GET request is the correct schema, you can now add fields to the schema and issue a PUT request.
+
+**Note:** This PUT request is essentially _re-writing_ the schema, so it is important that the payload of your PUT request include **ALL** of the fields (old and new) that you wish to have included in the schema.
+
+**API Format**
+
+```
+PUT /xdms/_customer/{id}
+```
+
+**Request**
+
+The request includes the fields that were previously defined (`"flightId"`, `"flightNumber"`, `"carrier"`, and `"carrierAddress"`), as well as two new fields (`"carrierPhone"` and `"carrierEmail"`) to be added to the schema.
+
+```
+curl -X PUT \
+  https://platform.adobe.io/data/foundation/catalog/xdms/_customer/web/flights \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H "content-type: application/json" \
+  -d "{ 
+        "title": "Flights", 
+        "type": "object", 
+        "description": "Data for all available flights.", 
+        "properties": { 
+          "flightId": { 
+            "title": "Flight ID",
+            "type": "string", 
+            "description": "The unique ID of the flight."
+          }, 
+          "flightNumber": { 
+            "title": "Flight Number",
+            "type": "string", 
+            "description": "Flight Number provided by the carrier." 
+          }, 
+          "carrier": { 
+            "title": "Carrier",
+            "type": "string", 
+            "description": "Name of the flight carrier." 
+          },
+          "carrierAddress": {
+            "title": "Carrier Address",
+            "description": "Address of the flight carrier.",
+            "$ref": "/common/address"
+          },
+          "carrierPhone": {
+            "title": "Carrier Phone Number",
+            "description": "Phone Number of the carrier.",
+            "$ref": "/context/phonenumber"
+          },
+          "carrierEmail": {
+            "title": "Carrier Email Address",
+            "description": "Email address of the carrier.",
+            "$ref": "/context/emailaddress"
+          }
+        }
+      }"
+```
+
+**Response**
+
+The response to the above request shows the path for the schema:
+
+```
+[
+    "@/xdms/context/person/_customer/web/fights"
+]
+```
+
+#### GET - View the Updated Schema
+
+Now that the fields have been added, you can view the updated schema by issuing a GET request on the `Flights` schema. 
+
+**API Format**
+
+```
+GET /xdms/_customer/{id}
+```
+
+**Request**
+
+```
+curl -X GET \
+  https://platform.adobe.io/data/foundation/catalog/xdms/_customer/web/flights \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
+
+**Response**
+
+```JSON
+{
+    "title": "Flights",
+    "type": "object",
+    "description": "Data for all available flights.",
+    "properties": {
+        "flightId": {
+            "title": "Flight ID",
+            "type": "string",
+            "description": "The unique ID of the flight.",
+            "meta:xdmType": "string"
+        },
+        "flightNumber": {
+            "title": "Flight Number",
+            "type": "string",
+            "description": "Flight Number provided by the carrier.",
+            "meta:xdmType": "string"
+        },
+        "carrier": {
+            "title": "Carrier",
+            "type": "string",
+            "description": "Name of the flight carrier.",
+            "meta:xdmType": "string"
+        },
+        "carrierAddress": {
+            "title": "Carrier Address",
+            "description": "Address of the flight carrier.",
+            "$ref": "common/address"
+        },
+        "carrierPhone": {
+            "title": "Carrier Phone Number",
+            "description": "Phone Number of the carrier.",
+            "$ref": "context/phonenumber"
+        },
+        "carrierEmail": {
+            "title": "Carrier Email Address",
+            "description": "Email address of the carrier.",
+            "$ref": "context/emailaddress"
+        }
+    },
+    "extNamespace": "web",
+    "version": "2",
+    "created": 1536692957370,
+    "updated": 1536693460042,
+    "createdClient": "{string}",
+    "updatedUser": "{string}@AdobeID",
+    "imsOrg": "{IMS_ORG}",
+    "id": "_customer/web/flights",
+    "meta:altId": "_customer.web.flights",
+    "$id": "_customer/web/flights"
+}
+```
+
 
 ## Defining XDM Field Types in the API
 
@@ -1421,8 +1802,8 @@ curl -X GET \
             "properties": {
                 "default": {
                     "version": "string",
-                    "created": {number},
-                    "updated": {number},
+                    "created": "number",
+                    "updated": "number",
                     "createdClient": "{API_KEY}",
                     "updatedUser": "string@AdobeID",
                     "imsOrg": "{IMS_ORG}",
