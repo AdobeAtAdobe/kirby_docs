@@ -159,3 +159,4 @@ If you are working with a mobile app, see how ECID is used to [track visitors be
 Deploying these tools can be simple and easy to manage if you use [Adobe Launch](https://docs.adobelaunch.com).
 
 Also, see the [GDPR Documentation](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/gathering-your-ids.md) for information on using ECID for GDPR compliance.
+
