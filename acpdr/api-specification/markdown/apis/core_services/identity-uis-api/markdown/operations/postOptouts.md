@@ -1,13 +1,14 @@
 
-<a name="getclustermembers"></a>
-### Given an identity, returns all linked identities in that cluster.
+<a name="optout"></a>
+### Given a timestamp, return all opted out id's for a customer
 ```
-GET /data/core/identity/cluster/members
+POST /data/core/identity/optout
 ```
-
 
 #### Description
-Given an ID return all IDs, in the same or other namespaces, that are linked to it by the device graph type. The related IDs are considered to be part of the same "cluster".
+A batch equivalent of GET method. Returns all public IDs opted out for the given client as identified by IMS org id, in the same or other namespaces, that are linked to it by the device graph type. 
+
+GET and POST supports the same functionality [and not a batch version] and is only provided for consistency with other functions
 
 
 #### Parameters
@@ -16,16 +17,10 @@ Given an ID return all IDs, in the same or other namespaces, that are linked to 
 |---|---|---|---|---|
 |**Header**|**Accept**  <br>*optional*|The version of the resource's representation.|string|`"application/vnd.adobe.identity+json;version=1.2"`|
 |**Header**|**Authorization**  <br>*required*|Should be a valid IMS token for authenticating with Identity Services|string||
-|**Header**|**x-api-key**  <br>*required*|Should be a valid client ID|string||
+|**Header**|**x-api-key**  <br>*required*|Should be a valid client ID|string|<api-key>|
 |**Header**|**x-gw-ims-org-id**  <br>*required*|IMS Org Id of requesting client|string|`"2ASDRTGUIytrOURsdr1001"`|
-|**Header**|**x-uis-cst-ctx**  <br>*optional*|Customer context to be used for stub response|string|`"stub"`|
-|**Query**|**graph-type**  <br>*optional*|Graph type (output type) you want to get the cluster from|string|`"coop"`|
-|**Query**|**xid**  <br>*required*|Identity string as returned by /identity GET api|string|`"2521328045094711779817"`|
-|**Query**|**namespace**  <br>*optional*|Case insensitive namespace enum - {"ecid", "idfa", "gaid", "email", "core"}. "core" is for internal Adobe use only. When namespace is 'core', return ids will be in 'core' namespace and not in 'ecid' namespace.<br>Although both namespace and nsid are optional, specifying one of them is mandatory if xid is not specified.|string|`"ecid"`|
-|**Query**|**nsid**  <br>*optional*|Namespace Id. This is provided for backward compatibility with V1. <br> For backward compatibility reasons if the parameter is passed in nsid form, response will be in nsid format (numbers).|int|`411`|
-|**Query**|**id**  <br>*required*|Id in that given namespace id.|string|`"2521328045094711779817"`|
-|**Query**|**outputNamespaceIncludes**  <br>*required*|Comma separated list of namespace enum values to be included in the output.|string|`"ecid,email"`|
-|**Query**|**outputNamespaceIncludes**  <br>*required*|Comma separated list of namespace enum values to be excuded in the output.|string|`"ecid,email"`|
+|**Header**|**Content-type**  <br>*required*|Response is a JSON document with UTF-8 encoding|string|`"application/json"`|
+
 
 #### Responses
 
@@ -46,18 +41,12 @@ Given an ID return all IDs, in the same or other namespaces, that are linked to 
 * `application/json`
 
 
-#### Tags
-
-* Cluster
-
-
 #### Example HTTP request
 
 ##### Request path
 ```
-/data/core/identity/cluster/members
+/data/core/identity/optout
 ```
-
 
 ##### Request header
 
@@ -67,66 +56,27 @@ Given an ID return all IDs, in the same or other namespaces, that are linked to 
 |**Header**|**Authorization**  <br>*required*|Should be a valid IMS token for authenticating with Identity Services|string||
 |**Header**|**x-api-key**  <br>*required*|Should be a valid client ID|string||
 |**Header**|**x-gw-ims-org-id**  <br>*required*|IMS Org Id of requesting client|string|`"2ASDRTGUIytrOURsdr1001"`|
-|**Header**|**x-uis-cst-ctx**  <br>*optional*|Customer context to be used for stub response|string|`"stub"`|
 
-
-
-
-##### Request query
+##### Request body
 ```
 
-/cluster/members?id=123&namespace=idfa
+json :
+{
+"timestamp": "2018-08-15T15:10:50Z"
+}
 
-/cluster/members?xid=252132804&graph-type=coop
-
-/cluster/members?nsid=411&id=7HKS711HKHS&graph-type=coop
-
-/cluster/members?nsid=411&id=7HKS711HKHS&graph-type=coop
 ```
-
 
 #### Example HTTP response
 
 ##### Response 200
-
-XID format
-
 ```
 json :
 {
   "value" : {
-    "version" : "1.0",
-    "clusters" : [ {
-      "xid" : "27064814400205787570627663430729680462",
-      "xidsInCluster" : [ "e8138f65-d3d3-4485-a7e1-6712e047349d", "21312343536983537571245438594" ]
-    } ],
-    "unprocessedXids" : []
+    "version" : "1.1",
+    "optoutids" : [ "12345TY6789000", "2ASDRTGUIytrOURsdr1001"]
   }
-}
-```
-Namespace format
-```
-json :
-{
-    "version": 1,
-    "clusters": [{
-            "compositeXid": {
-                "namespace": 'adcloud",
-                "id": "WRbM7AAAAJ_PBZHl"
-            },
-          
-            "members": [{
-                    "namespace": "ecid",
-                    "id": "27064814400205787570627663430729680462"
-                },
-                {
-                    "namespace": "adcloud",
-                    "id": "WRbM7AAAAJ_PBZHl"
-                }
-            ]
-        }
-    ],
-    "unprocessedNids": []
 }
 ```
 
@@ -188,6 +138,3 @@ json :
   "message" : "string"
 }
 ```
-
-
-
