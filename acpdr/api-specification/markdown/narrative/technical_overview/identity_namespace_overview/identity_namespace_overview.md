@@ -115,7 +115,7 @@ Create a new Namespaces under the given company. For recommendations around crea
 __Example Request - Create Namespace__:
 
 ```
-POST https://platform.adobe.io/data/core/idnamespace/identities  HTTP/1.1
+POST https://platform.adobe.io/data/core/idnamespace  HTTP/1.1
 
 Headers:
 

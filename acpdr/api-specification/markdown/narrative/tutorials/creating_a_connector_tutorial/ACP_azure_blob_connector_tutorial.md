@@ -1,38 +1,33 @@
-# Azure Blob Connector for Adobe Cloud Platform
-
-The Microsoft Azure Blob Connector for Adobe Cloud Platform provides an API and wizard to ingest data from your Azure Blob data store onto Adobe Cloud Platform (ACP). The Azure Blob connector for ACP allows you to:
-
-* Connect to your Azure Blob account.
-* Select one or more datasets from a list of available datasets.
-* Preview a sample of data for accuracy.
-* Identify each dataset as a lookup file, event, or record.
-* Set a schedule and frequency for ingesting data.
-* Save the Azure Blob connector and modify it as needed.
-
-This article provides steps to set up and configure the Azure Blob connector through API calls. 
+# ACP Connector for Azure Blob
 
 
-## Setting up the Azure Blob Connector
-Set up an account to access APIs and provide credentials to create a connector:  
+This article helps you build and ingest a dataset from a Microsoft Azure Blob using the ACP Azure Blob Connector from the Adobe Cloud Platform (ACP). 
 
-<!---### Prerequisites
-* Register the schema of the incoming file.
-* Register the metadata associated with the file, such as *DataSetName*, *UserID*, *IMSOrg*, and *ConnectionParameters*.
-* Get the details of the file ingested using an API call to the Catalog API.--->
+Adobe connectors provide two ways for creating a dataset: 
+
+* Use the Batch Ingestion API batch ingestion of delimited files. See  [batch ingestion via file upload](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md). 
+
+* Ingest files by setting up a connector. The following steps show you how to ingest CRM data using the ACP Azure Blob Connector.
+
+## Setting up the ACP Connector for Azure Blob
+
+Note: Data is ingested into the source schema. The platform needs to have a record of the data ingested and source schema to help build the ETL template.
 
 
-### Set up an Adobe I/O account 
-See [authenticating and accessing APIs](https://www.adobe.io/apis/cloudplatform/dataservices/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to  create an access token used to authenticate API calls from Adobe I/O.
+### Requirements
+* Ability to register the schema of the incoming file.
+* Ability to register the metadata associated with the file, such as DataSetName, UserID, IMSOrg, and ConnectionParameters.
+* Platform data engineer should be able to get the details of the file ingested using an API call to the Catalog API.
 
-* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-* `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
-* `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
 
-### Set up an ACP connection to the Azure Blob
-After setting up an Adobe I/O account, use the POST call and provide the *imsOrgId*, *accessToken*, and *Blob* connection string to set up a connection. 
+### Step 1: Set up an ACP account and connection 
+Set up an account for the Azure Blob data connector. Follow this [tutorial](./alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
+
+
+Use the below POST call and provide the imsOrgId, accessToken, and Blob connection string. This single call  provides handles to various operations in the platform.
 
 ```
-curl -X POST https://platform.adobe.io/data/foundation/ connectors/account/ -H 'authorization: Bearer <accessToken>'
+curl -X POST https://platform-int.adobe.io/data/foundation/ connectors/account/ -H 'authorization: Bearer <accessToken>'
 
 -H 'content-type: application/json' -H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg' -d
 
@@ -46,10 +41,10 @@ curl -X POST https://platform.adobe.io/data/foundation/ connectors/account/ -H '
   "type": "azure-blob-inbound"
 }'
 ```
-### Create a Dataset
-Once the account and connection are successfully created, the *Connection ID* can be used to create a dataset. You can configure ACP datasets, pipeline, and triggers with a successful POST call.
+### Step 2: Creating the Connection ID
+Once the account and connection are successfully created, the connection ID can be used to create a dataset. Configure ADF datasets,pipeline, and triggers with a successful POST call.
 
-You will want to provide a unique and identifiable name for the dataset, allowing you to identify it clearly when monitoring your data ingestion. 
+Note: It is suggested to provide a unique and identifiable name for the dataset. You will be monitoring the ingestion status from the ACP user interface 
 
 The following are various properties of JSON for creating a dataset.
 
@@ -65,8 +60,8 @@ params/datasets/fileDescription	| Optional. Identify the kind of file to ingest:
 
 #### Simple Payload Example
 ```
-curl -X POST https: //platform.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json'
--H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'-d
+curl-X POST https: //platform-int.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json'
++-H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'-d
 '{
   "params": {
     "datasets": [
@@ -87,12 +82,12 @@ curl -X POST https: //platform.adobe.io/data/foundation/connectors/connections/<
   }
 }'
 ```
-Note: The Schedule API is optional. Make this call only if you want to schedule the ingestion or send a blank JSON {} as the payload for a one-time run.
+Note: The Schedule API is optional. Make this call only if you want to schedule the ingestion or send a blank json {} as the payload for a one-time run.
 
 The following configuration will ingest data every 15 minutes.
 
 ``` 
-curl -X POST https: //platform.adobe.io/data/foundation/connectors/connections/<connectionId>/schedule -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json' 
+curl-X POST https: //platform-int.adobe.io/data/foundation/connectors/connections/<connectionId>/schedule -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json' 
 -H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'-d 
 '{
 	"ingestStart" : "2018-05-24T09:36:01.257Z",
@@ -107,18 +102,38 @@ curl -X POST https: //platform.adobe.io/data/foundation/connectors/connections/<
 }'
 ```
 
+### Step 3: Preview Data
+The status of the data ingestion can be seen from the ACP user interface. Go to the ACP UI and select the dataset created. Additional data can be previewed with the help of the preview icon.
 
-## Additional Adobe Cloud Platform APIs
+<screen shot>
 
-In addition to the Create Account and Create Dataset APIs, you can use these for specific needs.
+To know if data is ingested, please note the preview button on top right corner. That should be enabled. Also, one can use catalog APIs to see if datasetFiles are being created for the current batch. 
+
+Note: You can also make batch query with a datasetViewId filter from the Catalog API to see if the batches are properly created.
+
+To get list of the Catalog end points, select the Catalog API from the drop-down menu on top right corner
+
+<see https://git.corp.adobe.com/pages/experience-platform/api-specification/>
+
+< Will you see a batches list> Currently on click datasets, you will not see batches list. This is because of a bug which will be fixed in coming sprint. 
+
+#### Default Settings
+* For an incremental ingestion, you will have to clean up the data after every ingestion run.
+* Currently, the pipeline run is configured for a delay of 30 minutes between consecutive runs. This will be become configurable in coming sprint.
+ <what is the condition of this now>
+ 
+
+## Integrating with ACP APIs
+
+<Apart from Create Account and Create Dataset>
 
 **Object Listing API** 
 
-This API lists the content of an Azure blob.
+Lists the content of an Azure blob.
 
 ```
 curl -X GET \
-  'https://platform.adobe.io/data/foundation/connectors/connections/<connection id>/objects?object=/<container>/<path>' \
+  'https://platform-int.adobe.io/data/foundation/connectors/connections/<connection id>/objects?object=/<container>/<path>' \
   -H 'authorization: Bearer <Access token>' \
   -H 'content-type: application/json' \
   -H 'x-api-key: <API Key>' \
@@ -126,12 +141,11 @@ curl -X GET \
 ```
   
 **Preview Object API**
-
-This API lists the content of the file. Currently only parquet files are supported for preview.
+This API lists the content of the file. Currently only CSV files are supported for preview.
 
 ```
 curl -X GET \
-  'https://platform.adobe.io/data/foundation/connectors/connections/<connection Id>/rows?object=/<container>/<path>&fileType=delimited' \
+  'https://platform-int.adobe.io/data/foundation/connectors/connections/<connection Id>/rows?object=/<container>/<path>&fileType=delimited' \
   -H 'authorization: Bearer <Access Token>' \
   -H 'content-type: application/json' \
   -H 'x-api-key: <API Key>' \
@@ -143,7 +157,7 @@ This API lists fields of a file. Currently only CSV files are supported.
 
 ```
 curl -X GET \
-  'https://platform.adobe.io/data/foundation/connectors/connections/<connection Id>/fields?object=/<container>/<path>&fileType=delimited' \
+  'https://platform-int.adobe.io/data/foundation/connectors/connections/<connection Id>/fields?object=/<container>/<path>&fileType=delimited' \
   -H 'authorization: Bearer <Access Token>' \
   -H 'content-type: application/json' \
   -H 'x-api-key: <API Key>' \
