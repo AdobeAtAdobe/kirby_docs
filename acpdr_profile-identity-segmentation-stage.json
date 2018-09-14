@@ -43,15 +43,16 @@
 					"path": "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md",
 					"title": "Unified Profile Supported Queries"
 				},
-				{
-					"importedFileName": "segmentation_pql",
-					"pages": [],
-					"path": "end-user/markdown/segmentation_overview/segmentation.md",
-					"title": "Segment Builder"
-				}
+			
 			],
 			"path": "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md",
 			"title": "Unified Profile"
+		},
+		{
+			"importedFileName": "segmentation_pql",
+			"pages": [],
+			"path": "end-user/markdown/segmentation_overview/segmentation.md",
+			"title": "Segment Builder"
 		}
 	],
 	"app2app_map": {
