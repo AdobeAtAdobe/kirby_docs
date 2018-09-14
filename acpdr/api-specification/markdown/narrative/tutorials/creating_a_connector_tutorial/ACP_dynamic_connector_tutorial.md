@@ -1,94 +1,95 @@
-# Microsoft Dynamics Connector for Adobe Cloud Platform
+# Creating and Populating a Dataset using an MS Dynamic Connector
 
-The Microsoft Dynamics Connector for Adobe Cloud Platform provides an API and wizard to ingest your Microsoft Dynamics CRM data onto Adobe Cloud Platform (ACP), allowing you to:   
+## 1. Objective
 
-* Authenticate to your Microsoft Dynamics account. 
-* Select one or more datasets from a list of available datasets.
-* Preview a sample of your data for accuracy.
-* Identify each dataset as a lookup file, event, or record.
-* Set a schedule and frequency for ingesting data.
-* Save the connector and modify it as needed.
+This document is intended to provide a tutorial on creating and populating a customer dataset via a connector. The steps required to perform this operation are listed below:
 
-This article provides steps to set up and configure the Microsoft Dynamics connector through API calls.  
+* Create Catalog Account Entity  
+* Create Catalog Connection Entity
+* Create Catalog Dataset Entity
 
-## Setting up the Microsoft Dynamics Connector
-Set up an account to access APIs and provide credentials to create a connector: 
+The tutorial to create and populate a dataset via a file can be found [here](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
+
+### 1.1. Audience
+This document is written for users who need to understand Adobe Cloud Platform and have to integrate the platform with customer-owned or third party systems. Users include data engineers, data architects, data scientists, and app developers within Adobe I/O who will need to perform Adobe Cloud Platform API calls.
+
+### 1.2. Version Information
+*Version* : Preview
+
+### 1.3. License Information
+Terms of service : https://www.adobe.com/legal/terms.html
 
 
-<!---### Prerequisites
-* Register the schema of the incoming file.
-* Register the metadata associated with the file, such as *DataSetName*, *UserID*, *IMSOrg*, and *ConnectionParameters*.
-* Get the details of the file ingested using an API call to the Catalog API.--->
+### 1.4 URI Scheme
+*Host* : __platform.adobe.io__  
+*Schemes* : __HTTPS__
 
-### Set up an Adobe I/O account
-See [authenticating and accessing APIs](https://www.adobe.io/apis/cloudplatform/dataservices/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to  create an access token used to authenticate API calls from Adobe I/O.
+### 1.5. About the Docs
 
-After setting up authorization for APIs, these values will be returned:
+This document is kept up-to-date and can be updated without announcement.
+
+---
+
+## 2. Datasets from a Schema
+
+There are two ways data can be ingested into a dataset. The first is [batch ingestion via file upload](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md) and the second is ingestion via setting up a connector. We will go over the steps to ingest via a connector in this section.
+
+### 2.1. Prerequisites
+
+Follow this [Tutorial](./alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
+
+From the tutorial you should now have the following values:
 
 * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
 * `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
 * `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
 
-### Set up an ACP connection to Microsoft Dynamics
 
-You will need the following credentials:
+To set up the MS Dynamic CRM (Customer Relationship Management) connector, you will also need the following MS Dynamic CRM credentials:
 
 * `{MS Dynamic_USER_NAME}`: Your MS Dynamic CRM user name
 * `{MS Dynamic_PASSWORD}`: Your MS Dynamic CRM password
-* `{MS Dynamic_SECURITY_TOKEN}`: Your MS Dynamic security token. The token can be accessed following these steps:  
-  1. Go to *https://developer.MS Dynamic.com*.
-  2. Log in using your MS Dynamic CRM credentials.
-  3. Click on top-right user avatar and select *Settings*.
-  4. In the *Personal Information*, select *Reset My Security Token*.
-     You will receive a new security token via email.
+* `{MS Dynamic_SECURITY_TOKEN}`: Your MS Dynamic security token. This can be found with the following steps:  
+  1. Go to https://developer.MS Dynamic.com/
+  2. Log in using your MS Dynamic CRM credentials
+  3. Click on top right user avatar and select "Settings" link
+  4. Now in the "Personal Information" view click on "Reset My Security Token"
+  5. You will receive a new security token via email.
 
-With authorization to make API calls from the Adobe I/O Gateway and your Microsoft Dynamics credentials, your next step is to generate a dataset from the Microsoft Dynamics objects. 
+With the above values we can move on to the next section:
 
-## Setting up the Microsoft Dynamics Connector
-Follow these steps to create a dataset from Microsoft Dynamics and trigger a daily ingestion. 
+### 2.2. Ingesting Data from MS Dynamic Connector<a name="2_3_Header"></a>
 
+Now we will go through the API request steps required to set up a MS Dynamic CRM connector which will trigger data ingestion daily. The MS Dynamic CRM object used will be the `Account` object.
 
-#### 1. Create a Catalog Account entity
+#### 2.2.1. Create Catalog Account Entity
 
-As a first step, you need to create a Catalog account entity corresponding to your Microsoft Dynamics CRM credentials. This request requires your Microsoft Dynamics user name, password, and security token. The response to this request includes the *Account ID*.
+First we will create a MS Dynamic CRM catalog account entity. This request takes a MS Dynamic User Name, MS Dynamic Password, and MS Dynamic Security Token. The response contains the account ID.
 
-##### Request
+#### Request
+POST /connections
 
-```
-curl -X POST https://platform.adobe.io/data/foundation/catalog/accounts/ \
+```SHELL
+curl -X POST https://platform-int.adobe.io/data/foundation/catalog/accounts/ \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -H 'Content-Type: application/json' \
   -d '{
   "params": {
-    "organizationName":"<>"
-    "username": "<>",
+    "username": "{MS Dynamic_USER_NAME}",
     "password": {
-    "value": "<>",
-    "isSecret": true
+      "value": "{MS Dynamic_PASSWORD}",
+      "isSecret": true
     },
-  "organizationUri": "<>"  
+    "securityToken": {
+      "value": "{MS Dynamic_SECURITY_TOKEN}",
+      "isSecret": true
+    },
+    "serviceUrl": "login.MS Dynamic.com"
   },
-  "connector": "dynamics-online"
+  "connector": "MS Dynamic"
 }'
-```
-For on premise
-
-```
-{
-"connector": "dynamics-onprem",
-"params": {
-"username": "{{DYNAMICS_ONPREM_USERNAME}}",
-"hostName": "{{DYNAMICS_ONPREM_HOSTNAME}}",
-"organizationName": "{{DYNAMICS_ONPREM_ORGANIZATION_NAME}}",
-"password": {
-"value": "{{DYNAMICS_ONPREM_PASSWORD}}",
-"isSecret": true
-}
-}
-}
-
 ```
 
 `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
@@ -98,23 +99,23 @@ For on premise
 `{MS Dynamic_PASSWORD}`: Your password for MS Dynamic CRM.  
 `{MS Dynamic_SECURITY_TOKEN}`: Your security token for MS Dynamic CRM.  
 
-##### Response
-```
-JSON
+#### Response
+```JSON
 [
   "@/accounts/{ACCOUNT_ID}"
 ]
 ```
 
-You will use your account ID in future steps and refer to it as `{ACCOUNT_ID}`.
+`{ACCOUNT_ID}`: Take down this account ID. We will use this value in future steps and referring to it as {ACCOUNT_ID}.
 
-#### 2. Create a Catalog Connection entity
+#### 2.2.2. Create Catalog Connection Entity
 
-With the `{ACCOUNT_ID}`, you can now create an MS Dynamic Catalog Connection entity. In this request, you identify when you want the ingestion to start (`"ingestStart"`) and what frequency for ingestion to occur (`"frequency"`). The following request defaults to daily ingestion.
+With our account ID we can now create a MS Dynamic catalog connection entity. In this request we will state when we want the ingestion to start (`"ingestStart"`) and what frequency we want the ingestion to occur (`"frequency"`). In the following request we will go with the default value of daily ingestion.
 
-##### Request
+#### Request
+POST /connections
 
-```
+```SHELL
 curl -X POST https://platform.adobe.io/data/foundation/catalog/connections/ \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
@@ -144,23 +145,23 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/connections/ \
 `{CONNECTION_NAME}`: Name of the connection you are creating.  
 `{INGEST_START}`: Date and time when ingestion is scheduled to start. If time is set to the past (relative to current time) ingestion will begin immediately. Format is `"yyyy-mm-ddThh:mm:ss.000Z"` (E.g. `"2018-03-22T23:59:59.000Z"`)  
 
-##### Response
-```
-JSON
+#### Response
+```JSON
 [
     "@/connections/{CONNECTION_ID}"
 ]
 ```
 
-`{CONNECTION_ID}`: ID of the connector you just created. 
+`{CONNECTION_ID}`: ID of the connector you just created. We will refer to this as {CONNECTION_ID} in future steps.
 
-#### 3. Select an Microsoft Dynamics Object
+#### 2.2.3. Get MS Dynamic CRM Selected Object
 
-Next, select the Microsoft Dynamics CRM object to ingest. You can get the entire list of available objects from the MS Dynamic CRM connection using the following request.
+Our next step is to select what MS Dynamic CRM object to ingest. We can get the entire list of available objects from the MS Dynamic CRM connection using the following request.
 
-##### Request
+#### Request
+GET /connectors/connections/{CONNECTION_ID}/objects
 
-```
+```SHELL
 curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/objects \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
@@ -174,10 +175,9 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 `{ACCOUNT_ID}`: Account ID generated from your MS Dynamic credentials  
 `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
 
-##### Response
+#### Response
 
-```
-JSON
+```JSON
 [
     {
         "logicalName": "AcceptedEventRelation",
@@ -203,19 +203,14 @@ JSON
 ]
 ```
 
-The above object is just a partial response of the actual list of available MS Dynamic CRM objects. Note that the `logicalName` of the objects is used as the `{OBJECT_ID}`
+The above object is just a partial response of the actual list of available MS Dynamic CRM objects. We want to note that the `logicalName` of the objects we want to use . This will be used as the {OBJECT_ID}
 
+The next step will be ingesting fields from the `Account` object; however first we need to determine which fields we want from it. We can make the following response to see all fields for a specific MS Dynamic CRM object.
 
-The next step will be ingesting fields from the `Account` object. You will need to determine which fields you want from the object and add them to the API call. 
-
-#### To view all fields in an object
-Make the following request to see all fields for a specific MS Dynamic object.
-
-##### Request
+#### Request
 POST /connectors/connections/{CONNECTION_ID}/object/{OBJECT_ID}/fields
 
-```
-SHELL
+```SHELL
 curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/objects/{{OBJECT_ID}}/fields \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
@@ -230,10 +225,9 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 `{CONNECTION_ID}`: ID of the connector you created from the previous steps.  
 `{OBJECT_ID}`: Logical Name of the MS Dynamic Object you want to ingest.  
 
-##### Response  
+#### Response  
 
-```
-JSON
+```JSON
 [
     {
         "logicalName": "Name",
@@ -303,15 +297,18 @@ JSON
 ]
 ```
 
-Note that the above request is only a segment of the actual response. You can choose to have all the fields of an object ingested or only selected fields. 
+Note that the above request is only a segment of the actual response.  
 
-#### 4. Create Catalog Dataset Entity
+Users can choose to have all the fields of an object ingested or select only fields they are interested in. We will reference the fields in this request in the following step.
 
-The last step is to create the MS Dynamic Catalog entity. The dataset will define the structure of the data that will be ingested from the connector.
+#### 2.2.4. Create Dataset Catalog Entity
 
-##### Request
-```
-SHELL
+The last step is to create the MS Dynamic CRM dataset catalog entity. The dataset will define the structure of the data that will be ingested from the connection.
+
+#### Request
+POST /datasets
+
+```SHELL
 curl -X POST https://platform.adobe.io/data/foundation/catalog/datasets/ \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
@@ -327,10 +324,9 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/datasets/ \
 `{CONNECTION_ID}`: ID of the connector you created from the previous steps.  
 `{OBJECT_ID}`: Logical Name of the MS Dynamic Object you want to ingest.  
 
-`{JSON_PAYLOAD}`: The dataset to be posted is a JSON payload as used in this example:
+`{JSON_PAYLOAD}`: The dataset to be posted. The example we use in our tutorial is here:
 
-```
-JSON
+```JSON
 {
       "objectId": "{OBJECT_ID}",
       "name": "Accounts",
@@ -418,14 +414,12 @@ JSON
     }
 ```
 
-The `{JSON PAYLOAD}` is the subset of object fields selected from the previous response to get all fields for the `Account` object. This object defines the fields to be populated by the connector on a recurring frequency, such as the account Name, account Site, system modstamp, etc.).
+The `{JSON PAYLOAD}` we are using is the subset of object fields we selected from the previous response to get all fields for the `Account` MS Dynamic CRM object. This defines which fields that will be populated by the connector on a recurring frequency (E.g. Account Name, Account Site, System Modstamp...).
 
 
-The field `"requestStartDate"` dictates how far in the past (relative to now) the backfill should go. The `"requestStartDate"` parameter is always a date in the past. If you want a backfill of 30 days then you have to calculate `now() - 30 days` and enter a valid date time value for this field.
+The field `"requestStartDate"` dictates how far in the past (relative to now) should the backfill go. `"requestStartDate"` is always a date in the past. If you want a backfill of 30 days then you have to calculate `now() - 30 days` and enter a valid date time value for this field.
 
-The `"connectors-saveStrategy"` field refers to how the data will be ingested. In the example, Append data is required instead of a Delta or Overwrite parameter. For Append and Delta save strategies, since they are sorted by time, you will need to decide a value to use in the time-based-column if time-based-queries take place (such as System Modstamp, Created Date, and Last Modified Date). 
-
-Adding a `"delta": {}` in the `"meta"` field indicates the method for the time-based-column. In the example, a tag was added into the `"SystemModstamp"` object for the `"JSON_PAYLOAD"` request.
+The `"connectors-saveStrategy"` field refers to how the data will be ingested. In our tutorial we chose to Append data instead of Delta or Overwrite. For Append and Delta save strategies, since they are sorted by time, you will also need to decide on what value to use in the time-based-column if time-based-queries take place (E.g. System Modstamp, Created Date, Last Modified Date). Adding a `"delta": {}` in the `"meta"` field indicates which method is selected to be in the time-based-column. In our example we added the tag into the `"SystemModstamp"` object for the `"JSON_PAYLOAD"` we passed into the request.
 
 ```JSON
 {
@@ -443,7 +437,7 @@ Adding a `"delta": {}` in the `"meta"` field indicates the method for the time-b
 }
 ```
 
-##### Response
+#### Response
 
 ```JSON
 [
@@ -452,6 +446,3 @@ Adding a `"delta": {}` in the `"meta"` field indicates the method for the time-b
 ```
 
 `{DATASET_ID}`: The ID of the dataset that was created. This can be used in the future to make a request to Catalog to identify the DatasetView ID associated with this dataset.
-
-<!---## Viewing Data in the Connector Wizard
-(under construction)--->

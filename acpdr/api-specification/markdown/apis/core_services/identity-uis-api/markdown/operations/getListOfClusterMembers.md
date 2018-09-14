@@ -63,47 +63,29 @@ List of ID's for which we need to find related IDs
 
 
 ##### Request header
-
-|Type|Name|Description|Schema|Default|
-|---|---|---|---|---|
-|**Header**|**Accept**  <br>*optional*|The version of the resource's representation.|string|`"application/vnd.adobe.identity+json;version=1.2"`|
-|**Header**|**Authorization**  <br>*required*|Should be a valid IMS token for authenticating with Identity Services|string||
-|**Header**|**x-api-key**  <br>*required*|Should be a valid client ID|string||
-|**Header**|**x-gw-ims-org-id**  <br>*required*|IMS Org Id of requesting client|string|`"2ASDRTGUIytrOURsdr1001"`|
-|**Header**|**x-uis-cst-ctx**  <br>*optional*|Customer context to be used for stub response|string|`"stub"`|
-
+```
+json :
+"string"
+```
 
 
 ##### Request body
-
-Xid format
 ```
 json :
 {
   "xids" : [ {
     "xid" : "string"
   } ],
-  "graph-type" : "string"
+  "graph-type" : "string",
+  "imsOrgId" : "string",
+  "version" : "string"
 }
 ```
-Namespace format
 
-```
-json :
-{
-  "CompositeXids" : [ {
-    "namespace" : "ecid",
-    "id" : "567890876543123467789000987765"
-  } ],
-  "graph-type" : "coop"
-}
-```
 
 #### Example HTTP response
 
 ##### Response 200
-
-Xid format
 ```
 json :
 {
@@ -120,42 +102,28 @@ json :
   }
 }
 ```
-Namespace format
-```
-json:
-{
-    "version": 1,
-    "clusters": [{
-            "compositeXid": {
-                "namespace": 'adcloud",
-                "id": "WRbM7AAAAJ_PBZHl"
-            },
-          
-            "members": [{
-                    "namespace": "ecid",
-                    "id": "27064814400205787570627663430729680462"
-                },
-                {
-                    "namespace": "adcloud",
-                    "id": "WRbM7AAAAJ_PBZHl"
-                }
-            ]
-        }
-    ],
-    "unprocessedNids": [{
-        "namespace": "adcloud",
-        "id": "WY-RNgAAArI4rGBo"
-    }]
-}
 
+
+##### Response 204
 ```
+json :
+{
+  "type" : "string",
+  "title" : "string",
+  "status" : 0,
+  "detail" : "string"
+}
+```
+
 
 ##### Response 400
 ```
 json :
 {
-  "reason" : "string",
-  "message" : "string"
+  "type" : "string",
+  "title" : "string",
+  "status" : 0,
+  "detail" : "string"
 }
 ```
 
@@ -164,8 +132,10 @@ json :
 ```
 json :
 {
-  "reason" : "string",
-  "message" : "string"
+  "type" : "string",
+  "title" : "string",
+  "status" : 0,
+  "detail" : "string"
 }
 ```
 
@@ -174,8 +144,10 @@ json :
 ```
 json :
 {
-  "reason" : "string",
-  "message" : "string"
+  "type" : "string",
+  "title" : "string",
+  "status" : 0,
+  "detail" : "string"
 }
 ```
 
@@ -184,8 +156,10 @@ json :
 ```
 json :
 {
-  "reason" : "string",
-  "message" : "string"
+  "type" : "string",
+  "title" : "string",
+  "status" : 0,
+  "detail" : "string"
 }
 ```
 
@@ -194,8 +168,10 @@ json :
 ```
 json :
 {
-  "reason" : "string",
-  "message" : "string"
+  "type" : "string",
+  "title" : "string",
+  "status" : 0,
+  "detail" : "string"
 }
 ```
 
@@ -204,7 +180,12 @@ json :
 ```
 json :
 {
-  "reason" : "string",
-  "message" : "string"
+  "type" : "string",
+  "title" : "string",
+  "status" : 0,
+  "detail" : "string"
 }
 ```
+
+
+

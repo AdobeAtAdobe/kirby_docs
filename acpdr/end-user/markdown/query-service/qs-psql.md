@@ -1,1 +1,0 @@
-# PSQL Command Line Interface
