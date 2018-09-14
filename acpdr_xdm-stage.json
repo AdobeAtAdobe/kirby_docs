@@ -4,32 +4,33 @@
 	"description": "ACP XDM Services",
 	"author": "Emily Walpole",
 	"view_type": "mdbook",
-	"meta_keywords": "ACP, Services, Adobe ACP, Data Services, XDM",
+	"meta_keywords": "ACP, Services, Adobe ACP, Data Services, XDM, Experience Data Model, Schema Registry",
 	"meta_description": "Adobe Cloud Platform Data Services",
 	"publish_date": "11/09/2018",
 	"show_edit_github_banner": false,
 	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/staging/acpdr",
 	"pages": [
 				{
-					"pages": [],
+					"pages": [
+						{
+							"pages": [],
+							"path": "api-specification/markdown/narrative/technical_overview/schema_registry/schema_design/schema_principles.md",
+							"title": "Schema Design Principles and Best Practices"
+						},	
+						{
+							"pages": [],
+							"path": "api-specification/markdown/narrative/technical_overview/schema_registry/schema_design/xdm_field_dictionary.md",
+							"title": "Experience Data Model: Field Dictionary"
+						}	
+					],
 					"path": "api-specification/markdown/narrative/technical_overview/schema_registry/standard_schemas/acp_standard_schemas.md",
 					"title": "Using Standard Schemas with ACP"
 				},
 				{
 					"pages": [],
-					"path": "api-specification/markdown/narrative/technical_overview/schema_registry/schema_design/schema_principles.md",
-					"title": "Schema Design Principles and Best Practices"
-				},
-				{
-					"pages": [],
 					"path": "api-specification/markdown/narrative/technical_overview/schema_registry/acp_schema_registry.md",
 					"title": "Schema Registry Developer Guide"
-				},
-				{
-					"pages": [],
-					"path": "api-specification/markdown/narrative/technical_overview/schema_registry/schema_design/xdm_field_dictionary.md",
-					"title": "Experience Data Model: Field Dictionary"
-				}	
+				}
 	],
 	"app2app_map": {"api-specification/markdown/narrative/tutorials/":"/apis/cloudplatform/dataservices/tutorials/alltutorials.html", "acpdr/swagger/":"/apis/cloudplatform/dataservices/api-reference.html"}
 }
