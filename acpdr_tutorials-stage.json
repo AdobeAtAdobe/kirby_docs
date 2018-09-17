@@ -54,24 +54,6 @@
 					"pages": [],
 					"path": "api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md",
 					"title": "Querying Data via Data Access API"
-				},
-				{
-					"importedFileName": "ml_access_explore_data",
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/ml_access_and%20_explore_data_tutorial/ml_access_and_explore_data_tutorial.md",
-					"title": "Accessing and Exploring Data"
-				},
-				{
-					"importedFileName": "import_train_evaluate_recipes",
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_api_tutorial.md",
-					"title": "Import, Train & Evaluate Recipes"
-				},
-				{
-					"importedFileName": "import_package_recipes",
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md",
-					"title": "Importing Package Recipes"
 				}
 	]
 }
