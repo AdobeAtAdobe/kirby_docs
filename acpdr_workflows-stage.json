@@ -1,38 +1,20 @@
 {
 	"name": "ACP_Data_Workflows",
 	"version": "1.0.0",
-	"description": "ACP Data Workflows",
+	"description": "ACP Data Services Workflows",
 	"author": "Emily Walpole",
 	"view_type": "mdbook",
 	"meta_keywords": "defaultkeyword,defaultkeyword2",
 	"meta_description": "default description",
-	"publish_date": "29/08/2018",
+	"publish_date": "17/09/2018",
 	"show_edit_github_banner": false,
-	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
+	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/staging/acpdr",
 	"pages": [
-		{
-					"importedFileName": "authenticate_to_acp_tutorial",
+		    {
+					"importedFileName": "import_train_evaluate",
 					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md",
-					"title": "Authenticate to ACP"
-				},
-		{
-					"importedFileName": "creating_a_dataset_tutorial",
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md",
-					"title": "Configuring a Dataset"
-				},
-		{
-					"importedFileName": "creating_a_connector_tutorial",
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/creating_a_connector_tutorial.md",
-					"title": "Configuring a Connector"
-				},
-		{
-					"importedFileName": "data_access_tutorial",
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md",
-					"title": "Data Access"
+					"path": "api-specification/markdown/narrative/tutorials/how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial.md ",
+					"title": "Import, Train & Evaluate Recipes"
 				}
 	]
 }
