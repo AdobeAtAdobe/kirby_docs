@@ -6,10 +6,12 @@ The objective of this tutorial is to show users how to author a recipe using var
 ---
 
 ## Prerequisites
-* Install Docker https://docs.docker.com/install/#supported-platforms
+* Install Docker (https://docs.docker.com/install/#supported-platforms)
 
 Depending on which code base you clone, install the language of that intelligent service:
-* Python, <!---PySpark,--> Tensorflow - `brew install python`
+* Python, <!---PySpark,--> Tensorflow
+    * for macOS (`brew install python`)
+    * for [Windows 10](https://www.python.org/downloads/windows/)
 <!---* Scala - `brew install sbt`-->
 
 
@@ -31,14 +33,14 @@ Reference example for each intelligent service:
 
 ### Building the Artifact for the Intelligent Service
 
-Depending on which sample you downloaded, there will be a different procedure for creating your intelligent service. The sample codebase can be found [here](https://git.corp.adobe.com/ml).
+Depending on which sample you downloaded, there will be a different procedure for creating your intelligent service. The sample codebase can be found [here](https://github.com/adobe/acp-data-services-dsw-reference).
 
-This Sample Intelligent Service code performs Sentiment Analysis using the Natural Language Toolkit library (NLTK). First, the training and scoring data is loaded. The training data has values 0.0 which represent negative sentiment and 1.0 which represent positive sentiment. The result of the sentiment analysis done using NLTK will be compared with the scoring data in the future evaluation step to produce a score for your recipe. 
+This sample Retail Sales example leverages the wealth of historical data a retailer has access to, to predict future trends, and to optimize pricing decisions. The algorithm uses past sales data to train the model and to predict future sales trends. With this, the retailer will be able to have insights to help them when making pricing changes.
 
 We will go over how to build each one. You can skip ahead to the section you need.
-* [Building Python Retail Intelligent Service](#Building-Python-Retail-Intelligent-Service)
-* [Building Tensorflow Perceptron Intelligent Service](#Building-Tensorflow-Perceptron-Intelligent-Service)
-* [Building R Retail Intelligent Service](#Building-R-Retail-Intelligent-Service)
+* [Building Python Retail Intelligent Service](#buildingpythonretailintelligentservice)
+* [Building Tensorflow Perceptron Intelligent Service](#buildingtensorflowperceptronintelligentservice)
+* [Building R Retail Intelligent Service](#buildingrretailintelligentservice)
 
 <!---
 * [Building Scala Sentiment Analysis Intelligent Service](#Building-Scala-Sentiment-Analysis-Intelligent-Service)
@@ -67,12 +69,12 @@ Now inside the repository, we can run the following commands to create the `.egg
 
 ``` BASH
 cd retail
-python setup.py install
+python3 setup.py install
 ```
 
 The `.egg` file is generated in the `dist` folder.
 
-Now you can move on to the next section [Create Dockerfile](#Create-Dockerfile)
+Now you can move on to the next section [Create Dockerfile](#createdockerfile)
 
 <!---#### Building Scala Sentiment Analysis Intelligent Service
 
@@ -126,7 +128,7 @@ To get the Tensorflow application, we run the following command to clone the Git
 git clone https://github.com/adobe/acp-data-services-dsw-reference.git
 ```
 
-Now with the repository, we can run the following commands to create the `.egg` file which consists of project-related metadata files, code and resources which is well-suited to distribution and importing.
+Now in the repository, we can run the following commands to create the `.egg` file which consists of project-related metadata files, code and resources which is well-suited to distribution and importing.
 
 ``` BASH
 cd samples/tensorflow/samples/tensorflow/perceptron/
@@ -135,7 +137,7 @@ python setup.py install
 
 The `.egg` file is generated in the `dist` folder.
 
-Now you can move on to the next section [Create Dockerfile](#Create-Dockerfile)
+Now you can move on to the next section [Create Dockerfile](#createdockerfile)
 
 #### Building R Retail Intelligent Service
 
@@ -145,41 +147,39 @@ For R the files needed to create the Docker image are already built in the repos
 git clone https://github.com/adobe/acp-data-services-dsw-reference.git
 cd recipes/R/Retail\ -\ GradientBoosting/
 ```
-Now you can move on to the next section [Create Dockerfile](#Create-Dockerfile)
+Now you can move on to the next section [Create Dockerfile](#createdockerfile)
 
 ### Create Dockerfile
 
-We will need to create a Dockerfile that first takes the base image, installs dependencies, and copies over the packaged intelligent service we did in section [Create Dockerfile](#Create-Dockerfile). Since you are using the Sample Intelligent Service, the Dockerfile is provided in the directory. The example for Python is shown below:
+We will need to create a Dockerfile that first takes the base image, installs dependencies, and copies over the packaged intelligent service we did in section [Create Dockerfile](#createdockerfile). Since you are using the Sample Intelligent Service, the Dockerfile is provided [in the directory](https://github.com/adobe/acp-data-services-dsw-reference/blob/master/recipes/python/retail/Dockerfile). The example for Python is shown below:
 
 ``` Docker
-FROM <docker-runtime-path>
+FROM adobe/acp-dsw-ml-runtime-python:0.6.1
 
 #INSTALL NLTK and other modules needed by application
-RUN /usr/bin/python3.5 -m pip install -U nltk
 RUN /usr/bin/python3.5 -m pip install -U numpy
+RUN /usr/bin/python3.5 -m pip install -U pandas
+RUN /usr/bin/python3.5 -m pip install -U sklearn
+RUN /usr/bin/python3.5 -m pip install -U scipy
 
-COPY dist/sampleapp*.egg /application.egg
+COPY dist/retail*.egg /application.egg
 
-ENV MODEL_DIR=/data/model_dir
 ENV PYTHONPATH=$PYTHONPATH:/application.egg
-
-# Below is needed for local test mode
-COPY pipeline.json /pipeline.json
 ```
 
 The base Python-based image is specified as the `FROM` argument. `RUN` installs NLTK and numpy which are dependencies. `ENV` updates the environment variable for the software the container installs. We are updating the environment variable with the application we build in the previous section.
 
 ### Build Docker Image
-With our Dockerfile, we can build the Docker image. 
+With our Dockerfile, we can build the Docker image. When creating a new Recipe in the Data Science Workspace, we are provided with the Docker host, username, and password values which we will be able to use to build our Docker image. More details can be found in [this tutorial](../how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial.md).
 
 ``` BASH
-cd samples/scala/sentiment_analysis
+cd recipes/python/retail
  
-#<artifactory-token> is from the Prerequisites #2 above.
+#<artifactory-token> is from the New Recipe window
 docker login -u dsutil -p <artifactory-token> <docker-path>
 docker login -u dsutil -p <artifactory-token> <docker-path>
  
-#  Build the Docker image: e.g., docker build -t <docker-path>/sample-scala:1.0 .
+#  Build the Docker image: e.g., docker build -t <docker-path>/sample-python:1.0 .
 docker build -t <docker-path>/<intelligent-service>:<version_tag> 
 ```
 
