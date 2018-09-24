@@ -14,7 +14,7 @@
 			"pages": [
 				{
 					"pages": [],
-					"path": "api-specification/markdown/narrative/technical_overview/identity_namespace_overview/identity_services_api.md",
+					"path": "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_api.md",
 					"title": "Identity Services API"
 				},
 				{

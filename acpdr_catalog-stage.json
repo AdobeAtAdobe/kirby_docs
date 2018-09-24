@@ -34,6 +34,14 @@
 			"pages": [],
 			"path": "acpdr/swagger/id-namespace-api.yaml",
 			"title": "Identity Namespace Service"
+		},
+		{
+			
+			"view_type": "mdview",
+			"pages": [],
+			"path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md",
+			"title": "Getting Started with Platform Streaming Ingestion"
 		}
+	
 	]
 }
