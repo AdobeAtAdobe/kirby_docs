@@ -242,7 +242,7 @@ gulp.task('push-new-acp-staging-documents', done => {
     });
 });
 
-gulp.task('acpImport',gulp.series('clone-documents','pull-new-documents','checkout-master','pull-kirby-documents','acp-move-markdown','acp-move-end-user-markdown''add-new-acp-documents','commit-new-acp-documents','push-new-acp-documents', function(done) {
+gulp.task('acpImport',gulp.series('clone-documents','pull-new-documents','checkout-master','pull-kirby-documents','acp-move-markdown','acp-move-end-user-markdown', 'add-new-acp-documents','commit-new-acp-documents','push-new-acp-documents', function(done) {
     console.log('acpImport...');
     /* move in the files
      * https://git.corp.adobe.com/experience-platform/documentation
