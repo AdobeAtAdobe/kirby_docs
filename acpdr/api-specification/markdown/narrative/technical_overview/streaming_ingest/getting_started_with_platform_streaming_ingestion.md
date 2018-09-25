@@ -4,11 +4,11 @@
 
 This documentation will help you quickly get started with the Adobe Cloud Platform Streaming APIs. Specifically, this documentation will help you:
 
-1. [Create a Streaming Endpoint](#creating-a-streaming-endpoint)
-2. [Stream a Profile Object to Adobe Cloud Platform](#streaming-a-profile-object-to-adobe-cloud-platform)
-3. [Retrieve the newly created Profile](#retrieving-the-newly-created-profile)
-4. [Stream an ExperienceEvent to Adobe Cloud Platform](#streaming-an-experienceevent-to-adobe-cloud-platform)
-5. [Retrieve ExperienceEvents related to the Updated Profile](#retrieving-experienceevents-related-to-the-updated-profile)
+1. [Create a Streaming Endpoint](#creatingastreamingendpoint)
+2. [Stream a Profile Object to Adobe Cloud Platform](#streamingaprofileobjecttoadobecloudplatform)
+3. [Retrieve the newly created Profile](#retrievingthenewlycreatedprofile)
+4. [Stream an ExperienceEvent to Adobe Cloud Platform](#streaminganexperienceeventtoadobecloudplatform)
+5. [Retrieve ExperienceEvents related to the Updated Profile](#retrievingexperienceeventsrelatedtotheupdatedprofile)
 
 ## How do I get started?
 
@@ -25,13 +25,13 @@ Let's start by creating a new Streaming Endpoint. Assuming you have an API Key a
 #### Request
 
 ```SHELL
-CURL -X POST https://platform.adobe.io/data/core/pipeline/endpoint/registration/ \
+CURL -X POST https://platform.adobe.io/data/core/pipeline/inlet/registration/ \
 -H "Cache-Control: no-cache" \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer {ACCESS_TOKEN}" \
 -H "x-api-key: {API_KEY}" \
 -H "x-gw-ims-org-id: {IMS_ORG}" \
--d "{JSON_PAYLOAD}"
+-d '{JSON_PAYLOAD}'
 ```
 
 **Note**: To find your API Key and IMS org ID, go to https://console.adobe.io/integrations, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
@@ -53,6 +53,7 @@ CURL -X POST https://platform.adobe.io/data/core/pipeline/endpoint/registration/
 `name`: The name you want to use for your Streaming Endpoint.   
 `description`: The description you want to use for your Streaming Endpoint.   
 `sourceId`: A meaningful identifier or name of the source sending the streaming data.
+`dataType`: <insert text>
 
 
 #### Response
@@ -96,7 +97,7 @@ Once you've created a Streaming Endpoint, you can create use it to stream XDM re
 CURL -X POST {STREAMING_ENDPOINT_URL} \
 -H "Cache-Control: no-cache" \
 -H "Content-Type: application/json" \
--d "{JSON_PAYLOAD}
+-d '{JSON_PAYLOAD}'
 ```
 
 `{STREAMING_ENDPOINT_URL}`: The URL previously returned when creating your Streaming Endpoint.  
@@ -116,9 +117,10 @@ Where:
 {
     "header": {
         "msgType": "xdmEntityCreate",
+        "msgId": 12345,
         "msgVersion": "1.0",
         "xdmSchema": {
-            "name": "_xdm.context.profile",
+            "name": "_xdm.context.profile"
         },
         "imsOrgId": "{IMS_ORG}",
         "source": {
@@ -128,7 +130,7 @@ Where:
     "body": {
         "xdmMeta": {
             "xdmSchema": {
-                "name": "_xdm.context.profile",
+                "name": "_xdm.context.profile"
             }
         },
         "xdmEntity": {
@@ -138,7 +140,7 @@ Where:
                     "namespace": {
                         "code": "ecid"
                     },
-                    "primary": "true"
+                    "primary": true
                 },
                 {
                     "id": "janedoe@example.com",
@@ -215,7 +217,7 @@ Let's look using the identities we used previously:
         "namespace": {
             "code": "ecid"
         },
-        "primary": "true"
+        "primary": true
     },
     {
         "id": "janedoe@example.com",
@@ -250,7 +252,7 @@ Where:
 Now that you understand the multiple ways that you can query for your newly created Consumer Profile, here's an example request of how to read back the Consumer Profile created previously.
 
 ```SHELL
-CURL -X GET "https://platform.adobe.io/data/core/ups/access/entities?schema.name=_xdm.context.profile&entityId=58832431024964181144308914570411162539&entityIdNS=ecid"\
+CURL -X GET "https://platform.adobe.io/data/core/ups/access/entities?schema.name=_xdm.context.profile&entityId=89149270342662559642753730269986316601&entityIdNS=ecid"\
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "Cache-Control: no-cache" \
   -H "x-api-key: {API_KEY}" \
@@ -274,15 +276,15 @@ An example of a successful response can be seen below. As you can see, this is t
 
 {
     "A29cgveD5y64ezlhxjUXNzcm": {
-        "recordId": "A29cgveD5y64ezlhxjUXNzcm",
-        "record": {
+        "entityId": "A29cgveD5y64ezlhxjUXNzcm",
+        "entity": {
             "identities": [
                 {
                     "_id": "89149270342662559642753730269986316601",
                     "namespace": {
                         "code": "ecid"
                     },
-                    "primary": "true"
+                    "primary": true
                 },
                 {
                     "_id": "janedoe@example.com",
@@ -314,7 +316,8 @@ An example of a successful response can be seen below. As you can see, this is t
                 "number": "1-408-555-2368",
                 "status": "active"
             }
-        }
+        },
+        "lastModifiedAt": "2018-09-18T02:07:42Z"
     }
 }
 
@@ -322,8 +325,8 @@ An example of a successful response can be seen below. As you can see, this is t
 
 ---
 
-- Try changing values for **ecid** in the "identities" block in the payload above to submit an updated Profile record, and see if the values update.
-- Also try changing other attributes like birthYear, mobilePhone, or workEmail, and retrieve their updated values.
+- Try making more calls with different values for **ecid** and **email** in the “identities” block to create additional Profile records, and see if you can read them back
+- Also try changing other attributes like birthYear, mobilePhone, or workEmail for a given Profile, and retrieve their updated values.
 
 ---
 
@@ -339,7 +342,7 @@ The example below associates a new ExperienceEvent with the Consumer Profile you
 curl -X POST "https://dcs.data.adobe.net/collection/{STREAMING_ENDPOINT_ID}" \
   -H "Cache-Control: no-cache" \
   -H "Content-Type: application/json" \
-  -d "{JSON_PAYLOAD}"
+  -d '{JSON_PAYLOAD}'
 ```
 
 `{STREAMING_ENDPOINT_ID}`: The ID of the created Streaming Endpoint.  
@@ -348,85 +351,82 @@ curl -X POST "https://dcs.data.adobe.net/collection/{STREAMING_ENDPOINT_ID}" \
 ```JSON
 {
     "header":{
-        "datasetId":"5b60bb6052a78201e46b5ffb",
         "imsOrgId":"{IMS_ORG}",
         "xdmSchema":{
-            "name":"_xdm.context.experienceevent",
+            "name":"_xdm.context.experienceevent"
         },
-        "msgType:" "xdmEntityCreate",
+        "msgType": "xdmEntityCreate",
         "msgId": "12345",
         "msgVersion": "1.0",
         "source": {
             "name": "GettingStarted"
         }
     },
-    "body":{
-        "xdmMeta":{
-            "xdmSchema":{
-                "name":"_xdm.context.experienceevent",
+    "body": {
+        "xdmMeta": {
+            "xdmSchema": {
+                "name": "_xdm.context.experienceevent"
             }
         },
         "xdmEntity":{
-            "_id":"c8d11988-6b56-4571-a123-b6ce74236036",
-            "timestamp":"2018-07-10T22:07:56Z",
-            "endUserIDs":{
-                "_experience":{
-                    "ecid":{
-                        "id":"89149270342662559642753730269986316601",
-                        "namespace":{
-                            "code":"ecid"
+            "_id": "c8d11988-6b56-4571-a123-b6ce74236036",
+            "timestamp": "2018-07-10T22:07:56Z",
+            "receivedTimestamp": "2018-07-23T22:07:57Z",
+            "endUserIDs": {
+                "_experience": {
+                    "ecid": {
+                        "id": "89149270342662559642753730269986316601",
+                        "namespace": {
+                            "code": "ecid"
                         }
                     }
                 }
             },
-            "environment":{
-                "browserDetails":{
-                    "userAgent":"Mozilla\/5.0 (Windows NT 5.1) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/29.0.1547.57 Safari\/537.36 OPR\/16.0.1196.62",
-                    "acceptLanguage":"en-US",
-                    "cookiesEnabled":true,
-                    "javaScriptVersion":"1.6",
-                    "javaEnabled":true
+            "environment": {
+                "browserDetails": {
+                    "userAgent": "Mozilla\/5.0 (Windows NT 5.1) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/29.0.1547.57 Safari\/537.36 OPR\/16.0.1196.62",
+                    "acceptLanguage": "en-US",
+                    "cookiesEnabled": true,
+                    "javaScriptVersion": "1.6",
+                    "javaEnabled": true
                 },
-                "colorDepth":32,
-                "viewportHeight":799,
-                "viewportWidth":414
+                "colorDepth": 32,
+                "viewportHeight": 799,
+                "viewportWidth": 414
             },
-            "productListItems":[
+            "productListItems": [
                 {
-                    "SKU":"CC",
-                    "name":"Fernie Snow",
-                    "quantity":30,
-                    "priceTotal":7.8
+                    "SKU": "CC",
+                    "name": "Fernie Snow",
+                    "quantity": 30,
+                    "priceTotal": 7.8
                 }
             ],
-            "commerce":{
-                "productViews":{
-                    "value":1
+            "commerce": {
+                "productViews": {
+                    "value": 1
                 }
             },
             "web":{
-                "webPageDetails":{
-                    "name":"Fernie Snow",
+                "webPageDetails": {
+                    "name": "Fernie Snow",
                     "pageViews":{
-                        "value":1
+                        "value": 1
                     }
                 }
             },
-            "placeContext":{
-                "localTime":"2018-07-10T22:07:56Z",
+            "placeContext": {
+                "localTime": "2018-07-10T22:07:56Z",
                 "geo":{
                     "_schema":{
-                        "latitude":50.116322,
-                        "longitude":-122.957359
+                        "latitude": 50.116322,
+                        "longitude": -122.957359
                     },
-                    "countryCode":"CA",
-                    "stateProvince":"British Columbia",
-                    "city":"Whistler",
-                    "postalCode":"V0N"
+                    "countryCode": "CA",
+                    "stateProvince": "British Columbia",
+                    "city": "Whistler",
+                    "postalCode": "V0N"
                 }
-            },
-            "channel":{
-                "_type":"web"
             }
         }
     }
@@ -460,7 +460,7 @@ Now, let's use the Profile Access APIs to read the ExperienceEvent you just sent
 
 ```SHELL
 curl -X GET \
-  "https://platform.adobe.io/data/core/ups/access/entities?schema.name=_xdm.context.experienceEvent&relatedSchema.name=_xdm.context.profile&relatedEntityId=58832431024964181144308914570411162539&relatedEntityIdNS=ecid" \
+  "https://platform.adobe.io/data/core/ups/access/entities?schema.name=_xdm.context.experienceEvent&relatedSchema.name=_xdm.context.profile&relatedEntityId=89149270342662559642753730269986316601&relatedEntityIdNS=ecid" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "Cache-Control: no-cache" \
   -H "x-api-key: {API_KEY}" \
@@ -486,12 +486,12 @@ An example of a successful response can be seen below. As you can see, this is t
         "count":1,
         "next":""
     },
-    "records":[
+    "children":[
         {
-            "relatedRecordId":"A29C6ZBTbnqlUau73OD4Vsw7",
-            "recordId":"c8d11988-6b56-4571-a123-b6ce74236036",
-            "timestamp":1531260476000,
-            "record":{
+            "relatedEntityId": "A29C6ZBTbnqlUau73OD4Vsw7",
+            "entityId": "c8d11988-6b56-4571-a123-b6ce74236036",
+            "timestamp": 1532383621000,
+            "entity":{
                 "_id":"c8d11988-6b56-4571-a123-b6ce74236036",
                 "timestamp":"2018-07-10T22:07:56Z",
                 "endUserIDs":{
@@ -506,34 +506,34 @@ An example of a successful response can be seen below. As you can see, this is t
                 },
                 "environment":{
                     "browserDetails":{
-                        "userAgent":"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36 OPR/16.0.1196.62",
-                        "acceptLanguage":"en-US",
-                        "cookiesEnabled":true,
-                        "javaScriptVersion":"1.6",
-                        "javaEnabled":true
+                        "userAgent": "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36 OPR/16.0.1196.62",
+                        "acceptLanguage": "en-US",
+                        "cookiesEnabled": true,
+                        "javaScriptVersion": "1.6",
+                        "javaEnabled": true
                     },
-                    "colorDepth":32,
-                    "viewportHeight":799,
-                    "viewportWidth":414
+                    "colorDepth": 32,
+                    "viewportHeight": 799,
+                    "viewportWidth": 414
                 },
                 "productListItems":[
                     {
-                        "SKU":"CC",
-                        "name":"Fernie Snow",
-                        "quantity":30,
-                        "priceTotal":7.8
+                        "SKU": "CC",
+                        "name": "Fernie Snow",
+                        "quantity": 30,
+                        "priceTotal": 7.8
                     }
                 ],
                 "commerce":{
                     "productViews":{
-                        "value":1
+                        "value": 1
                     }
                 },
                 "web":{
-                    "webPageDetails":{
-                        "name":"Fernie Snow",
-                        "pageViews":{
-                            "value":1
+                    "webPageDetails": {
+                        "name": "Fernie Snow",
+                        "pageViews": {
+                            "value": 1
                         }
                     }
                 },
@@ -541,20 +541,18 @@ An example of a successful response can be seen below. As you can see, this is t
                     "localTime":"2018-07-10T22:07:56Z",
                     "geo":{
                         "_schema":{
-                            "latitude":50.116322,
-                            "longitude":-122.957359
+                            "latitude": 50.116322,
+                            "longitude": -122.957359
                         },
-                        "countryCode":"CA",
-                        "stateProvince":"British Columbia",
-                        "city":"Whistler",
-                        "postalCode":"V0N"
+                        "countryCode": "CA",
+                        "stateProvince": "British Columbia",
+                        "city": "Whistler",
+                        "postalCode": "V0N"
                     }
-                },
-                "channel":{
-                    "_type":"web"
                 }
             },
-            "lastModifiedAt":"2018-08-02T03:01:16Z"
+            "lastModifiedAt":"2018-08-02T03:01:16Z",
+            "receivedTimestamp": "2018-07-23T22:07:57Z"
         }
     ],
     "_links":{
