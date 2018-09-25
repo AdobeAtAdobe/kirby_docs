@@ -8,39 +8,32 @@
 	"meta_description": "default description",
 	"publish_date": "19/03/2018",
 	"show_edit_github_banner": false,
-	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master",
+	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/staging",
 	"pages": [
 		{
 			"pages": [],
-			"path": "acpdr/swagger/catalog.yaml",
+			"path": "acpdr/swagger-specs/catalog.yaml",
 			"title": "Catalog Service"
 		},
 		{
 			"pages": [],
-			"path": "acpdr/swagger/bulk-ingest-api.yaml",
+			"path": "acpdr/swagger-specs/bulk-ingest-api.yaml",
 			"title": "Bulk Ingestion Service"
 		},
 		{
 			"pages": [],
-			"path": "acpdr/swagger/data-access-api.yaml",
+			"path": "acpdr/swagger-specs/data-access-api.yaml",
 			"title": "Data Access Service"
 		},
 		{
 			"pages": [],
-			"path": "acpdr/swagger/profile-access.yaml",
+			"path": "acpdr/swagger-specs/profile-access.yaml",
 			"title": "Unified Profile Service"
 		},
 		{
 			"pages": [],
-			"path": "acpdr/swagger/id-namespace-api.yaml",
+			"path": "acpdr/swagger-specs/id-namespace-api.yaml",
 			"title": "Identity Namespace Service"
-		},
-		{
-			
-			"view_type": "mdview",
-			"pages": [],
-			"path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md",
-			"title": "Getting Started with Platform Streaming Ingestion"
 		}
 	
 	]
