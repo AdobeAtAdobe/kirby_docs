@@ -192,7 +192,7 @@ gulp.task('acp-move-staging-end-user-markdown', function() {
 
 gulp.task('acp-move-staging-swagger-specs', function() {
     /* move in tutorials */
-    return gulp.src('../staging-documentation/swagger-specs/**/*.{yaml,json}')
+    return gulp.src('../staging-documentation/swagger-specs/**/*.{yaml,json,YAML,JSON}')
     .pipe(debug())
     .pipe(cleanDest('acpdr/swagger-specs'))
     .pipe(gulp.dest('acpdr/swagger-specs'));
@@ -200,7 +200,7 @@ gulp.task('acp-move-staging-swagger-specs', function() {
 
 gulp.task('acp-move-staging-manifests-markdown', function() {
     /* move in tutorials */
-    return gulp.src('../staging-documentation/adobeio-manifests/**/*.{MD}')
+    return gulp.src('../staging-documentation/adobeio-manifests/**/*.{md,MD}')
     .pipe(debug())
     .pipe(cleanDest('acpdr/adobeio-manifests'))
     .pipe(gulp.dest('acpdr/adobeio-manifests'));
