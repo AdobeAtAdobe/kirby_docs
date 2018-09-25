@@ -12,7 +12,7 @@
 	"pages": [
 		{
 			"pages": [],
-			"path": "acpdr/swagger/gdpr-api.yaml",
+			"path": "acpdr/swagger-specs/gdpr-api.yaml",
 			"title": "GDPR APIs"
 		}
 	]
