@@ -318,4 +318,4 @@ We recommend using XDM extensions whenever possible because of their shared unde
 
 ### XDM Field Dictionary
 
-A complete list of XDM defined fields that can be used to extend and create custom schemas is available through the [XDM Field Dictionary]( xdm_field_dictionary.md).
+A complete list of XDM defined fields that can be used to extend and create custom schemas is available through the [XDM Field Dictionary](xdm_field_dictionary.md).
