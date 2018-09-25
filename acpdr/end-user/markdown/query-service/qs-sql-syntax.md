@@ -19,8 +19,7 @@ SELECT \[ ALL | DISTINCT \[ ON ( expression \[, ...\] ) \] \]
     \[ LIMIT { count | ALL } \]
     \[ OFFSET start \[ ROW | ROWS \] \]
     \[ FETCH { FIRST | NEXT } \[ count \] { ROW | ROWS } ONLY \]
-	```
-	
+```	
 
 where `from_item` can be one of:
 
@@ -29,7 +28,7 @@ where `from_item` can be one of:
     \[ LATERAL \] ( select ) \[ AS \] alias \[ ( column_alias \[, ...\] ) \]
     with\_query\_name \[ \[ AS \] alias \[ ( column_alias \[, ...\] ) \] \]
     from\_item \[ NATURAL \] join\_type from\_item \[ ON join\_condition | USING ( join_column \[, ...\] ) \]
-	```
+```
 
 and `grouping_element` can be one of:
 
@@ -40,11 +39,11 @@ and `grouping_element` can be one of:
     ROLLUP ( { expression | ( expression \[, ...\] ) } \[, ...\] )
     CUBE ( { expression | ( expression \[, ...\] ) } \[, ...\] )
     GROUPING SETS ( grouping_element \[, ...\] )
-	```
+```
 
 and `with_query` is:
 
- ```
+```
  with\_query\_name \[ ( column_name \[, ...\] ) \] AS ( select | values )
  
 TABLE \[ ONLY \] table_name \[ * \]
@@ -72,3 +71,40 @@ SELECT statement 1
 \[UNION | UNION ALL | UNION DISTINCT | INTERSECT | EXCEPT\]
 SELECT statement 2
 ```
+## CREATE TABLE AS SELECT
+
+The following syntax defines a `CREATE TABLE AS SELECT (CTAS)` query supported by XDW Query Service:
+
+```
+CREATE TABLE table_name AS (select_query)
+```
+
+where select_query is a SELECT statement, syntax of which is defined above in this document.
+
+Eg:
+```
+CREATE TABLE Chairs AS (SELECT color, count(*) AS no_of_chairs FROM Inventory i WHERE i.type=="chair" GROUP BY i.color)
+```
+Please note that for a given CTAS query:
+
+1. the SELECT statement MUST have alias for the aggregate functions such as COUNT, SUM, MIN, etc. 
+2. the SELECT statement MUST be enclosed in parentheses().
+
+## INSERT INTO
+
+The following syntax defines a `INSERT INTO` query supported by XDW Query Service:
+
+```
+INSERT INTO table_name select_query
+```
+
+where select_query is a SELECT statement, syntax of which is defined above in this document.
+
+Eg:
+```
+INSERT INTO Customers SELECT SupplierName, City, Country FROM OnlineCustomers;
+```
+Please note that for a given INSERT INTO query:
+
+1. the SELECT statement MUST NOT be enclosed in parentheses().
+2. Schema of the result of SELECT statement must conform to that of the table defined in the INSERT INTO.
