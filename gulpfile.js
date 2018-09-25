@@ -166,12 +166,36 @@ gulp.task('pull-kirby-staging-documents', done => {
     });
 })
 
-gulp.task('acp-move-markdown', function() {
+gulp.task('acp-move-api-spec-markdown', function() {
     /* move in tutorials */
     return gulp.src('../documentation/api-specification/markdown/**/*.{png,gif,jpg,md,PNG,GIF,JPG,MD}')
     .pipe(debug())
     .pipe(cleanDest('acpdr/api-specification/markdown'))
     .pipe(gulp.dest('acpdr/api-specification/markdown'));
+});
+
+gulp.task('acp-move-end-user-markdown', function() {
+    /* move in tutorials */
+    return gulp.src('../documentation/end-user/markdown/**/*.{png,gif,jpg,md,PNG,GIF,JPG,MD}')
+    .pipe(debug())
+    .pipe(cleanDest('acpdr/end-user/markdown'))
+    .pipe(gulp.dest('acpdr/end-user/markdown'));
+});
+
+gulp.task('acp-move-swagger-specs', function() {
+    /* move in tutorials */
+    return gulp.src('../documentation/swagger-specs/**/*.{yaml,json,YAML,JSON}')
+    .pipe(debug())
+    .pipe(cleanDest('acpdr/swagger-specs'))
+    .pipe(gulp.dest('acpdr/swagger-specs'));
+});
+
+gulp.task('acp-move-manifests-markdown', function() {
+    /* move in tutorials */
+    return gulp.src('../documentation/adobeio-manifests/**/*.{json,JSON}')
+    .pipe(debug())
+    .pipe(cleanDest('acpdr/adobeio-manifests'))
+    .pipe(gulp.dest('acpdr/adobeio-manifests'));
 });
 
 gulp.task('acp-move-staging-api-spec-markdown', function() {
@@ -250,7 +274,7 @@ gulp.task('push-new-acp-staging-documents', done => {
     });
 });
 
-gulp.task('acpImport',gulp.series('clone-documents','pull-new-documents','checkout-master','pull-kirby-documents','acp-move-markdown','add-new-acp-documents','commit-new-acp-documents','push-new-acp-documents', function(done) {
+gulp.task('acpImport',gulp.series('clone-documents','pull-new-documents','checkout-master','pull-kirby-documents','acp-move-api-spec-markdown', 'acp-move-end-user-markdown', 'acp-move-swagger-specs', 'acp-move-manifests-markdown', 'add-new-acp-documents','commit-new-acp-documents','push-new-acp-documents', function(done) {
     console.log('acpImport...');
     /* move in the files
      * https://git.corp.adobe.com/experience-platform/documentation
