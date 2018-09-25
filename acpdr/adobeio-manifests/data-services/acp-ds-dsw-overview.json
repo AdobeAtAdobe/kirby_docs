@@ -8,7 +8,7 @@
 	"meta_description": "ACP Data Services Data Science Workspace Overview",
 	"publish_date": "19/09/2018",
 	"show_edit_github_banner": false,
-	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/staging/acpdr",
+	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
 	"pages": [
 	    {
 					"pages": [],
