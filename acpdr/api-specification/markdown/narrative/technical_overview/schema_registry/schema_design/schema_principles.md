@@ -322,4 +322,4 @@ You can find these extensions in the [XDM Field Dictionary](#xdm-field-dictionar
 
 ### XDM Field Dictionary
 
-A complete list of XDM defined fields that can be used to extend and create custom schemas is available through the [XDM Field Dictionary]( xdm_field_dictionary.md).
+A complete list of XDM defined fields that can be used to extend and create custom schemas is available through the [XDM Field Dictionary](xdm_field_dictionary.md).
