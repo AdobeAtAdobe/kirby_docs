@@ -192,10 +192,10 @@ gulp.task('acp-move-staging-end-user-markdown', function() {
 
 gulp.task('acp-move-staging-swagger-specs', function() {
     /* move in tutorials */
-    return gulp.src('../staging-documentation/swagger-specs/**/*.{yaml, json}')
+    return gulp.src('../staging-documentation/swagger-specs/**/*.{yaml,json}')
     .pipe(debug())
-    .pipe(cleanDest('acpdr/swagger-specs/markdown'))
-    .pipe(gulp.dest('acpdr/swagger-specs/markdown'));
+    .pipe(cleanDest('acpdr/swagger-specs'))
+    .pipe(gulp.dest('acpdr/swagger-specs'));
 });
 
 gulp.task('acp-move-staging-manifests-markdown', function() {
