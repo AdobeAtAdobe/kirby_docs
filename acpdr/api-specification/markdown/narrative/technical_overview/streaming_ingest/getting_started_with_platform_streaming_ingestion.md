@@ -4,11 +4,11 @@
 
 This documentation will help you quickly get started with the Adobe Cloud Platform Streaming APIs. Specifically, this documentation will help you:
 
-1. [Create a Streaming Endpoint](#creating-a-streaming-endpoint)
-2. [Stream a Profile Object to Adobe Cloud Platform](#streaming-a-profile-object-to-adobe-cloud-platform)
-3. [Retrieve the newly created Profile](#retrieving-the-newly-created-profile)
-4. [Stream an ExperienceEvent to Adobe Cloud Platform](#streaming-an-experienceevent-to-adobe-cloud-platform)
-5. [Retrieve ExperienceEvents related to the Updated Profile](#retrieving-experienceevents-related-to-the-updated-profile)
+1. [Create a Streaming Endpoint](#creatingastreamingendpoint)
+2. [Stream a Profile Object to Adobe Cloud Platform](#streamingaprofileobjecttoadobecloudplatform)
+3. [Retrieve the newly created Profile](#retrievingthenewlycreatedprofile)
+4. [Stream an ExperienceEvent to Adobe Cloud Platform](#streaminganexperienceeventtoadobecloudplatform)
+5. [Retrieve ExperienceEvents related to the Updated Profile](#retrievingexperienceeventsrelatedtotheupdatedprofile)
 
 ## How do I get started?
 
@@ -116,6 +116,7 @@ Where:
 {
     "header": {
         "msgType": "xdmEntityCreate",
+        "msgId": 12345,
         "msgVersion": "1.0",
         "xdmSchema": {
             "name": "_xdm.context.profile",
@@ -274,8 +275,8 @@ An example of a successful response can be seen below. As you can see, this is t
 
 {
     "A29cgveD5y64ezlhxjUXNzcm": {
-        "recordId": "A29cgveD5y64ezlhxjUXNzcm",
-        "record": {
+        "entityId": "A29cgveD5y64ezlhxjUXNzcm",
+        "entity": {
             "identities": [
                 {
                     "_id": "89149270342662559642753730269986316601",
@@ -314,7 +315,8 @@ An example of a successful response can be seen below. As you can see, this is t
                 "number": "1-408-555-2368",
                 "status": "active"
             }
-        }
+        },
+        "lastModifiedAt": "2018-09-18T02:07:42Z"
     }
 }
 
@@ -348,7 +350,6 @@ curl -X POST "https://dcs.data.adobe.net/collection/{STREAMING_ENDPOINT_ID}" \
 ```JSON
 {
     "header":{
-        "datasetId":"5b60bb6052a78201e46b5ffb",
         "imsOrgId":"{IMS_ORG}",
         "xdmSchema":{
             "name":"_xdm.context.experienceevent",
@@ -360,73 +361,71 @@ curl -X POST "https://dcs.data.adobe.net/collection/{STREAMING_ENDPOINT_ID}" \
             "name": "GettingStarted"
         }
     },
-    "body":{
-        "xdmMeta":{
-            "xdmSchema":{
-                "name":"_xdm.context.experienceevent",
+    "body": {
+        "xdmMeta": {
+            "xdmSchema": {
+                "name": "_xdm.context.experienceevent",
             }
         },
         "xdmEntity":{
-            "_id":"c8d11988-6b56-4571-a123-b6ce74236036",
-            "timestamp":"2018-07-10T22:07:56Z",
-            "endUserIDs":{
-                "_experience":{
-                    "ecid":{
-                        "id":"89149270342662559642753730269986316601",
-                        "namespace":{
-                            "code":"ecid"
+            "_id": "c8d11988-6b56-4571-a123-b6ce74236036",
+            "timestamp": "2018-07-10T22:07:56Z",
+            "receivedTimestamp": "2018-07-23T22:07:57Z",
+            "endUserIDs": {
+                "_experience": {
+                    "ecid": {
+                        "id": "89149270342662559642753730269986316601",
+                        "namespace": {
+                            "code": "ecid"
                         }
                     }
                 }
             },
-            "environment":{
-                "browserDetails":{
-                    "userAgent":"Mozilla\/5.0 (Windows NT 5.1) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/29.0.1547.57 Safari\/537.36 OPR\/16.0.1196.62",
-                    "acceptLanguage":"en-US",
-                    "cookiesEnabled":true,
-                    "javaScriptVersion":"1.6",
-                    "javaEnabled":true
+            "environment": {
+                "browserDetails": {
+                    "userAgent": "Mozilla\/5.0 (Windows NT 5.1) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/29.0.1547.57 Safari\/537.36 OPR\/16.0.1196.62",
+                    "acceptLanguage": "en-US",
+                    "cookiesEnabled": true,
+                    "javaScriptVersion": "1.6",
+                    "javaEnabled": true
                 },
-                "colorDepth":32,
-                "viewportHeight":799,
-                "viewportWidth":414
+                "colorDepth": 32,
+                "viewportHeight": 799,
+                "viewportWidth": 414
             },
-            "productListItems":[
+            "productListItems": [
                 {
-                    "SKU":"CC",
-                    "name":"Fernie Snow",
-                    "quantity":30,
-                    "priceTotal":7.8
+                    "SKU": "CC",
+                    "name": "Fernie Snow",
+                    "quantity": 30,
+                    "priceTotal": 7.8
                 }
             ],
-            "commerce":{
-                "productViews":{
-                    "value":1
+            "commerce": {
+                "productViews": {
+                    "value": 1
                 }
             },
             "web":{
-                "webPageDetails":{
-                    "name":"Fernie Snow",
+                "webPageDetails": {
+                    "name": "Fernie Snow",
                     "pageViews":{
-                        "value":1
+                        "value": 1
                     }
                 }
             },
-            "placeContext":{
-                "localTime":"2018-07-10T22:07:56Z",
+            "placeContext": {
+                "localTime": "2018-07-10T22:07:56Z",
                 "geo":{
                     "_schema":{
-                        "latitude":50.116322,
-                        "longitude":-122.957359
+                        "latitude": 50.116322,
+                        "longitude": -122.957359
                     },
-                    "countryCode":"CA",
-                    "stateProvince":"British Columbia",
-                    "city":"Whistler",
-                    "postalCode":"V0N"
+                    "countryCode": "CA",
+                    "stateProvince": "British Columbia",
+                    "city": "Whistler",
+                    "postalCode": "V0N"
                 }
-            },
-            "channel":{
-                "_type":"web"
             }
         }
     }
@@ -486,12 +485,12 @@ An example of a successful response can be seen below. As you can see, this is t
         "count":1,
         "next":""
     },
-    "records":[
+    "children":[
         {
-            "relatedRecordId":"A29C6ZBTbnqlUau73OD4Vsw7",
-            "recordId":"c8d11988-6b56-4571-a123-b6ce74236036",
-            "timestamp":1531260476000,
-            "record":{
+            "relatedEntityId": "A29C6ZBTbnqlUau73OD4Vsw7",
+            "entityId": "c8d11988-6b56-4571-a123-b6ce74236036",
+            "timestamp": 1532383621000,
+            "entity":{
                 "_id":"c8d11988-6b56-4571-a123-b6ce74236036",
                 "timestamp":"2018-07-10T22:07:56Z",
                 "endUserIDs":{
@@ -506,34 +505,34 @@ An example of a successful response can be seen below. As you can see, this is t
                 },
                 "environment":{
                     "browserDetails":{
-                        "userAgent":"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36 OPR/16.0.1196.62",
-                        "acceptLanguage":"en-US",
-                        "cookiesEnabled":true,
-                        "javaScriptVersion":"1.6",
-                        "javaEnabled":true
+                        "userAgent": "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36 OPR/16.0.1196.62",
+                        "acceptLanguage": "en-US",
+                        "cookiesEnabled": true,
+                        "javaScriptVersion": "1.6",
+                        "javaEnabled": true
                     },
-                    "colorDepth":32,
-                    "viewportHeight":799,
-                    "viewportWidth":414
+                    "colorDepth": 32,
+                    "viewportHeight": 799,
+                    "viewportWidth": 414
                 },
                 "productListItems":[
                     {
-                        "SKU":"CC",
-                        "name":"Fernie Snow",
-                        "quantity":30,
-                        "priceTotal":7.8
+                        "SKU": "CC",
+                        "name": "Fernie Snow",
+                        "quantity": 30,
+                        "priceTotal": 7.8
                     }
                 ],
                 "commerce":{
                     "productViews":{
-                        "value":1
+                        "value": 1
                     }
                 },
                 "web":{
-                    "webPageDetails":{
-                        "name":"Fernie Snow",
-                        "pageViews":{
-                            "value":1
+                    "webPageDetails": {
+                        "name": "Fernie Snow",
+                        "pageViews": {
+                            "value": 1
                         }
                     }
                 },
@@ -541,20 +540,18 @@ An example of a successful response can be seen below. As you can see, this is t
                     "localTime":"2018-07-10T22:07:56Z",
                     "geo":{
                         "_schema":{
-                            "latitude":50.116322,
-                            "longitude":-122.957359
+                            "latitude": 50.116322,
+                            "longitude": -122.957359
                         },
-                        "countryCode":"CA",
-                        "stateProvince":"British Columbia",
-                        "city":"Whistler",
-                        "postalCode":"V0N"
+                        "countryCode": "CA",
+                        "stateProvince": "British Columbia",
+                        "city": "Whistler",
+                        "postalCode": "V0N"
                     }
-                },
-                "channel":{
-                    "_type":"web"
                 }
             },
-            "lastModifiedAt":"2018-08-02T03:01:16Z"
+            "lastModifiedAt":"2018-08-02T03:01:16Z",
+            "receivedTimestamp": "2018-07-23T22:07:57Z"
         }
     ],
     "_links":{

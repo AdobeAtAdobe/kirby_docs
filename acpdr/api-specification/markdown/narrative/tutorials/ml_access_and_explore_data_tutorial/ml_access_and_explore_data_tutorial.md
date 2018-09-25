@@ -85,7 +85,7 @@ Navigating into the Datasets directory, we will be able to see all the ingested 
 
 To access data in the dataset, we can right click on your desired dataset and select the "Explore Data in Notebook" option in the dropdown. An executable code entry will appear in your notebook.
 
-``` PYTHON
+```PYTHON
 from data_access_sdk_python.reader import DataSetReader
 reader = DataSetReader()
 df = reader.load(data_set_id="xxxxxxxx", ims_org="xxxxxxxx@AdobeOrg", start=0, limit=20)
