@@ -8,74 +8,31 @@ This developer guide provides an introduction to the Schema Registry (aka XDM Re
 - View a specific schema
 - Extend an existing schema
 - Add fields to an extension
-- Create and update a new schema
-- View schema descriptors
-- Create, update, and delete schema descriptors
+- Create a new schema
+- Add fields to the new schema
 
 ## Schema Registry
 
 The Schema Registry is used to access the Schema Library within Adobe Cloud Platform (ACP), providing a User Interface and RESTful API from which all available schemas are discoverable.
 
-### Using the Schema Registry API
+## Using the Schema Registry API
 
 Using the Schema Registry API, you are able to perform basic CRUD operations against the Schema Library in order to view, manage, and extend all schemas available to you within Adobe Cloud Platform. This includes those defined by Adobe, platform partners, and vendors whose applications you use. You can also use API calls to view and edit schemas that you have defined, as well as create new schemas for your organization.
 
 ### XDM Compatibility Mode
 
-[Experience Data Model](https://www.adobe.io/open/standards/xdm.html) (XDM) is a publicly documented specification, driven by Adobe to improve the interoperability, expressiveness, and power of digital experiences. Adobe maintains the source code and formal XDM definitions in an open source project on [GitHub](https://github.com/adobe/xdm/). These definitions are written in XDM Standard Notation, using JSON-LD in addition to JSON Schema as the grammar for defining XDM schemas. 
+Adobe maintains XDM definitions in an open source project on [GitHub](https://github.com/adobe/xdm/). These definitions are written in XDM Standard Notation, using JSON-LD in addition to JSON Schema as the grammar that defines an XDM schema.
 
-When looking at formal XDM definitions in the public repository, you can see that standard XDM differs from what you see in Adobe Cloud Platform. What you are seeing in ACP is called Compatibility Mode, and it provides a simple mapping between standard XDM and the way it is used within platform.
+The Schema Registry API uses 'XDM Compatibility Mode', a simplified mapping that uses a nested JSON structure to display schemas in a tree-like format. 
 
-#### How Compatibility Mode Works
-
-Compatibility Mode allows the XDM JSON-LD model to work with existing data infrastructure by altering values within standard XDM while keeping the semantics the same. It uses a nested JSON structure, displaying schemas in a tree-like format.
-
-The main difference you will notice between standard XDM and Compatibility Mode is that IDs (`id`) and references to schemas (`$ref`) are shorter, primarily due to the difficulties that some systems have with handling periods (".") and URIs. (Details regarding `id` and `$ref` are outlined below.)
-
-For example, the following is a side-by-side comparison of a snippet from the "Person" schema, showing the XDM field "name" in both standard XDM and Compatibility Mode:
-
-<table>
-<th>Standard XDM</th>
-<th>Compatibility Mode</th>
-<tr>
-<td>
-<pre class="JSON language-JSON hljs">
-"xdm:name": {
-  "title": "Full name",
-  "$ref": 
-    "https://ns.adobe.com/xdm/context/person-name",
-  "description": "The person's full name"
-}
-</pre>
-</td>
-<td>
-<pre class="JSON language-JSON hljs">
-"name": {
-  "title": "Full name",
-  "$ref": "context/person-name",
-  "description": "The person's full name",
-  "meta:xdmField": "xdm:name"
-}
-</pre>
-</td>
-</tr>
-</table>
-
-#### Why Do We Need Compatibility Mode?
-
-Adobe Cloud Platform is designed to work with multiple solutions and services, each with their own technical challenges and limitations (such as how certain technologies handle special characters). In order to overcome these limitations, Compatibility Mode was developed.
-
-Most platform services including Catalog, Data Lake, and Unified Profile Service use Compatibility Mode in lieu of standard XDM. The Schema Registry API also uses Compatibility Mode, and the examples in this document are all shown using Compatibility Mode.
-
-It is worthwhile to know that a mapping takes place between standard XDM and the way it is operationalized in ACP, but it should not affect your use of platform services. 
-
-The open source project is available to you as a resource, but when it comes to interacting with standard schemas through the Schema Registry, the API examples below and the UI steps outlined in the [Using Standard Schemas with Adobe Cloud Platform](acp_standard_schemas.md) document provide the best practices that you will need to know and follow.
+The examples below use XDM Compatibility Mode.
 
 ### Identifying and Referencing Schemas
 
 A schema identifier is represented by its `id` attribute. This attribute also represents the id of the schema within the Schema Registry. The GET request below for viewing all XDM Schemas returns a list of schemas and their paths.
 
 For example, the `Person` schema is located in the namespace `context` so it has an `id` value of `context/person`. Understanding this path is important as this is how you will interact with the schemas via the API.
+
 
 ### Understanding the `_customer` Keyword
 
@@ -93,13 +50,13 @@ A full list of available API calls can be found in the [RESTful API Resource](ht
 
 As mentioned above, you can view a list of all defined XDM schemas through a single API call. This allows you to find the `id` for each schema, and includes any schemas that you have defined or extensions that you have made. 
 
-##### API Format
+**API Format**
 
 ```
 GET /xdms
 ```
 
-##### Request
+**Request**
 
 ```
 curl -X GET \
@@ -108,14 +65,12 @@ curl -X GET \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
-
 - `{ACCESS_TOKEN}`: Token provided after authentication  
-- `{API_KEY}`: Your specific API key for your unique ACP integration (available via [Adobe Console](https://console.adobe.io))
+- `{API_KEY}`: Your specific API key for your unique ACP integration. Available via https://console.adobe.io  
 - `{IMS_ORG}`: The IMS Organization credentials for your unique ACP integration
 
 
-##### Response
-
+**Response**
 ```JSON
 [
     {
@@ -428,15 +383,15 @@ curl -X GET \
 
 Viewing a specific schema definition in its JSON Schema form requires a single GET request to the schema path. The following example shows how to perform a GET request for a specific schema. 
 
-Sample requests and responses for two of the most commonly used schema, [Profile](#profileschema) and [ExperienceEvent](#experienceeventschema), are included at the end of this document.
+Sample requests and responses for two of the most commonly used schema, [Profile](#profile-schema) and [ExperienceEvent](#experienceevent-schema), are included at the end of this document.
 
-##### API Format
+**API Format**
 
 ```
 GET /xdms?id={id}
 ```
 
-##### Request
+**Request**
 
 The following request will return the `Person` schema in JSON format, with all attributes of the schema located under `properties`.
 
@@ -449,8 +404,7 @@ curl -X GET \
 ```
 
 
-##### Response
-
+**Response**
 ```JSON
 {
     "created": 1535749106112,
@@ -598,47 +552,21 @@ curl -X GET \
 }
 ```
 
-### Defining a Field
-
-In the `Person` schema above, the fields of the schema are listed within the `properties` object. Each field is itself an object, containing additional fields to describe and constrain the data that the field can contain. Below is a sample field outlining some best practices for field definitions.
-
-```JSON
-"fieldName": {
-    "title": "Field Name",
-    "type": "string",
-    "format": "date-time",
-    "examples": [
-        "2004-10-23T12:00:00-06:00"
-    ],
-    "description": "Full sentence describing the field, using proper grammar and punctuation.",
-}
-```
-
-1. The name for the field object is written in camelCase. Example: `"fieldName"`
-1. The field should include a `"title"`, written in Title Case. Example: `"Field Name"`
-1. The field requires a `"type"`.  
-a. Defining certain types may require an optional `"format"`.   
-b. Where a specific formatting of data is required, `"examples"` can be added as an array.
-1. The `"description"` explains the field and pertinent information regarding field data. It should be written in full sentences with clear language so that anyone accessing the schema can understand the intention of the field.
-
-More information about [defining field types in the API](#definingxdmfieldtypesintheapi) can be found later in this document, including code samples and optional constraints for the most commonly used field types.
-
 ### PUT - Extend an Existing Schema
 
 Adobe Cloud Platform provides a wide assortment of standard schemas, but there will be times when you need to express non-standard data unique to your organization. This can be done by extending an existing schema, meaning that you can add custom fields for personalized data.
 
 When you want to add fields to an existing library schema, the `_customer` keyword will appear after the `id` of the schema you want to extend. This results in an extension of the existing schema with a new set of fields that appear under the extension name that you specify.
 
-##### API Format
+**API Format**
 
 ```
 PUT /xdms/{id}/_customer/{new extension name}
 ```
-
-- `{new extension name}`: The name you want to associate with the fields you are about to add or update.<br/>
+- `{new extension name}`: The name you want to associate with the fields you are about to add or update.<br/><br/>
 **Note:** Your organization can associate fields with different business units, teams, departments, etc. according to your preference. For example, you can have one team add and manage fields under the retail division (using extension name = retail) and another team manage the fields under the web division (using extension name = web).  
 
-##### Request
+**Request**
 
 After making the API request below with the provided payload, a new `_customer.retail` hierarchy and fields will be added to the `context/person` schema. Anytime you use this `context/person` schema (as a list of fields in a dataset or embedded in another schema), those new fields will be automatically included.  
 
@@ -648,30 +576,24 @@ curl -X PUT \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'content-type: application/json' \
-  -d '{
+  -H "content-type: application/json" \
+  -d "{
         "type": "object",
-        "title": "Retail Fields",
-        "description": "Custom fields for retail division",
+        "title": "Custom Retail Fields",
+        "description": "My custom fields for my retail division",
         "properties": {
-          "homeStoreId": {
-            "title": "Home Store ID",
-            "type": "string",
-            "description": "Unique ID of the individual's home store."
+          "storeId": {
+            "type": "string"
           },
-          "loyaltyMember": {
-            "title": "Loyalty Program Member",
-            "type": "boolean",
-            "default": false,
-            "description": "Is this individual a member of the Loyalty Program?"
+          "storeAddress": {
+            "$ref": "/common/address"
           }
         }
-     }'
+     }"
 ```
-
 **Note:** All requests with a payload in the request body, must include the header `Content-Type: application/json` as shown above.
 
-#### Response
+**Response**
 
 The response to the above request shows the path for the schema extension:
 
@@ -681,13 +603,11 @@ The response to the above request shows the path for the schema extension:
 ]
 ```
 
-### GET - View Updated Schema
+The code below shows the new response when issuing a GET request for the `context/person` schema. Note how there is a new top level field named `_customer` which contains a `retail` section that then includes the new fields that were added. 
 
-The code below shows the new response when issuing a GET request for the `context/person` schema. You'll notice that there is a new top level field named `_customer` which contains a `retail` section that then includes the new fields that were added. 
+When this schema is used in a dataset those new fields are accessed using `_customer.retail.storeId` and `_customer.retail.storeAddress`
 
-When this schema is used in a dataset those new fields are accessed using `_customer.retail.homeStoreId` and `_customer.retail.loyaltyMember`.
-
-##### Request
+**Request**
 
 ```
 curl -X GET \
@@ -697,8 +617,7 @@ curl -X GET \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-##### Response
-
+**Response**
 ```JSON
 {
     "created": 1535749106112,
@@ -843,22 +762,16 @@ curl -X GET \
                     "updatedUser": "{API_KEY}@AdobeID",
                     "imsOrg": "{imsOrg}",
                     "extNamespace": "retail",
-                    "title": "Retail Fields",
+                    "title": "Custom Retail Fields",
                     "type": "object",
-                    "description": "Custom fields for retail division",
+                    "description": "My custom fields for my retail division",
                     "properties": {
-                        "homeStoreId": {
-                            "title": "Home Store ID",
-                            "type": "string",
-                            "description": "Unique ID of the individual's home store.",
+                        "storeId": {
+                            "type":"string",
                             "meta:xdmType": "string"
                         },
-                        "loyaltyMember": {
-                            "title": "Loyalty Program Member",
-                            "type": "boolean",
-                            "default": false,
-                            "description": "Is this individual a member of the Loyalty Program?",
-                            "meta:xdmType": "boolean"
+                        "storeAddress": {
+                            "$ref": "common/address",
                         }
                     }
                 }
@@ -877,7 +790,7 @@ curl -X GET \
 }
 ```
 
-### Add Fields to an Extension
+### Adding Fields to an Extension
 
 After an extension has been defined, you may wish to add additional fields to that same extension at a later date. This can be done via the API.
 
@@ -889,16 +802,15 @@ The example below outlines the two-step process for adding fields to the `_custo
 
 The first step is to issue a GET request to view the extension as it exists currently.
 
-##### API Format
+**API Format**
 
 ```
 GET /xdms/{id}/_customer/{extension name}
 ```
-
-- `{extension name}`: The name of the extension you want to add fields to.<br/>
+- `{extension name}`: The name of the extension you want to add fields to.<br/><br/>
 **Note:** Your organization may have multiple extensions within the `_customer` section of a standard schema. It is important to perform a GET on the specific extension that you wish to add fields to. 
 
-##### Request
+**Request**
 
 The following request returns `_customer.retail` in JSON format, with all attributes of the extension located under `properties`.
 
@@ -910,7 +822,7 @@ curl -X GET \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-#### Response
+**Response**
 
 ```JSON
 {
@@ -921,22 +833,16 @@ curl -X GET \
     "updatedUser": "{string}@AdobeID",
     "imsOrg": "{IMS_ORG}",
     "extNamespace": "retail",
+    "title": "Custom Retail Fields",
     "type": "object",
-    "title": "Retail Fields",
-    "description": "Custom fields for retail division",
+    "description": "My custom fields for my retail division",
     "properties": {
-        "homeStoreId": {
-            "title": "Home Store ID",
+        "storeId": {
             "type": "string",
-            "description": "Unique ID of the individual's home store.",
             "meta:xdmType": "string"
         },
-        "loyaltyMember": {
-            "title": "Loyalty Program Member",
-            "type": "boolean",
-            "default": false,
-            "description": "Is this individual a member of the Loyalty Program?",
-            "meta:xdmType": "boolean"
+        "storeAddress": {
+            "$ref": "common/address"
         }
     }
 }
@@ -948,15 +854,15 @@ After confirming that the response from the GET request is the correct extension
 
 **Note:** This PUT request is essentially _re-writing_ the existing extension, so it is important that the payload of your PUT request include **ALL** of the fields (old and new) that you wish to have included in the extension.
 
-##### API Format
+**API Format**
 
 ```
 PUT /xdms/{id}/_customer/{extension name}
 ```
 
-##### Request
+**Request**
 
-The request includes the fields that were previously defined (`"homeStoreId"` and `"loyaltyMember"`), as well as two new fields (`"loyaltyLevel"` and `"loyaltyJoinDate"`) to be added to the extension.
+The request includes the fields that were previously defined (`"storeId"` and `"storeAddress"`), as well as two new fields (`"storePhone"` and `"storeName"`) to be added to the extension.
 
 ```
 curl -X PUT \
@@ -964,39 +870,29 @@ curl -X PUT \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'content-type: application/json' \
-  -d '{
+  -H "content-type: application/json" \
+  -d "{
         "type": "object",
-        "title": "Retail Fields",
-        "description": "Custom fields for retail division",
+        "title": "Custom Retail Fields",
+        "description": "My custom fields for my retail division",
         "properties": {
-          "homeStoreId": {
-            "title": "Home Store ID",
-            "type": "string",
-            "description": "Unique ID of the individual's home store."
+          "storeId": {
+            "type": "string"
           },
-          "loyaltyMember": {
-            "title": "Loyalty Program Member",
-            "type": "boolean",
-            "default": false,
-            "description": "Is this individual a member of the Loyalty Program?"
+          "storeAddress": {
+            "$ref": "/common/address"
           },
-          "loyaltyLevel": {
-              "title": "Loyalty Program Membership Level",
-              "type": "string",
-              "description": "Current membership level within the Loyalty Program."
+          "storePhone": {
+            "$ref": "/context/phonenumber"
           },
-          "loyaltyJoinDate": {
-              "title": "Loyalty Program Join Date",
-              "type": "string",
-              "format": "date",
-              "description": "Date individual joined the Loyalty Program."
+          "storeName": {
+            "type": "string"
           }
         }
-     }'
+     }"
 ```
 
-##### Response
+**Response**
 
 The response to the above request shows the path for the schema extension:
 
@@ -1010,13 +906,13 @@ The response to the above request shows the path for the schema extension:
 
 Now that the fields have been added, performing a GET request on the `Person` schema will show the updated `_customer.retail` extension. You can also issue a GET request directly on the extension to see the updated fields, as shown below.
 
-##### API Format
+**API Format**
 
 ```
 GET /xdms/{id}/_customer/{extension name}
 ```
 
-##### Request
+**Request**
 
 ```
 curl -X GET \
@@ -1026,38 +922,26 @@ curl -X GET \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-##### Response
+**Response**
 
 ```JSON
 {
     "type": "object",
-    "title": "Retail Fields",
-    "description": "Custom fields for retail division",
+    "title": "Custom Retail Fields",
+    "description": "My custom fields for my retail division",
     "properties": {
-        "homeStoreId": {
-            "title": "Home Store ID",
+        "storeId": {
             "type": "string",
-            "description": "Unique ID of the individual's home store.",
             "meta:xdmType": "string"
         },
-        "loyaltyMember": {
-            "title": "Loyalty Program Member",
-            "type": "boolean",
-            "default": false,
-            "description": "Is this individual a member of the Loyalty Program?",
-            "meta:xdmType": "boolean"
+        "storeAddress": {
+            "$ref": "common/address"
         },
-        "loyaltyLevel": {
-            "title": "Loyalty Program Membership Level",
-            "type": "string",
-            "description": "Current membership level within the Loyalty Program.",
-            "meta:xdmType": "string"
+        "storePhone": {
+            "$ref": "context/phonenumber"
         },
-        "loyaltyJoinDate": {
-            "title": "Loyalty Program Join Date",
+        "storeName": {
             "type": "string",
-            "format": "date",
-            "description": "Date individual joined the Loyalty Program.",
             "meta:xdmType": "string"
         }
     },
@@ -1079,7 +963,7 @@ An example of this would be if a travel company wanted a schema to store data fo
 
 The API call below shows how to define this new schema and its fields.
 
-##### API Format
+**API Format**
 
 In this scenario, `_customer` follows immediately after `/xdms/` because you are no longer starting with an existing schema; you are defining something completely new.
 
@@ -1087,11 +971,10 @@ In this scenario, `_customer` follows immediately after `/xdms/` because you are
 PUT /xdms/_customer/{id}
 ```
 
-- `{id}`: In the earlier examples, schema identifiers were referenced above using an `id` consisting of a path (`context/person`). When creating a new schema, you can create a directory of your own (similar to the `<new extension name>` used in the example above), which you would then combine with the new schema name that you are defining. For example, the new `Flights` schema will be maintained by the travel company's web team, so the path will be `web/flights`.  
-  
-**API vs UI:** The API allows you to define your own extension names as noted above. These schema will appear alongside all other schemas in the UI, with no discernible difference between them. When defining a schema in the UI, you will be directed to create your schema within the `default` extension, making it part of the `_customer.default` hierarchy. For better control over extension names (such as defining schema for "retail" and "web" teams), we recommend using the API when defining schemas.
+- `{id}`: In the earlier examples, schema identifiers were referenced above using an `id` consisting of a path (`context/person`).<br/><br/>
+When creating a new schema, you can create a directory of your own (similar to the `<new extension name>` used in the example above), which you would then combine with the new schema name that you are defining. For example, the new `Flights` schema will be maintained by the travel company's web team, so the path will be `web/flights`. 
 
-##### Request
+**Request**
 
 ```
 curl -X PUT \
@@ -1099,8 +982,8 @@ curl -X PUT \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'content-type: application/json' \
-  -d '{ 
+  -H "content-type: application/json" \
+  -d "{ 
         "title": "Flights", 
         "type": "object", 
         "description": "Data for all available flights.", 
@@ -1126,12 +1009,12 @@ curl -X PUT \
             "$ref": "/common/address"
           }
         }
-      }'
+      }
 ```
 
 The payload for this request is a JSON Schema object that represents your new schema and is able to use simple scalar field types (string, number, etc.) or fields that act as an entry point into a more complex embedded schema that you reference (using `$ref`). 
 
-##### Response
+**Response**
 
 The response to the above request shows the path to the newly created schema
 
@@ -1141,13 +1024,13 @@ The response to the above request shows the path to the newly created schema
 ]
 ```
 
-### Using the New Schema
+### Using Your New Schema
 
 Once the schema is created, you can use it like any other schema. You can create datasets based on that schema, or reference it within other schemas. 
 
 In either case, this new schema can be accessed by the path provided in the response above.
 
-##### Request
+**Request**
 
 The GET request to view your newly created schema would be:
 
@@ -1159,7 +1042,7 @@ curl -X GET \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-##### Reference
+**Reference**
 
 In order to embed that schema in another schema, the reference would be:
 
@@ -1167,7 +1050,7 @@ In order to embed that schema in another schema, the reference would be:
 "$ref": "/_customer/web/flights"
 ```
 
-### Add Fields to the New Schema
+### Adding Fields to Your New Schema
 
 After defining a new schema, you may find that you need to add additional fields to it. This can be done through the API following steps similar to those required for adding fields to an extension.
 
@@ -1179,13 +1062,13 @@ The example below outlines the two-step process for adding new fields to the `Fl
 
 The first step is to issue a GET request to view the schema as it exists currently.
 
-##### API Format
+**API Format**
 
 ```
 GET /xdms/_customer/{id}
 ```
 
-##### Request
+**Request**
 
 ```
 curl -X GET \
@@ -1195,7 +1078,7 @@ curl -X GET \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-##### Response
+**Response**
 
 ```JSON
 {
@@ -1246,15 +1129,15 @@ After confirming that the response from the GET request is the correct schema, y
 
 **Note:** This PUT request is essentially _re-writing_ the schema, so it is important that the payload of your PUT request include **ALL** of the fields (old and new) that you wish to have included in the schema.
 
-##### API Format
+**API Format**
 
 ```
 PUT /xdms/_customer/{id}
 ```
 
-##### Request
+**Request**
 
-The request includes the fields that were previously defined (`flightId`, `flightNumber`, `carrier`, and `carrierAddress`), as well as two new fields (`carrierPhone` and `carrierEmail`) to be added to the schema.
+The request includes the fields that were previously defined (`"flightId"`, `"flightNumber"`, `"carrier"`, and `"carrierAddress"`), as well as two new fields (`"carrierPhone"` and `"carrierEmail"`) to be added to the schema.
 
 ```
 curl -X PUT \
@@ -1262,8 +1145,8 @@ curl -X PUT \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'content-type: application/json' \
-  -d '{ 
+  -H "content-type: application/json" \
+  -d "{ 
         "title": "Flights", 
         "type": "object", 
         "description": "Data for all available flights.", 
@@ -1299,10 +1182,10 @@ curl -X PUT \
             "$ref": "/context/emailaddress"
           }
         }
-      }'
+      }"
 ```
 
-##### Response
+**Response**
 
 The response to the above request shows the path for the schema:
 
@@ -1316,13 +1199,13 @@ The response to the above request shows the path for the schema:
 
 Now that the fields have been added, you can view the updated schema by issuing a GET request on the `Flights` schema. 
 
-##### API Format
+**API Format**
 
 ```
 GET /xdms/_customer/{id}
 ```
 
-##### Request
+**Request**
 
 ```
 curl -X GET \
@@ -1332,7 +1215,7 @@ curl -X GET \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-##### Response
+**Response**
 
 ```JSON
 {
@@ -1387,442 +1270,6 @@ curl -X GET \
 }
 ```
 
-## Schema Descriptors
-
-Schemas define a static view of data entities, but do not provide specific details on how data based on these schemas (datasets, etc) may relate to one another. Adobe Cloud Platform allows you to describe these relationships and other interpretive metadata about a schema using descriptors. Schema descriptors are unique to your IMS Organization, meaning that other organizations will not see the descriptors that you define, nor will you see theirs.
-
-Each schema can have one or more schema descriptor entities applied to it. Each schema descriptor entity includes a descriptor type and the `sourceSchema` to which it applies. Once applied, these descriptors will apply to all datasets that are described by the related schemas.
-
-### Descriptor Types
-
-All descriptors are described using the base SchemaDescriptor schema. The base can be extended by the RelationshipDescriptor or UpdatePolicyDescriptor schemas to add additional properties needed when defining certain types of descriptors.
-
-The following table provides an overview of available descriptors, and details regarding proper API usage are outlined in subsequent sections below.
-
-<table>
-<tr>
-<th>@type</th>
-<th width="200px">Description</th>
-<th>Fields</th>
-<th width="650px">Code Sample</th>
-</tr>
-
-<tr>
-<td colspan=4><strong>SchemaDescriptor</strong></td>
-</tr>
-
-<tr>
-<td>xdm:descriptorPrimaryKey</td>
-<td>Signals that the sourceProperty of the sourceSchema may be used as a primary key for data based on the schema.</td>
-<td><strong>Required:</strong>
-<ul>
-<li>xdm:sourceSchema</li>
-<li>xdm:sourceProperty</li>
-</ul>
-</td>
-<td>
-<pre class="JSON language-JSON hljs">
-{<br/>
-"@type":"xdm:descriptorPrimaryKey",
-"xdm:sourceSchema":"_customer/retail/geography",
-"xdm:sourceProperty":"/geographyId"<br/>
-}
-</pre>
-</td>
-</tr>
-
-<!-- <tr>
-<td>xdm:descriptorInstantiable</td>
-<td>Signals that a schema may be instantiated as a dataset. (Some schemas are intended mainly to be composed in other, instantiable schemas.)</td>
-<td><strong>Required:</strong>
-<ul>
-<li>xdm:sourceSchema</li>
-</ul>
-</td>
-<td>
-<pre class="JSON language-JSON hljs">
-{<br/>
-"@type":"xdm:descriptorInstantiable",
-"xdm:sourceSchema":"model/Profile"<br/>
-}
-</pre>
-</td>
-</tr> -->
-
-<tr>
-<td colspan=4><strong>RelationshipDescriptor</strong></td>
-</tr>
-
-<tr>
-<td>xdm:descriptorOneToOne</td>
-<td>Describes a one to one relationship between two schemas, keyed on the properties described in "sourceProperty" and "destProperty".</td>
-<td><strong>Required:</strong>
-<ul>
-<li>xdm:sourceSchema</li>
-<li>xdm:sourceProperty</li>
-<li>xdm:destSchema</li>
-<li>xdm:destProperty</li>
-</ul>
-</td>
-<td>
-<pre class="JSON language-JSON hljs">
-{<br/>
-"@type":"xdm:descriptorOneToOne",
-"xdm:sourceSchema":"_customer/retail/geography",
-"xdm:sourceProperty":"/geographyId",
-"xdm:destSchema":"core/Organization",
-"xdm:destProperty":"/id"<br/>
-}
-</pre>
-</td>
-</tr>
-
-<tr>
-<td>xdm:descriptorOneToMany</td>
-<td>Describes a one to many relationship between two schemas, keyed on the properties described in "sourceProperty" and "destProperty".</td>
-<td><strong>Required:</strong>
-<ul>
-<li>xdm:sourceSchema</li>
-<li>xdm:sourceProperty</li>
-<li>xdm:destSchema</li>
-<li>xdm:destProperty</li>
-</ul>
-</td>
-<td>
-<pre class="JSON language-JSON hljs">
-{<br/>
-"@type":"xdm:descriptorOneToMany",
-"xdm:sourceSchema":"_customer/loyalty",
-"xdm:sourceProperty":"/programLevel",
-"xdm:destSchema":"_customer/retail",
-"xdm:destProperty":"/loyaltyLevel"<br/>
-}
-</pre>
-</td>
-</tr>
-
-<tr>
-<td>xdm:descriptorManyToMany</td>
-<td>Describes a many to many relationship between two schemas, keyed on the properties described in "sourceProperty" and "destProperty".</td>
-<td><strong>Required:</strong>
-<ul>
-<li>xdm:sourceSchema</li>
-<li>xdm:sourceProperty</li>
-<li>xdm:destSchema</li>
-<li>xdm:destProperty</li>
-</ul>
-</td>
-<td>
-<pre class="JSON language-JSON hljs">
-{<br/>
-"@type":"xdm:descriptorManyToMany",
-"xdm:sourceSchema":"_customer/web/flights",
-"xdm:sourceProperty":"/flightId",
-"xdm:destSchema":"context/person",
-"xdm:destProperty":"/_customer/properties/flights/properties/bookedFlights"<br/>
-}
-</pre>
-</td>
-</tr>
-
-<tr>
-<td colspan=4><strong>UpdatePolicyDescriptor</strong></td>
-</tr>
-
-<tr>
-<td>xdm:updatePolicy</td>
-<td>Describes how data of this schema type should be updated/merged when new data arrives.</td>
-<td><strong>Required:</strong>
-<ul>
-<li>xdm:sourceSchema</li>
-<li>xdm:updatePolicy</li>
-</ul>
-<strong>Values for xdm:updatePolicy:</strong>
-<ul>
-<li>"xdm:updateMerge" - Merge rules should be applied to rollup the new data with any existing data.</li>
-<li>"xdm:updateReplace" - This data should always replace existing data if it exists.</li>
-<li>"xdm:updateTimeSeries" - This is time series data, and should be stored incrementally, not updated or rolled up.</li>
-</ul>
-</td>
-<td>
-<pre class="JSON language-JSON hljs">
-{<br/>
-"@type":"xdm:updatePolicy",
-"xdm:sourceSchema":"_customer/web/sitevisits",
-"xdm:updatePolicy":"xdm:updateTimeSeries"<br/>
-}
-</pre>
-<p>In the case of "xdm:updateMerge" and "xdm:updateReplace", existing data is identified via the primary key. Specifying a primary key and declaring an update policy must occur in two separate API calls as shown here:</p>
-
-<strong>Call 1:</strong>
-<pre class="JSON language-JSON hljs">
-{
-
-"@type":"xdm:descriptorPrimaryKey",
-"xdm:sourceSchema":"_customer/retail/geography",
-"xdm:sourceProperty":"/geographyId"
-
-}
-</pre>
-
-<strong>Call 2:</strong>
-<pre class="JSON language-JSON hljs">
-{ 
-
-"@type":"xdm:updatePolicy",
-"xdm:sourceSchema":"_customer/retail/geography",
-"xdm:updatePolicy":"xdm:updateReplace"
-
-}
-</pre>
-</td>
-</tr>
-
-</table>
-
-
-
-### GET - View all Descriptors
-
-A single API call will allow you to view all existing descriptors within your organization.
-
-##### API Format
-
-```
-GET /descriptors 
-```
-
-##### Request
-
-```
-curl -X GET \
-  https://platform.adobe.io/data/foundation/catalog/descriptors/ \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
-```
-
-##### Response
-
-If descriptors exist, the response is an array of objects, with one object for each `descriptorType` that exists within your organization (in other words, if you have not declared any `schema` descriptors, you would not see a `"descriptorType": "schema"` object). 
-
-The `descriptors` array inside each object lists the paths to each individual descriptor of that type. The descriptors are shown in the format `@/descriptors/{id}`. There is more information about accessing individual descriptors by their `{id}` below.
-
-```JSON
-[
-    {
-        "descriptorType": "relationship",
-        "descriptors": [
-            "@/descriptors/0e409ec2e96e44e9bbca5732148915338d3c0d91"
-        ]
-    },
-    {
-        "descriptorType": "schema",
-        "descriptors": [
-            "@/descriptors/9801b0d39c2760ef4916a957f4b902a812a13262",
-            "@/descriptors/b257fb10f5453b018cace7f590060d443e8a3634",
-            "@/descriptors/cad834fda456c83af814f2b598213ac6ba838d78"
-        ]
-    },
-    {
-        "descriptorType": "updatePolicy",
-        "descriptors": [
-            "@/descriptors/3875cc1927e746e496cc2206f24e1567f46d7fb5"
-        ]
-    }
-]
-```
-
-#### Query Parameters
-
-To further refine your GET request, you can include one or more query parameter filters. Current supported filters include: type, sourceSchema, destSchema.
-
-##### API Examples
-
-```
-GET /descriptors?type=string&sourceSchema=directory/schema&destSchema=directory/schema2
-```
-##### Additional examples and possible query parameter combinations:
-```
-GET /descriptors?descriptorType=relationship
-GET /descriptors?sourceSchema=_customer/web/flights
-GET /descriptors?destSchema=context/person
-GET /descriptors?type=relationship&sourceSchema=_customer/web/flights&destSchema=context/person
-```
-
-##### Request
-
-```
-curl -X GET \
-  'https://platform.adobe.io/data/foundation/catalog/descriptors?descriptorType=schema' \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
-```
-
-##### Response
-
-The response to the above request will limit the results to only those descriptors with a `descriptorType` of `schema`. The descriptors are still shown as items in an array, using the format `@/descriptors/{id}`.
-
-```JSON
-[
-    {
-        "descriptorType": "schema",
-        "descriptors": [
-            "@/descriptors/9801b0d39c2760ef4916a957f4b902a812a13262",
-            "@/descriptors/b257fb10f5453b018cace7f590060d443e8a3634",
-            "@/descriptors/cad834fda456c83af814f2b598213ac6ba838d78"
-        ]
-    }
-]
-```
-
-### GET - View Individual Descriptor
-
-If you wish to view the details of an individual descriptor, and know its `{id}`, you can issue a GET request to return the individual descriptor in JSON format.
-
-##### API Format
-
-```
-GET /descriptors/{id}
-```
-
-##### Request
-
-```
-curl -X GET \
-  https://platform.adobe.io/data/foundation/catalog/descriptors/b257fb10f5453b018cace7f590060d443e8a3634 \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
-```
-
-##### Response
-
-```JSON
-{
-    "@type": "xdm:descriptorPrimaryKey",
-    "xdm:sourceSchema": "_customer/web/flights",
-    "xdm:sourceProperty": "/flightId",
-    "descriptorType": "schema",
-    "descriptorId": "b257fb10f5453b018cace7f590060d443e8a3634",
-    "imsOrg": "{IMS_ORG}",
-    "createdClient": "{API_KEY}",
-    "updatedUser": "{string}@AdobeID",
-    "version": "1",
-    "created": 1536969498700,
-    "updated": 1536969498700
-}
-
-```
-
-### POST - Create New Descriptor
-
-To create a new descriptor, issue a POST request to `/descriptors` that includes all of the necessary fields (as indicated by the [Descriptor Types table](#descriptortypes)) in the payload.
-
-##### API Format
-
-```
-POST /descriptors
-```
-
-##### Request
-
-In the example below, we are defining a descriptor for our `_customer/web/flights` schema that indicates `flightId` as a primary key.
-
-```
-curl -X POST \
-  https://platform.adobe.io/data/foundation/catalog/descriptors \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'Content-Type: application/json' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: 6{IMS_ORG}' \
-  -d '{
-    "@type":"xdm:descriptorPrimaryKey",
-    "xdm:sourceSchema":"_customer/web/flights",
-    "xdm:sourceProperty":"/flightId"
-}'
-```
-
-##### Response
-
-The response to this request is an object containing the `{id}` of our new descriptor.
-
-```JSON
-{
-    "@id": "061fc9ac5e2ac791bb664eb1ad1503bd50e96ad6"
-}
-```
-
-You can view the details for the descriptor you just created by using the `{id}` provided in the response and following the steps to [view an individual descriptor](#get-viewindividualdescriptor) as outlined above.
-
-### PUT - Update a Descriptor
-
-You may determine in the future that you need to update a descriptor. This can be done through the API using a PUT request to the individual descriptor `{id}`.
-
-##### API Format
-
-```
-PUT /descriptors/{id}
-```
-
-##### Request
-
-In this example, we will update the descriptor we just created to indicate a different field as the primary key for `_customer/web/flights` schema.
-
-```
-curl -X PUT \
-  https://platform.adobe.io/data/foundation/catalog/descriptors/061fc9ac5e2ac791bb664eb1ad1503bd50e96ad6 \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'Content-Type: application/json' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -d '{
-    "@type":"xdm:descriptorPrimaryKey",
-    "xdm:sourceSchema":"_customer/web/flights",
-    "xdm:sourceProperty":"/flightNumber"
-}'
-```
-
-**Note:** Similar to other update instructions in this document, the PUT request is _re-writing_ the existing descriptor, so you must include all necessary fields in the payload to ensure the descriptor is updated correctly.
-
-##### Response
-
-The response shows the descriptor `{id}`, which should be the same as when you first defined it.
-
-```JSON
-{
-    "@id": "061fc9ac5e2ac791bb664eb1ad1503bd50e96ad6"
-}
-```
-
-### DELETE - Remove a Descriptor
-
-You can remove a descriptor by performing a DELETE request using the `{id}` for the descriptor.
-
-##### API Format
-
-```
-DELETE /descriptors/{id}
-```
-
-##### Request
-
-```
-curl -X DELETE \
-https://platform.adobe.io/data/foundation/catalog/descriptors/9801b0d39c2760ef4916a957f4b902a812a13262 \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-```
-
-##### Response
-
-There is no response body for a DELETE request, but a successful deletion will return with HTTP Status Code 204 (No-content).
-
-```HTTP
-Status: 204 (No-content)
-```
 
 ## Defining XDM Field Types in the API
 
@@ -2098,7 +1545,7 @@ The Profile schema is a single representation of the attributes of both identifi
 
 Less-identified profiles may consist of only anonymous behavioral signals, such as browser cookies. In that case, the sparse profile data is used to build an information base into which the interests and preferences of the anonymous profile are collated and stored (by the Unified Profile Service). These identifiers may become more detailed over time as the subject signs up for notifications, subscriptions, purchases, etc. This increase in profile attributes may eventually result in an identified subject which allows for a higher degree of targeted engagement.
 
-##### Request
+**Request**
 
 ```
 curl -X GET \
@@ -2107,8 +1554,11 @@ curl -X GET \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
+- `{ACCESS_TOKEN}`: Token provided after authentication  
+- `{API_KEY}`: Your specific API key for your unique ACP integration. Available via https://console.adobe.io  
+- `{IMS_ORG}`: The IMS Organization credentials for your unique ACP integration
 
-##### Response
+**Response**
 
 ```JSON
 {
@@ -2384,7 +1834,7 @@ The ExperienceEvent Standard Schema is used to capture the state when a set of e
 
 Experience Events can be either either explicit or implicit. Explicit events are directly observable human actions taking place during a point in a journey. Implicit events are events that are being raised without a direct human action, but still relate to a person. Examples of implicit events are the scheduled sending of email newsletters, battery voltage reaching a certain threshold, or a credit card settling.
 
-##### Request
+**Request**
 
 ```
 curl -X GET \
@@ -2393,8 +1843,11 @@ curl -X GET \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
+- `{ACCESS_TOKEN}`: Token provided after authentication  
+- `{API_KEY}`: Your specific API key for your unique ACP integration. Available via https://console.adobe.io  
+- `{IMS_ORG}`: The IMS Organization credentials for your unique ACP integration
 
-##### Response
+**Response**
 
 ```JSON
 {

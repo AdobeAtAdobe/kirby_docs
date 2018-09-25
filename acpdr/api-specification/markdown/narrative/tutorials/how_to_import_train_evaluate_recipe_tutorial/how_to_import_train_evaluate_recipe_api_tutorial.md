@@ -1,13 +1,14 @@
 # Tutorial - Import, Train and Evaluate Recipe Tutorial via API
 
 ## Objective
-In this step by step tutorial, we will consume the APIs which allow us to create a Recipe, an Experiment, Scheduled Experiment Runs, and Trained Models. For a detailed list of API documentation please refer to [this document](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html).
+In this step by step tutorial, we will consume the APIs which allow us to create a Recipe, an Experiment, Scheduled Experiment Runs, and Trained Models. For a detailed list of API documentation please refer to [this document](../../apis/foundation/platform-ml-api/overview.md).
+
 
 ---
 
 ## Prerequisites
 
-Follow this [Tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
+Follow this [Tutorial](./alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
 
 From the tutorial you should now have the following values:
 
@@ -21,28 +22,28 @@ From the tutorial you should now have the following values:
 
 ## API Workflow
 
-We will be consuming the APIs to create an Experiment Run for Training and Scoring. For this tutorial, we will be focused on Recipes, Instances, and Experiments. The following chart outlines the relationship between the three and also introduces the idea of a trained model. 
+We will be consuming the APIs to create an Experiment Run for Training and Scoring. For this tutorial, we will be focused on Recipes, Instances and Experiments. The following chart outlines the relationship between the three and also introduces the idea of a trained model. 
 
 ![](./recipe_hierarchy.png)
 
 Here is a list of what we will cover this tutorial:
 
-* [Creating a Recipe](#creatingarecipe)
-* [Creating an Instance](#creatinganinstance)
-* [Creating an Experiment](#creatinganexperiment)
-    * [Creating a Scheduled Experiment for Training](#creatingascheduledexperimentfortraining)
-    * [Creating a Scheduled Experiment for Scoring](#creatingascheduledexperimentforscoring)
-    * [Creating an Experiment Run for Training](#creatinganexperimentrunfortraining)
-        * [Retrieving an Experiment Run Status](#retrievinganexperimentrunstatus)
-        * [Retrieving the Trained Model](#retrievingthetrainedmodel)
-    * [Creating an Experiment Run for Scoring](#creatinganexperimentrunforscoring)
-        * [Retrieve an Experiment Run Status for Scheduled Experiment Run](#retrieveanexperimentrunstatusforscheduledexperimentrun)
-* [Stop and Delete a Scheduled Experiment](#stopanddeleteascheduledexperiment)
+* [Creating a Recipe](#Creating-a-Recipe)
+* [Creating an Instance](#Creating-an-Instance)
+* [Creating an Experiment](#Creating-an-Experiment)
+    * [Creating a Scheduled Experiment for Training](#Creating-a-Scheduled-Experiment-for-Training)
+    * [Creating a Scheduled Experiment for Scoring](#Creating-a-Scheduled-Experiment-for-Scoring)
+    * [Creating an Experiment Run for Training](#Creating-an-Experiment-Run-for-Training)
+        * [Retrieving an Experiment Run Status](#Retrieving-an-Experiment-Run-Status)
+        * [Retrieving the Trained Model](#Retrieving-the-Trained-Model)
+    * [Creating an Experiment Run for Scoring](#Creating-an-Experiment-Run-for-Scoring)
+        * [Retrieve an Experiment Run Status for Scheduled Experiment Run](#Retrieve-an-Experiment-Run-Status-for-Scheduled-Experiment-Run)
+* [Stop and Delete a Scheduled Experiment](#Stop-and-Delete-a-Scheduled-Experiment)
 
 
 ### Creating a Recipe
 
-With the Docker image for the Recipe created in the [Package Recipe to Data Science Workspace tutorial](../package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md), we can create a Recipe. The Recipe is an umbrella entity holding all Instances. A Recipe is usually tied to one or more Docker images which is specified in the body of the request.
+With the Docker image for the Recipe created in the [Package Recipe to Data Science Workspace tutorial](../package_to_import_into_dsw/package_recipe_to_import_into_dsw.md), we can create a Recipe. The Recipe is an umbrella entity holding all Instances. A Recipe is usually tied to one or more Docker images which is specified in the body of the request.
 
 ***Note that the term "Recipe" and "Engine" (as seen in the API documentation) are interchangeably used and refer to the same thing.***
 
@@ -57,13 +58,13 @@ curl -X POST \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -F 'engine={
         "name": "Sensei - Sentiment Analysis",
-        "description": "Description of Sensei - Retail",
+        "description": "Description of Sensei - Sentiment Analysis",
         "type": "Spark",
         "artifacts": {
             "default": {
                 "image": {
                     "location": "{DOCKER_IMAGE}",
-                    "name": "retail",
+                    "name": "sentimentanalysis",
                     "executionType": "Spark",
                     "metadata": {
                         "__artifacts": "{ARTIFACT_BINARIES}"
@@ -78,7 +79,7 @@ curl -X POST \
 `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
 `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
 `{DOCKER_IMAGE}`: Link to the Docker image.  
-`{ARTIFACT_BINARIES}`: The binary Recipe artifact (eg. JAR, EGG) used for all operations by default.  
+`{ARTIFACT_BINARIES}`: The binary recipe artifact (eg. JAR, EGG) used for all operations by default.  
 
 Note that if an image that is not `Spark` is used, the `type` and `executionType` fields should be set to the correct type (eg. `Python`, `Pyspark`).
 
@@ -89,7 +90,7 @@ The response from the Recipe creation call is captured below.
 ``` JSON
 {
     "id": "{RECIPE_ID}",
-    "name": "Sensei - Retail",
+    "name": "Sensei - Sentiment Analysis",
     "type": "Spark",
     "created": "2018-11-11T11:11:11.111Z",
     "updated": "2018-11-11T11:11:11.111Z",
@@ -98,7 +99,7 @@ The response from the Recipe creation call is captured below.
         "default": {
             "image": {
                 "location": "{DOCKER_IMAGE}",
-                "name": "retail",
+                "name": "sentimentanalysis",
                 "executionType": "Spark",
                 "packagingType": "docker"
             },
@@ -108,15 +109,18 @@ The response from the Recipe creation call is captured below.
                     "parameters": [
                         {
                             "key": "numFeatures",
-                            "value": "1000"
+                            "value": "1000",
+                            "secret": false
                         },
                         {
                             "key": "maxIter",
-                            "value": "100"
+                            "value": "100",
+                            "secret": false
                         },
                         {
                             "key": "regParam",
-                            "value": "0.15"
+                            "value": "0.15",
+                            "secret": false
                         }
                     ]
                 }
@@ -152,7 +156,7 @@ curl -X POST \
 
 ``` JSON
 {
-    "name": "Retail - Instance",
+    "name": "Sentiment Analysis - Instance",
     "description": "Instance for ML Instance",
     "engineId": "{RECIPE_ID}",
     "createdBy": {
@@ -168,19 +172,33 @@ curl -X POST \
             "parameters": [
                 {
                     "key": "numFeatures",
-                    "value": "10"
+                    "value": "10",
+                    "secret": false
                 },
                 {
                     "key": "maxIter",
-                    "value": "2"
+                    "value": "2",
+                    "secret": false
                 },
                 {
                     "key": "regParam",
-                    "value": "0.15"
+                    "value": "0.15",
+                    "secret": false
                 },
                 {
                     "key": "trainingDataLocation",
-                    "value": "sample_training_data.csv"
+                    "value": "sample_training_data.csv",
+                    "secret": false
+                },
+                {
+                    "key": "CONF_blobStoreAccount_KEY",
+                    "value": "sample_blob.net",
+                    "secret": false
+                },
+                {
+                    "key": "CONF_blobStoreAccount_VALUE",
+                    "value": "{sample_account_key}",
+                    "secret": false
                 }
             ]
         },
@@ -189,11 +207,23 @@ curl -X POST \
             "parameters": [
                 {
                     "key": "scoringDataLocation",
-                    "value": "sample_scoring_data.csv"
+                    "value": "sample_scoring_data.csv",
+                    "secret": false
                 },
                 {
                     "key": "scoringResultsLocation",
-                    "value": "scoring_results.net"
+                    "value": "scoring_results.net",
+                    "secret": false
+                },
+                {
+                    "key": "CONF_blobStoreAccount_KEY",
+                    "value": "sample_blob.net",
+                    "secret": false
+                },
+                {
+                    "key": "CONF_blobStoreAccount_VALUE",
+                    "value": "{sample_account_key}",
+                    "secret": false
                 }
             ]
         }
@@ -204,14 +234,14 @@ curl -X POST \
 
 Note that in the `{JSON_PAYLOAD}`, we define parameters used for training and scoring in the `tasks` array. The `{RECIPE_ID}` is the ID of the Recipe you want to use and the `tag` field is an optional parameter used to identify the Instance.
 
-The response will contain the `{INSTANCE_ID}` which represents the Instance that is created. Multiple model Instances with different configurations can be created.
+The response will contain the `{INSTANCE_ID}` which represents the Instance that is created. Multiple model instances with different configurations can be created.
 
 #### Response
 
 ``` JSON
 {
     "id": "{INSTANCE_ID}",
-    "name": "Retail - Instance",
+    "name": "Sentiment Analysis - Instance",
     "description": "Instance for ML Instance",
     "engineId": "{RECIPE_ID}",
     "created": "2018-21-21T11:11:11.111Z",
@@ -264,7 +294,7 @@ curl -X POST \
 
 ``` JSON
 {
-    "name": "Experiment for Retail ",
+    "name": "Experiment for sentiment analysis",
     "mlInstanceId": "{INSTANCE_ID}",
     "tags": {
         "test": "guide"
@@ -281,8 +311,8 @@ The response from the Experiment creation looks like this.
 ``` JSON
 {
     "id": "{EXPERIMENT_ID}",
-    "name": "Experiment for Retail",
-    "mlInstanceId": "{INSTANCE_ID}",
+    "name": "Experiment for sentiment analysis",
+    "mlInstanceId": "02cd640d-5bbf-4c2c-ac6b-38d53a6bd0e3",
     "created": "2018-01-01T11:11:11.111Z",
     "updated": "2018-01-01T11:11:11.111Z",
     "deleted": false,
@@ -293,7 +323,6 @@ The response from the Experiment creation looks like this.
 ```
 
 `{EXPERIMENT_ID}`: The ID that represents the Experiment you have just created.
-`{INSTANCE_ID}`: The ID that represents the Instance.
 
 #### Creating a Scheduled Experiment for Training
 
@@ -321,7 +350,7 @@ curl -X POST \
 
 ``` JSON
 {
-    "name": "Experiment for Retail",
+    "name": "Experiment for sentiment analysis",
     "mlInstanceId": "{INSTANCE_ID}",
     "template": {
         "tasks": [{
@@ -354,7 +383,7 @@ When we create an Experiment, the body, `{JSON_PAYLOAD}`, should contain either 
 ``` JSON
 {
     "id": "{EXPERIMENT_ID}",
-    "name": "Experiment for Retail",
+    "name": "Experiment for sentiment analysis",
     "mlInstanceId": "{INSTANCE_ID}",
     "created": "2018-11-11T11:11:11.111Z",
     "updated": "2018-11-11T11:11:11.111Z",
@@ -410,7 +439,7 @@ curl -X POST \
 
 ``` JSON
 {
-    "name": "Experiment for Retail",
+    "name": "Experiment for sentiment analysis",
     "mlInstanceId": "{INSTANCE_ID}",
     "template": {
         "tasks": [{
@@ -418,7 +447,8 @@ curl -X POST \
             "parameters": [
                 {
                     "key": "modelId",
-                    "value": "{MODEL_ID}"
+                    "value": "{MODEL_ID}",
+                    "secret": false
                 }
             ],
             "specification": {
@@ -446,7 +476,7 @@ The following is the response after creating the Scheduled Experiment.
 ``` JSON
 {
   "id": "{EXPERIMENT_ID}",
-  "name": "Experiment for Retail",
+  "name": "Experiment for sentiment analysis",
   "mlInstanceId": "{INSTANCE_ID}",
   "created": "2018-11-11T11:11:11.111Z",
   "updated": "2018-11-11T11:11:11.111Z",
@@ -513,7 +543,8 @@ You can also override the configuration parameters by including a `tasks` array:
            "parameters": [
                 {
                    "key": "numFeatures",
-                   "value": "2"
+                   "value": "2",
+                   "secret": false
                 }
             ]
         }
@@ -687,7 +718,8 @@ curl -X POST \
             "parameters": [
                 {
                     "key": "modelId",
-                    "value": "{MODEL_ID}"
+                    "value": "{MODEL_ID}",
+                    "secret": false
                 }
             ]
         }

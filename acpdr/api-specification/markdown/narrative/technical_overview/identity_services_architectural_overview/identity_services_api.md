@@ -2,6 +2,7 @@
 
 Adobe's Identity Services manages cross-device, cross-channel identification of your end consumers as an identity graph.
 Accessing and interacting with your data in the identity graph is accomplished using the APIs summarized in this document.
+For complete coverage of the Identity Service APIs, visit the [Identity Service API Reference](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html#!acpdr/swagger/id-namespace-api.yaml). <!-- TODO: Fix URL -->
 
 ## Using the API
 
@@ -12,7 +13,7 @@ See the [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatf
 
 * All variations of Cluster and Mapping APIs support both XID and NID in their requests and response. One of the parameters is required - `xid` or combination of (`nsid`, `id`) to use these APIs
 * To limit the payload in response, APIs are adapt their responses to `xid` or `uid`. That is, if you pass XID your responses will have XIDs, if you pass NID responses will have NIDs
-* The below examples don't cover all usages of XIDs and NIDs. For the complete API, see the [Swagger API Reference](../../../../../../acpdr/swagger/id-namespace-api.yaml) <!-- TODO: This should reference identity services when it's available --> by selecting Core Services/Identity Services from the __Select a spec__ drop down menu on the top right
+* The below examples don't cover all usages of XIDs and NIDs. For the complete API, see [the Swagger](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html#!acpdr/swagger/id-namespace-api.yaml) <!-- TODO: This should reference identity services when it's available --> by selecting Core Services/Identity Services from the __Select a spec__ drop down menu on the top right
 
 ## Required Headers
 
@@ -91,6 +92,7 @@ Given an XID return all XIDs, in the same or other Namespaces, that are linked t
 
 * __coop__ - graph built by using coop data
 * __pdg__ - private device graph  
+* __psr__ - proprietary stitched rules
 
 ```
 GET https://platform.adobe.io/data/core/identity/cluster/members?xid=CJsDEAMaEAHmCKwPCQYNvzxD9JGDHZ8 HTTP/1.1
@@ -305,6 +307,7 @@ Given an XID, return all cluster associations with that XID. Cluster Association
 
 * __coop__ - graph built by using coop data
 * __pdg__ - private device graph  
+* __psr__ - proprietary stitched rules
 
 ```
 GET https://platform.adobe.io/data/core/identity/cluster/history?xid=CJsDEAMaEAHmCKwPCQYNvzxD9JGDHZ8 HTTP/1.1
