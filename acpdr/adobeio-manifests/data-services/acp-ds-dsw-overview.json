@@ -1,0 +1,19 @@
+{
+	"name": "ACPDR_DSW_Overview",
+	"version": "1.0.0",
+	"description": "ACP Data Services Data Science Workspace Overview",
+	"author": "Emily Walpole",
+	"view_type": "mdview",
+	"meta_keywords": "ACP,Data Science, Workspace,Adobe ACP",
+	"meta_description": "ACP Data Services Data Science Workspace Overview",
+	"publish_date": "19/09/2018",
+	"show_edit_github_banner": false,
+	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/staging/acpdr",
+	"pages": [
+	    {
+					"pages": [],
+					"path": "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/data_science_workspace_overview.md",
+					"title": "Data Science Workspace Overview"
+	    }
+	]
+}

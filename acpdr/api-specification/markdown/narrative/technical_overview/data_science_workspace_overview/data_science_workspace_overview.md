@@ -24,10 +24,10 @@ A retailer faces many challenges to stay competitive in the current market. One 
 A data scientist's solution is to leverage the wealth of historical data a retailer has access to, to predict future trends, and to optimize pricing decisions. We will use past sales data to train our machine learning model and use the model to predict future sale trends. With this, the retailer will be able to have insights to help them when making pricing changes.
 
 In this overview, we will go over the steps a data scientist would go through to take a dataset and to create a model to predict weekly sales. We will go over the following sections in the Sample Retail Sales Notebook on Adobe Cloud Platform Data Science Workspace:
-* [Setup](#Setup)
-* [Exploring Data](#Exploring-Data)
-* [Feature Engineering](#Feature-Engineering)
-* [Training and Verification](#Training-and-Verification)
+* [Setup](#setup)
+* [Exploring Data](#exploringdata)
+* [Feature Engineering](#featureengineering)
+* [Training and Verification](#trainingandverification)
 
 ### Adobe Data Science Workspace Notebook
 
@@ -209,8 +209,8 @@ Finally, we will visualize our prediction model with the actual weekly sales val
 
 With this overview, we went over the workflow that a data scientist would go through to solve a retail sales problem. Specifically, we went over the following steps to reach a solution that predicts future weekly sales.
 
-* [Setup](#Setup)
-* [Exploring Data](#Exploring_Data)
-* [Feature Engineering](#Feature_Engineering)
-* [Training and Verification](#Training_and_Verification)
+* [Setup](#setup)
+* [Exploring Data](#exploringdata)
+* [Feature Engineering](#featureengineering)
+* [Training and Verification](#trainingandverification)
 

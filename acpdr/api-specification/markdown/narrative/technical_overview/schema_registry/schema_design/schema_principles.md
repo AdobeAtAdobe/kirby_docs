@@ -47,7 +47,7 @@ The first step in building a schema is to determine the concept, or real world o
 
 **Example:** A simple schema for a Buyer might look like this:
 
-```
+```JSON
     Buyer:
         firstName
         lastName
@@ -80,7 +80,7 @@ The valid ranges of these scalar types can be further constrained to certain pat
 
 **Example:** The fields we defined for our Buyer schema would have the following types:
 
-```
+```JSON
     Buyer:
         firstName (string)
         lastName (string)
@@ -112,9 +112,9 @@ As you define a schema, you may notice that you have defined a set of fields tha
 
 Here is a breakdown of the Person schema, showing the fields it contains. Notice that the `name` field is a reference to another pre-existing schema, Person Name. This schema provides additional name-related fields whose definitions are understood across Adobe Cloud Platform.
 
-```
+```JSON
     Person:
-        name (schema:personName)
+        name (schema:person-name)
             firstName (string)
             lastName (string)
             middleName (string)
@@ -128,7 +128,7 @@ Here is a breakdown of the Person schema, showing the fields it contains. Notice
 
 The schema hierarchy would now have these reference schemas, and their fields, embedded within Buyer:
 
-```
+```JSON
     Buyer:
         person (schema:person)
             name (schema:person-name)
@@ -189,7 +189,7 @@ While principal and reference schemas provide a lot of possibilities, you may fi
 
 **Example:** You would like to include a list of Interests in your Person schema. This list can be represented by _extending_ the Person schema to include a field called "Interests" with a field type of "array".
 
-```
+```JSON
     Person:
         name (schema:person-name)
             firstName (string)
@@ -207,7 +207,7 @@ While principal and reference schemas provide a lot of possibilities, you may fi
 This extension will now appear anywhere the Person schema is used, including your Buyer schema:
 
 
-```
+```JSON
     Buyer:
         person (schema:person)
             name (schema:person-name)
@@ -310,12 +310,16 @@ XDM defines a set of fields "out of the box" that can be used when extending pri
 
 Since XDM fields include added connotations beyond the basic scalar field types, platform solutions automatically know that any fields sharing the same XDM field type will behave the same way across Adobe Cloud Platform. 
 
+The complete list of fields is available through the [XDM Field Dictionary](#xdm-field-dictionary) below.
+
 ### XDM Extensions
 
 In addition to defining a set of fields, XDM also defines a number of extensions that are broadly understood across Adobe Cloud Platform. There are key extensions related to each platform service that enable additional functionality within their respective solutions.
 
 We recommend using XDM extensions whenever possible because of their shared understanding across platform, and encourage you to avoid creating custom extensions unless absolutely necessary to define a very narrow use case that exists outside the scope of XDM.
 
+You can find these extensions in the [XDM Field Dictionary](#xdm-field-dictionary) below.
+
 ### XDM Field Dictionary
 
-A complete list of XDM defined fields that can be used to extend and create custom schemas is available through the [XDM Field Dictionary](xdm_field_dictionary.md).
+A complete list of XDM defined fields that can be used to extend and create custom schemas is available through the [XDM Field Dictionary]( xdm_field_dictionary.md).

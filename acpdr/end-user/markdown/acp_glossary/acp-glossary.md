@@ -41,7 +41,8 @@ __C7 Contractual Data Label:__ C7 contractual data governance label specifies da
 
 __Created Date Column:__ Selecting a `Created Date` column, is an option when specifying 3rd party data via a connection. When the `Append` save strategy is selected and the dataset contains multiple date related schema, the user must choose from the available date / time type schema to specify `Created Date` key column. `Created Date` option is not available when the `Overwrite` save strategy is selected.
 
-__Customer Data Model:__ A schema defined by a customer that is not based on an Adobe standard schema.
+__Customer Data Model:__ A collection of related schemas and schema descriptors for a customer’s business domain.
+
 
 ## D
 
@@ -124,6 +125,8 @@ __Profile Standard Schema:__ Profile standard schema includes schema related to 
 __Sample Data:__ Sample data is a preview of a data file, typically the first 100 rows, to provide a data scientist or engineer an idea of what schema and or data is in the data file.
 
 __Schema:__ Schema is a hierarchical organization of business data applied to a use case. On the Adobe Cloud Platform, customers have a choice between an Adobe standard schema such as Profile or ExperienceEvent or a custom schema defined by a customer.
+
+__Schema Descriptor:__ Additional schema related metadata that describes a behaviour that can be used by platform services to understand intended schema behavior such as the relationship between two schema.
 
 __Sensitive Data Labels:__ Sensitive data "S" labels are a type of data governance label used to categorize sensitive data such as geographic data.
 

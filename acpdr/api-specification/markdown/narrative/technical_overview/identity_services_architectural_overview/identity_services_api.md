@@ -2,7 +2,6 @@
 
 Adobe's Identity Services manages cross-device, cross-channel identification of your end consumers as an identity graph.
 Accessing and interacting with your data in the identity graph is accomplished using the APIs summarized in this document.
-For complete coverage of the Identity Service APIs, visit the [Identity Service API Reference](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html#!acpdr/swagger/id-namespace-api.yaml). <!-- TODO: Fix URL -->
 
 ## Using the API
 
@@ -13,7 +12,7 @@ See the [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatf
 
 * All variations of Cluster and Mapping APIs support both XID and NID in their requests and response. One of the parameters is required - `xid` or combination of (`nsid`, `id`) to use these APIs
 * To limit the payload in response, APIs are adapt their responses to `xid` or `uid`. That is, if you pass XID your responses will have XIDs, if you pass NID responses will have NIDs
-* The below examples don't cover all usages of XIDs and NIDs. For the complete API, see [the Swagger](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html#!acpdr/swagger/id-namespace-api.yaml) <!-- TODO: This should reference identity services when it's available --> by selecting Core Services/Identity Services from the __Select a spec__ drop down menu on the top right
+* The below examples don't cover all usages of XIDs and NIDs. For the complete API, see the [Swagger API Reference](../../../../../../acpdr/swagger/id-namespace-api.yaml) <!-- TODO: This should reference identity services when it's available --> by selecting Core Services/Identity Services from the __Select a spec__ drop down menu on the top right
 
 ## Required Headers
 
@@ -29,7 +28,7 @@ All APIs in this document require the following headers unless otherwise indicat
 
 # Working with Identity Services
 
-As the single source of truth for identity resolution in the Adobe Cloud Platform, Identity Services provide the following behavior:
+As the single source of truth for identity resolution in the Adobe Cloud Platform, Identity Services provide the following capability:
 
 * __Generation of ID__ - establishment of links between namespaces
 * __Computation of identity clusters__ - internal device graph resolves device specific identities
@@ -70,8 +69,8 @@ curl -X GET \
   -H 'x-gw-ims-org-id: 111'
 ```
 
-![](lightbulb.jpg) NOTE: Usage of `x-uis-cst-ctx: stub` header will return a stubbed response. 
-This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed. 
+![](lightbulb.jpg) NOTE: Usage of `x-uis-cst-ctx: stub` header will return a stubbed response.
+This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed.
 We will keep our consumers advised to when this is no longer needed or supported.
 
 __Example response__
@@ -86,13 +85,12 @@ Returns an HTTP 200 OK on success.
 
 ## Cluster Members API
 
-Given an XID return all XIDs, in the same or other Namespaces, that are linked to it. The related XIDs are considered to be part of the same "cluster". 
+Given an XID return all XIDs, in the same or other Namespaces, that are linked to it. The related XIDs are considered to be part of the same "cluster".
 
 ![](lightbulb.jpg) NOTE: Use optional `graph-type` parameter to indicate the output type to get the cluster from. Options are:
 
 * __coop__ - graph built by using coop data
 * __pdg__ - private device graph  
-* __psr__ - proprietary stitched rules
 
 ```
 GET https://platform.adobe.io/data/core/identity/cluster/members?xid=CJsDEAMaEAHmCKwPCQYNvzxD9JGDHZ8 HTTP/1.1
@@ -201,8 +199,8 @@ curl -X POST \
 }' | json_pp
 ```
 
-![](lightbulb.jpg) Usage of `x-uis-cst-ctx: stub` header will return a stubbed response. 
-This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed. 
+![](lightbulb.jpg) Usage of `x-uis-cst-ctx: stub` header will return a stubbed response.
+This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed.
 We will keep our consumers advised to when this is no longer needed or supported.
 
 __Example stubbed response__
@@ -307,7 +305,6 @@ Given an XID, return all cluster associations with that XID. Cluster Association
 
 * __coop__ - graph built by using coop data
 * __pdg__ - private device graph  
-* __psr__ - proprietary stitched rules
 
 ```
 GET https://platform.adobe.io/data/core/identity/cluster/history?xid=CJsDEAMaEAHmCKwPCQYNvzxD9JGDHZ8 HTTP/1.1
@@ -419,8 +416,8 @@ curl -X POST \
 }' | json_pp
 ```
 
-![](lightbulb.jpg) Usage of `x-uis-cst-ctx: stub` header will return a stubbed response. 
-This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed. 
+![](lightbulb.jpg) Usage of `x-uis-cst-ctx: stub` header will return a stubbed response.
+This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed.
 We will keep our consumers advised to when this is no longer needed or supported.
 
 __Example response__
@@ -567,8 +564,8 @@ curl -X POST \
 
 If no related identities were found with the provided input, an `HTTP 204` response code is returned with no content.
 
-![](lightbulb.jpg) Usage of `x-uis-cst-ctx: stub` header will return a stubbed response. 
-This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed. 
+![](lightbulb.jpg) Usage of `x-uis-cst-ctx: stub` header will return a stubbed response.
+This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed.
 We will keep our consumers advised to when this is no longer needed or supported.
 
 __Example response__

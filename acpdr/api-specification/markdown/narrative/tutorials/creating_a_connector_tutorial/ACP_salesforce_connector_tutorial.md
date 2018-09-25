@@ -1,72 +1,66 @@
-# Setting up the Salesforce Connector
+# Salesforce Connector for Adobe Cloud Platform
 
-## 1. Objective
+The Salesforce Connector for Adobe Cloud Platform (ACP) provides an API and wizard to ingest your Salesforce CRM data onto Adobe Cloud Platform (ACP). The Salesforce connector allows you to:   
 
-Create and populate a dataset from a Salesforce Object using the Salesforce Connector in Adobe Cloud Platform (ACP). 
+* Authenticate to your Salesforce account.
+* Select one or more datasets from a list of available datasets.
+* Preview a sample of your data for accuracy.
+* Identify each dataset as a lookup file, event, or record.
+* Set a schedule and frequency for uploading data.
+* Save the Salesforce connector and modify it as needed.
 
-* Create Catalog Account Entity  
-* Create Catalog Connection Entity
-* Create Catalog Dataset Entity
+This article provides steps to set up and configure the Salesforce connector through API calls.  
 
-Instructions to create and populate a dataset from a file can be found [here](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md).
+## Setting up the Salesforce Connector
+Set up an account to access APIs and provide credentials to create a connector:  
 
-### 1.1. Audience
-This article helps you understand  Adobe Cloud Platform and integrate the platform with Salesforce CRM. Users of this document include data engineers, data architects, data scientists, and app developers using Adobe I/O who want to perform Adobe Cloud Platform API calls.
+<!---### Prerequisites
+* Register the schema of the incoming file.
+* Register the metadata associated with the file, such as *DataSetName*, *UserID*, *IMSOrg*, and *ConnectionParameters*.
+* Get the details of the file ingested using an API call to the Catalog API.--->
 
-### 1.2. Version Information
-*Version* : Preview
+### Set up an Adobe I/O account
+See [authenticating and accessing APIs](https://www.adobe.io/apis/cloudplatform/dataservices/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to  create an access token used to authenticate API calls from Adobe I/O.
 
-### 1.3. License Information
-Terms of service : https://www.adobe.com/legal/terms.html
-
-
-### 1.4 URI Scheme
-*Host* : __platform.adobe.io__  
-*Schemes* : __HTTPS__
-
----
-
-## 2. Datasets from a Schema
-
-There are two ways data can be ingested into a dataset. The first is [batch ingestion via file upload](./alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md) and the second is ingestion via setting up a connector. The following steps show you how to ingest CRM data using the ACP Salesforce Connector.
-
-### 2.1. Prerequisites
-
-Follow this [guide](./alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to make API calls.
-
-After setting up authorization, you should now have the following values:
+After setting up authorization for APIs, these values will be returned:
 
 * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
 * `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
 * `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
 
 
-To set up the ACP Salesforce Connector, you will also need the following Salesforce credentials:
+### Set up an ACP connection to Amazon S3
+
+You will need the following credentials:
 
 * `{SALESFORCE_USER_NAME}`: Your Salesforce CRM user name
 * `{SALESFORCE_PASSWORD}`: Your Salesforce CRM password
-* `{SALESFORCE_SECURITY_TOKEN}`: Your Salesforce security token. This can be found following these steps:  
-  1. Go to https://developer.salesforce.com/
-  2. Log in using your Salesforce CRM credentials
-  3. Click on top right user avatar and select "Settings" link
-  4. Now in the "Personal Information" view click on "Reset My Security Token"
-  5. You will receive a new security token via email.
+* `{SALESFORCE_SECURITY_TOKEN}`: Your Salesforce security token can be found following these steps:  
+  1. Go to `https://developer.salesforce.com/`.
+  2. Log in using your Salesforce CRM credentials.
+  3. Select the user and select the *Settings* link.
+  4. In the *Personal Information* view, select *Reset My Security Token*.
+     You will receive a new security token via email.
 
-With the above values we can move on to the next section:
+With authorization to make API calls from the Adobe I/O Gateway and your Salesforce credentials, your next step is to generate a dataset from Salesforce objects. 
 
-### 2.2. Ingesting Data from Salesforce Connector<a name="2_3_Header"></a>
+## Setting up the Salesforce Connector
 
-Now you will go through the API request steps required to set up a Salesforce connector to trigger data ingestion daily. The Salesforce CRM object used will be the `Account` object.
+Follow these steps to create a dataset from Salesforce and set up a connector to trigger a daily ingestion.  The Salesforce `Account` object is used in the example.
 
-#### 2.2.1. Create Catalog Account Entity
+### Creating a dataset from a Salesforce Object
 
-First you will create a Salesforce CRM catalog account entity. This request takes a Salesforce User Name, Salesforce Password, and Salesforce Security Token. The response contains the account ID.
 
-#### Request
+
+#### 1. Create a Catalog Account entity
+
+First, you need to request a Salesforce CRM catalog account entity. This request requires your Salesforce User Name, Salesforce Password, and Salesforce Security Token. The response to this request includes the Salesforce *Account ID*.
+
+##### Request
 POST /connections
 
 ```SHELL
-curl -X POST https://platform-int.adobe.io/data/foundation/catalog/accounts/ \
+curl -X POST https://platform.adobe.io/data/foundation/catalog/accounts/ \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -95,22 +89,22 @@ curl -X POST https://platform-int.adobe.io/data/foundation/catalog/accounts/ \
 `{SALESFORCE_PASSWORD}`: Your password for Salesforce CRM.  
 `{SALESFORCE_SECURITY_TOKEN}`: Your security token for Salesforce CRM.  
 
-#### Response
+##### Response
 ```JSON
 [
   "@/accounts/{ACCOUNT_ID}"
 ]
 ```
 
-`{ACCOUNT_ID}`: Copy this account ID. You will use this value in future steps by referring to it as {ACCOUNT_ID}.
+`{ACCOUNT_ID}`: Copy this account ID. You will use this value in future steps.
 
-#### 2.2.2. Create Catalog Connection Entity
+#### 2. Create a Catalog Connection entity
 
-With an account ID, you can now create a Salesforce Catalog connection entity. In this request you will identify when the ingestion starts (`"ingestStart"`), and the frequency for ingestion to occur (`"frequency"`). 
+With an account ID, you can now create a Salesforce Catalog connection entity. In this request, you will identify when the ingestion starts (`ingestStart`), and the frequency for ingestion to occur (`frequency`). 
 
-In the following request, you will enter the default value for daily ingestion and its frequency.
+In the example request, you will enter the default value for daily ingestion and its frequency.
 
-#### Request
+##### Request
 POST /connections
 
 ```SHELL
@@ -143,7 +137,7 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/connections/ \
 `{CONNECTION_NAME}`: Name of the connection you are creating.  
 `{INGEST_START}`: Date and time when ingestion is scheduled to start. If time is set to the past (relative to current time) ingestion will begin immediately. Format is `"yyyy-mm-ddThh:mm:ss.000Z"` (E.g. `"2018-03-22T23:59:59.000Z"`)  
 
-#### Response
+##### Response
 ```JSON
 [
     "@/connections/{CONNECTION_ID}"
@@ -152,11 +146,11 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/connections/ \
 
 `{CONNECTION_ID}`: ID of the connector you just created. We will refer to this as {CONNECTION_ID} in future steps.
 
-#### 2.2.3. Get Salesforce CRM Selected Object
+#### 3. Select a Salesforce object
 
-Next select what Salesforce CRM object to ingest. You can get the entire list of available objects from the Salesforce CRM connection using the following request.
+Next, select a Salesforce object to ingest. You can get the entire list of available objects from the Salesforce connector using the following request.
 
-#### Request
+##### Request
 GET /connectors/connections/{CONNECTION_ID}/objects
 
 ```SHELL
@@ -173,9 +167,9 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 `{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials  
 `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
 
-#### Response
+##### Response
+```
 
-```JSON
 [
     {
         "logicalName": "AcceptedEventRelation",
@@ -201,13 +195,13 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 ]
 ```
 
-The above object is just a partial response of the actual list of available Salesforce CRM objects. Note that the `logicalName` of the objects you want to use. This will be used as the {OBJECT_ID}
+NOTE: The above object is just a partial response of the actual list of available Salesforce CRM objects. Note that the `logicalName` of the objects is used as the `{OBJECT_ID}`.
 
-The next step will be ingesting fields from the `Account` object. However first you need to determine which fields you want from the object. 
 
-For example, you can return the following response to see all fields for a specific Salesforce CRM object.
+####Ingesting selected fields from the Salesforce object
+You can ingest select fields from the `Account` object, but first you need to determine which fields you want from the object. For example, you can get all of the fields for a specific Salesforce CRM object.
 
-#### Request
+##### Request
 POST /connectors/connections/{CONNECTION_ID}/object/{OBJECT_ID}/fields
 
 ```SHELL
@@ -225,7 +219,7 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 `{CONNECTION_ID}`: ID of the connector you created from the previous steps.  
 `{OBJECT_ID}`: Logical Name of the Salesforce Object you want to ingest.  
 
-#### Response  
+##### Response  
 
 ```JSON
 [
@@ -297,17 +291,13 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 ]
 ```
 
-Note that the above request is only a segment of the actual response.  
+NOTE: The above request is only a segment of the actual response.
+You can choose to have all the fields of an object ingested or only select the fields you are interested in. Here is an example of identifying fields in a request:
 
-You can choose to have all the fields of an object ingested or only select the fields you are interested in. 
+#### 4. Create a Dataset Catalog entity
+The last step is to create the Catalog dataset entity. The dataset will define the structure of the data to be ingested from the connector.
 
-Here is an example of identifying fields in a request.
-
-#### 2.2.4. Create Dataset Catalog Entity
-
-The last step is to create the Salesforce CRM dataset catalog entity. The dataset will define the structure of the data to be ingested from the connection.
-
-#### Request
+##### Request
 POST /datasets
 
 ```SHELL
@@ -328,7 +318,8 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/datasets/ \
 
 `{JSON_PAYLOAD}`: This is the dataset to be posted. 
 
-```JSON
+```
+JSON
 {
       "objectId": "{OBJECT_ID}",
       "name": "Accounts",
@@ -421,11 +412,11 @@ The `{JSON PAYLOAD}` used is the subset of the object fields you selected from t
 
 The field `"requestStartDate"` dictates how far in the past (relative to now) the back-fill will go. The `"requestStartDate"` field is always a date in the past. If you want a back-fill of 30 days, then you have to calculate `now() - 30 days` and enter a valid date and time value for this field.
 
-The `"connectors-saveStrategy"` field refers to how the data will be ingested. In this example, the Append data instead of Delta or Overwrite was used. 
+The `"connectors-saveStrategy"` field refers to how the data will be ingested. In this example, the Append option was used instead of the Delta or Overwrite options. 
 
-For Append and Delta save strategies, since they are sorted by time, you will also need to decide the value to use in the time-based column if time-based queries take place (such as System Modstamp, Created Date, and Last Modified Date). 
+Append and Delta options are sorted by time, requiring you to select a time-based property to order the data, such as `System Modstamp`, `Created Date`, or `Last Modified Date`. 
 
-Adding a `"delta": {}` in the `"meta"` field indicates the method selected to be in the time-based column. In the example, the tag into the `"SystemModstamp"` object for the `"JSON_PAYLOAD"` was passed back to the request.
+Adding a `"delta": {}` in the `"meta"` field indicates the method selected is to be in the time-based column. In the example, the tag into the `"SystemModstamp"` object for the `"JSON_PAYLOAD"` was passed back to the request.
 
 ```JSON
 {
@@ -443,7 +434,7 @@ Adding a `"delta": {}` in the `"meta"` field indicates the method selected to be
 }
 ```
 
-#### Response
+##### Response
 
 ```JSON
 [
@@ -451,4 +442,8 @@ Adding a `"delta": {}` in the `"meta"` field indicates the method selected to be
 ]
 ```
 
-`{DATASET_ID}`: The ID of the dataset that was created. This can be used in the future to make a request to Catalog to identify the DatasetView ID associated with this dataset.
+`{DATASET_ID}`: The ID of the dataset that was created. This can be used to make a request to Catalog to identify the DatasetView ID associated with this dataset.
+
+<!---## Viewing Data in the Connector Wizard
+(under construction)--->
+

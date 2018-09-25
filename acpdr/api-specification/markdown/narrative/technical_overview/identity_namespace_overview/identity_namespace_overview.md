@@ -39,7 +39,7 @@ List all Namespaces available for use by your organization to determine which to
 __Example Request - List Namespaces__:
 
 ```
-GET https://platform.adobe.io/data/core/idnamespace/identities/ HTTP/1.1
+GET https://platform.adobe.io/data/core/idnamespace/identities HTTP/1.1
 
 Headers:
 
@@ -92,7 +92,8 @@ Response:
 ]
 ```
 
-Where `imsorg` is the Org ID for which to retrieve available Namespaces (for example - “09A55EBC5639E6017F000101@AdobeOrg”). For information on how to retrieve your IMS Org ID, or how to obtain an IMS service token, see [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html).
+Where `imsorg` is the Org ID for which to retrieve available Namespaces (for example - “09A55EBC5639E6017F000101@AdobeOrg”).
+For information on how to retrieve your IMS Org ID, or how to obtain an IMS service token, see [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html).
 
 The following Namespaces are provided for use by all organizations.
 
@@ -115,7 +116,7 @@ Create a new Namespaces under the given company. For recommendations around crea
 __Example Request - Create Namespace__:
 
 ```
-POST https://platform.adobe.io/data/core/idnamespace  HTTP/1.1
+POST https://platform.adobe.io/data/core/idnamespace/identities  HTTP/1.1
 
 Headers:
 
@@ -153,7 +154,8 @@ Response:
 
 ### 2.3 Label Your Data
 
-Indicating which Identity Namespace under which to categorize your data is a function of specifying the `code` for that Namespace in your XDM data. The following is an example of an XDM `Identity` entity referencing the custom Namespace created above:
+Indicating which Identity Namespace under which to categorize your data is a function of specifying the `code` for that Namespace in your XDM data.
+The following is an example of an XDM `Identity` entity referencing the custom Namespace created above:
 
 ```JSON
 {
