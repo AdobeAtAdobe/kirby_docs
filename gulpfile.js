@@ -200,7 +200,7 @@ gulp.task('acp-move-staging-swagger-specs', function() {
 
 gulp.task('acp-move-staging-manifests-markdown', function() {
     /* move in tutorials */
-    return gulp.src('../staging-documentation/adobeio-manifests/**/*.{md,MD}')
+    return gulp.src('../staging-documentation/adobeio-manifests/**/*.{json,JSON}')
     .pipe(debug())
     .pipe(cleanDest('acpdr/adobeio-manifests'))
     .pipe(gulp.dest('acpdr/adobeio-manifests'));
