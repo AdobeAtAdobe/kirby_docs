@@ -19,6 +19,11 @@
 				},
 				{
 					"pages": [],
+					"path": "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_ecid.md",
+					"title": "ECID - An Essential Tool"
+				},
+				{
+					"pages": [],
 					"path": "api-specification/markdown/narrative/technical_overview/identity_namespace_overview/identity_namespace_overview.md",
 					"title": "Identity Namespace"
 				},
