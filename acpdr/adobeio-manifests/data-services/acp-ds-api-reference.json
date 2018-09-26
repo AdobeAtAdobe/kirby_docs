@@ -34,11 +34,6 @@
 			"pages": [],
 			"path": "acpdr/swagger-specs/id-namespace-api.yaml",
 			"title": "Identity Namespace Service"
-		},
-		{
-			"pages": [],
-			"path": "acpdr/swagger-specs/sensei-ml-api.yaml",
-			"title": "Sensei Unified Machine Learning API"
 		}
 
 	]
