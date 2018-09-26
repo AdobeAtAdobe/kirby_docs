@@ -261,7 +261,7 @@ As the nature of digital experiences continues to evolve, so must the schemas us
 
 #### Additive Versioning
 
-Maintaining backwards compatibility is crucial for schema evolution. A purely additive versioning principle ensures that any revision to the schema results in non-destructive updates and changes only. **Breaking changes are not supported.**
+Maintaining backwards compatibility is crucial for schema evolution. A purely additive versioning principle ensures that any revision to the schema results in non-destructive updates and changes only. In other words, **breaking changes are not supported.**
 
 |Supported Changes                   | Breaking Changes (Not Supported)|
 |------------------------------------|---------------------------------|
@@ -322,4 +322,4 @@ You can find these extensions in the [XDM Field Dictionary](#xdm-field-dictionar
 
 ### XDM Field Dictionary
 
-A complete list of XDM defined fields that can be used to extend and create custom schemas is available through the [XDM Field Dictionary]( xdm_field_dictionary.md).
+A complete list of XDM defined fields that can be used to extend and create custom schemas is available through the [XDM Field Dictionary](xdm_field_dictionary.md).

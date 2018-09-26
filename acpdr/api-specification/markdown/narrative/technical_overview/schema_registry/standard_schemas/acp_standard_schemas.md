@@ -173,7 +173,7 @@ Occasionally you may find that it is better to define a new schema rather than e
 
 The [Schema Design Principles](../schema_design/schema_principles.md) example also involved extending the Person schema to include a custom "Interests" field. 
 
-To do this, simply click the plus sign under Person to add a new field. Since the Interests field will contain a list of interests, also known as an array of strings, you will need to select the Field Type "String" and check the box next to Array.
+To do this, click the plus sign under Person to add a new field. Since the Interests field will contain a list of interests, also known as an array of strings, you will need to select the Field Type "String" and check the box next to Array.
 
 ![Adding an Array of Interests](Array_of_Interests.png)
 

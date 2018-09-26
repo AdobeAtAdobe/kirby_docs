@@ -12,9 +12,7 @@ An End User can be identified by a multitude of values, such as:
 * The CRM ID provided during a product purchase
 * Countless others
 
-An Identity Namespace is an indicator of the context from which data originates, such as an email address used to ID your user in your help desk system, or the device ID of the tablet used to browse your gallery.
-Adobe provides several pre-defined Standard Identity Namespaces including a Namespace for each Adobe solution, as well as for many industry standard solutions IDs such as the Windows AID (WAID) and Google Ad ID (GAID).
-Generic Namespaces, such as for "Email" and "Phone" are provided by default. You may also create new Namespaces to represent additional systems and ID types.
+An Identity Namespace is an indicator of the context from which data originates, such as an email address used to ID your user in your help desk system, or the device ID of the tablet used to browse your gallery. Adobe provides several pre-defined Standard Identity Namespaces including a Namespace for each Adobe solution, as well as for many industry standard solutions IDs such as the Windows AID (WAID) and Google Ad ID (GAID). Generic Namespaces, such as for "Email" and "Phone" are provided by default. You may also create new Namespaces to represent additional systems and ID types.
 
 Identity Namespaces also can be configured to imply security and privacy settings enabling compliance with General Data Protection Regulation (GDPR).
 
@@ -28,15 +26,15 @@ This document describes interacting with Identity Namespace Services using Adobe
 
 In this section, we will discuss the aspects of working with Identity Namespaces within the Experience Cloud, including:
 
-* __List Available Namespaces__: View a list of all Identity Namespaces available for use. Before creating a new Identity Namespace, you should check to see if one already exists which meets the requirements of your data.
+* __List Available Namespaces__: View a list of all Identity Namespaces available for use. Before creating a new Identity Namespace, you should check to see if one already exists which meets the requirements of your data
 * __Create a Namespace__:  Create a Namespace for use by your organization
-* __Label Your Data__: XDM formatted data will provide identifying data along with the applicable Identity Namespace code. All data ingested into the Experience Cloud must include a Namespace.
+* __Label Your Data__: XDM formatted data will provide identifying data along with the applicable Identity Namespace code. All data ingested into the Experience Cloud must include a Namespace
 
 ### 2.1 List Available Namespaces
 
 List all Namespaces available for use by your organization to determine which to use to group your data.
 
-__Example Request - List Namespaces__:
+__Example Request - List Namespaces__
 
 ```
 GET https://platform.adobe.io/data/core/idnamespace/identities HTTP/1.1
@@ -47,7 +45,7 @@ Authorization: Bearer {TOKEN}
 X-Gw-Ims-Org-Id: {imsOrgId}
 X-Api-Key: {your-api-client-id}
 
-Response:
+Example response:
 
 [
   {
@@ -92,8 +90,7 @@ Response:
 ]
 ```
 
-Where `imsorg` is the Org ID for which to retrieve available Namespaces (for example - “09A55EBC5639E6017F000101@AdobeOrg”).
-For information on how to retrieve your IMS Org ID, or how to obtain an IMS service token, see [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html).
+Where `imsorg` is the Org ID for which to retrieve available Namespaces (for example - “09A55EBC5639E6017F000101@AdobeOrg”). For information on how to retrieve your IMS Org ID, or how to obtain an IMS service token, see [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html).
 
 The following Namespaces are provided for use by all organizations.
 
@@ -113,7 +110,7 @@ The following Namespaces are provided for use by all organizations.
 
 Create a new Namespaces under the given company. For recommendations around creating custom Namespaces, see [the FAQ](../identity_services_architectural_overview/identity_services_faq.md).
 
-__Example Request - Create Namespace__:
+__Example Request - Create Namespace__
 
 ```
 POST https://platform.adobe.io/data/core/idnamespace/identities  HTTP/1.1
@@ -124,7 +121,7 @@ Authorization: Bearer {TOKEN}
 X-Gw-Ims-Org-Id: {imsOrgId}
 X-Api-Key: {your-api-client-id}
 
-BODY:
+Example body:
 
 {
   "shared": false,
@@ -134,7 +131,7 @@ BODY:
   "name": "Test Namespace"
 }
 
-Response:
+Example response:
 
 {
     "updateTime": 1525129290000,
@@ -154,10 +151,9 @@ Response:
 
 ### 2.3 Label Your Data
 
-Indicating which Identity Namespace under which to categorize your data is a function of specifying the `code` for that Namespace in your XDM data.
-The following is an example of an XDM `Identity` entity referencing the custom Namespace created above:
+Indicating which Identity Namespace under which to categorize your data is a function of specifying the `code` for that Namespace in your XDM data. The following is an example of an XDM `Identity` entity referencing the custom Namespace created above:
 
-```JSON
+```
 {
   "identity" : {
     "id": "some_sys_id",

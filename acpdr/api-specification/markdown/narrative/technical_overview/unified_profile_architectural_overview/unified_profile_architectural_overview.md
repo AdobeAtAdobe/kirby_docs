@@ -45,14 +45,15 @@ Example body:
 
 ### 2.2 Batch Ingestion of ExperienceEvent XDM DataSets
 
-The following is an example `PATCH` request adding the "unifiedProfile" Tag for an ExperienceEvent dataset using the `datasetId`.
-Initial releases limit ExperienceEvents to being related to only XDM Profiles, or extensions of the XDM Profile schema.
+The following is an example `PATCH` request adding the "unifiedProfile" Tag for an ExperienceEvent dataset using the `datasetId`. Initial releases limit ExperienceEvents to being related to only XDM Profiles, or extensions of the XDM Profile schema.
 
 ```
 PATCH https://platform.adobe.io/data/foundation/catalog/dataSets/5a7d26e92a6e55000086d459 HTTP/1.1
+```
 
-Example body:
+__Example body__
 
+```
 {
    "tags" : {
         "unifiedProfile": ["enabled:true"],
@@ -63,15 +64,15 @@ Example body:
 
 ### 2.1.3 Verify a DataSet is Enabled in Profile
 
-To check if your dataset has been enabled in UPS, use the Data Catalog Service API to `GET` the dataset using the `datasetId`.
-A dataset is enabled if it contains a `unifiedProfile` Tag with a colon-delimited property string for `enabledAt`.
-The value of this tuple reports the time after which ingested Profile data would be made accessible via UPS.
+To check if your dataset has been enabled in UPS, use the Data Catalog Service API to `GET` the dataset using the `datasetId`. A dataset is enabled if it contains a `unifiedProfile` Tag with a colon-delimited property string for `enabledAt`. The value of this tuple reports the time after which ingested Profile data would be made accessible via UPS.
 
 ```
 GET https://platform.adobe.io/data/foundation/catalog/dataSets/5b020a27e7040801dedbf46e HTTP/1.1
+```
 
-Example response:
+__Example response__ 
 
+```
 {
     "5b020a27e7040801dedbf46e": {
         "version": "1.0.3",
@@ -108,10 +109,7 @@ For more details on this and other Data Catalog Service APIs, visit the [Swagger
 
 ### 2.4 Monitoring Ingestion
 
-Depending on the size of the data, batches take varying lengths of time to ingest.
-Using the Bulk Ingestion API, the first step to uploading a batch of data is to create the batch. You are provided with a `batchId` in the response.
-In the example below the batch ID is "29285e08378f4a41827e7e70fb7cb8f0", provided as the value to the `batch` request parameter, indicating to retrieve all batches _related to that batch_.
-Using that ID, you are able to poll the dataset for the status of the batch from ingestion until the `status` in the response indicates completion ("success" or "failure").
+Depending on the size of the data, batches take varying lengths of time to ingest. Using the Bulk Ingestion API, the first step to uploading a batch of data is to create the batch. You are provided with a `batchId` in the response. In the example below the batch ID is "29285e08378f4a41827e7e70fb7cb8f0", provided as the value to the `batch` request parameter, indicating to retrieve all batches _related to that batch_. Using that ID, you are able to poll the dataset for the status of the batch from ingestion until the `status` in the response indicates completion ("success" or "failure").
 
 __Example request for related Unified Profile batches__
 
@@ -198,28 +196,22 @@ __Example negative response__
 }
 ```
 
-A recommended interval is two minutes.
-For more information on working with Catalog datasets and batches, see [Data Catalog Services](../catalog_architectural_overview/catalog_architectural_overview.md).
+A recommended interval is two minutes. For more information on working with Catalog datasets and batches, see [Data Catalog Services](../catalog_architectural_overview/catalog_architectural_overview.md).
 
 ---
 
 ## 3. Profile Merging
 
-One of the key features of UPS is being able to unify multi-channel data.
-Unified Profile stores data in "profile fragments".
-A profile fragment is a tuple of {ID, dataset/datastream} where:
+One of the key features of UPS is being able to unify multi-channel data. Unified Profile stores data in "profile fragments". A profile fragment is a tuple of {ID, dataset/datastream} where:
 
 * __ID__ is the primary identity of the record (e.g. XID in case of XDM Profile)
 * __Dataset/Datastream__ refers to where the data came from (e.g. catalog batch dataset, streaming datastream etc.). Each dataset/datastream conforms to exactly one XDM schema
 
-As Unified Profile ingests data, records within a profile fragment are updated at ingest time.
-However, records across profile fragments are merged at access time using merge policies.
-
+As Unified Profile ingests data, records within a profile fragment are updated at ingest time. However, records across profile fragments are merged at access time using merge policies.
+ 
 ### 3.1 Merge Policies
 
-A merge policy is a set of configurations controlling aspects of identity stitching and attribute merging.
-UPS provides the tools to manage various merge policies for unified profiles by way of the Merge Policies API.
-Merge policies are related to a schema, where an IMS Org can create any number of merge policies for a single schema.
+A merge policy is a set of configurations controlling aspects of identity stitching and attribute merging. UPS provides the tools to manage various merge policies for unified profiles by way of the Merge Policies API. Merge policies are related to a schema, where an IMS Org can create any number of merge policies for a single schema.
 
 Merge policies give you the control to handle situations such as:
 
@@ -228,8 +220,7 @@ Merge policies give you the control to handle situations such as:
 
 The merge policies API centralizes merge rules used throughout UPS APIs, including Segmentation Jobs and the Profile Access API.
 
-When using an API that accepts a merge policy without specifying one, the IMS Org's default merge policy for the given schema will be used.
-If a default merge policy has not been specified, the system will generate one automatically when needed.
+When using an API that accepts a merge policy without specifying one, the IMS Org's default merge policy for the given schema will be used. If a default merge policy has not been specified, the system will generate one automatically when needed.
 
 There are two parts to merging Profile data across stores:
 
@@ -238,20 +229,19 @@ There are two parts to merging Profile data across stores:
 
 #### 3.1.1 Identity stitching
 
-Identity Stitching refers to determining when multiple fragments of a Profile refer to a single person.
-For more information, see [Identity Services](../identity_services_architectural_overview/identity_services_architectural_overview.md).
+Identity Stitching refers to determining when multiple fragments of a Profile refer to a single person. For more information, see [Identity Services](../identity_services_architectural_overview/identity_services_architectural_overview.md).
 
 #### 3.1.2 Attribute merging
 
-When multiple profile fragments contain the same data elements, merge policies can be used to tune prioritization of your data by allowing you to specify the order of data precedence by dataset.
-When a merge policy is created with an attribute merge type of "dataSetPrecedence", you supply a list of datasets sorted from highest to lowest precedence.
-The following demonstrates creating a merge policy wherein a dataset "ds1" should be regarded as highest priority data when the records' `createdAt` value fails to distinguish.
+When multiple profile fragments contain the same data elements, merge policies can be used to tune prioritization of your data by allowing you to specify the order of data precedence by dataset. When a merge policy is created with an attribute merge type of "dataSetPrecedence", you supply a list of datasets sorted from highest to lowest precedence. The following demonstrates creating a merge policy wherein a dataset "ds1" should be regarded as highest priority data when the records' `createdAt` value fails to distinguish.
 
 ```
 POST https://platform.adobe.io/data/core/ups/config/mergepolicies HTTP/1.1
+```
 
-Example body:
+__Example body__
 
+```
 {
   "name":"Name",
   "id":1,
@@ -270,8 +260,7 @@ Example body:
 }
 ```
 
-Note that when "dataSetPrecedence" is used, only data from the datasets listed is merged.
-In other words, using the example merge policy above, merged data will only ever include data from datasets "ds1" and "ds2".
+Note that when "dataSetPrecedence" is used, only data from the datasets listed is merged. In other words, using the example merge policy above, merged data will only ever include data from datasets "ds1" and "ds2".
 
 ### 3.2 Working with the Merge Policies API
 
@@ -307,9 +296,11 @@ __Example Unified Profile Service request - Get a Unified Profile by ID__
 
 ```
 GET https://platform.adobe.io/data/core/ups/access/entities/?schema.name={schema}&entityId={id}&entityIdNS={IDNS} HTTP/1.1
+```
 
-Example response:
+__Example response__ 
 
+```
 {
     "GU8rb925s2L2fkF55boQKCbliQ8,GbZWRW8tXrZ4gABvwzC_gAAAAAAA,A2-s19jafhDickW6PP0c5dpi": {
         "record": {
@@ -378,9 +369,11 @@ __Example UPS request - Get ExperienceEvents for a Unified Profile__
 
 ```
 GET https://platform.adobe.io/data/core/ups/access/entities/?schema.name=_xdm.context.experienceevent&relatedschema.name=_xdm.context.profile&entityID={}&relatedentityIdNS={} HTTP/1.1
+```
 
-Example response:
+__Example response__ 
 
+```
 {
     "records": [
         {
@@ -466,13 +459,12 @@ Example response:
     }
 }
 ```
+
 ---
 
 ## 5. Segmenting Your Base - Creating and Working with Audiences
 
-The cornerstone of your marketing campaign is your audience.
-UPS provides the tools for segmenting your user base into audiences consisting of members meeting criteria with exactly the precision you require.
-With segmentation, you can isolate members of your user base by criteria such as:
+The cornerstone of your marketing campaign is your audience. UPS provides the tools for segmenting your user base into audiences consisting of members meeting criteria with exactly the precision you require. With segmentation, you can isolate members of your user base by criteria such as:
 
 * Users for whom one week has passed since last making a purchase
 * Users for whom the sum of the purchases is greater than $10,000
@@ -485,9 +477,7 @@ UPS behaves on/with the following components:
 * __Segmentation Jobs__ are asynchronous processes which isolate members of your user base per the rules described by a Definition
 * An __Audience__ is the collection of XDM objects which met the qualifications, or conditions, as set out by the Segment Definition
 
-Segmentation is supported for XDM Profile and ExperienceEvent schemas, with plans to expand to include additional schemas in the future.
-Segmentation is handled in the steps described by the remainder of this section.
-In summary, the following tasks are involved in segmentation and are detailed in this section:
+Segmentation is supported for XDM Profile and ExperienceEvent schemas, with plans to expand to include additional schemas in the future. Segmentation is handled in the steps described by the remainder of this section. In summary, the following tasks are involved in segmentation and are detailed in this section:
 
 * __Develop a Definition__ - Determine and design the criteria that objects must meet to qualify for your Segment, and write the query representation of those rules
 * __Estimate and Preview Your audience__ - As an optional step in the iterations of writing and testing your Definition, process your Definition in a summary mode, gleaning information summarizing your audience as well as the progress of the asynchronous Preview Job
@@ -496,9 +486,7 @@ In summary, the following tasks are involved in segmentation and are detailed in
 
 ### 5.1 Develop a Segment Definition
 
-A Definition encapsulates the complete set of criteria that define a specific audience, written as a query in Adobe's proprietary Profile Query Language (PQL) specifically designed for building queries on XDM data.
-The following summarizes PQL, though more in-depth detail can be found [here](unified_profile_pql.md).
-In the context of this section, to develop the Segment Definition is to compose the PQL query describing the desired audience.
+A Definition encapsulates the complete set of criteria that define a specific audience, written as a query in Adobe's proprietary Profile Query Language (PQL) specifically designed for building queries on XDM data. The following summarizes PQL, though more in-depth detail can be found [here](unified_profile_pql.md). In the context of this section, to develop the Segment Definition is to compose the PQL query describing the desired audience.
 
 * Queries may be over Profile-only (e.g. [q1](unified_profile_supported_queries.md#q1)), ExperienceEvent-only (e.g. [q5](unified_profile_supported_queries.md#q5)), or a combination of Profile and ExperienceEvent ([q11](unified_profile_supported_queries.md#q11)).
 * Queries can contain variables, which simplify or make clearer a single field or a composite value resulting from a calculation or condition (e.g. [q10](unified_profile_supported_queries.md#q10): two orders within a two-week period).
@@ -513,9 +501,7 @@ In the context of this section, to develop the Segment Definition is to compose 
 
 #### 5.1.1 Persist the Definition
 
-Definitions are persisted to the Experience Cloud Platform as a predicate expression in PQL to be referenced by ID.
-This is helpful in creating a centrally-managed collection of queries to be reused, and simplifying API calls.
-The request body consists of the following properties:
+Definitions are persisted to the Experience Cloud Platform as a predicate expression in PQL to be referenced by ID. This is helpful in creating a centrally-managed collection of queries to be reused, and simplifying API calls. The request body consists of the following properties:
 
 * `name` (__required__) - Specify a name by which to refer to the Segment. Choose a name that is descriptive and unique per Segment
 * `schema` (__required__) - Entity which consists of either an `id` or `name` field, naming the schema of the entities in the Segment
@@ -531,9 +517,11 @@ __Example Unified Profile request - Create a new Definition__
 
 ```
 POST https://platform.adobe.io/data/core/ups/segment/definition HTTP/1.1
+```
 
-Example body:
+__Example body__
 
+```
 {
     "name": "My Sample Cart Abandons Segment Definition",
     "schema": {
@@ -545,9 +533,11 @@ Example body:
     "description": "This Segment represents those users who have abandoned a cart",
     "expression": "xEvent.metrics.commerce.abandons.value > 0"
 }
+```
 
-Example response:
+__Example response__
 
+```
 {
     "id": "1234",
     "name": "My Sample Cart Abandons Segment Definition",
@@ -571,22 +561,21 @@ You can find a list of supported PQL query examples [here](unified_profile_suppo
 
 The Preview API allows for a direct path between Definition query and a summary of the qualifying/relevant audience.
 
-Because of the varying length of time required to run a query, the estimate and preview processes are asynchronous.
-Once the query execution has initiated, you would need to `GET` the preview or estimate and determine its state as it progresses.
+Because of the varying length of time required to run a query, the estimate and preview processes are asynchronous. Once the query execution has initiated, you would need to `GET` the preview or estimate and determine its state as it progresses.
 
 #### 5.2.1 Estimate and Preview audience - Step 1: Create a Preview Job
 
-Run a query as a Preview Job using the `POST https://platform.adobe.io/data/core/ups/preview` API call.
-The response from this call includes a `previewId` which will be used to `GET` estimate or preview results. In the body of this `POST` will be the query information. For example, the expression, type, model, graph type, and merge strategy.
-The `state` of the preview will be "RUNNING" until processing is complete, at which point it becomes "RESULT_READY" or "FAILED".
+Run a query as a Preview Job using the `POST https://platform.adobe.io/data/core/ups/preview` API call. The response from this call includes a `previewId` which will be used to `GET` estimate or preview results. In the body of this `POST` will be the query information. For example, the expression, type, model, graph type, and merge strategy. The `state` of the preview will be "RUNNING" until processing is complete, at which point it becomes "RESULT_READY" or "FAILED".
 
 __Example request to create a Preview Job__
 
 ```
-POST https://platform.adobe.io/data/core/ups/preview
+POST https://platform.adobe.io/data/core/ups/preview HTTP/1.1
+```
 
-Example body:
+__Example body__
 
+```
 {
     "predicateExpression": "person.birthDay",
     "predicateType": "pql/text",
@@ -594,9 +583,11 @@ Example body:
     "graphType": "simple",
     "mergeStrategy": "simple"
 }
+```
 
-Example response:
+__Example response__
 
+```
 {
    "state": "RUNNING",
    "previewQueryId": "4a45e853-ac91-4bb7-a426-150937b6af5c",
@@ -616,9 +607,11 @@ Using the `previewId` returned from Step 1, periodically get the estimate or pre
 
 ```
 GET https://platform.adobe.io/data/core/ups/estimate/{previewId} HTTP/1.1
+```
 
-Example response:
+__Example response__
 
+```
 {
     "estimatedSize": 45,
     "state": "RESULT_READY",
@@ -641,9 +634,11 @@ Example response:
 
 ```
 GET https://platform.adobe.io/data/core/ups/preview/{previewId} HTTP/1.1
+```
 
-Example response:
+__Example response__
 
+```
 {
    "results": [{
          "XID_ADOBE-MARKETING-CLOUD-ID-1": {
@@ -696,9 +691,11 @@ You can delete a Preview Job by using the following API:
 
 ```
 DELETE https://platform.adobe.io/data/core/ups/preview/{previewId} HTTP/1.1
+```
 
-Example response:
+__Example response__
 
+```
 {
     "status": true,
     "message": "KILLED"
@@ -707,16 +704,17 @@ Example response:
 
 ### 5.3 Create a Segment Job
 
-A Segment Job is an asynchronous process which isolates members of your user base per one or more Definitions.
-The [Export API](#export-api) is used to access these audiences by the `snapshot.name` name which is provided on creation of the Segment Job; "Profile_Segmented" in the example below.
+A Segment Job is an asynchronous process which isolates members of your user base per one or more Definitions. The [Export API](#export-api) is used to access these audiences by the `snapshot.name` name which is provided on creation of the Segment Job; "Profile_Segmented" in the example below.
 
 __Example request to create a Segment Job__
 
 ```
 POST https://platform.adobe.io/data/core/ups/segment/jobs HTTP/1.1
+```
 
-Example body:
+__Example body__
 
+```
 [
     {
         "segmentId" : "42f49f2d-edb0-474f-b29d-2799d89cd5a6",
@@ -726,9 +724,11 @@ Example body:
         }
     }
 ]
+```
 
-Example response:
+__Example response__
 
+```
 {
     "profileInstanceId": "ups",
     "computeJobId": 1,
@@ -776,9 +776,11 @@ Segment Jobs run asynchronously, and a job's `status` can be checked by retrievi
 
 ```
 GET https://platform.adobe.io/data/core/ups/segment/jobs/3456 HTTP/1.1
+```
 
-Example response:
+__Example response__
 
+```
 {
     "status": true,
     "segmentJob": {
@@ -809,9 +811,7 @@ Repeat the call to retrieve your Segment Job until the `status` reaches "SUCCEED
 <a name="export-api"></a>
 ### 5.4 Export Your Audience
 
-The export API is used to isolate an audience built by a Segment Job for access.
-Once a Segment Job has completed running (its `status` attribute has reached "SUCCEEDED"), the Export API can be used to generate XDM Profiles for each member of that audience in your chosen dataset.
-In summary, the following steps are required to export your audience:
+The export API is used to isolate an audience built by a Segment Job for access. Once a Segment Job has completed running (its `status` attribute has reached "SUCCEEDED"), the Export API can be used to generate XDM Profiles for each member of that audience in your chosen dataset. In summary, the following steps are required to export your audience:
 
 * __Identify your dataSet__ - A dataset should be created to hold audience members
 * __Generate audience Profiles in dataset__ - Export jobs populate the results of a Segment Job as XDM Profiles in a dataset
@@ -820,14 +820,15 @@ In summary, the following steps are required to export your audience:
 
 #### 5.4.1 Export Audience - Step 1: Create or Select Audience DataSet
 
-A dataset used to store audiences can be reused, but must exist prior to running the export, and must have been created with the following properties (either via the API or UI), where `schema` must be a standard XDM Profile or an extension of a standard XDM Profile.
-The following is an example:
+A dataset used to store audiences can be reused, but must exist prior to running the export, and must have been created with the following properties (either via the API or UI), where `schema` must be a standard XDM Profile or an extension of a standard XDM Profile. The following is an example:
 
 ```
 POST https://platform.adobe.io/data/foundation/catalog/dataSets HTTP/1.1
+```
 
-Example body:
+__Example body__
 
+```
 {
   "fileDescription" : {
     "persisted": true,
@@ -848,8 +849,7 @@ Example response:
 
 #### 5.4.2 Export Audience - Step 2: Generate XDM Profiles for Audience Members
 
-Trigger an Export Job to persist the audience members to the dataset from above by providing the `datasetId` from establishing the audience dataset in Step 1.
-An Export Job is an asynchronous process triggered using a `POST` to `https://platform.adobe.io/data/core/ups/export/jobs` with a request body which defines:
+Trigger an Export Job to persist the audience members to the dataset from above by providing the `datasetId` from establishing the audience dataset in Step 1. An Export Job is an asynchronous process triggered using a `POST` to `https://platform.adobe.io/data/core/ups/export/jobs` with a request body which defines:
 
 * `destination` (__required__) - Indicates the dataset into which to persist the members meeting the conditions of the related definition ("MyIsolatedProfilesDS_Id" from the example above)
 * `model` (__required__) - Names the XDM schema name of the members. A schema will only be relative to the IMS Org ID specified in API calls, preventing members from other Orgs' data from being accessible
@@ -859,16 +859,17 @@ An Export Job is an asynchronous process triggered using a `POST` to `https://pl
 * `fields` - You can choose to limit the size of each audience member by using the `fields` property to limit the data populated within the members in the dataset.
 For example, a value of `name,workAddress.city` would result in Profile records which contain only the values of each member's `name` and `workAddress.city`.
 
-The result of successfully running an export job is a dataset populated with only those Profiles which qualified for the last completed run of the Segment Job.
-Any members who existed in that dataset, but did not qualify for the Segment at the time of the last completed run of the Segment Job, will be removed from the dataset.
+The result of successfully running an export job is a dataset populated with only those Profiles which qualified for the last completed run of the Segment Job. Any members who existed in that dataset, but did not qualify for the Segment at the time of the last completed run of the Segment Job, will be removed from the dataset.
 
 __Example Unified Profile request - Run an Export Job__
 
 ```
 POST https://platform.adobe.io/data/core/ups/export/jobs HTTP/1.1
+```
 
-Example body:
+__Example body__
 
+```
 {
     "fields" : [] //list of fields,
     "mergePolicyId" : 123, //only applicable if segment filter is not there
@@ -883,9 +884,11 @@ Example body:
         "name":"_xdm.context.profile"
     }
 }
+```
 
-Example response:
+__Example response__
 
+```
 {
     "id": 111,
     "jobType": "BATCH",
@@ -914,15 +917,16 @@ Iteratively retrieve the Export Job by ID until the `status` reaches "SUCCEEDED"
 
 #### 5.4.4 Export Audience - Step 4: Read Profiles from Audience Dataset
 
-To use the Data Access SDK to read data, you must have the `datasetId` of your audience dataset.
-The following is an example Data Catalog API call to retrieve the properties, including `datasetId`, for your dataset:
+To use the Data Access SDK to read data, you must have the `datasetId` of your audience dataset. The following is an example Data Catalog API call to retrieve the properties, including `datasetId`, for your dataset:
 
 ```
 GET https://platform.adobe.io/data/foundation/catalog/dataSets/{datasetId} HTTP/1.1
+```
 
-Example response:
-
-{
+__Example response__
+ 
+```
+{ 
   "5aa6885ecf70a301dabdfa49": {
      "version": "1.0.1",
      "imsOrg": "1BD6382559DF0C130A49422D@AdobeOrg",

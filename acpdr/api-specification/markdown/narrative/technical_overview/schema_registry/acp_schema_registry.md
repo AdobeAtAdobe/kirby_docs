@@ -69,7 +69,7 @@ Most platform services including Catalog, Data Lake, and Unified Profile Service
 
 It is worthwhile to know that a mapping takes place between standard XDM and the way it is operationalized in ACP, but it should not affect your use of platform services. 
 
-The open source project is available to you as a resource, but when it comes to interacting with standard schemas through the Schema Registry, the API examples below and the UI steps outlined in the [Using Standard Schemas with Adobe Cloud Platform](acp_standard_schemas.md) document provide the best practices that you will need to know and follow.
+The open source project is available to you as a resource, but when it comes to interacting with standard schemas through the Schema Registry, the API examples below and the UI steps outlined in the [Using Standard Schemas with Adobe Cloud Platform](../schema_registry/standard_schemas/acp_standard_schemas.md) document provide the best practices that you will need to know and follow.
 
 ### Identifying and Referencing Schemas
 
@@ -428,7 +428,7 @@ curl -X GET \
 
 Viewing a specific schema definition in its JSON Schema form requires a single GET request to the schema path. The following example shows how to perform a GET request for a specific schema. 
 
-Sample requests and responses for two of the most commonly used schema, [Profile](#profileschema) and [ExperienceEvent](#experienceeventschema), are included at the end of this document.
+Sample requests and responses for two of the most commonly used schema, [Profile](#profile-schema) and [ExperienceEvent](#experienceevent-schema), are included at the end of this document.
 
 ##### API Format
 
@@ -621,7 +621,7 @@ a. Defining certain types may require an optional `"format"`.
 b. Where a specific formatting of data is required, `"examples"` can be added as an array.
 1. The `"description"` explains the field and pertinent information regarding field data. It should be written in full sentences with clear language so that anyone accessing the schema can understand the intention of the field.
 
-More information about [defining field types in the API](#definingxdmfieldtypesintheapi) can be found later in this document, including code samples and optional constraints for the most commonly used field types.
+More information about [defining field types in the API](#defining-xdm-field-types-in-the-api) can be found later in this document, including code samples and optional constraints for the most commonly used field types.
 
 ### PUT - Extend an Existing Schema
 
@@ -1430,24 +1430,6 @@ The following table provides an overview of available descriptors, and details r
 </pre>
 </td>
 </tr>
-
-<!-- <tr>
-<td>xdm:descriptorInstantiable</td>
-<td>Signals that a schema may be instantiated as a dataset. (Some schemas are intended mainly to be composed in other, instantiable schemas.)</td>
-<td><strong>Required:</strong>
-<ul>
-<li>xdm:sourceSchema</li>
-</ul>
-</td>
-<td>
-<pre class="JSON language-JSON hljs">
-{<br/>
-"@type":"xdm:descriptorInstantiable",
-"xdm:sourceSchema":"model/Profile"<br/>
-}
-</pre>
-</td>
-</tr> -->
 
 <tr>
 <td colspan=4><strong>RelationshipDescriptor</strong></td>

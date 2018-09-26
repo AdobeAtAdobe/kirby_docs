@@ -1,18 +1,16 @@
 # Identity Services API
 
-Adobe's Identity Services manages cross-device, cross-channel identification of your end consumers as an identity graph.
-Accessing and interacting with your data in the identity graph is accomplished using the APIs summarized in this document.
+Adobe's Identity Services manages cross-device, cross-channel identification of your end consumers as an identity graph. Accessing and interacting with your data in the identity graph is accomplished using the APIs summarized in this document.
 
 ## Using the API
 
-This document describes interacting with Identity Namespace Services using Adobe's Cloud Platform APIs.
-See the [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for information on how to access these services.
+This document describes interacting with Identity Namespace Services using Adobe's Cloud Platform APIs. See the [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for information on how to access these services.
 
 ![](lightbulb.jpg) Before you start using the APIs, please read though these notes.
 
 * All variations of Cluster and Mapping APIs support both XID and NID in their requests and response. One of the parameters is required - `xid` or combination of (`nsid`, `id`) to use these APIs
 * To limit the payload in response, APIs are adapt their responses to `xid` or `uid`. That is, if you pass XID your responses will have XIDs, if you pass NID responses will have NIDs
-* The below examples don't cover all usages of XIDs and NIDs. For the complete API, see the [Swagger API Reference](../../../../../../acpdr/swagger-specs/id-namespace-api.yaml) <!-- TODO: This should reference identity services when it's available --> by selecting Core Services/Identity Services from the __Select a spec__ drop down menu on the top right
+* The below examples don't cover all usages of XIDs and NIDs. For the complete API, see the [Swagger API Reference](../../../../../../acpdr/swagger-specs/id-namespace-api.yaml) <!-- TODO: This should reference identity services when it's available --> 
 
 ## Required Headers
 
@@ -69,9 +67,7 @@ curl -X GET \
   -H 'x-gw-ims-org-id: 111'
 ```
 
-![](lightbulb.jpg) NOTE: Usage of `x-uis-cst-ctx: stub` header will return a stubbed response.
-This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed.
-We will keep our consumers advised to when this is no longer needed or supported.
+![](lightbulb.jpg) NOTE: Usage of `x-uis-cst-ctx: stub` header will return a stubbed response. This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed. We will keep our consumers advised to when this is no longer needed or supported.
 
 __Example response__
 
@@ -199,9 +195,7 @@ curl -X POST \
 }' | json_pp
 ```
 
-![](lightbulb.jpg) Usage of `x-uis-cst-ctx: stub` header will return a stubbed response.
-This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed.
-We will keep our consumers advised to when this is no longer needed or supported.
+![](lightbulb.jpg) Usage of `x-uis-cst-ctx: stub` header will return a stubbed response. This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed. We will keep our consumers advised to when this is no longer needed or supported.
 
 __Example stubbed response__
 
@@ -382,7 +376,6 @@ curl -X POST \
     "graph-type": "coop"
 }'
 
-
 # Using XIDs
 curl -X POST \
   https://platform.adobe.io/data/core/identity/clusters/history \
@@ -416,9 +409,7 @@ curl -X POST \
 }' | json_pp
 ```
 
-![](lightbulb.jpg) Usage of `x-uis-cst-ctx: stub` header will return a stubbed response.
-This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed.
-We will keep our consumers advised to when this is no longer needed or supported.
+![](lightbulb.jpg) Usage of `x-uis-cst-ctx: stub` header will return a stubbed response. This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed. We will keep our consumers advised to when this is no longer needed or supported.
 
 __Example response__
 
@@ -564,9 +555,7 @@ curl -X POST \
 
 If no related identities were found with the provided input, an `HTTP 204` response code is returned with no content.
 
-![](lightbulb.jpg) Usage of `x-uis-cst-ctx: stub` header will return a stubbed response.
-This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed.
-We will keep our consumers advised to when this is no longer needed or supported.
+![](lightbulb.jpg) Usage of `x-uis-cst-ctx: stub` header will return a stubbed response. This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed. We will keep our consumers advised to when this is no longer needed or supported.
 
 __Example response__
 <!-- CORE-15066 - Duplicate key: `mapping`... Should this be broken out into valid JSON objects? -->
