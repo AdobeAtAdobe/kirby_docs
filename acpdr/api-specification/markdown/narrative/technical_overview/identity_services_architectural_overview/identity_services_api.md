@@ -5,14 +5,14 @@ Accessing and interacting with your data in the identity graph is accomplished u
 
 ## Using the API
 
-This document describes interacting with Identity Namespace Services using Adobe's Cloud Platform APIs. 
+This document describes interacting with Identity Namespace Services using Adobe's Cloud Platform APIs.
 See the [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for information on how to access these services.
 
 ![](lightbulb.jpg) Before you start using the APIs, please read though these notes.
 
 * All variations of Cluster and Mapping APIs support both XID and NID in their requests and response. One of the parameters is required - `xid` or combination of (`nsid`, `id`) to use these APIs
 * To limit the payload in response, APIs are adapt their responses to `xid` or `uid`. That is, if you pass XID your responses will have XIDs, if you pass NID responses will have NIDs
-* The below examples don't cover all usages of XIDs and NIDs. For the complete API, see the [Swagger API Reference](../../../../../../acpdr/swagger/id-namespace-api.yaml) <!-- TODO: This should reference identity services when it's available --> by selecting Core Services/Identity Services from the __Select a spec__ drop down menu on the top right
+* The below examples don't cover all usages of XIDs and NIDs. For the complete API, see the [Swagger API Reference](../../../../../../acpdr/swagger-specs/id-namespace-api.yaml) <!-- TODO: This should reference identity services when it's available --> by selecting Core Services/Identity Services from the __Select a spec__ drop down menu on the top right
 
 ## Required Headers
 
@@ -34,7 +34,7 @@ As the single source of truth for identity resolution in the Adobe Cloud Platfor
 * __Computation of identity clusters__ - internal device graph resolves device specific identities
 * __Access to identify clusters and mappings through APIs__ - this document covers the Identity Services API
 
-The following are examples meant to describe the way the UIS APIs behave. 
+The following are examples meant to describe the way the UIS APIs behave.
 
 ## Get XID
 
@@ -60,7 +60,7 @@ curl -X GET \
   -H 'x-api-key: CALLERS_API_KEY/CLIENT_ID' \
   -H 'x-uis-cst-ctx: stub' \
   -H 'x-gw-ims-org-id: 111'
- 
+
 # Real API
 curl -X GET \
   'https://platform.adobe.io/data/core/identity/identity?nsId=411&id=WTCpVgAAAFq14FMF' \
@@ -117,7 +117,7 @@ OR, use `POST` as a batch equivalent of `GET` method. Returns the XIDs that belo
 POST https://platform.adobe.io/data/core/identity/clusters/members HTTP/1.1
 ```
 
-__Example body__ 
+__Example body__
 
 ```
 {
@@ -165,7 +165,7 @@ curl -X POST \
   -d '{
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"]
 }'
-  
+
 ## Real Call - Using XIDs
 curl -X POST \
   https://platform.adobe.io/data/core/identity/clusters/members \
@@ -177,7 +177,7 @@ curl -X POST \
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
     "graph-type": "coop"
 }' | json_pp
-  
+
 ## Real Call - Using UIDs
 curl -X POST \
   https://platform.adobe.io/data/core/identity/clusters/members \
@@ -241,7 +241,7 @@ __Example stubbed response__
        "id": "WY-RNgAAArI4rGBo"
    }]
 }
-``` 
+```
 
 __Example real response__
 
@@ -294,7 +294,7 @@ __Example real response__
    ]
 }
 ```
-   
+
 ![](lightbulb.jpg) The response will always have one entry for each XID provided in the request regardless of whether a request's XIDs belong to the same cluster or if one or more have any cluster associated at all.
 
 ## Cluster History API
@@ -381,8 +381,8 @@ curl -X POST \
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
     "graph-type": "coop"
 }'
- 
- 
+
+
 # Using XIDs
 curl -X POST \
   https://platform.adobe.io/data/core/identity/clusters/history \
@@ -394,7 +394,7 @@ curl -X POST \
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
     "graph-type": "coop"
 }' | json_pp
- 
+
 # Using UIDs
 curl -X POST \
   https://platform.adobe.io/data/core/identity/clusters/history \
@@ -462,7 +462,7 @@ __Example response__
         "nsid": 411,
         "id": "WY-RNgAAArI4rGBo"
     }]
- 
+
 }
 ```
 
@@ -506,7 +506,7 @@ __Example body__
 }
 ```
 
-or 
+or
 
 ```
 {
@@ -539,7 +539,7 @@ curl -X POST \
  "targetNs": "0",
  "graph-type": "coop"
 }' | json_pp
-  
+
 # Using UIDs
 curl -X POST \
   https://platform.adobe.io/data/core/identity/mappings \
@@ -591,7 +591,7 @@ __Example response__
             },
             "lastAssociationTime": "1493310475047"
         }],
- 
+
         "regions": [{
             "regionId": "10",
             "lastAssociationTime": "1493310475047"

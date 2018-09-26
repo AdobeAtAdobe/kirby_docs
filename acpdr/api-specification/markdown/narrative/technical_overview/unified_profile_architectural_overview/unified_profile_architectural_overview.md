@@ -20,9 +20,9 @@ This document describes interacting with UPS using Adobe's Platform APIs. See th
 
 ## 2. Ingesting XDM Data
 
-UPS maintains XDM data in the Profile Store which can be updated via batch or stream ingestion. XDM data can be ingested into the UPS based on and triggered by batch data being [ingested](../ingest_architectural_overview/ingest_architectural_overview.md) and managed by Data Catalog Service. 
-                                                                                                
-Both enablement and configuration for ingestion by Unified Profile are handled by a Tag on a dataset, named specifically "unifiedProfile". The Tag is configured with an array of key:value properties providing configuration values. The `identityField` Tag property names the location in the XDM schema of the primary identity field. Dot-notation is used to specify attributes within a hierarchy. The `enabled` property set to true enables the dataset for ingestion into UPS. 
+UPS maintains XDM data in the Profile Store which can be updated via batch or stream ingestion. XDM data can be ingested into the UPS based on and triggered by batch data being [ingested](../ingest_architectural_overview/ingest_architectural_overview.md) and managed by Data Catalog Service.
+
+Both enablement and configuration for ingestion by Unified Profile are handled by a Tag on a dataset, named specifically "unifiedProfile". The Tag is configured with an array of key:value properties providing configuration values. The `identityField` Tag property names the location in the XDM schema of the primary identity field. Dot-notation is used to specify attributes within a hierarchy. The `enabled` property set to true enables the dataset for ingestion into UPS.
 
 ### 2.1 Batch Ingestion of Profile XDM DataSets
 
@@ -70,7 +70,7 @@ The value of this tuple reports the time after which ingested Profile data would
 ```
 GET https://platform.adobe.io/data/foundation/catalog/dataSets/5b020a27e7040801dedbf46e HTTP/1.1
 
-Example response: 
+Example response:
 
 {
     "5b020a27e7040801dedbf46e": {
@@ -104,7 +104,7 @@ Example response:
 }
 ```
 
-For more details on this and other Data Catalog Service APIs, visit the [Swagger API reference](../../../../../../acpdr/swagger/catalog.yaml).
+For more details on this and other Data Catalog Service APIs, visit the [Swagger API reference](../../../../../../acpdr/swagger-specs/catalog.yaml).
 
 ### 2.4 Monitoring Ingestion
 
@@ -116,7 +116,7 @@ Using that ID, you are able to poll the dataset for the status of the batch from
 __Example request for related Unified Profile batches__
 
 ```
-GET https://platform-stage.adobe.io/data/foundation/catalog/batches?batch=29285e08378f4a41827e7e70fb7cb8f0&createdClient=acp_core_unifiedProfile_feeds HTTP/1.1 
+GET https://platform-stage.adobe.io/data/foundation/catalog/batches?batch=29285e08378f4a41827e7e70fb7cb8f0&createdClient=acp_core_unifiedProfile_feeds HTTP/1.1
 ```
 
 __Arguments__
@@ -214,7 +214,7 @@ A profile fragment is a tuple of {ID, dataset/datastream} where:
 
 As Unified Profile ingests data, records within a profile fragment are updated at ingest time.
 However, records across profile fragments are merged at access time using merge policies.
- 
+
 ### 3.1 Merge Policies
 
 A merge policy is a set of configurations controlling aspects of identity stitching and attribute merging.
@@ -282,7 +282,7 @@ Using the merge policies API, you are able to:
 * GET a merge policy by id
 * DELETE a merge policy by id
 
-See the [Swagger specification](https://git.corp.adobe.com/pages/experience-platform/api-specification/) for more details.
+See the [Swagger specification](../../../../../../acpdr/swagger-specs/profile-access.yaml) for more details.
 
 ---
 
@@ -298,7 +298,7 @@ This operation gets a Profile by ID and retrieves all its properties.
 
 The parameters for the access service are as follows:
 
-* `schema.name` (__required__) - Names the entity type, by schema name, for the record to return. Support both XED and FullURINameXED 
+* `schema.name` (__required__) - Names the entity type, by schema name, for the record to return. Support both XED and FullURINameXED
 * `entityId` (__required__) - Record ID for the entity
 * `entityIdNS` (optional) - Represents the [Identity Namespace](../identity_namespace_overview/identity_namespace_overview.md) if the ID provided is NOT in native XID format
 * `mergePolicyId` (optional) - Names the merge policy to use for the exported data
@@ -308,7 +308,7 @@ __Example Unified Profile Service request - Get a Unified Profile by ID__
 ```
 GET https://platform.adobe.io/data/core/ups/access/entities/?schema.name={schema}&entityId={id}&entityIdNS={IDNS} HTTP/1.1
 
-Example response: 
+Example response:
 
 {
     "GU8rb925s2L2fkF55boQKCbliQ8,GbZWRW8tXrZ4gABvwzC_gAAAAAAA,A2-s19jafhDickW6PP0c5dpi": {
@@ -366,7 +366,7 @@ The parameters for the access service are as follows:
 <!-- TODO: CORE-11543 What information from this page to include, and how? https://wiki.corp.adobe.com/pages/viewpage.action?pageId=1441927960
      Need more info -->
 
-* `schema.name` (__required__) - Names the entity type, by schema name, for the record to return. Support both XED and FullURINameXED 
+* `schema.name` (__required__) - Names the entity type, by schema name, for the record to return. Support both XED and FullURINameXED
 * `entityId` (__required__) - Record ID for the entity
 * `entityIdNS` - Represents the [Identity Namespace](../identity_namespace_overview/identity_namespace_overview.md) if the ID provided is NOT in native XID format
 * `mergePolicyId` - Names the merge policy to use for the exported data
@@ -379,7 +379,7 @@ __Example UPS request - Get ExperienceEvents for a Unified Profile__
 ```
 GET https://platform.adobe.io/data/core/ups/access/entities/?schema.name=_xdm.context.experienceevent&relatedschema.name=_xdm.context.profile&entityID={}&relatedentityIdNS={} HTTP/1.1
 
-Example response: 
+Example response:
 
 {
     "records": [
@@ -475,7 +475,7 @@ UPS provides the tools for segmenting your user base into audiences consisting o
 With segmentation, you can isolate members of your user base by criteria such as:
 
 * Users for whom one week has passed since last making a purchase
-* Users for whom the sum of the purchases is greater than $10,000 
+* Users for whom the sum of the purchases is greater than $10,000
 * Users who have seen a campaign and then clicked on it within 30 minutes, for any 3 of a list of campaigns specified by their Campaign ID
 
 UPS behaves on/with the following components:
@@ -530,7 +530,7 @@ The request body consists of the following properties:
 __Example Unified Profile request - Create a new Definition__
 
 ```
-POST https://platform.adobe.io/data/core/ups/segment/definition HTTP/1.1 
+POST https://platform.adobe.io/data/core/ups/segment/definition HTTP/1.1
 
 Example body:
 
@@ -553,7 +553,7 @@ Example response:
     "name": "My Sample Cart Abandons Segment Definition",
     "description": "This Segment represents those users who have abandoned a cart",
     "type": "PQL",
-    "format": "pql/text", 
+    "format": "pql/text",
     "expression": "xEvent.metrics.commerce.abandons.value > 0",
     "_links": {
         "self": {
@@ -688,7 +688,7 @@ Example response:
       "size": 5
    }
 }
-``` 
+```
 
 #### 5.2.3 Estimate and Preview audience - Step 3: Delete Preview Job
 
@@ -816,7 +816,7 @@ In summary, the following steps are required to export your audience:
 * __Identify your dataSet__ - A dataset should be created to hold audience members
 * __Generate audience Profiles in dataset__ - Export jobs populate the results of a Segment Job as XDM Profiles in a dataset
 * __Wait for audience Profiles to complete persisting__ - Export Jobs are asynchronous. Get an Export Job until its status indicates completion (its `status` attribute has reached "SUCCEEDED", or "FAILED")
-* __Read Audience Data__ - Using the Data Access SDK, retrieve the resulting XDM Profiles representing the members of your audience 
+* __Read Audience Data__ - Using the Data Access SDK, retrieve the resulting XDM Profiles representing the members of your audience
 
 #### 5.4.1 Export Audience - Step 1: Create or Select Audience DataSet
 
@@ -875,7 +875,7 @@ Example body:
     "filter" : {
         "segments" : [{"id":"segment-name:snapshot-name"}]
     }
-      
+
     "destination" : {
         "dataSetId" : ""
     }
@@ -909,7 +909,7 @@ Example response:
 ```
 
 #### 5.4.3 Export Audience - Step 3: Wait for Export to Complete
- 
+
 Iteratively retrieve the Export Job by ID until the `status` reaches "SUCCEEDED".
 
 #### 5.4.4 Export Audience - Step 4: Read Profiles from Audience Dataset
@@ -921,8 +921,8 @@ The following is an example Data Catalog API call to retrieve the properties, in
 GET https://platform.adobe.io/data/foundation/catalog/dataSets/{datasetId} HTTP/1.1
 
 Example response:
- 
-{ 
+
+{
   "5aa6885ecf70a301dabdfa49": {
      "version": "1.0.1",
      "imsOrg": "1BD6382559DF0C130A49422D@AdobeOrg",
@@ -948,5 +948,5 @@ Example response:
   }
 }
 ```
- 
-With the `viewId` from the response, you are able to use the Data Access SDK to read data. Data Access SDK is an official SDK provided by Platform Foundation to read any data present inside a valid dataset. For more information on using the Data Access SDK, [see the tutorial](../../alltutorials.html#!api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md), [samples](https://git.corp.adobe.com/experience-platform/data-access-sdk-sample) or [see the project on GitHub](https://git.corp.adobe.com/experience-platform/data-access-sdk).
+
+With the `viewId` from the response, you are able to use the Data Access SDK to read data. Data Access SDK is an official SDK provided by Platform Foundation to read any data present inside a valid dataset. For more information on using the Data Access SDK, [see the tutorial](../../alltutorials.html#!api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md).

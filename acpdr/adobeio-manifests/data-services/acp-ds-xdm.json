@@ -32,5 +32,5 @@
 					"title": "Schema Registry Developer Guide"
 				}
 	],
-	"app2app_map": {"api-specification/markdown/narrative/tutorials/":"/apis/cloudplatform/dataservices/tutorials/alltutorials.html", "acpdr/swagger/":"/apis/cloudplatform/dataservices/api-reference.html"}
+	"app2app_map": {"api-specification/markdown/narrative/tutorials/":"/apis/cloudplatform/dataservices/tutorials/alltutorials.html", "acpdr/swagger-specs/":"/apis/cloudplatform/dataservices/api-reference.html"}
 }
