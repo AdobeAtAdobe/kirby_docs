@@ -2,7 +2,7 @@
 
 **When is the GDPR coming into effect?**
 
-The GDPR was approved and adopted by the EU Parliament in April, 2016. The regulation will take effect after a two-year transition period and, unlike a Directive it does not require any enabling legislation to be passed by government - meaning it will be in force May 2018.
+The GDPR was approved and adopted by the EU Parliament in April, 2016. The regulation will take effect after a two-year transition period and, unlike a Directive it does not require any enabling legislation to be passed by government--meaning it will be in force May 2018.
 
 **Who does the GDPR affect?**
 
