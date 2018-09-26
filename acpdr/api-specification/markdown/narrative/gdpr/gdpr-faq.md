@@ -2,7 +2,7 @@
 
 **When is the GDPR coming into effect?**
 
-The GDPR was approved and adopted by the EU Parliament in April 2016. The regulation will take effect after a two-year transition period and, unlike a Directive it does not require any enabling legislation to be passed by government - meaning it will be in force May 2018.
+The GDPR was approved and adopted by the EU Parliament in April, 2016. The regulation will take effect after a two-year transition period and, unlike a Directive it does not require any enabling legislation to be passed by government - meaning it will be in force May 2018.
 
 **Who does the GDPR affect?**
 
@@ -26,7 +26,7 @@ The conditions for [consent](gdpr-terminology.md#consent) have been strengthened
 
 **What about [Data Subjects](gdpr-terminology.md#datasubject) under the age of 16?**
 
-Parental consent will be required to process the [Personal Data](gdpr-terminology.md#personaldata) of children under the age of 16 for online services; member states may legislate for a lower age of [consent](gdpr-terminology.md#consent) but this will not be below the age of 13.
+Parental consent is required to process the [Personal Data](gdpr-terminology.md#personaldata) of children under the age of 16 for online services; member states may legislate for a lower age of [consent](gdpr-terminology.md#consent) but this will not be below the age of 13.
 
 **What is the difference between a [Regulation](gdpr-terminology.md#regulation) and a [Directive](gdpr-terminology.md#directive)?**
 
@@ -39,3 +39,90 @@ A [Regulation](gdpr-terminology.md#regulation) is a binding legislative act. It 
 **How does the GDPR affect policy surrounding data breaches?**
 
 Proposed regulations surrounding data breaches primarily relate to the notification policies of companies that have been breached. Data breaches which may pose a risk to individuals must be notified to the DPA within 72 hours and to affected individuals without undue delay.
+
+**How do I get information about the status of my GDPR request or job?**
+
+You can learn the status of your GDPR request or job by using the [GDPR API’s GET request](https://www.adobe.io/apis/cloudplatform/gdpr/api-reference.html) or by visiting the GDPR UI at [https://gdprui.cloud.adobe.io/](https://gdprui.cloud.adobe.io/). For example: from those locations, you can obtain a downloadable archive file with results of completed GDPR Access requests.
+
+*Note:* As of September 14, 2018, we are turning off email notifications for completion or erroring of your GDPR requests. Other GDPR functionality is not affected by this change.
+
+The following is a sample API GET request:
+
+```json
+{
+    "jobs": [
+        {
+            "jobId": "XXXXXXX-XXXXXX-XXXXXXX-XXXX-XXXXXXXXXXX",
+            "requestId": XXXXXX,
+            "lastUpdatedOn": "09/11/2018 2:02 AM",
+            "customer": {
+                "user": {
+                    "key": "155XXXX",
+                    "action": [
+                        "access"
+                    ],
+                    "userIDs": [
+                        {
+                            "namespace": "XXXX",
+                           "value": "XXXXXXXX",
+                            "type": "analytics",
+                            "isDeletedClientSide": false
+                        },
+                        {
+                            "namespace": "YYYYY",
+                            "value": "YYYYYYYYYYYYY",
+                            "type": "analytics",
+                            "isDeletedClientSide": false
+                        },
+                        {
+                            "namespace": "ZZZZZZZZ",
+                            "value": "ZZZZZZZZZZZZZZZZZ",
+                            "type": "analytics",
+                            "isDeletedClientSide": false
+                        }
+                    ]
+                },
+                "companyContexts": [
+                    {
+                        "namespace": "imsOrgID",
+                        "value": "XXXXXXXXXXXXXXXXXXX@AdobeOrg"
+                    }
+                ]
+            },
+           "emailId": "gdprstatus@mycompany.com",
+            "productResponses": [
+                {
+                    "product": "Analytics",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 1,
+                        "statusMessage": "complete",
+                        "solutionMessage": {
+                            "message": "success",
+                            "product": "analytics",
+                            "results": {
+                                "userContexts": [],
+                                "receiptData": {}
+                            },
+                            "jobId": "XXXXXXX-XXXXXX-XXXXXXX-XXXX-XXXXXXXXXXX",
+                            "status": "complete",
+                            "action": null
+                        }
+                    },
+                    "processedDate": "09/11/2018 2:00 AM"
+                }
+            ],
+            "lastUpdatedBy": "GDPRCentralService",
+            "timeRequested": "09/01/2018 4:52 AM",
+            "submittedBy": "XXXXX-XXXXXX-XXXXX-XXXXXXX@techacct.adobe.com",
+            "gdprStatusResponse": {
+                "statusCode": 1,
+                "statusMessage": "complete",
+                "solutionMessage": null
+            },
+            "downloadUrl": "https://va7gdprprodblob.blob.core.windows.net/va7gdprprodblobpublic/XXXXXX-XXXXXX-XXXXXXX-XXXXXXX-XXXXXX-XXXXXXX.zip"
+        }
+    ],
+    "totalRecords": 1
+}
+```

@@ -8,7 +8,7 @@ This document provides an overview of how to integrate with and consume the GDPR
 
 ## GDPR API
 
-Across the Adobe Experience Cloud there are many products that support your digital marketing needs. Each solution handles data and user identities in unique ways, according to their business goals. However they also must support to the overall ExC goals for security and compliance. The GDPR API has been developed to do exactly this: coordinate privacy and compliance requests across various solutions in the ExC, beginning with GDPR access and deletion requests.
+Across the Adobe Experience Cloud there are many products that support your digital marketing needs. Each solution handles data and user identities in unique ways, according to their business goals. However, they also must support to the overall ExC goals for security and compliance. The GDPR API has been developed to do exactly this: coordinate privacy and compliance requests across various solutions in the ExC, beginning with GDPR access and deletion requests.
 
 All GDPR API requests are REST-based with JSON used as the payload for requests and responses. Documentation on each of the supported APIs can be found here: [GDPR API Specification](http://www.adobe.io)
 
@@ -16,7 +16,7 @@ All GDPR API requests are REST-based with JSON used as the payload for requests 
 
 Below are the required steps for creating your first call into the GDPR API:
 
-1. Gather your data - from a customer request, from the Adobe Privacy JS library, or from your own internal tools, assemble information about the data subject and provide context for the request ([data format](#gdprapipostrequestformat))
+1. Gather your data: from a customer request, from the Adobe Privacy JS library, or from your own internal tools, assemble information about the data subject and provide context for the request ([data format](#gdprapipostrequestformat))
 2. Create your Adobe IO integration to obtain authorization and service access for your organization ([integration](#creatingyourapiintegration))
 3. Populate your HTTP headers for full authentication and routing through the Adobe IO Gateway and into the GDPR API ([headers and authorization](#gdprheadersandauthorization))
 4. Submit your request using all the data gathered above
@@ -127,6 +127,7 @@ The “users” section of the JSON payload is a collection of users (one or man
                "type": "custom"
            }
        ]
+           "include":["profile"]
    }
 ]
 ```
@@ -196,7 +197,7 @@ The GDPR API supports three basic REST-type operations, HTTP verbs that indicate
 ```
 https://platform.adobe.io/data/privacy/gdpr/
 ```
- 
+
 | API Name (Method Type)| Path | Description |
 | -------- | ---- | ----------- |
 | Access/Delete (POST) | {baseURL} | Create one or many ACCESS/DELETE requests to retrieve or delete all data corresponding to the provided user id's |
@@ -373,6 +374,147 @@ As shown above, the response gives additional detail about each solution that is
 | 4 | Error | Something failed in the processing of the job - more specific information may be obtained by getting individual job details |
 | 5 | Expired | Final response is not received from the solution(s) before the specified time |
 
+A job might remain in a processing state if a dependent child job is still in process.
+
+```
+{
+    "jobs": [
+        {
+            "jobId": "d685625c-1292-4f8c-8890-9925c23c43e0",
+            "requestId": 1,
+            "lastUpdatedOn": "09/04/2018 2:18 PM",
+            "productResponses": [
+                {
+                    "product": "Analytics",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted",
+                        "solutionMessage": null
+                    },
+                    "processedDate": "09/04/2018 2:18 PM"
+                },
+                {
+                    "product": "Audience Manager",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted",
+                        "solutionMessage": null
+                    },
+                    "processedDate": "09/04/2018 2:18 PM"
+                },
+                {
+                    "product": "Profile Service",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted",
+                        "solutionMessage": null
+                    },
+                    "processedDate": "09/04/2018 2:18 PM"
+                },
+                {
+                    "product": "Target",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted",
+                        "solutionMessage": null
+                    },
+                    "processedDate": "09/04/2018 2:18 PM"
+                },
+                {
+                    "product": "CRS",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted",
+                        "solutionMessage": null
+                    },
+                    "processedDate": "09/04/2018 2:18 PM"
+                },
+                {
+                    "product": "DPSC",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 3,
+                        "statusMessage": "submitted",
+                        "solutionMessage": null
+                    },
+                    "processedDate": "09/04/2018 2:18 PM"
+                }
+            ],
+            "lastUpdatedBy": "GDPRCentralService",
+            "timeRequested": "09/04/2018 2:18 PM",
+            "submittedBy": "acp_privacy_gdpr@adobe.com",
+            "gdprStatusResponse": {
+                "statusCode": 2,
+                "statusMessage": "processing",
+                "solutionMessage": null
+            },
+            "statusCode": 2,
+            "childJobs": [
+                {
+                    "jobId": "415cbe6f-d258-472d-a350-b78d2d6916b3",
+                    "requestId": 1,
+                    "lastUpdatedOn": "09/05/2018 2:55 PM",
+                    "productResponses": [
+                        {
+                            "product": "Analytics",
+                            "retryCount": 0,
+                            "productStatusResponse": {
+                                "statusCode": 3,
+                                "statusMessage": "submitted",
+                                "solutionMessage": null
+                            },
+                            "processedDate": "09/05/2018 2:55 PM"
+                        }
+                    ],
+                    "lastUpdatedBy": "GDPRCentralService",
+                    "timeRequested": "09/05/2018 2:55 PM",
+                    "submittedBy": "acp_privacy_gdpr@adobe.com",
+                    "gdprStatusResponse": {
+                        "statusCode": 2,
+                        "statusMessage": "processing",
+                        "solutionMessage": null
+                    },
+                    "statusCode": 2
+                },
+                {
+                    "jobId": "d54e24f5-fc95-4f7c-ab80-eddae3e1a5b7",
+                    "requestId": 1,
+                    "lastUpdatedOn": "09/04/2018 3:32 PM",
+                    "productResponses": [
+                        {
+                            "product": "Analytics",
+                            "retryCount": 0,
+                            "productStatusResponse": {
+                                "statusCode": 3,
+                                "statusMessage": "submitted",
+                                "solutionMessage": null
+                            },
+                            "processedDate": "09/04/2018 3:32 PM"
+                        }
+                    ],
+                    "lastUpdatedBy": "GDPRCentralService",
+                    "timeRequested": "09/04/2018 3:32 PM",
+                    "submittedBy": "acp_privacy_gdpr@adobe.com",
+                    "gdprStatusResponse": {
+                        "statusCode": 2,
+                        "statusMessage": "processing",
+                        "solutionMessage": null
+                    },
+                    "statusCode": 2
+                }
+            ]
+        }
+    ],
+    "totalRecords": 1
+}
+```
+**Listing7:** Response to Get Job `status` with child
+
 ### Namespace Qualifiers
 
 | Qualifier | Definition |
@@ -384,7 +526,7 @@ As shown above, the response gives additional detail about each solution that is
 | unregistered | A freeform string that is not defined in the namespace service and will be taken "as is". Any solution that handles these kinds of namespaces will check against them and handle if appropriate for the company context and data set. No namespace ID will be provided. |
 | analytics | A custom namespace that is mapped internally in Analytics, not in the namespace service. This will be passed in directly as specified by the original request, without a namespace ID |
 | dpsc | A custom field type for DPS mappings, which support a set of three standard namespaces. |
-| target | A custom namespace that is understood internally by Target, not in the namespace service. This will be passed in directly as specified by the original request, without a namespace ID |
+| target | A custom namespace understood internally by Target, not in the namespace service. This will be passed in directly as specified by the original request, without a namespace ID |
 
 ### Product Values
 
