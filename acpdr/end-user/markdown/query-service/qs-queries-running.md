@@ -26,6 +26,14 @@ For non-interactive experiences, use the HTTP API provided by Adobe, which takes
 
 Using the Adobe interface, queries (especially those that fail during execution due to a timeout) can be promoted to run as a CTAS query by providing a output dataset name.
 
-*   **[Supported Syntax](qs-syntax.md)**  
-    
+## Timestamp
+
+By default, the date and time are shown in the GMT time zone. You can adjust the timestamp to another time zone in the query. For example:
+
+```
+SELECT from_utc_timestamp(timestamp, 'America/New_York') ...
+```
+
+*   **[Supported Syntax](qs-syntax.md)**
+
 *   **[Downloading Results](qs-results.md)**
