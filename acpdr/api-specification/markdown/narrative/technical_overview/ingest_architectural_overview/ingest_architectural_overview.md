@@ -1,7 +1,7 @@
-# Bulk Ingestion Overview
+# Batch Ingestion Overview
 
 ## 1. Overview
-The Bulk Ingestion service APIs enable clients to push batch data into the Adobe Cloud Platform. This document will cover the Bulk Ingestion API.
+The Batch Ingestion service APIs enable clients to push batch data into the Adobe Cloud Platform. This document will cover the Batch Ingestion API.
 
 ---
 
