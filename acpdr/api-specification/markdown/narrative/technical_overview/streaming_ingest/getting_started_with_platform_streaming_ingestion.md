@@ -34,7 +34,7 @@ CURL -X POST https://platform.adobe.io/data/core/pipeline/inlet/registration/ \
 -d '{JSON_PAYLOAD}'
 ```
 
-**Note**: To find your API Key and IMS org ID, go to https://console.adobe.io/integrations, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
+**Note**: To find your API Key and IMS org ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
 
 
 `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
@@ -53,7 +53,7 @@ CURL -X POST https://platform.adobe.io/data/core/pipeline/inlet/registration/ \
 `name`: The name you want to use for your Streaming Endpoint.   
 `description`: The description you want to use for your Streaming Endpoint.   
 `sourceId`: A meaningful identifier or name of the source sending the streaming data.
-`dataType`: <insert text>
+`dataType`: The type of data that is being streamed.
 
 
 #### Response
@@ -85,8 +85,6 @@ An example of a successful response can be seen below:
 `{API_KEY}` : Your specific API key value found in your unique Adobe Cloud Platform integration.  
 
 
-<!For further information about this API, look at the [Streaming Endpoint Registration API Specifications][apispecs] page.>
-
 ### Streaming a Profile object to Adobe Cloud Platform
 
 Once you've created a Streaming Endpoint, you can create use it to stream XDM records and create or update [Customer Profiles][customerprofiles].
@@ -111,7 +109,7 @@ Where:
 `imsOrgId`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
 `source`: The source of the streamed record - this should be the **same** as the one specified earlier, when you created the streaming endpoint.
 
-**Note:** To find your IMS org ID, go to https://console.adobe.io/integrations, click on the Overview for the integration you want to use, and copy the Organization ID listed.
+**Note:** To find your IMS org ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the Organization ID listed.
 
 ```JSON
 {
@@ -260,7 +258,7 @@ CURL -X GET "https://platform.adobe.io/data/core/ups/access/entities?schema.name
 ```
 
 **Note:** 
-To find your API Key and IMS org ID, go to https://console.adobe.io/integrations, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
+To find your API Key and IMS org ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
 
 `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
 `{API_KEY}` : Your specific API key value found in your unique Adobe Cloud Platform integration.  
@@ -468,7 +466,7 @@ curl -X GET \
 
 ```
 
-**Note:** To find your API Key and IMS org ID, go to https://console.adobe.io/integrations, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
+**Note:** To find your API Key and IMS org ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
 
 `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
 `{API_KEY}` : Your specific API key value found in your unique Adobe Cloud Platform integration.  
@@ -577,19 +575,25 @@ Following this guide, you should be able to do the following actions:
 
 With this knowledge, you should be able to easily get your data to Adobe Cloud Platform. Now that you can stream and retrieve your own events, try repeating these steps with other data and see if you can replicate your results.
 
-[1]: https://www.adobe.io/apis/cloudplatform/dataservices/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md
+[1]: ../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md 
 
 [2]: https://medium.com/adobetech/using-postman-for-jwt-authentication-on-adobe-i-o-7573428ffe7f
 
 [3]: https://console.adobe.io/
 
 [apispecs]: streaming_endpoint_registration/streaming_endpoint_registration.md
-[standardnamespace]: https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_faq.md
-[customnamespace]: https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/identity_namespace_overview/identity_namespace_overview.md
 
-[identityapi]: https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md
+[standardnamespace]: ../identity_services_architectural_overview/identity_services_faq.md
 
-[xdminfo]: https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/xdm_registry_architectural_overview/xdm_registry_architectural_overview.md
-[profileapi]: https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md
+[customnamespace]: ../identity_namespace_overview/identity_namespace_overview.md
 
-[customerprofiles]: https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md
+
+[identityapi]: ../identity_services_architectural_overview/identity_services_architectural_overview.md
+
+
+[xdminfo]: ../schema_registry/standard_schemas/acp_standard_schemas.md
+
+[profileapi]: ../unified_profile_architectural_overview/unified_profile_architectural_overview.md
+
+
+[customerprofiles]: ../unified_profile_architectural_overview/unified_profile_architectural_overview.md

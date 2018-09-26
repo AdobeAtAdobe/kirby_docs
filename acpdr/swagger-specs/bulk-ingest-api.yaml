@@ -1,6 +1,6 @@
 ---
 info:
-  title: Bulk Ingestion API
+  title: Batch Ingestion API
   version: v2
   contact:
       name: Grp-Siphon-Core

@@ -18,7 +18,7 @@
 		{
 			"pages": [],
 			"path": "acpdr/swagger-specs/bulk-ingest-api.yaml",
-			"title": "Bulk Ingestion Service"
+			"title": "Batch Ingestion Service"
 		},
 		{
 			"pages": [],
