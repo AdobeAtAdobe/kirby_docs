@@ -63,7 +63,7 @@ SELECT endUserIds._experience.mcid, timestamp, marketing.trackingCode,
     ATTRIBUTION\_LAST\_TOUCH(timestamp, 'trackingCode', marketing.trackingCode)
       OVER(PARTITION BY endUserIds._experience.mcid
            ORDER BY timestamp
-           ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING)
+           ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
       AS last_touch
 FROM experience_events
 ORDER BY endUserIds._experience.mcid, timestamp ASC
