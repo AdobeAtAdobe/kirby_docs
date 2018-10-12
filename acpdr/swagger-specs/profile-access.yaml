@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   description: Access API for Unified Profile service
   version: 0.0.1
-  title: profileaccess API
+  title: Profile Access API
   termsOfService: ''
 host: platform.adobe.io
 basePath: /data/core/ups/models
