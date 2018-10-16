@@ -14,8 +14,13 @@
 			"pages": [
 				{
 					"pages": [],
+					"path": "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_ecid.md",
+					"title": "ECID - An Essential Tool"
+				},
+				{
+					"pages": [],
 					"path": "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_api.md",
-					"title": "Identity Services API"
+					"title": "Identity Service API"
 				},
 				{
 					"pages": [],
@@ -29,7 +34,7 @@
 				}
 			],
 			"path": "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md",
-			"title": "Unified Identity"
+			"title": "Identity Service"
 		},
 		{
 			"pages": [

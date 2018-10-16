@@ -27,17 +27,17 @@ We will be consuming the APIs to create an Experiment Run for Training and Scori
 
 Here is a list of what we will cover this tutorial:
 
-* [Creating a Recipe](#creatingarecipe)
-* [Creating an Instance](#creatinganinstance)
-* [Creating an Experiment](#creatinganexperiment)
-    * [Creating a Scheduled Experiment for Training](#creatingascheduledexperimentfortraining)
-    * [Creating a Scheduled Experiment for Scoring](#creatingascheduledexperimentforscoring)
-    * [Creating an Experiment Run for Training](#creatinganexperimentrunfortraining)
-        * [Retrieving an Experiment Run Status](#retrievinganexperimentrunstatus)
-        * [Retrieving the Trained Model](#retrievingthetrainedmodel)
-    * [Creating an Experiment Run for Scoring](#creatinganexperimentrunforscoring)
-        * [Retrieve an Experiment Run Status for Scheduled Experiment Run](#retrieveanexperimentrunstatusforscheduledexperimentrun)
-* [Stop and Delete a Scheduled Experiment](#stopanddeleteascheduledexperiment)
+* [Creating a Recipe](#creating-a-recipe)
+* [Creating an Instance](#creating-an-instance)
+* [Creating an Experiment](#creating-an-experiment)
+    * [Creating a Scheduled Experiment for Training](#creating-a-scheduled-experiment-for-training)
+    * [Creating a Scheduled Experiment for Scoring](#creating-a-scheduled-experiment-for-scoring)
+    * [Creating an Experiment Run for Training](#creating-an-experiment-run-for-training)
+        * [Retrieving an Experiment Run Status](#retrieving-an-experiment-run-status)
+        * [Retrieving the Trained Model](#retrieving-the-trained-model)
+    * [Creating an Experiment Run for Scoring](#creating-an-experiment-run-for-scoring)
+        * [Retrieve an Experiment Run Status for Scheduled Experiment Run](#retrieve-an-experiment-run-status-for-scheduled-experiment-run)
+* [Stop and Delete a Scheduled Experiment](#stop-and-delete-a-scheduled-experiment)
 
 
 ### Creating a Recipe

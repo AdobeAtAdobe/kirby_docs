@@ -25,9 +25,9 @@ A data scientist's solution is to leverage the wealth of historical data a retai
 
 In this overview, we will go over the steps a data scientist would go through to take a dataset and to create a model to predict weekly sales. We will go over the following sections in the Sample Retail Sales Notebook on Adobe Cloud Platform Data Science Workspace:
 * [Setup](#setup)
-* [Exploring Data](#exploringdata)
-* [Feature Engineering](#featureengineering)
-* [Training and Verification](#trainingandverification)
+* [Exploring Data](#exploring-data)
+* [Feature Engineering](#feature-engineering)
+* [Training and Verification](#training-and-verification)
 
 ### Adobe Data Science Workspace Notebook
 
@@ -210,7 +210,7 @@ Finally, we will visualize our prediction model with the actual weekly sales val
 With this overview, we went over the workflow that a data scientist would go through to solve a retail sales problem. Specifically, we went over the following steps to reach a solution that predicts future weekly sales.
 
 * [Setup](#setup)
-* [Exploring Data](#exploringdata)
-* [Feature Engineering](#featureengineering)
-* [Training and Verification](#trainingandverification)
+* [Exploring Data](#exploring-data)
+* [Feature Engineering](#feature-engineering)
+* [Training and Verification](#training-and-verification)
 
