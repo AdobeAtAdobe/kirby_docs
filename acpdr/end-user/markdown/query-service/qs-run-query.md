@@ -11,7 +11,7 @@ Not all SQL syntax is supported. For the supported syntax, see [SQL Syntax](qs-s
 
 For example, select statements are supported, but insert or update statements are not. Query Service uses a read-only paradigm for queries.
 
-1.  Log in to the Experience Cloud, navigate to Adobe Experience Platform, and select Services.
+1.  Log in to the Experience Cloud, navigate to Adobe Cloud Platform, and select Services.
 2.  Select Query Service.
 3.  Retrieve your credentials needed to connect to an external client.
 4.  Use your credentials to authenticate with an external tool.

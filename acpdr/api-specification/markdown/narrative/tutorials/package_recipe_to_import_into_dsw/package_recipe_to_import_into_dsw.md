@@ -38,13 +38,13 @@ Depending on which sample you downloaded, there will be a different procedure fo
 This sample Retail Sales example leverages the wealth of historical data a retailer has access to, to predict future trends, and to optimize pricing decisions. The algorithm uses past sales data to train the model and to predict future sales trends. With this, the retailer will be able to have insights to help them when making pricing changes.
 
 We will go over how to build each one. You can skip ahead to the section you need.
-* [Building Python Retail Intelligent Service](#building-python-retail-intelligent-service)
-* [Building Tensorflow Perceptron Intelligent Service](#building-tensorflow-perceptron-intelligent-service)
-* [Building R Retail Intelligent Service](#building-r-retail-intelligent-service)
+* [Building Python Retail Intelligent Service](#buildingpythonretailintelligentservice)
+* [Building Tensorflow Perceptron Intelligent Service](#buildingtensorflowperceptronintelligentservice)
+* [Building R Retail Intelligent Service](#buildingrretailintelligentservice)
 
 <!---
-* [Building Scala Sentiment Analysis Intelligent Service](#building-scala-sentiment-analysis-intelligent-service)
-* [Building PySpark Sentiment Analysis Intelligent Service](#building-pySpark-sentiment-analysis-intelligent-service)
+* [Building Scala Sentiment Analysis Intelligent Service](#Building-Scala-Sentiment-Analysis-Intelligent-Service)
+* [Building PySpark Sentiment Analysis Intelligent Service](#Building-PySpark-Sentiment-Analysis-Intelligent-Service)
 -->
 
 ### Building Python Retail Intelligent Service
@@ -74,7 +74,7 @@ python3 setup.py install
 
 The `.egg` file is generated in the `dist` folder.
 
-Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
+Now you can move on to the next section [Create Dockerfile](#createdockerfile)
 
 <!---#### Building Scala Sentiment Analysis Intelligent Service
 
@@ -99,7 +99,7 @@ sbt clean package publish-local
 
 The generated `.jar` artifact is generated in the `/target/scala-2.11/` folder
 
-Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
+Now you can move on to the next section [Create Dockerfile](#Create-Dockerfile)
 
 #### Building PySpark Sentiment Analysis Intelligent Service
 
@@ -118,7 +118,7 @@ python setup.py install
 
 The `.egg` file is generated in the `dist` folder.
 
-Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
+Now you can move on to the next section [Create Dockerfile](#Create-Dockerfile)
 -->
 #### Building Tensorflow Perceptron Intelligent Service
 
@@ -137,7 +137,7 @@ python setup.py install
 
 The `.egg` file is generated in the `dist` folder.
 
-Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
+Now you can move on to the next section [Create Dockerfile](#createdockerfile)
 
 #### Building R Retail Intelligent Service
 
@@ -147,11 +147,11 @@ For R the files needed to create the Docker image are already built in the repos
 git clone https://github.com/adobe/acp-data-services-dsw-reference.git
 cd recipes/R/Retail\ -\ GradientBoosting/
 ```
-Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
+Now you can move on to the next section [Create Dockerfile](#createdockerfile)
 
 ### Create Dockerfile
 
-We will need to create a Dockerfile that first takes the base image, installs dependencies, and copies over the packaged intelligent service we did in section [Create Dockerfile](#create-dockerfile). Since you are using the Sample Intelligent Service, the Dockerfile is provided [in the directory](https://github.com/adobe/acp-data-services-dsw-reference/blob/master/recipes/python/retail/Dockerfile). The example for Python is shown below:
+We will need to create a Dockerfile that first takes the base image, installs dependencies, and copies over the packaged intelligent service we did in section [Create Dockerfile](#createdockerfile). Since you are using the Sample Intelligent Service, the Dockerfile is provided [in the directory](https://github.com/adobe/acp-data-services-dsw-reference/blob/master/recipes/python/retail/Dockerfile). The example for Python is shown below:
 
 ```Docker
 FROM <docker-runtime-path>

@@ -66,27 +66,13 @@ Once your have your certificate, integration, and access values, you will be abl
 
 #### 2.2.1. Create Certificate
 
-**For MacOS & Linux platform**
+We will be creating a self-signed certificate and private key using terminal on MacOS with the built-in-command-line tool `openssl`. The same commands work also using Cygwin for Windows users and Linux.
 
-Open terminal and execute below command:  
-
-`openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout private.key -out certificate_pub.crt`
-
-
-**For Windows Platform**
-
-i) Download an openssl client to generate public certificates. For e.g. [Openssl windows client](https://bintray.com/vszakats/generic/download_file?file_path=openssl-1.1.1-win64-mingw.zip)
-
-ii) Extract the folder and copy it to C:/libs/ location.
-
-iii) Open Command Line Prompt and execute below commands.
-
-`set OPENSSL_CONF=C:/libs/openssl-1.1.1-win64-mingw/openssl.cnf`
-
-`cd C:/libs/openssl-1.1.1-win64-mingw/`
-
-`openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout private.key -out certificate_pub.crt`
-
+```SHELL
+openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 \
+-keyout private.key \
+-out certificate_pub.crt
+```
 
 You will get a response similar to the following which prompts you to enter some information about yourself:
 
@@ -112,9 +98,9 @@ Common Name (eg, fully qualified host name) []:
 Email Address []:
 ```
 
-After entering the information two files will be generated: `certificate_pub.crt` and `private.key`.
+After entering the information two files will be generated: `certificate_put.crt` and `private.key`.
 
-Note `certificate_pub.crt` will expire in 365 days. You can make the period longer by changing the value of `days` in the `openssl` command above but rotating credentials periodically is a good security practice.
+Note `certificate_put.crt` will expire in 365 days. You can make the period longer by changing the value of `days` in the `openssl` command above but rotating credentials periodically is a good security practice.
 
 The `certificate_pub.crt` certificate will later be uploaded to the Adobe IO Console for when you create an API key for access to any Adobe I/O API.
 

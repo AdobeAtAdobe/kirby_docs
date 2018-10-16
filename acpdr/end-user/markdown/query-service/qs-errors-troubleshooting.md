@@ -14,11 +14,9 @@
 | ------------------------------- | ----------- | -------------- |
 | **28P01** Start-up - authentication | Invalid password | Invalid authentication token |
 | **28000** Start-up - authentication | Invalid authorization type | Invalid authorization type. Must be `AuthenticationCleartextPassword`. |
-| **42P12** Start-up - authentication | No tables found | No tables found for use |
+| **58000** Start-up - authentication | No tables found | No tables found for use |
 | **42601** Query | Syntax error | Invalid command or syntax error |
 | **58000** Query | System error | Internal system failure |
-| **42P01** Query | Table not found | Table specified in the query was not found |
-| **42P07** Query | Table exists | Table already exists with the same name (CREATE TABLE) |
-| **53400** Query | LIMIT exceeds max value | User specified a LIMIT clause higher than 100,000 |
-| **53400** Query | Statement timeout | The live statement submitted took more than the maximum of 10 minutes |
+| **58000** Query | Table not found | Table specified in the query was not found |
+| **58000** Query | Table exists | Table already exists with the same name (CREATE TABLE) |
 | **08P01** N/A | Unsupported message type | Unsupported message type |

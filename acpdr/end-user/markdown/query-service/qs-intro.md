@@ -10,7 +10,7 @@ The Query Service helps you collect all that data in one place and answer questi
 
 Traditionally, data has been siloed in different vendor solutions or managed across different internal environments like Hadoop or other proprietary data warehousing systems, making it difficult to access and use together to gain the most insights. And, once insights are generated, each of these environments has different workflows for getting them back into the Experience Cloud.
 
-The Adobe Experience Platform Query Service closes that loop. It provides a general-purpose SQL interface for Experience Platform datasets.
+The Adobe Platform Query Service closes that loop. It provides a general-purpose SQL interface for Experience Platform datasets.
 
 The Query Service serves as a consolidated reporting SQL interface for solutions across the Experience Cloud and other datasets loaded into the Experience Platform.
 

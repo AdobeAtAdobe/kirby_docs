@@ -1,216 +1,217 @@
 # Data Science Workspace Overview
 
+- [Data Science Workspace Overview](#data-science-workspace-overview)
+    - [Overview](#overview)
+    - [Introduction](#introduction)
+    - [Terminology](#terminology)
+    - [Why Data Science Workspace?](#why-data-science-workspace)
+        - [One-stop Data Access](#one-stop-data-access)
+        - [Prebuilt Machine Learning Recipes](#prebuilt-machine-learning-recipes)
+        - [Workflow Focused on the Data Scientist](#workflow-focused-on-the-data-scientist)
+        - [Data Exploration](#data-exploration)
+        - [Authoring](#authoring)
+        - [Experimentation](#experimentation)
+        - [Operationalization](#operationalization)
+        - [Continuous Improvement](#continuous-improvement)
+        - [Access to New Features and Datasets](#access-to-new-features-and-datasets)
+        - [Security and Peace of Mind](#security-and-peace-of-mind)
+    - [Data Science Workspace in Action](#data-science-workspace-in-action)
+        - [Define the Problem](#define-the-problem)
+        - [Explore and Prepare the Data](#explore-and-prepare-the-data)
+        - [Author the Recipe](#author-the-recipe)
+        - [Experiment with the Recipe](#experiment-with-the-recipe)
+        - [Operationalize the Model](#operationalize-the-model)
+    - [Conclusion](#conclusion)
+    - [Additional Resources](#additional-resources)
+
+
 ## Overview
 
-This document provides an overview of the Data Science Workspace in Adobe Cloud Platform. Specifically we will go over the general workflow a data scientist would go through to solve a problem using machine learning.
+Data Science Workspace uses Machine Learning and artificial intelligence to unleash insights from your data. Integrated into the Adobe Cloud Platform, Data Science Workspace helps you make predictions using your content and data assets across Adobe solutions.  
+
+Data Scientists of all skill levels will find sophisticated, easy-to-use tools that support rapid development, training, and tuning of Machine Learning recipes - all the benefits of AI technology, without the complexity.  
+
+With Data Science Workspace, Data Scientists can easily create intelligent services APIs - powered by Machine Learning. These services work with other Adobe services, including Adobe Target and Adobe Analytics Cloud, to help you automate personalized, targeted digital experiences in web, desktop, and mobile apps.
 
 ---
 
-## Prerequisites
+## Introduction
 
-* A registered Adobe ID account
-    * The Adobe ID account must have been added to an Organization with access to "Adobe Cloud Platform"
+Today's enterprise puts a high priority on mining big data for predictions and insights that will help them personalize customer experiences and deliver more value to customers - and to the business. 
+As important as it is, getting from data to insights can come at a high cost. It typically requires skilled Data Scientists who conduct intensive and time-consuming data research to develop Machine Learning models, or recipes, which power intelligent services. The process is lengthy, the technology is complex, and skilled Data Scientists can be hard to find.  
 
----
+With Data Science Workspace, the Adobe Cloud Platform allows you to bring experience-focused AI across the enterprise, streamlining and accelerating data-to-insights-to-code with:
+* A Machine Learning framework and runtime
+* Integrated access to your data stored in Adobe Cloud Platform
+* A unified data schema built on the Experience Data Model (XDM)
+* The computing power essential for Machine Learning/AI and managing big datasets
+* Prebuilt Machine Learning recipes to accelerate the leap into AI-driven experiences
+* Simplified authoring, reuse, and modification of recipes for Data Scientists of varied skill levels
+* Intelligent service publishing and sharing in just a few clicks - without a developer - and monitoring and retraining for continuous optimization of personalized customer experiences
 
-## Data Scientist's Motivation
+Data Scientists of all skill levels will achieve insights faster and more effective digital experiences sooner. 
 
-A retailer faces many challenges to stay competitive in the current market. One of the retailer's main concerns is to decide on the optimal pricing of their products and to predict sale trends. With an accurate prediction model, the retailer would be able to find the relationship between demand and pricing policies and make optimized pricing decisions to maximize sales and revenue.
+## Terminology
 
----
+Before diving into details of Data Science Workspace, here is a brief summary of key terms:
 
-## Data Scientist's Solution
+| Term | Definition |
+|---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Algorithm | A Standard Data Science technique such as classification, linear regression, k-means clustering etc. |
+| XDM | Standardized, extensible schemas for representing all experience data to enable immediate semantic understanding of cross-channel data and foster an ecosystem of pre-built insights & services. [(More information)](https://adobe.io/apis/cloudplatform/dataservices/xdm.html) |
+| Feature | An individual measurable property or characteristic of a phenomenon being observed |
+| Feature Engineering | The process of converting raw data into usable form for analysis - using domain knowledge of the data to create features that make Machine Learning algorithms work. |
+| Recipe | Propriety algorithm, or an ensemble of algorithms, to help solve specific business problems |
+| Instance | An occurrence of the recipe configured with the right data definition to help solve specific business problems. One recipe can create many instances. |
+| Trained Model | An instance (of the recipe) that is trained using historical data to learn from. The historical data must contain the correct answer, also known as the target or target attribute. The trained model finds patterns in the training data to help predict the target and uses that knowledge to predict the target for new sets of data where the target is unknown. One instance can create multiple trained models - one per training task. |
+| Service | Created from a "Trained Model" to be used in building experiences. |
+| Jupyter Notebook | An open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text. [(More information)](http://jupyter.org/) |
+| Experiment | The process of creating a trained model by training the instance with a portion of the live production data. |
+| Hyperparameters | Different from standard model parameters, hyperparameters are high-level properties of a model that are usually fixed (hence not learned) during model training. Examples are: depth of decision tree, number of hidden layers, prior of NB, learning rate. |
+| Unified Edge | A cohesive collection of components and services which, when used together, power aggregation, sharing, and processing of data for real-time analysis and execution of customer experiences. |
 
-A data scientist's solution is to leverage the wealth of historical data a retailer has access to, to predict future trends, and to optimize pricing decisions. We will use past sales data to train our machine learning model and use the model to predict future sale trends. With this, the retailer will be able to have insights to help them when making pricing changes.
+The following chart outlines the hierarchical relationship between recipes, instances, experiments, and trained models. 
 
-In this overview, we will go over the steps a data scientist would go through to take a dataset and to create a model to predict weekly sales. We will go over the following sections in the Sample Retail Sales Notebook on Adobe Cloud Platform Data Science Workspace:
-* [Setup](#setup)
-* [Exploring Data](#exploring-data)
-* [Feature Engineering](#feature-engineering)
-* [Training and Verification](#training-and-verification)
+![](recipe_hiearchy.png)
 
-### Adobe Data Science Workspace Notebook
+## Why Data Science Workspace?
 
-Firstly, we want to create a JupyterLab notebook to open the "Retail Sales" sample notebook. Following the steps done by the data scientist in the notebook will allow us to gain an understanding of a typical workflow.
+With Data Science Workspace, your Data Scientists can streamline the cumbersome process of uncovering insights in large datasets. Built on a common Machine Learning framework and runtime, Data Science Workspace delivers advanced workflow management, model management, and scalability. Intelligent services support re-use of Machine Learning recipes to power a variety of applications created using Adobe products and solutions. 
 
-In the Adobe Cloud Platform UI, click on the Data Science tab in the top menu to take you to the Data Science Workspace. From this page, click on the JupyterLab tab which will open the JupyterLab launcher. You should see a page similar to this.
+### One-stop Data Access
 
-![](jupyterlab_launcher.png)
+Data is the cornerstone of AI and Machine Learning.  
 
-In our tutorial, we will be using Python 3 in the Jupyter Notebook to show how to access and explore the data. In the Launcher page there are sample notebooks provided. We will be using the "Retail Sales" sample for Python 3.
+Data Science Workspace is fully integrated with the Adobe Cloud Platform, including the Data Lake, Unified Profile, and Unified Edge. Explore all your organizational data stored in Adobe Cloud Platform at once, along with common big data and deep learning libraries, such as Spark ML and TensorFlow. If you don't find what you need, ingest your own datasets using the XDM standardized schema.  
 
-![](retail_sales.png)
+### Prebuilt Machine Learning Recipes
 
-### Setup
+Data Science Workspace includes prebuilt Machine Learning recipes for common business needs, like retail sales prediction and anomaly detection, so Data Scientists and developers don't have to start from scratch. The built-in recipe gallery offers recommendations for prebuilt recipes based on your business needs.
 
-With the Retail Sales notebook opened, the first thing we do is to load the libraries required for our workflow. The following list will give a short description of what each are used for:
-* **numpy** - scientific computing library that adds support for large, multi-dimensional arrays and matrices
-* **pandas** - library that offers data structures and operations used for data manipulation and analysis
-* **matplotlib.pyplot** - plotting library that provides a MATLAB-like experience when plotting 
-* **seaborn** - high-level interface data visualization library based on matplotlib
-* **sklearn** - machine learning library that features classification, regression, support vector, and cluster algorithms
-* **warnings** - library that controls warning messages  
+If you prefer, you can adapt a prebuilt recipe to your needs, import a recipe, or start from scratch to build a custom recipe. However you begin, once you train and hyper-tune a recipe, creating a custom intelligent service doesn't require a developer - just a few clicks and you're ready to build a targeted, personalized digital experience. 
 
-### Exploring Data
+### Workflow Focused on the Data Scientist
+Whatever your level of data science expertise, Data Science Workspace helps simplify and accelerate the process of finding insights in data and applying them to digital experiences.
+ 
+### Data Exploration
 
-#### Loading Data
+Finding the right data and preparing it is the most labor-intensive part of building an effective recipe. Data Science Workspace and Adobe Cloud Platform will help you get from data to insights more quickly.
 
-After the libraries are loaded, we can start looking at the data. The following Python code uses pandas' `DataFrame` data structure and the [read_csv()](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html#pandas.read_csv) function to read the CSV hosted on Github into the pandas DataFrame:
+On Adobe Cloud Platform, your cross-channel data is centralized and stored in the XDM standardized schema, so data is easier to find, understand, and clean. A single store of data based on a common schema can save you countless hours of data exploration and preparation. 
 
-![](read_csv.png)
+As you browse, use R, Python, or Scala with the integrated, hosted Jupyter Notebook to browse the catalog of data on the platform. Using one of these languages, you can also take advantage of Spark ML and TensorFlow. Start from scratch, or use one of the notebook templates provided for specific business problems. 
 
-Pandas' DataFrame data structure is a two-dimensional labeled data structure. To quickly see the dimensions of our data, we can use `df.shape`. This returns a tuple that represents the dimensionality of the DataFrame:
+As part of the data exploration workflow, you can also ingest new data or use existing features to help with data preparation.  
 
-![](df_shape.png)
+### Authoring
 
-Finally, we can take a peek at what our data looks like. We can use `df.head(n)` to view the first `n` rows of the DataFrame:
+With Data Science Workspace, you decide how you want to author recipes. 
 
-![](df_head.png)
+* Save time by browsing for a prebuilt recipe that addresses your business needs, which you can use as is or configure to meet your specific requirements. 
+* Create a recipe from scratch, using the authoring runtime in Jupyter Notebook to develop and register the recipe.
+* Upload a recipe authored outside the Adobe Cloud Platform into Data Science Workspace or import recipe code from a repository, such as Git, using the authentication and integration available between Git and Data Science Workspace.
 
-#### Statistical Summary
+### Experimentation
 
-We can leverage Python's pandas library to get the data type of each attribute. The output of the following call will gives us information about the number of entries and the data type for each of the columns:
+Data Science Workspace brings tremendous flexibility to the experimentation process. Start with your recipe. Then create a separate instance, using the same core algorithm paired with unique characteristics, such as hyper-tuning parameters. You can create as many instances as you need, training and scoring each instance as many times as you want. As you train them, Data Science Workspace tracks recipes, recipe instances, and trained instances, along with evaluation metrics, so you don't have to.
 
-```PYTHON
-df.info()
-```
+### Operationalization
 
-![](df_info.png)
+When you're happy with your recipe, it's just a few clicks to create an intelligent service. No coding required - you can do it yourself, without enlisting a developer or engineer. Finally, publish the intelligent service to Adobe IO and it's ready for your digital experience team to consume.
 
-This information is useful since knowing the data type for each column will enable us to know how to treat the data.
+<!--You can also publish your intelligent service to the Service Gallery, where it's available to specific people, specific organizations, or everyone who develops data solutions on the Adobe Cloud Platform. You can even share it with your external partners, and they can share their intelligent service with you. And the next time you're starting a new recipe, you can check the Service Gallery to see if there's a similar intelligent service you can use to get started. -->
 
-Now let's look at the statistical summary. Only the numeric data types will be shown so `date`, `storeType`, and `isHoliday` will not be outputted:
+### Continuous Improvement
 
-```PYTHON
-df.describe()
-```
+Data Science Workspace tracks where intelligent services are invoked and how they're performing. As data rolls in, you can evaluate intelligent service accuracy to close the loop, and retrain the recipes as needed to improve performance. The result is continuous refinement in the precision of customer personalization.
 
-![](df_describe.png)
+### Access to New Features and Datasets
 
-With this, we can see there are 6435 instances for each characteristic. Additionally, statistical information such as mean, standard deviation (std), min, max, and interquartiles are given. This gives us information about the deviation for the data. In the next section, we will go over visualization which works together with this information to give us a complete understanding of our data. 
+Data scientists can take advantage of new technologies and datasets as soon as they are available through the Adobe services. Through frequent updates, we do the work of integrating datasets and technologies into the platform, so you don't have to.
 
-Looking at the minimum and maximum values for `store`, we can see that there are 45 unique stores the data represents. There are also `storeTypes` which differentiate what a store is. We can see the distribution of `storeTypes` by doing the following:
+### Security and Peace of Mind
 
-![](df_groupby.png)
+Securing your data is a top priority for Adobe. We protect your data with security processes and controls developed to help us comply with industry-accepted standards, regulations, and certifications.
 
-This means 22 stores are of `storeType A` , 17 are `storeType B`, and 6 are `storeType C`.
+We build security into our software and services as part of Adobe Secure Product Lifecycle.
+To learn more about Adobe data and software security, compliance, and more, visit our security page at https://www.adobe.com/security.html. 
 
-#### Visualizing Data
+## Data Science Workspace in Action 
 
-Now that we know our data frame values, we want to supplement this with visualizations to make things clearer and easier to identify patterns. These graphs are also useful when conveying results to an audience. 
+Predictions and insights provide the information you need to deliver a highly personalized experience to each customer who visits your web site, contacts your call center, or engages in other digital experiences. Here's how your day-to-day work happens with Data Science Workspace.
 
-##### Univariate Graphs 
+### Define the Problem
 
-Univariate graphs are plots of an individual variable. A common univariate graph used to visualize your data are box and whisker plots.
+It all starts with a business problem. For example, an online call center needs context to help them turn a negative customer sentiment positive.
 
-Using our retail dataset from before, we can generate the box and whisker plot for each of the 45 stores and their weekly sales. The plot is generated using the `seaborn.boxplot` function.
+There's plenty of data about the customer. They've browsed the site, put items in their cart, and even placed orders. They might have received emails, used coupons, or contacted the call center previously. The recipe, then, needs to use the data available about the customer and their activities to determine propensity to buy and recommend an offer that the customer is likely to appreciate and use.
 
-![](box_whisker.png)
+![](example_problem.png)
+ 
+At the time of the call center contact, the customer still has two pairs of shoes in the cart, but removed a shirt. With this information, the intelligent service might recommend that the call center agent offer a coupon for 20% off on shoes during the call. If the customer uses the coupon, that information is added to the dataset and the predictions become even better the next time the customer calls.
 
-A box and whisker plot is used to show the distribution of data. The outer lines of the plot show the upper and lower quartiles while the box spans the interquartile range. The line in the box marks the median. Any points of data more than 1.5 times the upper or lower quartile are marked as a circle. These points are considered outliers.
+### Explore and Prepare the Data
 
-Next, we can plot the weekly sales with time. We will only show the output of the first store. The code in the notebook generates 6 plots corresponding to 6 of the 45 stores in our dataset.
+Based on the business problem defined, you know the recipe should look at all the customer's web transactions, including site visits, searches, page views, links clicked, cart actions, offers received, emails received, call center interactions, and so on. 
 
-![](weekly_sales.png)
+A Data Scientist typically spends up to 75% of the time required to create a recipe exploring and transforming the data. Data often comes from multiple repositories and is saved in different schemas - it must be combined and mapped before it can be used to create a recipe. 
 
-With this diagram, we can compare the weekly sales over a period of 2 years. It is easy to see sale peaks and trough patterns over time.
+Your first step is to check the recipe gallery to see if an existing recipe meets your needs, or comes close. An alternative is to import a recipe you created outside of Adobe Cloud Platform. Starting with an existing recipe often streamlines the data exploration phase and makes it easier for a Data Scientist.
+ 
+![](prebuilt_recipes.png)
 
-##### Multivariate Graphs
+If you're starting from scratch or configuring an existing recipe, you begin your data search in a centralized and standardized data catalog for you organization, which simplifies the hunt considerably. You might even find that another Data Scientist in your organization has already identified a similar dataset, and choose to fine-tune that dataset rather than start from scratch.
+All the data in the Adobe Cloud Platform complies with a standardized XDM schema, eliminating the need to create a complex model for joining data or obtain help from a Data Engineer.
 
-Multivariate plots are used to see the interaction between variables. With the visualization, data scientists can see if there are any correlations or patterns between the variables. A common multivariate graph used is a correlation matrix. With a correlation matrix, dependencies between multiple variables are quantified with the correlation coefficient. 
+If you don't immediately find the data you need, but it exists outside Adobe Cloud Platform, it's a relatively simple task to ingest additional datasets, which will also transform into the standardized XDM schema.  
+You can use Jupyter Notebook to simplify data pre-processing - possibly starting with a notebook template or a notebook you've used previously for propensity to buy.  
+ 
+![](list_of_notebooks.png)
 
-Using the same retail dataset, we can generate the correlation matrix.
+For more information, check out this tutorial:
+* [How to Access and Explore Data in the Data Science Workspace](../../tutorials/ml_access_and_explore_data_tutorial/ml_access_and_explore_data_tutorial.md)
 
-![](correlation_1.png)
+### Author the Recipe
 
-Notice the diagonal of ones down the center. This shows that when comparing a variable to itself, it has complete positive correlation. Strong positive correlation will have a magnitude closer to 1 while weak correlations will be closer to 0. Negative correlation is shown with a negative coefficient showing an inverse trend.
+If you already found a recipe that meets all your needs, you can move on to experimentation. Or, you can modify the recipe a bit or create one from scratch - taking advantage of the Data Science Workspace authoring runtime in Jupyter Notebook. Using the authoring runtime ensures that you can both use the Data Science Workspace training and scoring workflow and convert the recipe later so it can be stored in the recipe gallery and reused by others in your organization.
 
-### Feature Engineering
+You can also use the [Data Science Workspace](http://platform.adobe.com/studio) to import a recipe, so that you can take advantage of the experimentation workflows as you create your intelligent service.
 
-In this section, we will be making modifications to our Retail dataset. We will perform the following operations:
-* add week and year columns
-* convert storeType to an indicator variable
-* convert isHoliday to a numeric variable
-* predict weeklySales of next week
+For more information, check out this tutorial:
+* [Package Recipe to Import into the Data Science Workspace](../../tutorials/package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md)
 
-#### Add Week and Year Columns
+### Experiment with the Recipe
 
-The current format for date (`2010-02-05`) is hard to differentiate that the data is for every week. Because of this, we will convert the date to the week and year.
+With a recipe that incorporates your core algorithms in hand, you'll create one or more unique instances of the recipe, and change the parameters for each instance so you can experiment. Then you'll test each unique recipe instance. 
 
-![](date_to_week_year.png)
+![](recipe_hiearchy.png)
 
-Now the week and date are as follows:
+As you test, Data Science Workspace keeps track of evaluation metrics for each unique recipe instance and each trained instance. You'll check Data Science Workspace's evaluation metrics as you experiment to find the instance that performs best. 
 
-![](date_week_year.png)
+![](evaluation_metrics.png)
 
-#### Convert storeType to Indicator Variable
+For more information, check out these tutorials:
+* [Import, Train, and Evaluate Recipe Tutorial via UI](../../tutorials/how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial.md)
+* [Import, Train, and Evaluate Recipe Tutorial via API](../../tutorials/how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_api_tutorial.md)
 
-Next, we want to convert the storeType column to columns representing each `storeType`. There are 3 store types, (`A`, `B`, `C`), from which we are creating 3 new columns. The value set in each will be a boolean value where a '1' will be set depending on what the `storeType` was and `0` for the other 2 columns.
 
-![](storeType.png)
+### Operationalize the Model
 
-The current `storeType` column will be dropped.
+When you've selected the best trained recipe to address your business needs, you can create an intelligent service in Data Science Workspace without developer assistance. It's just a couple of clicks - no coding required. Then publish the intelligence service to Adobe I/O for deployment in digital experiences. 
 
-#### Convert isHoliday to Numeric
+As your intelligent service is deployed, you can continue to track where it's used and how it's doing, retraining it to improve performance as more data becomes available. 
 
-The next modification is to change the `isHoliday` boolean to a numerical representation.
-
-![](isHoliday.png)
-
-
-#### Predict weeklySales of Next Week
-
-Now we want to add previous and future weekly sales to each of our datasets. We are doing this by offsetting our `weeklySales`. Additionally, we are calculating the `weeklySales` difference. This is done by subtracting `weeklySales` with the previous week's `weeklySales`.
-
-![](weekly_past_future.png)
-
-Since we are offsetting the `weeklySales` data 45 datasets forwards and 45 datasets backwards to create new columns, the first and last 45 data points will have NaN values. We can remove these points from our dataset by using the `df.dropna()` function which removes all rows that have NaN values.
-
-![](dropna.png)
-
-A summary of the dataset after our modifications is shown below:
-
-![](df_info_new.png)
-
-
-
-### Training and Verification
-
-Now, it is time to create some models of the data and select which model is the best performer for predicting future sales. We will evaluate the 5 following algorithms:
-* Linear Regression
-* Decision Tree
-* Random Forest
-* Gradient Boosting
-* K Neighbors
-
-#### Split Dataset to Training and Testing Subsets
-
-We need a way to know how accurate our model will be able to predict values. This evaluation can be done by allocating part of dataset to use as validation and the rest as training data. Since `weeklySalesAhead` is the actual future values of `weeklySales`, we can use this to evaluate how accurate the model is at predicting the value. The splitting is done below:
-
-![](split_data.png)
-
-We now have `X_train` and `y_train` for preparing the models and `X_test` and `y_test` for evaluation later.
-
-#### Spot Check Algorithms
-
-In this section, we will declare all the algorithms into an array called `model`. Next, we iterate through this array and for each algorithm, input our training data with `model.fit()` which creates a model `mdl`. Using this model, we will predict `weeklySalesAhead` with our `X_test` data.
-
-![](training_scoring.png)
-
-For the scoring, we are taking the mean percentage difference between the predicted `weeklySalesAhead` with the actual values in the `y_test` data. Since we want to minimize the difference between our prediction and the actual, Gradient Boosting Regressor is the best performing model.
-
-#### Visualize Predictions
-
-Finally, we will visualize our prediction model with the actual weekly sales values. The blue line represents the actual numbers, while the green represents our prediction using Gradient Boosting. The following code generates 6 plots which represent 6 of the 45 stores in our dataset. Only `Store 1` is shown here:
-
-![](visualize_prediction.png)
 
 ## Conclusion
 
-With this overview, we went over the workflow that a data scientist would go through to solve a retail sales problem. Specifically, we went over the following steps to reach a solution that predicts future weekly sales.
+Data Science Workspace helps streamline and simplify data science workflow, from data gathering to algorithms to intelligent services, for Data Scientists of all skill levels. With the sophisticated tools Data Science Workspace provides, you can significantly shorten the time from data to insights.
 
-* [Setup](#setup)
-* [Exploring Data](#exploring-data)
-* [Feature Engineering](#feature-engineering)
-* [Training and Verification](#training-and-verification)
+More importantly, Data Science Workspace puts the data science and algorithmic optimization capabilities of Adobe's leading marketing platform in the hands of enterprise Data Scientists. For the first time, enterprises can bring proprietary algorithms to the platform, taking advantage of Adobe's powerful Machine Learning and AI capabilities to deliver highly personalized customer experiences at massive scale.  
 
+With the marriage of brand expertise and Adobe's Machine Learning and AI prowess, enterprises will have the power to drive more business value and brand loyalty by giving customers what they want, before they ask for it.
+
+Adobe was recently named the only leader in "The Forrester Wave™: Digital Intelligence Platforms, Q2 2017" report, and received the highest scores possible in nine criteria, including behavioral targeting and online testing.
+
+## Additional Resources
+For more information about Data Science Workspace, visit https://adobe.io/apis/cloudplatform/dataservices.html.
+To stay up to date, sign up for Adobe Sensei and AI news at www.adobe.com/subscription/adobesenseinewsletter.html.

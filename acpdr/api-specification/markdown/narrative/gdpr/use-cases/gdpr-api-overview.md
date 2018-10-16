@@ -152,7 +152,7 @@ The include key is an optional parameter. It supports an array of product string
 
 ```
 
-See [Product Values](#productvalues).
+See https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md for Product Values.
 
 If the product you specify as part of an include or exclude key does not match the list of product values, you will receive an error message and the request will fail.
 
@@ -160,9 +160,9 @@ If the product you specify as part of an include or exclude key does not match t
 
 The following flags my be specified at the root level (equivalent to the *users* or *companyContexts* keys) and will be applied for the complete set of user data included.
 
-* The **include** key is an optional parameter and supports an array of product strings to exclude in your processing. If you only support or integrate with Analytics, you could include only Analytics in the request. By default, all supported ExC solutions are included in every request. See [Product Values](#productvalues).
+* The **include** key is an optional parameter and supports an array of product strings to exclude in your processing. If you only support or integrate with Analytics, you could include only Analytics in the request. By default, all supported ExC solutions are included in every request. See [product values](#productvalues)
 * the **expandIds** key is an optional parameter and supports a boolean value of true|false. optional field that represents an optimization for processing the IDs in the solutions (currently only used by Analytics). If omitted, Analytics' default behavior is *false*
-* The **priority** key is an optional parameter (*normal*|*low*) for optimizing requests based on customer need. This key is inactive at the moment. 
+* The **priority** key is an optional parameter (*normal*|*low*) for optimizing requests based on customer need. If an end-user makes the request, and thus the company is required to respond within the 30 day window for GDPR, the priority should always be *normal* (default value if omitted). If the request is being made by systems for cleanup or optimization, it may not need to fall within the time table of a GDPR request by law, thus could be set to *low* to allow other requests to process sooner.
 * The **analyticsDeleteMethod** is an optional parameter (*purge*|*anonymize*) for specifying how Analytics should handle the customer data. By default (if omitted), all data referenced by the given collection of user IDs is anonymized, thus maintaining data integrity for historical reporting and other functions. Purge will remove the data completely.
 
 ## Creating your API Integration

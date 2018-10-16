@@ -179,7 +179,7 @@ The schema hierarchy would now have these reference schemas, and their fields, e
 
 In order to accommodate non-standard data, existing schemas may be 'extended' by adding one or more fields that define personalized data.
 
-You should be thoughtful when extending a schema and check first that an XDM defined schema or field does not already exist. If one does exist, you will benefit more from using the XDM defined schema or field as platform services will implicitly understand the definition for that schema or field.
+You should be thoughtful when extending a schema and first check that an XDM defined schema or field does not already exist. If one does exist, you will benefit more from using the XDM defined schema or field as platform services will implicitly understand the definition for that schema or field.
 
 It is best to avoid creating custom extensions unless you are defining a narrow use case that exists outside the scope of existing schemas and fields.
 

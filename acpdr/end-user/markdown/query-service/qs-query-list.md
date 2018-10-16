@@ -1,6 +1,6 @@
 # Query List Page
 
-You can retrieve authentication information and connect to your instance of the Query Service to see what datasets are available and issue queries. The Adobe Experience Platform UI shows a list of queries that you've run. The query list provides the following information:
+You can retrieve authentication information and connect to your instance of the Query Service to see what datasets are available and issue queries. The Platform UI shows a list of queries that you've run. The query list provides the following information:
 
 *   Query name
     

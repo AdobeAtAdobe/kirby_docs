@@ -18,7 +18,7 @@ In this step by step tutorial, we will go over how to score your Recipe via Adob
 
 In this section, we will create a scoring run for an existing Experiment run. We went over how to import, train, and evaluate a recipe in a previous tutorial found [here](../how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial.md).
 
-First, we will open our existing trained model. Launch the [Adobe Cloud Platform UI](https://platform.adobe.com) and go to the `Data Science` tab in the top navigation bar. In the Recipes carousel, find the existing Recipe that you created.
+First, we will open our existing trained model. Launch the [Adobe Cloud Platform UI](https://ui-prod-va7.cloud.adobe.io/) and go to the `Data Science` tab in the top navigation bar. In the Recipes carousel, find the existing Recipe that you created.
 
 ### Create New Scoring Run
 
@@ -26,7 +26,7 @@ From the Recipe page, you should see your Instances. From here, navigate into yo
 
 On the Experiment page, you will be able to see the "Scoring Runs" tab along with the "Score" button. The "Scoring Runs" tab lists all scoring runs that are under the current Experiment while the "Score" button will allow the user to create new Scoring Runs using the current configuration. The current training and scoring parameter configuration can be seen in the "Configuration Details" tab. 
 
-When clicking on the "Score" button, a popup menu will appear which allows you to view and add to the Scoring parameters. You can edit the configuration in two ways: The first method involves uploading a new JSON file when clicking on the "Upload New Config" button. The second method allows users to add new parameters or edit existing parameters in the menu. By entering a new key name along with the value in the fields below, you can add custom parameters to the scoring run. Note that you will not be able to remove parameters that were added as a configuration when the Experiment was created. These are known as "inherited parameters". You can edit or revert non-inherited parameters by double clicking the value or clicking on the revert icon while hovering the entry. 
+When clicking on the "Score" button, a popup menu will appear which allows you to view and add to the Scoring parameters. You can edit the configuration in two ways: The first method involves uploading a new JSON file when clicking on the "Upload New Config" button. The second method allows users to add new parameters or edit exising parameters in the menu. By entering a new key name along with the value in the fields below, you can add custom parameters to the scoring run. Note that you will not be able to remove parameters that were added as a configuration when the Experiment was created. These are known as "inherited parameters". You can edit or revert non-inherited parameters by double clicking the value or clicking on the revert icon while hovering the entry. 
 
 ![](new_scoring_run.png)
 
