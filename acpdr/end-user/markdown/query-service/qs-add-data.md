@@ -1,4 +1,4 @@
-# Get Your Data on Adobe Cloud Platform
+# Get Your Data on Adobe Experience Platform
 
 Ingest additional datasets, beyond the solution datasets, needed to support planned queries.
 

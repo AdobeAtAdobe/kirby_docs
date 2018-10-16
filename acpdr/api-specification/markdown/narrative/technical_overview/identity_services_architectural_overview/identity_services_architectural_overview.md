@@ -74,7 +74,7 @@ For data conforming to the ExperienceEvent XDM, identities can be provided as an
 {
 	"endUserIDs": {
 		"_experience": {
-			"mcid": {
+			"ecid": {
 				"id": "83115878867093271677830342615471247088",
 				"namespace": {
 					"code": "ECID"

@@ -154,7 +154,7 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
 
 After successfully creating a new batch for uploading, files can be then be uploaded to a specific dataset.
 
-If the file is smaller than 512MB, it can be uploaded in a single chunk, which we will walk through here. If the original file being uploaded is greater than 512 MB, it will need to be broken up into 512 MB chunks, before being ingested, and uploaded one file at a time. Uploading a larger file is covered in [section 4.3.2.1 of the Data Ingestion Technical Overview](https://git.corp.adobe.com/experience-platform/documentation/blob/master/api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md).
+If the file is smaller than 512MB, it can be uploaded in a single chunk, which we will walk through here. If the original file being uploaded is greater than 512 MB, it will need to be broken up into 512 MB chunks, before being ingested, and uploaded one file at a time. Uploading a larger file is covered in [section 4.3.2.1 of the Data Ingestion Technical Overview](../technical_overview/ingest_architectural_overview/ingest_architectural_overview.md).
 
 Data is uploaded to the schema defined (`Profile schema`) by when the dataset was created.  The file being uploaded must match the XDM schema of the dataset it will be uploaded into.
 

@@ -2,7 +2,7 @@
 
 The Query Service workflow consists of the following steps.
 
-1.  [Ingest your data into the Adobe Cloud Platform.](qs-add-data.md)
+1.  [Ingest your data into the Adobe Experience Platform.](qs-add-data.md)
     
 2.  [Connect a supported client.](qs-connect-client.md)
     

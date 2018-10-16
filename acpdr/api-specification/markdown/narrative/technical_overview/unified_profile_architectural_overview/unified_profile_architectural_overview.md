@@ -329,7 +329,7 @@ __Example response__
                 {
                     "xid": "A2-s19jafhDickW6PP0c5dpi",
                     "namespace": {
-                        "code": "mcId",
+                        "code": "ecId",
                         "id": 4
                     },
                     "id": "82781972020839607487123257673310321221"
@@ -424,11 +424,11 @@ __Example response__
                     "_vendor": {
                         "adobe": {
                             "experience": {
-                                "mcId": {
+                                "ecId": {
                                     "id": "55115069898928455152185628961882945298",
                                     "namespace": {
                                         "id": 0,
-                                        "code": "mcId"
+                                        "code": "ecId"
                                     }
                                 },
                                 "analytics": {
