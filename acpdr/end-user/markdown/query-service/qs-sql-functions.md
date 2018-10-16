@@ -19,14 +19,14 @@ The majority of the Spark SQL helpers are window functions that are updated with
 Example:
 
 ```
-SELECT endUserIds._experience.mcid, timestamp,
+SELECT endUserIds._experience.mcid.id, timestamp,
        SESS_TIMEOUT(ts, 60 * 30)
-         OVER (PARTITION BY endUserIds._experience.mcid
+         OVER (PARTITION BY endUserIds._experience.mcid.id
                ORDER BY timestamp
                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
          AS sess
 FROM experience_events
-ORDER BY endUserIds._experience.mcid, timestamp ASC
+ORDER BY endUserIds._experience.mcid.id, timestamp ASC
 ```
 
 ### Attribution
@@ -35,38 +35,38 @@ ORDER BY endUserIds._experience.mcid, timestamp ASC
 
 Determines the allocation for the first, single channel.
 
-Syntax: `ATTRIBUTION\_FIRST\_TOUCH(timestamp, channelName, channelValue) OVER (\[partition\] \[order\] \[frame\])`
+Syntax: `ATTRIBUTION_FIRST_TOUCH(timestamp, channelName, channelValue) OVER ([partition] [order] [frame])`
 
 Example:
 
 ```
-SELECT endUserIds._experience.mcid, timestamp, marketing.trackingCode,
-    ATTRIBUTION\_FIRST\_TOUCH(timestamp, 'trackingCode', marketing.trackingCode)
-      OVER(PARTITION BY endUserIds._experience.mcid
+SELECT endUserIds._experience.mcid.id, timestamp, marketing.trackingCode,
+    ATTRIBUTION_FIRST_TOUCH(timestamp, 'trackingCode', marketing.trackingCode)
+      OVER(PARTITION BY endUserIds._experience.mcid.id
            ORDER BY timestamp
            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
       AS first_touch
 FROM experience_events
-ORDER BY endUserIds._experience.mcid, timestamp ASC
+ORDER BY endUserIds._experience.mcid.id, timestamp ASC
 ```
 
 **Last Touch Attribution**
 
 Determines the allocation for the last, single channel.
 
-Syntax: `ATTRIBUTION\_LAST\_TOUCH(timestamp, channelName, channelValue) OVER (\[partition\] \[order\] \[frame\])`
+Syntax: `ATTRIBUTION_LAST_TOUCH(timestamp, channelName, channelValue) OVER ([partition] [order] [frame])`
 
 Example:
 
 ```
-SELECT endUserIds._experience.mcid, timestamp, marketing.trackingCode,
-    ATTRIBUTION\_LAST\_TOUCH(timestamp, 'trackingCode', marketing.trackingCode)
-      OVER(PARTITION BY endUserIds._experience.mcid
+SELECT endUserIds._experience.mcid.id, timestamp, marketing.trackingCode,
+    ATTRIBUTION_LAST_TOUCH(timestamp, 'trackingCode', marketing.trackingCode)
+      OVER(PARTITION BY endUserIds._experience.mcid.id
            ORDER BY timestamp
            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
       AS last_touch
 FROM experience_events
-ORDER BY endUserIds._experience.mcid, timestamp ASC
+ORDER BY endUserIds._experience.mcid.id, timestamp ASC
 ```
 
 ### Previous/Next touch
@@ -75,38 +75,38 @@ ORDER BY endUserIds._experience.mcid, timestamp ASC
 
 Determines the previous value of a particular field within the window.
 
-Syntax: `PREVIOUS(key, \[shift, \[ignoreNulls\]\]) OVER (\[partition\] \[order\] \[frame\])`
+Syntax: `PREVIOUS(key, [shift, [ignoreNulls]]) OVER ([partition] [order] [frame])`
 
 Example:
 
 ```
-SELECT endUserIds._experience.mcid, sessionId, timestamp, pageName
-    PREVIOUS(pageName, 3)
-      OVER(PARTITION BY endUserIds._experience.mcid, sessionId
+SELECT endUserIds._experience.mcid.id, _experience.analytics.session.num, timestamp, web.webPageDetails.name
+    PREVIOUS(web.webPageDetails.name, 3)
+      OVER(PARTITION BY endUserIds._experience.mcid.id, _experience.analytics.session.num
            ORDER BY timestamp
            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
       AS previous_page
 FROM experience_events
-ORDER BY endUserIds._experience.mcid, sessionId, timestamp ASC
+ORDER BY endUserIds._experience.mcid.id, _experience.analytics.session.num, timestamp ASC
 ```
 
 **Next Touch**
 
 Determines the next value of a particular field within the window.
 
-Syntax: `NEXT(key, \[shift, \[ignoreNulls\]\]) OVER (\[partition\] \[order\] \[frame\])`
+Syntax: `NEXT(key, [shift, [ignoreNulls]]) OVER ([partition] [order] [frame])`
 
 Example:
 
 ```
-SELECT endUserIds._experience.mcid, sessionId, timestamp, pageName
-    NEXT(pageName, 2, true)
-      OVER(PARTITION BY endUserIds._experience.mcid, sessionId
+SELECT endUserIds._experience.mcid.id, _experience.analytics.session.num, timestamp, web.webPageDetails.name
+    NEXT(web.webPageDetails.name, 2, true)
+      OVER(PARTITION BY endUserIds._experience.mcid.id, _experience.analytics.session.num
            ORDER BY timestamp
            ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING)
       AS next_page
 FROM experience_events
-ORDER BY endUserIds._experience.mcid, sessionId, timestamp ASC
+ORDER BY endUserIds._experience.mcid.id, _experience.analytics.session.num, timestamp ASC
 ```
 
 ### Time-Between
@@ -115,36 +115,36 @@ ORDER BY endUserIds._experience.mcid, sessionId, timestamp ASC
 
 Provides a new dimension, that measures the time which has elapsed since a particular incident.
 
-Syntax: `TIME\_BETWEEN\_PREVIOUS_MATCH(time, eventDefintion, \[timeUnit\]) OVER (\[partition\] \[order\] \[frame\])`
+Syntax: `TIME_BETWEEN_PREVIOUS_MATCH(time, eventDefintion, [timeUnit]) OVER ([partition] [order] [frame])`
 
 Example:
 
 ```
-SELECT endUserIds._experience.mcid, sessionId, timestamp, pageName
-    TIME\_BETWEEN\_PREVIOUS_MATCH(ts, pageName='registration complete', 'minutes')
-      OVER(PARTITION BY endUserIds._experience.mcid, sessionId
+SELECT endUserIds._experience.mcid.id, _experience.analytics.session.num, timestamp, web.webPageDetails.name
+    TIME_BETWEEN_PREVIOUS_MATCH(ts, web.webPageDetails.name='registration complete', 'minutes')
+      OVER(PARTITION BY endUserIds._experience.mcid.id, _experience.analytics.session.num
            ORDER BY timestamp
            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
-      AS time\_between\_previous_match
+      AS time_between_previous_match
 FROM experience_events
-ORDER BY endUserIds._experience.mcid, sessionId, timestamp ASC
+ORDER BY endUserIds._experience.mcid.id, _experience.analytics.session.num, timestamp ASC
 ```
 
 **Time-Between Next Match**
 
 Provides a new dimension, that measures the time before which a particular event occured.
 
-Syntax: `TIME\_BETWEEN\_NEXT_MATCH(time, eventDefintion, \[timeUnit\]) OVER (\[partition\] \[order\] \[frame\])`
+Syntax: `TIME_BETWEEN_NEXT_MATCH(time, eventDefintion, [timeUnit]) OVER ([partition] [order] [frame])`
 
 Example:
 
 ```
-SELECT endUserIds._experience.mcid, sessionId, timestamp, pageName
-    TIME\_BETWEEN\_NEXT_MATCH(ts, pageName='registration complete', 'hours')
-      OVER(PARTITION BY endUserIds._experience.mcid, sessionId
+SELECT endUserIds._experience.mcid.id, _experience.analytics.session.num, timestamp, web.webPageDetails.name
+    TIME_BETWEEN_NEXT_MATCH(ts, web.webPageDetails.name='registration complete', 'hours')
+      OVER(PARTITION BY endUserIds._experience.mcid.id, _experience.analytics.session.num
            ORDER BY timestamp
            ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING)
-      AS time\_between\_next_match
+      AS time_between_next_match
 FROM experience_events
-ORDER BY endUserIds._experience.mcid, sessionId, timestamp ASC
+ORDER BY endUserIds._experience.mcid.id, _experience.analytics.session.num, timestamp ASC
 ```

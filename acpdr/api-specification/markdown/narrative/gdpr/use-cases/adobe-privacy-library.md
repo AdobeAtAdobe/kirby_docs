@@ -44,9 +44,8 @@ There are multiple options to install the AdobePrivacy library:
 
 * To install AdobePrivacy from npm, run the following command: `npm install @adobe/adobe-privacy`
 * Use the Launch Extension under the name `AdobePrivacy`
-* Download from [https://assets.adobedtm.com/experience-cloud/privacy/js/adobeprivacy.bundle.zip](https://assets.adobedtm.com/experience-cloud/privacy/js/adobeprivacy.bundle.zip)
-* Install the script via DTM by adding a "Sequential JavaScript Tag"
-* Use the pre-built Launch Extension in Adobe's New Tag Management Offering, ["Launch, by Adobe"](https://www.adobe.com/enterprise/cloud-platform/launch.html)
+* Download from [https://github.com/Adobe-Marketing-Cloud/adobe-privacy](https://github.com/Adobe-Marketing-Cloud/adobe-privacy)
+
 
 
 
