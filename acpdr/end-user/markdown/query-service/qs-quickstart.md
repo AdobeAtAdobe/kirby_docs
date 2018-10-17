@@ -1,20 +1,6 @@
 # Quick Start Guide
+1. In order to use Query Service, your organization needs to be provisioned for the Adobe Experience Platform and your adminstrator needs to grant you access to it. 
+2. If you haven't already ingested your data into the Adobe Experience Platform, then that is where you should start. Here you can find [data ingestion documentation](https://stage.adobe.io/apis/cloudplatform/dataservices/data-ingestion.html).
+3. The Experience Query Service provides a way to connect external tools to issue queries. Here are instructions on connecting a tool such as a Business Intelligence tool or a command line interface. [Connect a tool.](qs-connect.md)
+4. Once you have an external tool connected, you can [write and run queries.](qs-queries.md) 
 
-The Query Service workflow consists of the following steps.
-
-1.  [Ingest your data into the Adobe Experience Platform.](qs-add-data.md)
-    
-2.  [Connect a supported client.](qs-connect-client.md)
-    
-3.  [Run a query.](qs-run-query.md)
-    
-
-*   **[Prepare to Implement Query Service](qs-prepare-to-implement.md)**  
-    
-*   **[Implement Query Service](qs-implement.md)**  
-    
-*   **[Get Your Data on Adobe Cloud Platform](qs-add-data.md)**  
-    
-*   **[Connect a Supported Client](qs-connect-client.md)**  
-    
-*   **[Run a Query](qs-run-query.md)**

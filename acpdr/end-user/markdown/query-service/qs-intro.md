@@ -1,33 +1,26 @@
-# What Is the Query Service?
+# What Is the Experience Query Service?
 
-Use the Query Service to build comprehensive data analysis ecosystems. Create a picture of consumers across their various interaction channels. These channels might include:
+The Experience Query Service gives you the ability to use standard SQL to query data in the Adobe Experience Platform in support of many different use cases. It is a serverless tool which allows you to join any datasets in the Experience Data Lake and capture the query results as a new dataset for use in reporting, Data Science Workspace, or for ingestion into Profile Service. 
+
+You can use the Query Service to build data analysis ecosystems, creating a picture of consumers across their various interaction channels. These channels might include:
 
 *   Point-of-sale system
-*   Website
+*   Web
+*   Mobile
 *   CRM system
 
-The Query Service helps you collect all that data in one place and answer questions about that data.
+## Key Use Case Examples
+* Joins of Experience Event datasets with other customer data to create reporting or BI inputs
+* Customer Journey reporting
+* Omni-channel attribution
+* Data collection debugging
 
-Traditionally, data has been siloed in different vendor solutions or managed across different internal environments like Hadoop or other proprietary data warehousing systems, making it difficult to access and use together to gain the most insights. And, once insights are generated, each of these environments has different workflows for getting them back into the Experience Cloud.
 
-The Adobe Experience Platform Query Service closes that loop. It provides a general-purpose SQL interface for Experience Platform datasets.
+The Query Service serves as a consolidated reporting SQL interface for solutions across the Experience Cloud and other datasets loaded into the Experience Platform. In its current implementation, the Query Service provides:
 
-The Query Service serves as a consolidated reporting SQL interface for solutions across the Experience Cloud and other datasets loaded into the Experience Platform.
+*   A Query List UI to see all of the queries that have been run in your organization.
+*   The ability to connect external query clients.
+*   The ability to create datasets in the Experience Data Lake from query output.
+*   An HTTP API for issuing queries.
 
-In its current implementation, Query Service provides:
-
-*   Basic structure
-*   Query service itself
-*   SQL interface to make it possible to generate queries
-*   Integration pathways for external tools to connect and issue queries
-
-## High-Level Objectives
-
-*   Provide an SQL interface into Experience Platform datasets.
-*   Support the existing Adobe IMS authorization model.
-*   Support Analytics reporting functionality like Sessionization and Attribution through extra SQL helper functions.
-*   Support joining between datasets.
-*   Support both live and export queries.
-*   Support a classic HTTP API and allow integrations with 3rd party applications without a new, proprietary JDBC/ODBC driver.
-*   Lay the foundation for future functionality later, such as machine learning.
-*   Accomplish all of the above using open-source resources whenever possible.
+### [Get Started](qs-quickstart.md)
