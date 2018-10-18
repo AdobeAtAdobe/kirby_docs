@@ -32,6 +32,9 @@
 <a name="ref-gdprstatusresponse"></a>
 ### [GdprStatusResponse](definitions/GdprStatusResponse.md#gdprstatusresponse)
 
+<a name="ref-page"></a>
+### [GET Pagination](definitions/GdprPageSizeResponse.md#page)
+
 <a name="ref-jobs"></a>
 ### [Jobs](definitions/Jobs.md#jobs)
 

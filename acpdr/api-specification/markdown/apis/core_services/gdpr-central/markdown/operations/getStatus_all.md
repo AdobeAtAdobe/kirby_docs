@@ -14,7 +14,8 @@ GET /data/privacy/gdpr
 |**Header**|**Content-Type**  <br>*required*|application/json|string|
 |**Header**|**x-api-key**  <br>*required*|acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io|string|
 |**Header**|**x-gw-ims-org-id**  <br>*required*|XXXXX47E56F59C747FXXXXX@AdobeOrg|string|
-
+|**Query parameter**|**page**  <br>*required*|The page number when requesting results with the GET All API|integer|
+|**Query parameter**|**size**  <br>*required*|The number of items per page when requesting results with the GET All API|string|
 
 #### Responses
 
@@ -88,7 +89,7 @@ json :
   "errorType" : "https://mcloud.io/client-error",
   "errorCode" : "4xx",
   "title" : "Client side error",
-  "detail" : "Invalid ID format"
+  "detail" : "Invalid ID format" "Page size exceeded"
 }
 ```
 

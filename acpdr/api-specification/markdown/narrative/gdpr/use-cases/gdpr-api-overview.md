@@ -10,7 +10,7 @@ This document provides an overview of how to integrate with and consume the GDPR
 
 Across the Adobe Experience Cloud there are many products that support your digital marketing needs. Each solution handles data and user identities in unique ways, according to their business goals. However, they also must support to the overall ExC goals for security and compliance. The GDPR API has been developed to do exactly this: coordinate privacy and compliance requests across various solutions in the ExC, beginning with GDPR access and deletion requests.
 
-All GDPR API requests are REST-based with JSON used as the payload for requests and responses. Documentation on each of the supported APIs can be found here: [GDPR API Specification](http://www.adobe.io)
+All GDPR API requests are REST-based with JSON used as the payload for requests and responses. Documentation on each of the supported APIs can be found at [GDPR API Specification](https://www.adobe.io/apis/cloudplatform/gdpr/api-reference.html)
 
 ## Submitting your first GDPR request (POST)
 
@@ -247,11 +247,9 @@ Note the `jobId` value in the response shown in Listing 3. This value is used fo
 
 Once a job ID is obtained, it can be used to retrieve details about the job started from a previous `access` or `delete` request. A `status` request containing a `jobId` value is shown in Listing 5.
 
-**Listing 5:** GDPR `status` request by Job ID
+Listing 4 illustrates how the GDPR `status` API request uses the same URI as an `access` or `delete` request with one exception - the ID of a specific job is appended to the URI. If the job ID is not specified, details about all jobs for the authenticated integration is returned.
 
-Listing 5 illustrates how the GDPR `status` API request uses the same URI as an `access` or `delete` request with one exception - the ID of a specific job is appended to the URI. If the job ID is not specified, details about all jobs for the authenticated integration is returned.
-
-Listing 6 shows a typical example of a response payload from a `status` request that specified a job ID.
+Listing 4 shows a typical example of a response payload from a `status` request that specified a job ID.
 
 ```
 {
@@ -362,7 +360,7 @@ Listing 6 shows a typical example of a response payload from a `status` request 
 }
 ```
 
-**Listing 6:** Response payload from a `status` request with a job ID
+**Listing 4:** Response payload from a `status` request with a job ID
 
 As shown above, the response gives additional detail about each solution that is currently performing work on behalf of this job. The following table lists the corresponding status codes and their meaning:
 
@@ -513,7 +511,86 @@ A job might remain in a processing state if a dependent child job is still in pr
     "totalRecords": 1
 }
 ```
-**Listing7:** Response to Get Job `status` with child
+**Listing 5:** Response to Get Job `status` with child
+
+### GET All API with Pagination
+
+You can use pagination when requesting results with the GET All API.
+
+HTTP Method: GET
+
+The default request looks like this:
+
+`https://platform.adobe.io/data/privacy/gdpr?data=true`
+
+By default, `page=1` and `size=25`. The maximum allowed size is 100.
+
+If the size parameter exceeds the maximum limit, you'll receive HTTP status code 400 with the following response:
+
+```javascript
+{
+    "errors": {
+        "errorType": "uri=/data/privacy/gdpr",
+        "errorCode": 400,
+        "title": "Invalid Request",
+        "detail": "Page size exceeded,Maximum page size supported is 100"
+    },
+    "totalRecords": 0
+}
+```
+**Listing 6:** Response to Get Job when size exceeds the max limit
+
+**Sample request 1**
+You can change the page and size parameters. For example, to make a request where `page=1` and `size=50`:
+
+`https://platform.adobe.io/data/privacy/gdpr?data=true&page=1&size=50`
+
+This results in the following response:
+
+```javascript
+{
+  "jobs": [
+     ...list of 50 job details
+  ],
+  "totalRecords": 75
+}
+```
+**Listing 7:** A sample status check for all jobs
+
+To fetch the next set of remaining 25 job details, you would request:
+
+`https://platform.adobe.io/data/privacy/gdpr?data=true&page=2&size=50`
+
+**Sample request 2**
+
+`https://platform.adobe.io/data/privacy/gdpr?data=true&page=1&size=50`
+
+This results in this response:
+
+```javascript
+{
+  "jobs": [
+     ...list of 50 job details
+  ],
+  "totalRecords": 175
+}
+
+```
+**Listing 8:** A sample status check for all jobs
+
+The above request will return jobs from 1 to 50.
+ 
+To fetch next four pages, you would request:
+
+`https://platform.adobe.io/data/privacy/gdpr?data=true&page=2&size=50`
+
+The above request returns jobs from 51 to 100. To request jobs 101 to 150, make the following request:
+
+`https://platform.adobe.io/data/privacy/gdpr?data=true&page=3&size=50`
+
+To request jobs 151 to 175:
+
+`https://platform.adobe.io/data/privacy/gdpr?data=true&page=4&size=50`
 
 ### Namespace Qualifiers
 
@@ -535,9 +612,11 @@ product {
     "Analytics",
     "AudienceManager",
     "AdCloud",
+    "AdobeCloudPlatform",
     "CRS",
     "DPSC",
     "Campaign",
+    "ProfileService",
     "Target"
 }
 ```
