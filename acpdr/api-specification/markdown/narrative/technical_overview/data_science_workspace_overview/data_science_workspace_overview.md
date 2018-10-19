@@ -61,7 +61,7 @@ Before diving into details of Data Science Workspace, here is a brief summary of
 | XDM | Standardized, extensible schemas for representing all experience data to enable immediate semantic understanding of cross-channel data and foster an ecosystem of pre-built insights & services. [(More information)](https://adobe.io/apis/cloudplatform/dataservices/xdm.html) |
 | Feature | An individual measurable property or characteristic of a phenomenon being observed |
 | Feature Engineering | The process of converting raw data into usable form for analysis - using domain knowledge of the data to create features that make machine learning algorithms work. |
-| Recipe | Propriety algorithm, or an ensemble of algorithms, to help solve specific business problems |
+| Recipe | Proprietary algorithm, or an ensemble of algorithms, to help solve specific business problems |
 | Instance | An occurrence of the recipe configured with the right data definition to help solve specific business problems. One recipe can create many instances. |
 | Trained Model | An instance (of the recipe) that is trained using historical data to learn from. The historical data must contain the correct answer, also known as the target or target attribute. The trained model finds patterns in the training data to help predict the target and uses that knowledge to predict the target for new sets of data where the target is unknown. One instance can create multiple trained models - one per training task. |
 | Service | Created from a "Trained Model" to be used in building experiences. |
