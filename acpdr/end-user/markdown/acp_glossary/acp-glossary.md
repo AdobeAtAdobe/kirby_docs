@@ -1,25 +1,25 @@
-# Glossary of the Adobe Cloud Platform
+# Glossary of the Adobe Experience Platform
 
 
 ## A
 
-__Adobe Cloud Platform:__ Adobe Cloud Platform (ACP) centralizes and standardizes content and data; to help identify, understand and engage customers to deliver consistent, continuous and compelling experiences. ACP leverages Adobe Sensei, Adobe’s AI and machine learning framework across Adobe Creative, Document and Experience Clouds. 
+__Adobe Experience Platform:__ Adobe Experience Platform (AEP) centralizes and standardizes content and data; to help identify, understand and engage customers to deliver consistent, continuous and compelling experiences. AEP leverages Adobe Sensei, Adobe’s AI and machine learning framework across Adobe Creative, Document and Experience Clouds. 
 
-__Adobe Connectors:__ Adobe Connectors are pre-configured connections created by Adobe, that enable data to flow in and out of the Adobe Cloud Platform. An example of an Adobe connector would be Salesforce, Microsoft Dynamics, Adobe Analytics or Adobe Campaign.
+__Adobe Connectors:__ Adobe Connectors are pre-configured connections created by Adobe, that enable data to flow in and out of the Adobe Experience Platform. An example of an Adobe connector would be Salesforce, Microsoft Dynamics, Adobe Analytics or Adobe Campaign.
 
-__Adobe I/O:__ Adobe I/O is part of Adobe Cloud Platform and provides access to everything developers need to integrate, extend and customize Adobe Cloud Platform including APIs, events, developer console, and helpful tooling. 
+__Adobe I/O:__ Adobe I/O is part of Adobe Experience Platform and provides access to everything developers need to integrate, extend and customize Adobe Experience Platform including APIs, events, developer console, and helpful tooling. 
 
-__Append Save Strategy:__ `Append` save strategy is an option when specifying 3rd party data to ingest via a connection, any new data or rows are written to the end of the dataset. The previously ingested rows remain untouched and only rows created since the last scheduled run are ingested into the Adobe Cloud Platform. Any rows that were changed in the source system remained unchanged on the ACP. 
+__Append Save Strategy:__ `Append` save strategy is an option when specifying 3rd party data to ingest via a connection, any new data or rows are written to the end of the dataset. The previously ingested rows remain untouched and only rows created since the last scheduled run are ingested into the Adobe Experience Platform. Any rows that were changed in the source system remained unchanged on the AEP. 
 
 ## B
 
-__Backfill Period:__ Backfill period is an option for ingesting 3rd party data via a connection, how far back in time is existing data is ingested to the Adobe Cloud Platform. Selecting a backfill period of forever will ingest the entire history of the source data to ACP.
+__Backfill Period:__ Backfill period is an option for ingesting 3rd party data via a connection, how far back in time is existing data is ingested to the Adobe Experience Platform. Selecting a backfill period of forever will ingest the entire history of the source data to AEP.
 
 __Batch:__ Batch is a set of data collected over a period of time and processed together as a single unit.
 
 ## C
 
-__Connection:__ A connection is a virtual pipeline that enables data to flow in and out of the Adobe Cloud Platform.
+__Connection:__ A connection is a virtual pipeline that enables data to flow in and out of the Adobe Experience Platform.
 
 __Connection Labels:__ Connection labels are data governance labels that are applied when setting up or editing a connection. Data governance labels added to a connection are inherited down or applied to all datasets and fields ingested through the connection.
 
@@ -52,21 +52,22 @@ __Data Governance:__ Data governance encompasses the strategies and technologies
 
 __Data Governance Labels:__ Data governance labels provide users the ability to classify data that reflects privacy related considerations and contractual conditions to be compliant with regulations and organization policies. Data governance labels added to a connection are inherited down or applied to all datasets and fields ingested through the connection.  Data governance labels can also be applied directly to datasets and fields.
 
-__Data Integration Partners:__ Data integration partners are companies that Adobe partners with to integrate and automate the flow of data to and from 3rd party sources to and from the Adobe Cloud Platform.
+__Data Integration Partners:__ Data integration partners are companies that Adobe partners with to integrate and automate the flow of data to and from 3rd party sources to and from the Adobe Experience Platform.
 
 __Dataset Labels:__ Dataset labels are data governance labels that are either inherited from a connection or applied directly to a dataset. Labels applied to a dataset are applied to all fields within the dataset.
 
 __Data Steward:__ Data steward is the person responsible for the management, oversight and enforcement of an organization's data assets. A data steward also ensures data governance policies are safeguarded and maintained to be compliance with government regulations and organization policies.
 
-__Delta Save Strategy:__ Delta save strategy is an option for ingesting 3rd party data via a connection. The option allows the user to specify that new or changed rows of source data are ingested into the Adobe Cloud Platform. New rows are added to the end of the dataset and changed rows are updated in dataset on the ACP.
+__Delta Save Strategy:__ Delta save strategy is an option for ingesting 3rd party data via a connection. The option allows the user to specify that new or changed rows of source data are ingested into the Adobe Experience Platform. New rows are added to the end of the dataset and changed rows are updated in dataset on the AEP.
 
 __Display Name:__ Display name is the title of a field that is shown in the schema user interface.
 
 ## E
 
-__Experience Data Model (XDM):__ Experience Data Model (XDM) is the concept of using standard schemas to unify data for use with the Adobe Cloud Platform and Adobe Experience Cloud solutions. XDM standardizes how data is structured and speeds up and simplifies the process of gaining insights from massive amounts of data.
+__Experience Data Model (XDM):__ Experience Data Model (XDM) is the concept of using standard schemas to unify data for use with the Adobe Experience Platform and Adobe Experience 
+solutions. XDM standardizes how data is structured and speeds up and simplifies the process of gaining insights from massive amounts of data.
 
-__ExperienceEvent:__ ExperienceEvent is an Adobe Cloud Platform standard schema used to define behavioral event data.
+__ExperienceEvent:__ ExperienceEvent is an Adobe Experience Platform standard schema used to define behavioral event data.
 
 __Extension:__ An extension is the addition of one or more fields to an existing schema.
 
@@ -90,9 +91,9 @@ __I1 Data Label:__ The I1 data label is used to classify data that can directly 
 
 __I2 Data Label:__ The I2 data label is used to classify indirectly identifiable data that can be used in combination with any other data to identify or contact a specific person.  Indirectly identifiable data can be used to contact or identify a given individual if used with other data, no matter where the additional data is located or who has control of the data.
 
-__Ingest:__ Ingestion is the process of adding data from a source to the Adobe Cloud Platform. Data can be ingested to the ACP in a number of ways, it can be streamed, batched or added via file upload.
+__Ingest:__ Ingestion is the process of adding data from a source to the Adobe Experience Platform. Data can be ingested to the AEP in a number of ways, it can be streamed, batched or added via file upload.
 
-__Ingestion Schedule:__ Ingestion schedule provides time based options for when data is ingested from a source to the Adobe Cloud Platform.
+__Ingestion Schedule:__ Ingestion schedule provides time based options for when data is ingested from a source to the Adobe Experience Platform.
 
 ## J
 
@@ -108,7 +109,7 @@ __Modified Date Column:__ Selecting a `Modified Date` column, is an option when 
 
 ## O
 
-__Overwrite Save Strategy:__ `Overwrite` save strategy is an option for ingesting 3rd party data via a connection, where the user specifies if ingested data will be overwritten on a specified schedule. The Adobe Cloud platform will ingest the specified dataset from the 3rd party source and overwrite the dataset on the ACP.
+__Overwrite Save Strategy:__ `Overwrite` save strategy is an option for ingesting 3rd party data via a connection, where the user specifies if ingested data will be overwritten on a specified schedule. The Adobe Experience platform will ingest the specified dataset from the 3rd party source and overwrite the dataset on the AEP.
 
 ## P
 
@@ -124,7 +125,7 @@ __Profile Standard Schema:__ Profile standard schema includes schema related to 
 
 __Sample Data:__ Sample data is a preview of a data file, typically the first 100 rows, to provide a data scientist or engineer an idea of what schema and or data is in the data file.
 
-__Schema:__ Schema is a hierarchical organization of business data applied to a use case. On the Adobe Cloud Platform, customers have a choice between an Adobe standard schema such as Profile or ExperienceEvent or a custom schema defined by a customer.
+__Schema:__ Schema is a hierarchical organization of business data applied to a use case. On the Adobe Experience Platform, customers have a choice between an Adobe standard schema such as Profile or ExperienceEvent or a custom schema defined by a customer.
 
 __Schema Descriptor:__ Additional schema related metadata that describes a behaviour that can be used by platform services to understand intended schema behavior such as the relationship between two schema.
 
@@ -146,7 +147,7 @@ __Standard Schema:__ Standard schema is part of the library of schema that Adobe
 
 ## X
 
-__XDM (Experience Data Model):__ XDM (Experience Data Model) is the concept of using standard schemas to unify data for use with the Adobe Cloud Platform and Adobe Experience Cloud solutions. XDM standardizes how data is structured and speeds up and simplifies the process of gaining insights from massive amounts of data.
+__XDM (Experience Data Model):__ XDM (Experience Data Model) is the concept of using standard schemas to unify data for use with the Adobe Experience Platform and Adobe Experience Cloud solutions. XDM standardizes how data is structured and speeds up and simplifies the process of gaining insights from massive amounts of data.
 
 ## Y
 
