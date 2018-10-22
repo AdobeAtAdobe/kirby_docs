@@ -9,10 +9,6 @@ __Adobe Connectors:__ Adobe Connectors are pre-configured connections created by
 
 __Adobe I/O:__ Adobe I/O is part of Experience Platform and provides access to everything developers need to integrate, extend and customize Experience Platform including APIs, events, developer console, and helpful tooling. 
 
-__Amazon S3 Bucket:__ Amazon S3 buckets are the foundational containers for data stored in the Amazon ecosystem. 
-
-__Amazon S3 Connector:__ Amazon S3 connector allows customers of Experience Platform to securely connect and access their Amazon S3 data.
-
 __Append Save Strategy:__ `Append` save strategy is an option when specifying 3rd party data to ingest via a connection, any new data or rows are written to the end of the dataset. The previously ingested rows remain untouched and only rows created since the last scheduled run are ingested into Experience Platform. Any rows that were changed in the source system remained unchanged on Experience Platform.
 
 __Array:__ Arrays are used for ordered elements with the same data type.
