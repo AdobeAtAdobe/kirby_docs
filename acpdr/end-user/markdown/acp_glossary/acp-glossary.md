@@ -1,27 +1,37 @@
-# Glossary of the Adobe Experience Platform
+# Glossary of Adobe Experience Platform
 
 
 ## A
 
-__Adobe Experience Platform:__ Adobe Experience Platform centralizes and standardizes content and data; to help identify, understand and engage customers to deliver consistent, continuous and compelling experiences. Experience Platform leverages Adobe Sensei, Adobe’s AI and machine learning framework across Adobe Creative, Document and Experience Clouds. 
+__Adobe Experience Platform:__ Adobe Experience Platform centralizes and standardizes content and data; to help identify, understand and engage customers to deliver consistent, continuous and compelling experiences. Experience Platform leverages Adobe Sensei, Adobe’s AI and machine learning framework across Adobe Creative, Document and Experience Clouds.  
 
-__Adobe Connectors:__ Adobe Connectors are pre-configured connections created by Adobe, that enable data to flow in and out of Adobe Experience Platform. An example of an Adobe connector would be Salesforce, Microsoft Dynamics, Adobe Analytics or Adobe Campaign.
+__Adobe Connectors:__ Adobe Connectors are pre-configured connections created by Adobe, that enable data to flow in and out of Experience Platform. An example of an Adobe connector would be Salesforce, Microsoft Dynamics, Adobe Analytics or Adobe Campaign.
 
 __Adobe I/O:__ Adobe I/O is part of Experience Platform and provides access to everything developers need to integrate, extend and customize Experience Platform including APIs, events, developer console, and helpful tooling. 
 
-__Append Save Strategy:__ `Append` save strategy is an option when specifying 3rd party data to ingest via a connection, any new data or rows are written to the end of the dataset. The previously ingested rows remain untouched and only rows created since the last scheduled run are ingested into Experience Platform. Any rows that were changed in the source system remained unchanged on Experience Platform. 
+__Amazon S3 Bucket:__ Amazon S3 buckets are the foundational containers for data stored in the Amazon ecosystem. 
+
+__Amazon S3 Connector:__ Amazon S3 connector allows customers of Experience Platform to securely connect and access their Amazon S3 data.
+
+__Append Save Strategy:__ `Append` save strategy is an option when specifying 3rd party data to ingest via a connection, any new data or rows are written to the end of the dataset. The previously ingested rows remain untouched and only rows created since the last scheduled run are ingested into Experience Platform. Any rows that were changed in the source system remained unchanged on Experience Platform.
+
+__Array:__ Arrays are used for ordered elements with the same data type.
 
 ## B
 
-__Backfill Period:__ Backfill period is an option for ingesting 3rd party data via a connection, how far back in time is existing data is ingested to Experience Platform. Selecting a backfill period of forever will ingest the entire history of the source data to Experience Platform.
+__Backfill Period:__ Backfill period is an option for ingesting 3rd party data via a connection, how far back in time is existing data is ingested to Experience Platform. Selecting a backfill period of forever will ingest the entire history of the source data to Experience Platform. 
 
 __Batch:__ Batch is a set of data collected over a period of time and processed together as a single unit.
+
+__Batch ID:__ Batch ID is an Adobe generated identifier for a batch of data.
+
+__Business intelligence tools:__ Business intelligence, also known as "BI" tools are primarily integrated with the Experience Platform Query Service. BI tools are types of application software that collect and process large amounts of unstructured data from internal and external systems.
 
 ## C
 
 __Connection:__ A connection is a virtual pipeline that enables data to flow in and out of Experience Platform.
 
-__Connection Labels:__ Connection labels are data governance labels that are applied when setting up or editing a connection. Data governance labels added to a connection are inherited down or applied to all datasets and fields ingested through the connection.
+__Connection Labels:__ Connection labels are data governance labels that are applied when setting up or editing a connection. Data governance labels added to a connection are inherited down or applied to all datasets and fields ingested through the connection. 
 
 __Contractual Data "C" Labels:__ Contractual data "C" labels are a type of data governance label that is used to categorize data that has contractual obligations or is related to an organization's data governance policies. 
 
@@ -39,7 +49,7 @@ __C6 Contractual Data Label:__ C6 contractual data governance label specifies da
 
 __C7 Contractual Data Label:__ C7 contractual data governance label specifies data cannot be used for performance and optimization of customer's own website. C7 label is customer privacy policy specific and is roughly similar to ICO performance and functionality cookies.
 
-__Created Date Column:__ Selecting a `Created Date` column, is an option when specifying 3rd party data via a connection. When the `Append` save strategy is selected and the dataset contains multiple date related schema, the user must choose from the available date / time type schema to specify `Created Date` key column. `Created Date` option is not available when the `Overwrite` save strategy is selected.
+__Created Date Column:__ Selecting a `Created Date` column,  is an option when specifying 3rd party data via a connection. When the append save strategy is selected and the dataset contains multiple date related schema, the user must choose from the available date/time type schema to specify `Created Date` key column. `Created Date` option is not available when the overwrite save strategy is selected.
 
 __Customer Data Model:__ A collection of related schemas and schema descriptors for a customer’s business domain.
 
@@ -48,11 +58,17 @@ __Customer Data Model:__ A collection of related schemas and schema descriptors 
 
 __Dataset:__ A dataset is a storage and management construct for a collection of data, typically a table, that contains schema (columns) and fields (rows).
 
+__Dataset ID:__ An Adobe generated identifier for an ingested dataset.
+
 __Data Governance:__ Data governance encompasses the strategies and technologies used to ensure data is in compliance with regulations and organization policies with respect to data usage.
 
 __Data Governance Labels:__ Data governance labels provide users the ability to classify data that reflects privacy related considerations and contractual conditions to be compliant with regulations and organization policies. Data governance labels added to a connection are inherited down or applied to all datasets and fields ingested through the connection.  Data governance labels can also be applied directly to datasets and fields.
 
 __Data Integration Partners:__ Data integration partners are companies that Adobe partners with to integrate and automate the flow of data to and from 3rd party sources to and from Experience Platform.
+
+__Data Model Workspace:__ Data Model Workspace enables visual exploration of schema structure and semantics.
+
+__Data Workspace:__ Data Workspace is a centralized location to connect, ingest, manage and query data on Experience Platform. 
 
 __Dataset Labels:__ Dataset labels are data governance labels that are either inherited from a connection or applied directly to a dataset. Labels applied to a dataset are applied to all fields within the dataset.
 
@@ -62,7 +78,11 @@ __Delta Save Strategy:__ Delta save strategy is an option for ingesting 3rd part
 
 __Display Name:__ Display name is the title of a field that is shown in the schema user interface.
 
+__DULE:__ DULE is an acronym for "Data Usage Labeling and Enforcement". DULE is a key part of data governance and a collection of key features that allow for data usages labeling and applying data access policies for governance needs within an organization.
+
 ## E
+
+__Enum:__  An enum is a list of values that represent the valid data for a field.
 
 __Experience Data Model (XDM):__ Experience Data Model (XDM) is the concept of using standard schemas to unify data for use with Experience Platform and Adobe Experience solutions. XDM standardizes how data is structured and speeds up and simplifies the process of gaining insights from massive amounts of data.
 
@@ -92,7 +112,7 @@ __I2 Data Label:__ The I2 data label is used to classify indirectly identifiable
 
 __Ingest:__ Ingestion is the process of adding data from a source to Experience Platform. Data can be ingested to Experience Platform in a number of ways, it can be streamed, batched or added via file upload.
 
-__Ingestion Schedule:__ Ingestion schedule provides time based options for when data is ingested from a source to the Experience Platform.
+__Ingestion Schedule:__ Ingestion schedule provides time-based options for when data is ingested from a source to the Experience Platform.
 
 ## J
 
@@ -118,6 +138,10 @@ __Profile Standard Schema:__ Profile standard schema includes schema related to 
 
 ## Q
 
+__Queries:__ A query is a request for data from database tables.
+
+__Query Service:__ Experience Platform Query Service enables data analysts to query ExperienceEvents and XDMs for use in analytics and machine learning.
+
 ## R
 
 ## S
@@ -126,7 +150,7 @@ __Sample Data:__ Sample data is a preview of a data file, typically the first 10
 
 __Schema:__ Schema is a hierarchical organization of business data applied to a use case. On Experience Platform, customers have a choice between an Adobe standard schema such as Profile or ExperienceEvent or a custom schema defined by a customer.
 
-__Schema Descriptor:__ Additional schema related metadata that describes a behaviour that can be used by platform services to understand intended schema behavior such as the relationship between two schema.
+__Schema Descriptor:__ Additional schema related metadata that describes a behavior that can be used by Platform services to understand intended schema behavior such as the relationship between two schema.
 
 __Sensitive Data Labels:__ Sensitive data "S" labels are a type of data governance label used to categorize sensitive data such as geographic data.
 
