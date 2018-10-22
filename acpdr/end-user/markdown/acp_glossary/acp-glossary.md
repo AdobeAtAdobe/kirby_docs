@@ -1,4 +1,4 @@
-# Glossary of Adobe Experience Platform
+# Adobe Experience Platform Glossary
 
 
 ## A
