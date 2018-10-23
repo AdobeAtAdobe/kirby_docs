@@ -1,10 +1,10 @@
 {
-	"name": "AXP_Query_Service",
+	"name": "experience_platform_query_services",
 	"version": "1.0.0",
-	"description": "AXP Query Services",
+	"description": "Adobe Experience Platform Query Services",
 	"author": "Emily Walpole",
 	"view_type": "mdbook",
-	"meta_keywords": "experience platform, query, services",
+	"meta_keywords": "experience platform, query services",
 	"meta_description": "",
 	"publish_date": "23/10/2018",
 	"show_edit_github_banner": false,
