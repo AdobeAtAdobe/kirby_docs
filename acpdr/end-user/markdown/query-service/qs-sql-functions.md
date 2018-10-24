@@ -1,6 +1,4 @@
-# SQL Functions
-
-## ADF Functions
+# ADF Functions
 
 The Spark SQL helpers provide Spark SQL user-defined functions to encapsulate the Analytics business logic like Sessionization and Attribution.
 

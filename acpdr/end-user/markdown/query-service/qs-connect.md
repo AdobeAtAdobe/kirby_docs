@@ -2,7 +2,7 @@
 
 ## Overview
 
-This exercise will explain how to connect to Query Service from a variety of desktop client applications. Query Service uses the Postgres protocol, so the instructions below will tell you how to use Postgres tools and drivers to connect and write queries.
+This exercise explains how to connect to Query Service from a variety of desktop client applications. Query Service uses the Postgres protocol, so the instructions below will tell you how to use Postgres tools and drivers to connect and write queries.
 
 ## Topics
 
@@ -14,7 +14,7 @@ This exercise will explain how to connect to Query Service from a variety of des
 
 ## 1. Using the Platform UI for Query Service
 
-Using Chrome (download now if you don't have it already) connect to this web site: https://platform.adobe.com
+Using Chrome (download now if you don't have it already), connect to this web site: [https://platform.adobe.com](https://platform.adobe.com)
 
 Browse to the "**Data**" tab:
 
@@ -29,7 +29,7 @@ Click the first query in the query list under "**Name**":
 
 ![Image](graphics/firstquery.png)
 
-View the query, close the query window, then click the "Connect BI Tools". View the available connection parameters but don't copy any of them yet.
+View the query, close the query window, then click the "Connect BI Tools" button. View the available connection parameters but don't copy any of them yet.
 
 
 ## 2. Connect PSQL and verify
@@ -41,27 +41,24 @@ PSQL is a command-line interface that comes when you isntall Postgres on your ma
 
 > Open a terminal window and issue these three commands:
   
->
 ```
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
   
->
 ```
 brew install postgres
 ```
->
+
 ```
 which psql
 ```
   
-> You should see the following if it worked correctly:
+You should see the following if it worked correctly:
   
->
 ```
 /usr/local/bin/psql
 ```
->
+
 
 #### On a PC
 

@@ -1,15 +1,15 @@
-# Writing Queries
-The Experience Query Service gives you the power to run SQL queries against datasets in the Experience Data Lake. There are a few things to be aware of as you use SQL to interact with datasets in a data lake. The Query Service manages certain things, like creating SQL-safe table names for each dataset in the data lake. There are also considerations around working with the hierarchical data in the data lake: discovering schema, selecting just the right field in the hierarchical model are two important concepts. 
+# Running Queries
+Experience Query Service gives you the power to run SQL queries against datasets in Experience Data Lake. There are a few things to be aware of as you use SQL to interact with datasets in a data lake. The Query Service manages certain things, like creating SQL-safe table names for each dataset in the data lake. There are also considerations around working with the hierarchical data in the data lake: discovering schema, selecting just the right field in the hierarchical model are two important concepts. 
 
 Follow the exerercises below to get a good idea for how the Query Service works. 
 
-## DataSets vs Tables and Schema
+## Datasets vs Tables and Schema
 
-1. Review DataSet list in UI - https://platform.adobe.com/datasets. Observe the dataset names. Note that they have spaces and might otherwise not be SQL safe. 
+1. Review the Dataset list in the UI - https://platform.adobe.com/datasets. Observe the dataset names. Note that they have spaces and might otherwise not be SQL safe. 
 
 	![DataSets](graphics/DataSetUI.png)
 
-2. Review DataSet schema in UI by clicking on a dataset and clicking on the Schema tab. Note the hierarchical nature of the schema. 
+2. Review the Dataset schema in the UI by clicking on a dataset and clicking on the Schema tab. Note the hierarchical nature of the schema. 
 
 	![Schema View](graphics/DataSetUI-Schema.png)
 
@@ -27,12 +27,12 @@ Follow the exerercises below to get a good idea for how the Query Service works.
 	![Image](graphics/2A-5.png)
 6. Working with dot notation and objects - Run this SQL statement, and substitute your analytics table name for `your_analytics_table`:
 
-```sql
-SELECT endUserIds._experience.mcid
-FROM your_analytics_table
-WHERE endUserIds._experience.mcid IS NOT NULL
-LIMIT 1;
-```
+  ```sql
+  SELECT endUserIds._experience.mcid
+  FROM your_analytics_table
+  WHERE endUserIds._experience.mcid IS NOT NULL
+  LIMIT 1;
+  ```
 ![Image](graphics/2A-6a.png)
 Notice anything about the result? It produced a flattened object rather than returning a single value. The endUserIds._experience.mcid object contains these four parameters `id, namespace, xid, primary`. And when the column is only delcared down to the object it will return the entire object as a string.  The XDM schema is more complex than what you may have had experience with before because we need to cover multiple solutions, channels, and use-cases.  If you just wanted the ID value you would use:
 ```sql
@@ -58,73 +58,73 @@ _experience.analytics.customDimensions.evars.evar1 (parameter)
 
 1. Create a trended report of events by day over a specific date range using:
 The timestamp column found in the ExperienceEvent dataset is in UTC. You will use the function `from_utc_timestamp()` to transform the value to another timezone. In this example, we will tranform it into `EDT` and then use the `date_format()` to isolate the day from the timestamp. The date range will be declared in the WHERE clause using separate _ACP_YEAR, _ACP_MONTH and _ACP_DAY columns. (In the near future date ranges will use a single date column and you will be able to use standard SQL data range comparisons)
-```sql
-SELECT 
-  date_format( from_utc_timestamp(timestamp, 'EDT') , 'yyyy-MM-dd') as Day,
-  SUM(web.webPageDetails.pageviews.value) as pageViews,
-  SUM(_experience.analytics.event1to100.event1.value) as A,
-  SUM(_experience.analytics.event1to100.event2.value) as B,
-  SUM(_experience.analytics.event1to100.event3.value) as C,
-  SUM(
-    CASE 
-      WHEN _experience.analytics.customDimensions.evars.evar1 = 'parkas' 
-      THEN 1 
-      ELSE 0 
-    END) as viewedParkas
-FROM your_analytics_table 
-WHERE _ACP_YEAR = 2018 AND _ACP_MONTH = 3 
-GROUP BY Day 
-ORDER BY Day ASC, pageViews DESC;
-```
-![Image](graphics/2B-1.png)
+  ```sql
+  SELECT 
+    date_format( from_utc_timestamp(timestamp, 'EDT') , 'yyyy-MM-dd') as Day,
+   SUM(web.webPageDetails.pageviews.value) as pageViews,
+   SUM(_experience.analytics.event1to100.event1.value) as A,
+   SUM(_experience.analytics.event1to100.event2.value) as B,
+   SUM(_experience.analytics.event1to100.event3.value) as C,
+   SUM(
+     CASE 
+        WHEN _experience.analytics.customDimensions.evars.evar1 = 'parkas' 
+        THEN 1 
+        ELSE 0 
+      END) as viewedParkas
+  FROM your_analytics_table 
+  WHERE _ACP_YEAR = 2018 AND _ACP_MONTH = 3 
+  GROUP BY Day 
+  ORDER BY Day ASC, pageViews DESC;
+  ```
+  ![Image](graphics/2B-1.png)
 2. Find a list of visitors organized by their number of page views:
-```sql
-SELECT 
-  endUserIds._experience.aaid.id, 
-  SUM(web.webPageDetails.pageviews.value) as pageViews 
-FROM your_analytics_table
-GROUP BY endUserIds._experience.aaid.id 
-ORDER BY pageViews DESC
-LIMIT 10;
-```
-![Image](graphics/2B-2.png)
+  ```sql
+  SELECT 
+    endUserIds._experience.aaid.id, 
+    SUM(web.webPageDetails.pageviews.value) as pageViews 
+  FROM your_analytics_table
+  GROUP BY endUserIds._experience.aaid.id 
+  ORDER BY pageViews DESC
+  LIMIT 10;
+  ```
+  ![Image](graphics/2B-2.png)
 3. Replay a visitor's sessions:
-```sql
-SELECT 
-  timestamp, 
-  web.webReferrer.type as referrerType, 
-  web.webReferrer.URL as referrer, 
-  web.webPageDetails.name as pageName, 
-  _experience.analytics.event1to100.event1.value as A, 
-  _experience.analytics.event1to100.event2.value as B, 
-  _experience.analytics.event1to100.event3.value as C, 
-  web.webPageDetails.pageviews.value as pageViews
-FROM your_analytics_table 
-WHERE endUserIds._experience.aaid.id = '457C3510571E5930-69AA721C4CBF9339' 
-ORDER BY timestamp 
-LIMIT 100;
-```
-![Image](graphics/2B-3.png)
+  ```sql
+  SELECT 
+    timestamp, 
+    web.webReferrer.type as referrerType, 
+    web.webReferrer.URL as referrer, 
+    web.webPageDetails.name as pageName, 
+    _experience.analytics.event1to100.event1.value as A, 
+    _experience.analytics.event1to100.event2.value as B, 
+    _experience.analytics.event1to100.event3.value as C, 
+    web.webPageDetails.pageviews.value as pageViews
+  FROM your_analytics_table 
+  WHERE endUserIds._experience.aaid.id = '457C3510571E5930-69AA721C4CBF9339' 
+  ORDER BY timestamp 
+  LIMIT 100;
+  ```
+  ![Image](graphics/2B-3.png)
 4. Visitor rollup:
-```sql
-SELECT 
-  endUserIds._experience.aaid.id, 
-  SUM(web.webPageDetails.pageviews.value) as pageViews, 
-  SUM(_experience.analytics.event1to100.event1.value) as A, 
-  SUM(_experience.analytics.event1to100.event2.value) as B, 
-  SUM(_experience.analytics.event1to100.event3.value) as C,
-  SUM(
-    CASE 
-      WHEN _experience.analytics.customDimensions.evars.evar1 = 'parkas' 
-      THEN 1 
-      ELSE 0 
-    END) as viewedParkas
-FROM your_analytics_table 
-WHERE endUserIds._experience.aaid.id = '457C3510571E5930-69AA721C4CBF9339' 
-GROUP BY endUserIds._experience.aaid.id
-ORDER BY pageViews DESC;
-```
-![Image](graphics/2B-4.png)
+  ```sql
+  SELECT 
+    endUserIds._experience.aaid.id, 
+    SUM(web.webPageDetails.pageviews.value) as pageViews, 
+    SUM(_experience.analytics.event1to100.event1.value) as A, 
+    SUM(_experience.analytics.event1to100.event2.value) as B, 
+    SUM(_experience.analytics.event1to100.event3.value) as C,
+    SUM(
+     CASE 
+        WHEN _experience.analytics.customDimensions.evars.evar1 = 'parkas' 
+        THEN 1 
+        ELSE 0 
+      END) as viewedParkas
+  FROM your_analytics_table 
+  WHERE endUserIds._experience.aaid.id = '457C3510571E5930-69AA721C4CBF9339' 
+  GROUP BY endUserIds._experience.aaid.id
+  ORDER BY pageViews DESC;
+  ```
+  ![Image](graphics/2B-4.png)
 
 ## Joining DataSets
 
@@ -134,7 +134,7 @@ Datasets:
 * your_analytics_table
 * custom_operating_system_lookup
 
-1. Create a select statement for the top 50 operating systems by number of page views:
+Create a select statement for the top 50 operating systems by number of page views:
 ```sql
 SELECT 
   b.operatingsystem AS OperatingSystem,
@@ -167,50 +167,50 @@ Returns:
 Structure with fields `(timestamp_diff, num, is_new, depth)`
 
 1. Explore the row level SESS_TIMEOUT() and output:
-```sql
-SELECT analyticsVisitor,
-       session.is_new,
-       session.timestamp_diff,
-       session.num,
-       session.depth
-FROM (SELECT endUserIDs._experience.aaid.id as analyticsVisitor,
-         SESS_TIMEOUT(timestamp, 60 * 30)
-           OVER (PARTITION BY endUserIDs._experience.aaid.id
-                 ORDER BY timestamp
-                 ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
-           AS session
-  FROM your_analytics_table
-  WHERE _ACP_YEAR = 2018
-)
-LIMIT 100;
-```
-![Image](graphics/2C-S-1.png)
+  ```sql
+  SELECT analyticsVisitor,
+         session.is_new,
+         session.timestamp_diff,
+         session.num,
+         session.depth
+  FROM (SELECT endUserIDs._experience.aaid.id as analyticsVisitor,
+           SESS_TIMEOUT(timestamp, 60 * 30)
+             OVER (PARTITION BY endUserIDs._experience.aaid.id
+                   ORDER BY timestamp
+                   ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
+             AS session
+    FROM your_analytics_table
+    WHERE _ACP_YEAR = 2018
+  )
+  LIMIT 100;
+  ```
+  ![Image](graphics/2C-S-1.png)
 2. Create a new trended report with visitors, sessionsm, and page-views:
-```sql
-SELECT 
-  date_format( from_utc_timestamp(timestamp, 'EDT') , 'yyyy-MM-dd') as Day,
-  COUNT(DISTINCT analyticsVisitor ) as Visitors,
-  COUNT(DISTINCT analyticsVisitor || session.num ) as Sessions,
-  SUM( PageViews ) as PageViews
-FROM 
-  ( 
-    SELECT 
-    timestamp,
-    endUserIDs._experience.aaid.id as analyticsVisitor,
-    SESS_TIMEOUT(timestamp, 60 * 30) 
-      OVER (PARTITION BY endUserIDs._experience.aaid.id 
-            ORDER BY timestamp 
-            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) 
-      AS session,
-    web.webPageDetails.pageviews.value as PageViews
-    FROM your_analytics_table
-    WHERE _ACP_YEAR = 2018
-  )
-GROUP BY Day 
-ORDER BY Day DESC 
-LIMIT 31;
-```
-![Image](graphics/2C-S-2.png)
+  ```sql
+  SELECT 
+    date_format( from_utc_timestamp(timestamp, 'EDT') , 'yyyy-MM-dd') as Day,
+    COUNT(DISTINCT analyticsVisitor ) as Visitors,
+    COUNT(DISTINCT analyticsVisitor || session.num ) as Sessions,
+    SUM( PageViews ) as PageViews
+  FROM 
+    ( 
+      SELECT 
+      timestamp,
+      endUserIDs._experience.aaid.id as analyticsVisitor,
+      SESS_TIMEOUT(timestamp, 60 * 30) 
+        OVER (PARTITION BY endUserIDs._experience.aaid.id 
+              ORDER BY timestamp 
+              ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) 
+        AS session,
+      web.webPageDetails.pageviews.value as PageViews
+      FROM your_analytics_table
+      WHERE _ACP_YEAR = 2018
+    )
+  GROUP BY Day 
+  ORDER BY Day DESC 
+  LIMIT 31;
+  ```
+  ![Image](graphics/2C-S-2.png)
 
 ### Attribution
 
@@ -283,72 +283,72 @@ Returns:
 struct with field `(value)`
 
 1. Select the current page and next page:
-```sql
-SELECT 
-  endUserIds._experience.aaid.id,
-  timestamp,
-  web.webPageDetails.name,
-  NEXT(web.webPageDetails.name, 1, true)
-      OVER(PARTITION BY endUserIds._experience.aaid.id
-           ORDER BY timestamp
-           ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING).value
-      AS next_pagename
-FROM your_analytics_table
-WHERE _ACP_YEAR=2018 
-LIMIT 10;
-```
-![Image](graphics/2C-P-1.png)
+  ```sql
+  SELECT 
+    endUserIds._experience.aaid.id,
+    timestamp,
+    web.webPageDetails.name,
+    NEXT(web.webPageDetails.name, 1, true)
+        OVER(PARTITION BY endUserIds._experience.aaid.id
+             ORDER BY timestamp
+             ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING).value
+        AS next_pagename
+  FROM your_analytics_table
+  WHERE _ACP_YEAR=2018 
+  LIMIT 10;
+  ```
+  ![Image](graphics/2C-P-1.png)
 2. Create a breakdown report for the top 5 page names on entry of the session:
-```sql
-SELECT 
-  PageName,
-  PageName_2,
-  PageName_3,
-  PageName_4,
-  PageName_5,
-  SUM(PageViews) as PageViews
-FROM
-  (SELECT
+  ```sql
+  SELECT 
     PageName,
-    NEXT(PageName, 1, true)
-      OVER(PARTITION BY VisitorID, session.num
-            ORDER BY timestamp
-            ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING).value
-      AS PageName_2,
-    NEXT(PageName, 2, true)
-      OVER(PARTITION BY VisitorID, session.num
-            ORDER BY timestamp
-            ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING).value
-      AS PageName_3,
-    NEXT(PageName, 3, true)
-       OVER(PARTITION BY VisitorID, session.num
-            ORDER BY timestamp
-            ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING).value
-      AS PageName_4,
-    NEXT(PageName, 4, true)
-       OVER(PARTITION BY VisitorID, session.num
-            ORDER BY timestamp
-            ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING).value
-      AS PageName_5,
-    PageViews,
-    session.depth AS SessionPageDepth
+    PageName_2,
+    PageName_3,
+    PageName_4,
+    PageName_5,
+    SUM(PageViews) as PageViews
   FROM
-    (SELECT 
-  	  endUserIds._experience.aaid.id as VisitorID,
- 	  timestamp,
- 	  web.webPageDetails.pageviews.value AS PageViews,
-  	  web.webPageDetails.name AS PageName,
-      SESS_TIMEOUT(timestamp, 60 * 30) 
-        OVER (PARTITION BY endUserIDs._experience.aaid.id 
-              ORDER BY timestamp 
-              ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) 
-      AS session
-    FROM your_analytics_table
-    WHERE _ACP_YEAR=2018)
-  )
-WHERE SessionPageDepth=1
-GROUP BY PageName, PageName_2, PageName_3, PageName_4, PageName_5
-ORDER BY PageViews DESC
-LIMIT 100;
-```
-![Image](graphics/2C-P-2.png)
+    (SELECT
+      PageName,
+      NEXT(PageName, 1, true)
+        OVER(PARTITION BY VisitorID, session.num
+              ORDER BY timestamp
+              ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING).value
+        AS PageName_2,
+      NEXT(PageName, 2, true)
+        OVER(PARTITION BY VisitorID, session.num
+              ORDER BY timestamp
+              ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING).value
+        AS PageName_3,
+      NEXT(PageName, 3, true)
+         OVER(PARTITION BY VisitorID, session.num
+              ORDER BY timestamp
+              ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING).value
+        AS PageName_4,
+      NEXT(PageName, 4, true)
+         OVER(PARTITION BY VisitorID, session.num
+              ORDER BY timestamp
+              ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING).value
+        AS PageName_5,
+      PageViews,
+      session.depth AS SessionPageDepth
+    FROM
+      (SELECT 
+    	  endUserIds._experience.aaid.id as VisitorID,
+   	  timestamp,
+   	  web.webPageDetails.pageviews.value AS PageViews,
+    	  web.webPageDetails.name AS PageName,
+        SESS_TIMEOUT(timestamp, 60 * 30) 
+          OVER (PARTITION BY endUserIDs._experience.aaid.id 
+                ORDER BY timestamp 
+                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) 
+        AS session
+      FROM your_analytics_table
+      WHERE _ACP_YEAR=2018)
+    )
+  WHERE SessionPageDepth=1
+  GROUP BY PageName, PageName_2, PageName_3, PageName_4, PageName_5
+  ORDER BY PageViews DESC
+  LIMIT 100;
+  ```
+  ![Image](graphics/2C-P-2.png)

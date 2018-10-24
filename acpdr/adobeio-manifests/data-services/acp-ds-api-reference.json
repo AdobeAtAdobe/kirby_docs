@@ -39,6 +39,11 @@
 			"pages": [],
 			"path": "acpdr/swagger-specs/sensei-ml-api.yaml",
 			"title": "Sensei Unified Machine Learning API"
+		},
+		{
+			"pages": [],
+			"path": "acpdr/swagger-specs/qs-api.yaml",
+			"title": "Experience Query Service API"
 		}
 
 	]

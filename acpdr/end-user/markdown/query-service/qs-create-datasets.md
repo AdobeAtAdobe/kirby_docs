@@ -1,5 +1,4 @@
-# Creating Datasets
-
+# Generating Datasets from Query Results
 The true power of Query Service is revealed when queries are used to generate datasets in Data Lake to be used as input into more queries or in other services like Data Science Workspace, Profile Service, or Analysis Workspace. 
 
 The Alpha Query Service allows the creation of datasets from the UI. Follow these steps:
@@ -9,7 +8,7 @@ The Alpha Query Service allows the creation of datasets from the UI. Follow thes
 3. Find your Query in the list and hover over the row.
 4. Click on the "Create Dataset" button![Image](graphics/createdataset.png)
 
-5. Enter a dataset name, prepended with your LDAP ID (does not have to be unique or SQL-safe, the system will generate a "table name" based on the name given here).
+5. Enter a dataset name, prepended with your LDAP ID (does not have to be unique or SQL-safe, the system generates a "table name" based on the name given here).
 6. Enter a dataset description and click OK.![Image](graphics/createdialog.png)
 
 7. Watch the query complete and then go to the dataset list page to see the dataset you just created. 
