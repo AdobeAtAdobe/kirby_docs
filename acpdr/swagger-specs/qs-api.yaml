@@ -1,9 +1,9 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: Platform Query Service
+  title: Experience Query Service API
   description:
-    Platform Query Service API.
+    Experience Query Service API.
     
     When trying out these APIs, get your token from IMS stage and prefix them with 'Bearer'.
 basePath: /data/foundation/query
