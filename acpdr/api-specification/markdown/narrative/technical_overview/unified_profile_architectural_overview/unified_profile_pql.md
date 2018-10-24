@@ -410,7 +410,7 @@ Examples:
 * `X.timestamp occurs > 3 weeks after date(2017,10,1)`
 * `X.timestamp occurs < 2 weeks after Y.timestamp`
 
-``` 
+```
 X.timestamp occurs {direction} {relative term|date|Y.timestamp}
 ```
 
