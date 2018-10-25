@@ -1,16 +1,16 @@
 
-# GDPR on ACP Overview
+# GDPR on Adobe Experience Platform Overview
 ===================
 
 
 
-Use the Adobe GDPR APIs to submit both `access` and `delete` requests to anonymize data to comply with the General Data Protection Regulations (GDPR) on the Adobe Cloud Platform (ACP). The following are practices and prerequisites required to submit GDPR requests to the ACP.
+Use the Adobe GDPR APIs to submit both `access` and `delete` requests to anonymize data to comply with the General Data Protection Regulations (GDPR) on Adobe Experience Platform. The following are practices and prerequisites required to submit GDPR requests to Adobe Experience Platform.
 
 ## GDPR Labeling in Platform using API
 
 First, look at the datasets ingested into your platform and decide the dataset fields applicable to GDPR requests. Then add the appropriate GDPR labels to the fields using the DatasetAPI.
 
-For example, a dataset in ACP includes the fields `id`, `address`, and `product purchased`. If you deem that `address` should be available for GDPR requests, you should label the field with a unique label. These labels can then be specified when submitting `access` and `delete` requests to the GDPR APIs on ACP.
+For example, a dataset in Adobe Experience Platform includes the fields `id`, `address`, and `product purchased`. If you deem that `address` should be available for GDPR requests, you should label the field with a unique label. These labels can then be specified when submitting `access` and `delete` requests to the GDPR APIs on Adobe Experience Platform.
 
 ## Submitting GDPR Requests
 
@@ -43,7 +43,7 @@ fields: [{
  
 
 
-### Submitting a GDPR request for ACP in the GDPR Central Service
+### Submitting a GDPR request for Adobe Experience Platform in the GDPR Central Service
 
 
 **Request endpoint**: `/data/privacy/gdpr`

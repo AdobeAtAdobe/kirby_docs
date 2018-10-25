@@ -16,7 +16,7 @@ As a data controller, you will determine the personal data that Adobe Experience
 *   Check the status of one or all existing requests.
     
 
-**Note:**  If your company has multiple Adobe Experience Cloud Identity Management Service Organization IDs (IMS Org IDs), then you must send separate API requests for each. You can, however make one API request to multiple Advertising Cloud sub-solutions (Search, Creative, DSP, and DCO), with one account per sub-solution.
+**Note:**  If your company has multiple Adobe Experience Cloud Identity Management Service Organization IDs (IMS Org IDs), then you must send separate API requests for each. You can, however make one API request to multiple Advertising Cloud sub-solutions (Search, Creative, DSP, and DCO), with one account per sub-solution.
 
 ## Required Setup to Send Requests for Advertising Cloud
 
@@ -150,7 +150,7 @@ See the API documentation for more information about where to add these fields.
 
 "namespace": "AdCloud",
 
-"value": "**acctId:GI1K2DSIBH83S**”
+"value": "**acctId:GI1K2DSIBH83S**ï¿½
 
 },
 ```

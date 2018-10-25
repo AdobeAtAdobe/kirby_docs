@@ -68,7 +68,7 @@ According to GDPR, &quot;personal data&quot; is any information relating to an i
 
 To back up a moment, before diving into Adobe Experience Cloud&#39;s GDPR API, it is worth stating that a key step in GDPR readiness is having a robust data governance framework to help address data protection and privacy.
 
-The Adobe Cloud Platform (ACP) provides an integrated solution that connects a brand&#39;s data governance infrastructure with the tools it uses to create and manage consumer experiences. The data governance features of Adobe Cloud Platform enable the direct linkage of data governance policy to data usage. ACP, as a data and intelligence platform that enables all of Adobe&#39;s marketing and consumer experience solutions in Adobe Experience Cloud, centralizes the collection and storage of all consumer experience-related data and offers data governance actors (e.g., stewards, scientists, engineers, marketers) the features they need to help define and enforce data governance rules that activate that data for the Experience Business. For more information about ACP data governance features, see the Adobe Cloud Platform Data Governance whitepaper.
+Adobe Experience Platform provides an integrated solution that connects a brand&#39;s data governance infrastructure with the tools it uses to create and manage consumer experiences. The data governance features of Adobe Experience Platform enable the direct linkage of data governance policy to data usage. Adobe Experience Platform, as a data and intelligence platform that enables all of Adobe&#39;s marketing and consumer experience solutions in Adobe Experience Cloud, centralizes the collection and storage of all consumer experience-related data and offers data governance actors (e.g., stewards, scientists, engineers, marketers) the features they need to help define and enforce data governance rules that activate that data for the Experience Business. For more information about ACP data governance features, see the Adobe Experience Platform Data Governance whitepaper.
 
 **What is data governance?**
 
@@ -84,7 +84,7 @@ GDPR sets out the obligations for the various parties involved with GDPR readine
 | Data Controllers | Adobe Experience Cloud&#39;s customers |
 | Data Processor | Adobe Experience Cloud |
 
-Adobe Experience Cloud&#39;s role is to help our customers (Data Controllers) respond to requests from their consumers (Data Subjects) when it comes to individual rights requests (e.g., access or delete requests) related to data maintained in the Adobe Experience Cloud.
+Adobe Experience Cloud&#39;s role is to help our customers (Data Controllers) respond to requests from their consumers (Data Subjects) when it comes to individual rights requests (e.g., access or delete requests) related to data maintained in Adobe Experience Cloud.
 
 ![GDPR Responsibilities](images/gdpr-responsibilities.png)
 
@@ -156,11 +156,11 @@ Following is an example workflow for clarification purposes only; its purpose is
 
 Before sending GDPR requests to Adobe Experience Cloud, you must identify what personal data Adobe Experience Cloud should process and store on your behalf. This involves going into Adobe Experience Cloud products or services in which you house complex data types, e.g., Adobe Analytics, Platform, or Campaign, to identify and label the data types that should be referenced in a GDPR request. This is the Controller&#39;s responsibility because data schemas will vary by customer and Solution.
 
-When you identify fields that contain any GDPR-relevant data, you should label the data or consider using the general data governance labels in Adobe Cloud Platform&#39;s Data Usage Labeling &amp; Enforcement (DULE) framework when available. The DULE features enable data stewards to apply labels (metadata) to data, either as it&#39;s ingested or after, and categorize it according to what kind of data usage policies apply to it. For more information about the DULE framework, please see the Adobe Cloud Platform Data Governance whitepaper.
+When you identify fields that contain any GDPR-relevant data, you should label the data or consider using the general data governance labels in Adobe Experience Platform&#39;s Data Usage Labeling &amp; Enforcement (DULE) framework when available. The DULE features enable data stewards to apply labels (metadata) to data, either as it&#39;s ingested or after, and categorize it according to what kind of data usage policies apply to it. For more information about the DULE framework, please see the Adobe Experience Platform Data Governance whitepaper.
 
 **How to Label Data: An example**
 
-Let&#39;s say the Controller plans to collect cookie IDs from Data Subjects to process their GDPR requests. These cookie IDs are stored in a Report Suite in Adobe Analytics. To create a label for cookie IDs, the Controller must supply a label of his/her own or use the Adobe Cloud Platform&#39;s Data Usage Labeling &amp; Enforcement (DULE) framework in Analytics (if available). The Controller then takes the label from this activity and codes it as an API parameter in Adobe Experience Cloud&#39;s GDPR API. When Adobe Analytics receives this GDPR request from the API call, it can identify that the supplied data refers to a cookie ID in a particular Report Suite, and return that data or process the deletion.
+Let&#39;s say the Controller plans to collect cookie IDs from Data Subjects to process their GDPR requests. These cookie IDs are stored in a Report Suite in Adobe Analytics. To create a label for cookie IDs, the Controller must supply a label of his/her own or use Adobe Experience Platform&#39;s Data Usage Labeling &amp; Enforcement (DULE) framework in Analytics (if available). The Controller then takes the label from this activity and codes it as an API parameter in Adobe Experience Cloud&#39;s GDPR API. When Adobe Analytics receives this GDPR request from the API call, it can identify that the supplied data refers to a cookie ID in a particular Report Suite, and return that data or process the deletion.
 
 ![GDPR Labels](images/gdpr-labels.png)
 
