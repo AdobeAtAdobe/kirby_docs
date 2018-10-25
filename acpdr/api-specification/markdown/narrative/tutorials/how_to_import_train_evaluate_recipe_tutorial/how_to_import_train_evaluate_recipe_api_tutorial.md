@@ -12,8 +12,8 @@ Follow this [Tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutor
 From the tutorial you should now have the following values:
 
 * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-* `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
-* `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+* `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
 * Link to a Docker image of an intelligent service
 
@@ -75,8 +75,8 @@ curl -X POST \
 ```
 
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 `{DOCKER_IMAGE}`: Link to the Docker image.  
 `{ARTIFACT_BINARIES}`: The binary Recipe artifact (eg. JAR, EGG) used for all operations by default.  
 
@@ -146,8 +146,8 @@ curl -X POST \
 ```
 
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 `{JSON_PAYLOAD}`: The configuration of our Instance. The example we use in our tutorial is shown here:
 
 ```JSON
@@ -257,9 +257,9 @@ curl -X POST \
   -d `{JSON PAYLOAD}`
 ```
 
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 `{JSON_PAYLOAD}`: Experiment object that is created. The example we use in our tutorial is shown here:
 
 ```JSON
@@ -314,9 +314,9 @@ curl -X POST \
 
 ```
 
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 `{JSON_PAYLOAD}`: Data set to be posted. The example we use in our tutorial is shown here:
 
 ```JSON
@@ -403,9 +403,9 @@ curl -X POST \
   -d '{JSON_PAYLOAD}'
 ```
 
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 `{JSON_PAYLOAD}`: Experiment Run object to be sent. The example we use in our tutorial is shown here:
 
 ```JSON
@@ -491,9 +491,9 @@ curl -X POST \
 ```
 
 `{EXPERIMENT_ID}`: The ID corresponding to the Experiment you want to target. This can be found in the response when creating your Experiment.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 `{JSON_PAYLOAD}`: To create a training run, you will have to include the following in the body:
 
 ```JSON
@@ -561,8 +561,8 @@ curl -X GET \
 `{EXPERIMENT_ID}`: The ID that represents the Experiment.  
 `{EXPERIMENT_RUN_ID}`: The ID that represents the Experiment Run.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 
 ##### Response
 
@@ -623,7 +623,7 @@ curl -X GET \
 ```
 `{EXPERIMENT_RUN_ID}`: The ID corresponding to the Experiment Run you want to target. This can be found in the response when creating your Experiment Run.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 
 The response represents the Trained Model that was created.
 
@@ -672,9 +672,9 @@ curl -X POST \
   -d '{JSON_PAYLOAD}'
 ```
 
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 `{EXPERIMENT_ID}`: The ID corresponding to the Experiment you want to target. This can be found in the response when creating your Experiment.  
 `{JSON_PAYLOAD}`: Data to be posted. The example we use in our tutorial is here:
 
@@ -737,7 +737,7 @@ curl -X GET \
 
 `{EXPERIMENT_ID}`:  The ID corresponding to the Experiment the Run is under.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 
 Since there are multiple Experiment Runs for a specific Experiment, the response returned will have an array of Run IDs.
 
@@ -780,7 +780,7 @@ curl -X DELETE \
 
 `{EXPERIMENT_ID}`:  The ID corresponding to the Experiment.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 
 Note that the API call will disable creation of new Experiment runs. However, it will not stop execution of already running Experiment Runs.
 

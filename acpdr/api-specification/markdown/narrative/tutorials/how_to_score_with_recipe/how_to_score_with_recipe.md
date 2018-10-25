@@ -1,14 +1,14 @@
 # Tutorial - Scoring Using Recipe
 
 ## Objective
-In this step by step tutorial, we will go over how to score your Recipe via Adobe Cloud Platform UI. 
+In this step by step tutorial, we will go over how to score your Recipe via Adobe Experience Platform UI. 
 
 ---
 
 ## Prerequisites
 
 * A registered Adobe ID account
-    * The Adobe ID account must have been added to an Organization with access to "Adobe Cloud Platform"
+    * The Adobe ID account must have been added to an Organization with access to "Adobe Experience Platform"
 * An existing: 
     * Recipe
     * Instance
@@ -18,7 +18,7 @@ In this step by step tutorial, we will go over how to score your Recipe via Adob
 
 In this section, we will create a scoring run for an existing Experiment run. We went over how to import, train, and evaluate a recipe in a previous tutorial found [here](../how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial.md).
 
-First, we will open our existing trained model. Launch the [Adobe Cloud Platform UI](https://platform.adobe.com) and go to the `Data Science` tab in the top navigation bar. In the Recipes carousel, find the existing Recipe that you created.
+First, we will open our existing trained model. Launch the [Adobe Experience Platform UI](https://platform.adobe.com) and go to the `Data Science` tab in the top navigation bar. In the Recipes carousel, find the existing Recipe that you created.
 
 ### Create New Scoring Run
 
@@ -62,7 +62,7 @@ curl -X GET "https://platform.adobe.io/models/{MODEL_ID}" \
 
 `{MODEL_ID}`: The ID corresponding to the details of the Scoring Run from the previous section.
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 
 ##### Response
 

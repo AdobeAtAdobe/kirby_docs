@@ -1,7 +1,7 @@
 # Tutorial: How to Access and Explore Data in the Data Science Workspace
 
 ## Objective
-In this step by step tutorial, we will focus on how to create a new Jupyter notebook in the Data Science Workspace to access data from Adobe Cloud Platform. We will then explore the dataset to get a better understanding of the data. The steps that will be explained in this tutorial are:
+In this step by step tutorial, we will focus on how to create a new Jupyter notebook in the Data Science Workspace to access data from Adobe Experience Platform. We will then explore the dataset to get a better understanding of the data. The steps that will be explained in this tutorial are:
 
 1. Creating a new Jupyter notebook
 2. Accessing Datasets and Schemas
@@ -52,7 +52,7 @@ GPU Compute - External Customers | Boundary | TBD | TBD
 
 ### Create a new Notebook
 
-In the Adobe Cloud Platform UI, click on the Data Science tab in the top menu to take you to the Data Science Workspace. From this page, click on the JupyterLab tab which will open the JupyterLab launcher. You should see a page similar to this.
+In the Adobe Experience Platform UI, click on the Data Science tab in the top menu to take you to the Data Science Workspace. From this page, click on the JupyterLab tab which will open the JupyterLab launcher. You should see a page similar to this.
 
 ![](jupyterlab_launcher.png)
 
@@ -62,11 +62,11 @@ In our tutorial, we will be using Python 3 in the Jupyter Notebook to show how t
 
 ### Accessing Data
 
-We will go over accessing data internally from Adobe Cloud Platform and data externally. We will be using the `data_access_sdk_python` library to access internal data such as datasets and XDM schemas. For external data, we will use the pandas Python library.
+We will go over accessing data internally from Adobe Experience Platform and data externally. We will be using the `data_access_sdk_python` library to access internal data such as datasets and XDM schemas. For external data, we will use the pandas Python library.
 
-#### Adobe Cloud Platform Data
+#### Adobe Experience Platform Data
 
-First, we will go over accessing Adobe Cloud Platform data. There are two methods data can be retrieved into the notebook:
+First, we will go over accessing Adobe Experience Platform data. There are two methods data can be retrieved into the notebook:
 * By Dataset ID
 * By Batch ID
 
@@ -74,7 +74,7 @@ First, we will go over accessing Adobe Cloud Platform data. There are two method
 
 For this section, we are using the Retail Sales dataset which is the same dataset used in the Retail Sales sample notebook.
 
-To ingest this data, navigate to the Datasets tab under the Data tab in the Adobe Cloud Platform UI and click on "Create Dataset". From there, you can upload the "retail.csv" file found in the [public repository](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/datasets/retail).
+To ingest this data, navigate to the Datasets tab under the Data tab in the Adobe Experience Platform UI and click on "Create Dataset". From there, you can upload the "retail.csv" file found in the [public repository](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/datasets/retail).
 
 In our Jupyter Notebook, we can access our data from the Data tab on the left. Upon clicking the tab, you will be able to see two directories:
 
@@ -106,7 +106,7 @@ You can also specify a `batch_id` to load. Note that if `batch_id` is used, `sta
 df = reader.read(view_id="12345", ims_org="12345@AdobeOrg", batch_id="12345")
 ```
 
-A `batch_id` can be found by finding your Dataset in the Data tab in the Adobe Cloud Platform UI. From there, click on a batch in the overview tab to open a modal which will show `batch_id`.
+A `batch_id` can be found by finding your Dataset in the Data tab in the Adobe Experience Platform UI. From there, click on a batch in the overview tab to open a modal which will show `batch_id`.
 
 ![](batch_id_modal.png)
 

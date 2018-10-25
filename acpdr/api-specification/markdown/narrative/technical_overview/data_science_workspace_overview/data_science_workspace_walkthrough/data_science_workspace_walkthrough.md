@@ -2,14 +2,14 @@
 
 ## Overview
 
-This document provides a walkthrough for the Data Science Workspace in Adobe Cloud Platform. Specifically we will go over the general workflow a data scientist would go through to solve a problem using machine learning.
+This document provides a walkthrough for the Data Science Workspace in Adobe Experience Platform. Specifically we will go over the general workflow a data scientist would go through to solve a problem using machine learning.
 
 ---
 
 ## Prerequisites
 
 * A registered Adobe ID account
-    * The Adobe ID account must have been added to an Organization with access to Adobe Cloud Platform and the Data Science Workspace
+    * The Adobe ID account must have been added to an Organization with access to Adobe Experience Platform and the Data Science Workspace
 
 ---
 
@@ -23,7 +23,7 @@ A retailer faces many challenges to stay competitive in the current market. One 
 
 A data scientist's solution is to leverage the wealth of historical data a retailer has access to, to predict future trends, and to optimize pricing decisions. We will use past sales data to train our machine learning model and use the model to predict future sale trends. With this, the retailer will be able to have insights to help them when making pricing changes.
 
-In this overview, we will go over the steps a data scientist would go through to take a dataset and to create a model to predict weekly sales. We will go over the following sections in the Sample Retail Sales Notebook on Adobe Cloud Platform Data Science Workspace:
+In this overview, we will go over the steps a data scientist would go through to take a dataset and to create a model to predict weekly sales. We will go over the following sections in the Sample Retail Sales Notebook on Adobe Experience Platform Data Science Workspace:
 * [Setup](#setup)
 * [Exploring Data](#exploring-data)
 * [Feature Engineering](#feature-engineering)
@@ -33,7 +33,7 @@ In this overview, we will go over the steps a data scientist would go through to
 
 Firstly, we want to create a JupyterLab notebook to open the "Retail Sales" sample notebook. Following the steps done by the data scientist in the notebook will allow us to gain an understanding of a typical workflow.
 
-In the Adobe Cloud Platform UI, click on the Data Science tab in the top menu to take you to the Data Science Workspace. From this page, click on the JupyterLab tab which will open the JupyterLab launcher. You should see a page similar to this.
+In the Adobe Experience Platform UI, click on the Data Science tab in the top menu to take you to the Data Science Workspace. From this page, click on the JupyterLab tab which will open the JupyterLab launcher. You should see a page similar to this.
 
 ![](jupyterlab_launcher.png)
 

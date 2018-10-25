@@ -19,7 +19,7 @@ Depending on which code base you clone, install the language of that intelligent
 
 A Docker image is a recipe for which a Docker container is created during the `docker run` command. This container is built from the image and can be written to and modified by the user. A good analogy is that the Docker image is the blueprints and the Docker container is the building. You can make as many buildings as you like with the blueprints.
 
-From there the Docker image we create will be stored in the Artifactory and can be accessed via a link by other users. The link will also be used in the platform UI when creating an instance. 
+From there the Docker image we create will be stored in the Artifactory and can be accessed via a link by other users. The link will also be used in the Adobe Experience Platform UI when creating an instance. 
 
 Reference example for each intelligent service:
 * [Python](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/recipes/python)

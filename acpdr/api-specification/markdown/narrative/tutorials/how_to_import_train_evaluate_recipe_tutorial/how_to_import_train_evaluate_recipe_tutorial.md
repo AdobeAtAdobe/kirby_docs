@@ -8,13 +8,13 @@ In this step by step tutorial, we will go over how to import a Recipe into the D
 ## Prerequisites
 
 * A registered Adobe ID account
-    * The Adobe ID account must have been added to an Organization with access to "Adobe Cloud Platform"
+    * The Adobe ID account must have been added to an Organization with access to "Adobe Experience Platform"
 
 ## UI Workflow
 
 In this section, we will go over creating a Recipe where you can import your Docker image. We went through the steps to create a Docker image in the [Package Recipe to Data Science Workspace tutorial](../package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md).
 
-First, we launch the [Adobe Cloud Platform UI](https://platform.adobe.com/) and go to the `Data Science` tab in the top navigation bar. You will be taken to the `Overview` tab where you will see three sections:
+First, we launch the [Adobe Experience Platform UI](https://platform.adobe.com/) and go to the `Data Science` tab in the top navigation bar. You will be taken to the `Overview` tab where you will see three sections:
 * Recipes
 * My Instances
 * My Notebooks
