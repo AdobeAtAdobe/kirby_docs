@@ -1,4 +1,4 @@
-# Adobe Cloud Platform: Schema Registry Developer Guide
+# Adobe Experience Platform: Schema Registry Developer Guide
 
 ## Overview
 
@@ -14,17 +14,17 @@ This developer guide provides an introduction to the Schema Registry (aka XDM Re
 
 ## Schema Registry
 
-The Schema Registry is used to access the Schema Library within Adobe Cloud Platform (ACP), providing a User Interface and RESTful API from which all available schemas are discoverable.
+The Schema Registry is used to access the Schema Library within Adobe Experience Platform, providing a User Interface and RESTful API from which all available schemas are discoverable.
 
 ### Using the Schema Registry API
 
-Using the Schema Registry API, you are able to perform basic CRUD operations against the Schema Library in order to view, manage, and extend all schemas available to you within Adobe Cloud Platform. This includes those defined by Adobe, platform partners, and vendors whose applications you use. You can also use API calls to view and edit schemas that you have defined, as well as create new schemas for your organization.
+Using the Schema Registry API, you are able to perform basic CRUD operations against the Schema Library in order to view, manage, and extend all schemas available to you within Adobe Experience Platform. This includes those defined by Adobe, Experience Platform partners, and vendors whose applications you use. You can also use API calls to view and edit schemas that you have defined, as well as create new schemas for your organization.
 
 ### XDM Compatibility Mode
 
 [Experience Data Model](https://www.adobe.io/open/standards/xdm.html) (XDM) is a publicly documented specification, driven by Adobe to improve the interoperability, expressiveness, and power of digital experiences. Adobe maintains the source code and formal XDM definitions in an open source project on [GitHub](https://github.com/adobe/xdm/). These definitions are written in XDM Standard Notation, using JSON-LD in addition to JSON Schema as the grammar for defining XDM schemas. 
 
-When looking at formal XDM definitions in the public repository, you can see that standard XDM differs from what you see in Adobe Cloud Platform. What you are seeing in ACP is called Compatibility Mode, and it provides a simple mapping between standard XDM and the way it is used within platform.
+When looking at formal XDM definitions in the public repository, you can see that standard XDM differs from what you see in Adobe Experience Platform. What you are seeing in Experience Platform is called Compatibility Mode, and it provides a simple mapping between standard XDM and the way it is used within Platform.
 
 #### How Compatibility Mode Works
 
@@ -63,19 +63,19 @@ For example, the following is a side-by-side comparison of a snippet from the "P
 
 #### Why Do We Need Compatibility Mode?
 
-Adobe Cloud Platform is designed to work with multiple solutions and services, each with their own technical challenges and limitations (such as how certain technologies handle special characters). In order to overcome these limitations, Compatibility Mode was developed.
+Adobe Experience Platform is designed to work with multiple solutions and services, each with their own technical challenges and limitations (for example, how certain technologies handle special characters). In order to overcome these limitations, Compatibility Mode was developed.
 
-Most platform services including Catalog, Data Lake, and Unified Profile Service use Compatibility Mode in lieu of standard XDM. The Schema Registry API also uses Compatibility Mode, and the examples in this document are all shown using Compatibility Mode.
+Most Experience Platform services including Catalog, Data Lake, and Unified Profile Service use Compatibility Mode in lieu of standard XDM. The Schema Registry API also uses Compatibility Mode, and the examples in this document are all shown using Compatibility Mode.
 
-It is worthwhile to know that a mapping takes place between standard XDM and the way it is operationalized in ACP, but it should not affect your use of platform services. 
+It is worthwhile to know that a mapping takes place between standard XDM and the way it is operationalized in Experience Platform, but it should not affect your use of Platform services. 
 
-The open source project is available to you as a resource, but when it comes to interacting with standard schemas through the Schema Registry, the API examples below and the UI steps outlined in the [Using Standard Schemas with Adobe Cloud Platform](../schema_registry/standard_schemas/acp_standard_schemas.md) document provide the best practices that you will need to know and follow.
+The open source project is available to you as a resource, but when it comes to interacting with standard schemas through the Schema Registry, the API examples below and the UI steps outlined in the [Using Standard Schemas with Adobe Experience Platform](../schema_registry/standard_schemas/acp_standard_schemas.md) document provide the best practices that you should know and follow.
 
 ### Identifying and Referencing Schemas
 
 A schema identifier is represented by its `id` attribute. This attribute also represents the id of the schema within the Schema Registry. The GET request below for viewing all XDM Schemas returns a list of schemas and their paths.
 
-For example, the `Person` schema is located in the namespace `context` so it has an `id` value of `context/person`. Understanding this path is important as this is how you will interact with the schemas via the API.
+In the following example, the `Person` schema is shown to have a path of `"@/xdms/context/profile"`, meaning it is located in the namespace `context` and therefore has an `id` value of `context/person`. The `id` is important as this is how you will interact with the schemas via the API.
 
 ### Understanding the `_customer` Keyword
 
@@ -110,8 +110,8 @@ curl -X GET \
 ```
 
 - `{ACCESS_TOKEN}`: Token provided after authentication  
-- `{API_KEY}`: Your specific API key for your unique ACP integration (available via [Adobe Console](https://console.adobe.io))
-- `{IMS_ORG}`: The IMS Organization credentials for your unique ACP integration
+- `{API_KEY}`: Your specific API key for your unique Platform integration (available via [Adobe Console](https://console.adobe.io))
+- `{IMS_ORG}`: The IMS Organization credentials for your unique Platform integration
 
 
 ##### Response
@@ -600,7 +600,7 @@ curl -X GET \
 
 ### Defining a Field
 
-In the `Person` schema above, the fields of the schema are listed within the `properties` object. Each field is itself an object, containing additional fields to describe and constrain the data that the field can contain. Below is a sample field outlining some best practices for field definitions.
+In the `Person` schema above, the fields of the schema are listed within the `properties` object. Each field is itself an object, containing additional fields to describe and constrain the data that the field can contain. Below is a sample field outlining some best practices to follow when defining fields.
 
 ```JSON
 "fieldName": {
@@ -616,7 +616,7 @@ In the `Person` schema above, the fields of the schema are listed within the `pr
 
 1. The name for the field object is written in camelCase. Example: `"fieldName"`
 1. The field should include a `"title"`, written in Title Case. Example: `"Field Name"`
-1. The field requires a `"type"`.  
+1. The field requires a scalar `"type"`.  
 a. Defining certain types may require an optional `"format"`.   
 b. Where a specific formatting of data is required, `"examples"` can be added as an array.
 1. The `"description"` explains the field and pertinent information regarding field data. It should be written in full sentences with clear language so that anyone accessing the schema can understand the intention of the field.
@@ -625,7 +625,7 @@ More information about [defining field types in the API](#defining-xdm-field-typ
 
 ### PUT - Extend an Existing Schema
 
-Adobe Cloud Platform provides a wide assortment of standard schemas, but there will be times when you need to express non-standard data unique to your organization. This can be done by extending an existing schema, meaning that you can add custom fields for personalized data.
+Adobe Experience Platform provides a wide assortment of standard schemas, but there will be times when you need to express non-standard data unique to your organization. This can be done by extending an existing schema, meaning that you can add custom fields for personalized data.
 
 When you want to add fields to an existing library schema, the `_customer` keyword will appear after the `id` of the schema you want to extend. This results in an extension of the existing schema with a new set of fields that appear under the extension name that you specify.
 
@@ -669,7 +669,7 @@ curl -X PUT \
      }'
 ```
 
-**Note:** All requests with a payload in the request body, must include the header `Content-Type: application/json` as shown above.
+**Note:** All requests with a payload in the request body must include the header `Content-Type: application/json` as shown above.
 
 #### Response
 
@@ -946,7 +946,7 @@ curl -X GET \
 
 After confirming that the response from the GET request is the correct extension, you can now add fields to the extension and issue a PUT request.
 
-**Note:** This PUT request is essentially _re-writing_ the existing extension, so it is important that the payload of your PUT request include **ALL** of the fields (old and new) that you wish to have included in the extension.
+**Note:** This PUT request is essentially _re-writing_ the existing extension, so it is important that the payload of your PUT request includes **ALL** of the fields (old and new) that you wish to have in the updated extension.
 
 ##### API Format
 
@@ -1089,7 +1089,7 @@ PUT /xdms/_customer/{id}
 
 - `{id}`: In the earlier examples, schema identifiers were referenced above using an `id` consisting of a path (`context/person`). When creating a new schema, you can create a directory of your own (similar to the `<new extension name>` used in the example above), which you would then combine with the new schema name that you are defining. For example, the new `Flights` schema will be maintained by the travel company's web team, so the path will be `web/flights`.  
   
-**API vs UI:** The API allows you to define your own extension names as noted above. These schema will appear alongside all other schemas in the UI, with no discernible difference between them. When defining a schema in the UI, you will be directed to create your schema within the `default` extension, making it part of the `_customer.default` hierarchy. For better control over extension names (such as defining schema for "retail" and "web" teams), we recommend using the API when defining schemas.
+**API vs UI:** The API allows you to define your own extension names as noted above. These schema will appear alongside all other schemas in the UI, with no discernible difference between them. When defining a schema in the UI, you will be directed to create your schema within the `default` extension, making it part of the `_customer.default` hierarchy. For better control over extension names (such as defining separate schema for "retail" and "web" teams), we recommend using the API when defining schemas.
 
 ##### Request
 
@@ -1389,15 +1389,15 @@ curl -X GET \
 
 ## Schema Descriptors
 
-Schemas define a static view of data entities, but do not provide specific details on how data based on these schemas (datasets, etc) may relate to one another. Adobe Cloud Platform allows you to describe these relationships and other interpretive metadata about a schema using descriptors. Schema descriptors are unique to your IMS Organization, meaning that other organizations will not see the descriptors that you define, nor will you see theirs.
+Schemas define a static view of data entities, but do not provide specific details on how data based on these schemas (datasets, etc) may relate to one another. Adobe Experience Platform allows you to describe these relationships and other interpretive metadata about a schema using descriptors. Schema descriptors are unique to your IMS Organization, meaning that other organizations will not see the descriptors that you define, nor will you see theirs.
 
-Each schema can have one or more schema descriptor entities applied to it. Each schema descriptor entity includes a descriptor type and the `sourceSchema` to which it applies. Once applied, these descriptors will apply to all datasets that are described by the related schemas.
+Each schema can have one or more schema descriptor entities applied to it. Each schema descriptor entity includes a descriptor `@type` and the `sourceSchema` to which it applies. Once applied, these descriptors will apply to all datasets that are described by the related schemas.
 
 ### Descriptor Types
 
 All descriptors are described using the base SchemaDescriptor schema. The base can be extended by the RelationshipDescriptor or UpdatePolicyDescriptor schemas to add additional properties needed when defining certain types of descriptors.
 
-The following table provides an overview of available descriptors, and details regarding proper API usage are outlined in subsequent sections below.
+The following table provides an overview of available descriptors and details regarding proper API usage are outlined in subsequent sections below.
 
 <table>
 <tr>
@@ -1586,9 +1586,9 @@ curl -X GET \
 
 ##### Response
 
-If descriptors exist, the response is an array of objects, with one object for each `descriptorType` that exists within your organization (in other words, if you have not declared any `schema` descriptors, you would not see a `"descriptorType": "schema"` object). 
+If descriptors exist, the response is an array of objects with one object for each `descriptorType` that your organization has defined. In other words, if you have not declared any `schema` descriptors, you would not see a `"descriptorType": "schema"` object. 
 
-The `descriptors` array inside each object lists the paths to each individual descriptor of that type. The descriptors are shown in the format `@/descriptors/{id}`. There is more information about accessing individual descriptors by their `{id}` below.
+The `descriptors` array inside each object lists the paths to each individual descriptor of that type. The descriptors are shown in the format `@/descriptors/{descriptorId}`. There is more information about accessing individual descriptors by their `{descriptorId}` below.
 
 ```JSON
 [
@@ -1617,19 +1617,19 @@ The `descriptors` array inside each object lists the paths to each individual de
 
 #### Query Parameters
 
-To further refine your GET request, you can include one or more query parameter filters. Current supported filters include: type, sourceSchema, destSchema.
+To further refine your GET request, you can include one or more query parameter filters. Currently supported filters include: descriptorType, sourceSchema, destSchema.
 
 ##### API Examples
 
 ```
-GET /descriptors?type=string&sourceSchema=directory/schema&destSchema=directory/schema2
+GET /descriptors?descriptorType=string&sourceSchema=directory/schema&destSchema=directory/schema2
 ```
 ##### Additional examples and possible query parameter combinations:
 ```
 GET /descriptors?descriptorType=relationship
 GET /descriptors?sourceSchema=_customer/web/flights
 GET /descriptors?destSchema=context/person
-GET /descriptors?type=relationship&sourceSchema=_customer/web/flights&destSchema=context/person
+GET /descriptors?descriptorType=relationship&sourceSchema=_customer/web/flights&destSchema=context/person
 ```
 
 ##### Request
@@ -1644,7 +1644,7 @@ curl -X GET \
 
 ##### Response
 
-The response to the above request will limit the results to only those descriptors with a `descriptorType` of `schema`. The descriptors are still shown as items in an array, using the format `@/descriptors/{id}`.
+The response to the above request will limit the results to only those descriptors with a `descriptorType` of `schema`. The descriptors are still shown as items in an array, using the format `@/descriptors/{descriptorId}`.
 
 ```JSON
 [
@@ -1661,12 +1661,12 @@ The response to the above request will limit the results to only those descripto
 
 ### GET - View Individual Descriptor
 
-If you wish to view the details of an individual descriptor, and know its `{id}`, you can issue a GET request to return the individual descriptor in JSON format.
+If you wish to view the details of an individual descriptor, and know its `{descriptorId}`, you can issue a GET request to return the individual descriptor in JSON format.
 
 ##### API Format
 
 ```
-GET /descriptors/{id}
+GET /descriptors/{descriptorId}
 ```
 
 ##### Request
@@ -1700,7 +1700,7 @@ curl -X GET \
 
 ### POST - Create New Descriptor
 
-To create a new descriptor, issue a POST request to `/descriptors` that includes all of the necessary fields (as indicated by the [Descriptor Types table](#descriptortypes)) in the payload.
+To create a new descriptor, issue a POST request to `/descriptors` that includes all of the required fields (as indicated by the [Descriptor Types table](#descriptor-types)) in the payload.
 
 ##### API Format
 
@@ -1718,7 +1718,7 @@ curl -X POST \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: 6{IMS_ORG}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -d '{
     "@type":"xdm:descriptorPrimaryKey",
     "xdm:sourceSchema":"_customer/web/flights",
@@ -1728,7 +1728,7 @@ curl -X POST \
 
 ##### Response
 
-The response to this request is an object containing the `{id}` of our new descriptor.
+The response to this request is an object containing the `{descriptorId}` of our new descriptor.
 
 ```JSON
 {
@@ -1736,21 +1736,21 @@ The response to this request is an object containing the `{id}` of our new descr
 }
 ```
 
-You can view the details for the descriptor you just created by using the `{id}` provided in the response and following the steps to [view an individual descriptor](#get-viewindividualdescriptor) as outlined above.
+You can view the details for the descriptor you just created by using the `{descriptorId}` provided in the response and following the steps to [view an individual descriptor](#get---view-individual-descriptor) as outlined above.
 
 ### PUT - Update a Descriptor
 
-You may determine in the future that you need to update a descriptor. This can be done through the API using a PUT request to the individual descriptor `{id}`.
+You may determine in the future that you need to update a descriptor. This can be done through the API by issuing a PUT request using the `{descriptorId}` of the descriptor you would like to update.
 
 ##### API Format
 
 ```
-PUT /descriptors/{id}
+PUT /descriptors/{descriptorId}
 ```
 
 ##### Request
 
-In this example, we will update the descriptor we just created to indicate a different field as the primary key for `_customer/web/flights` schema.
+In this example, we will update the descriptor we just created to indicate a different field as the primary key for the `_customer/web/flights` schema.
 
 ```
 curl -X PUT \
@@ -1766,11 +1766,11 @@ curl -X PUT \
 }'
 ```
 
-**Note:** Similar to other update instructions in this document, the PUT request is _re-writing_ the existing descriptor, so you must include all necessary fields in the payload to ensure the descriptor is updated correctly.
+**Note:** The PUT request is _re-writing_ the existing descriptor, so you must include all necessary fields in the payload to ensure the descriptor is updated correctly.
 
 ##### Response
 
-The response shows the descriptor `{id}`, which should be the same as when you first defined it.
+The response shows the `{descriptorId}` for the updated descriptor, which should be the same as the one used in the PUT request.
 
 ```JSON
 {
@@ -1780,12 +1780,12 @@ The response shows the descriptor `{id}`, which should be the same as when you f
 
 ### DELETE - Remove a Descriptor
 
-You can remove a descriptor by performing a DELETE request using the `{id}` for the descriptor.
+You can remove a descriptor by performing a DELETE request using the `{descriptorId}` of the descriptor you would like to remove.
 
 ##### API Format
 
 ```
-DELETE /descriptors/{id}
+DELETE /descriptors/{descriptorId}
 ```
 
 ##### Request
@@ -1800,7 +1800,7 @@ https://platform.adobe.io/data/foundation/catalog/descriptors/9801b0d39c2760ef49
 
 ##### Response
 
-There is no response body for a DELETE request, but a successful deletion will return with HTTP Status Code 204 (No-content).
+There is no response body for a DELETE request. A successful deletion will return with HTTP Status Code 204 (No-content).
 
 ```HTTP
 Status: 204 (No-content)

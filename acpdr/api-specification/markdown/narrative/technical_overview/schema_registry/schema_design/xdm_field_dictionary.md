@@ -1,8 +1,8 @@
 # Experience Data Model: Field Dictionary
 
-Experience Data Model (XDM) defines a set of fields "out of the box" that can be used when extending principal schemas or building new schemas for use in Adobe Cloud Platform. These XDM field types contain specific definitions that provide consistency in behavior for any fields sharing the same XDM field type.
+Experience Data Model (XDM) defines a set of fields "out of the box" that can be used when extending principal schemas or building new schemas for use in Adobe Experience Platform. These XDM field types contain specific definitions that provide consistency in behavior for any fields sharing the same XDM field type.
 
-**Note:** A field with a Type of "directory/schema-name" is the path pointing to a specific reference schema that contains its own fields and connotations. The [Schema Design Principles and Best Practices](schema_principles.md) guide outlines referencing and extending schemas in more detail.
+**Note:** A field with a Type of "directory/schemaname" is the path pointing to a specific reference schema that contains its own fields and connotations. The [Schema Design Principles and Best Practices](schema_principles.md) guide outlines referencing and extending schemas in more detail.
 
 ---
 

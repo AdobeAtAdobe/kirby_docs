@@ -1,33 +1,33 @@
-# Adobe Cloud Platform: Using Standard Schemas
+# Using Standard Schemas in Adobe Experience Platform
 
 ## Overview
 
 In order to gain insights from data, we need to ensure that similar data is consistently defined in the same way. When data definitions are consistent, this removes the need for translation and improves the interoperability of data across systems.
 
-To gain consistency in data definitions, Adobe Cloud Platform (ACP) uses standard schemas across its many services. This document provides an overview of how standard schemas are used across ACP, including:
+To gain consistency in data definitions, Adobe Experience Platform uses standard schemas across its many services. This document provides an overview of how standard schemas are used across Experience Platform, including:
 
-- How different ACP components utilize standard schemas
+- How different Platform components utilize standard schemas
 - The Schema Library and key standard schemas
-- The Schema Registry and its role within ACP
+- The Schema Registry and its role within Platform
 - The Data Model workspace and how to view, extend, and create schemas
 
-## ACP Components and Use of Schema
+## Adobe Experience Platform Components and Use of Schema
 
-Adobe Cloud Platform is schema agnostic, meaning that any schema that conforms to the standard can be used across the platform. Examples of standard schemas include those defined by Adobe as part of Experience Data Model (XDM), as well as Common Data Model (CDM) schemas published by Microsoft. Standard schemas are also supplied by other platform partners and you can create your own by mixing and matching available schemas or by defining new schemas.
+Adobe Experience Platform is schema agnostic, meaning that any schema that conforms to the standard can be used across Platform. Examples of standard schemas include those defined by Adobe as part of Experience Data Model (XDM), as well as Common Data Model (CDM) schemas published by Microsoft. Standard schemas are also supplied by other Platform partners and you can create your own by mixing and matching available schemas or by defining new schemas.
 
-Standard schemas are available for use by all platform services, such as Data Catalog, Unified Profile Service, and Unified Segmentation, each of which is outlined below.
+Standard schemas are available for use by all Experience Platform services, such as Data Catalog, Unified Profile Service, and Unified Segmentation, each of which is outlined below.
 
 ### Experience Data Lake & Data Catalog
 
-Adobe Cloud Platform contains a central Data Catalog of assets and their related schemas. The Experience Data Lake (XDL) is highly granular, storing all of your data managed by ACP, regardless of origin or file format.
+Adobe Experience Platform contains a central Data Catalog of assets and their related schemas. The Experience Data Lake (XDL) is highly granular, storing all of your data managed by Platform, regardless of origin or file format.
 
-To ingest data into Adobe Cloud Platform, a dataset is created which references a target schema, providing constraints to how the data should look. If the dataset is created without a target schema, ACP will derive an observed schema through the inspection of fields and field types.
+To ingest data into Adobe Experience Platform, a dataset is created which references a target schema, providing constraints to how the data should look. If the dataset is created without a target schema, Experience Platform will derive an observed schema through the inspection of fields and field types.
 
 The datasets are then tracked in the data catalog and stored alongside their target and observed schemas. The catalog provides the ability for you to discover datasets, as well as understand the formats and storage locations of the datasets, dependencies, lineage, etc.
 
 ### Unified Profile Service
 
-Unified Profile Service (UPS) in Adobe Cloud Platform provides a unified, 360° customer profile for each individual in your entire user base. It contains data that is aggregated across all systems, as well as actionable timestamped accounts of events involving the individual, in any of your systems that have been ingested into the platform.
+Unified Profile Service (UPS) in Adobe Experience Platform provides a unified, 360° customer profile for each individual in your entire user base. It contains data that is aggregated across all systems, as well as actionable timestamped accounts of events involving the individual, in any of your systems that have been ingested into Experience Platform.
 
 UPS consumes schema formatted data, preferably in the form of Profile and ExperienceEvent, and responds to queries that can span record (profile) and event (time series) data. The Profile Service maintains a single record of each profile, merging data together to form a "single source of truth" for each individual.
 
@@ -47,15 +47,15 @@ These audiences, or subsets, of customers are based on shared characteristics an
 
 ## Schema Library
 
-The Schema Library contains all of the standard schemas that are available within platform. This includes schemas curated by Adobe (Experience Data Model), as well as those provided by platform partners and defined by your own organization.
+The Schema Library contains all of the standard schemas that are available within Platform. This includes schemas curated by Adobe (Experience Data Model), as well as those provided by Experience Platform partners and defined by your own organization.
 
 ### Key Experience Data Model (XDM) Schemas
 
-Principal schemas for Adobe Cloud Platform can be grouped into two different behavior types: Time Series and Record.
+Principal schemas for Adobe Experience Platform can be grouped into two different behavior types: Time Series and Record.
 
-Time Series data provides a snapshot of the system at the time an action was taken either directly or indirectly by a subject. ExperienceEvent is one example of a Time Series schema, but you can also define your own within ACP. We recommend using ExperienceEvent, as it is the platform preferred schema to express Time Series data.
+Time Series data provides a snapshot of the system at the time an action was taken either directly or indirectly by a subject. ExperienceEvent is one example of a Time Series schema, but you can also define your own within Experience Platform. We recommend using ExperienceEvent, as it is the preferred schema to express Time Series data in Adobe Experience Platform.
 
-Record data provides information about attributes of the subject. This could be an organization or individual, and represents the state. The Profile schema is an example of a Record schema, but not the only one. It is the platform preferred schema for consumer record data.
+Record data provides information about attributes of a subject. This could be an organization or individual, and represents the state. The Profile schema is an example of a Record schema, but not the only one. It is preferred schema for consumer record data in Experience Platform.
 
 Record schemas and Time Series schemas can contain one or more identity fields. Identity fields contain the identity representation of the subject, such as a CRM identifier, Experience Cloud ID (ECID), browser cookie, AdvertisingId, or other IDs in different domains.
 
@@ -81,17 +81,17 @@ Less-identified profiles may consist of only anonymous behavioral signals, such 
 
 The Schema Registry is used to access the Schema Library, providing a user interface (the Data Model workspace, outlined below) and a RESTful API from which all available schemas are discoverable.
 
-Using API calls and/or the Data Model workspace, you are able to view, manage, and extend all schemas made available to you by Adobe, platform partners, and vendors whose applications you use. The Schema Registry also allows you to create and manage new schemas through both the API and user interface.
+Using API calls and/or the Data Model workspace, you are able to view, manage, and extend all schemas made available to you by Adobe, Experience Platform partners, and vendors whose applications you use. The Schema Registry also allows you to create and manage new schemas through both the API and user interface.
 
-For more information on using the Schema Registry API, see the [Adobe Cloud Platform: Schema Registry Development Guide](../acp_schema_registry.md).
+For more information on using the Schema Registry API, see the [Adobe Experience Platform: Schema Registry Development Guide](../acp_schema_registry.md).
 
 ## Data Model Workspace
 
 The Data Model workspace provides a visualization of the Schema Library allowing you to view all of the schemas available to you, as well as perform Schema Registry actions such as extending an existing schema and creating a new one. 
 
-Once you log in to Adobe Cloud Platform, click on Data Model in the top navigation and you will be taken to the Data Model workspace. You will then see a list of schemas, aka the Schema Library, where you can view, manage, and extend all available schemas as required.
+Once you log in to Adobe Experience Platform, click on Data Model in the top navigation and you will be taken to the Data Model workspace. You will then see a list of schemas, aka the Schema Library, where you can view, manage, and extend all available schemas as required.
 
-![Schema Library in the Data Model Workspace](Data_Model_Workspace.png "View the Schema Library within the Data Model Workspace")
+![Schema Library in the Data Model Workspace](DataModelWorkspace.png "View the Schema Library within the Data Model Workspace")
 
 ### Viewing a Schema
 
@@ -99,28 +99,28 @@ Viewing a schema from within the Schema Library is as simple as clicking on the 
 
 A Field containing a reference to another schema (for example, "person") will display a Type consisting of the name of the schema on which it is based ("Person"). In the example below, the fields homeAddress and workAddress both have a field type of Address because they are both referencing the standard schema, Address.
 
-Mousing over a schema will display a blue line showing the relationship between that schema and others it references. For example, the Person reference schema has a field called "name" with a type "Person Name"; the blue line from Profile to Person, and from Person to Person Name, highlight the references being made between them.
+Mousing over a schema will display a blue line showing the relationship between that schema and others it references. For example, the Person reference schema has a field called "name" with a type "Person Name"; the blue line from Profile to Person, and from Person to Person Name, highlights the references being made between them.
 
-![Navigating a Schema](Navigating_Schema.png "Navigating the Profile Schema")
+![Navigating a Schema](NavigatingSchema.png "Navigating the Profile Schema")
 
 ### Creating a New Schema
 
 From the Data Model Workspace, clicking the Create Schema button will open the Add Schema dialog and allow you to begin defining a new schema. 
 
-![Create a New Schema](Add_New_Schema.png)
+![Create a New Schema](NewSchema.png "Add Schema dialog opens")
 
 Best practices for completing the Add Schema dialog include:
 - **Name** - Use all lowercase without spaces (`/_customer/default/newschemaname`)
 - **Display Name** - Capitalize each word, also known as "Title Case" (`New Schema Name`)
 - **Description** - Include a description that is detailed enough that a new user could understand the meaning and intention behind the schema.
 
-**UI vs API:** When defining a schema in the UI, you will be directed to create your schema within the `_customer/default` extension. The API provides functionality for defining your own extension names, allowing you to define schemas for different departments, teams, etc. within your organization (such as defining schema for "retail" and "web" teams). Schema defined in this way in the API appear alongside all other schema in the UI, with no discernible difference between them. 
+**UI vs API:** When defining a schema in the UI, you will be directed to create your schema within the `_customer/default` extension. The API provides functionality for defining your own extension names, allowing you to define schemas for different departments, teams, etc. within your organization (such as defining schema for "retail" and "web" teams). Schemas defined in this way in the API appear alongside all other schema in the UI, with no discernible difference between them. 
 
-If you require better control over extension names, we recommend using the API when defining schemas. Steps on how to define schemas with specific extensions can be found in the [Adobe Cloud Platform: Schema Registry Development Guide](../acp_schema_registry.md).
+If you require better control over extension names, we recommend using the API when defining schemas. Steps on how to define schemas with specific extensions can be found in the [Adobe Experience Platform: Schema Registry Development Guide](../acp_schema_registry.md).
 
 ![Buyer schema](Buyer_schema.png "The new Buyer schema in the Data Model workspace")
 
-Once you complete the Add Schema dialog, your new schema will open in the workspace. You will notice a colored strip on the left side of the schema blog indicating it is a Custom schema. The list of fields will be blank, but you can use the plus sign (+) to add new fields and references.
+Once you complete the Add Schema dialog, your new schema will open in the workspace. You will notice a colored strip on the left side of the schema box indicating it is a Custom schema. The list of fields will be blank, but you can use the plus sign (+) to add new fields and references.
 
 ### Adding a Field
 
@@ -128,7 +128,7 @@ In the [Schema Design Principles and Best Practices](../schema_design/schema_pri
 
 To add a field to the Buyer schema, click the plus sign (+) next to FIELDS to open the Add Field dialog.
 
-![Add Company Name field to Buyer](Add_companyName.png)
+![Add Company Name field to Buyer](CompanyName.png "Add Field dialog opens to add Company Name field to Buyer schema")
 
 The Buyer schema will now have a field named "companyName" with type "string".
 
@@ -140,11 +140,11 @@ The [Schema Design Principles and Best Practices](../schema_design/schema_princi
 
 To use reference schemas in the Data Model workspace, click the plus sign next to fields to open the Add Field dialog again. Using the Field Type dropdown, select "Schema" and search the Schema dropdown by typing "person" to select the Person standard schema. 
 
-![Adding a Field](Reference_Person.png "Add a field with type schema to reference an existing schema")
+![Adding a Field](ReferencePerson.png "Use Add Field dialog to add a Reference to the Person Schema")
 
 Once added, you will see a new field under Buyer named "person" with a type "Person" (Remember, if the Field references a schema, its Type is the name of the reference schema). The Person schema is now displayed in the workspace, along with a reference to Person Name, as the Person Name schema is referenced within Person.
 
-![Adding Reference Schema](Buyer_reference_Person.png "Adding a Reference Schema")
+![Adding Reference Schema](Buyer_reference_Person.png "Buyer schema now contains a reference to Person")
 
 Using the same steps as above, you can now add references to the Phone Number, Email Address, and Address reference schemas. 
 
@@ -154,7 +154,7 @@ Using the same steps as above, you can now add references to the Phone Number, E
 
 ### Extensibility
 
-A wide assortment of standard schemas are available to you within platform, but there will be times when you need to express non-standard data unique to your organization. In order to accommodate this need, library schemas are extensible, meaning that you can add custom fields for personalized data.
+A wide assortment of standard schemas are available to you within Platform, but there will be times when you need to express non-standard data unique to your organization. In order to accommodate this need, library schemas are extensible, meaning that you can add custom fields for personalized data.
 
 These extended fields are injected into the base schema, allowing any application that can consume the original schema to be able to understand the new, extended schema.
 
@@ -175,12 +175,12 @@ The [Schema Design Principles](../schema_design/schema_principles.md) example al
 
 To do this, click the plus sign under Person to add a new field. Since the Interests field will contain a list of interests, also known as an array of strings, you will need to select the Field Type "String" and check the box next to Array.
 
-![Adding an Array of Interests](Array_of_Interests.png)
+![Adding an Array of Interests](ArrayOfInterests.png)
 
 You will now see the Interests field under Person with a type of "String[]", indicating an array of strings. There is also a dot next to the field name, denoting that it is an extension.
 
 ![Extending Person with Interests Array](Person_Interests_Extension.png)
 
-Once you click the Save button to save your new Buyer schema, you will be able to use it within Adobe Cloud Platform as you would any other schema.
+Once you click the Save button to save your new Buyer schema, you will be able to use it within Adobe Experience Platform as you would any other schema.
 
 You have now successfully extended an existing schema and defined a new schema to represent your specific use case. From here, you can use schemas to define datasets and datastreams using Data Catalog, and start loading data into these schemas.

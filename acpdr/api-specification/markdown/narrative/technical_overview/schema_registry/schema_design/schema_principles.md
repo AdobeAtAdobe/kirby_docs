@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document provides an introduction to schemas and the building blocks, principles, and best practices for designing schemas to be used with Adobe Cloud Platform.
+This document provides an introduction to schemas and the building blocks, principles, and best practices for designing schemas to be used with Adobe Experience Platform.
 
 After reading this document, you will be able to answer the following questions:
 - What is a schema?
@@ -27,7 +27,7 @@ Schemas solve this big data problem by allowing data to be integrated from multi
 
 ### Schema and Datasets
 
-To ingest data into the platform, a dataset is created which references a target schema, providing constraints to how the data should look. If the dataset is created without a target schema, the platform will derive an observed schema through the inspection of fields and field types.
+To ingest data into Experience Platform, a dataset is created which references a target schema, providing constraints to how the data should look. If the dataset is created without a target schema, Platform will derive an observed schema through the inspection of fields and field types.
 
 In some systems, observed and target schemas are stored alongside the data, providing important definitions for the data and how it should look.
 
@@ -61,7 +61,7 @@ The first step in building a schema is to determine the concept, or real world o
 
 ### Field Types
 
-Once the fields for the schema have been identified, you will need to determine the field types. In addition to describing the structure of data, schemas provide constraints regarding the type of data contained within each field. In order for schemas to be compatible with Adobe Cloud Platform, fields must adhere to the following data types:
+Once the fields for the schema have been identified, you will need to determine the field types. In addition to describing the structure of data, schemas provide constraints regarding the type of data contained within each field. In order for schemas to be compatible with Adobe Experience Platform, fields must adhere to the following data types:
 
 - string
 - integer
@@ -90,7 +90,7 @@ The valid ranges of these scalar types can be further constrained to certain pat
         companyName (string)
 ```
 
-**Note:** When specifying field types, scalar types such as 'string' don't strongly enforce the data that can be contained within a field. Experience Data Model (XDM) defines an additional [dictionary](#xdm-field-dictionary) of stronger field types that are recommended for common fields such as "firstName" and "phoneNumber". These [XDM field types](#xdm-field-types) contain specific definitions that provide consistency in behavior across platform services for any fields sharing the same XDM field type.
+**Note:** When specifying field types, scalar types such as 'string' don't strongly enforce the data that can be contained within a field. Experience Data Model (XDM) defines an additional [dictionary](#xdm-field-dictionary) of stronger field types that are recommended for common fields such as "firstName" and "phoneNumber". These [XDM field types](#xdm-field-types) contain specific definitions that provide consistency in behavior across Experience Platform services for any fields sharing the same XDM field type.
 
 ### Principal Schemas
 
@@ -106,11 +106,11 @@ A reference schema is a schema definition that is intended to be used as a field
 
 As you define a schema, you may notice that you have defined a set of fields that describe a particular concept you would like to reuse across other schemas that describe your business domain. These fields would be better collected into their own schema and included as a reference within a principal schema.
 
-**Note:** There are a number of reference schemas available in Adobe Cloud Platform, and similar to XDM field types, these existing schemas contain definitions that are understood across platform and provide added functionality with platform services.
+**Note:** There are a number of reference schemas available in Adobe Experience Platform, and similar to XDM field types, these existing schemas contain definitions that are understood across Platform and provide added functionality with Experience Platform services.
 
 **Example:** The Buyer schema contains several fields that are very common and are likely to be reused across multiple schemas. Person, Address, Email Address, and Phone Number are all pre-existing schemas and can therefore be _referenced_ by the Buyer schema. 
 
-Here is a breakdown of the Person schema, showing the fields it contains. Notice that the `name` field is a reference to another pre-existing schema, Person Name. This schema provides additional name-related fields whose definitions are understood across Adobe Cloud Platform.
+Here is a breakdown of the Person schema, showing the fields it contains. Notice that the `name` field is a reference to another pre-existing schema, Person Name. This schema provides additional name-related fields whose definitions are understood across Adobe Experience Platform.
 
 ```JSON
     Person:
@@ -179,7 +179,7 @@ The schema hierarchy would now have these reference schemas, and their fields, e
 
 In order to accommodate non-standard data, existing schemas may be 'extended' by adding one or more fields that define personalized data.
 
-You should be thoughtful when extending a schema and check first that an XDM defined schema or field does not already exist. If one does exist, you will benefit more from using the XDM defined schema or field as platform services will implicitly understand the definition for that schema or field.
+You should be thoughtful when extending a schema and check first that an XDM defined schema or field does not already exist. If one does exist, you will benefit more from using the XDM defined schema or field as Experience Platform services will implicitly understand the definition for that schema or field.
 
 It is best to avoid creating custom extensions unless you are defining a narrow use case that exists outside the scope of existing schemas and fields.
 
@@ -273,11 +273,11 @@ Maintaining backwards compatibility is crucial for schema evolution. A purely ad
 
 ### Schema Behavior Types
 
-Principal schemas for Adobe Cloud Platform can be grouped into two different behavior types: Time Series and Record.
+Principal schemas for Adobe Experience Platform can be grouped into two different behavior types: Time Series and Record.
 
-Time Series data provides a snapshot of the environment at the time an action was taken either directly or indirectly by a subject. ExperienceEvent is one example of a Time Series schema, but you can also define your own. It is best practice to use ExperienceEvent, as it is the platform preferred schema to express Time Series data.
+Time Series data provides a snapshot of the environment at the time an action was taken either directly or indirectly by a subject. ExperienceEvent is one example of a Time Series schema, but you can also define your own. It is best practice to use ExperienceEvent, as it is the preferred schema to express Time Series data in Experience Platform .
 
-Record data provides information about attributes of the subject. The Profile schema is not the only example of a Record schema, but it is the platform preferred schema for subject record data. Best practices encourage using the Profile schema to express Record data.
+Record data provides information about attributes of the subject. The Profile schema is not the only example of a Record schema, but it is the preferred schema for subject record data in Platform. Best practice encourages using the Profile schema to express Record data.
 
 Record schemas and Time Series schemas can contain one or more identity fields. These fields contain the identity representation of a subject, such as a CRM identifier, Experience Cloud ID (ECID), browser cookie, AdvertisingId, or other IDs in different domains.
 
@@ -285,7 +285,7 @@ Record schemas and Time Series schemas can contain one or more identity fields. 
 
 Experience Data Model (XDM) is a publicly documented specification, driven by Adobe, to improve the interoperability, expressiveness, and power of digital experiences.
 
-XDM provides a common format for any application to use to communicate with solutions on Adobe Cloud Platform. By adhering to XDM standards, all customer experience data can be incorporated into a common representation delivering insights in a faster, more integrated way.
+XDM provides a common format for any application to use to communicate with solutions on Adobe Experience Platform. By adhering to XDM standards, all customer experience data can be incorporated into a common representation delivering insights in a faster, more integrated way.
 
 ### Concepts Behind XDM
 
@@ -306,17 +306,17 @@ Each Experience includes three key parts: Who, What, and When, with each part co
 
 ### XDM Field Types
 
-XDM defines a set of fields "out of the box" that can be used when extending principal schemas or building custom schemas. This common set of fields have predefined meanings that are widely understood by platform solutions and ensure that meaning is maintained across schemas.
+XDM defines a set of fields "out of the box" that can be used when extending principal schemas or building custom schemas. This common set of fields have predefined meanings that are widely understood by Experience Platform solutions and ensure that meaning is maintained across schemas.
 
-Since XDM fields include added connotations beyond the basic scalar field types, platform solutions automatically know that any fields sharing the same XDM field type will behave the same way across Adobe Cloud Platform. 
+Since XDM fields include added connotations beyond the basic scalar field types, Platform solutions automatically know that any fields sharing the same XDM field type will behave the same way across Adobe Experience Platform. 
 
 The complete list of fields is available through the [XDM Field Dictionary](#xdm-field-dictionary) below.
 
 ### XDM Extensions
 
-In addition to defining a set of fields, XDM also defines a number of extensions that are broadly understood across Adobe Cloud Platform. There are key extensions related to each platform service that enable additional functionality within their respective solutions.
+In addition to defining a set of fields, XDM also defines a number of extensions that are broadly understood across Adobe Experience Platform. There are key extensions related to each Experience Platform service that enable additional functionality within their respective solutions.
 
-We recommend using XDM extensions whenever possible because of their shared understanding across platform, and encourage you to avoid creating custom extensions unless absolutely necessary to define a very narrow use case that exists outside the scope of XDM.
+It is recommended to use XDM extensions whenever possible because of their shared understanding across Platform, and encourage you to avoid creating custom extensions unless absolutely necessary to define a very narrow use case that exists outside the scope of XDM.
 
 You can find these extensions in the [XDM Field Dictionary](#xdm-field-dictionary) below.
 
