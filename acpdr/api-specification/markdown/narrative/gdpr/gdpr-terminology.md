@@ -2,63 +2,63 @@
 
 ## Binding Corporate Rules (BCRs)
 
-A set of binding rules put in place to allow multinational companies and organisations to transfer personal data that they control from the EU to their affiliates outside the EU (but within the organisation)
+A set of binding rules put in place to allow multinational companies and organisations to transfer personal data that they control from the EU to their affiliates outside the EU (but within the organisation).
 
 ## Biometric Data
 
-Any personal data relating to the physical, physiological, or behavioral characteristics of an individual which allows their unique identification
+Any personal data relating to the physical, physiological, or behavioral characteristics of an individual which allows their unique identification.
 
 ## Consent
 
-Freely given, specific, informed and explicit consent by statement or action signifying agreement to the processing of their personal data
+Freely given, specific, informed and explicit consent by statement or action signifying agreement to the processing of their personal data.
 
 ## Data Concerning Health
 
-Any personal data related to the physical or mental health of an individual or the provision of health services to them
+Any personal data related to the physical or mental health of an individual or the provision of health services to them.
 
 ## Data Controller
 
-The entity that determines the purposes, conditions and means of the processing of personal data
+The entity that determines the purposes, conditions and means of the processing of personal data.
 
 ## Data Erasure
 
-Also known as the Right to be Forgotten, it entitles the data subject to have the data controller erase his/her personal data, cease further dissemination of the data, and potentially have third parties cease processing of the data
+Also known as the Right to be Forgotten, it entitles the data subject to have the data controller erase his/her personal data, cease further dissemination of the data, and potentially have third parties cease processing of the data.
 
 ## Data Portability
 
-The requirement for controllers to provide the data subject with a copy of his or her data in a format that allows for easy use with another controller (more info here)
+The requirement for controllers to provide the data subject with a copy of his or her data in a format that allows for easy use with another controller.
 
 ## Data Processor
 
-The entity that processes data on behalf of the Data Controller
+The entity that processes data on behalf of the Data Controller.
 
 ## Data Protection Authority
 
-National authorities tasked with the protection of data and privacy as well as monitoring and enforcement of the data protection regulations within the Union
+National authorities tasked with the protection of data and privacy as well as monitoring and enforcement of the data protection regulations within the Union.
 
 ## Data Protection Officer
 
-An expert on data privacy who works independently to ensure that an entity is adhering to the policies and procedures set forth in the GDPR (more info here)
+An expert on data privacy who works independently to ensure that an entity is adhering to the policies and procedures set forth in the GDPR.
 
 ## Data Subject
 
-A natural person whose personal data is processed by a controller or processor
+A natural person whose personal data is processed by a controller or processor.
 
 ## Delegated Acts
 
-Non-legislative acts enacted in order to supplement existing legislation and provide criteria or clarity
+Non-legislative acts enacted in order to supplement existing legislation and provide criteria or clarity.
 
 ## Derogation
 
-An exemption from a law
+An exemption from a law.
 
 ## Directive
 
-A legislative act that sets out a goal that all EU countries must achieve through their own national laws
+A legislative act that sets out a goal that all EU countries must achieve through their own national laws.
 
 ## Encrypted Data
 
-Personal data that is protected through technological measures to ensure that the data is only accessible/readable by those with specified access
+Personal data that is protected through technological measures to ensure that the data is only accessible/readable by those with specified access.
 
 ## Enterprise
 
@@ -66,7 +66,7 @@ Any entity engaged in economic activity, regardless of legal form, including per
 
 ## Filing System
 
-Any specific set of personal data that is accessible according to specific criteria, or able to be queried
+Any specific set of personal data that is accessible according to specific criteria, or able to be queried.
 
 ## GDPR
 
@@ -74,11 +74,11 @@ The General Data Protection Regulation (GDPR) is a legal framework that sets gui
 
 ## Genetic Data
 
-Data concerning the characteristics of an individual which are inherited or acquired which give unique information about the health or physiology of the individual
+Data concerning the characteristics of an individual which are inherited or acquired which give unique information about the health or physiology of the individual.
 
 ## Group of Undertakings
 
-A controlling undertaking and its controlled undertakings
+A controlling undertaking and its controlled undertakings.
 
 ## Identity Management Services (IMS)
 
@@ -90,23 +90,23 @@ Refers to an Adobe authorization token for service-to-service authentication, wh
 
 ## Main Establishment
 
-The place within the Union that the main decisions surrounding data processing are made; with regard to the processor
+The place within the Union that the main decisions surrounding data processing are made; with regard to the processor.
 
 ## Personal Data
 
-Any information related to a natural person or 'Data Subject', that can be used to directly or indirectly identify the person
+Any information related to a natural person or 'Data Subject', that can be used to directly or indirectly identify the person.
 
 ## Personal Data Breach
 
-a breach of security leading to the accidental or unlawful access to, destruction, misuse, etc. of personal data
+A breach of security leading to the accidental or unlawful access to, destruction, misuse, etc. of personal data.
 
 ## Privacy by Design
 
-A principle that calls for the inclusion of data protection from the onset of the designing of systems, rather than an addition
+A principle that calls for the inclusion of data protection from the onset of the designing of systems, rather than an addition.
 
 ## Privacy Impact Assessment
 
-A tool used to identify and reduce the privacy risks of entities by analysing the personal data that are processed and the policies in place to protect the data
+A tool used to identify and reduce the privacy risks of entities by analysing the personal data that are processed and the policies in place to protect the data.
 
 ## Processing
 
@@ -114,39 +114,39 @@ Any operation performed on personal data, whether or not by automated means, inc
 
 ## Profiling
 
-Any automated processing of personal data intended to evaluate, analyse, or predict data subject behavior
+Any automated processing of personal data intended to evaluate, analyse, or predict data subject behavior.
 
 ## Pseudonymisation
 
-The processing of personal data such that it can no longer be attributed to a single data subject without the use of additional data, so long as said additional data stays separate to ensure non-attribution
+The processing of personal data such that it can no longer be attributed to a single data subject without the use of additional data, so long as said additional data stays separate to ensure non-attribution.
 
 ## Recipient
 
-Entity to which the personal data are disclosed
+Entity to which the personal data are disclosed.
 
 ## Regulation
 
-A binding legislative act that must be applied in its entirety across the Union
+A binding legislative act that must be applied in its entirety across the Union.
 
 ## Representative
 
-Any person in the Union explicitly designated by the controller to be addressed by the supervisory authorities
+Any person in the Union explicitly designated by the controller to be addressed by the supervisory authorities.
 
 ## Right to be Forgotten
 
-also known as Data Erasure, it entitles the data subject to have the data controller erase his/her personal data, cease further dissemination of the data, and potentially have third parties cease processing of the data
+Also known as Data Erasure, it entitles the data subject to have the data controller erase his/her personal data, cease further dissemination of the data, and potentially have third parties cease processing of the data.
 
 ## Right to Access
 
-Also known as Subject Access Right, it entitles the data subject to have access to and information about the personal data that a controller has concerning them
+Also known as Subject Access Right, it entitles the data subject to have access to and information about the personal data that a controller has concerning them.
 
 ## Subject Access Right
 
-Also known as the Right to Access, it entitles the data subject to have access to and information about the personal data that a controller has concerning them
+Also known as the Right to Access, it entitles the data subject to have access to and information about the personal data that a controller has concerning them.
 
 ## Supervisory Authority
 
-A public authority which is established by a member state in accordance with article 46
+A public authority which is established by a member state in accordance with article 46.
 
 ## Trilogues
 

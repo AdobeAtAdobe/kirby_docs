@@ -1,10 +1,10 @@
-# Interacting with the GDPR API through the UI
+# Interacting with the Adobe Experience Platform GDPR Service through the UI
 
-## GDPR API access
+## Adobe Experience Platform GDPR Service access
 
-The GDPR API currently supports two types of interactions: direct API, as we explored previously, and a Web UI, which helps simplify the authentication and interaction.
+The Platform GDPR Service currently supports two types of interactions: direct API, as we explored previously, and a Web UI, which helps simplify the authentication and interaction.
 
-This lab will explore the UI portion of the GDPR API service, and help you understand how to best leverage both of these access options in your environment.
+This lab will explore the UI portion of the Platform GDPR Service, and help you understand how to best leverage both of these access options in your environment.
 
 ## Logging in
 
@@ -34,7 +34,7 @@ This simple UI is for uploading JSON requests to the central service. You can ei
 
 - **Email to notify** field allows you to submit one or multiple email addresses for notification. By default, the person submitting the request is always included. However, you may change that as needed, and add multiple email addresses. To add additional email addresses – press &lt;TAB&gt; or &lt;ENTER&gt; after each entry to complete each email in the list. The addresses included in this list will receive a copy of any email notifications, which are sent when the job completes, finishes with errors, or times out.
 
-- After gathering the GDPR data from the data subjects and identifying the company contexts and user IDs with associated namespaces, you should have a valid JSON file to drag and drop into the UI. Initially the client-side validation will check the file for well-formed JSON as well as the required fields needed to make a successful request. Please see [GDPR API Overview](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) for examples of well-formed GDPR JSON files.
+- After gathering the GDPR data from the data subjects and identifying the company contexts and user IDs with associated namespaces, you should have a valid JSON file to drag and drop into the UI. Initially the client-side validation will check the file for well-formed JSON as well as the required fields needed to make a successful request. Please see [Adobe Experience Platform GDPR Service Overview](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) for examples of well-formed GDPR JSON files.
 
 - If the file is accepted and passes client-side validation, you should see the file listed in the UI just below the drag-and-drop window. You may drag additional JSON files into the UI as well if you have more, and each one should be listed if it passes validation. At this point, you may submit the request with the valid JSON where the server-side validation will occur, including permissions for the organization, namespace validation on the user IDs, and more. If successful, a dialog will prompt you to navigate to the Status Tracker.
 
@@ -57,7 +57,7 @@ After submitting the file successfully, you may choose to be taken to the Status
 
 - Easily switch back to submit new requests by clicking on the _Submit New Request_ button to the right, or by selecting the tab _Upload Request_ in the top left.
 
-- Each unique job ID is a link to a more detailed description of the job itself, containing updated status values and responses from each ExC product orchestrated by the GDPR API. If you click on this, it takes you to the third UI screen, the Job Details Page.
+- Each unique job ID is a link to a more detailed description of the job itself, containing updated status values and responses from each ExC product orchestrated by the Platform GDPR Service. If you click on this, it takes you to the third UI screen, the Job Details Page.
 
 ### Job Details Page
 
