@@ -1,20 +1,20 @@
-# Getting Started with Adobe Cloud Platform Streaming Ingestion APIs
+# Getting Started with Adobe Experience Platform Streaming Ingestion APIs
 
 ## Overview
 
-This documentation will help you quickly get started with the Adobe Cloud Platform Streaming APIs. Specifically, this documentation will help you:
+This documentation will help you quickly get started with the Adobe Experience Platform Streaming APIs. Specifically, this documentation will help you:
 
-1. [Create a Streaming Endpoint](#creatingastreamingendpoint)
-2. [Stream a Profile Object to Adobe Cloud Platform](#streamingaprofileobjecttoadobecloudplatform)
-3. [Retrieve the newly created Profile](#retrievingthenewlycreatedprofile)
-4. [Stream an ExperienceEvent to Adobe Cloud Platform](#streaminganexperienceeventtoadobecloudplatform)
-5. [Retrieve ExperienceEvents related to the Updated Profile](#retrievingexperienceeventsrelatedtotheupdatedprofile)
+1. [Create a Streaming Endpoint](#creating-a-streaming-endpoint)
+2. [Stream a Profile Object to Adobe Experience Platform](#streaming-a-profile-object-to-adobe-experience-platform)
+3. [Retrieve the newly created Profile](#retrieving-the-newly-created-profile)
+4. [Stream an ExperienceEvent to Adobe Experience Platform](#streaming-an-experience-event-to-adobe-experience-platform)
+5. [Retrieve ExperienceEvents related to the Updated Profile](#retrieving-experience-events-related-to-the-updated-profile)
 
 ## How do I get started?
 
-Streaming Endpoint Registration is the first step for you to start streaming data to Adobe Cloud Platform. When registering a Streaming Endpoint, you need to provide some key details like the source of streaming data, and whether or not you intend to send records expressed in the [XDM Schema][xdminfo].
+Streaming Endpoint Registration is the first step for you to start streaming data to Adobe Experience Platform. When registering a Streaming Endpoint, you need to provide some key details like the source of streaming data, and whether or not you intend to send records expressed in the [XDM Schema][xdminfo].
 
-In response, you, as the data producer, are provided with a unique URL which can be used to stream data to ACP.
+In response, you, as the data producer, are provided with a unique URL which can be used to stream data to Platform.
 
 To complete this tutorial, you will first need to obtain your **developer credentials** and an **authorization token**. Follow this [tutorial][1] or this [blog post][2] for detailed information on how to go through this process.
 
@@ -38,7 +38,7 @@ CURL -X POST https://platform.adobe.io/data/core/pipeline/inlet/registration/ \
 
 
 `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
-`{API_KEY}` : Your specific API key value found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
 `{IMS_ORG}` :  Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
 `{JSON_PAYLOAD}` : An example JSON payload format can be seen below:
 
@@ -82,10 +82,10 @@ An example of a successful response can be seen below:
 `{SOURCE_ID}`: The meaningful identifier or name of the source you sent in your request.    
 `{STREAMING_ENDPOINT_NAME}`: The name of your newly created Streaming Endpoint.   
 `{STREAMING_ENDPOINT_DESCRIPTION}`: The description of your newly created Streaming Endpoint.   
-`{API_KEY}` : Your specific API key value found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
 
 
-### Streaming a Profile object to Adobe Cloud Platform
+### Streaming a Profile object to Adobe Experience Platform
 
 Once you've created a Streaming Endpoint, you can create use it to stream XDM records and create or update [Customer Profiles][customerprofiles].
 
@@ -206,7 +206,7 @@ An example of a successful response can be seen below:
 
 Now that you've created a new Consumer Profile record, let's use the [Profile Access API][profileapi] to read it back.
 
-Let's look using the identities we used previously:
+Let's look using the identities you used previously:
 
 ```JSON
 "identities": [
@@ -261,7 +261,7 @@ CURL -X GET "https://platform.adobe.io/data/core/ups/access/entities?schema.name
 To find your API Key and IMS org ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
 
 `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
-`{API_KEY}` : Your specific API key value found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
 `{IMS_ORG}` : Your IMS organization ID can be found under the integration details in the Adobe I/O Console.
 
 For further information about this API call, check out the Profile Access API documentation [here][profileapi].
@@ -328,9 +328,9 @@ An example of a successful response can be seen below. As you can see, this is t
 
 ---
 
-### Streaming an ExperienceEvent to Adobe Cloud Platform
+### Streaming an ExperienceEvent to Adobe Experience Platform
 
-Once you've confirmed your Profile can be properly accessed, you can use Adobe's Streaming Ingestion APIs to stream ExperienceEvents as they happen. Streamed ExprienceEvents will be instantaneously available on Adobe Cloud Platform services, such as Unified Profile. 
+Once you've confirmed your Profile can be properly accessed, you can use Adobe's Streaming Ingestion APIs to stream ExperienceEvents as they happen. Streamed ExprienceEvents will be instantaneously available on Adobe Experience Platform services, such as Unified Profile. 
 
 The example below associates a new ExperienceEvent with the Consumer Profile you created above. It captures some details about the browser, the product items they viewed, the web page they viewed it on, as well as the approximate location of the device.
 
@@ -469,7 +469,7 @@ curl -X GET \
 **Note:** To find your API Key and IMS org ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
 
 `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
-`{API_KEY}` : Your specific API key value found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
 `{IMS_ORG}` : Your IMS organization ID can be found under the integration details in the Adobe I/O Console.
 
 #### Response
@@ -571,9 +571,9 @@ An example of a successful response can be seen below. As you can see, this is t
 Following this guide, you should be able to do the following actions:
 - Request a Streaming Endpoint
 - Stream and Retrieve Profile Events
-- Stream and Retrieve ExperienceEvents from Adobe Cloud Platform
+- Stream and Retrieve ExperienceEvents from Adobe Experience Platform
 
-With this knowledge, you should be able to easily get your data to Adobe Cloud Platform. Now that you can stream and retrieve your own events, try repeating these steps with other data and see if you can replicate your results.
+With this knowledge, you should be able to easily get your data to Adobe Experience Platform. Now that you can stream and retrieve your own events, try repeating these steps with other data and see if you can replicate your results.
 
 [1]: ../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md 
 
