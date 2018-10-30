@@ -1,50 +1,49 @@
 # Data Access Overview
 
-## 1. Overview
-The Data Access API provides users with a REST interface to access ingested data in Adobe Cloud Platform.
+## Overview
 
----
-
-## 2 What is Data Access API?
-The Data Access API supports Adobe Cloud Platform by providing users with a REST interface focused on the discoverability and accessibility of ingested datasets within Adobe Cloud Platform.
+The Data Access API supports Adobe Experience Platform by providing users with a RESTful interface focused on the discoverability and accessibility of ingested datasets within Experience Platform.
 
 
-## 3 API Specification Reference
-The Swagger API reference documentation can be found [here](../../../../../../acpdr/swagger-specs/data-access-api.yaml)
+### API Specification Reference
+The Swagger API reference documentation can be found [here](../../../../../../acpdr/swagger-specs/data-access-api.yaml).
 
 
-## 4 High-level Architecture Diagram
+### High-level Architecture Diagram
 ![High Level Architecture Diagram](architectural_diagram_2.png)
 
 
-## 5 Common Use Cases
+### Common Use Cases
 The Data Access API supports a multitude of common use cases in order to streamline data access and discovery:
 
-* Retrieving a list of files under a batch
+* Retrieve a list of files within a batch
 * Access and Download files within a batch
 * Parallel / Resumable downloads using HTTP Range headers
 * Pagination Support for Directory listings
 
-### 5.1 Retrieving a list of files under a batch
+#### Retrieve List of Files Within a Batch
 
-By using a batch's identifier (batchID), the Data Access API can retrieve a list of files belonging to that particular batch.
+By using a batch identifier (batchID), the Data Access API can retrieve a list of files belonging to that particular batch.
 
-#### Request
+##### API Format
+```
 GET /batches/{BATCH_ID}/files
+```
 
-``` SHELL
+##### Request
+```
 curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/files \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-* `BATCH_ID`: The ID of the batch to retrieve from
-* `ACCESS_TOKEN`: Token provided after authentication.
-* `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.
-* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
+- `{BATCH_ID}`: The ID of the specified batch
+- `{ACCESS_TOKEN}`: Token provided after authentication 
+- `{API_KEY}`: Your specific API key for your unique Platform integration (available via [Adobe Console](https://console.adobe.io))
+- `{IMS_ORG}`: The IMS Organization credentials for your unique Platform integration
 
-#### Response
+##### Response
 ```JSON
 {
   "data": [
@@ -74,7 +73,6 @@ curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/
         }
       }
     },
-    :
   ],
   "_page": {
     "limit": 100,
@@ -83,36 +81,38 @@ curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/
 }
 ```
 
-The data array returned contains a list of all files within the specified batch. Each file returned has its own unique ID (file ID) contained within the dataSetFileId field. This unique ID can then be used to access or download the file.
+The `"data"` array contains a list of all files within the specified batch. Each file returned has its own unique ID (`{FILE_ID}`) contained within the `"dataSetFileId"` field. This unique ID can then be used to access or download the file.
 
-* `FILE_ID_1`: The file ID of the first file in the specified batch
-* `FILE_ID_2`: The file ID of the second file in the specified batch
-* `_link > self > href`: The url to access the file
-
+* `{FILE_ID}`: The file ID for each file in the specified batch
+* `"href"`: The url to access the file
 
 
-### 5.2 Access and Download files within a batch
 
-By using a file's identifier (file ID), the Data Access API can be used to access the specific details of the file, including its name, size in bytes, and a link to download it.
+#### Access and Download Batch Files
 
-The response will contain a data array. Depending on whether the file pointed to by the ID is an individual file or a directory the data array returned may contain a single entry or a list of files belonging to that directory. Each file element will include the details of the file.
+By using a file identifier (`{FILE_ID}`), the Data Access API can be used to access specific details of a file, including its name, size in bytes, and a link to download.
 
-#### Request
-GET /files/{dataSetFileId}
+The response will contain a data array. Depending on whether the file pointed to by the ID is an individual file or a directory, the data array returned may contain a single entry or a list of files belonging to that directory. Each file element will include the details of the file.
 
-``` SHELL
+##### API Format
+```
+GET /files/{FILE_ID}
+```
+
+##### Request
+```
 curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID} \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-* `FILE_ID`: The ID of the file to access
-* `ACCESS_TOKEN`: Token provided after authentication.
-* `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.
-* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
+- `{FILE_ID}`: Equal to the `"dataSetFileId"`, the ID of the file to be accessed
+- `{ACCESS_TOKEN}`: Token provided after authentication 
+- `{API_KEY}`: Your specific API key for your unique Platform integration (available via [Adobe Console](https://console.adobe.io))
+- `{IMS_ORG}`: The IMS Organization credentials for your unique Platform integration
 
-#### Response (Case 1 : Response points to a single file)
+##### Single File Response
 ```JSON
 {
   "data": [
@@ -133,11 +133,11 @@ curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID} \
 }
 ```
 
-* `FILE_NAME`: Name of the file (E.g. profiles.csv)
-* `LENGTH`: Size of the file (in bytes)
-* `_links > self > href`: URL to download the file
+* `{FILE_NAME}`: Name of the file (e.g. profiles.csv)
+* `{LENGTH}`: Size of the file (in bytes)
+* `"href"`: URL to download the file
 
-#### Response (Case 2 : Response points to a directory)
+##### Directory Response
 ```JSON
 {
   "data": [
@@ -175,43 +175,45 @@ curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID} \
 }
 ```
 
-When a directory is returned, it contains an array of every file held within it. The `_links > self > href` field within each array item links to the unique file within the directory.
-* `FILE_ID_1`: The file ID of the first file in the specified batch
-* `FILE_ID_2`: The file ID of the second file in the specified batch
-* `_links > self > href`: The url to access the file
+When a directory is returned, it contains an array of all files within the directory. The `"href"` field within each array item links to the individual file within the directory.
+* `{FILE_ID}`: The file ID of an individual file in the specified batch
+* `"href"`: The url to access an individual file
 
 
 
-### 5.3 Access the contents of a file
+#### Access the contents of a file
 The Data Access API can also be used to access the contents of a file. This can then be used to download the contents to an external source.
 
-#### Request
-GET /files/{dataSetFileId}?path={file_name}
+##### API Format
+```
+GET /files/{dataSetFileId}?path={FILE_NAME}
+```
 
-``` SHELL
+##### Request
+```
 curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?path={FILE_NAME} \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-* `FILE_ID`: The ID of the file within a dataset
-* `FILE_NAME`: The full name of the file (E.g. profiles.csv)
-* `ACCESS_TOKEN`: Token provided after authentication.
-* `API_KEY`: Your specific API key value found in your unique Adobe Cloud Platform integration.
-* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
+- `{FILE_ID}`: The ID of the file within a dataset
+- `{FILE_NAME}`: The full name of the file (e.g. profiles.csv)
+- `{ACCESS_TOKEN}`: Token provided after authentication 
+- `{API_KEY}`: Your specific API key for your unique Platform integration (available via [Adobe Console](https://console.adobe.io))
+- `{IMS_ORG}`: The IMS Organization credentials for your unique Platform integration
 
-#### Response
+##### Response
 
-```JSON
+```
 Contents of the file
 ```
 
-## 6 Additional Code Samples
-Please refer to the tutorial [How to Query Data via Data Access API](../../tutorials/data_access_tutorial/data_access_tutorial.md).
+### Additional Code Samples
+For additional samples, please refer to the [How to Query Data via Data Access API](../../tutorials/data_access_tutorial/data_access_tutorial.md) tutorial.
 
 
-## 7. Terminology
+### Terminology
 
 | Term          | Description                                                                            |
 | ------------- |----------------------------------------------------------------------------------------|
