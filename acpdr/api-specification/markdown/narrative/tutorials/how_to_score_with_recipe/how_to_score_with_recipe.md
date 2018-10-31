@@ -54,7 +54,7 @@ We can fetch details about the model using the following API call.
 
 GET /model
 
-``` SHELL
+```SHELL
 curl -X GET "https://platform.adobe.io/models/{MODEL_ID}" \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
@@ -66,7 +66,7 @@ curl -X GET "https://platform.adobe.io/models/{MODEL_ID}" \
 
 ##### Response
 
-``` JSON
+```JSON
 {
     "id": "{MODEL_ID}",
     "name": "{MODEL_NAME}",
