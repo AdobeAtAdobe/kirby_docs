@@ -236,7 +236,7 @@ Identity Stitching refers to determining when multiple fragments of a Profile re
 When multiple profile fragments contain the same data elements, merge policies can be used to tune prioritization of your data by allowing you to specify the order of data precedence by dataset. When a merge policy is created with an attribute merge type of "dataSetPrecedence", you supply a list of datasets sorted from highest to lowest precedence. The following demonstrates creating a merge policy wherein a dataset "ds1" should be regarded as highest priority data when the records' `createdAt` value fails to distinguish.
 
 ```
-POST https://platform.adobe.io/data/core/ups/config/mergepolicies HTTP/1.1
+POST https://platform.adobe.io/data/core/ups/config/mergePolicies HTTP/1.1
 ```
 
 __Example body__
