@@ -2,28 +2,28 @@
 
 ## Introduction
 
-Adobe Experience Platform GDPR Service from Adobe provides a simple set of calls, enabling Adobe Customers to manage (access and delete) the personal data of their consumers (Data Subjects) across Adobe Experience Cloud (ExC) solutions. In addition to APIs for accessing and deleting data, the Platform GDPR Service also provides a central audit and logging mechanism to surface job status and results from across the various solutions.
+Adobe Experience Platform GDPR Service provides a simple set of calls, enabling Adobe Customers to manage (access and delete) the personal data of their consumers (Data Subjects) across Adobe Experience Cloud (ExC) solutions. In addition to APIs for accessing and deleting data, Platform GDPR Service also provides a central audit and logging mechanism to surface job status and results from across the various solutions.
 
-This document provides an overview of how to integrate with and consume the Platform GDPR Service.
+This document provides an overview of how to integrate with and consume Platform GDPR Service.
 
 ## Platform GDPR Service
 
-Across the Adobe Experience Cloud there are many products that support your digital marketing needs. Each solution handles data and user identities in unique ways, according to their business goals. However, they also must support to the overall ExC goals for security and compliance. The Platform GDPR Service has been developed to do exactly this: coordinate privacy and compliance requests across various solutions in the ExC, beginning with GDPR access and deletion requests.
+Across the Adobe Experience Cloud there are many products that support your digital marketing needs. Each solution handles data and user identities in unique ways, according to their business goals. However, they also must support to the overall ExC goals for security and compliance. Platform GDPR Service has been developed to do exactly this: coordinate privacy and compliance requests across various solutions in the ExC, beginning with GDPR access and deletion requests.
 
 All Platform GDPR Service requests are REST-based with JSON used as the payload for requests and responses. Documentation on each of the supported APIs can be found at [Platform GDPR Service Specification](https://www.adobe.io/apis/cloudplatform/gdpr/api-reference.html)
 
 ## Submitting your first GDPR request (POST)
 
-Below are the required steps for creating your first call into the Platform GDPR Service:
+Below are the required steps for creating your first call into Platform GDPR Service:
 
 1. Gather your data: from a customer request, from the Adobe Privacy JS library, or from your own internal tools, assemble information about the data subject and provide context for the request ([data format](#gdprapipostrequestformat))
 2. Create your Adobe IO integration to obtain authorization and service access for your organization ([integration](#creatingyourapiintegration))
-3. Populate your HTTP headers for full authentication and routing through the Adobe IO Gateway and into the Platform GDPR Service ([headers and authorization](#gdprheadersandauthorization))
+3. Populate your HTTP headers for full authentication and routing through the Adobe IO Gateway and into Platform GDPR Service ([headers and authorization](#gdprheadersandauthorization))
 4. Submit your request using all the data gathered above
 
 ## Platform GDPR Service POST request format
 
-The Platform GDPR Service communicates, as mentioned previously, using JSON data for both request and response payloads. As part of a POST request, you as the data controller will need to collect information about the data subjects who are requesting to access their data or have it be deleted. Adobe has provided a few tools to assist in this complex effort, including the Adobe Privacy JS library to collect IDs for individual site visitors (cookie information, etc.) (see), as well as data labeling inside solutions such as Adobe Campaign and Adobe Analytics.
+Platform GDPR Service communicates, as mentioned previously, using JSON data for both request and response payloads. As part of a POST request, you as the data controller will need to collect information about the data subjects who are requesting to access their data or have it be deleted. Adobe has provided a few tools to assist in this complex effort, including the Adobe Privacy JS library to collect IDs for individual site visitors (cookie information, etc.) (see), as well as data labeling inside solutions such as Adobe Campaign and Adobe Analytics.
 
 An example of this data is shown in listing 1 below.
 
@@ -104,7 +104,7 @@ You can see that the company section is actually an array of contexts. There are
     * These identifiers are used for solutions that may not be linked to an organization
     * Often considered “legacy”, they are the account names, such as login company, client code, partner, tenant ID or other similar solution identifiers
 
-The Platform GDPR Service interacts with the IMS organization ID to validate permissions of the user submitting the request. It then forwards this information on to the ExC solutions to process.
+Platform GDPR Service interacts with the IMS organization ID to validate permissions of the user submitting the request. It then forwards this information on to the ExC solutions to process.
 
 ### Users
 
@@ -177,9 +177,9 @@ For service-to-service integrations, you will also need a JSON Web Token (JWT) t
 
 ## GDPR Headers and Authorization
 
-Once the integration is setup properly, you have everything you need to make a request to the Platform GDPR Service. In order to populate the full header authorization keys, continue to use the instructions referenced above to exchange your JWT token for a valid technical account bearer token. Using that token and the account information from your integration, you are ready to populate the HTTP header. 
+Once the integration is setup properly, you have everything you need to make a request to Platform GDPR Service. In order to populate the full header authorization keys, continue to use the instructions referenced above to exchange your JWT token for a valid technical account bearer token. Using that token and the account information from your integration, you are ready to populate the HTTP header. 
 
-The following table outlines what is required for a POST request in the Platform GDPR Service:
+The following table outlines what is required for a POST request in Platform GDPR Service:
 
 | Key | Value | Description |
 |-----|-------|-------------|
@@ -193,7 +193,7 @@ The following table outlines what is required for a POST request in the Platform
 
 ## Submitting a Adobe Experience Platform GDPR Service request
 
-The Platform GDPR Service supports three basic REST-type operations, HTTP verbs that indicate what type of action to be taken. The abbreviated table below shows these operations and additional detailed information for each API can be found here [docs](http://www.adobe.io). All requests are submitted to the following base URL:
+Platform GDPR Service supports three basic REST-type operations, HTTP verbs that indicate what type of action to be taken. The abbreviated table below shows these operations and additional detailed information for each API can be found here [docs](http://www.adobe.io). All requests are submitted to the following base URL:
 ```
 https://platform.adobe.io/data/privacy/gdpr/
 ```
@@ -216,7 +216,7 @@ To begin, take your header information and make a request to the simple Status (
 
 ### Submitting an ACCESS or DELETE request
 
-Now that you've gotten your feet wet, it's time to dive in. Take the JSON document you assembled from your customer's data and add it to a POST request in the POST body. Validate your user actions (`access` and/or `delete`), and make sure you populate your header correctly with the information from your integration. You are now ready to submit to the Platform GDPR Service.
+Now that you've gotten your feet wet, it's time to dive in. Take the JSON document you assembled from your customer's data and add it to a POST request in the POST body. Validate your user actions (`access` and/or `delete`), and make sure you populate your header correctly with the information from your integration. You are now ready to submit to Platform GDPR Service.
 
 Listing 3 shows the JSON payload returned from a successful `access` request.
 
@@ -626,5 +626,5 @@ Adobe allows customers to group multiple GDPR user IDs to process as a single ba
 
 ## Summary
 
- Adobe Experience Platform GDPR Service from Adobe provides a simple set of calls, enabling Adobe Customers to manage (access and delete) the personal data of their consumers (Data Subjects) across Adobe Experience Cloud (ExC) solutions. In addition to APIs for accessing and deleting data, the Platform GDPR Service also provides a central audit and logging mechanism to surface job status and results from across the various solutions.
+ Adobe Experience Platform GDPR Service provides a simple set of calls, enabling Adobe Customers to manage (access and delete) the personal data of their consumers (Data Subjects) across Adobe Experience Cloud (ExC) solutions. In addition to APIs for accessing and deleting data, Platform GDPR Service also provides a central audit and logging mechanism to surface job status and results from across the various solutions.
 

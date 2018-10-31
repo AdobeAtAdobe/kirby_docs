@@ -2,9 +2,9 @@
 
 ## Adobe Experience Platform GDPR Service access
 
-The Platform GDPR Service currently supports two types of interactions: direct API, as we explored previously, and a Web UI, which helps simplify the authentication and interaction.
+Platform GDPR Service currently supports two types of interactions: direct API, as we explored previously, and a Web UI, which helps simplify the authentication and interaction.
 
-This lab will explore the UI portion of the Platform GDPR Service, and help you understand how to best leverage both of these access options in your environment.
+This lab will explore the UI portion of Platform GDPR Service, and help you understand how to best leverage both of these access options in your environment.
 
 ## Logging in
 
@@ -57,7 +57,7 @@ After submitting the file successfully, you may choose to be taken to the Status
 
 - Easily switch back to submit new requests by clicking on the _Submit New Request_ button to the right, or by selecting the tab _Upload Request_ in the top left.
 
-- Each unique job ID is a link to a more detailed description of the job itself, containing updated status values and responses from each ExC product orchestrated by the Platform GDPR Service. If you click on this, it takes you to the third UI screen, the Job Details Page.
+- Each unique job ID is a link to a more detailed description of the job itself, containing updated status values and responses from each ExC product orchestrated by Platform GDPR Service. If you click on this, it takes you to the third UI screen, the Job Details Page.
 
 ### Job Details Page
 
