@@ -3,9 +3,10 @@
 ## Objective
 In this step by step tutorial, we will focus on how to create a new Jupyter notebook in the Data Science Workspace to access data from Adobe Experience Platform. We will then explore the dataset to get a better understanding of the data. The steps that will be explained in this tutorial are:
 
-1. Creating a new Jupyter notebook
-2. Accessing Datasets and Schemas
-3. Exploring Datasets 
+1. Create a Dataset based on a Schema
+2. Creating a new Jupyter notebook
+3. Accessing Datasets and Schemas
+4. Exploring Datasets 
 
 We will go through the UI flow in this tutorial. The API tutorial can be found [here](../ml_api_access_and_explore_data_tutorial.md). The example we will use in the tutorial is with Python. Note that the Data Science Workspace also supports the following languages, but they will not be used in this tutorial:
 
@@ -23,7 +24,49 @@ We will go through the UI flow in this tutorial. The API tutorial can be found [
 
 ---
 
+## Create a Dataset Based on Schema
+
+In this section, we will be creating a dataset based on a schema. You will be populating the dataset by uploading data in the parquet format. There are a number of methods to ingest data into the platform. Later, we will use this dataset in our notebook and also in our training and scoring runs.
+
+### Create Training Dataset
+
+We want to create a Dataset with our custom **DSWRetailSales** schema to store our data. We can create one with the following steps:
+
+1. Launch the [Adobe Experience Platform UI](https://platform.adobe.com) and log in. 
+2. Navigate to the **Data** tab
+3. Select the option **Create Dataset**
+4. Review the various methods supported to bring data into the platform
+
+![](select_data_source.png)
+
+5. On the **Select Data Source** screen select **Create Dataset** on the **Schema** card
+6. On the **Choose Schema** step choose the **DSWRetailSales** custom schema
+7. On the **Configure: Dataset** step provide a unique name e.g., `Retail-Training-<your-alias>`. Note that you will need to locate this dataset later so use a unique name. This is your training data set.
+8. Click Save
+
+### Create Scoring Dataset
+
+Repeat the same steps as above but use the name `Retail-Scoring-<your-alias>`. This will be the dataset that you will score with your trained model.
+
+### Ingest Data
+
+We will be ingesting data using the parquet format. The training and scoring parquet files can be found in this [public repository](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/datasets/retail). The parquet files are listed here:
+* Training Data: [DSWRetailSales-Training.parquet](https://github.com/adobe/acp-data-services-dsw-reference/blob/master/datasets/retail/DSWRetailSales-Training.parquet)
+* Scoring Data: [DSWRetailSales-Scoring.parquet](https://github.com/adobe/acp-data-services-dsw-reference/blob/master/datasets/retail/DSWRetailSales-Scoring.parquet)
+
+The following steps show you how to ingest the data into the training and scoring dataset we created in the previous section.
+
+1. Download the parquet files listed above
+2. Navigate to the **Data** tab in the [Adobe Experience Platform UI](https://platform.adobe.com)
+3. Locate the select the `Retail-Training-<your-alias>` dataset you created previously
+4. Drag and drop or browse for the DSWRetailSales-Training.parquet file.
+5. Select **Ingest**
+6. Once ingestion is complete (indicated by a Status of Success), click the Preview option to examine sample records and familiarize yourself with the dataset
+7. Repeat this step for the scoring dataset and DSWRetailSales-Scoring.parquet file
+
 ## Exploring the Data Science Workspace Notebook
+
+In this section, we will be exploring data that we previously ingested into our **DSWRetailSales** schema.
 
 The Data Science Workspace allows users to create Jupyter Notebooks through the JupyterLab platform where they can create and edit machine learning workflows. JupyterLab is a server-client collaboration tool that allows users to edit notebook documents via a web browser. These notebooks can contain both executable code and rich text elements. For our purposes, we will use Markdown for analysis description and executable Python code to perform data exploration and analysis.
 
@@ -49,7 +92,6 @@ Instance VM | Boundary | On-Disk Dataframe Max Size | Tied to Hard-Drive Space
 Compute Spark | Boundary | Total Cluster RAM | 2 TB of which 1.5 TB available - Shared by Notebook Instances
 GPU Compute - External Customers | Boundary | TBD | TBD
 
-
 ### Create a new Notebook
 
 In the Adobe Experience Platform UI, click on the Data Science tab in the top menu to take you to the Data Science Workspace. From this page, click on the JupyterLab tab which will open the JupyterLab launcher. You should see a page similar to this.
@@ -60,55 +102,11 @@ In our tutorial, we will be using Python 3 in the Jupyter Notebook to show how t
 
 ![](retail_sales.png)
 
+The Retail Sales sample is a standalone example which uses the same Retail dataset to show how data can be explored and visualized in Jupyter Notebook. Additionally, the notebook goes further in depth with training and verification. More information about this specific notebook can be found in this [walkthrough](../technical_overview/data_science_workspace_overview/data_science_workspace_walkthrough/data_science_workspace_walkthrough.md).
+
 ### Accessing Data
 
 We will go over accessing data internally from Adobe Experience Platform and data externally. We will be using the `data_access_sdk_python` library to access internal data such as datasets and XDM schemas. For external data, we will use the pandas Python library.
-
-#### Adobe Experience Platform Data
-
-First, we will go over accessing Adobe Experience Platform data. There are two methods data can be retrieved into the notebook:
-* By Dataset ID
-* By Batch ID
-
-##### By Dataset ID
-
-For this section, we are using the Retail Sales dataset which is the same dataset used in the Retail Sales sample notebook.
-
-To ingest this data, navigate to the Datasets tab under the Data tab in the Adobe Experience Platform UI and click on "Create Dataset". From there, you can upload the "retail.csv" file found in the [public repository](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/datasets/retail).
-
-In our Jupyter Notebook, we can access our data from the Data tab on the left. Upon clicking the tab, you will be able to see two directories:
-
-* **Datasets** - Contains all ingested datasets within the IMS Organization
-* **Schemas** - Contains both core and custom dataset schemas in JSON format for users to preview
-
-Navigating into the Datasets directory, we will be able to see all the ingested datasets. Note that it may take a minute to load all the entries if your directory is heavily populated with datasets.
-
-To access data in the dataset, we can right click on your desired dataset and select the "Explore Data in Notebook" option in the dropdown. An executable code entry will appear in your notebook.
-
-```PYTHON
-from data_access_sdk_python.reader import DataSetReader
-reader = DataSetReader()
-df = reader.load(data_set_id="xxxxxxxx", ims_org="xxxxxxxx@AdobeOrg", start=0, limit=20)
-df.head()
-```
-
-By default, the `DataSetReader()` is set to read from index 0 (`start=0`) and the number of batches to read is set to 20 (`limit=20`). If your dataset is not being read you can set `limit='all'` which will read starting from `start`. Note that if your dataset has many batches then the process may run out of memory.
-
-Selecting the executable cell then pressing the play button in the toolbar will run the executable code. The output for `head()` will be be a table with your dataset's keys as columns and the first n rows in the dataset. `head()` accepts an integer argument to specify how many lines to output. By default this is 5.
-
-![](datasetreader_head.png)
-
-##### By Batch ID
-
-You can also specify a `batch_id` to load. Note that if `batch_id` is used, `start` and `limit` will be ignored.
-
-```PYTHON
-df = reader.read(view_id="12345", ims_org="12345@AdobeOrg", batch_id="12345")
-```
-
-A `batch_id` can be found by finding your Dataset in the Data tab in the Adobe Experience Platform UI. From there, click on a batch in the overview tab to open a modal which will show `batch_id`.
-
-![](batch_id_modal.png)
 
 #### External Data
 
@@ -123,6 +121,40 @@ Pandas' DataFrame data structure is a 2-dimensional labeled data structure. To q
 Finally, we can take a peek at what our data looks like. We can use `df.head(n)` to view the first `n` rows of the DataFrame:
 
 ![](df_head.png)
+
+#### Adobe Experience Platform Data
+
+Now, we will go over accessing Adobe Experience Platform data. There are two methods data can be retrieved into the notebook:
+* By Dataset ID
+* By Batch ID
+
+##### By Dataset ID
+
+For this section, we are using the Retail Sales dataset which is the same dataset used in the Retail Sales sample notebook.
+
+In our Jupyter Notebook, we can access our data from the **Data** tab on the left. Upon clicking the tab, you will be able to see a list of Datasets.
+
+Now in the Datasets directory, we will be able to see all the ingested datasets. Note that it may take a minute to load all the entries if your directory is heavily populated with datasets.
+
+Since the dataset is the same, we want to replace the load data from the previous section which uses external data. Select the code block under **Load Data** and press the **'d'** key on your keyboard twice. Make sure the focus is on the block and not in the text. You can press **'esc'** to escape the text focus before pressing **'d'** twice.
+
+Now, we can right click on the `Retail-Training-<your-alias>` dataset and select the "Explore Data in Notebook" option in the dropdown. An executable code entry will appear in your notebook.
+
+```PYTHON
+from data_access_sdk_python.reader import DataSetReader
+from datetime import date
+reader = DataSetReader()
+df = reader.load(data_set_id="xxxxxxxx", ims_org="xxxxxxxx@AdobeOrg",batch_id="xxxxxxxx")
+df.head()
+```
+
+Selecting the executable cell then pressing the play button in the toolbar will run the executable code. The output for `head()` will be be a table with your dataset's keys as columns and the first n rows in the dataset. `head()` accepts an integer argument to specify how many lines to output. By default this is 5.
+
+![](datasetreader_head.png)
+
+If you restart your kernel and run all the cells again, you should get the same outputs as before.
+
+![](restart_kernel_run.png)
 
 ### Exploring our Data
 
