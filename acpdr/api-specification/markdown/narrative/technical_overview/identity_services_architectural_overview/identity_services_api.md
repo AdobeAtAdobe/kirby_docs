@@ -4,7 +4,7 @@ Adobe's Identity Services manages cross-device, cross-channel identification of 
 
 ## Using the API
 
-This document describes interacting with Identity Namespace Services using Adobe's Cloud Platform APIs. See the [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for information on how to access these services.
+This document describes interacting with Identity Namespace Services using Adobe Experience Platform APIs. See the [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for information on how to access these services.
 
 ![](lightbulb.jpg) Before you start using the APIs, please read though these notes.
 
@@ -26,7 +26,7 @@ All APIs in this document require the following headers unless otherwise indicat
 
 # Working with Identity Services
 
-As the single source of truth for identity resolution in the Adobe Cloud Platform, Identity Services provide the following capability:
+As the single source of truth for identity resolution in Experience Platform, Identity Services provide the following capability:
 
 * __Generation of ID__ - establishment of links between namespaces
 * __Computation of identity clusters__ - internal device graph resolves device specific identities

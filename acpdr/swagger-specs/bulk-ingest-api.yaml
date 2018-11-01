@@ -1,6 +1,6 @@
----
+swagger: '2.0'
 info:
-  title: Batch Ingestion API
+  title: Adobe Experience Platform Data Ingestion
   version: v2
   contact:
       name: Grp-Siphon-Core
@@ -16,8 +16,8 @@ paths:
       - Bearer: []
       tags:
       - "Ingest Batch"
-      summary: "Registers a new batch in Catalog"
-      description: "Creates a new batch in Catalog as a first step to bulk data ingestion. The data is uploaded to this
+      summary: "Registers a new batch in Adobe Data Catalog"
+      description: "Creates a new batch in Data Catalog as a first step to bulk data ingestion. The data is uploaded to this
       batch after which the batch is marked ready for triggering data registration in Catalog"
       operationId: "createBatch"
       consumes:

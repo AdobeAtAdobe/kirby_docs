@@ -1,12 +1,12 @@
 ## ECID - An Essential Tool
 
-Experience Cloud ID Service (ECID) is the client side module providing access to identity management, serving three primary functions:
+Adobe Experience Platform Identity Service (ECID) is the client side module providing access to identity management, serving three primary functions:
 
 *  Identify each visitor 
 *  Provide synchronization with Partners 
 *  Feed pairwise links to connect with offline or other IDs to the graph
 
-Identifying your online users requires instrumentizing your site or mobile app with the ECID, which provides a universal and persistent ID that identifies your visitors across all solutions in the Experience Cloud.
+Identifying your online users requires instrumentizing your site or mobile app with the ECID, which provides a universal and persistent ID that identifies your visitors across all solutions in Adobe Experience Platform.
  
 If you are working with a website implementation, explore the resources [here](https://marketing.adobe.com/resources/help/en_US/mcvid).
 

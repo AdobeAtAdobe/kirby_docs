@@ -4,7 +4,7 @@ info:
   version: "1.0.0"
   title: "Data Access API"
   description: >- 
-    Data Access API for Adobe Cloud Platform data access and egress
+    Data Access API for Adobe Experience Platform data access and egress
 
     Notes:
 

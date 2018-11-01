@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Segment Builder serves as a single workspace for Adobe Cloud Platform (ACP) for building segments from your Unified Profiles. Using Segment Builder, users can use a single segmentation workflow across solutions to generate audiences and power their consumer experiences.
+The Segment Builder serves as a single workspace for Adobe Experience Platform for building segments from your Unified Profiles. Using Segment Builder, users can use a single segmentation workflow across solutions to generate audiences and power their consumer experiences.
 
 ### Terms used in this document
 
@@ -14,15 +14,15 @@ The Segment Builder serves as a single workspace for Adobe Cloud Platform (ACP) 
 
 Segmentation deals with defining a particular subset of data from your profile store, a concrete example of which could be to describe the criteria distinguishing a marketable group of people among your profile store. For example, in an email campaign called 'Did you forget to buy your sneakers?', you may limit the recipients to the users among your user base who searched for running shoes within the last 30 days, but who did not complete a purchase. Or, you may want to target web content to display only for users with a certain rating in your rewards program.
 
-When a customer segment has been conceptually defined, the marketing department typically works with their organization's data analysts to build the segment within ACP. The data analyst reviews available data in ACP and selects which fields and values will be used to build the rules or conditions of the segment. Consider a segment defined by an organization's rewards program "Member Rating", a proprietary attribute which isn't part of a standard schema. A data analyst must ensure the XDM schema being used is an extension that includes a field for "Member Rating", and that the values for that field are included in the data being ingested into ACP.
+When a customer segment has been conceptually defined, the marketing department typically works with their organization's data analysts to build the segment within Experience Platform. The data analyst reviews available data on Platform and selects which fields and values will be used to build the rules or conditions of the segment. Consider a segment defined by an organization's rewards program "Member Rating", a proprietary attribute which isn't part of a standard schema. A data analyst must ensure the XDM schema being used is an extension that includes a field for "Member Rating", and that the values for that field are included in the data being ingested into ACP.
 
 The segment rules themselves, whether created via API or the Segment Builder UI (described in this document), are ultimately defined using Predicate Query Language, or PQL. This is where marketing's conceptual segment 'Men over 50' gets described in the language built to retrieve profiles meeting the criteria (e.g. `person.age > 50 and person.gender = "male"`). If a suitable segment doesn’t already exist, a user can create a new segment.
 
-To gain a deeper understanding of the Unified Profile Service and the role of PQL in segmentation on the platform, please review the [API documentation](https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md#5segmentingyourbasecreatingandworkingwithaudiences).
+To gain a deeper understanding of the Unified Profile Service and the role of PQL in segmentation on Platform, please review the [API documentation](api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md#segmenting-your-base-creating-and-working-with-audiences).
 
 ## Using the Segment Builder
 
-The Segment Builder is the visual development environment used to build segment definitions and serves as a common component of all solutions using Unified Segmentation on the platform. 
+The Segment Builder is the visual development environment used to build segment definitions and serves as a common component of all solutions using Unified Segmentation on Platform. 
 
 ### The UI
 
@@ -70,7 +70,7 @@ When creating a new segment project, you are asked for a segment name and descri
 
 A rule refers to the smallest portion of a segment that resolves to a true or false and is joined to other rules by and or or. For example, there are two rules in the “Men over 50” segment, those with a gender of “male” and those with a birth-date of over 50 years prior to today.
 
-To build a rule, find each component from the left rail that reflects the the rule will be based. Drag the field onto the rule area, enabling controls for further configuring that rule. Extended schema fields may take up to 24 hours to be available to the Segment Builder UI for use in building rules, beginning when data including that field begins hydrating the platform.
+To build a rule, find each component from the left rail that reflects the the rule will be based. Drag the field onto the rule area, enabling controls for further configuring that rule. Extended schema fields may take up to 24 hours to be available to the Segment Builder UI for use in building rules, beginning when data including that field begins hydrating Platform.
 
 When adding a rule to a container, it will be appended to any existing rules in the container with the AND operator. Click the `AND` to access the option to change it to `OR`.
 
@@ -134,7 +134,7 @@ When working with timestamps, you are able to specify that the time be within th
 
 ## Using segments
 
-The goal of Unified Segmentation is that any Adobe solution can refer to the segments centrally configured and maintained on the platform. 
+The goal of Unified Segmentation is that any Adobe solution can refer to the segments centrally configured and maintained on Platform. 
 
 ### Segment types
 
@@ -162,9 +162,9 @@ In this case these subsequent rules would be applied only to profiles who were p
 
 ## Conclusion
 
-Using Adobe’s Segment Builder provides a consolidated workflow for building segments from Unified Profile data, regardless of the ACP product in which you intend to use them. In summary:
+Using Adobe’s Segment Builder provides a consolidated workflow for building segments from Unified Profile data, regardless of the Adobe Experience Platform product in which you intend to use them. In summary:
 
 * Use the drag and drop tiles on the left rail to add rules to your definition. You are able to base rules on XDM schema fields or other saved definitions
 * Containers are used to scope and to control the order of execution of your rules. You are able to create a subset of data within a container to then include to your results, exclude. PQL also allows containers to be used for functions such as `count()` to glean the size of the results of the rules in that container
 * As you build or edit your segment, the Segment Builder UI will display an estimation of the results of applying the definition to your entire profile store. These estimates are based on snapshots of your profile data which are loaded once per 24 hour period. The estimation information displayed includes the date of the sample being used to estimate. 
-* The Segment Builder is a visual interface for the Unified Profile's Segment API, which you can learn more about [here](../api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md#5segmentingyourbasecreatingandworkingwithaudiences).
+* The Segment Builder is a visual interface for the Unified Profile's Segment API, which you can learn more about [here](api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md#5segmentingyourbasecreatingandworkingwithaudiences).

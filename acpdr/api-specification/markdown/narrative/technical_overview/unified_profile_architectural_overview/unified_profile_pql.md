@@ -1,10 +1,10 @@
 # Unified Profile - Profile Query Language (PQL)
 
-## 1. Overview
+## Overview
 
 The following discusses the features of the Profile Query Language (PQL) and the functions it supports.
 
-## 2. Purpose of PQL
+## Purpose of PQL
 
 PQL is a query language developed to support the definition and execution of segmentation queries over Unified Profile.  Initially, it is focused on queries over profiles (i.e. _xdm.context.profile) and their associated experience events (i.e. _xdm.context.experienceevent), as the name Profile Query Language suggests.  However, it will soon be extended to support segmentation over any XDM schema.
 
@@ -14,11 +14,11 @@ PQL is XDM-compliant; it supports evaluating queries against data which has been
 
 A PQL query is evaluated over one profile at a time (with its linked experience events).  There is therefore always an implicit profile in context in the initial version of PQL (e.g. a PQL expression such as person.birthDay is understood to apply to the profile in context without explicitly including a reference to _xdm.context.profile).
 
-## 3. Elements of PQL
+## Elements of PQL
 
 PQL is composed of various basic elements that are combined together to create PQL queries. We will look into those in some detail below.
 
-### 3.1 Types
+### Types
 
 Since PQL is XDM compliant, it will support the types that XDM has. These include basic scalar data types such as String, Double, Int, Boolean, Number, DateLiteral,  object data types and arrays. The eventual full set of data types that PQL will support is listed at XDM Data Types. PQL statements themselves will not have declarations of types and the type inferred during execution is currently implicit.
 
@@ -26,13 +26,13 @@ PQL allows the use of dot-notation to access an object and its fields, such `wor
 
 Note that the top-level properties referenced in these two examples ("homeAddress" and "person") are root properties on _xdm.context.profile.  As noted above, in the initial version of PQL, _xdm.context.profile is always assumed to be the root model and is not explicitly included in the PQL queries.  When PQL is extended to support other root schemas, we will most likely require that references to the root schema (profile or otherwise) be included in the query.
 
-#### 3.1.1 Arrays
+#### Arrays
 
 PQL supports querying over arrays (as it must to be XDM-compliant, as arrays form a key part of XDM).  Arrays can be used in a number of PQL functions such as count, select and sum (see below for the specifics of these functions).  However, note that the "running dot" notation cannot be currently used to directly access properties of items within an array – e.g. if "arrayProp" is a property whose type is Array of Obj1, where Obj1 is a model which itself has a property "itemProp", the expression "arrayProp.itemProp" is not currently allowed in PQL, since itemProp is a property on the items in the array, not on the array itself.  The supported way to reference item properties within an array is as follows: 
 
 `select X from arrayProp where X.itemProp = ...`
 
-#### 3.1.2 Literals
+#### Literals
 
 PQL provides support for string, relative time reference, integer, double and boolean literals.
 
@@ -99,7 +99,7 @@ The above reserved words are used as literals in PQL expressions, frequently in 
 
 See the section on the [`occurs`](#occurs) function for more details
 
-#### 3.1.3 XDM references
+#### XDM references
 
 PQL expressions access profile and experience event data using XDM references.  For example:
 
@@ -114,7 +114,7 @@ PQL contains a reserved word, `xEvent`, which is used to refer to the array of E
 
 XDM references in PQL can refer to primitive types (e.g. `person.birthYear` has type Integer), arrays (e.g. `xEvent`) or complex objects (e.g. `person`).  PQL's type coercion allows most references to be used in a Boolean position (e.g. at the top level of a query expression).  For example, the simple query `person` is a valid PQL query, and will evaluate to true if the profile has a `person` property defined, and false otherwise.  For array-valued XDM properties or other array-valued PQL expressions, the value is coerced to true if the property is defined and is non-empty, false otherwise, when in Boolean position.
 
-#### 3.1.4 Comparisons
+#### Comparisons
 PQL supports comparison operators which allow conditions relating XDM properties and literals to be defined.
 
 Examples are:
@@ -127,7 +127,7 @@ Note that comparison operators can compare XDM references with literals, or XDM 
 
 See the functions table below for more details. <!-- Add link to anchor -->
 
-#### 3.1.5 Boolean Operators
+#### Boolean Operators
 
 PQL supports boolean operators which allow basic conditions such as comparisons described above to be combined.
 
@@ -140,14 +140,14 @@ Examples are:
 
 Note that PQL supports both `not` and `!` for logical negation.
 
-#### 3.1.6 Precedence
+#### Precedence
 
 PQL follows normal rules of precedence.  Parentheses can be inserted to change or clarify precedence.  For example:
 
 * `person.birthYear = 1980 and (homeAddress.countryCode != workAddress.countryCode or homeAddress.countryCode = "US")`
 * `person.birthYear - (person.birthMonth + person.birthDay)`
 
-#### 3.1.7 Select operator
+#### Select operator
 
 In PQL, the select operator allows a filtering condition to be applied to an array-valued expression to return the subset of the array which matches the condition.
 
@@ -224,7 +224,7 @@ The above defines profiles which have more than 5 associated ExperienceEvents ea
 
 Since the select construct evaluates to a set of tuples, it is possible to run aggregation functions on them. PQL only supports the `count()` function applied to the result returned by select.  As of 18.8.1, PQL supports other aggregation functions (`sum`, `min`, `max` and `average`) which are implemented using their own operators using a similar syntax to select.  See [Aggregate Functions](#55aggregatefunctions)
 
-#### 3.1.8 Statement
+#### Statement
 
 Every PQL query is a statement that is composed of expressions that are built together using the features discussed above. PQL allows for compound expressions that are constructed using arbitrary combinations of conjunctions and disjunctions, comparisons etc. These will follow the natural priority of the operators if they are not separated by parentheses. PQL also allows for the use of parentheses to control the evaluation of these expressions. The typical structure of a statement is to have the CRM related portions of the query at the beginning and then have the ExperienceEvent related portions later, possibly within a select construct.
 
@@ -232,7 +232,7 @@ For CRM statements, since the execution is running in the context of a single us
 
 There are various types of statements supported in PQL. For more examples of supported queries, see [Unified Profile Supported Queries](unified_profile_supported_queries.md).
 
-#### 3.1.9 Coercion of types
+#### Coercion of types
 
 PQL will try to match the RHS type to the LHS type of an expression to the extent possible. At the time of query construction, the compiler will consult with the XDM registry to ascertain the types of the various fields involved in these expressions and match them. For example, we may be able to coerce a stringLiteral "true" to the BooleanLiteral 'true' if it makes sense to do so. If it is not possible to coerce them, then an error will be thrown during query validation.
 
@@ -243,11 +243,11 @@ PQL supports the use of the traditional comparison operators and some SQL like o
 * `emailAddress like "%.edu" and homeAddress.stateProvinceISO="CA"`
 * `select X from xEvent where X.type="FLIGHT" and X.destination in ["SJC","DAL"]`
 
-## 4. Language Examples
+## Language Examples
 
 The following examples of PQL to illustrate the structure and capabilities of the language.
 
-### 4.1 Example 1: Operates purely on CRM data
+### Example 1: Operates purely on CRM data
 
 ```
 homeAddress.countryISO = "US" and
@@ -255,7 +255,7 @@ homeAddress.stateProvinceISO = "CA" and
 person.birthYear > 1980
 ```
 
-### 4.2 Example 2: Operates on both CRM data and ExperienceEvent (touchpoint) data.
+### Example 2: Operates on both CRM data and ExperienceEvent (touchpoint) data.
 
 ```
 homeAddress.countryISO = "US" 
@@ -270,7 +270,7 @@ and (
 
 This example shows the query that combines searching the CRM data and the events while allowing for filters for dates. This example also illustrates the use of variables and the select operator.
 
-### 4.3 Example 3: Operation on an Array-valued property
+### Example 3: Operation on an Array-valued property
 
 ```
 (select X from xEvent where X.type = "FLIGHT").count() > 1
@@ -280,9 +280,9 @@ and
 
 The above examples show that PQL can support arbitrary combinations of conjunctions and disjunctions. PQL supports the use of parentheses to enable these combinations. The other notable feature in this example is a function call on the result of the select operator to count the number of elements in it.
 
-## 5. PQL Functions Detail
+## PQL Functions Detail
 
-### 5.1 Comparison Functions
+### Comparison Functions
 
 #### =
 
@@ -387,7 +387,7 @@ The above examples show that PQL can support arbitrary combinations of conjuncti
     * This example defines people with at least one experience event at least 3 product list items in it.
 
 
-### 5.2 Date/Time-related Functions
+### Date/Time-related Functions
 
 #### occurs
 
@@ -636,7 +636,7 @@ The occurs operator allows you to construct natural sounding queries without hav
   * `select X from xEvent where X.timestamp occurs on date(currentYear() - 1, 10, 1)`
     * This example selects profiles which have events which occurred on the 1st of October last year
 
-### 5.3 String functions
+### String functions
 
 The following describes functions that are available for comparing string literals.
 
@@ -873,7 +873,7 @@ There are two special characters which can be used in the second argument:
 * The negative versions are not precisely the negations of the corresponding positive versions, due to how null values are treated.  For instance, an XDM property reference which turns out to be undefined during evaluation will return false for both `contains` and `doesNotContain`
 * `equals` and `notEqualTo` are added as string-specific functions in order to support the case sensitivity switch parameter.  `=` and `!=` are maintained in PQL as before for use on any type, and imply case sensitivity when used on strings
 
-### 5.4 Arithmetic Functions
+### Arithmetic Functions
 
 #### + (addition)
 
@@ -923,7 +923,7 @@ There are two special characters which can be used in the second argument:
 * Examples
   * `select X from xEvent where X.commerce.checkouts.value / X.commerce.cartAbandons.value > 1`
 
-### 5.5 Aggregation Functions
+### Aggregation Functions
 
 #### sum
 
@@ -991,7 +991,7 @@ Examples:
       * The maximum of the numerical values is returned, rather than the sum
       * If there are no matching sets of variables, null is returned.  In PQL execution, null values propagate upwards in the expression tree, until a boolean position is reached, at which point the null value is cast to false.
 
-#### 5.6 List Functions
+#### List Functions
 
 The following describes functions that are available for comparing values with a list of literals.
 
@@ -1077,11 +1077,11 @@ Determine if two lists have one or more intersections.
     * `null` where `person.favoriteColors` = ["yellow", "violet"] 
   * `person.citiesVisited.intersection(person.favoriteCities).count() > 1`
 
-## 6. Language examples
+## Language examples
 
 The following are examples of PQL intended to illustrate the structure and capabilities of the language.
 
-### 6.1 Example 1: Operates purely on CRM data
+### Example 1: Operates purely on CRM data
 
 Where a statement is based purely CRM data, the root entity `user` is implied and must be omitted from the dot-notation field paths in the statement.
 
@@ -1091,7 +1091,7 @@ stateProvinceISO = "CA" and
 ageBetween25And35 = "Y"
 ```
 
-### 6.2 Example 2: Operates on both CRM data and ExperienceEvent (touchpoint) data
+### Example 2: Operates on both CRM data and ExperienceEvent (touchpoint) data
 
 This example shows the query that combines searching the CRM data and the events while allowing for filters for dates. This example also illustrates the use of variables and a `select` construct that is bounded by parenthesis.
 
@@ -1106,7 +1106,7 @@ and (
 )
 ```
 
-### 6.3 Example 3: Operation on a Set
+### Example 3: Operation on a Set
 
 The following example shows that PQL can support arbitrary combinations of conjunctions and disjunctions. PQL supports the use of parentheses to enable these combinations. The other notable feature in this example is a function call on the Set to count the number of elements in it.
 

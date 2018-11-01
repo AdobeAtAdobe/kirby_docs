@@ -5,8 +5,8 @@ produces:
 swagger: '2.0'
 info:
   description: |-
-    ID-Namespace API is used to query and create Namespaces and Realms used with Identity & Profile APIs
-  title: ID-Namespace API.
+    Experience Platform Identity Namespace Service API is used to query and create Namespaces and Realms used with Identity Service & Unified Profile Service APIs
+  title: Experience Platform Identity Namespace Service
   contact:
     url: 'http://www.adobe.io'
   version: 0.0.1
@@ -61,7 +61,7 @@ paths:
         - in: body
           required: true
           name: namespace_to_create
-          description: Namespace details as a json input
+          description: Namespace details as a JSON input
           schema:
             $ref: '#/definitions/NamespaceForCreate'
       consumes:

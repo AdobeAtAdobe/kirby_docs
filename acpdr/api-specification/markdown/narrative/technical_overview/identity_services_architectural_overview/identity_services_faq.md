@@ -45,7 +45,7 @@ The following Namespaces are provided for use by all organizations. These are re
 |Display Name|ID|Code|Description|
 |------------|---|---|-----------|
 |CORE|0|CORE|legacy name: "Adobe AudienceManager"|
-|ECID|4|ECID|alias: "Adobe Marketing Cloud ID", "Adobe Experience Cloud ID"|
+|ECID|4|ECID|alias: "Adobe Marketing Cloud ID", "Adobe Experience Cloud ID", "Adobe Experience Platform ID"|
 |Email|6|Email||
 |Phone|7|Phone||
 |Windows AID|8|WAID||

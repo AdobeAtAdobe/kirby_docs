@@ -1,14 +1,14 @@
 # Unified Profile - Supported PQL Queries
 
-## 1. Overview
+## Overview
 
-Segmentation enables a multitude of use cases ranging from simple segmentation for filtering data to more complex uses for targeting and personalization. The platform segmentation engine provides these capabilities using a language built to query XDM Profile data, the Profile Query Language, or PQL. Segments are defined as a query in PQL, where any Profiles meeting the conditions are considered part of the Segment. See [Profile Query Language](unified_profile_pql.md) for more information on PQL, or [Unified Profile](unified_profile_architectural_overview.md) for more information on Unified Profile and Segmentation.
+Segmentation enables a multitude of use cases ranging from simple segmentation for filtering data to more complex uses for targeting and personalization. Unified Profile's segmentation engine provides these capabilities using a language built to query XDM Profile data; the Profile Query Language, or PQL. Segments are defined as a query in PQL, where any Profiles meeting the conditions are considered part of the Segment. See [Profile Query Language](unified_profile_pql.md) for more information on PQL, or [Unified Profile](unified_profile_architectural_overview.md) for more information on Unified Profile and Segmentation.
 
-## 1. Classes of Queries
+## Classes of Queries
 
 Queries can be broken into classes of use cases, as described in this section.
 
-### 1.1 Simple Demographic
+### Simple Demographic
 
 A Simple Demographic query is one where the conditions center around geographic locations. A query can be said to be a Simple Demographic query when it only includes demographic criteria.
 
@@ -22,7 +22,7 @@ __Example - People with a US address__
 }
 ```
 
-### 1.2 Time Series
+### Time Series
 
 A query whose conditions are based on timestamps, most typically events, are considered Time Series queries.  
 
@@ -36,7 +36,7 @@ __Example - People who have ordered twice in two weeks__
 }
 ```
 
-### 1.3 Demography and Time Series
+### Demography and Time Series
 
 Queries can be developed which have criteria based on both geographic locations and timestamps and are considered Demography and Time Series queries.
 
@@ -53,7 +53,7 @@ __Example - Customers with US addresses who've ordered twice in a two-week perio
            which includes mention of query classes which are planned to be supported, but aren't supported for this document's publish date
 -->
 
-## 2. Supported PQL Query Types
+## Supported PQL Query Types
 
 The following are examples demonstrating the use of PQL's supported operators, functions and other features.
 
