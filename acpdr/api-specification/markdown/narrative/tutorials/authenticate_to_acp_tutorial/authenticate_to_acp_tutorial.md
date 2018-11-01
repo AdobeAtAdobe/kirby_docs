@@ -1,11 +1,11 @@
-# Tutorial: Authenticating and accessing Adobe Cloud Platform APIs
+# Tutorial: Authenticating and accessing Adobe Experience Platform APIs
 
-## 1. Objective
+## Objective
 
-This tutorial will cover the steps on how to gain access to making Adobe Cloud Platform API calls starting with creating your access token used to authenticate API calls. The steps that will be explained in this tutorial are:
+This tutorial will cover the steps on how to gain access to making Adobe Experience Platform API calls starting with creating your access token used to authenticate API calls. The steps that will be explained in this tutorial are:
 
-* (optional) Create an AdobeID
-* Grant access to the Organization and Adobe Cloud Platform using Adobe Admin Console
+* (optional) Create an Adobe ID
+* Grant access to the Organization and Adobe Experience Platform using Adobe Admin Console
 * Creating the required public and private certificates
 * Logging into Adobe I/O Console
 * Creating a new Integration
@@ -14,20 +14,20 @@ This tutorial will cover the steps on how to gain access to making Adobe Cloud P
 
 ---
 
-## 2. Authenticate to Make API Calls
+## Authenticate to Make API Calls
 
 To maintain the security of your applications and users, all requests to Adobe I/O APIs must be authenticated and authorized using standards such as OAuth and JSON Web Tokens (JWT). The JWT will then be used along with client specific information to generate your personal access token.
 
 We will be going through the steps of authentication through the creation of an access token outlined in this flowchart:
 ![](how_to_authenticate_acp_for_api_flowchart.png)
 
-### 2.1. Prerequisites
+### Prerequisites
 * A registered Adobe ID account
-* the Adobe ID account must have been added to an Organization with access to "Adobe Cloud Platform"
+* the Adobe ID account must have been added to an Organization with access to "Adobe Experience Platform"
 * Administrative Rights (System Administrator) for an IMS Organization
 
 
-#### 2.1.1 A registered Adobe ID account
+#### A registered Adobe ID account
 
 If you don't have an Adobe ID yet, you can create one with the following steps:
 
@@ -35,24 +35,24 @@ If you don't have an Adobe ID yet, you can create one with the following steps:
 2. Click on the *Get an Adobe ID* link
 3. Complete the Sign up process
 
-#### 2.1.2 Administrative Rights for a IMS Organization
+#### Administrative Rights for a IMS Organization
 
- Administrative rights can be granted to you by another administrator using [Adobe Admin Console UI](https://adminconsole.adobe.com/). You will need administrative rights to add yourself as a user to an IMS Organization.  You will also need admin rights to create an integration for Adobe Cloud Platform -  Data Services.
+ Administrative rights can be granted to you by another administrator using [Adobe Admin Console UI](https://adminconsole.adobe.com/). You will need administrative rights to add yourself as a user to an IMS Organization.  You will also need admin rights to create an integration for Adobe Experience Platform -  Data Services.
 
  ![](add_user_as_admin.png)
 
-#### 2.1.3 User of an IMS Organization
+#### User of an IMS Organization
 
-Once as an administrator, you (or another Administrator)can add yourself to the Organization as a user:
+Once as an administrator, you (or another Administrator) can add yourself to the Organization as a user:
 
-1. Navigate to [Adobe AdminConsole UI](https://adminconsole.adobe.com/)
+1. Navigate to [Adobe Admin Console UI](https://adminconsole.adobe.com/)
 2. Click on *Assign Users* for the IMS Organization you wish to join
 ![](assign_user.png)
 3. Enter the email assigned to your Adobe ID
 4. Select the profiles you want assigned to your account
 5. Press *Save* Button to finish
 
-### 2.2. One Time Setup
+### One Time Setup
 
 The following steps will only need to be done once:
 
@@ -64,16 +64,16 @@ The following steps will only need to be done once:
 
 Once your have your certificate, integration, and access values, you will be able to reuse them in future authentications. We will go over each step in detail below.
 
-#### 2.2.1. Create Certificate
+#### Create Certificate
 
-**For MacOS & Linux platform**
+**For MacOS & Linux platforms**
 
 Open terminal and execute below command:  
 
 `openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout private.key -out certificate_pub.crt`
 
 
-**For Windows Platform**
+**For Windows platforms**
 
 i) Download an openssl client to generate public certificates. For e.g. [Openssl windows client](https://bintray.com/vszakats/generic/download_file?file_path=openssl-1.1.1-win64-mingw.zip)
 
@@ -120,11 +120,11 @@ The `certificate_pub.crt` certificate will later be uploaded to the Adobe IO Con
 
 Your private key file named `private.key` will be used later to sign your JWT token.
 
-#### 2.2.2. Log into adobe.io Developer Portal: console.adobe.io
+#### Log into adobe.io Developer Portal: console.adobe.io
 
 Navigate to the [Adobe I/O Console](https://console.adobe.io/) and sign in with your Adobe ID.
 
-#### 2.2.3. Create Integration
+#### Create Integration
 
 You will be taken to the Integrations page. An *Integration* is a service account that is created for the selected IMS Organization (If you are associated with multiple Organizations, you can select the appropriate Organization from the drop-down). You will only be allowed to make calls for the IMS Organization for which the Integration is created in.
 
@@ -151,7 +151,7 @@ Fill in your Integration Details. Afterwards, click on *Select a File* to upload
 
 ![](new_integration4.png)
 
-#### 2.2.4. Copy Down Access Values
+#### Copy Down Access Values
 
 After creating your integration, you will be able to view the details of your integration. After clicking on *Retrieve client Secret* your screen should look similar to this.
 
@@ -159,11 +159,11 @@ After creating your integration, you will be able to view the details of your in
 
 Copy down the values for `{API KEY}`, `{IMS ORG}` which is the Organization ID, and `{CLIENT SECRET}` as these will be used in the next step.
 
-### 2.3. Authentication For Each Session
+### Authentication For Each Session
 
-The end goal is to generate your `{ACCESS_TOKEN}` which will be used to authenticate your API calls. The access token is added into the authorization header in every API call you make to Adobe Cloud Platform.  This action will need to be done every-time the access token expires which is every 24 hours.
+The end goal is to generate your `{ACCESS_TOKEN}` which will be used to authenticate your API calls. The access token is added into the authorization header in every API call you make to Adobe Experience Platform.  This action will need to be done every-time the access token expires which is every 24 hours.
 
-#### 2.3.1. Create JWT
+#### Create JWT
 
 While in your integration's detail page, navigate to the *JWT* tab. Your page should look similar to this.
 
@@ -193,7 +193,7 @@ Copy the entire output into the text field and *Generate JWT*. Copy down your ge
 
 ![](generated_jwt.png)
 
-#### 2.3.2. Generate Access Token
+#### Generate Access Token
 
 Finally, the last piece of information you will need to start making API calls is generating an access token. Your access token is the key used to authorize your API calls.
 
@@ -220,9 +220,9 @@ It should return something like this.
 
 Your access token is the value under the `access_token` key. Note this access token will expire in 86399947 milliseconds or 24 hours.
 
-You are now ready to make API requests in Adobe Cloud Platform!
+You are now ready to make API requests in Adobe Experience Platform!
 
-#### 2.3.3. Testing Access Code
+#### Testing Access Code
 
 To test if your access token is valid, we can try to make the following API call. This call will list all the core XDM objects:
 
@@ -257,17 +257,18 @@ If no error is returned and a large JSON object is returned then your `access_to
   }
 ```
 
-#### 2.3.4. Using Postman for JWT Authentication and API calls
-[Postman](https://www.getpostman.com/) is a popular tool to work with REST based APIs. This [Medium post](https://medium.com/adobetech/using-postman-for-jwt-authentication-on-adobe-i-o-7573428ffe7f) describes how you can setup postman to automatically perform JWT authentication and use it to consume Adobe Cloud Platform APIs
+#### Using Postman for JWT Authentication and API calls
 
-## 3. Adobe Cloud Platform Components
+[Postman](https://www.getpostman.com/) is a popular tool to work with REST based APIs. This [Medium post](https://medium.com/adobetech/using-postman-for-jwt-authentication-on-adobe-i-o-7573428ffe7f) describes how you can setup postman to automatically perform JWT authentication and use it to consume Adobe Experience Platform APIs.
+
+## Adobe Experience Platform Components
 
 The services below are the primary components you will interact with when it comes to ingestion or reading of existing data.
 
-### 3.1. Data Discovery (Catalog)
+### Data Discovery (Catalog)
 Stores information about existing datasets that you may read or write to.
 
-#### sample fetch of available datasets
+#### Sample fetch of available datasets
 ```shell
 curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets" \
     -H "accept:application/json" \
@@ -276,7 +277,7 @@ curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets" \
     -H "x-api-key: API_KEY"
 ```
 
-#### sample response
+#### Sample response
 
 ```json
 {
@@ -333,7 +334,7 @@ curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets" \
     is not traditional JSON schema, but an older proprietary format.
 -   **files** - API end point used to access the files associated with this dataset
 
-#### sample fetch to get a specific dataset
+#### Sample fetch to get a specific dataset
 ```shell
 curl -X GET
 "https://platform.adobe.io/data/foundation/catalog/dataSets/598d6e81b2745f000015edcb" \
@@ -342,10 +343,10 @@ curl -X GET
     -H "Authorization: Bearer ACCESS_TOKEN" \
     -H "x-api-key: API_KEY"
 ```
-### 3.2. XDM Schema Registry
-The registry stores the reusable schemas that may be associated with platform datasets
+### XDM Schema Registry
+The registry stores the reusable schemas that may be associated with platform datasets.
 
-##### sample fetch of the "context/profile" schema from above dataset
+##### Sample fetch of the "context/profile" schema from above dataset
 ```shell
 curl -X GET
 "https://platform.adobe.io/data/foundation/catalog/xdms/context/profile?expansion=true" \
@@ -357,7 +358,7 @@ curl -X GET
 
   Note: Parameter 'expansion=true' will expand all embedded $ref's if used
 
-##### sample response
+##### Sample response
 
 ```JSON
 {
@@ -662,12 +663,12 @@ that is intended for that field. Because the base schemas is defined using JSON 
 use if sending JSON data. If using a serialization format other then JSON for ingestion, you should use data types that match the
 meta:xdmType as described in **Section 4** of the [XDM Registry Overview Guide](https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/xdm_registry_architectural_overview/xdm_registry_architectural_overview.md).
 
-### 3.3. Data Access
+### Data Access
 Provides users the interface to access their data on the platform.
 
-#### 3.3.1 Access a single sample file from a a dataset
+#### Access a single sample file from a a dataset
 
-##### sample request to list files associated with a dataset - refer to the 'files' attribute of a dataset
+##### Sample request to list files associated with a dataset - refer to the 'files' attribute of a dataset
 
 ```shell
 curl -X GET \
@@ -678,7 +679,7 @@ curl -X GET \
     -H "x-api-key : API_KEY"
 
 ```
-##### sample response
+##### Sample response
 ```json
 {
     "74627653-6b6f-40a8-ad57-6bd1badfb9c6": {
@@ -693,16 +694,13 @@ curl -X GET \
         "updatedUser": "CLIENT_USER_ID@AdobeID",
         "availableDates": {}
     },
-    :
-    :
-    :
 }
 ```
 -   The list of file ids will be used in **Data Access API** to fetch
     further file details. The file Key of JSON field will be used in
     this call:: "28146732-2af7-41c6-9d4a-95fb3334216b" in this case.
 
-#### curl to fetch file details
+#### CURL to fetch file details
 ```shell
 curl -X GET "https://platform.adobe.io/data/foundation/export/files/28146732-2af7-41c6-9d4a-95fb3334216b" \
     -H "accept: application/json" \
@@ -711,7 +709,7 @@ curl -X GET "https://platform.adobe.io/data/foundation/export/files/28146732-2af
     -H "x-api-key : API_KEY"
 
 ```
-##### sample response
+##### Sample response
 ```json
 [
     {
@@ -735,7 +733,7 @@ curl -X GET \
     -H "Authorization: Bearer ACCESS_TOKEN" \
     -H "x-api-key : API_KEY"
 ```
-##### sample response
+##### Sample response
 ```
 longitude,optin_email,optin_mobile,optin_address,username,created
 
@@ -746,9 +744,9 @@ longitude,optin_email,optin_mobile,optin_address,username,created
 5,Dorthary,Murphy,1950-03-27,female,dorthary0.murphy@outlook.com,122-742-4590,730 Hickory Lane,BROWNSTOWN,IN,47220,USA,38.88,-86.04,true,false,true,dorthary.murphy,2017-03-31 03:41:33
 ```
 
-#### 3.3.2 Access all the data from a given time period
+#### Access all the data from a given time period
 
-##### curl to fead data from a dataset
+##### CURL to fead data from a dataset
 This will give you all batches between start time and end time, sorted by the order they were created.
 
 ```shell
@@ -760,7 +758,7 @@ curl -X GET \
     -H "x-api-key : API_KEY"
 ```
 
-##### sample response
+##### Sample response
 ```json
 {
     "BATCHID1": {
@@ -780,14 +778,14 @@ curl -X GET \
             }
         ]
     },
-"BATCHID2": {
-:
-:
+    "BATCHID2": {
+        "..."
+    }
 }
 ```
 Now take out dataset files belonging to these batches using below call
 
-##### curl request to get files out of a batch
+##### CURL request to get files out of a batch
 ```shell
 curl -X GET https://platform.adobe.io/data/foundation/export/batches/BATCHID1/files \
     -H 'authorization: Bearer ACCESS_TOKEN' \
@@ -796,7 +794,7 @@ curl -X GET https://platform.adobe.io/data/foundation/export/batches/BATCHID1/fi
     -H "x-api-key : API_KEY"
 
 ```
-##### sample response
+##### Sample response
 ```json
 {
     "data": [
@@ -839,7 +837,7 @@ curl -X GET https://platform.adobe.io/data/foundation/export/batches/BATCHID1/fi
 
 Now we will iterate over individual file via _link.self.href
 
-##### curl to access file metadata
+##### CURL to access file metadata
 ```shell
 curl -X GET https://platform.adobe.io/data/foundation/export/files/DATASETFILEID1 \
     -H 'authorization: Bearer ACCESS_TOKEN' \
@@ -847,7 +845,7 @@ curl -X GET https://platform.adobe.io/data/foundation/export/files/DATASETFILEID
     -H "Authorization:Bearer ACCESS_TOKEN" \
     -H "x-api-key : API_KEY"
 ```
-##### sample response
+##### Sample response
 ```json
 {
     "data": [
@@ -873,7 +871,7 @@ curl -X GET https://platform.adobe.io/data/foundation/export/files/DATASETFILEID
 
 Now we will list content of file by using link under _links > self > href
 
-#### curl to access file content
+#### CURL to access file content
 ```shell
 curl -X GET https://platform.adobe.io/data/foundation/export/files/DATASETFILEID1?path=filename1.csv \
     -H 'authorization: Bearer ACCESS_TOKEN' \
@@ -881,19 +879,18 @@ curl -X GET https://platform.adobe.io/data/foundation/export/files/DATASETFILEID
     -H "Authorization:Bearer ACCESS_TOKEN" \
     -H "x-api-key : API_KEY"
 ```
-##### sample Response
-```
+##### Sample Response
+```shell
 name,age,date,digit,gender,email,float,alpha
 John Kumar,,,,male,johnk@email.com,,
 Marry Gupta,,,,female,marryg@email.com,,
-
 ```
 
 
-#### 3.4. Data Ingestion
-Pushes data to the ACP with Data Ingestion APIs.
+#### Data Ingestion
+Pushes data to Adobe Experience Platform with Data Ingestion APIs.
 
-#### create a batch
+#### Create a batch
 ```shell
 curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
     -H "accept: application/json" \
@@ -902,7 +899,7 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
     -H "x-api-key : API_KEY" \
     --data-binary '{"datasetId":"DATASETID"}'
 ```
-##### sample response
+##### Sample response
 ```json
 {
     "BATCHID": {
@@ -919,7 +916,7 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
 }
 ```
 
-#### write to dataset
+#### Write to dataset
 Multiple files can be posted in a batch until it is promoted.
 ```shell
 curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/BATCHID/datasets/DATASETID/files/filename.csv" \
@@ -933,7 +930,7 @@ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/BATCHID/da
 
 Data in platform should be written in the form of parquet files.
 
-##### sample response
+##### Sample response
 ```json
 {
    "BATCHID": {
@@ -943,9 +940,9 @@ Data in platform should be written in the form of parquet files.
 }
 ```
 
-Data will first land on the Adobe Cloud Platform staging location and then will be moved to final location after cataloging and validation. Batches will be marked as successful once all the data is moved to    permanent location.
+Data will first land on the Adobe Experience Platform staging location and then will be moved to final location after cataloging and validation. Batches will be marked as successful once all the data is moved to    permanent location.
 
-#### curl to mark batch upload complete
+#### CURL to mark batch upload complete
 ```shell
 curl -X POST "https://platform.adobe.io/data/foundation/import/batches/BATCHID?action=COMPLETE" \
     -H "x-gw-ims-org-id: AdobeIMSOrganization@AdobeOrg" \
@@ -953,8 +950,8 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/BATCHID?a
     -H "x-api-key : API_KEY"
 ```
 
-##### sample response
+##### Sample response
 
-```
+```http
 #Status 200 OK, with empty response
 ```

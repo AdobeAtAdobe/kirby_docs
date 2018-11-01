@@ -1,6 +1,6 @@
-# Microsoft Dynamics Connector for Adobe Cloud Platform
+# Microsoft Dynamics Connector for Adobe Experience Platform
 
-The Microsoft Dynamics Connector for Adobe Cloud Platform provides an API and wizard to ingest your Microsoft Dynamics CRM data onto Adobe Cloud Platform (ACP), allowing you to:   
+The Microsoft Dynamics Connector for Adobe Experience Platform provides an API and wizard to ingest your Microsoft Dynamics CRM data onto Adobe Experience Platform, allowing you to:   
 
 * Authenticate to your Microsoft Dynamics account. 
 * Select one or more datasets from a list of available datasets.
@@ -14,22 +14,21 @@ This article provides steps to set up and configure the Microsoft Dynamics conne
 ## Setting up the Microsoft Dynamics Connector
 Set up an account to access APIs and provide credentials to create a connector: 
 
-
 <!---### Prerequisites
 * Register the schema of the incoming file.
 * Register the metadata associated with the file, such as *DataSetName*, *UserID*, *IMSOrg*, and *ConnectionParameters*.
 * Get the details of the file ingested using an API call to the Catalog API.--->
 
 ### Set up an Adobe I/O account
-See [authenticating and accessing APIs](https://www.adobe.io/apis/cloudplatform/dataservices/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to  create an access token used to authenticate API calls from Adobe I/O.
+See [authenticating and accessing APIs](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to create an access token used to authenticate API calls from Adobe I/O.
 
 After setting up authorization for APIs, these values will be returned:
 
 * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-* `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
-* `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+* `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
-### Set up an ACP connection to Microsoft Dynamics
+### Set up a Platform connection to Microsoft Dynamics
 
 You will need the following credentials:
 
@@ -47,60 +46,58 @@ With authorization to make API calls from the Adobe I/O Gateway and your Microso
 ## Setting up the Microsoft Dynamics Connector
 Follow these steps to create a dataset from Microsoft Dynamics and trigger a daily ingestion. 
 
-
 #### 1. Create a Catalog Account entity
 
 As a first step, you need to create a Catalog account entity corresponding to your Microsoft Dynamics CRM credentials. This request requires your Microsoft Dynamics user name, password, and security token. The response to this request includes the *Account ID*.
 
 ##### Request
 
-```
+```shell
 curl -X POST https://platform.adobe.io/data/foundation/catalog/accounts/ \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -H 'Content-Type: application/json' \
   -d '{
-  "params": {
-    "organizationName":"<>"
-    "username": "<>",
-    "password": {
-    "value": "<>",
-    "isSecret": true
+    "params": {
+        "organizationName":"<>"
+        "username": "<>",
+        "password": {
+            "value": "<>",
+            "isSecret": true
+        },
+        "organizationUri": "<>"  
     },
-  "organizationUri": "<>"  
-  },
-  "connector": "dynamics-online"
+    "connector": "dynamics-online"
 }'
 ```
 For on premise
 
-```
+```shell
 {
-"connector": "dynamics-onprem",
-"params": {
-"username": "{{DYNAMICS_ONPREM_USERNAME}}",
-"hostName": "{{DYNAMICS_ONPREM_HOSTNAME}}",
-"organizationName": "{{DYNAMICS_ONPREM_ORGANIZATION_NAME}}",
-"password": {
-"value": "{{DYNAMICS_ONPREM_PASSWORD}}",
-"isSecret": true
-}
-}
+    "connector": "dynamics-onprem",
+    "params": {
+        "username": "{{DYNAMICS_ONPREM_USERNAME}}",
+        "hostName": "{{DYNAMICS_ONPREM_HOSTNAME}}",
+        "organizationName": "{{DYNAMICS_ONPREM_ORGANIZATION_NAME}}",
+        "password": {
+            "value": "{{DYNAMICS_ONPREM_PASSWORD}}",
+            "isSecret": true
+        }
+    }
 }
 
 ```
 
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
+`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
 `{MS Dynamic_USER_NAME}`: Your username for MS Dynamic CRM.  
 `{MS Dynamic_PASSWORD}`: Your password for MS Dynamic CRM.  
 `{MS Dynamic_SECURITY_TOKEN}`: Your security token for MS Dynamic CRM.  
 
 ##### Response
-```
-JSON
+```JSON
 [
   "@/accounts/{ACCOUNT_ID}"
 ]
@@ -114,39 +111,38 @@ With the `{ACCOUNT_ID}`, you can now create an MS Dynamic Catalog Connection ent
 
 ##### Request
 
-```
+```shell
 curl -X POST https://platform.adobe.io/data/foundation/catalog/connections/ \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -H 'Content-Type: application/json' \
   -d '{
-      "name": "{CONNECTION_NAME}",
-      "description": "",
-      "ingestStart": "{INGEST_START}",
-      "frequency": {
-        "timezone": "UTC",
-        "month": "*",
-        "day": "*",
-        "hour": "00",
-        "minute": "00",
-        "dayOfWeek": "*"
+        "name": "{CONNECTION_NAME}",
+        "description": "",
+        "ingestStart": "{INGEST_START}",
+        "frequency": {
+            "timezone": "UTC",
+            "month": "*",
+            "day": "*",
+            "hour": "00",
+            "minute": "00",
+            "dayOfWeek": "*"
         },
-      "connector": "MS Dynamic",
-      "accountId": "{ACCOUNT_ID}"
+        "connector": "MS Dynamic",
+        "accountId": "{ACCOUNT_ID}"
     }'
 ```
 
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
+`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
 `{ACCOUNT_ID}`: Account ID generated from your MS Dynamic credentials  
 `{CONNECTION_NAME}`: Name of the connection you are creating.  
 `{INGEST_START}`: Date and time when ingestion is scheduled to start. If time is set to the past (relative to current time) ingestion will begin immediately. Format is `"yyyy-mm-ddThh:mm:ss.000Z"` (E.g. `"2018-03-22T23:59:59.000Z"`)  
 
 ##### Response
-```
-JSON
+```JSON
 [
     "@/connections/{CONNECTION_ID}"
 ]
@@ -160,7 +156,7 @@ Next, select the Microsoft Dynamics CRM object to ingest. You can get the entire
 
 ##### Request
 
-```
+```shell
 curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/objects \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
@@ -168,16 +164,15 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
   -H 'Content-Type: application/json' \
 ```
 
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
+`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
 `{ACCOUNT_ID}`: Account ID generated from your MS Dynamic credentials  
 `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
 
 ##### Response
 
-```
-JSON
+```json
 [
     {
         "logicalName": "AcceptedEventRelation",
@@ -214,8 +209,7 @@ Make the following request to see all fields for a specific MS Dynamic object.
 ##### Request
 POST /connectors/connections/{CONNECTION_ID}/object/{OBJECT_ID}/fields
 
-```
-SHELL
+```SHELL
 curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/objects/{{OBJECT_ID}}/fields \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
@@ -223,8 +217,8 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
   -H 'Content-Type: application/json'
 ```
 
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
+`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
 `{ACCOUNT_ID}`: Account ID generated from your MS Dynamic credentials.  
 `{CONNECTION_ID}`: ID of the connector you created from the previous steps.  
@@ -232,8 +226,7 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 
 ##### Response  
 
-```
-JSON
+```JSON
 [
     {
         "logicalName": "Name",
@@ -310,18 +303,17 @@ Note that the above request is only a segment of the actual response. You can ch
 The last step is to create the MS Dynamic Catalog entity. The dataset will define the structure of the data that will be ingested from the connector.
 
 ##### Request
-```
-SHELL
+```SHELL
 curl -X POST https://platform.adobe.io/data/foundation/catalog/datasets/ \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -H 'Content-Type: application/json' \
   -d '{JSON_PAYLOAD}'
 ```
 
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
+`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
 `{ACCOUNT_ID}`: Account ID generated from your MS Dynamic credentials.  
 `{CONNECTION_ID}`: ID of the connector you created from the previous steps.  
@@ -329,8 +321,7 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/datasets/ \
 
 `{JSON_PAYLOAD}`: The dataset to be posted is a JSON payload as used in this example:
 
-```
-JSON
+```JSON
 {
       "objectId": "{OBJECT_ID}",
       "name": "Accounts",
@@ -429,17 +420,17 @@ Adding a `"delta": {}` in the `"meta"` field indicates the method for the time-b
 
 ```JSON
 {
-  "logicalName": "SystemModstamp",
-  "displayName": "System Modstamp",
-  "isPrimaryKey": false,
-  "type": "date",
-  "meta": {
-      "inboundSupported": true,
-      "outboundSupported": true,
-      "originalType": "datetime",
-      "options": null,
-      "delta": {}
-  }
+    "logicalName": "SystemModstamp",
+    "displayName": "System Modstamp",
+    "isPrimaryKey": false,
+    "type": "date",
+    "meta": {
+        "inboundSupported": true,
+        "outboundSupported": true,
+        "originalType": "datetime",
+        "options": null,
+        "delta": {}
+    }
 }
 ```
 

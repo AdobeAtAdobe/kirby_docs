@@ -1,6 +1,6 @@
-# Azure Blob Connector for Adobe Cloud Platform
+# Azure Blob Connector for Adobe Experience Platform
 
-The Microsoft Azure Blob Connector for Adobe Cloud Platform provides an API and wizard to ingest data from your Azure Blob data store onto Adobe Cloud Platform (ACP). The Azure Blob connector for ACP allows you to:
+The Microsoft Azure Blob Connector for Adobe Experience Platform provides an API and wizard to ingest data from your Azure Blob data store onto Adobe Experience Platform. The Azure Blob connector for Platform allows you to:
 
 * Connect to your Azure Blob account.
 * Select one or more datasets from a list of available datasets.
@@ -22,32 +22,35 @@ Set up an account to access APIs and provide credentials to create a connector:
 
 
 ### Set up an Adobe I/O account 
-See [authenticating and accessing APIs](https://www.adobe.io/apis/cloudplatform/dataservices/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to  create an access token used to authenticate API calls from Adobe I/O.
+See [authenticating and accessing APIs](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to create an access token used to authenticate API calls from Adobe I/O.
+
+After setting up authorization for APIs, these values will be returned:
 
 * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-* `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
-* `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+* `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
-### Set up an ACP connection to the Azure Blob
+### Set up a Platform connection to the Azure Blob
 After setting up an Adobe I/O account, use the POST call and provide the *imsOrgId*, *accessToken*, and *Blob* connection string to set up a connection. 
 
-```
-curl -X POST https://platform.adobe.io/data/foundation/ connectors/account/ -H 'authorization: Bearer <accessToken>'
-
--H 'content-type: application/json' -H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg' -d
-
-'{
-  "params": {
-    "connectionString": {
-      "value": "<connection string as retrieved from Azure portal>",
-      "isSecret": true
-    }
-  },
-  "type": "azure-blob-inbound"
-}'
+```shell
+curl -X POST https://platform.adobe.io/data/foundation/ connectors/account/ \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '{
+        "params": {
+            "connectionString": {
+                "value": "<connection string as retrieved from Azure portal>",
+                "isSecret": true
+            }
+        },
+        "type": "azure-blob-inbound"
+      }'
 ```
 ### Create a Dataset
-Once the account and connection are successfully created, the *Connection ID* can be used to create a dataset. You can configure ACP datasets, pipeline, and triggers with a successful POST call.
+Once the account and connection are successfully created, the *Connection ID* can be used to create a dataset. You can configure Platform datasets, pipeline, and triggers with a successful POST call.
 
 You will want to provide a unique and identifiable name for the dataset, allowing you to identify it clearly when monitoring your data ingestion. 
 
@@ -64,51 +67,57 @@ params/datasets/fileDescription	| Optional. Identify the kind of file to ingest:
 
 
 #### Simple Payload Example
-```
-curl -X POST https: //platform.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json'
--H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'-d
-'{
-  "params": {
-    "datasets": [
-      {
-        "name": "<DataSetName>",
-        "tags": {
-          "connectors-objectName": [
-            "<Object path>"
-          ]
-        },
-        "fileDescription": {
-            "persisted": true,
-            "format": "parquet"
-        },
-		"schema":"@/xdms/model/Profile"
-      }
-    ]
-  }
+```shell
+curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'\
+  -d '{
+        "params": {
+            "datasets": [
+                {
+                    "name": "<DataSetName>",
+                    "tags": {
+                        "connectors-objectName": [
+                            "<Object path>"
+                        ]
+                    },
+                    "fileDescription": {
+                        "persisted": true,
+                        "format": "parquet"
+                    },
+		            "schema":"@/xdms/model/Profile"
+                }
+            ]
+        }
 }'
 ```
 Note: The Schedule API is optional. Make this call only if you want to schedule the ingestion or send a blank JSON {} as the payload for a one-time run.
 
 The following configuration will ingest data every 15 minutes.
 
-``` 
-curl -X POST https: //platform.adobe.io/data/foundation/connectors/connections/<connectionId>/schedule -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json' 
--H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'-d 
-'{
-	"ingestStart" : "2018-05-24T09:36:01.257Z",
-	"frequency": {
-            "month": "*",
-            "day": "*",
-            "dayOfWeek": "*",
-            "hour": "*",
-            "minute": "*/15",
-            "timezone": "UTC"
-        }
-}'
+```shell
+curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<connectionId>/schedule \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'\
+  -d '{
+	        "ingestStart" : "2018-05-24T09:36:01.257Z",
+	        "frequency": {
+                "month": "*",
+                "day": "*",
+                "dayOfWeek": "*",
+                "hour": "*",
+                "minute": "*/15",
+                "timezone": "UTC"
+            }
+     }'
 ```
 
 
-## Additional Adobe Cloud Platform APIs
+## Additional Adobe Experience Platform APIs
 
 In addition to the Create Account and Create Dataset APIs, you can use these for specific needs.
 
@@ -116,38 +125,38 @@ In addition to the Create Account and Create Dataset APIs, you can use these for
 
 This API lists the content of an Azure blob.
 
-```
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/foundation/connectors/connections/<connection id>/objects?object=/<container>/<path>' \
-  -H 'authorization: Bearer <Access token>' \
-  -H 'content-type: application/json' \
-  -H 'x-api-key: <API Key>' \
-  -H 'x-gw-ims-org-id: <IMS Org>'
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
   
 **Preview Object API**
 
 This API lists the content of the file. Currently only parquet files are supported for preview.
 
-```
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/foundation/connectors/connections/<connection Id>/rows?object=/<container>/<path>&fileType=delimited' \
-  -H 'authorization: Bearer <Access Token>' \
-  -H 'content-type: application/json' \
-  -H 'x-api-key: <API Key>' \
-  -H 'x-gw-ims-org-id: <IMS Org>'
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 **Schema Discovery API**
 
 This API lists fields of a file. Currently only CSV files are supported.
 
-```
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/foundation/connectors/connections/<connection Id>/fields?object=/<container>/<path>&fileType=delimited' \
-  -H 'authorization: Bearer <Access Token>' \
-  -H 'content-type: application/json' \
-  -H 'x-api-key: <API Key>' \
-  -H 'x-gw-ims-org-id: <IMS Org>'
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
 

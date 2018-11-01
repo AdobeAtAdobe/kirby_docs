@@ -1,7 +1,6 @@
-# Amazon S3 Connector for Adobe Cloud Platform
- 
+# Amazon S3 Connector for Adobe Experience Platform
 
-The Amazon S3 Connector for Adobe Cloud Platform provides an API and wizard to ingest data from your S3 data store onto Adobe Cloud Platform (ACP). The S3 connector for ACP allows you to:
+The Amazon S3 Connector for Adobe Experience Platform provides an API and wizard to ingest data from your S3 data store onto Adobe Experience Platform. The S3 connector for Platform allows you to:
 
 * Authenticate to your S3 account.
 * Select one or more datasets from a list of available datasets.
@@ -23,30 +22,31 @@ Set up an account to access APIs and provide credentials to create a connector:
 
 
 ### Set up an Adobe I/O account 
-See [authenticating and accessing APIs](./alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to  create an access token used to authenticate API calls from Adobe I/O.
+See [authenticating and accessing APIs](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to create an access token used to authenticate API calls from Adobe I/O.
 
 * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-* `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
-* `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+* `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
-### Set up an ACP connection to Amazon S3 
+### Set up a Platform connection to Amazon S3 
 Use the below POST call and provide the *imsOrgId*, *accessToken*, and AWS access keys. 
 
-```
-curl -X POST https://platform.adobe.io/data/foundation/ connectors/account/ -H 'authorization: Bearer <accessToken>'
-
--H 'content-type: application/json' -H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg' -d
-
-'{
-  "params": {
-    "s3AccessKey": "<awsAccessKey>",
-    "s3SecretKey": {
-    "value": "<awsSecretAccessKey>",
-    "isSecret": true
-    }
-  },
-  "type": "amazon-s3"
-   }'
+```shell
+curl -X POST https://platform.adobe.io/data/foundation/ connectors/account/ \
+  -H 'authorization: Bearer <accessToken>' \
+  -H 'content-type: application/json' \
+  -H 'x-api-key: <api_key>' \
+  -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg' \
+  -d '{
+        "params": {
+            "s3AccessKey": "<awsAccessKey>",
+            "s3SecretKey": {
+                "value": "<awsSecretAccessKey>",
+                "isSecret": true
+            }
+        },
+        "type": "amazon-s3"
+    }'
 ```
 
 ### Create a Dataset
@@ -66,49 +66,53 @@ params/datasets/fileDescription	| Optional. Identify the kind of file to ingest:
 
 
 #### Simple Payload Example
-```
-curl -X POST https: //platform.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json'
-
--H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'-d 
--H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'-d 
-'{
-  "params": {
-    "datasets": [
-      {
-        "name": "<DataSetName>",
-        "tags": {
-          "connectors-objectName": [
-            "<Object path>"
-          ]
-        },
-        "fileDescription": {
-            "persisted": true,
-            "format": "parquet"
-        },
-		"schema":"@/xdms/model/Profile"
-      }
-    ]
-  }
-}'
+```shell
+curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets \
+  -H 'authorization: Bearer <accessToken>' \
+  -H 'content-type: application/json' \
+  -H 'x-api-key: <api_key>' \
+  -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg' \ 
+  -d '{
+        "params": {
+            "datasets": [
+                {
+                    "name": "<DataSetName>",
+                    "tags": {
+                        "connectors-objectName": [
+                            "<Object path>"
+                        ]
+                    },
+                    "fileDescription": {
+                        "persisted": true,
+                        "format": "parquet"
+                    },
+		            "schema":"@/xdms/model/Profile"
+                }
+            ]
+        }
+    }'
 ```
 Schedule API (OPTIONAL - Make this call only if you want to do scheduled ingestion or send a blank JSON {} as the payload for a one-time run).
 
 The following configuration will ingest data every 15 minutes.
 
-``` 
-curl -X POST https: //platform.adobe.io/data/foundation/connectors/connections/<connectionId>/schedule -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json' 
--H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'-d 
-'{
-	"ingestStart" : "2018-05-24T09:36:01.257Z",
-	"frequency": {
-      "month": "*",
-      "day": "*",
-      "dayOfWeek": "*",
-      "hour": "*",
-      "minute": "*/15",
-      "timezone": "UTC"
+```shell
+curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<connectionId>/schedule \
+  -H 'authorization: Bearer <accessToken>' 
+  -H 'content-type: application/json' 
+  -H 'x-api-key: <api_key>' 
+  -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'
+  -d '{
+	    "ingestStart" : "2018-05-24T09:36:01.257Z",
+	    "frequency": {
+            "month": "*",
+            "day": "*",
+            "dayOfWeek": "*",
+            "hour": "*",
+            "minute": "*/15",
+            "timezone": "UTC"
         }
-}'
+    }'
 ```
 
 ### Preview Data
@@ -119,9 +123,7 @@ You can see a preview of the dataset by selecting it in the user interface and c
 * For an incremental ingestion, you will have to clean up the data after every ingestion run.
 * Currently, the pipeline run is configured for a delay of 30 minutes between consecutive runs. This will be become configurable in coming sprint.
  
- 
-
-## Additional Adobe Cloud Platform APIs
+## Additional Adobe Experience Platform APIs
 
 In addition to the Create Account and Create Dataset APIs, you can use these for specific needs.
 
@@ -129,7 +131,7 @@ In addition to the Create Account and Create Dataset APIs, you can use these for
 
 Lists the content of an Amazon S3.
 
-```
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/foundation/connectors/connections/<connection id>/objects?object=/<container>/<path>' \
   -H 'authorization: Bearer <Access token>' \
@@ -141,7 +143,7 @@ curl -X GET \
 **Preview Object API**
 This API lists the content of the file. Currently only CSV files are supported for preview.
 
-```
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/foundation/connectors/connections/<connection Id>/rows?object=/<container>/<path>&fileType=delimited' \
   -H 'authorization: Bearer <Access Token>' \
@@ -153,7 +155,7 @@ curl -X GET \
 
 This API lists fields of a file. Currently only CSV files are supported.
 
-```
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/foundation/connectors/connections/<connection Id>/fields?object=/<container>/<path>&fileType=delimited' \
   -H 'authorization: Bearer <Access Token>' \

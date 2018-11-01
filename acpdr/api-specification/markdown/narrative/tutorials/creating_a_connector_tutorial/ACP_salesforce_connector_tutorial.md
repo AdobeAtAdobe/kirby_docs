@@ -1,6 +1,6 @@
-# Salesforce Connector for Adobe Cloud Platform
+# Salesforce Connector for Adobe Experience Platform
 
-The Salesforce Connector for Adobe Cloud Platform (ACP) provides an API and wizard to ingest your Salesforce CRM data onto Adobe Cloud Platform (ACP). The Salesforce connector allows you to:   
+The Salesforce Connector for Adobe Experience Platform provides an API and wizard to ingest your Salesforce CRM data onto Adobe Experience Platform. The Salesforce connector allows you to:   
 
 * Authenticate to your Salesforce account.
 * Select one or more datasets from a list of available datasets.
@@ -20,16 +20,16 @@ Set up an account to access APIs and provide credentials to create a connector:
 * Get the details of the file ingested using an API call to the Catalog API.--->
 
 ### Set up an Adobe I/O account
-See [authenticating and accessing APIs](https://www.adobe.io/apis/cloudplatform/dataservices/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to  create an access token used to authenticate API calls from Adobe I/O.
+See [authenticating and accessing APIs](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to  create an access token used to authenticate API calls from Adobe I/O.
 
 After setting up authorization for APIs, these values will be returned:
 
 * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-* `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
-* `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+* `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
 
-### Set up an ACP connection to Amazon S3
+### Set up a Platform connection to Amazon S3
 
 You will need the following credentials:
 
@@ -39,8 +39,7 @@ You will need the following credentials:
   1. Go to `https://developer.salesforce.com/`.
   2. Log in using your Salesforce CRM credentials.
   3. Select the user and select the *Settings* link.
-  4. In the *Personal Information* view, select *Reset My Security Token*.
-     You will receive a new security token via email.
+  4. In the *Personal Information* view, select *Reset My Security Token*. You will receive a new security token via email.
 
 With authorization to make API calls from the Adobe I/O Gateway and your Salesforce credentials, your next step is to generate a dataset from Salesforce objects. 
 
@@ -49,8 +48,6 @@ With authorization to make API calls from the Adobe I/O Gateway and your Salesfo
 Follow these steps to create a dataset from Salesforce and set up a connector to trigger a daily ingestion.  The Salesforce `Account` object is used in the example.
 
 ### Creating a dataset from a Salesforce Object
-
-
 
 #### 1. Create a Catalog Account entity
 
@@ -82,8 +79,8 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/accounts/ \
 }'
 ```
 
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
+`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
 `{SALESFORCE_USER_NAME}`: Your username for Salesforce CRM.  
 `{SALESFORCE_PASSWORD}`: Your password for Salesforce CRM.  
@@ -130,8 +127,8 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/connections/ \
     }'
 ```
 
-`{API_KEY}`: Specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMG_ORG}`: IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}`: Specific API key value found in your unique Adobe Experience Platform integration.  
+`{IMG_ORG}`: IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Specific bearer token value provided after authentication.   
 `{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials  
 `{CONNECTION_NAME}`: Name of the connection you are creating.  
@@ -158,18 +155,17 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'Content-Type: application/json' \
+  -H 'Content-Type: application/json' 
 ```
 
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
+`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
 `{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials  
 `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
 
 ##### Response
-```
-
+```JSON
 [
     {
         "logicalName": "AcceptedEventRelation",
@@ -197,8 +193,7 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 
 NOTE: The above object is just a partial response of the actual list of available Salesforce CRM objects. Note that the `logicalName` of the objects is used as the `{OBJECT_ID}`.
 
-
-####Ingesting selected fields from the Salesforce object
+#### Ingesting selected fields from the Salesforce object
 You can ingest select fields from the `Account` object, but first you need to determine which fields you want from the object. For example, you can get all of the fields for a specific Salesforce CRM object.
 
 ##### Request
@@ -212,8 +207,8 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
   -H 'Content-Type: application/json'
 ```
 
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
+`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
 `{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials.  
 `{CONNECTION_ID}`: ID of the connector you created from the previous steps.  
@@ -304,13 +299,13 @@ POST /datasets
 curl -X POST https://platform.adobe.io/data/foundation/catalog/datasets/ \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -H 'Content-Type: application/json' \
   -d '{JSON_PAYLOAD}'
 ```
 
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
+`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
 `{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials.  
 `{CONNECTION_ID}`: ID of the connector you created from the previous steps.  
@@ -318,22 +313,21 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/datasets/ \
 
 `{JSON_PAYLOAD}`: This is the dataset to be posted. 
 
-```
-JSON
+```JSON
 {
-      "objectId": "{OBJECT_ID}",
-      "name": "Accounts",
-      "saveStrategy": "append",
-      "connectionId": "{CONNECTION_ID}",
-      "tags": {
+    "objectId": "{OBJECT_ID}",
+    "name": "Accounts",
+    "saveStrategy": "append",
+    "connectionId": "{CONNECTION_ID}",
+    "tags": {
         "connectors-objectName": [
-          "{OBJECT_ID}"
+            "{OBJECT_ID}"
         ],
         "connectors-saveStrategy": [
-          "append"
+            "append"
         ]
-      },
-      "fields": [
+    },
+    "fields": [
         {
             "logicalName": "Name",
             "displayName": "Account Name",
@@ -399,16 +393,15 @@ JSON
                 ]
             }
         }
-      ],
-      "connectorId": "salesforce",
-      "requestStartDate": "2018-02-14 16:06:44",
-      "status": "enabled",
-      "aspect": "production"
-    }
+    ],
+    "connectorId": "salesforce",
+    "requestStartDate": "2018-02-14 16:06:44",
+    "status": "enabled",
+    "aspect": "production"
+}
 ```
 
 The `{JSON PAYLOAD}` used is the subset of the object fields you selected from the previous response to get all fields for the `Account` Salesforce CRM object. This defines the fields populated by the connector on a recurring frequency (such as Account Name, Account Site, System Modstamp, etc.).
-
 
 The field `"requestStartDate"` dictates how far in the past (relative to now) the back-fill will go. The `"requestStartDate"` field is always a date in the past. If you want a back-fill of 30 days, then you have to calculate `now() - 30 days` and enter a valid date and time value for this field.
 
@@ -420,17 +413,17 @@ Adding a `"delta": {}` in the `"meta"` field indicates the method selected is to
 
 ```JSON
 {
-  "logicalName": "SystemModstamp",
-  "displayName": "System Modstamp",
-  "isPrimaryKey": false,
-  "type": "date",
-  "meta": {
-      "inboundSupported": true,
-      "outboundSupported": true,
-      "originalType": "datetime",
-      "options": null,
-      "delta": {}
-  }
+    "logicalName": "SystemModstamp",
+    "displayName": "System Modstamp",
+    "isPrimaryKey": false,
+    "type": "date",
+    "meta": {
+        "inboundSupported": true,
+        "outboundSupported": true,
+        "originalType": "datetime",
+        "options": null,
+        "delta": {}
+    }
 }
 ```
 
