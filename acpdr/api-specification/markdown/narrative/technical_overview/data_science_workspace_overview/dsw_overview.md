@@ -213,5 +213,5 @@ With the marriage of brand expertise and Adobe's machine learning and AI prowess
 Adobe was recently named the only leader in "The Forrester Wave™: Digital Intelligence Platforms, Q2 2017" report, and received the highest scores possible in nine criteria, including behavioral targeting and online testing.
 
 ## Additional Resources
-For more information about Data Science Workspace, visit https://adobe.io/apis/cloudplatform/dataservices.html.
-To stay up to date, sign up for Adobe Sensei and AI news at www.adobe.com/subscription/adobesenseinewsletter.html.
+For more information about Data Science Workspace, visit [https://adobe.io/apis/cloudplatform/dataservices.html](https://adobe.io/apis/cloudplatform/dataservices.html).  
+To stay up to date, sign up for Adobe Sensei and AI news at [www.adobe.com/subscription/adobesenseinewsletter.html](www.adobe.com/subscription/adobesenseinewsletter.html).
