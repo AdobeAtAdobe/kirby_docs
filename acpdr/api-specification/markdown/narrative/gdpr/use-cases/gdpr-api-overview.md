@@ -188,7 +188,6 @@ The following table outlines what is required for a POST request in Platform GDP
 | x-gw-ims-org-id | Experience Cloud organization ID | This ID is used to authenticate and validate your access token through the Adobe IO gateway and should match the organization in the JSON payload |
 | x-api-key | [string value] | A defined key to authorize your request, created by you through Adobe IO Console integration
 | ticketId | Internal tracking ID | Optional - This ID allows you to link the jobs in this request to any internal tracking ID you may have in your systems |
-| emailToNotify | Comma-separated email list | Optional – allows you to provide additional emails for people who should be notified once a job is complete |
 
 
 ## Submitting a Adobe Experience Platform GDPR Service request
