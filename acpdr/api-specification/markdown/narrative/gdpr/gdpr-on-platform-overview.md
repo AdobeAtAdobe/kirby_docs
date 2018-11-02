@@ -56,7 +56,9 @@ In the example below:
 }
 ```
 
-`curl -X PATCH "https://platform.adobe.io/data/foundation/catalog/dataSets/5bc391a7e388cc12f991678e" -H "accept: application/json" -H "x-api-key: acp_foundation_example" -H "x-gw-ims-org-id: example@AdobeOrg" -H "Authorization: bearer example_token" -H "content-type: application/json" -d "{ \"schemaMetadata\": { \"gdpr\": [{ \"path\": \"/properties/personalEmail/properties/address\", \"namespace\": [\"email_ns\"] }] }}"`
+```json
+curl -X PATCH "https://platform.adobe.io/data/foundation/catalog/dataSets/5bc391a7e388cc12f991678e" -H "accept: application/json" -H "x-api-key: acp_foundation_example" -H "x-gw-ims-org-id: example@AdobeOrg" -H "Authorization: bearer example_token" -H "content-type: application/json" -d "{ \"schemaMetadata\": { \"gdpr\": [{ \"path\": \"/properties/personalEmail/properties/address\", \"namespace\": [\"email_ns\"] }] }}"
+```
 
 Labels are an array of string values. In the above example, the label is `email_ns`. Labels should only be applied to leaf fields (fields without children). In the sample above, the path refers to a leaf field.
 
