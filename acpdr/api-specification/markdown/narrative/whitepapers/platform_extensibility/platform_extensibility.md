@@ -2,11 +2,11 @@
 
 Adobe Experience Platform is the most powerful, flexible, and open system on the market for building and managing complete solutions for your customer experience. Experience Platform enables organizations to centralize and standardize customer data and content from any system and apply data science and machine learning to dramatically improve the design and delivery of rich, personalized customer experiences. 
 
-Experience Platform is built on open APIs, exposing the full functionality of the system to developers using familiar tools so that customers can integrate their enterprise solutions with Experience Platform, and partners can build their own products and technologies for their custom needs. 
+Experience Platform is built on open APIs, exposing the full functionality of the system to developers using familiar tools so that customers can integrate their enterprise solutions. Experience Platform also allows partners to build their own products and technologies for their needs. 
 
 <p style="text-align: center;"><img src="image001.png"  /></p> 
 
-This power and flexibility makes the Platform unique in the market, and gives partners and customers an unparalleled foundation for the types of transformative innovations in customer experience that drive what we call The Experience Business: exceeding customers’ expectations with continually improved experiences, drawn from a 360-degree view of the customer and awareness of the user’s context and preferences, that surprise and delight the customer, cement customer loyalty, and drive business value. 
+This power and flexibility makes Experience Platform unique in the market. It gives partners, customers, and a community of developers a foundation for the types of transformative innovations in customer experience that drive an Experience Business&mdash;exceeding customers’ expectations with continually improved experiences drawn from a 360-degree view of the customer and their context and preferences. 
 
 With the Platform, you get an open system that supports the experience innovations you want to create with a data foundation, machine intelligence, and value-added services that are all open to be controlled, customized, and integrated with as you see fit.
 
@@ -23,7 +23,7 @@ Experience Platform has been designed and built from the ground up using the pri
 
 Guided by these principles, as you build Platform services and solutions, you start by looking first at the API and then architecting the platform from the ground up to support developer access to low-level CRUD operations. Once the API is built, the user interface is constructed by making REST calls to the API.
 
-This means that the API&mdash;being built first&mdash;allows not only Adobe developers but ANY developer the same access to the core logic of Experience Platform services and solutions using the same API calls. This principal is not limited to REST-based APIs. It also applies to other interfaces of the Experience Platform like message-based interfaces. Message-based, event-driven interfaces allow developers to build responsive, reactive applications.
+This means that the API&mdash;being built first&mdash;allows not only Adobe developers, but a community of developers using the core logic of Experience Platform services and solutions employing the same API calls. This principle is not limited to REST-based APIs. It also applies to other interfaces of Experience Platform like message-based interfaces and event-driven interfaces allow developers to build responsive, reactive applications.
  
 Because the platform is built API-first, it opens up a lot of integration opportunities with partners:
 
@@ -32,7 +32,7 @@ Because the platform is built API-first, it opens up a lot of integration opport
 
 2.	Developers who want to build custom UIs to support specific task-driven use cases. 
 
-The openness and breadth offered by the platform’s open API lets you construct a solution that integrates with Experience Platform or other Adobe solutions and offer almost any functionality you can conceive.
+The openness and breadth offered by the platform’s open API lets you construct a solution that integrates with Experience Platform or other Adobe solutions.
 
 ## Experience Platform Overview
 Experience Platform consists of multiple components. This multilayer model provides a complete infrastructure on which to build your own custom solutions: 
@@ -41,7 +41,6 @@ Experience Platform consists of multiple components. This multilayer model provi
 * Machine Learning Framework
 * Unified Profile Service
 
-![Alt Image Text](acp_overview.png "Overview")
 
 ### Data Foundation
 The Data Foundation layer gives developers the power to manage standard schemas, ingest data, manage datasets, apply DULE metadata, and access data. To make the best use of these capabilities, it’s vital that customer data be imported into Experience Platform in a standardized format that enables it to interpret the data and apply analysis. Adobe’s format for this purpose is the Experience Data Model (XDM), a format for representing the data for the Experience Business with your customer data in standardized fields. 
@@ -52,7 +51,7 @@ Using XDM, you can create a Customer Data Model representing all your customer d
 The Machine Learning Framework offers predefined machine learning models you can leverage in your own solutions, as well as the capability to develop your own custom models. Through feature development, transforming your data into predefined schemas for machine learning, you can extract valuable insights from customer behavior, allowing you to understand their interactions and intentions. In combination with other attributes of the consumer’s profile, it creates a 360-degree view of the customer in the Unified Profile Services.
 
 ### Unified Profile Services
-This includes the Unified Profile, Identity, and Edge Services.  Platform services work together to enable you to build and activate audiences based on a complete profile of your customers’ attributes and behavior:
+This includes the Unified Profile, Identity, and Edge Services. Platform services work together to enable you to build and activate audiences based on a complete profile of your customers’ attributes and behavior:
 
 * **Unified Profile** serves as a central data store for your customers’ attributes and interactions, deciphering the customer’s behavior across multiple touchpoints and enabling Adobe solutions and your integrations to leverage the complete picture of the customer, which  can be used to identify interests and preferences, predict behavior, and  deliver personalized experiences.
 
@@ -95,10 +94,10 @@ Using the Data Access API in conjunction with the Catalog Service API, developer
 ### Unified Profile Service
 The Unified Profile Service is the central service to activate the audiences that are developed within Experience Platform. As multiple datasets come into the platform and are transformed, eventually they will be consumed by the Profile service. Based on the Customer Data Model (consisting of schemas in XDM and third-party schemas), the service creates an aggregated 360-degree view of the consumer and allows you to inspect individual consumer profile attributes. 
 
-Using segment definitions, the profile can return an audience that meets the segment criteria by stitching together the multiple data points coming from multiple datasets. The Unified Profile Service also supports individual point lookups to understand the preferences of a consumer and deliver the right experience. The Unified Profile Service will be consumed by Adobe Solutions, but is also available for integration into third-party activation solutions.
+Using segment definitions, the profile can return an audience that meets the segment criteria by stitching together the multiple data points coming from multiple datasets. Unified Profile Service also supports individual point lookups to understand the preferences of a consumer and deliver the right experience. Unified Profile Service will be consumed by Adobe Solutions, but is also available for integration into third-party activation solutions.
 
 ## An example use case – Interactive Voice Response system
-For integrators, the Experience Platform APIs provide all capabilities of the platform that are offered through the user interface, but now with the ability to create customer workflows and automated data flows. As an integrator, you periodically check the status of datasets, set up new data ingestion procedures, and integrate your own audience activation solution with the Unified Profile.
+For integrators, Experience Platform APIs provide all capabilities of the platform that are offered through the user interface, but now with the ability to create customer workflows and automated data flows. As an integrator, you periodically check the status of datasets, set up new data ingestion procedures, and integrate your own audience activation solution with Unified Profile Service.
 
 To highlight a potential use case, consider the world of Interactive Voice Response (IVR) systems and Call Center management software. The supplier can use the platform APIs to ingest historical information of the customer’s call center activity in the Experience Data Lake.
 
