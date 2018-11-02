@@ -1,6 +1,5 @@
 
 # GDPR on Adobe Experience Platform Overview
-===================
 
 Adobe Experience Platform GDPR Service provides a method to submit both access and delete requests by the data controller, in an effort to comply with the General Data Protection Regulation on the Adobe Experience Platform.
 
