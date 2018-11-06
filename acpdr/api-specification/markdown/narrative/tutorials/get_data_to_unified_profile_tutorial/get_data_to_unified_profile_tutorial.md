@@ -1,22 +1,22 @@
 # Tutorial - Get Data to Unified Profile
 
-## 1. Objective
+## Objective
 (explain what this document will be about and what topics will be covered,
 get data to unified profile)
 
 ---
 
-## 2. Get Data to Unified Profile
+## Get Data to Unified Profile
 
-### 2.1. Prerequisites
-Follow this [Tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
+### Prerequisites
+Follow this [tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
 
 Once we have the following values we can move on to the next section:
 * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-* `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
-* `{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
+* `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
-### 2.2. Create Dataset
+### Create Dataset
 Before we can get data into the unified profile we will need to create our dataset our data will conform to. For this tutorial we start with creating a dataset with `Profile` schema. Other schemas one could use can be found in the [XDM registry](https://github.com/adobe/xdm/blob/master/docs/reference/README.md).
 
 #### Request
@@ -33,21 +33,20 @@ curl -X POST "https://platform.adobe.io/data/foundation/catalog/dataSets?request
   -d "{JSON_PAYLOAD}"
 ```
 
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Cloud Platform integration.
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-`{API_KEY}`: Your specific API key value found in your unique Adobe Cloud Platform integration.
-
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 `{JSON_PAYLOAD}`: Data set to be posted. The example we used in our tutorial is here:
 
 ```JSON
 {
-      "name":"ProfileDataset",
-      "schema":"@/xdms/model/Profile",
-      "fileDescription": {
+    "name":"ProfileDataset",
+    "schema":"@/xdms/model/Profile",
+    "fileDescription": {
         "persisted": true,
         "containerFormat": "parquet",
         "format": "parquet"
-      }
+    }
 }
 ```
 
@@ -60,7 +59,7 @@ For the file format, we chose [parquet](https://parquet.apache.org/documentation
 
 `{DATASET_ID}`: The ID of the dataset that was created. We will use this ID when creating a batch in the next section.
 
-### 2.3. Enable a Dataset for Unified Profile Service
+### Enable a Dataset for Unified Profile Service
 
 Now with the dataset containing the `Profile` XDM schema, we will update the dataset to add a `Tag` attribute named `unifiedProfile`. This tag configures the specific dataset to be ingested into the Unified Profile Service. Note that any dataset conforming to XDM can be ingested as either Profile or ExperienceEvent type.
 
@@ -71,7 +70,7 @@ To access
 If the Profile had ID for 3 different ID they would be named customerId under that key. You could say Profiles in the dataset then use the ID for mcId as the primary key by specifying customerIds.mcId.id.
 
 #### Request
-```
+```http
 PATCH /dataSets/{id}
 ```
 
@@ -82,11 +81,11 @@ curl -X PATCH "https://platform-int.adobe.io/data/foundation/catalog/dataSets/%7
   -H "x-gw-ims-org-id: {IMS_ORG}" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "content-type: application/json" \
-  -d "{ \
-        "tags\" : { \
-          "unifiedProfile\": [\ "enabled:true\", \"identityField:endUserIds.mcId.id\ "] \
+  -d '{
+        "tags": { 
+          "unifiedProfile": ["enabled:true", "identityField:endUserIds.mcId.id"] 
         }
-      }"
+      }'
 ```
 
 #### Response
@@ -123,9 +122,9 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
 -H "x-api-key : {API_KEY}"
 -d '{"datasetId":"{DATASET_ID}"}'
 ```
-**IMS_ORG:** Your IMS org credentials found in your unique Adobe Cloud Platform integration.
-**ACCESS_TOKEN:** Token provided after authentication.
-**API_KEY:** Your specific API key value found in your unique Adobe Cloud Platform integration.
+**IMS_ORG:** Your IMS org credentials found in your unique Adobe Experience Platform integration.  
+**ACCESS_TOKEN:** Token provided after authentication.  
+**API_KEY:** Your specific API key value found in your unique Adobe Experience Platform integration.  
 **DATASET_ID:** The ID of the dataset to upload the files into.
 
 #### Response
@@ -148,8 +147,8 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
     "updatedUser": "string"
 }
 ```
-**BATCH_ID:** The ID of the batch that was just created (used in subsequent requests).
-**IMS_ORG:** Your IMS org specified in the request.
+**BATCH_ID:** The ID of the batch that was just created (used in subsequent requests).  
+**IMS_ORG:** Your IMS org specified in the request.  
 **DATASET_ID:** The ID of the dataset to upload the files into.
 
 After successfully creating a new batch for uploading, files can be then be uploaded to a specific dataset.
@@ -169,12 +168,12 @@ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}
 -H "x-api-key : {API_KEY}" \
 --data-binary "@{FILE_PATH_AND_NAME}.parquet"
 ```
-**BATCH_ID:** The ID of the batch to write files to.
-**DATASET_ID:** The ID of the dataset to upload the files into.
-**FILE_NAME:** Name of file as it will be seen in the dataset.
-**IMS_ORG:** Your IMS org credentials found in your unique Adobe Cloud Platform integration.
-**ACCESS_TOKEN:** Token provided after authentication.
-**FILE_PATH_AND_NAME:** The path and filename of the file to be uploaded into the dataset.
+**BATCH_ID:** The ID of the batch to write files to.  
+**DATASET_ID:** The ID of the dataset to upload the files into.  
+**FILE_NAME:** Name of file as it will be seen in the dataset.  
+**IMS_ORG:** Your IMS org credentials found in your unique Adobe Experience Platform integration.  
+**ACCESS_TOKEN:** Token provided after authentication.  
+**FILE_PATH_AND_NAME:** The path and filename of the file to be uploaded into the dataset.  
 
 #### Response
 ```JSON
