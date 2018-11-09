@@ -3,64 +3,83 @@ swagger: "2.0"
 info:
   version: "1.0.0"
   title: "Data Access API"
-  description: >- 
-    Data Access API for Adobe Experience Platform data access and egress
+  description: >-
+    The Data Access API provides users with the capability for data access and egress on Adobe Experience Platform.
+
+    This includes, but not limited to, the following operations:
+
+      * Access and download Dataset files under a batch
+      * Retrieve HEADER information regarding files
+      * Parallel / Resumable downloads using HTTP Range headers
+      * Pagination Support for Directory listings
+
+    An in depth technical overview of the Data Access API can be found here:
+      * https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md
+
+    Tutorial for getting started with the Data Access API:
+      * https://www.adobe.io/apis/cloudplatform/dataservices/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md
 
     Notes:
+          * PLATFORM Gateway URL: https://platform.adobe.io/
+          * Base path for this API: /data/foundation/export
+          * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
 
-    * All requests with a payload in the request body (i.e., POST, PUT, and
-    PATCH calls) must include the header 'Content-Type: application/json'.
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
+
+externalDocs:
+  description: Find out more about the Data Access API
+  url: https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md
 
 host: "platform.adobe.io"
 basePath: "/data/foundation/export"
 
 tags:
-  - name: "dataAccess"
-    description: "API's for data access on Platform"
+- name: "dataAccess"
+  description: "APIs for data access and egress on Adobe Experience Platform"
 
 paths:
   /files/{dataSetFileId}:
     head:
       security:
-        - Bearer: []
+      - Bearer: []
       operationId: "get-dataset-file-operation"
       tags:
-        - dataAccess
-      summary: "Gets headers in response signifying what is allowed on this file"
-      description: "Gets headers in response signifying what is allowed on this file"
+      - dataAccess
+      summary: "Get headers regarding a file"
+      description: "Retrieves headers in response with a file's metadata. The response header will indicate information regarding the specified file."
       parameters:
-       - name: "x-gw-ims-org-id"
-         type: "string"
-         in: "header"
-         required: true
-         description: "Ims Org Identifier"
-       - name: "path"
-         type: "string"
-         description: "Name of file under partition identified by File Identifier"
-         in: "query"
-         required: true
-       - name: "dataSetFileId"
-         in: "path"
-         required: true
-         description: "File Identifier"
-         type: "string"
-       - name: "x-api-key"
-         type: "string"
-         in: "header"
-         required: true
-         description: "API key"
+      - name: "x-gw-ims-org-id"
+        type: "string"
+        in: "header"
+        required: true
+        description: "Organization ID"
+      - name: "path"
+        type: "string"
+        description: "Full file name of file under partition identified by File Identifier. E.g, profiles.csv"
+        in: "query"
+        required: true
+      - name: "dataSetFileId"
+        in: "path"
+        required: true
+        description: "File Identifier"
+        type: "string"
+      - name: "x-api-key"
+        type: "string"
+        in: "header"
+        required: true
+        description: "API Access key"
       responses:
         200:
           description: "OK"
           headers:
             Content-type:
-              description: "application/json"
+              description: "Content type of returned file  (E.g, application/csv)"
               type: "string"
             Accept-Ranges:
-              description: "Unit of Range E.g, bytes"
+              description: "Unit of Range (E.g, bytes)"
               type: "string"
             Content-Length:
-              description: "Size of payload (bytes) in the response"
+              description: "Size of the file (bytes)"
               type: "integer"
         401:
           description: "Unauthorized"
@@ -70,51 +89,52 @@ paths:
           description: "Internal Server Error"
     get:
       security:
-        - Bearer: []
+      - Bearer: []
       operationId: "get-dataset-file-data"
       tags:
-        - dataAccess
-      summary: "Download a file"
-      description: "Returns complete or chunked data for a particular file."
+      - dataAccess
+      summary: "Access / Download a file"
+      description: |
+        Returns either a complete file, or a directory of chunked data that make up the file. The response contains a data array that may contain a single entry, or a list of files belonging to that directory.
       parameters:
-       - name: "x-gw-ims-org-id"
-         type: "string"
-         in: "header"
-         required: true
-         description: "Ims Org Identifier"
-       - name: "path"
-         type: "string"
-         description: "Name of file under partition identified by File Identifier. The file would be downloaded if path is provided. Otherwise, it lists all the files under the direcotry."
-         in: "query"
-         required: false
-       - name: "dataSetFileId"
-         in: "path"
-         required: true
-         description: "File Identifier"
-         type: "string"
-       - name: "x-api-key"
-         type: "string"
-         in: "header"
-         required: true
-         description: "API key"
-       - name: "Range"
-         in: "header"
-         type: "string"
-         required: false
-         description: "Range of bytes requested. E.g, Range: bytes=0-100000"
-       - name: "start"
-         in: "query"
-         required: false
-         type: "string"
-         description: "Paging parameter to specify start of new page. E.g, start=fileName.csv"
-       - name: "limit"
-         in: "query"
-         required: false
-         type: "integer"
-         description: "Paging parameter to specify number of results per page. E.g, limit=10"
+      - name: "x-gw-ims-org-id"
+        type: "string"
+        in: "header"
+        required: true
+        description: "Organization ID"
+      - name: "path"
+        type: "string"
+        description: "Full file name of file under partition identified by File Identifier. The contents of the file would be downloaded if this parameter is provided. E.g, profiles.csv"
+        in: "query"
+        required: false
+      - name: "dataSetFileId"
+        in: "path"
+        required: true
+        description: "File Identifier"
+        type: "string"
+      - name: "x-api-key"
+        type: "string"
+        in: "header"
+        required: true
+        description: "API Access key"
+      - name: "Range"
+        in: "header"
+        type: "string"
+        required: false
+        description: "Range of bytes requested. E.g, Range: bytes=0-100000"
+      - name: "start"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Paging parameter to specify start of new page. E.g, start=fileName.csv"
+      - name: "limit"
+        in: "query"
+        required: false
+        type: "integer"
+        description: "Paging parameter to specify number of results per page. E.g, limit=10"
       produces:
-        - application/json
-        - application/octet-stream
+      - application/json
+      - application/octet-stream
       responses:
         200:
           description: "OK"
@@ -141,20 +161,20 @@ paths:
     get:
       operationId: "get-health-detailed"
       tags:
-        - dataAccess
-      summary: "Perform a health check for dependent services"
-      description: "Returns status of each dependent service signifying its health"
+      - dataAccess
+      summary: "Perform health check on dependent services"
+      description: "Returns health status for all dependent services"
       parameters:
-       - name: "x-gw-ims-org-id"
-         type: "string"
-         in: "header"
-         required: true
-         description: "Ims Org Identifier"
-       - name: "x-api-key"
-         type: "string"
-         in: "header"
-         required: true
-         description: "API key"
+      - name: "x-gw-ims-org-id"
+        type: "string"
+        in: "header"
+        required: true
+        description: "Organization ID"
+      - name: "x-api-key"
+        type: "string"
+        in: "header"
+        required: true
+        description: "API Access key"
       responses:
         200:
           description: "OK"
@@ -166,40 +186,40 @@ paths:
   /batches/{batchId}/files:
     get:
       security:
-        - Bearer: []
+      - Bearer: []
       operationId: "get-dataset-files-by-batchId"
       tags:
-        - dataAccess
-      summary: "Get dataset files."
-      description: "List all Dataset files under a batch."
+      - dataAccess
+      summary: "Get dataset files under a batch."
+      description: "List all dataset files under a batch."
       parameters:
-       - name: "x-gw-ims-org-id"
-         type: "string"
-         in: "header"
-         required: true
-         description: "Ims Org Identifier"
-       - name: "batchId"
-         in: "path"
-         required: true
-         description: "Batch Identifier"
-         type: "string"
-       - name: "x-api-key"
-         type: "string"
-         in: "header"
-         required: true
-         description: "API key"
-       - name: "start"
-         in: "query"
-         required: false
-         type: "string"
-         description: "Paging parameter to specify start of new page. E.g, start=1"
-       - name: "limit"
-         in: "query"
-         required: false
-         type: "string"
-         description: "Paging parameter to specify number of results per page. E.g, limit=10"
+      - name: "x-gw-ims-org-id"
+        type: "string"
+        in: "header"
+        required: true
+        description: "Organization ID"
+      - name: "batchId"
+        in: "path"
+        required: true
+        description: "Batch ID"
+        type: "string"
+      - name: "x-api-key"
+        type: "string"
+        in: "header"
+        required: true
+        description: "API Access key"
+      - name: "start"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Paging parameter to specify start of new page. E.g, start=1"
+      - name: "limit"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Paging parameter to specify number of results per page. E.g, limit=10"
       produces:
-        - application/json
+      - application/json
       responses:
         200:
           description: "OK"
