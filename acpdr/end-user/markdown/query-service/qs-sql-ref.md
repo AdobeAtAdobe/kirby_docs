@@ -3,4 +3,5 @@ Experience Query Service provides the ability to use standard ANSI SQL for SELEC
 
 * [SQL Syntax](qs-sql-syntax.md)
 * [ADF Functions](qs-sql-functions.md)
+* [Spark SQL, Built-in Functions](qs-sql-spark-functions.md)
 * [SQL Metadata](qs-sql-metadata.md)
