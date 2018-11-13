@@ -2,7 +2,7 @@
 
 ## Overview
 
-Retail Sales recipe enables you to predict sales forecast for all stores seeded for a certain time period. With an accurate prediction model, the retailer would be able to find the relationship between demand and pricing policies and make optimized pricing decisions to maximize sales and revenue.
+The Retail Sales recipe enables you to predict sales forecast for all stores seeded for a certain time period. With an accurate prediction model, the retailer would be able to find the relationship between demand and pricing policies and make optimized pricing decisions to maximize sales and revenue.
 
 The following document will answer questions such as:
 * Who is this recipe built for?
@@ -21,7 +21,7 @@ The Retail Sales Forecasting recipe uses machine learning to predict sale trends
 
 You can get started by following the following [tutorial](https://www.adobe.io/apis/cloudplatform/dataservices/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html#!api-specification/markdown/narrative/tutorials/package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md#building-python-retail-intelligent-service).
 
-This tutorial will help you get started by going through how to package the Retail Sales Recipe with Docker and import it to the Adobe Experience Platform Data Science Workspace.
+This tutorial will help you get started by going through how to package the Retail Sales Recipe with Docker and import it into the Data Science Workspace in Adobe Experience Platform.
 
 ## Data Schema
 

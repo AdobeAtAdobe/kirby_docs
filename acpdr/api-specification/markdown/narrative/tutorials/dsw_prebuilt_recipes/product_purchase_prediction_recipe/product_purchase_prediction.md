@@ -2,7 +2,7 @@
 
 ## Overview
 
-Product Purchase Prediction recipe enables you to predict the likelihood of a certain type of customer purchase event - a product purchase, for instance.
+The Product Purchase Prediction recipe enables you to predict the likelihood of a certain type of customer purchase event - a product purchase, for instance.
 
 ![](./images/ppp_bigpicture.png)
 
@@ -17,11 +17,11 @@ Your brand seeks to boost quarterly sales for your product line through effectiv
 
 ## What does this recipe do?
 
-The Product Purchase Prediction recipe utilizes machine learning to predict customer purchase behavior. It does this by applying a customized random forest classifier and a two-tiered experience data model to predict the probability of a purchase event. The model utilizes input data incorporating customer profile information and past purchase history and defaults to pre-determined configuration parameters determined by our Data Scientists to enhance predictive accuracy. 
+The Product Purchase Prediction recipe utilizes machine learning to predict customer purchase behavior. It does this by applying a customized random forest classifier and a two-tiered Experience Data Model (XDM) to predict the probability of a purchase event. The model utilizes input data incorporating customer profile information and past purchase history and defaults to pre-determined configuration parameters determined by our Data Scientists to enhance predictive accuracy. 
 
 ## Data Schema
 
-This recipe uses an [XDM schema](../../technical_overview/schema_registry/standard_schemas/acp_standard_schemas.md) as the dataset. The schema used is the **ProductPrediction** dataset shown below.
+This recipe uses [XDM schema](../../technical_overview/schema_registry/standard_schemas/acp_standard_schemas.md) as the dataset. The schema used is the **ProductPrediction** dataset shown below.
 
 Field Name | Type
 --- | ---
@@ -46,6 +46,6 @@ totalPrice2 | Number
 
 ## Algorithm
 
-First, the training dataset in the **ProductPrediction** schema is loaded. From here, the model is trained using a [random forest classifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html). Random forest classifier is a type of ensembled algorithm which refers to an algorithm that combines multiple algorithms to obtain improved predictive performance. The idea behind the algorithm is that random forest classifier builds multiple decision trees and merges them to create a more accurate and stable prediction.
+First, the training dataset in the **ProductPrediction** schema is loaded. From here, the model is trained using a [random forest classifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html). Random forest classifier is a type of ensembled algorithm which refers to an algorithm that combines multiple algorithms to obtain improved predictive performance. The idea behind the algorithm is that the random forest classifier builds multiple decision trees and merges them to create a more accurate and stable prediction.
 
 This process starts with creating a set of decision trees that randomly selects subsets of training data. Afterwards, the results of each decision tree is averaged.
