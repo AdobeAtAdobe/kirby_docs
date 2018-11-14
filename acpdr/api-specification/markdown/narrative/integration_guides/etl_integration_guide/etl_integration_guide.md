@@ -134,6 +134,7 @@ The workflow diagram below provides the high-level overview of integration of Ad
 > **Note**: Partners will also have to specify a time stamp filter marking the date to ingest data and offset - what should be the window for which data is to be read. ETL tool should support taking these two parameters in this or another relevant UX. On the Adobe Experience Platform side these parameters will be mapped to either available dates (if present) or captured date present in batch object of dataset.
 
 #### curl to fetch datasets
+Datasets can be pulled using pagination APIs with the help of query parameters like 'start' and 'limit'. Please refer [Catalog Datasets API ](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html#/default/get_data_sets) for detailed information.
 ```http
 $ curl -X GET
 "https://platform.adobe.io/data/foundation/catalog/dataSets" \
@@ -190,6 +191,7 @@ $ curl -X GET
     }
 }
 ```
+Please note "fields" in the above Datasets response is in process of deprecation.
 
 5.  The *Schema of a dataset* can be found at following places
 ##### i. schema
