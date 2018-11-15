@@ -191,7 +191,7 @@ $ curl -X GET
     }
 }
 ```
-Please note "fields" in the above Datasets response is in process of deprecation.
+Please note: "fields" have been deprecated and implementation should look for the "schema" referenced by dataset.
 
 5.  The *Schema of a dataset* can be found at following places
 ##### i. schema
