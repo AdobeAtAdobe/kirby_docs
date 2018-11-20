@@ -31,32 +31,32 @@
 			"pages": [
 				{
 					"pages": [],
-					"path": "https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html#!acpdr/swagger-specs/profile-config-api.yaml",
+					"path": "acpdr/swagger-specs/profile-config-api.yaml",
 					"title": "Unified Profile Configuration API"
 				},
 				{
 					"pages": [],
-					"path": "https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html#!acpdr/swagger-specs/profile-access.yaml",
+					"path": "acpdr/swagger-specs/profile-access.yaml",
 					"title": "Unified Profile Access API"
 				},
 				{
 					"pages": [],
-					"path": "https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html#!acpdr/swagger-specs/profile-export-api.yaml",
+					"path": "acpdr/swagger-specs/profile-export-api.yaml",
 					"title": "Unified Profile Export API"
 				},
 				{
 					"pages": [],
-					"path": "https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html#!acpdr/swagger-specs/profile-segment-definitions-api.yaml",
+					"path": "acpdr/swagger-specs/profile-segment-definitions-api.yaml",
 					"title": "Unified Profile Segment Definitions API"
 				},
 				{
 					"pages": [],
-					"path": "https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html#!acpdr/swagger-specs/profile-segment-jobs-api.yaml",
+					"path": "acpdr/swagger-specs/profile-segment-jobs-api.yaml",
 					"title": "Unified Profile Segment Jobs API"
 				},
 				{
 					"pages": [],
-					"path": "https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html#!acpdr/swagger-specs/profile-preview-api.yaml",
+					"path": "acpdr/swagger-specs/profile-preview-api.yaml",
 					"title": "Unified Profile Preview API"
 				}
 			]
