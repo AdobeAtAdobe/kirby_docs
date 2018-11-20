@@ -1,277 +1,282 @@
 swagger: '2.0'
 info:
-  description: Access API for Experience Platform Unified Profile
-  version: 0.0.1
-  title: Experience Platform Unified Profile
-  termsOfService: ''
-host: platform.adobe.io
-basePath: /data/core/ups/models
+
+  description: >- 
+    Experience Platform Unified Profile Access API
+    
+    
+    Work with XDM Model objects individually on Adobe Experience Platform using Unified Profile Access API.
+    
+
+    For more information, see [Unified Profile Overview](https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
+    
+
+    Notes:
+      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * Base path for this API: /data/core/ups/access
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+
+  version: 18.8.1
+  title: Unified Profile Access API
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
+host: "platform.adobe.io"
+basePath: /data/core/ups/access
+
 tags:
-  - name: models
-  - name: health-detailed
+  - name: ingest
+  - name: lookup
+  - name: delete
   - name: health
-  - name: ping
-  - name: version
 paths:
-  '/{model}':
+  '/entities':
     put:
       tags:
-        - models
-      summary: Puts XDM Model objects into the Unified Profile Store.
-      description: ''
-      operationId: putModelObjectRoute
+        - ingest
+      summary: Put single XDM Model objects into Unified Profile Store.
       consumes:
         - application/json
       produces:
         - application/json
       parameters:
-        - name: model
-          in: path
-          description: Name of XDM model. Case in-sensitive.
-          required: true
-          type: string
-          x-example: profile
         - name: x-gw-ims-org-id
           in: header
-          description: IMS Client Id
+          description: IMS Organization ID
           required: true
           type: string
-          x-example: 123@AdobeOrg
+          x-example: 1BD6382559DF0C130A49422D@AdobeOrg
         - in: body
           name: body
-          description: List of XDM Model objects to be put. Each should be in Json format.
+          description: XDM Model objects to be ingested. Each object should be in JSON format.
           required: true
+          schema:
+            type: object
+            $ref: '#/definitions/PUTRequestBodyEntity'
+      responses:
+        '202':
+          description: Accepted.
           schema:
             type: array
             items:
-              $ref: '#/definitions/ModelObjectEntity'
-      responses:
-        '200':
-          description: Objects created successfully.
-        '403':
-          description: You are forbidden to make this request.
+              type: string
+              example:  
+        '400':
+          description: Bad Request.
+          schema:
+            $ref: '#/definitions/ResponseErrorContext'
         '422':
-          description: Failed to create the objects.
+          description: Failed to create some XDM Model objects.
           schema:
-            $ref: '#/definitions/FailedModelObjectRecord'
-        '503':
-          description: Service unavailable
-  '/{model}/{recordId}':
+            type: array
+            items:
+              $ref: '#/definitions/PutXDMObjectsErrorResponseEntityItem'
+        '429':
+          description: Too many requests. Please try again later.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PutXDMObjectsErrorResponseEntityItem'
     get:
       tags:
-        - models
-      summary: >-
-        Gets a specified KeyValue XDM Model Object and retrieves all its
-        properties.
-      description: ''
-      operationId: getModelObjectRoute
-      consumes:
-        - application/json
+        - lookup
+      summary: Lookup a merged key-value XDM Model Object or related time-series XDM Model Objects by XID or ID:NS.
       produces:
         - application/json
       parameters:
-        - name: model
-          in: path
-          description: 'Name of XDM model, case in-sensitive.'
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
           required: true
           type: string
-          x-example: profile
-        - name: recordId
-          in: path
-          description: >-
-            Unique identifier for the model object. In case of Profile XDM
-            Model, {recordId} is expected to be in XID format
-          required: true
+          x-example: 1BD6382559DF0C130A49422D@AdobeOrg
+        - name: schema.name
+          in: query
+          description: XED Schema name.
           type: string
-          x-example: '252132804'
+          required: true
+          x-example: _xdm.context.profile
+        - name: relatedSchema.name
+          in: query
+          description: XED Schema name that the experience event is associated with. Used when looking up experience events.
+          type: string
+          required: false
+          x-example: _xdm.context.profile   
+        - name: entityId
+          in: query
+          description: 'ID of the entity. For Native XID lookup, use `entityId=<XID>` and leave `entityIdNS` absent; For Id:NS lookup, use both `entityId` and `entityIdNS` fields.'
+          type: string
+          required: false
+          x-example: GtghAUFkdGVzdDE
+        - name: entityIdNS
+          in: query
+          description: 'Identity Namespace code. Used for id:ns lookup. If this field is used, `entityId` cannot be empty.'
+          type: string
+          required: false
+          x-example: UPS1
+        - name: relatedEntityId
+          in: query
+          description: 'ID of the entity that the experience event is associated with. Used when looking up experience events. For Native XID lookup, use `relatedEntityId=<XID>` and leave `relatedEntityIdNS` absent; For Id:NS lookup, use both `relatedEntityId` and `relatedEntityIdNS` fields.'
+          type: string
+          required: false
+          x-example: GtghAUFkdGVzdDE
+        - name: relatedEntityIdNS
+          in: query
+          description: 'Identity Namespace code of the related entity id of experience event. Used when looking up experience events.If this field is used, `entityId` cannot be empty.'
+          type: string
+          required: false
+          x-example: UPS1
         - name: fields
           in: query
-          description: >-
-            Fields for the model object. By default, all fields will be fetched.
-            Separated by comma.
+          description: Fields for the model object. By default, all fields will be fetched. Separated by comma.
           required: false
           type: string
-          x-example: 'person.firstName,person.lastName'
-        - name: graphType
+          x-example: person.name.firstName,person.name.lastName
+        - name: mergePolicyId
           in: query
-          description: >-
-            Graph-type (output type) you want to get the cluster from. Only
-            'coop' is supported for now
+          description: 'Id of the mergePolicy. MergePolicy includes information of Identity stitching and key-value xdm object merging. If not present, default merge policy will be used.'
           required: false
           type: string
-          x-example: coop
-        - name: x-gw-ims-org-id
-          in: header
-          description: IMS Client Id
-          required: true
-          type: string
-          x-example: southwest@adobe.com
-      responses:
-        '200':
-          description: 'XDM model objects of given {recordId} successfully returned. '
-          schema:
-            $ref: '#/definitions/ModelObjectEntity'
-        '403':
-          description: You are forbidden to make this request.
-        '404':
-          description: '{model} with recordId {recordId} does not exist.'
-        '503':
-          description: Service unavailable
-    delete:
-      tags:
-        - models
-      summary: Deletes a specified XDM Model Object.
-      description: ''
-      operationId: deleteModelObjectRoute
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - name: model
-          in: path
-          description: 'Name of XDM model, case in-sensitive.'
-          required: true
-          type: string
-          x-example: profile
-        - name: recordId
-          in: path
-          description: >-
-            Unique identifier for the model object. In case of Profile XDM
-            Model, {recordId} is expected to be in XID format
-          required: true
-          type: string
-          x-example: '252132804'
-        - name: x-gw-ims-org-id
-          in: header
-          description: IMS Client Id
-          required: true
-          type: string
-          x-example: southwest@adobe.com
-      responses:
-        '200':
-          description: successful operation
-          schema:
-            $ref: >-
-              #/definitions/Function1DataAccessServiceFunction1RequestContextFutureRouteResult
-        '204':
-          description: The delete operation was successful.
-        '403':
-          description: You are forbidden to make this request.
-        '404':
-          description: '{model} with recordId {recordId} does not exist.'
-        '503':
-          description: Service unavailable
-  '/{model}/{recordId}/ExperienceEvent':
-    get:
-      tags:
-        - models
-      summary: >-
-        Gets a specified XDM Model Object and retrieves all its ExperienceEvent
-        properties.
-      description: ''
-      operationId: getModelTimeSeriesObjectRoute
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - name: model
-          in: path
-          description: 'Name of XDM model, case in-sensitive.'
-          required: true
-          type: string
-          x-example: profile
-        - name: recordId
-          in: path
-          description: >-
-            Unique identifier for the model object. In case of Profile XDM
-            Model, {recordId} is expected to be in XID format
-          required: true
-          type: string
-          x-example: '252132804'
-        - name: x-gw-ims-org-id
-          in: header
-          description: IMS Client Id
-          required: true
-          type: string
-          x-example: southwest@adobe.com
-        - name: fields
-          in: query
-          description: >-
-            Selective fields to be fetched. Separated by comma. By default all
-            fields. field=* means all fields.
-          required: false
-          type: string
-          x-example: 'field1.field2,field3'
+          x-example: 'example-mergePolicy'
         - name: startTime
           in: query
-          description: >-
-            Epoch time of start of the time range query. Included. If not
-            specified, will fetch from the beginning.
+          description: 'Start time of Time range filter for time-series objects. Should be at millisecond granularity. Included. Default: From beginning.'
           required: false
-          type: string
-          x-example: '1517019315'
+          type: number
         - name: endTime
           in: query
-          description: >-
-            Epoch time of end of the time range query. Excluded. If not
-            specified, will fetch till the end.
+          description: 'End time of Time range filter for time-series objects. Should be at millisecond granularity. Excluded. Default: To the end.'
           required: false
-          type: string
-          x-example: '1517019396'
-        - name: graphType
-          in: query
-          description: >-
-            Graph-type (output type) you want to get the cluster from. Only
-            'coop' is supported for now
-          required: false
-          type: string
-          x-example: coop
-        - name: start
-          in: query
-          description: >-
-            Ordering value of first record in result. Dictates the ordering
-            value of first record in desired page. Ordering field is a
-            combination of schemaRef Index and the ordering field within a
-            schemaRef (in reverse order).
-          required: false
-          type: string
-          x-example: start=1-12345678
+          type: number
         - name: limit
           in: query
-          description: How many entries should be present in a page. 1000 if not specified.
+          description: 'Number of records to return from the result. Only for time-series objects. Default: 1000'
           required: false
-          type: integer
-          x-example: 100
+          type: number
       responses:
         '200':
-          description: 'XDM model objects of given {recordId} successfully returned. '
+          description: XDM Model object(s) successfully returned.
           schema:
-            $ref: '#/definitions/TimeSeriesObjectResponseEntity'
-        '403':
-          description: You are forbidden to make this request.
+            $ref: '#/definitions/XDMObjectEntity'
+        '400':
+          description: Bad Request.
+          schema:
+            $ref: '#/definitions/ResponseErrorContext'
         '404':
-          description: '{model} with recordId {recordId} does not exist.'
-        '503':
-          description: Service unavailable
-  /health-detailed:
-    get:
+          description: XDM Model objects not found.
+          schema:
+            $ref: '#/definitions/NotFoundError'
+        '429':
+          description: Too many requests. Please try again later.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ErrorResponseById'
+    post:
       tags:
-        - health-detailed
-      summary: Return a detailed health check message
-      description: ''
-      operationId: detailedHealthRoute
+        - lookup
+      summary: Lookup merged key-value XDM Model Objects by multiple entityIds.
+      consumes:
+        - application/json
       produces:
         - application/json
-      parameters: []
+      parameters:
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          x-example: 1BD6382559DF0C130A49422D@AdobeOrg
+        - in: body
+          name: body
+          description: XDM Model objects to be put. Each object should be in JSON format.
+          required: true
+          schema:
+            type: object
+            $ref: '#/definitions/PUTRequestBodyEntity'
       responses:
         '200':
-          description: Detailed health check succeeded
+          description: Key-value XDM Model object successfully returned.
           schema:
-            $ref: '#/definitions/HealthDetailedResponse'
-        '503':
-          description: Service is unavailable
+            $ref: '#/definitions/XDMObjectEntity'
+        '207':
+          description: Failed to get records for some recordIds.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ErrorResponseById'
+        '400':
+          description: Bad Request.
+          schema:
+            $ref: '#/definitions/ResponseErrorContext'
+        '404':
+          description: XDM Model objects not found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+        '429':
+          description: Too many requests. Please try again later.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ErrorResponseById'
+    delete:
+      tags:
+        - delete
+      summary: Delete key-value XDM Objects and related time-series XDM Model Objects by Ids.
+      produces:
+        - application/json
+      parameters:
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          x-example: 1BD6382559DF0C130A49422D@AdobeOrg
+        - name: schema.name
+          in: query
+          description: XED name of the schema
+          required: true
+          type: string
+          x-example: _xdm.context.profile
+        - name: entityId
+          in: query
+          description: 'ID of the entity. For Native XID, use `entityId=<XID>` and leave `entityIdNS` absent; For id:ns, use both `entityId` and `entityIdNS` fields.'
+          type: string
+          required: false
+          x-example: GtghAUFkdGVzdDE
+        - name: entityIdNS
+          in: query
+          description: 'Identity Namespace code. Used for id:ns. If this field is used, `entityId` cannot be empty.'
+          type: string
+          required: false
+          x-example: UPS1
+        - name: mergePolicyId
+          in: query
+          description: 'Id of the mergePolicy. MergePolicy includes information of Identity stitching and key-value xdm object merging. If not present, default merge policy will be used.'
+          required: false
+          type: string
+          x-example: 'example-mergePolicy'
+      responses:
+        '202':
+          description: Accepted
+        '207':
+          description: Failed to delete records with some recordIds.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ErrorResponseById'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ResponseErrorContext'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+        '429':
+          description: Too many requests. Please try again later.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ErrorResponseById'
   /health:
     get:
       tags:
@@ -287,100 +292,153 @@ paths:
           description: Health check succeeded
           schema:
             $ref: '#/definitions/HealthResponse'
-        '503':
-          description: Service is unavailable
-  /ping:
-    get:
-      tags:
-        - ping
-      summary: Return a ping message
-      description: ''
-      operationId: pingRoute
-      produces:
-        - application/json
-      parameters: []
-      responses:
-        '200':
-          description: Ping succeeded
-          schema:
-            $ref: '#/definitions/PingResponse'
-        '503':
-          description: Service unavailable
-  /version:
-    get:
-      tags:
-        - version
-      summary: Return version information
-      description: ''
-      operationId: versionRoute
-      produces:
-        - application/json
-      parameters: []
-      responses:
-        '200':
-          description: Version info response succeeded
-          schema:
-            $ref: '#/definitions/VersionResponse'
-        '503':
-          description: Service unavailable
 definitions:
-  ModelObjectEntity:
+  SchemaEntity:
+    type: object
+    properties:
+      name:
+        description: XED name of the schema.
+        type: string
+        example: _xdm.context.profile
+  PutXDMObjectsErrorResponseEntityItem:
+    type: object
+    properties:
+      request:
+        $ref: '#/definitions/XDMObjectEntity'
+      error:
+        $ref: '#/definitions/ResponseErrorContext'
+  NotFoundError:
+    type: object
+    properties:
+      statusCode:
+        type: string
+  ResponseErrorContext:
+    type: object
+    properties:
+      message:
+        description: Error message
+        type: string
+      cause:
+        description: Cause message
+        type: string
+      retryAfterMs:
+        description: Retry in milliseconds
+        type: string
+      statusCode:
+        description: Original status code from error
+        type: string
+  ErrorResponseById:
+    type: object
+    properties:
+      xid:
+        type: string
+      error:
+        type: object
+        $ref: '#/definitions/ResponseErrorContext'
+  IdentityEntities:
+    type: array
+    items:
+      $ref: '#/definitions/IdentityEntityItem'
+  IdentityEntityItem:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID of the entity.
+      namespace:
+        type: object
+        description: Identity namespace of the entity.
+        properties:
+          code:
+            type: string
+            description: Identity namespace code.
+  KeyValueXDMObjectResponseEntity:
     type: object
     properties:
       recordId:
-        type: string
-        description: Unique identifier of XDM Model object.
-      timestamp:
-        type: string
-        description: >-
-          The Unix timestamp (in milliseconds) captures when event has happened.
-          This is required for time series data.
-      sourceId:
-        type: string
-        description: Id of the source of the record.
+        type: object
+        description: Unique id of the XDM Object. Type can also be a string.
+        properties:
+          id:
+            type: string
+          namespace:
+            type: object
+            properties:
+              code:
+                type: string
+      sources:
+        type: array
+        items:
+          type: string
+          description: Sources of the merged record
       record:
         type: object
         description: Any user defined JSON as per the definition of XDM Model
         additionalProperties:
-          type: number
-  FailedModelObjectRecord:
-    type: object
-    properties:
-      record:
-        type: object
-        description: Raw records failed to put.
-        items:
-          $ref: '#/definitions/ModelObjectEntity'
-      failedReason:
+          type: object
+      lastModifiedAt:
         type: string
-        description: Reason of the failure.
+        description: Last modified timestamp. In RFC-3339 format.
+  XDMObjectEntity:
+    type: object
+    required: [entityId, sourceId, entity]
+    properties:
+      entityId:
+        type: object
+        description: The unique identifier for the model object. For XID, use string.
+        $ref: '#/definitions/IdentityEntityItem'
+      relatedEntityId:
+        type: object
+        description:  unique identifier for the related model object of an experience event. This field is only applicable for experience events. If this value does not present, will use `entityId` for the identitifer.
+        $ref: '#/definitions/IdentityEntityItem'
+      timestamp:
+        type: string
+        description: Epoch in milliseconds or RFC-3339 timestamp. This is required for time series data.
+      sourceId:
+        type: string
+        description: Id of the source of the record.
+      entity:
+        type: object
+        description: Any user defined JSON as per the definition of XDM Model
+        additionalProperties:
+          type: object
+  PUTRequestBodyEntity:
+    type: object
+    required: [schema, entities]
+    properties:
+      schema:
+        type: object
+        $ref: '#/definitions/SchemaEntity'
+      entities:
+        type: array
+        items:
+          $ref: '#/definitions/XDMObjectEntity'
   Link:
     type: object
     properties:
       next:
-        type: string
-        description: >-
-          The href link to the next page of the records. Empty if no more
-          records.
+        type: object
+        description: The href link to the next page of the records. Empty if no more records.
+        properties:
+          href:
+            type: string
     description: The link information.
   Page:
     type: object
     properties:
-      sortField:
+      orderby:
         type: string
-        description: The order records are sorted. By default is timestamp.
-      sort:
+        description: Comma separated list of properties by which the resource is sorted including prefixes indicating ascending (default) or descending order
+      start:
         type: string
-        description: The sorting order. By default is ascending order.
-      pageOffset:
-        type: string
-        description: >-
-          The offset of the page. By default is the internal id for the first
-          record.
-      pageSize:
+        description: The first value, in sorted order, of the orderby property on this page
+      count:
         type: integer
         format: int32
-        description: The total number of records of this page.
+        description: The number of items on this page
+      next:
+        type: string
+        description: The start value for the next page
     description: The page information of the response entity.
   TimeSeriesObjectResponseEntity:
     type: object
@@ -389,42 +447,14 @@ definitions:
         type: array
         description: The list of XDM Model object records.
         items:
-          $ref: '#/definitions/ModelObjectEntity'
+          $ref: '#/definitions/XDMObjectEntity'
       page:
         description: The page information of the current response entity.
         $ref: '#/definitions/Page'
       link:
         description: The href links.
         $ref: '#/definitions/Link'
-    description: >-
-      The XDM Model Object entity response, with current page information and
-      next page link.
-  Function1:
-    type: object
-  Function1DataAccessServiceFunction1RequestContextFutureRouteResult:
-    type: object
-  HealthDetailedResponse:
-    type: object
-    required:
-      - dependencies
-      - status
-    properties:
-      status:
-        type: boolean
-      dependencies:
-        type: array
-        items:
-          $ref: '#/definitions/ServiceHealth'
-  ServiceHealth:
-    type: object
-    required:
-      - service
-      - status
-    properties:
-      service:
-        type: string
-      status:
-        type: boolean
+    description: The XDM Model Object entity response, with current page information and next page link.
   HealthResponse:
     type: object
     required:
@@ -432,41 +462,3 @@ definitions:
     properties:
       status:
         type: boolean
-  PingResponse:
-    type: object
-    required:
-      - code
-      - message
-    properties:
-      code:
-        type: string
-      message:
-        type: string
-  VersionResponse:
-    type: object
-    required:
-      - branchName
-      - buildDate
-      - buildInfo
-      - cycleNumber
-      - gitCommit
-      - projectName
-      - projectVersion
-      - versionNumber
-    properties:
-      projectName:
-        type: string
-      projectVersion:
-        type: string
-      buildInfo:
-        type: string
-      versionNumber:
-        type: string
-      branchName:
-        type: string
-      cycleNumber:
-        type: string
-      gitCommit:
-        type: string
-      buildDate:
-        type: string

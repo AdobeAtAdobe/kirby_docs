@@ -1,0 +1,419 @@
+swagger: "2.0"
+info:
+  description: >-
+  
+    Experience Platform Unified Profile Segment Definition API
+    
+    
+    A Profile Segment Definition is the object encapsulation of a PQL Predicate which can be run to build a Profile Segment, or audience.
+    
+  
+    For more information, see [Unified Profile Overview](https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
+
+
+    Notes:
+      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * Base path for this API: /data/core/ups
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+
+  version: 18.8.1
+  title: Unified Profile Segment Definition API
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
+host: "platform.adobe.io"
+basePath: /data/core/ups
+tags:
+- name: "definitions"
+- name: "health-detailed"
+- name: "health"
+- name: "ping"
+- name: "version"
+paths:
+  /health-detailed:
+    get:
+      tags:
+      - "health-detailed"
+      summary: "Return a detailed health check message"
+      description: ""
+      operationId: "detailedHealthRoute"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Detailed health check succeeded"
+          schema:
+            $ref: "#/definitions/HealthDetailedResponse"
+        503:
+          description: "Service is unavailable"
+  /health:
+    get:
+      tags:
+      - "health"
+      summary: "Return a health check message"
+      description: ""
+      operationId: "healthRoute"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Health check succeeded"
+          schema:
+            $ref: "#/definitions/HealthResponse"
+        503:
+          description: "Service is unavailable"
+  /ping:
+    get:
+      tags:
+      - "ping"
+      summary: "Return a ping message"
+      description: ""
+      operationId: "pingRoute"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Ping succeeded"
+          schema:
+            $ref: "#/definitions/PingResponse"
+        503:
+          description: "Service unavailable"
+  /version:
+    get:
+      tags:
+      - "version"
+      summary: "Return version information"
+      description: ""
+      operationId: "versionRoute"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Version info response succeeded"
+          schema:
+            $ref: "#/definitions/VersionResponse"
+        503:
+          description: "Service unavailable"
+  /segment/definitions:
+    get:
+      tags:
+      - "definitions"
+      summary: "Get list of all Profile segment definitions"
+      description: ""
+      operationId: "getSegmentsRoute"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "x-gw-ims-org-id"
+        in: "header"
+        description: "IMS Organization ID"
+        required: true
+        type: "string"
+        x-example: "southwest@adobe.com"
+      - name: "limit"
+        in: "query"
+        description: "Page Size"
+        required: false
+        type: "integer"
+        x-example: 10
+      responses:
+        200:
+          description: "List of Profile segment definitions returned"
+          schema:
+            type: "number"
+        403:
+          description: "Forbidden"
+        503:
+          description: "Service Unavailable"
+    post:
+      tags:
+      - "definitions"
+      summary: "Posts a Profile Segment Definition"
+      description: ""
+      operationId: "postSegmentRoute"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "x-gw-ims-org-id"
+        in: "header"
+        description: "IMS Organization ID"
+        required: true
+        type: "string"
+        x-example: "southwest@adobe.com"
+      - in: "body"
+        name: "body"
+        description: "name - Name of the segment\n\nformat - This is the  format of the\
+          \ segment definition. It can take only pql/text and pql/json as of now\n\ndescription - Description\
+          \ of the segment\n\nexpression - PQL expression"
+        required: true
+        schema:
+          $ref: "#/definitions/SegmentEntityRequest"
+      responses:
+        200:
+          description: "Profile Segment definition successfully Posted"
+          schema:
+            $ref: "#/definitions/SegmentEntity"
+          headers:
+            X-Location:
+              type: "string"
+              description: "HRef to the Profile Segment"
+        400:
+          description: "Invalid profile segment definition"
+        422:
+          description: "Profile Segment already exists. Please do patch to update."
+        403:
+          description: "Forbidden"
+        503:
+          description: "Service Unavailable"
+  /segment/definitions/{segmentId}:
+    get:
+      tags:
+      - "definitions"
+      summary: "Returns the Profile Segment Definition"
+      description: ""
+      operationId: "getSegmentRoute"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "x-gw-ims-org-id"
+        in: "header"
+        description: "IMS Organization ID"
+        required: true
+        type: "string"
+        x-example: "southwest@adobe.com"
+      - name: "segmentId"
+        in: "path"
+        description: "Segment Id"
+        required: true
+        type: "string"
+        x-example: "12345-678"
+      responses:
+        200:
+          description: "Profile Segment Definition successfully Returned"
+          schema:
+            $ref: "#/definitions/SegmentEntity"
+        404:
+          description: "Profile Segment Definition not found"
+        403:
+          description: "Forbidden"
+        503:
+          description: "Service Unavailable"
+    delete:
+      tags:
+      - "definitions"
+      summary: "Deletes the segment definition given an id"
+      description: ""
+      operationId: "deleteSegmentRoute"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "x-gw-ims-org-id"
+        in: "header"
+        description: "IMS Organization ID"
+        required: true
+        type: "string"
+        x-example: "southwest@adobe.com"
+      - name: "segmentId"
+        in: "path"
+        description: "Segment Id"
+        required: true
+        type: "string"
+        x-example: "12345-678"
+      responses:
+        200:
+          description: "Profile Segment definition deleted successfully"
+          schema:
+            $ref: "#/definitions/MessageResponse"
+        403:
+          description: "Forbidden"
+        503:
+          description: "Service Unavailable"
+    patch:
+      tags:
+      - "definitions"
+      summary: "Overwrites a Profile Segment definition"
+      description: ""
+      operationId: "patchSegmentRoute"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "x-gw-ims-org-id"
+        in: "header"
+        description: "IMS Organization ID"
+        required: true
+        type: "string"
+        x-example: "southwest@adobe.com"
+      - name: "segmentId"
+        in: "path"
+        description: "Segment Id"
+        required: true
+        type: "string"
+        x-example: "12345-678"
+      - in: "body"
+        name: "body"
+        description: "name - Name of the segment\n\nformat - This is the  format of the\
+          \ segment. It can take only pql/text and pql/json as of now\n\ndescription - Description\
+          \ of the segment\n\nexpression - PQL expression"
+        required: true
+        schema:
+          $ref: "#/definitions/SegmentEntityUpdate"
+      responses:
+        200:
+          description: "Profile Segment Definition successfully Patched"
+          schema:
+            $ref: "#/definitions/SegmentEntity"
+          headers:
+            X-Location:
+              type: "string"
+              description: "HRef to the Profile Segment Definition"
+        400:
+          description: "Invalid profile segment definition"
+        403:
+          description: "Forbidden"
+        503:
+          description: "Service Unavailable"
+definitions:
+  HealthDetailedResponse:
+    type: "object"
+    required:
+    - "dependencies"
+    - "status"
+    properties:
+      status:
+        type: "boolean"
+      dependencies:
+        type: "array"
+        items:
+          $ref: "#/definitions/ServiceHealth"
+  ServiceHealth:
+    type: "object"
+    required:
+    - "service"
+    - "status"
+    properties:
+      service:
+        type: "string"
+      status:
+        type: "boolean"
+  HealthResponse:
+    type: "object"
+    required:
+    - "status"
+    properties:
+      status:
+        type: "boolean"
+  PingResponse:
+    type: "object"
+    required:
+    - "code"
+    - "message"
+    properties:
+      code:
+        type: "string"
+      message:
+        type: "string"
+  VersionResponse:
+    type: "object"
+    required:
+    - "branchName"
+    - "buildDate"
+    - "buildInfo"
+    - "cycleNumber"
+    - "gitCommit"
+    - "projectName"
+    - "projectVersion"
+    - "versionNumber"
+    properties:
+      projectName:
+        type: "string"
+      projectVersion:
+        type: "string"
+      buildInfo:
+        type: "string"
+      versionNumber:
+        type: "string"
+      branchName:
+        type: "string"
+      cycleNumber:
+        type: "string"
+      gitCommit:
+        type: "string"
+      buildDate:
+        type: "string"
+  SegmentEntity:
+    type: "object"
+    required:
+    - "creationTime"
+    - "description"
+    - "expression"
+    - "imsOrgId"
+    - "name"
+    - "mergePolicyId"
+    - "ttlInDays"
+    - "xdmSchema"
+    - "updateTime"
+    properties:
+      id:
+        type: "number"
+      imsOrgId:
+        type: "string"
+      name:
+        type: "string"
+      description:
+        type: "string"
+      expression:
+        type: "string"
+      mergePolicyId:
+        type: "string"
+      xdmSchema:
+        type: "string"
+      ttlInDays:
+        type: "number"
+      creationTime:
+        type: "string"
+        format: "date-time"
+      updateTime:
+        type: "string"
+        format: "date-time"
+  SegmentEntityRequest:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      description:
+        type: "string"
+      mergePolicyId:
+        type: "string"
+      xdmSchema:
+        type: "string"
+      ttlInDays:
+        type: "number"
+      expression:
+        type: "string"
+  SegmentEntityUpdate:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      description:
+        type: "string"
+      mergePolicyId:
+        type: "string"
+      xdmSchema:
+        type: "string"
+      ttlInDays:
+        type: "number"
+      expression:
+        type: "string"
+  MessageResponse:
+    type: "object"
+    required:
+    - "message"
+    - "status"
+    properties:
+      status:
+        type: "boolean"
+      message:
+        type: "string"

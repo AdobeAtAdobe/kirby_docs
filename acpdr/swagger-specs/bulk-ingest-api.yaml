@@ -4,7 +4,7 @@ info:
   version: v2
   contact:
       name: Grp-Siphon-Core
-basePath: /
+basePath: /data/foundation/import
 host: bulk-ingestion-dev-va7.dev.cloud.adobe.io
 tags:
 - name: "Ingest Batch"

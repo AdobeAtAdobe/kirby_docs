@@ -22,7 +22,7 @@ This document describes interacting with UPS using Adobe's Platform APIs. See th
 
 UPS maintains XDM data in the Profile Store which can be updated via batch or stream ingestion. XDM data can be ingested into the UPS based on and triggered by batch data being [ingested](../ingest_architectural_overview/ingest_architectural_overview.md) and managed by Data Catalog Service.
 
-Both enablement and configuration for ingestion by Unified Profile are handled by a Tag on a dataset, named specifically "unifiedProfile". The Tag is configured with an array of key:value properties providing configuration values. The `identityField` Tag property names the location in the XDM schema of the primary identity field. Dot-notation is used to specify attributes within a hierarchy. The `enabled` property set to true enables the dataset for ingestion into UPS.
+Enabling Unified Profile to ingest Adobe Data Catalog is handled by a Tag on a dataset, named specifically "unifiedProfile". The Tag is configured with an `enabled` property that when set to true enables the dataset for ingestion into UPS.
 
 ### Batch Ingestion of Profile XDM DataSets
 
@@ -66,7 +66,7 @@ __Example body__
 
 ### Verify a DataSet is Enabled in Profile
 
-To check if your dataset has been enabled in UPS, use the Data Catalog Service API to `GET` the dataset using the `datasetId`. A dataset is enabled if it contains a `unifiedProfile` Tag with a colon-delimited property string for `enabledAt`. The value of this tuple reports the time after which ingested Profile data would be made accessible via UPS.
+To check if your dataset has been enabled in UPS, use the Data Catalog Service API to get the dataset using the `datasetId`. A dataset is enabled if it contains a `unifiedProfile` Tag with a colon-delimited property string for `enabledAt`. The value of this tuple reports the time after which ingested Profile data would be made accessible via UPS.
 
 ```
 GET https://platform.adobe.io/data/foundation/catalog/dataSets/5b020a27e7040801dedbf46e HTTP/1.1
@@ -107,7 +107,7 @@ __Example response__
 }
 ```
 
-For more details on this and other Data Catalog Service APIs, visit the [Swagger API reference](../../../../../../acpdr/swagger-specs/catalog.yaml).
+For more details on this and other Data Catalog Service APIs, visit the [Swagger API reference](acpdr/swagger-specs/catalog.yaml).
 
 ### Monitoring Ingestion
 
@@ -220,7 +220,7 @@ Merge policies give you the control to handle situations such as:
 * An environment where multiple datasets, say datasets DS1 and DS2, store the same attribute of a Profile (eg: firstName). Using merge policies, you are able to give precedence to DS1 such that merged Profiles always contain the value of the data from DS1
 * DULE Labels restrict you from using data from a particular dataset. By creating a merge policy and leaving that dataset out of the dataset precedence list, you are able to suppress any data from that dataset from being used in a merged Profile
 
-The merge policies API centralizes merge rules used throughout UPS APIs, including Segmentation Jobs and the Profile Access API.
+The Profile Configuration API centralizes merge rules used throughout UPS APIs, including Segmentation Jobs and the Profile Access API.
 
 When using an API that accepts a merge policy without specifying one, the IMS Org's default merge policy for the given schema will be used. If a default merge policy has not been specified, the system will generate one automatically when needed.
 
@@ -273,21 +273,21 @@ Using the merge policies API, you are able to:
 * GET a merge policy by id
 * DELETE a merge policy by id
 
-See the [Swagger specification](../../../../../../acpdr/swagger-specs/profile-access.yaml) for more details.
+See the [Swagger API Reference](acpdr/swagger-specs/profile-access.yaml) for more details.
 
 ---
 
 ## Accessing Profiles in the Unified Profile Service
 
-This section describes the methods for accessing Unified Profiles as they exist in the Profile Store.
+This following provide overview level detail covering using the Profile Access API to get Profiles and ExperienceEvents. Visit the [Swagger API Reference](acpdr/swagger-specs/profile-access.yaml) for complete coverage of the Profile Access API.
 
 Profiles and time-series ExperienceEvent data are retrieved from separate `GET` calls.
 
 ### Access Unified Profile By Record ID
 
-This operation gets a Profile by ID and retrieves all its properties.
+This section highlights using the Profile Access API to get a Unified Profile, given the Profile's ID and Namespace. Visit the [Swagger API Reference](acpdr/swagger-specs/profile-access.yaml) for complete coverage of the Profile Access API.
 
-The parameters for the access service are as follows:
+The parameters for accessing a Profile are as follows:
 
 * `schema.name` (__required__) - Names the entity type, by schema name, for the record to return. Support both XED and FullURINameXED
 * `entityId` (__required__) - Record ID for the entity
@@ -353,11 +353,9 @@ __Example response__
 
 ### Access ExperienceEvents by Profile Record ID
 
-Access a paginated list of ExperienceEvents for a given Profile.
+This section highlights using the Profile Access API to get a paginated list of ExperienceEvents for a given Profile, given the Profile's ID and Namespace. Visit the [Swagger API Reference](acpdr/swagger-specs/profile-access.yaml) for complete coverage of the Profile Access API.
 
-The parameters for the access service are as follows:
-<!-- TODO: CORE-11543 What information from this page to include, and how? https://wiki.corp.adobe.com/pages/viewpage.action?pageId=1441927960
-     Need more info -->
+The parameters for accessing ExperienceEvents are as follows:
 
 * `schema.name` (__required__) - Names the entity type, by schema name, for the record to return. Support both XED and FullURINameXED
 * `entityId` (__required__) - Record ID for the entity
@@ -479,7 +477,9 @@ UPS behaves on/with the following components:
 * __Segmentation Jobs__ are asynchronous processes which isolate members of your user base per the rules described by a Definition
 * An __Audience__ is the collection of XDM objects which met the qualifications, or conditions, as set out by the Segment Definition
 
-Segmentation is supported for XDM Profile and ExperienceEvent schemas, with plans to expand to include additional schemas in the future. Segmentation is handled in the steps described by the remainder of this section. In summary, the following tasks are involved in segmentation and are detailed in this section:
+Segmentation is supported for XDM Profile and ExperienceEvent schemas, with plans to expand to include additional schemas in the future. Segmentation is handled in the steps described by the remainder of this section. 
+
+In summary, the following tasks are involved in segmentation and are detailed in this section:
 
 * __Develop a Definition__ - Determine and design the criteria that objects must meet to qualify for your Segment, and write the query representation of those rules
 * __Estimate and Preview Your audience__ - As an optional step in the iterations of writing and testing your Definition, process your Definition in a summary mode, gleaning information summarizing your audience as well as the progress of the asynchronous Preview Job
@@ -488,18 +488,9 @@ Segmentation is supported for XDM Profile and ExperienceEvent schemas, with plan
 
 ### Develop a Segment Definition
 
-A Definition encapsulates the complete set of criteria that define a specific audience, written as a query in Adobe's proprietary Profile Query Language (PQL) specifically designed for building queries on XDM data. The following summarizes PQL, though more in-depth detail can be found [here](unified_profile_pql.md). In the context of this section, to develop the Segment Definition is to compose the PQL query describing the desired audience.
+A Segment Definition encapsulates the complete set of criteria that define a specific audience, written as a query in Adobe's proprietary Profile Query Language (PQL) specifically designed for building queries on XDM data. The following summarizes PQL, though more in-depth detail can be found [here](unified_profile_pql.md). In the context of this section, to develop the Segment Definition is to compose the PQL query describing the desired audience.
 
-* Queries may be over Profile-only (e.g. [q1](unified_profile_supported_queries.md#q1)), ExperienceEvent-only (e.g. [q5](unified_profile_supported_queries.md#q5)), or a combination of Profile and ExperienceEvent ([q11](unified_profile_supported_queries.md#q11)).
-* Queries can contain variables, which simplify or make clearer a single field or a composite value resulting from a calculation or condition (e.g. [q10](unified_profile_supported_queries.md#q10): two orders within a two-week period).
-* Operators/functions:
-  * Boolean operators (and, or, not) - e.g. [q2](unified_profile_supported_queries.md#q2).
-  * Equality, inequality (=, !=)
-  * Numerical comparisons (<, >, <=, >=) - e.g. [q1](unified_profile_supported_queries.md#q1), [q3](unified_profile_supported_queries.md#q3).
-  * Time-series conditions: occurs - e.g. [q7](unified_profile_supported_queries.md#q7), [q10](unified_profile_supported_queries.md#q10).
-  * Others: like, in - e.g. [q2](unified_profile_supported_queries.md#q2), [q4](unified_profile_supported_queries.md#q4).
-  * Set formation over variable definitions: {} - e.g. [q6](unified_profile_supported_queries.md#q6)-[q11](unified_profile_supported_queries.md#q11).
-  * Count
+Segment Definitions are built using the Profile Segment Definition API. The following examples serve as only a summary. Visit the [Swagger API Reference](acpdr/swagger-specs) for complete coverage of the Segment Definitions API.
 
 #### Persist the Definition
 
@@ -518,7 +509,7 @@ Definitions are persisted to Experience Platform as a predicate expression in PQ
 __Example Unified Profile request - Create a new Definition__
 
 ```
-POST https://platform.adobe.io/data/core/ups/segment/definition HTTP/1.1
+POST https://platform.adobe.io/data/core/ups/segment/definitions HTTP/1.1
 ```
 
 __Example body__
@@ -549,7 +540,7 @@ __Example response__
     "expression": "xEvent.metrics.commerce.abandons.value > 0",
     "_links": {
         "self": {
-            "href": "https://platform.adobe.io/data/core/ups/segment/definition/1234"
+            "href": "https://platform.adobe.io/data/core/ups/segment/definitions/1234"
         }
     }
 }
@@ -561,13 +552,13 @@ You can find a list of supported PQL query examples [here](unified_profile_suppo
 
 ### Estimate and Preview Your Audience
 
-The Preview API allows for a direct path between Definition query and a summary of the qualifying/relevant audience.
+The Profile Preview API allows for a direct path between Definition query and a summary of the qualifying/relevant audience. The following are overview level examples demonstrating estimating and previewing audiences. Visit the [Swagger API Reference](acpdr/swagger-specs/profile-preview-api.md) for complete coverage of the Profile Preview API.
 
-Because of the varying length of time required to run a query, the estimate and preview processes are asynchronous. Once the query execution has initiated, you would need to `GET` the preview or estimate and determine its state as it progresses.
+Because of the varying length of time required to run a query, the estimate and preview processes are asynchronous. Once the query execution has initiated, you would need to get the preview or estimate and determine its state as it progresses.
 
 #### Estimate and Preview audience - Step 1: Create a Preview Job
 
-Run a query as a Preview Job using the `POST https://platform.adobe.io/data/core/ups/preview` API call. The response from this call includes a `previewId` which will be used to `GET` estimate or preview results. In the body of this `POST` will be the query information. For example, the expression, type, model, graph type, and merge strategy. The `state` of the preview will be "RUNNING" until processing is complete, at which point it becomes "RESULT_READY" or "FAILED".
+Run a query as a Preview Job using the `POST https://platform.adobe.io/data/core/ups/preview` API call. The response from this call includes a `previewId` which will be used to get estimate or preview results. In the body of this `POST` will be the query information. For example, the expression, type, model, graph type, and merge strategy. The `state` of the preview will be "RUNNING" until processing is complete, at which point it becomes "RESULT_READY" or "FAILED".
 
 __Example request to create a Preview Job__
 
@@ -706,7 +697,9 @@ __Example response__
 
 ### Create a Segment Job
 
-A Segment Job is an asynchronous process which isolates members of your user base per one or more Definitions. The [Export API](#export-api) is used to access these audiences by the `snapshot.name` name which is provided on creation of the Segment Job; "Profile_Segmented" in the example below.
+A Segment Job is an asynchronous process which isolates members of your user base per one or more Definitions. The [Export API](#export-api) is used to access these audiences by the `snapshot.name` name which is provided on creation of the Profile Segment Job; "Canadian1" in the example below.
+
+This section contains examples demonstrating use of the Segment Job API. For complete coverage of the Segment Job API, please visit the [Swagger API Reference](acpdr/swagger-specs/profile-segment-jobs-api.yaml).
 
 __Example request to create a Segment Job__
 
@@ -809,16 +802,18 @@ __Example response__
 ```
 
 Repeat the call to retrieve your Segment Job until the `status` reaches "SUCCEEDED", indicating the Export Job is ready to be run.
-
 <a name="export-api"></a>
+
 ### 5.4 Export Your Audience
 
-The export API is used to isolate an audience built by a Segment Job for access. Once a Segment Job has completed running (its `status` attribute has reached "SUCCEEDED"), the Export API can be used to generate XDM Profiles for each member of that audience in your chosen dataset. In summary, the following steps are required to export your audience:
+The Profile Export API is used to isolate an audience built by a Segment Job for access. Once a Segment Job has completed running (its `status` attribute has reached "SUCCEEDED"), the Profile Export API can be used to generate XDM Profiles for each member of that audience in your chosen dataset. In summary, the following steps are required to export your audience:
 
 * __Identify your dataSet__ - A dataset should be created to hold audience members
 * __Generate audience Profiles in dataset__ - Export jobs populate the results of a Segment Job as XDM Profiles in a dataset
 * __Wait for audience Profiles to complete persisting__ - Export Jobs are asynchronous. Get an Export Job until its status indicates completion (its `status` attribute has reached "SUCCEEDED", or "FAILED")
 * __Read Audience Data__ - Using the Data Access SDK, retrieve the resulting XDM Profiles representing the members of your audience
+
+The following contains examples demonstrating use of the Profile Export API. Please visit the [Swagger API Reference](acpdr/swagger-specs/profile-export-api.yaml) for complete coverage of the Profile Export API.
 
 #### Export Audience - Step 1: Create or Select Audience DataSet
 
@@ -857,7 +852,7 @@ Trigger an Export Job to persist the audience members to the dataset from above 
 
 * `destination` (__required__) - Indicates the dataset into which to persist the members meeting the conditions of the related definition ("MyIsolatedProfilesDS_Id" from the example above)
 * `model` (__required__) - Names the XDM schema name of the members. A schema will only be relative to the IMS Org ID specified in API calls, preventing members from other Orgs' data from being accessible
-* `filter` (__required__) - When creating the Segment Job, you specified a `snapshot.name` value, naming the audience. This value ("Profiles_Segmented" from the example above), or `segment-id` are permissible values for this property
+* `filter` (__required__) - When creating the Segment Job, you specified a `snapshot.name` value, naming the audience. This value, or `segment-id` are permissible values for this property
 * `schema` - Names the schema of the exported dataset <!-- TODO: Does this not come from destination? -->
 * `mergePolicyId` - Specify the merge policy to use for the exported data
 * `fields` - You can choose to limit the size of each audience member by using the `fields` property to limit the data populated within the members in the dataset.
@@ -957,4 +952,4 @@ __Example response__
 }
 ```
 
-With the `viewId` from the response, you are able to use the Data Access SDK to read data. Data Access SDK is an official SDK provided by Platform Foundation to read any data present inside a valid dataset. For more information on using the Data Access SDK, [see the tutorial](api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md).
+With the `viewId` from the response, you are able to use the Data Access SDK to read data. For more information on using the Data Access SDK, [see the tutorial](api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md).

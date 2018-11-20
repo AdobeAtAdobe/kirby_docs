@@ -1,0 +1,469 @@
+swagger: '2.0'
+info:
+  description: >- 
+  
+    Experience Platform Unified Profile Export API
+    
+    
+    Use this API to export Profile Segment audience members to a dataset where they can be used by Adobe Experience Platform solutions.
+    
+    
+    For more information, see [Unified Profile Overview](https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
+
+
+    Notes:
+      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * Base path for this API: /data/core/ups/export
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+
+  version: 18.8.1
+  title: Unified Profile Export API
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
+host: "platform.adobe.io"
+basePath: /data/core/ups/export
+tags:
+  - name: jobs
+  - name: health-detailed
+  - name: health
+  - name: ping
+  - name: version
+paths:
+  /jobs:
+    get:
+      tags:
+        - jobs
+      summary: Get list of all Profile export jobs
+      description: ''
+      operationId: getScanJobsRoute
+      produces:
+        - application/json
+      parameters:
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          x-example: southwest@adobe.com
+        - name: limit
+          in: query
+          description: Page Size
+          required: false
+          type: integer
+          x-example: 10
+        - name: offset
+          in: query
+          description: Page Offset - As per created Time of resource
+          required: false
+          type: string
+          x-example: '109103839'
+      responses:
+        '200':
+          description: List of Profile export jobs returned
+          schema:
+            $ref: '#/definitions/ScanJobsPageResponse'
+        '403':
+          description: Forbidden
+        '503':
+          description: Service Unavailable
+    post:
+      tags:
+        - jobs
+      summary: Posts a Profile Export Job
+      description: ''
+      operationId: postScanJobRoute
+      produces:
+        - application/json
+      parameters:
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          x-example: southwest@adobe.com
+        - name: x-profile-instance-id
+          in: header
+          description: Profile Instance Id
+          required: false
+          type: string
+          x-example: ups
+        - in: body
+          name: body
+          description: |2-
+             fields - Column filters (comma separated dot notation of columns)" +
+
+            mergePolicy - Takes id and version as nested parameters, if not provided, will take the same value as in segmentId or snapshotName
+
+            filter - Array of segments with either segmentId or snapshotName
+
+            destination - DatasetId where the exported data will be stored
+
+            schema - Schema name for the data
+          required: true
+          schema:
+            $ref: '#/definitions/ScanJobEntityRequest'
+      responses:
+        '200':
+          description: Profile Export Job successfully Posted
+          schema:
+            $ref: '#/definitions/ScanJobResponse'
+          headers:
+            X-Location:
+              type: string
+              description: HRef to the Profile Export Job
+        '403':
+          description: Forbidden
+        '503':
+          description: Service Unavailable
+  '/jobs/{exportJobId}':
+    get:
+      tags:
+        - jobs
+      summary: Returns the Profile Export Job
+      description: ''
+      operationId: getScanJobRoute
+      produces:
+        - application/json
+      parameters:
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          x-example: southwest@adobe.com
+        - name: exportJobId
+          in: path
+          description: Export Job Id
+          required: true
+          type: string
+          x-example: '12345678'
+      responses:
+        '200':
+          description: Profile Export Job successfully Returned
+          schema:
+            $ref: '#/definitions/ScanJobResponse'
+        '403':
+          description: Forbidden
+        '404':
+          description: Profile Export Job not found
+        '503':
+          description: Service Unavailable
+  /health-detailed:
+    get:
+      tags:
+        - health-detailed
+      summary: Return a detailed health check message
+      description: ''
+      operationId: detailedHealthRoute
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Detailed health check succeeded
+          schema:
+            $ref: '#/definitions/HealthDetailedResponse'
+        '503':
+          description: Service is unavailable
+  /health:
+    get:
+      tags:
+        - health
+      summary: Return a health check message
+      description: ''
+      operationId: healthRoute
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Health check succeeded
+          schema:
+            $ref: '#/definitions/HealthResponse'
+        '503':
+          description: Service is unavailable
+  /ping:
+    get:
+      tags:
+        - ping
+      summary: Return a ping message
+      description: ''
+      operationId: pingRoute
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Ping succeeded
+          schema:
+            $ref: '#/definitions/PingResponse'
+        '503':
+          description: Service unavailable
+  /version:
+    get:
+      tags:
+        - version
+      summary: Return version information
+      description: ''
+      operationId: versionRoute
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Version info response succeeded
+          schema:
+            $ref: '#/definitions/VersionResponse'
+        '503':
+          description: Service unavailable
+definitions:
+  DestinationResponse:
+    type: object
+    properties:
+      datasetId:
+        type: string
+        description: Dataset Id of the destination.
+      batchId:
+        type: string
+        description: Batch Id of the destination.
+    description: The destination information for Exported data
+  FeedbackMetrics:
+    type: object
+    properties:
+      startTimeInMs:
+        type: number
+      endTimeInMs:
+        type: number
+      totalTimeInMs:
+        type: number
+    description: Feedback Metrics
+  Filter:
+    type: object
+    properties:
+      segments:
+        type: array
+        description: Array of filter values for Export Job.
+        items:
+          $ref: '#/definitions/SegmentValues'
+    description: Array of filter values for Export Job.
+  MergePolicyObject:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Merge policy id.
+      version:
+        type: number
+        description: 'Version for the given merge policy Id; Default value: Latest.'
+    description: Merge Policy id and version.
+  ScanJobMetrics:
+    type: object
+    properties:
+      totalTime:
+        description: 'Total time '
+        $ref: '#/definitions/FeedbackMetrics'
+      profileExportTime:
+        description: 'Profile Export time '
+        $ref: '#/definitions/FeedbackMetrics'
+      aCPDatasetWriteTime:
+        description: 'ACP Dataset Write time '
+        $ref: '#/definitions/FeedbackMetrics'
+    description: Metrics parameter for Export Job
+  ScanJobResponse:
+    type: object
+    properties:
+      id:
+        type: number
+        description: Id of the export job
+      jobType:
+        type: string
+        description: 'Job type: batch or streaming.'
+      destination:
+        description: Destination for Export Job results.
+        $ref: '#/definitions/DestinationResponse'
+      fields:
+        type: string
+        description: Column filters.
+      schema:
+        description: Schema name.
+        $ref: '#/definitions/Schema'
+      imsOrgId:
+        type: string
+        description: ImsOrgId provided.
+      status:
+        type: string
+        description: NEW/PROCESSING/SUCCEEDED/FAILED.
+      filter:
+        description: Filter.
+        $ref: '#/definitions/Filter'
+      mergePolicy:
+        description: Merge Policy Id.
+        $ref: '#/definitions/MergePolicyObject'
+      profileInstanceId:
+        type: string
+        description: Profile Instance Id provided.
+      errors:
+        type: string
+        description: Errors in case of failure
+      metrics:
+        description: Metrics for the job
+        $ref: '#/definitions/ScanJobMetrics'
+      creationTime:
+        type: integer
+        format: int64
+        description: The creation time of the job.
+      updateTime:
+        type: integer
+        format: int64
+        description: The updated time for the job.
+      requestId:
+        type: string
+        description: Tracing Id for the job.
+    description: The information after submitting a export job eg. job id.
+  Schema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Schema name.
+    description: Schema value.
+  SegmentValues:
+    type: object
+    properties:
+      segmentId:
+        type: string
+        description: Segment Id.
+      snapshotName:
+        type: string
+        description: Snapshot name from a successful segmentation job.
+    description: Segment values for filter.
+  Destination:
+    type: object
+    properties:
+      datasetId:
+        type: string
+        description: Dataset Id of the destination.
+    description: Destination values for exported data.
+  ScanJobEntityRequest:
+    type: object
+    properties:
+      fields:
+        type: string
+        description: Column filters (comma separated dot notation of columns)
+      mergePolicy:
+        description: 'Takes id and version as nested parameters, if not provided, will take the same value as in segmentId or snapshotName'
+        $ref: '#/definitions/MergePolicyObject'
+      filter:
+        description: Array of segments with either segmentId or snapshotName
+        $ref: '#/definitions/Filter'
+      destination:
+        description: DatasetId where the exported data will be stored
+        $ref: '#/definitions/Destination'
+      schema:
+        description: Schema name for the data
+        $ref: '#/definitions/Schema'
+    description: Request for POST export job.
+  Link:
+    type: object
+    properties:
+      next:
+        type: string
+        description: The href link to the next page of the records. Empty if no more records.
+    description: The link information.
+  ScanJobPage:
+    type: object
+    properties:
+      sortField:
+        type: string
+        description: The order records are sorted. By default is creation time.
+      sort:
+        type: string
+        description: The sorting order. By default is descending order.
+      pageOffset:
+        type: string
+        description: The offset of the page. By default is the creation time and job id for the last record on this page.
+      pageSize:
+        type: integer
+        format: int32
+        description: The total number of records of this page.
+    description: The page information of the response entity.
+  ScanJobsPageResponse:
+    type: object
+    properties:
+      records:
+        type: array
+        description: The list of Export Job records.
+        items:
+          $ref: '#/definitions/ScanJobResponse'
+      page:
+        description: The page information of the current response entity.
+        $ref: '#/definitions/ScanJobPage'
+      link:
+        description: The href links.
+        $ref: '#/definitions/Link'
+  HealthDetailedResponse:
+    type: object
+    required:
+      - dependencies
+      - status
+    properties:
+      status:
+        type: boolean
+      dependencies:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceHealth'
+  ServiceHealth:
+    type: object
+    required:
+      - service
+      - status
+    properties:
+      service:
+        type: string
+      status:
+        type: boolean
+  HealthResponse:
+    type: object
+    required:
+      - status
+    properties:
+      status:
+        type: boolean
+  PingResponse:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+  VersionResponse:
+    type: object
+    required:
+      - branchName
+      - buildDate
+      - buildInfo
+      - cycleNumber
+      - gitCommit
+      - projectName
+      - projectVersion
+      - versionNumber
+    properties:
+      projectName:
+        type: string
+      projectVersion:
+        type: string
+      buildInfo:
+        type: string
+      versionNumber:
+        type: string
+      branchName:
+        type: string
+      cycleNumber:
+        type: string
+      gitCommit:
+        type: string
+      buildDate:
+        type: string

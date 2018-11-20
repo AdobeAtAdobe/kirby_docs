@@ -4,8 +4,8 @@ produces:
   - application/json
 swagger: '2.0'
 info:
-  description: |-
-    Experience Platform Identity Namespace Service API is used to query and create Namespaces and Realms used with Identity Service & Unified Profile Service APIs
+  description: >-
+    Experience Platform Identity Namespace Service API is used to query and create Namespaces used with Identity Service & Unified Profile Service APIs
   title: Experience Platform Identity Namespace Service
   contact:
     url: 'http://www.adobe.io'
@@ -137,7 +137,7 @@ paths:
           name: id
           type: integer
           required: true
-          description: The Namespace ID (Example - 123 )
+          description: The Namespace ID (Example - 123)
         - in: body
           required: true
           name: namespace_to_create

@@ -2789,7 +2789,7 @@ paths:
         - name: resources
           description: >-
             See:
-            https://wiki.corp.adobe.com/pages/viewpage.action?spaceKey=DMSArchitecture&title=Catalog+Service#CatalogService-BatchingCatalogAPIRequests.
+            https://www.adobe.io/apis/cloudplatform/dataservices/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md.
           required: true
           in: body
           schema:

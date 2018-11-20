@@ -1,0 +1,433 @@
+swagger: '2.0'
+info:
+  description: >-
+    Experience Platform Unified Profile Segment Jobs API
+    
+
+    Once your Segment has been built, use Unified Profile Segment Jobs to build the resulting audience which then can be exported to a dataset.
+    
+    
+    For more information, see [Unified Profile Overview](https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
+
+
+    Notes:
+      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * Base path for this API: /data/core/ups
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+
+  version: 18.8.1
+  title: Unified Profile Segment Jobs API
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
+host: "platform.adobe.io"
+basePath: /data/core/ups
+tags:
+- name: segmentjobs
+- name: health-detailed
+- name: health
+- name: ping
+- name: version
+paths:
+  "/health-detailed":
+    get:
+      tags:
+      - health-detailed
+      summary: Return a detailed health check message
+      description: ''
+      operationId: detailedHealthRoute
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Detailed health check succeeded
+          schema:
+            "$ref": "#/definitions/HealthDetailedResponse"
+        '503':
+          description: Service is unavailable
+  "/health":
+    get:
+      tags:
+      - health
+      summary: Return a health check message
+      description: ''
+      operationId: healthRoute
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Health check succeeded
+          schema:
+            "$ref": "#/definitions/HealthResponse"
+        '503':
+          description: Service is unavailable
+  "/ping":
+    get:
+      tags:
+      - ping
+      summary: Return a ping message
+      description: ''
+      operationId: pingRoute
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Ping succeeded
+          schema:
+            "$ref": "#/definitions/PingResponse"
+        '503':
+          description: Service unavailable
+  "/version":
+    get:
+      tags:
+      - version
+      summary: Return version information
+      description: ''
+      operationId: versionRoute
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Version info response succeeded
+          schema:
+            "$ref": "#/definitions/VersionResponse"
+        '503':
+          description: Service unavailable
+  "/segment/jobs/{segmentJobsRequestId}":
+    get:
+      tags:
+      - segmentjobs
+      summary: Returns the Profile Segment Jobs Request
+      description: ''
+      operationId: getSJRRoute
+      produces:
+      - application/json
+      parameters:
+      - name: x-gw-ims-org-id
+        in: header
+        description: IMS Organization ID
+        required: true
+        type: string
+        x-example: southwest@adobe.com
+      - name: segmentJobsRequestId
+        in: path
+        description: Segment Jobs Request Id
+        required: true
+        type: string
+        x-example: '123456789'
+      responses:
+        '200':
+          description: Profile Segment Jobs Request successfully Returned
+          schema:
+            "$ref": "#/definitions/RichSJR"
+        '403':
+          description: Forbidden
+        '404':
+          description: Profile Segment Jobs Request not found
+        '503':
+          description: Service Unavailable
+    delete:
+      tags:
+      - segmentjobs
+      summary: Returns the Profile Segment Jobs Request
+      description: ''
+      operationId: deleteSJRRoute
+      produces:
+      - application/json
+      parameters:
+      - name: x-gw-ims-org-id
+        in: header
+        description: IMS Organization ID
+        required: true
+        type: string
+        x-example: southwest@adobe.com
+      - name: segmentJobsRequestId
+        in: path
+        description: Segment Jobs Request Id
+        required: true
+        type: string
+        x-example: '123456789'
+      responses:
+        '200':
+          description: Profile Segment Jobs Request successfully Returned
+          schema:
+            "$ref": "#/definitions/SimpleResponse"
+        '403':
+          description: Forbidden
+        '404':
+          description: Profile Segment Jobs Request not found
+        '503':
+          description: Service Unavailable
+  "/segment/jobs":
+    get:
+      tags:
+      - segmentjobs
+      summary: Get a list of all Profile Segment Jobs Request
+      description: ''
+      operationId: getSJRBySnapshotNameRoute
+      produces:
+      - application/json
+      parameters:
+      - name: x-gw-ims-org-id
+        in: header
+        description: IMS Organization ID
+        required: true
+        type: string
+        x-example: southwest@adobe.com
+      responses:
+        '200':
+          description: List of Profile Segment Jobs Request returned
+          schema:
+            "$ref": "#/definitions/RichSJR"
+        '403':
+          description: Forbidden
+        '503':
+          description: Service Unavailable
+    post:
+      tags:
+      - segmentjobs
+      summary: Posts a Profile Segment Jobs Request
+      description: ''
+      operationId: postSJRRoute
+      produces:
+      - application/json
+      parameters:
+      - name: x-gw-ims-org-id
+        in: header
+        description: IMS Organization ID
+        required: true
+        type: string
+        x-example: southwest@adobe.com
+      - in: body
+        name: body
+        description: List of segment jobs. Each should be in Json format.
+        required: true
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Profile Segment Jobs Request successfully posted
+          schema:
+            "$ref": "#/definitions/RichSJR"
+          headers:
+            X-Location:
+              type: string
+              description: HRef to the Profile Segment Jobs Request
+        '403':
+          description: Forbidden
+        '422':
+          description: Profile Segment Jobs Request already exists. Please do patch
+            to update.
+        '503':
+          description: Service Unavailable
+definitions:
+  HealthDetailedResponse:
+    type: object
+    required:
+    - dependencies
+    - status
+    properties:
+      status:
+        type: boolean
+      dependencies:
+        type: array
+        items:
+          "$ref": "#/definitions/ServiceHealth"
+  ServiceHealth:
+    type: object
+    required:
+    - service
+    - status
+    properties:
+      service:
+        type: string
+      status:
+        type: boolean
+  HealthResponse:
+    type: object
+    required:
+    - status
+    properties:
+      status:
+        type: boolean
+  PingResponse:
+    type: object
+    required:
+    - code
+    - message
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+  VersionResponse:
+    type: object
+    required:
+    - branchName
+    - buildDate
+    - buildInfo
+    - cycleNumber
+    - gitCommit
+    - projectName
+    - projectVersion
+    - versionNumber
+    properties:
+      projectName:
+        type: string
+      projectVersion:
+        type: string
+      buildInfo:
+        type: string
+      versionNumber:
+        type: string
+      branchName:
+        type: string
+      cycleNumber:
+        type: string
+      gitCommit:
+        type: string
+      buildDate:
+        type: string
+  FeedbackMetrics:
+    type: object
+    properties:
+      startTimeInMs:
+        type: number
+      endTimeInMs:
+        type: number
+      totalTimeInMs:
+        type: number
+  RichSJR:
+    type: object
+    required:
+    - _links
+    - computeJobId
+    - creationTime
+    - errors
+    - id
+    - imsOrgId
+    - metrics
+    - profileInstanceId
+    - requestId
+    - segments
+    - status
+    - updateTime
+    properties:
+      id:
+        type: string
+      imsOrgId:
+        type: string
+      profileInstanceId:
+        type: string
+      status:
+        type: string
+      computeJobId:
+        type: integer
+        format: int64
+      creationTime:
+        type: integer
+        format: int64
+      updateTime:
+        type: integer
+        format: int64
+      segments:
+        type: array
+        items:
+          "$ref": "#/definitions/SJResponse"
+      errors:
+        type: string
+      metrics:
+        "$ref": "#/definitions/SJRMetricResponse"
+      requestId:
+        type: string
+      _links:
+        type: object
+        additionalProperties:
+          type: number
+  SJExpression:
+    type: object
+    required:
+    - format
+    - type
+    - value
+    properties:
+      type:
+        type: string
+      format:
+        type: string
+      value:
+        type: string
+  SJMergePolicy:
+    type: object
+    required:
+    - id
+    - version
+    properties:
+      id:
+        type: string
+      version:
+        type: integer
+        format: int32
+  SJRMetricResponse:
+    type: object
+    required:
+    - profileSegmentationTime
+    - totalTime
+    properties:
+      totalTime:
+        "$ref": "#/definitions/FeedbackMetrics"
+      profileSegmentationTime:
+        "$ref": "#/definitions/FeedbackMetrics"
+  SJResponse:
+    type: object
+    required:
+    - segment
+    - segmentId
+    - snapshot
+    properties:
+      segmentId:
+        type: string
+      segment:
+        "$ref": "#/definitions/SJSegment"
+      snapshot:
+        "$ref": "#/definitions/SJSnapshot"
+  SJSegment:
+    type: object
+    required:
+    - expression
+    - id
+    - mergePolicy
+    - version
+    properties:
+      id:
+        type: string
+      version:
+        type: integer
+        format: int32
+      expression:
+        "$ref": "#/definitions/SJExpression"
+      mergePolicy:
+        "$ref": "#/definitions/SJMergePolicy"
+  SJSnapshot:
+    type: object
+    required:
+    - name
+    - ttlInDays
+    properties:
+      name:
+        type: string
+      ttlInDays:
+        type: integer
+        format: int32
+  SimpleResponse:
+    type: object
+    required:
+    - message
+    - status
+    properties:
+      status:
+        type: boolean
+      message:
+        type: string
