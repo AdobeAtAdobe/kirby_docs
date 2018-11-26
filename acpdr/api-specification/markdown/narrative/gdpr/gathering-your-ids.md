@@ -49,7 +49,7 @@ There are a few namespaces that are pre-defined and available to all customers. 
 | content-type  | application/json | The input content type |
 | x-gw-ims-org-id  | <imsOrgId>, Eg: 17FA2AFD56CF35747F000101@AdobeOrg | The IMS Org ID of Client |
 
-### GET /orgs/{imsorg}/idnamespaces/
+### GET https://platform.adobe.io/data/core/idnamespace/identities/
 
 **List all namespaces for given IMS-ORG**
 
@@ -57,27 +57,51 @@ There are a few namespaces that are pre-defined and available to all customers. 
 
 | Parameter     | Type   | Req/Opt  | Description |
 | ------------- | ------ | -------- |
-| imsorg        | String | Required | The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg"”" ) |
+| none        |  |  |  |
 
 ### Response
 
 ```
-{
-    "updateTime": 1503898885000,
-    "pid": 4233,
-    "integrationCode": "adobe-provided",
-    "allowDataSharing": false,
-    "type": "GENERAL",
-    "status": "ACTIVE",
-    "description": "Automatically generated data source",
-    "nspid": 36481,
-    "createTime": 1503898885000,
-    "dataExportRestrictions": [
-      "PII"
-    ],
-    "idType": "COOKIE",
-    "name": "Test Audiences"
-}
-
+[
+  {
+        "updateTime": 1441122419000,
+        "code": "CORE",
+        "shared": true,
+        "type": "GENERAL",
+        "status": "ACTIVE",
+        "description": "CORE Namespace",
+        "id": 0,
+        "createTime": 1441122419000,
+        "idType": "COOKIE",
+        "name": "CORE",
+        "custom": false
+    },
+    {
+        "updateTime": 1495153678000,
+        "code": "ECID",
+        "shared": false,
+        "type": "GENERAL",
+        "status": "ACTIVE",
+        "description": "ECID Namespace",
+        "id": 4,
+        "createTime": 1495153678000,
+        "idType": "COOKIE",
+        "name": "ECID",
+        "custom": false
+    },
+    {
+        "updateTime": 1522783145000,
+        "code": "AdCloud",
+        "shared": true,
+        "type": "GENERAL",
+        "status": "ACTIVE",
+        "description": "Adobe AdCloud - ID Syncing Partner",
+        "id": 411,
+        "createTime": 1522783145000,
+        "idType": "COOKIE",
+        "name": "AdCloud",
+        "custom": false
+    }
+]
 Returns an HTTP 200 OK on success.
 ```

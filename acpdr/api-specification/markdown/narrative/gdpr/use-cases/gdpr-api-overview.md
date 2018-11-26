@@ -144,7 +144,7 @@ One key not detailed in the example above:
 
 ### Include
 
-The include key is an optional parameter. It supports an array of product strings to include in your processing. If you only support or integrate with Audience Manager, you could include only AudienceManager in your request, which has the effect of excluding all the other products. By default, all supported Experience Cloud solutions are included in every request. 
+The include key is an optional parameter, but is highly recommended for use when creating a POST request to GDPR. It supports an array of product strings to include in your processing. If you only support or integrate with Audience Manager, you could include only AudienceManager in your request, which has the effect of excluding all the other products. By default, all supported Experience Cloud solutions are included in every request. 
 
 ```json
 
@@ -160,7 +160,6 @@ If the product you specify as part of an include or exclude key does not match t
 
 The following flags my be specified at the root level (equivalent to the *users* or *companyContexts* keys) and will be applied for the complete set of user data included.
 
-* The **include** key is an optional parameter and supports an array of product strings to exclude in your processing. If you only support or integrate with Analytics, you could include only Analytics in the request. By default, all supported ExC solutions are included in every request. See [Product Values](#productvalues).
 * the **expandIds** key is an optional parameter and supports a boolean value of true|false. optional field that represents an optimization for processing the IDs in the solutions (currently only used by Analytics). If omitted, Analytics' default behavior is *false*
 * The **priority** key is an optional parameter (*normal*|*low*) for optimizing requests based on customer need. This key is inactive at the moment. 
 * The **analyticsDeleteMethod** is an optional parameter (*purge*|*anonymize*) for specifying how Analytics should handle the customer data. By default (if omitted), all data referenced by the given collection of user IDs is anonymized, thus maintaining data integrity for historical reporting and other functions. Purge will remove the data completely.
