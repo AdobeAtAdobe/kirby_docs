@@ -39,7 +39,10 @@ There are a few namespaces that are pre-defined and available to all customers. 
 
 ## List Namespaces for a Company
 
-### Request
+### GET Request
+**List all namespaces for given IMS-ORG**
+
+URL: https://platform.adobe.io/data/core/idnamespace/identities/
 
 **Headers**
 
@@ -49,9 +52,6 @@ There are a few namespaces that are pre-defined and available to all customers. 
 | content-type  | application/json | The input content type |
 | x-gw-ims-org-id  | <imsOrgId>, Eg: 17FA2AFD56CF35747F000101@AdobeOrg | The IMS Org ID of Client |
 
-### GET https://platform.adobe.io/data/core/idnamespace/identities/
-
-**List all namespaces for given IMS-ORG**
 
 **Parameters**
 

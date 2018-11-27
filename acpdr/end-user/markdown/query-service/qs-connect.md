@@ -123,9 +123,35 @@ from the Platform UI's "**Connect BI Tools**" page into the corresponding Tablea
 
 ![Image](graphics/sslrequired.png)
 
-## 4. Bonus - connect Power BI (PC)
+## 4. Connect Power BI (PC)
 
-As a backup client, PC users can also install Power BI from [here](https://powerbi.microsoft.com/en-us/desktop/)
+PC users can also install Power BI from [here](https://powerbi.microsoft.com/en-us/desktop/)
+
+Once you have Power BI installed you will need to set up the necessary components to support the PostgreSQL connector. Follow these steps:
+
+1. Procure and install "[npgsql](https://github.com/npgsql/Npgsql/releases)", a .NET driver package for PostgresSQL that is the official way for PowerBI to connect.
+	2. Select v3.2.7 (newer versions currently result in an error)
+	3. Under "Npgsql GAC Installation" on the "Custom Setup" screen select "Will be installed on local hard drive". Not installing the GAC will cause Power BI to fail later.
+4. Restart Windows.
+5. Procure [PowerBI Desktop evaluation version](https://powerbi.microsoft.com/en-us/desktop/).
+
+After performing those preparatory steps, you can connect Power BI to Query Service:
+
+1. Open Power BI
+2. Click "Get Data" in the top menu ribbon
+3. Choose PostgreSQL database, click on "Connect"
+4. Enter values for the Server and Database
+	5. Server is the Host found under the connection details, and for production add port ":80" to the end of the Host string.
+	6. Database can either be "all" or a dataset table name (try one of the CTAS derived datasets)
+7. Click on "Advanced options"
+	8. uncheck "include relationship columns"
+	9. Enter a SQL statement (Optional but recommended when "all" is declared for the Database)
+	```
+	SELECT web.webPageDetails.name as Page_Name, SUM(web.webPageDetails.pageviews.value) as Page_Views FROM _TABLE_ WHERE _ACP_YEAR=2018 AND _ACP_MONTH=11 AND _ACP_DAY=20 GROUP BY web.webPageDetails.name ORDER BY SUM(web.webPageDetails.pageviews.value) DESC LIMIT 10
+	```
+11. Click "OK"
+12. At this step Power BI will connect to the Experience Query Service and if not errors, produce a Preview. (There is a known issue with the Preview rendering numeric columns. Proceed to the next step.) 
+13. Click Load, to bring the dataset into Power BI.
 
 ## 5. Bonus - connect Postico (Mac)
 
