@@ -207,10 +207,59 @@ Response
 
 To do a point lookup on the Unified Profile Service:
 
-	curl	-X GET "https://platform.adobe.io/ data/core/ups/models/endcustomers/<customerId>" 
+	curl	-X GET "https://platform.adobe.io/data/core/ups/access/entities/?schema.name=<schema>&entityId=<id>&entityIdNS=<IDNS>" 
 			-H "Authorization: Bearer <access_token>" 
 			-H "x-api-key: <api_key>" -H "x-gw-ims-org-id: <IMS_Org_for_caller>"
 			
+Response
+
+	{
+	  "GU8rb925s2L2fkF55boQKCbliQ8,GbZWRW8tXrZ4gABvwzC_gAAAAAAA,A2-s19jafhDickW6PP0c5dpi": {
+	      "record": {
+	          "extraField1": 1,
+	          "personalEmail": {
+	              "address": "vmountneyji@pcworld.com"
+	          },
+	          "extraField2": 2,
+	          "identities": [
+	              {
+	                  "xid": "GU8rb925s2L2fkF55boQKCbliQ8",
+	                  "namespace": {
+	                      "code": "CRMId",
+	                      "id": 11111
+	                  },
+	                  "id": "87374043487584731811119677934421981925"
+	              },
+	              {
+	                  "xid": "GbZWRW8tXrZ4gABvwzC_gAAAAAAA",
+	                  "namespace": {
+	                      "code": "AVID",
+	                      "id": 22222
+	                  },
+	                  "id": "2d5eb67880006fc3-30bf800000000000"
+	              },
+	              {
+	                  "xid": "A2-s19jafhDickW6PP0c5dpi",
+	                  "namespace": {
+	                      "code": "ecId",
+	                      "id": 4
+	                  },
+	                  "id": "82781972020839607487123257673310321221"
+	              }
+	          ],
+	          "homePhone": {
+	              "number": "878-183-0090"
+	          },
+	          "person": {
+	              "firstName": "Val",
+	              "lastName": "Mountney",
+	              "gender": "xy",
+	              "courtesyTitle": "Mr"
+	          }
+	      }
+	  }
+	}
+
 As you can see, the common procedure is to issue the GET request to the API endpoint with parameters that indicate what you’re requesting, plus other parameters that provide your authentication information and your organization identifier. In each case the response will be a JSON object.
 
 ## Conclusion
