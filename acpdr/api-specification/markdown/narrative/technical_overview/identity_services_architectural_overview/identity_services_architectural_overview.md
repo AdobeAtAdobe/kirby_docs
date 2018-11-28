@@ -69,7 +69,7 @@ When uploading data conforming to the Profile XDM, specify the relevant IDs by a
 }
 ```
 
-For data conforming to the ExperienceEvent XDM, identities can be provided as an entry in `endUserIds`:
+For data conforming to the ExperienceEvent XDM, identities can be provided as an entry in `endUserIds`. Note that Identity Namespaces are scoped; standard Namespaces being specified in the `_experience` entity while custom Namespaces are provided in the `_customer` entity. To learn how to create custom Identity Namespaces, visit the [Identity Namespace Overview](../identity_namespace_overview/identity_namespace_overview.md#create-a-custom-namespace).
 
 ```
 {
@@ -123,6 +123,16 @@ For data conforming to the ExperienceEvent XDM, identities can be provided as an
 					"code": "Email"
 				},
 				"primary": false
+			}
+		},
+		"_customer": {
+			"default": {
+				"ldapId": {
+					"id": "custom_id",
+					"namespace": {
+						"code": "LDAP"
+					}
+				}
 			}
 		}
 	}
