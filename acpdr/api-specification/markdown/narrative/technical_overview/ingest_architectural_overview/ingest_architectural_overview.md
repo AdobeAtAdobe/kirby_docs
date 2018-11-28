@@ -1,27 +1,37 @@
 # Batch Ingestion Overview
 
 
-The Batch Ingestion API allows you to ingest batch data into the Adobe Experience Platform. Data being ingested can be the profile data from a CRM system, or data that conforms to a known schema in the XDM registry.
+The Batch Ingestion API allows you to ingest data into Adobe Experience Platform as batch files. Data being ingested can be the profile data from a flat file in a CRM system (such as a parquet file), or data that conforms to a known schema in the Experience Data Model (XDM) registry.
 
-![Bulk Data Ingestion](Bulk-Ingest.png)
+![](batch_ingestion.png)
 
-
-The Swagger API reference documentation can be found [here](../../../../../../acpdr/swagger-specs/bulk-ingest-api.yaml).
+See the [Batch Ingestion API](../../../../../../acpdr/swagger-specs/bulk-ingest-api.yaml) reference for additional information.
 
 ## Using the API
 
-The Data Ingestion API allows you to ingest data as batches (a unit of data that consists of one or more files to be ingested as a single unit) into the Adobe Experience Platform in three basic steps:
+The Data Ingestion API allows you to ingest data as batches (a unit of data that consists of one or more files to be ingested as a single unit) into Experience Platform in three basic steps:
 
-1. Creates a new batch. 
-2. Uploads files to a specified dataset that matches the data's XDM schema. 
-3. Signals the end of the batch. 
+1. Create a new batch. 
+2. Upload files to a specified dataset that matches the XDM schema of the data. 
+3. Signal the end of the batch. 
 
 
 ### Data Ingestion Prerequisites
-- Data to upload must be in [.parquet](http://parquet.apache.org/documentation/latest/) format.
-- A [dataset created in the Catalog component] (../allservices.html.html#!api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md).
-- Contents of the parquet file must match (a subset of) the schema of the dataset being uploaded into.
-- Have your unique Access Token, given after authentication.
+- Data to upload must be in [parquet](http://parquet.apache.org/documentation/latest/) format.
+
+- A dataset created in the [Catalog services](../catalog_architectural_overview/catalog_architectural_overview.md).
+
+- Contents of the parquet file must match a subset of the schema of the dataset being uploaded into.
+
+- Have your unique Access Token after authentication.
+
+### Recommended Batch Sizes
+
+Number of files = No more than 1500 files in a batch.
+
+Size of batches = Max sum of file sizes in batch 10 GB.
+
+Upload chunk size = recommended 250 MB chunk sizes.
 
 ### Batch Ingestion Status
 * **Active**:  The batch has been successfully promoted and is available for downstream consumption.
@@ -58,13 +68,15 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
 -H "x-gw-ims-org-id: {IMS_ORG}" \
 -H "Authorization: Bearer {ACCESS_TOKEN}" \
 -H "x-api-key : {API_KEY}"
--d '{"datasetId":"{DATASET_ID}"}'
+-d '{
+      "datasetId":"{DATASET_ID}"
+    }'
 ```
-**IMS_ORG:** Your IMS organization credentials found in your unique Adobe Experience Platform integration.
+**IMS_ORG:** Your IMS organization credentials found in your unique Platform integration.
 
 **ACCESS_TOKEN:** Token provided after authentication.
 
-**API_KEY:** Your specific API key value found in your unique Adobe Experience Platform integration.
+**API_KEY:** Your specific API key value found in your unique Platform integration.
 
 **DATASET_ID:** The ID of the dataset to upload the files into.
 
@@ -98,7 +110,7 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
 ### File Upload
 After successfully creating a new batch for uploading, files can then be uploaded to a specific dataset.
 
-You can upload files using the Small File Upload API. However, if your files are too large and the gateway limits exceeded--such as extended timeouts, requests for body size exceeded, and other constrictions--you can switch over to the Large File Upload API. This API uploads the file in chunks, and stitches data together using the Large File Upload Complete API call.
+You can upload files using the *Small File Upload API*. However, if your files are too large and the gateway limit is exceeded (such as extended timeouts, requests for body size exceeded, and other constrictions), you can switch over to the *Large File Upload API*. This API uploads the file in chunks, and stitches data together using the *Large File Upload Complete API* call.
 
 ### Small File Upload
 Once a batch is created, data can be uploaded to a preexisting dataset.  The file being uploaded must match its referenced XDM schema.
@@ -128,7 +140,7 @@ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}
 
 #### Response
 ```JSON
-#Status 200 OK, with empty response
+#Status 200 OK, with empty response body
 ```
 
 ### Large File Upload - Create File
@@ -147,19 +159,19 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID
 
 **DATASET_ID:** The ID of the dataset ingesting the files.
 
-**IMS_ORG:** Your IMS org credentials found in your unique Adobe Experience Platform integration.
+**IMS_ORG:** Your IMS org credentials found in your unique Experience Platform integration.
 
 **ACCESS_TOKEN:** Token provided after authentication.
 
-**API_KEY:** Your specific API key value found in your unique Adobe Experience Platform integration.
+**API_KEY:** Your specific API key value found in your unique Experience Platform integration.
 
 #### Response
 ```JSON
-#Status 201 CREATED, with empty response
+#Status 201 CREATED, with empty response body
 ```
 
 ### Large File Upload - Upload Subsequent Parts
-After the file has been created, all subsequent chunks can be uploaded by making repeated PATCH requests, one for each piece of the file.
+After the file has been created, all subsequent chunks can be uploaded by making repeated PATCH requests, one for each section of the file.
 
 #### Request
 PATCH /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
@@ -179,7 +191,7 @@ curl -X PATCH "https://platform.adobe.io/data/foundation/import/batches/{BATCH_I
 
 **FILE_NAME:** Name of file as it will be seen in the dataset.
 
-**IMS_ORG:** Your IMS org credentials found in your unique Adobe Experience Platform integration.
+**IMS_ORG:** Your IMS org credentials found in your unique Platform integration.
 
 **ACCESS_TOKEN:** Token provided after authentication.
 
@@ -193,7 +205,7 @@ curl -X PATCH "https://platform.adobe.io/data/foundation/import/batches/{BATCH_I
 ```
 
 ### Signal Batch Completion
-After all files have been uploaded to the batch, the batch can be signaled for completion. By doing this, the Catalog *DataSetFile* entries are created for the completed files and associated with the batch generated above. The Catalog batch is then marked as successful, which triggers any downstream flows to work on the available data.
+After all files have been uploaded to the batch, the batch can be signaled for completion. By doing this, the Catalog *DataSetFile* entries are created for the completed files and associated with the batch generated above. The Catalog batch is then marked as successful, which triggers downstream flows to ingest the available data.
 
 #### Request
 POST /batches/{BATCH_ID}?actions=COMPLETE
@@ -206,11 +218,11 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID
 ```
 **BATCH_ID:** The ID of the batch to be uploaded into the dataset.
 
-**IMS_ORG:** Your IMS org credentials found in your unique Adobe Experience Platform integration.
+**IMS_ORG:** Your IMS org credentials found in your unique Platform integration.
 
 **ACCESS_TOKEN:** Token provided after authentication.
 
-**API_KEY:** Your specific API key value found in your unique Adobe Experience Platform integration.
+**API_KEY:** Your specific API key value found in your unique Platform integration.
 
 #### Response
 ```JSON
