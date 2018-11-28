@@ -1,8 +1,8 @@
-# Data Catalog Services - Technical Overview
+# Catalog Service Overview
 
-## 1. Overview
+Catalog is the system of record for data location, lineage, schema definition, and usage labeling for Adobe Experience Platform. Catalog is not the actual files or directories containing data, rather it holds the metadata and description of those files and directories. Simply put, Catalog acts as a metadata store or "catalog" where you can find information about your data within Experience Platform.
 
-The Data Catalog serves on the Adobe Cloud Platform as the system of record for data location, schema definition, lineage, and usage labelling for batched data across the platform. Data Catalog Services answer the following questions:
+Catalog Service allows you to answer the following questions:
 
 * Where is my data located?
 * At what stage of processing is this data?
@@ -10,413 +10,856 @@ The Data Catalog serves on the Adobe Cloud Platform as the system of record for 
 * What errors occurred during processing?
 * If successful, how much data was processed?
 
----
+## Catalog Objects
 
-## 2. Using the Data Catalog API
+Catalog "objects" are the metadata encapsulation of data, schemas, provisioning, and operations on Platform. Catalog Service supports the following object types:
 
-This document describes interacting with Data Catalog Services using Adobe's Platform APIs. See [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for information on how to access these services.
+|Object|API Endpoint|Definition|
+|---|---|---|
+|Account|/accounts|Accounts represent a collection of authentication credentials used by a customer to create connections of a specific type. Each connection has a set of unique parameters that are persisted by Catalog and secured in an Azure Key Vault via Security Services.|
+|Batch|/batches|Batches allow Catalog users to understand which operations and applications have been performed on objects tracked by the system. A batch outlines the final results (records processed, size on disk, etc.) but may also include links to Datasets, DatasetViews, and more that were affected by the batch operation.|
+|Connector|/connectors|Connectors define how and when data is ingested into Platform. They define how data is to be gathered from technology sources (like S3, RedShift, and SFTP) and partner sources (like DFA, SAP, MSFT and ExactTarget). Connectors also define how and when Adobe Solution data is ingested into Platform.|
+|Connection|/connections|Connections are customer-specific instances of Connectors. As an example, when a user selects the Azure Blob Connector and supplies the necessary details as defined by that Connector, the result is a Connection.|
+|Dataset|/datasets|Datasets are the building blocks for data transformation and tracking in Catalog Service. Generally, datasets represent a table or file made available by a Connection. |
+|Dataset File|/datasetFiles|Dataset Files represent blocks of data that has been saved on Platform. As records of literal files, these are where you can find the file size and which batch the file came from. This construct will also provide the number of records contained in the file.|
+|Transform|/transforms|Transforms are used to house the instructions that translate data into a new form. As a customer maps their newly uploaded data to XDM schema, a Transform is created to document links to the repository where the code resides, as well as a link to the vehicle (or engine) used to perform that work.|
 
-### 2.1 Specify Multiple IDs
+## Using Catalog Service API
 
-Often it's desirable to request a specific collection of objects based on their IDs.  Rather than making one request per object, Data Catalog Service provides a simple shortcut for requesting multiple objects of the same type with a single query with the use of comma-separated IDs.
+Catalog provides a RESTful API through which you can perform basic CRUD operations against the supported object types. In order to make API calls successfully, you will need to follow the steps outlined in the [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) to acquire the necessary credentials.
 
-__Example Catalog Service request, demonstrating a multi-object request:__
+Once you have the necessary credentials, you will be able to follow the sample calls outlined in this document. All of the sample API calls that follow require you to have the following:
+- `{ACCESS_TOKEN}`: Token provided after authentication  
+- `{API_KEY}`: Your specific API key for your unique Platform integration (available via [Adobe Console](https://console.adobe.io))
+- `{IMS_ORG}`: The IMS Organization credentials for your unique Platform integration
+
+In addition to providing an introduction to working with Catalog Service, this document outlines some of the common conventions used across most Catalog APIs:
+
+- [View a list of objects](#get---view-a-list-of-objects)
+- [View a specific object](#get---view-a-specific-object)
+- [Update or modify an object](#patch---update-an-object)
+- [Delete an object](#delete---remove-an-object)
+- [View multiple objects](#get---view-multiple-objects)
+- [View interrelated objects](#get---view-interrelated-objects-using-expansions-query-parameter)
+- [Link multiple requests](#post---multiple-requests-in-a-single-call)
+- [Filter responses using query parameters](#filtering-data-with-query-parameters)
+
+Most of the examples in this document use the `/datasets` endpoint, but the principles can be applied to other endpoints within Catalog. The complete [Catalog Service RESTful API Resource](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html#!acpdr/swagger-specs/catalog.yaml) shows all available calls and operations.
+
+### Best Practices for Catalog Queries
+
+When performing Catalog queries, it is best practice to include query parameters in your requests in order to return only the objects and properties that you need. For example, you can perform GET requests to view specific objects by their `{id}` or [use query parameters](#filtering-data-with-query-parameters) such as "[properties](#filter-by-displaying-select-properties)" and "[limit](#filter-using-limits)" to filter responses. Filters can be passed as headers and as query parameters, with those passed as query parameters taking precedence.
+
+Since some queries can put a heavy load on the API, global limits have been implemented on Catalog queries to further support best practices. For more information, see the [Filter Using Limits](#filter-using-limits) section of this document.
+
+### GET - View a List of Objects
+
+It is possible to view a list of all available objects through a single API call (e.g. `GET /datasets`), with best practice being to include filters that limit the size of the response. For example, in cases where _full_ dataset information is being requested the response payload can reach past 3GB in size, which can slow overall performance.
+
+#### API Format
 
 ```
-GET /dataSets/5601dc3ee91c55aa3834b607,0ad0554e4fa033861780c2962e,…
+GET /datasets
+GET /datasets?{filter}={value}&{filter2}={value}
 ```
 
-### 2.2 Expansions
+#### Request
 
-The Data Catalog manages objects that are interrelated. Some fields are returned in XDM responses as an abbreviated representation of an underlying list of values by default. These are prefixed with @, such as `@/dataSets/58ed485dee812c05a7cfc8d0/views/58ed4a86215b2f0c215a4539/files`. This is an example of an expandable field which could be returned in its full detailed form using the `expansions` request parameter.
-
-For example, a query for a particular DataSet yields a record that contains several expandable fields and you would like to retrieve detailed, expanded list of all Transforms.
-
-
-__Example Data Catalog Service request, demonstrating requesting Transforms be expanded:__
+The sample request below includes two filters. When using multiple filters, you must separate them with an ampersand (`&`). 
 
 ```
-GET /dataSets/58ed485dee812c05a7cfc8d0?expansion=transforms
+curl -X GET \
+  'https://platform.adobe.io/data/foundation/catalog/datasets?limit=5&properties=name,description,files' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-> Multiple fields can be specified as a comma-delimited list, such as `expansion=transforms,files`
+#### Response
 
-__Example Data Catalog Service response, demonstrating the result of the `expansion` request parameter:__
+The response body consists of a JSON object with individual objects for each returned dataset. The response is limited to the five most recent datasets (`limit=5`) and the requested properties (name, description, and files) are the only properties that will be displayed. If a dataset does not contain all of the requested properties, it will return any of the requested properties that it does include, as shown in "Sample Dataset 3" and "Sample Dataset 4" below.
 
-```JSON
+```json
 {
-  "58ed485dee812c05a7cfc8d0": {
-    "version": "1.0.0",
-    "imsOrg": "1376517755E72AC07F000101@AdobeOrg",
-    "name": "limit/offset test 4",
-    "created": 1491945565855,
-    "updated": 1491946118111,
-    "createdClient": "MCDPCatalogServiceQa2",
-    "createdUser": "MCDPCatalogServiceQa2@AdobeID",
-    "updatedUser": "MCDPCatalogServiceQa2@AdobeID",
-    "aspect": "production",
-    "status": "enabled",
-    "editable": true,
-    "basePath": "ab://some/path/to/blob",
-    "fileDescription": {
-      "persisted": false
+    "5ba9452f7de80400007fc52a": {
+        "name": "Sample Dataset 1",
+        "description": "Description of dataset.",
+        "files": "@/dataSets/5ba9452f7de80400007fc52a/views/5ba9452f7de80400007fc52b/files"
     },
-    "transforms": {
-      "58ed52ea6da08e0f72ebc99a": {
-        "version": "1.0.0",
-        "imsOrg": "1376517755E72AC07F000101@AdobeOrg",
-        "created": 1491948266385,
-        "createdClient": "MCDPCatalogServiceQa2",
-        "createdUser": "MCDPCatalogServiceQa2@AdobeID",
-        "updatedUser": "MCDPCatalogServiceQa2@AdobeID",
-        "updated": 1491948266385,
-        "dataSetViewId": "58ed4a86215b2f0c215a4539",
-        "codeUrl": "git://foo.bar/path/to/code.git"
-      }
+    "5bb276b03a14440000971552": {
+        "name": "Sample Dataset 2",
+        "description": "Description of dataset.",
+        "files": "@/dataSets/5bb276b03a14440000971552/views/5bb276b01250b012f9acc75b/files"
     },
-    "files": "@/dataSets/58ed485dee812c05a7cfc8d0/views/58ed4a86215b2f0c215a4539/files",
-    "children": "@/dataSetViews/58ed4a86215b2f0c215a4539/children",
-    "viewId": "58ed4a86215b2f0c215a4539"
-  }
+    "5bceaa4c26c115000039b24b": {
+        "name": "Sample Dataset 3"
+    },
+    "5bda3a4228babc0000126377": {
+        "name": "Sample Dataset 4",
+        "files": "@/dataSets/5bda3a4228babc0000126377/views/5bda3a4228babc0000126378/files"
+    },
+    "5bde21511dd27b0000d24e95": {
+        "name": "Sample Dataset 5",
+        "description": "Description of dataset.",
+        "files": "@/dataSets/5bde21511dd27b0000d24e95/views/5bde21511dd27b0000d24e96/files"
+    }
 }
 ```
 
-### 2.3 PUT vs PATCH
+More information regarding available query parameters and how to use them to filter responses is available in the [Filtering Data with Query Parameters](#filtering-data-with-query-parameters) section later in this document.
 
-While PATCH is a well known method for REST services, there are a few notes about how it operates in Data Catalog. The distinction between PUT and PATCH is an important one, as PUT will replace the entire resource with the presented payload, and PATCH will simply modify only the fields provided in the request. One of the most common mistakes to make with Data Catalog is to use PUT when the desired action requires PATCH.
+### GET - View a Specific Object
 
-Data Catalog Services supports two methods for PATCH. If you pass a subset of the object you are PATCHing the Data Catalog Service; this will only alter the fields present in the object body.
+If the object `{id}` is known, you can perform a GET request to view the specific object. 
+
+In the example below, even though you are requesting a specific dataset, it is best practice to [filter by properties](#filter-by-displaying-select-properties) and return only the properties you are interested in.
+
+#### API Format
 
 ```
-PATCH /dataSets/123456
+GET /datasets/{id}
+GET /datasets/{id}?properties={property1},{property2},{property3}
+```
 
+#### Request
+
+```
+curl -X GET \
+  'https://platform.adobe.io/data/foundation/catalog/datasets/5ba9452f7de80400007fc52a?properties=name,description,state,tags,transforms,files' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
+
+#### Response
+
+The response shows the specified dataset with only the requested fields (name, description, state, tags, transforms, and files) in the body.
+
+```json
 {
-    "name":"bob"
+    "5ba9452f7de80400007fc52a": {
+        "name": "Sample Dataset",
+        "description": "Sample dataset containing important data",
+        "state": "DRAFT",
+        "tags": {
+            "adobe/pqs/table": [
+                "sample_dataset"
+            ]
+        },
+        "transforms": "@/dataSets/5ba9452f7de80400007fc52a/views/5ba9452f7de80400007fc52b/transforms",
+        "files": "@/dataSets/5ba9452f7de80400007fc52a/views/5ba9452f7de80400007fc52b/files",
+    }
 }
 ```
 
-In the above example all other values in the dataset will be retained except name, which will be changed to "bob".  If this was instead a PUT, any other mutable values of the dataset would be unset.
+### Updating Objects: PUT vs PATCH
 
-Alternatively, Data Catalog Services also support json-patch as described in [RFC-6902](https://tools.ietf.org/html/rfc6902).  One thing to note is that if you are using this method your content-type MUST be `json-patch+json`
+The distinction between PUT and PATCH is an important one, as PUT will replace the entire resource with the request payload (i.e. _re-writing_ the resource to contain only the contents of the request payload), whereas PATCH will modify the current resource values for the fields provided in the request payload and leave the rest unaltered. 
+
+_**Note:**_ Neither PATCH nor PUT will modify expandable fields.  Modifications to any related objects must be done directly on that object.
+
+### PATCH - Update an Object
+
+Catalog offers two possible ways of updating values within a dataset. Both involve a PATCH request to the dataset `{id}` and require you to supply the values to be updated in the request payload.
+
+#### PATCH 1
+
+#### API Format
+```
+PATCH /datasets/{id}
+```
+
+#### Request
+
+Requests containing a payload require the header `Content-Type: application/json` be added, as shown in the sample below.
 
 ```
-PATCH /dataSets/123456
+curl -X PATCH \
+  https://platform.adobe.io/data/foundation/catalog/datasets/5ba9452f7de80400007fc52a \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '{
+       "name":"Updated Dataset Name",
+       "description":"Updated description for Sample Dataset"
+      }'
+```
 
-content-type: application/json-patch+json
+#### Response
+
+If successful, the response will include an array containing the updated dataset `{id}`. This `{id}` should match the one sent in the PATCH request.
+
+```json
 [
-    {"op":"add","path":"/name","value":"bob"}
+    "@/dataSets/5ba9452f7de80400007fc52a"
 ]
 ```
 
-> Neither PATCH nor PUT will modify expansions.  Modifications to expansions must be done directly on the expansion resource.
+If you were to now perform a GET request for this dataset, only the "name" and "description" would be updated while the other values remain unchanged. 
 
-### 2.4 Batching Data Catalog Requests - Transactional API
+#### PATCH 2
 
-This is not to be confused with the Batch object supported by Data Catalog. Rather, this API satisfies a use-case offering a multi-request method that not only allows for multiple requests to be made on a single connection, but if those requests are modifications/additions to the catalog, all changes will __transactionally__ roll-back if any one change fails.
+Alternatively, Catalog supports `json-patch` as described in [RFC-6902](https://tools.ietf.org/html/rfc6902).
 
-The API signature is a POST on the root API:
+#### API Format
+```
+PATCH /datasets/{id}
+```
 
-__Data Catalog Service Request:__
+#### Request
+
+To use this method, the request must have the header `Content-Type: application/json-patch+json` and contain the fields to be updated in the payload, as shown below.
+
+```
+curl -X PATCH \
+  https://platform.adobe.io/data/foundation/catalog/datasets/5ba9452f7de80400007fc52a \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json-patch+json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '[
+    {"op":"add","path":"/name","value":"New Dataset Name"},
+    {"op":"add","path":"/description","value":"New description for dataset"}
+]'
+```
+
+#### Response
+
+If successful, the response will include an array containing the updated dataset `{id}`. This `{id}` should match the one sent in the PATCH request.
+
+```json
+[
+    "@/dataSets/5ba9452f7de80400007fc52a"
+]
+```
+
+Once again, performing a GET request for this dataset would reveal that only the "name" and "description" have been updated while the other values remain unchanged. 
+
+
+### DELETE - Remove an Object
+
+Catalog allows for the removal of objects using a DELETE request. Take extra care when deleting objects as this cannot be undone and may produce breaking changes elsewhere in Experience Platform.
+
+#### API Format
+```
+DELETE /datasets/{id}
+```
+
+#### Request
+
+```
+curl -X DELETE \
+  'https://platform.adobe.io/data/foundation/catalog/datasets/5ba9452f7de80400007fc52a' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
+
+#### Response
+
+A successful deletion will return HTTP Status Code 200 (OK) and the response will contain an array with the `{id}` of the deleted dataset. This should match the `{id}` you provided in the request.
+
+Performing a GET request on the deleted `{id}` should return an HTTP Status Code 404 (Not Found).
+
+```json
+[
+    "@/dataSets/5ba9452f7de80400007fc52a"
+]
+```
+
+_**Note:**_ If no objects match the request, you may still receive an HTTP Status Code 200, but the response array will be empty.
+
+### GET - View Multiple Objects
+
+When you wish to view several specific objects, rather than making one request per object, Catalog provides a simple shortcut for requesting multiple objects of the same type. 
+
+In the example below, a single GET request includes a comma-separated list of dataset IDs. Despite requesting specific datasets, it is still best practice to [filter by properties](#filter-by-displaying-select-properties) to return only the properties you need.
+
+#### API Format
+
+```
+GET /datasets/{id1},{id2},{id3},{id4}
+GET /datasets/{id1},{id2},{id3},{id4}?properties={property1},{property2},{property3}
+```
+
+#### Request
+
+The sample request includes a comma-separated list of dataset IDs as well as a comma-separated list of properties to be returned.
+```
+curl -X GET \
+  'https://platform.adobe.io/data/foundation/catalog/datasets/5bde21511dd27b0000d24e95,5bda3a4228babc0000126377,5bceaa4c26c115000039b24b,5bb276b03a14440000971552,5ba9452f7de80400007fc52a?properties=name,description,files' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
+
+#### Response
+
+The response body consists of a JSON object with individual objects for each requested dataset, containing only the requested properties (name, description, and files). If a dataset does not contain all of the requested properties, it will return any of the requested properties that it does include, as shown in "Sample Dataset 3" and "Sample Dataset 4" below.
+
+```json
+{
+    "5ba9452f7de80400007fc52a": {
+        "name": "Sample Dataset 1",
+        "description": "Description of dataset.",
+        "files": "@/dataSets/5ba9452f7de80400007fc52a/views/5ba9452f7de80400007fc52b/files"
+    },
+    "5bb276b03a14440000971552": {
+        "name": "Sample Dataset 2",
+        "description": "Description of dataset.",
+        "files": "@/dataSets/5bb276b03a14440000971552/views/5bb276b01250b012f9acc75b/files"
+    },
+    "5bceaa4c26c115000039b24b": {
+        "name": "Sample Dataset 3"
+    },
+    "5bda3a4228babc0000126377": {
+        "name": "Sample Dataset 4",
+        "files": "@/dataSets/5bda3a4228babc0000126377/views/5bda3a4228babc0000126378/files"
+    },
+    "5bde21511dd27b0000d24e95": {
+        "name": "Sample Dataset 5",
+        "description": "Description of dataset.",
+        "files": "@/dataSets/5bde21511dd27b0000d24e95/views/5bde21511dd27b0000d24e96/files"
+    }
+}
+```
+
+### GET - View Interrelated Objects Using `Expansions` Query Parameter
+
+Catalog Service manages interrelated objects. These related objects, if queried properly, can be joined automatically via Catalog Service and included in the response. As you inspect a response, fields prefixed by `@` denote interrelated objects that can be expanded. 
+
+For example, when we [requested a specific dataset](#get---view-an-object) earlier, the response contained a `"transforms"` field with the value `"@/datasets/5ba9452f7de80400007fc52a/views/5ba9452f7de80400007fc52b/transforms"`. This field can be expanded to show details by issuing a GET request to the dataset `{id}` and using the `expansion` query parameter.
+
+#### API Format
+
+```
+GET /datasets/{id}?expansion=transforms
+```
+
+#### Request
+
+```
+curl -X GET \
+  'https://platform.adobe.io/data/foundation/catalog/datasets/5ba9452f7de80400007fc52a?expansion=transforms' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
+
+_**Note:**_ You can expand multiple fields in a single GET request by using a comma-delimited list, such as `expansion=transforms,files`.
+
+#### Response
+
+The response now shows the expanded "transforms" field and its details. 
+
+```JSON
+{
+    "5ba9452f7de80400007fc52a": {
+        "name": "Sample Dataset",
+        "description": "Sample dataset containing important data",
+        "dule": {},
+        "statsCache": {},
+        "state": "DRAFT",
+        "createdUser": "{string}@AdobeID",
+        "imsOrg": "{IMS_ORG}",
+        "createdClient": "{API_KEY}",
+        "updatedUser": "{string}@AdobeID",
+        "version": "1.0.0",
+        "tags": {
+            "unifiedProfile": [
+                "enabled:true"
+            ]
+        },
+        "created": 1537819952110,
+        "updated": 1537819952876,
+        "viewId": "5ba9452f7de80400007fc52b",
+        "aspect": "production",
+        "status": "enabled",
+        "fields": [],
+        "fileDescription": {
+            "persisted": true,
+            "format": "csv",
+            "delimiters": [
+                ","
+            ],
+            "containerFormat": "text",
+            "charset": "UTF-8"
+        },
+        "transforms": {
+            "58ed52ea6da08e0f72ebc99a": {
+                "version": "1.0.0",
+                "imsOrg": "{IMS_ORG}",
+                "created": 1491948266385,
+                "createdClient": "{API_KEY}",
+                "createdUser": "{string}@AdobeID",
+                "updatedUser": "{string}@AdobeID",
+                "updated": 1491948266385,
+                "dataSetViewId": "58ed4a86215b2f0c215a4539",
+                "codeUrl": "git://foo.bar/path/to/code.git"
+            }
+        },
+        "files": "@/dataSets/5ba9452f7de80400007fc52a/views/5ba9452f7de80400007fc52b/files",
+        "observableSchema": {},
+        "schemaMetadata": {},
+        "schemaRef": {}
+    }
+}
+```
+
+### POST - Multiple Requests in a Single Call
+
+Catalog Service API provides a multi-request method that not only allows for multiple requests to be made on a single connection, but if those requests are modifications/additions to Catalog and any one of the changes fails, all changes will roll-back transactionally.
+
+#### API Format
 
 ```
 POST /
 ```
 
-Where the POST body is an array of objects containing the information needed to represent what would normally be a single request:
+#### Request
+
+The request payload contains an array of objects representing what would normally be individual requests. 
+
+Requests are executed in order and values returned from a previous call are made available in subsequent calls through template language.  For example, if you would like to reference a value from a previous object, you can create a reference in the format: `<<{ID of object}.{attribute from body}>>`.  You can reference any attribute available in the "body" of a previous object through these templates.
+
+There is also a special use case, such that when a PUT or POST is executed and only the reference to the object is returned by default, this can be aliased to the value `id` and can be used as  `<<firstObject.id>>`, for example.
+
+The sample below creates (POST) a new dataset and then creates (POST) related views and transforms.
 
 ```
-[
+curl -X POST \
+  https://platform.adobe.io/data/foundation/catalog/ \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '[
     {
         "id": "firstObjectId",
-        "resource": "/dataSetFile",
-        "method": "put",
+        "resource": "/datasets",
+        "method": "post",
         "body": {
-            "id": "56c62ca67b8f2a643b6c1ae8",
-            "dataSetViewId": "6af287f491059dea782709da6b"
+            "type": "raw",
+            "name": "First Dataset"
+        }
+    }, 
+    {
+        "id": "secondObjectId",
+        "resource": "/datasetViews",
+        "method": "post",
+        "body": {
+            "status": "enabled",
+            "aspect": "production",
+            "dataSetId": "<<firstObjectId.id>>"
         }
     },
-    {
-        "id": "secondObjectId",
-        "resource": "/dataSetFiles/56c62ca67b8f2a643b6c1ae8",
-        "method": "get"
+        {
+        "id": "thirdObjectId",
+        "resource": "/transforms",
+        "method": "post",
+        "body": {
+            "dataSetViewId": "<<secondObjectId.id>>",
+            "codeUrl": "git://example.com/foo/bar/something.git",
+            "args": [ "argV", "argC"]
+        }
     }
-]
+]'
 ```
+The request involves several important fields, outlined in more detail below:
+* `"id"`: User-supplied ID that is attached to the response object so that you can match up requests to responses. Catalog does not use this value except to pass it back in the response.
+* `"resource"`: The resource path relative to the root (Catalog). The protocol and domain should not be part of this value and it is expected to be prefixed with "/". When using PATCH and DELETE, include the object `{id}` in the resource path. Not to be confused with the user-supplied `"id"`, the resource path uses the `{id}` of the dataset itself (e.g. `"resource": "/datasets/1234567890"`).
+* `"method"`: The name of the method (e.g. GET, PUT, POST, PATCH, DELETE) related to the action taking place in the request.
+* `"body"`: The JSON document that would normally be passed as the payload in a POST, PUT, or PATCH request.
 
-Requests are executed in order and values returned from a previous call are made available in subsequent calls through a templating message.  If you would like to reference a value from another object, you create a reference in the style <<[ID of object].[attribute from body]>>.  You can reference any attribute available in the "body" of a previous object through this templating language, as well as a single special case:  When a PUT or POST is executed, only the reference to the object is returned by default, aliased to the value `id` (ex. <<firstObject.id>>).
+#### Response
 
-```
-[
-   {
-       "id": "firstObjectId",
-       "resource": "/dataSet",
-       "method": "post",
-       "body": {
-           "type": "raw",
-           "name": "firstdataset"
-       }
-   },
-   {
-       "id": "secondObjectId",
-       "resource": "/dataSetViews",
-       "method": "post",
-       "body": {
-           "status": "enabled",
-           "aspect": "production",
-           "dataSetId": "<<firstObjectId.id>>"
-       }
-   },
-       {
-       "id": "thirdObjectId",
-       "resource": "/transforms",
-       "method": "post",
-       "body": {
-           "dataSetViewId": "<<secondObjectId.id>>",
-           "codeUrl": "git://example.com/foo/bar/something.git",
-           "args": [ "argV", "argC"]
-       }
-   }
-]
-```
+Take care when inspecting the response to a multi-request, as you will need to verify the code of each individual request and not rely solely on the HTTP Status Code for the POST request.  It is possible for a single sub-request to return a 404 (for example a GET done on an invalid resource) while the overall request returns 200.
 
-__Example Catalog Response:__
+The response to a multi-request is an array with objects containing the `"id"` that you assigned to each request, the HTTP Status Code for the individual request, and the typical response `"body"` for a request of this nature. Since the three sample requests were all to create (POST) new objects, it makes sense that the "body" of each object is an array containing only the `{id}` of the newly created object, as is the standard with most successful POST responses.
 
-```
+```json
 [
     {
         "id": "firstObjectId",
+        "code": 200,
         "body": [
-            "@/dataSetFiles/56c62ca67b8f2a643b6c1ae8"
-        ],
-        "code": 200
+            "@/dataSets/5be230aef5b02914cd52dbfa"
+        ]
     },
     {
         "id": "secondObjectId",
-        "body": {
-            "56c62ca67b8f2a643b6c1ae8": {
-                "created": 1455836898440,
-                "createdClient": "MCDPCatalogServiceQa2",
-                "dataSetViewId": "6af287f491059dea782709da6b",
-                "imsOrg": "1376517755E72AC07F000101@AdobeOrg",
-                "version": "1.0.15"
-            }
-        },
-        "code": 200
+        "code": 200,
+        "body": [
+            "@/dataSetViews/5be230aef5b02914cd52dbfb"
+        ]
+    },
+    {
+        "id": "thirdObjectId",
+        "code": 200,
+        "body": [
+            "@/transforms/5be230aef5b02914cd52dbfc"
+        ]
     }
 ]
 ```
 
-> Be aware that because of the nature of multi-request you will need to verify the code of each individual request and not rely on the standard HTTP status code passed to the browser.  It is possible for a single sub-request to return a 404 (for example a GET done on an invalid resource) but the actual HTTP response to still be a 200.
+## Filtering Data with Query Parameters
 
----
+Catalog Service allows response data to be filtered by specifying query parameters and attributes during your request. Please refer to the [Catalog Service RESTful API](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html#!acpdr/swagger-specs/catalog.yaml) documentation to better understand what filters are available for a given API endpoint.  The following examples outline the most common types of filters used in Catalog.
 
-## 3. Components
+Best practices for Catalog Service include using query parameters to filter responses. Filters reduce the load on the API and help to improve overall performance.
 
-The Data Catalog Service is an orchestration between the following components:
+### Filter by Combining Multiple Filters
 
-|Object|JSON Schema|Definition|
-|---|---|---|
-|Account|accountSchema|Accounts represent a collection of authentication credentials used by a customer to create Connections of a specific type. Each Connection has a set of unique parameters that are persisted by Catalog and secured in an Azure Key Vault by way of the Security Service.|
-|Batch|batchSchema|Batches allow Catalog users to understand which operations and applications have operated on objects tracked by the system. First, a batch outlines the final results (records processed, size on disk etc) but may also include links to DataSets, DataSetViews, etc. that were affected by the batch operation.|
-|Connector|connectorSchema|Connectors define how and when data is ingested into the platform. They define how data is to be gathered from technology sources (like S3, RedShift, and SFTP) and partner sources (like DFA, SAP, MSFT and ExactTarget). <br>Connectors also define how and when Adobe Solution data is ingested into the platform.|
-|Connection|connectionSchema|Connections are customer-specific instances of Connectors. As an example, a user selects the Azure Blob Connector, supplies the necessary details as defined by that Connector, and ends up with a Connection.|
-|DataSet|dataSetSchema|DataSets are the building blocks for data transformation and tracking in the Catalog Service. This is your interface to the data. DataSets can tell you where the data came from, what fields it was originally composed of, and what fields are being exposed for use.|
-|DataSetFile|dataSetFileSchema|A DataSetFile represents a block of data that's been saved on the platform. As record of a literal file, this is where you'll go to find the file's size and what batch it came from. This construct will also provide the number of records contained in the file.|
+Using an ampersand (`&`) you can combine multiple filters in a single request. When additional conditions are added to a request, an AND relationship is assumed. 
 
-
-> Internally, DataSets have a DataSetView construct which you will see in responses but should not consider in your developments.
-
----
-
-## 4. Data Discovery
-
-Data Catalog Services offers a robust set of options for accessing your data. The following describe modifiers to services which access data.
-
-### 4.1 Filtering
-
-Many APIs allow response data to be filtered by string or numeric attributes. Please refer to the swagger documentation for a given API to understand what filters might be available. For example, you can filter a list of DataSets by those tagged a certain way.
-
-__Example Data Catalog Service request, demonstrating filtering by tagname:__
+#### API Format
 
 ```
-GET /dataSets/58ed485dee812c05a7cfc8d0?tags=tagname:tagvalue
+GET /datasets?{filter}={value}&{filter2}={value}&{filter3}={value}
 ```
 
-#### 4.1.1 Filtering by Property
+### Filter Using Limits
 
-Certain APIs allow filtering by property. The table below lists the operations supported.
+To improve the speed of API requests, use the `limit` query parameter to constrain the number of objects returned.
 
-|Operation|Description|
-|---|---|
-|Existence|Stating only the property name will only return entries where the property exists|
-|~|Match the (string) value against a regular expression|
-|< / > / <= / >= / == / !=|Comparison of the field value against another field or value|
+Catalog responses are automatically metered according to configured limits:
 
-__Examples:__
+* If a `limit` parameter is not specified, the maximum number of objects per response payload is 20.
+* The global limit for all other Catalog queries is 100 objects.
+* For dataset queries, if `observableSchema` is requested using the `properties` query parameter, the maximum number of datasets returned is 20.
+* Invalid `limit` parameters (including `limit=0`) are met with a 400-level error response that outlines proper ranges.
+* If limits or offsets are passed as query parameters, they take precedence over those passed as headers.
 
-|Usage|Explanation|
-|---|---|
-|GET/dataSets?property=name|Returns only data sets which contain the property `name`|
-|GET /dataSets?property=!name|Returns only data sets that don't contain the property `name`|
-|GET /dataSets?property=name~^Sample|Returns only data sets whose name starts with the word `Sample`|
-|GET /dataSets?property=version>1.0.0|Returns only data sets whose version are greater than 1.0.0|
-
-> The `name` property supports the use of the wildcard `*` character within, or as, the search string. Wildcards match empty/no character, such that the the search string `te*st` will match the value "test". Asterisks are escaped using "**" (double asterisk), to represent a single asterisks as a literal string in your search string.
-
-### 4.2. Data Range Queries
-
-Some Data Catalog APIs have query parameters that allow ranged queries, most often in the case of dates. Each service will indicate which attributes are allowed. When additional params are added on to a query, the operation is assumed to be additive (AND).
-
-__Range Queries:__
+#### API Format
 
 ```
-// Get Batches created in August
-GET /batches?createdAfter=1501545600000&createdBefore=1504137600000
-
-// Get Batches with data that is related to August
-GET /batches?startAfter=1501545600000&endBefore=1504137600000
+GET /datasets?limit=3
 ```
 
-### 4.3. Limiting & Offsets
-
-Data Catalog responses are automatically metered according to configured limits:
-
-* 20 response objects by default
-* Maximum limits are defined on a per-environment basis dynamically by operations. Invalid limits are met with error responses that outline proper ranges
-* If limits or offsets are passed as query parameters, they take precedence over those passed as headers
-
-#### 4.3.1 Limit Number of Objects in a Response
-
-To constrain an API response to a limited number of objects, use the `limit` query parameter.
-
-__Example Data Catalog Service Request, demonstrating limiting the number of objects returned:__
+#### Request
 
 ```
-GET /dataSet?limit=1
+curl -X GET \
+  https://platform.adobe.io/data/foundation/catalog/datasets?limit=3 \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-#### 4.3.2 Shift Response List Forward
+#### Response
 
-To shift the response list forward, you can use the `start` query parameter.
+The above request will return three datasets (`limit=3`) and the details therein.
 
-__Data Catalog Service Request:__
+### Filter by Displaying Select Properties
 
-```
-GET /dataSet?limit=1&start=140
-```
+Querying objects can often return far more information that you actually need. To help reduce the load on the system, it is best practice to use the `properties` query parameter to return only the properties of the object that you need to use.
 
-Alternatively, you can send in a `Range` header to indicate what objects you want in a response.
+The `properties` parameter can be used to filter within a single object or a group of objects, returning only the requested properties in the response. You can use `properties` to return a single property or send a comma-separated list of fields to return more than one. 
 
-|Header|Value|Description|
-|---|---|---|
-`Range`|`objects=140-141`|Using the `Range` header also allows you to see how many objects would normally be returned without any limit by inspecting the Content-`Content-Range` header.<br><br>__Note__: Using the `Range` header does incur an additional cost because we query to see the total count as well. Use lightly.|
-|OR|
-|`Content-Range`|`objects 140-141/311`||
-
-### 4.4 Sorting
-
-Sorting the response collections is done by making a request with the `orderBy` query parameter. The value is two-part, with the first part being the direction, the delimiter (a colon “:” character), followed by the field to be sorted by. If the direction is not specified, the default direction is taken to be ascending.
-
-__Data Catalog Service Request:__
+#### API Format
 
 ```
-GET /dataSet?orderBy=asc:created
-GET /dataSet?orderBy=desc:created
-GET /dataSet?orderBy=created,desc:updated
+GET /datasets?properties={property1},{property2},{property3}
+GET /datasets/{id}?properties={property1},{property2},{property3}
+GET /datasets/{id1},{id2},{id3},{id4}?properties={property1},{property2},{property3}
 ```
 
-### 4.5 Mixed Examples
+#### Request
 
-As a reminder, additional conditions are assumed to be ANDed with others on the request.
-
-__Example multi-factor queries:__
+The following request includes a comma-separated list of properties, as well as a `limit` to the number of datasets returned. If the request did not include a "limit" parameter, the response would contain a maximum of 20 objects.
 
 ```
-// Get a list of DataSets recently created by me.
-GET /dataSets?sort=desc:created&createdUser=foobar@AdobeID
-
-// Get a list of failed Batches in August, sorted by creation date.
-GET /batches?createdAfter=1501545600000&createdBefore=1504137600000&sort=desc:created&status=failure
+curl -X GET \
+  'https://platform.adobe.io/data/foundation/catalog/datasets?limit=4&properties=created,updated,version,observableSchema' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
----
+#### Response
 
-## 5. Data Quality
+The response object includes four datasets (`limit=4`) with only the requested properties displayed. If a dataset does not include any of the requested properties it will display as an empty object `{}` ("Dataset1" below) or as an object showing any of the requested properties that it does include ("Dataset2").
 
-Adobe Data Catalog provides visibility into the success of your data ingestions by providing access to errors reported. Maintain the integrity of your data during updates using the features described in this section.
+A dataset may return a requested property as an empty object if it contains the property but there is no value ("Dataset3"). 
 
-### 5.1 Assert Object Version
+Otherwise, the dataset will display the full value of all requested properties ("Dataset4").
 
-It is good practice to use object versioning to prevent the type of data corruption that occurs when multiple threads save an object near-simultaneously. API calls to get a single object, as should be the case when getting an object to perform an update, will include the version of the object retrieved as response header `E-Tag`. Adding that version as a response header named `If-Match` in your PUT calls will result in the update only succeeding if the version is still the same, preventing data collission.
-
-|Header|Value|Description|
-|---|---|---|
-|`If-Match`|`version`<br><br>A version is provided as a response header (`E-Tag`) in responses that contain a single object|If during PUT operations, you wish to make sure you’re editing the object as it existed when you received it, you can send your request with an `If-Match` header.<br><br>1. If the versions in the request and the Data Catalog match, the PUT is executed and your data is updated.<br>2. If the versions do not match (the object was modified by another process since you received it), you’ll receive a HTTP 412 response.|
-
-### 5.2 Validate Update Only
-
-Perform an update in hypothetical, validation mode. Do not actually persist data.
-
-|Header|Value|Description|
-|---|---|---|
-|`Pragma`|`validate-only`|When added to a POST or PUT call, the update process operates to validate only, and will not actually persist the data|
-
----
-
-## 6. Data Curation
-
-Your data exists on Adobe Cloud Platform as a conglomeration of data from any number of disparate systems and data sources. Once on the platform, Data Catalog allows you to work with your data your way.
-
-### 6.1 Tags
-
-Some objects in the catalog support tags that provision the attachment of information to an object, which can then be used to retrieve it.  Tags may be used however your processes require, and there are very few limitations to tag names.
-
-* Tag names are namespaced to a customer and are unique to each customer, regardless of tag name
-* Adobe components and processes may leverage tags for internal behavior and would, as a standard, prefix used tag names with an "adobe" prefix. Your tag names, then, should avoid this convention
-* The following are reserved tag names, used by various ACP components:
-  * "unifiedProfile" - This tag name is used to enable a DataSet to be ingested by Unified Profile
-
-__Example uses of tags:__
-
-```
-# Assume this object is created:
-POST /dataSets
-
+```json
 {
-    "type":"master",
-    "name":"Test Master DataSet with Tags",
-    "tags":{
-        "customTag1_SomeId":["223344"],
-        "customTag2_SomeString":["bar"]
+    "Dataset1": {},
+    "Dataset2": {
+        "created": 1541284178110,
+        "updated": 1541284608521,
+    },
+    "Dataset3": {
+        "version": "1.0.1",
+        "created": 1541028420007,
+        "updated": 1541028428418,
+        "observableSchema": {}
+    },
+    "Dataset4": {
+        "version": "1.0.1",
+        "created": 1540270671178,
+        "updated": 1540297501986,
+        "observableSchema": {
+            "type": "object",
+            "meta:xdmType": "object",
+            "properties": {
+                "homeAddress": {
+                    "type": "object",
+                    "meta:xdmType": "object",
+                    "properties": {
+                        "city": {
+                            "type": "string",
+                            "meta:xdmType": "string"
+                        },
+                        "postalCode": {
+                            "type": "string",
+                            "meta:xdmType": "string"
+                        },
+                        "stateProvince": {
+                            "type": "string",
+                            "meta:xdmType": "string"
+                        },
+                        "street1": {
+                            "type": "string",
+                            "meta:xdmType": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+### Filter by Shifting Response List Forward
+
+To shift the response list forward, or "offset" the results, you can use the `start` query parameter. Remember that the `start` parameter uses zero-based numbering with the origin index being zero. (i.e. to access the third object you would write `start=2` because the first object has an index equal to zero.) 
+
+If the `start` parameter is not paired with a `limit` parameter, the maximum number of objects returned is 20.
+
+#### API Format
+
+```
+GET /datasets?start={number}
+```
+#### Request
+
+```
+curl -X GET \
+  https://platform.adobe.io/data/foundation/catalog/datasets?limit=2&start=4 \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
+
+#### Response
+
+The response for the above request is a JSON object containing two top-level items (`limit=2`), one for each dataset and its details. The response is shifted by four (`start=4`), meaning the datasets shown are number five and six chronologically.
+
+### Filter Using Tags
+
+Some objects in the catalog support the use of tags. Tags can be used to attach information to an object and then be used later to retrieve the object.  The choice of what tags to use and how to apply them depends on your organizational processes, however there are a few limitations to tags:
+
+* The only Catalog objects that currently support tags are Dataset, Batch, and Connection.
+* Tag names are unique to each customer, meaning that you cannot see tags created by other organizations, nor can they see yours.
+* Adobe processes may leverage tags for specific behaviors and would, as a standard, prefix used tag names with "adobe". Therefore you should avoid this convention in declaring tag names.
+* The following are reserved tag names, used across Experience Platform, and therefore cannot be declared as a tag name for your organization:
+  * "unifiedProfile" - This tag name is reserved for datasets to be ingested by Unified Profile.
+  * "unifiedIdentity" - This tag name is reserved for datasets to be ingested by Unified Identity.
+
+#### API Format
+
+Filter by a specific tag having a specific value:
+```
+GET /datasets?tags={TAG_NAME}:{TAG_VALUE}
+```
+Filter by multiple tags having specific values (assumes an AND relationship):
+```
+GET /datasets?tags={TAG_NAME}:{TAG_VALUE},{TAG2_NAME}:{TAG2_VALUE}
+```
+Filter by a tag value containing a wildcard (e.g. `test*` returns any dataset where the tag value begins with "test")
+```
+GET /datasets?tags={TAG_NAME}:{TAG_VALUE}*
+```
+Filter by the existence of a specific tag. This request uses a wildcard (`*`) to accept any value.
+```
+GET /datasets?tags={TAG_NAME}:*
+```
+
+#### Request
+
+Imagine a dataset containing the following tags:
+
+```json
+{
+    "5be1f2ecc73c1714ceba66e2": {
+        "imsOrg": "{IMS_ORG}",
+        "tags": {
+            "sampleTag": [
+                "123456"
+            ],
+            "secondTag": [
+                "tag_string"
+            ]
+        },
+        "name": "Sample Dataset",
+        "description": "Same dataset containing sample data.",
+        "dule": {
+            "identifiability": [
+                "I1"
+            ]
+        },
+        "statsCache": {},
+        "state": "DRAFT",
+        "lastBatchId": "ca12b29612bf4052872edad59573703c",
+        "lastBatchStatus": "success",
+        "lastSuccessfulBatch": "ca12b29612bf4052872edad59573703c",
+        "namespace": "{string}",
+        "createdUser": "{string}@AdobeID",
+        "createdClient": "{API_KEY}",
+        "updatedUser": "{string}@AdobeID",
+        "version": "1.0.0",
+        "created": 1541534444286,
+        "updated": 1541534444286
     }
 }
 
-# Filter down to DataSets that contain a single tag with a particular value:
-GET /dataSets?tags=customTag1_SomeId:223344
-
-# Filter down to DataSets that contain both tag/value combinations:
-GET /dataSets?tags=customTag1_SomeId:223344,customTag2_SomeString:bar
-
-# By tag value:
-GET /dataSets?tags=customTag2_SomeString:bar*
-
-# By tag existence:
-GET /dataSets?tags=customTag1_SomeId:*
+```
+The following sample request could be made to filter by one tag having a specific value AND the second tag being present.
+```
+curl -X GET \
+  'https://platform.adobe.io/data/foundation/catalog/datasets?tags=sampleTag:123456,secondTag:* \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-Objects that currently support tags: DataSet, Batch, Connection
+#### Response
+The response contains individual objects that meet the parameters. Unless a limit was also specified, the response will contain a maximum of 20 objects. In the sample code below, the objects are minimized for space but when expanded would contain the details for each dataset.
 
-### 6.2 Delete DataSetFiles for a Batch
+```json
+{
+    "5be1f2ecc73c1714ceba66e2": {},
+    "5bb276b03a14440000971552": {},
+    "5bde21511dd27b0000d24e95": {},
+    "5bda3a4228babc0000126377": {},
+    "5bceaa4c26c115000039b24b": {}
+}
+```
 
-This functionality allows for the deletion of all DataSetFiles for a given Batch, by ID. An empty array and an HTTP 200 response will be returned if no DataSetFiles are found.
+### Filter Using Date Range Queries
 
-__Example DELETE Request/Response:__
+Some Catalog APIs have query parameters that allow ranged queries, most often in the case of dates. Each service will indicate which attributes are allowed. When additional params are added to a query, the operation is assumed to be additive (AND).
+
+#### API Format
 
 ```
-DELETE /dataSetFiles?batchId=12345ABCD12345
-
-Response: 200
-[
-    "@/dataSetFiles/678222A2233385221DF"
-]
+GET /batches?createdAfter={UNIX Epoch Time}&createdBefore={UNIX Epoch Time}
 ```
+
+#### Request
+
+The following request returns batches created during the month of September 2018.
+```
+curl -X GET \
+  'https://platform.adobe.io/data/foundation/catalog/batches?createdAfter=1535760000000&createdBefore=1538265600000' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
+
+### Filter by Sorting
+
+Sorting response data involves using the `orderBy` query parameter. This parameter requires a "direction" (`asc` for ascending or `desc` for descending), a colon (`:`) and then the field to be sorted by. If a direction is not specified, the default direction is ascending.
+
+Sort parameters can be joined together allowing you to order by one field and then determine direction based on another. 
+
+#### API Format
+
+```
+GET /datasets?orderBy=asc:created
+GET /datasets?orderBy=desc:created
+GET /datasets?orderBy=created,desc:updated
+```
+
+### Filter by Property
+
+Certain Catalog APIs, such as `/datasets` allow filtering by property. Some simple filters are designed for equivalency comparisons, while others support wildcards.  
+
+#### API Format
+
+```
+GET /datasets?property={VALUE}
+```
+
+|Supported Operations|Description|
+|---|---|
+|Existence|Stating only the property name will only return entries where the property exists|
+|~|Match the (string) value against a regular expression|
+|< , > , <= , >= , == , !=|Comparison of the field value against another field or value|
+
+_**Note:**_ Simple filters support the ability to pass in a set of values.  If a set is passed in, it is treated like an "in" clause for an array (i.e. is the value of this field in the provided list).  You can invert the query by prefixing a `!` character to the list to return "where the value is not in the provided list" (e.g. `/datasets?name=!samplename,anothername`).
+
+#### Additional Examples
+
+|Usage|Explanation|
+|---|---|
+|`GET /datasets?property=name`|Returns only datasets which contain the property `name`|
+|`GET /datasets?property=!name`|Returns only datasets that don't contain the property `name`|
+|`GET /datasets?property=name~^Sample`|Returns only datasets whose name starts with the word `Sample`|
+|`GET /datasets?property=version>1.0.0`|Returns only datasets whose version are greater than 1.0.0|
+
+_**Note:**_ The `name` property supports the use of a wildcard `*` character within, or as, the search string. Wildcards match empty/no character, such that the search string `te*st` will match the value "test". Asterisks are escaped using `**` (double asterisk) to represent a single asterisk as a literal string in your search string.
+
+#### Request
+
+The following request will return any datasets with a version number greater than 1.0.3.
+
+```
+curl -X GET \
+  https://platform.adobe.io/data/foundation/catalog/datasets?property=version>1.0.3 \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
+Any "top-level" object property can be used in the request, meaning that for the following sample object, you could filter by property for "name", "description", and "subItem", but NOT by "sampleKey".
+
+```json
+{
+  "5ba9452f7de80400007fc52a": {
+      "name": "Sample Dataset",
+      "description": "Sample dataset containing important data",
+      "subitem": {
+          "sampleKey": "sampleValue"
+      }
+  }
+}
+```
+
+#### Response
+
+The response object for the above request contains objects for each dataset that meets the criteria. Without specifying a limit, the maximum number of objects in the response will be 20.
+
+## Headers
+
+Catalog provides visibility into the success of data ingestion by giving you access to reported errors and provides several header conventions to help you maintain the integrity of your data during updates.
+
+### E-Tag/If-Match
+
+It is good practice to use object versioning to prevent the type of data corruption that occurs when an object is saved by multiple users near-simultaneously. 
+
+Best practice when updating an object involves first making an API call to view (GET) the object to be updated. Contained within the response (and any call where the response contains a single object) is an `E-Tag` header containing the version of the object. Adding the object version as a request header named `If-Match` in your update (PUT or PATCH) calls will result in the update only succeeding if the version is still the same, helping to prevent data collision.
+
+If the versions do not match (the object was modified by another process since you received it), you will receive HTTP Status Code 412 (Precondition Failed) indicating that access to the target resource has been denied.
+
+### Pragma
+
+On occasion, you may wish to validate an object without saving the information. If you require the ability to POST or PUT for validation purposes only, and do not wish the data in the request to be persisted, you can use a Pragma header set to `validate-only`. 
+
+
+
+
