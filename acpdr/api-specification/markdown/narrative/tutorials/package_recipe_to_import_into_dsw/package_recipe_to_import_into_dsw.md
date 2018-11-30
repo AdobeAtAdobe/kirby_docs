@@ -153,7 +153,7 @@ Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
 
 We will need to create a Dockerfile that first takes the base image, installs dependencies, and copies over the packaged intelligent service we did in section [Create Dockerfile](#create-dockerfile). Since you are using the Sample Intelligent Service, the Dockerfile is provided [in the directory](https://github.com/adobe/acp-data-services-dsw-reference/blob/master/recipes/python/retail/Dockerfile). The example for Python is shown below:
 
-```Docker
+```BASH
 FROM <docker-runtime-path>
 
 #INSTALL NLTK and other modules needed by application
