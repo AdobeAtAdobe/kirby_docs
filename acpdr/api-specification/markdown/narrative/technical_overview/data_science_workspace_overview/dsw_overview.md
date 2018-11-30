@@ -27,7 +27,7 @@
 
 ## Overview
 
-Data Science Workspace uses machine learning and artificial intelligence to unleash insights from your data. Integrated into the Adobe Experience Platform, Data Science Workspace helps you make predictions using your content and data assets across Adobe solutions.  
+Data Science Workspace uses machine learning and artificial intelligence to unleash insights from your data. Integrated into Adobe Experience Platform, Data Science Workspace helps you make predictions using your content and data assets across Adobe solutions.  
 
 Data scientists of all skill levels will find sophisticated, easy-to-use tools that support rapid development, training, and tuning of machine learning recipes - all the benefits of AI technology, without the complexity.  
 
@@ -40,10 +40,10 @@ With Data Science Workspace, data scientists can easily create intelligent servi
 Today's enterprise puts a high priority on mining big data for predictions and insights that will help them personalize customer experiences and deliver more value to customers - and to the business. 
 As important as it is, getting from data to insights can come at a high cost. It typically requires skilled data scientists who conduct intensive and time-consuming data research to develop machine-learning models, or recipes, which power intelligent services. The process is lengthy, the technology is complex, and skilled data scientists can be hard to find.  
 
-With Data Science Workspace, the Adobe Experience Platform allows you to bring experience-focused AI across the enterprise, streamlining and accelerating data-to-insights-to-code with:
+With Data Science Workspace, Adobe Experience Platform allows you to bring experience-focused AI across the enterprise, streamlining and accelerating data-to-insights-to-code with:
 * A machine learning framework and runtime
 * Integrated access to your data stored in Adobe Experience Platform
-* A unified data schema built on the Experience Data Model (XDM)
+* A unified data schema built on Experience Data Model (XDM)
 * The computing power essential for machine learning/AI and managing big datasets
 * Prebuilt machine learning recipes to accelerate the leap into AI-driven experiences
 * Simplified authoring, reuse, and modification of recipes for data scientists of varied skill levels
@@ -82,7 +82,7 @@ With Data Science Workspace, your data scientists can streamline the cumbersome 
 
 Data is the cornerstone of AI and machine learning.  
 
-Data Science Workspace is fully integrated with the Adobe Experience Platform, including the Data Lake, Unified Profile, and Unified Edge. Explore all your organizational data stored in Adobe Experience Platform at once, along with common big data and deep learning libraries, such as Spark ML and TensorFlow. If you don't find what you need, ingest your own datasets using the XDM standardized schema.  
+Data Science Workspace is fully integrated with Adobe Experience Platform, including the Data Lake, Unified Profile, and Unified Edge. Explore all your organizational data stored in Adobe Experience Platform at once, along with common big data and deep learning libraries, such as Spark ML and TensorFlow. If you don't find what you need, ingest your own datasets using the XDM standardized schema.  
 
 ### Prebuilt machine learning recipes
 
@@ -109,7 +109,7 @@ With Data Science Workspace, you decide how you want to author recipes.
 
 * Save time by browsing for a prebuilt recipe that addresses your business needs, which you can use as is or configure to meet your specific requirements. 
 * Create a recipe from scratch, using the authoring runtime in Jupyter Notebook to develop and register the recipe.
-* Upload a recipe authored outside the Adobe Experience Platform into Data Science Workspace or import recipe code from a repository, such as Git, using the authentication and integration available between Git and Data Science Workspace.
+* Upload a recipe authored outside Adobe Experience Platform into Data Science Workspace or import recipe code from a repository, such as Git, using the authentication and integration available between Git and Data Science Workspace.
 
 ### Experimentation
 
@@ -119,7 +119,7 @@ Data Science Workspace brings tremendous flexibility to the experimentation proc
 
 When you're happy with your recipe, it's just a few clicks to create an intelligent service. No coding required - you can do it yourself, without enlisting a developer or engineer. Finally, publish the intelligent service to Adobe IO and it's ready for your digital experience team to consume.
 
-<!--You can also publish your intelligent service to the Service Gallery, where it's available to specific people, specific organizations, or everyone who develops data solutions on the Adobe Experience Platform. You can even share it with your external partners, and they can share their intelligent service with you. And the next time you're starting a new recipe, you can check the Service Gallery to see if there's a similar intelligent service you can use to get started. -->
+<!--You can also publish your intelligent service to the Service Gallery, where it's available to specific people, specific organizations, or everyone who develops data solutions on Adobe Experience Platform. You can even share it with your external partners, and they can share their intelligent service with you. And the next time you're starting a new recipe, you can check the Service Gallery to see if there's a similar intelligent service you can use to get started. -->
 
 ### Continuous improvement
 
@@ -127,7 +127,7 @@ Data Science Workspace tracks where intelligent services are invoked and how the
 
 ### Access to new features and datasets
 
-Data scientists can take advantage of new technologies and datasets as soon as they are available through the Adobe services. Through frequent updates, we do the work of integrating datasets and technologies into the platform, so you don't have to.
+Data scientists can take advantage of new technologies and datasets as soon as they are available through Adobe services. Through frequent updates, we do the work of integrating datasets and technologies into the platform, so you don't have to.
 
 ### Security and peace of mind
 
@@ -158,10 +158,10 @@ A data scientist typically spends up to 75% of the time required to create a rec
 
 Your first step is to check the recipe gallery to see if an existing recipe meets your needs, or comes close. An alternative is to import a recipe you created outside of Adobe Experience Platform. Starting with an existing recipe often streamlines the data exploration phase and makes it easier for a data scientist.
  
-![](prebuilt_recipes.png)
+![](prebuilt_recipes2.png)
 
 If you're starting from scratch or configuring an existing recipe, you begin your data search in a centralized and standardized data catalog for you organization, which simplifies the hunt considerably. You might even find that another data scientist in your organization has already identified a similar dataset, and choose to fine-tune that dataset rather than start from scratch.
-All the data in the Adobe Experience Platform complies with a standardized XDM schema, eliminating the need to create a complex model for joining data or obtain help from a data engineer.
+All the data in Adobe Experience Platform complies with a standardized XDM schema, eliminating the need to create a complex model for joining data or obtain help from a data engineer.
 
 If you don't immediately find the data you need, but it exists outside Adobe Experience Platform, it's a relatively simple task to ingest additional datasets, which will also transform into the standardized XDM schema.  
 You can use Jupyter Notebook to simplify data pre-processing - possibly starting with a notebook template or a notebook you've used previously for propensity to buy.  
