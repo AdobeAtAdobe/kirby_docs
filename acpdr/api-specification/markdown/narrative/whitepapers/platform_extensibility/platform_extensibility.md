@@ -1,269 +1,229 @@
-# Adobe Experience Platform
-
-Adobe Experience Platform is the most powerful, flexible, and open system on the market for building and managing complete solutions for your customer experience. Experience Platform enables organizations to centralize and standardize customer data and content from any system and apply data science and machine learning to dramatically improve the design and delivery of rich, personalized customer experiences. 
-
-Experience Platform is built on open APIs, exposing the full functionality of the system to developers using familiar tools so that customers can integrate their enterprise solutions. Experience Platform also allows partners to build their own products and technologies for their needs. 
-
-<p style="text-align: center;"><img src="image001.png"  /></p> 
-
-This power and flexibility makes Experience Platform unique in the market. It gives partners, customers, and a community of developers a foundation for the types of transformative innovations in customer experience that drive an Experience Business&mdash;exceeding customers’ expectations with continually improved experiences drawn from a 360-degree view of the customer and their context and preferences. 
-
-With the Platform, you get an open system that supports the experience innovations you want to create with a data foundation, machine intelligence, and value-added services that are all open to be controlled, customized, and integrated with as you see fit.
+# Adobe Experience Platform 
 
 
-<p style="text-align: center;"><img src="platform_overview.png"  /></p> 
+Adobe Experience Platform is the most powerful, flexible, and open system on the market for building and managing complete solutions that drive customer experience. Experience Platform enables organizations to centralize and standardize customer data and content from any system and apply data science and machine learning to dramatically improve the design and delivery of rich, personalized experiences. 
 
+Built on open APIs, Experience Platform exposes the full functionality of the system to developers, supporting the easy integration of enterprise solutions using familiar tools. Experience Platform also supports partners to build and integrate their own products and technologies as needed. 
 
-## API-first development
-Experience Platform has been designed and built from the ground up using the principles of API-first design.
+This power and flexibility makes Experience Platform unique in the market. It gives partners, customers, and a community of developers a foundation on which to build innovations that drive The Experience Business: exceeding customer expectations by delivering a continually improving, fully-personalized experience drawn from a 360-degree view of the customer and their individual preferences. 
 
-1.	The API is the primary interface into the application.
-2.	All platform functions, including administrative functions, are available via API.
-3.	The platform services, Adobe solutions and 3rd party integrations use the same API.
+Adobe Experience Platform delivers an open system complete with data foundation, machine learning, and value-added services that help you control, customize, and integrate your data. Together with Platform, you can create experiences that surprise and delight your customers, cement brand loyalty, and drive business value. 
 
-Guided by these principles, as you build Platform services and solutions, you start by looking first at the API and then architecting the platform from the ground up to support developer access to low-level CRUD operations. Once the API is built, the user interface is constructed by making REST calls to the API.
+![Adobe Experience Platform](experience_platform_flow.png "Adobe Experience Platform")
 
-This means that the API&mdash;being built first&mdash;allows not only Adobe developers, but a community of developers using the core logic of Experience Platform services and solutions employing the same API calls. This principle is not limited to REST-based APIs. It also applies to other interfaces of Experience Platform like message-based interfaces and event-driven interfaces allow developers to build responsive, reactive applications.
- 
-Because the platform is built API-first, it opens up a lot of integration opportunities with partners:
+## API-first Development
 
-1.	Partners who want to build their own data ingestion and egress capabilities, including 24-hour automated processes. Using the Catalog and Data Access services gives you full integration capabilities with the platform’s data store.
+Experience Platform has been designed and built using core principles of API-first development:
 
+1.	The API is the primary interface into Experience Platform.
+2.	All Platform functions, including administrative functions, are available via API.
+3.	Platform services, Adobe solutions, and 3rd party integrations use the same API.
 
-2.	Developers who want to build custom UIs to support specific task-driven use cases. 
+Guided by these principles, Adobe Experience Platform services and solutions are designed by first looking at the API and ensuring the functionality exists to support developers through low-level CRUD operations. Only once the API is built can the user interface (UI) be constructed by making REST calls to the API. By starting with the API, Experience Platform allows not only Adobe developers but _any_ developer to have the same access to the core logic of Platform services and solutions by means of the same API calls. This principle is not limited to REST-based APIs. It also applies to other interfaces into Experience Platform like message-based, event-driven interfaces that allow developers to build responsive, reactive applications.
 
-The openness and breadth offered by the platform’s open API lets you construct a solution that integrates with Experience Platform or other Adobe solutions.
+By taking an API-first approach, Experience Platform opens up integration opportunities such as:
 
-## Experience Platform Overview
-Experience Platform consists of multiple components. This multilayer model provides a complete infrastructure on which to build your own custom solutions: 
+* Partners wanting to build their own data ingestion and egress capabilities, including 24-hour automated processes, using Catalog and Data Access services for full integration capabilities with the data store in Experience Platform.
+* Developers wanting to build custom UIs to support specific task-driven use cases.
+
+The openness and breadth offered by Experience Platform APIs makes it easy to construct a solution that integrates with Platform and offers almost any functionality you can imagine.
+
+## Experience Platform Components
+
+Experience Platform consists of multiple components. This multilayer model provides a complete infrastructure on which to build your own custom solutions. These component layers are: 
 
 * Data Foundation
-* Machine Learning Framework
-* Unified Profile Service
+* Machine Learning
+* Audience Activation
+
+![Experience Platform Overview](platform_overview.png "Experience Platform Overview")
 
 
 ### Data Foundation
-The Data Foundation layer gives developers the power to manage standard schemas, ingest data, manage datasets, apply DULE metadata, and access data. To make the best use of these capabilities, it’s vital that customer data be imported into Experience Platform in a standardized format that enables it to interpret the data and apply analysis. Adobe’s format for this purpose is the Experience Data Model (XDM), a format for representing the data for the Experience Business with your customer data in standardized fields. 
 
-Using XDM, you can create a Customer Data Model representing all your customer data using multiple datasets from whatever data sources you use. You can take advantage of a number of third-party Extract-Transform-Load (ETL) solutions to import into the Experience Data Lake. The data stored in the Data Lake can come from Adobe solutions like Adobe Analytics, Adobe Target, or Adobe Audience Manager, third-party connectors (Microsoft Dynamics, Salesforce, S3 and others), or be ingested through the available APIs.
+Data Foundation gives developers the power to manage standard schemas, ingest data, interact with datasets, apply Data Usage Labeling & Enforcement (DULE) metadata, and access data. To best utilize these capabilities, customer data must be imported into Experience Platform in a standardized format that allows for the consistent interpretation of data and application of analysis. For this, Adobe introduced Experience Data Model (XDM), the new standard for representing experience data that enables it to be immediately understood and actioned across Experience Platform. 
 
-### Machine Learning Framework
-The Machine Learning Framework offers predefined machine learning models you can leverage in your own solutions, as well as the capability to develop your own custom models. Through feature development, transforming your data into predefined schemas for machine learning, you can extract valuable insights from customer behavior, allowing you to understand their interactions and intentions. In combination with other attributes of the consumer’s profile, it creates a 360-degree view of the customer in the Unified Profile Services.
+Using XDM, you can create a Customer Data Model representing all of your customer data no matter which data sources you use. You can take advantage of a number of third-party Extract-Transform-Load (ETL) solutions to import data into Experience Data Lake. Data stored in the Data Lake can come from Adobe solutions like Analytics, Target, or Audience Manager, third-party connectors such as Microsoft Dynamics, Salesforce, S3 and others, or be ingested through available APIs.
 
-### Unified Profile Services
-This includes the Unified Profile, Identity, and Edge Services. Platform services work together to enable you to build and activate audiences based on a complete profile of your customers’ attributes and behavior:
+### Machine Learning
 
-* **Unified Profile** serves as a central data store for your customers’ attributes and interactions, deciphering the customer’s behavior across multiple touchpoints and enabling Adobe solutions and your integrations to leverage the complete picture of the customer, which  can be used to identify interests and preferences, predict behavior, and  deliver personalized experiences.
+Machine Learning offers predefined models you can leverage in your own solutions, as well as the capability to develop custom machine learning models for your specific needs. Transforming your data into predefined schemas for machine learning lets you extract valuable insights from customer behavior, helping you to better understand intentions and predict future interactions. In combination with other attributes in the customer profile, this helps to create a 360-degree view of each one of your customers.
 
-* **Unified Identity** stitches together the identity of the consumer across various touchpoints. It spans domains from unauthenticated to authenticated interactions with your brand across to build an identity graph that connects with the customer’s 360-degree profile that represents their behavior and interests.
+### Audience Activation
 
-* **Unified Edge** takes the customer data you need to deliver custom experiences and serves it from a worldwide delivery network that enables you to access that data instantaneously for millisecond decisioning, perform computations on it, and then use it immediately to provide your customers enhanced experiences in real-time as they interact with your brand.
+Audience Activation includes Unified Profile, Identity, and Edge Services. These services work together to enable you to build and activate audiences based on customer profiles containing individual attributes and behaviors.
 
-These services work together to bring your insights and audiences to life. You can segment your audiences, inspect individual profiles, and either make them available inside of Adobe solutions or consume the Unified Profile from a third-party application through the open APIs.
+* **Unified Profile Service** serves as a central data store for customer attributes and interactions. By deciphering customer behavior across multiple interactions, Adobe solutions and other integrations are able to leverage the complete picture of a customer. This can be used to identify interests and preferences, predict behavior, and deliver personalized experiences.
 
-## Services in Experience Platform
-Experience Platform’s integration capabilities are provided by a collection of services open to your integration through APIs. Some of the key services in Experience Platform are:
+* **Identity Service** stitches together the identity of the consumer. It examines unauthenticated and authenticated interactions with your brand to build an identity graph that connects with the 360-degree customer profile to represent behavior and interests.
 
-Service name	| Description
+* **Edge Services** enable you to access customer data to instantaneously perform computations and decisioning to deliver enhanced individualized experiences to customers, in real-time, as they interact with your brand.
+
+These services work together to bring insights and audiences to life. You can segment your audiences, inspect individual profiles, make profiles available inside of Adobe solutions or consume them from a third-party application through the open APIs.
+
+## Experience Platform Services
+
+The components outlined above are composed of a collection of services accessible to you via RESTful APIs. These APIs are the primary way to integrate with Experience Platform. Some of the key services in Experience Platform include:
+
+Service Name	| Description
 ------------ | --------
-XDM Registry	|Manages a library of the available XDM standard schemas as well as tenant-specific schemas and extensions
-Catalog |	Manages the metadata for the datasets created in the tenant, data lineage, and policies associated with them
-Data Ingestion	| APIs and connectors to bring data into platform, either in batch or streaming fashion
-Governance	| Manages data usage labels for registered datasets and enforces the usage labels as data travels through Experience Platform
-Data Access |	Provides access to the content of registered datasets for data export
-Unified Profile	| Creates a single 360-degree view of the consumer. The profile is populated with information provided in Experience Platform datasets and can be consumed by any service, either using point lookups or segmentation queries. 
-Unified Identity	| Every consumer can be identified in a number of different ways, ranging from unknown identities like a cookie, to an authenticated identity like a CRM ID. The Identity service provides identity stitching and identity resolution.
+Catalog |	Manages the metadata for you datasets and files in Platform, including data lineage and policies associated with data.
+Data Ingestion	| APIs and connectors to bring data into platform, either in batch or streaming fashion.
+Data Access |	Provides access to the content of registered datasets for data export.
+Governance	| Manages Data Usage Labelling and Enforcement (DULE) metadata for registered datasets and enforces the usage labels as data travels through Experience Platform.
+Unified Identity	| Every customer can be identified in a number of different ways, ranging from unknown identities like a cookie, to an authenticated identity like a ECID. The Identity service provides identity stitching and identity resolution by bringing interactions together.
+Unified Profile	| Creates a single 360-degree view of the consumer. The profile is populated with information provided in Experience Platform datasets and can be consumed by any service, either using point lookups or segmentation queries.
+Experience Data Model (XDM) Registry	|Manages the library of available XDM standard schemas as well as customer-defined schemas and extensions.
 
-Some additional detail in a couple of these services:
+Additional information on each of these services can be found by visiting [Platform Services on Adobe I/O](https://www.adobe.io/apis/cloudplatform/dataservices/services.html).
 
-### XDM Registry
-Adobe is providing a standard data model for the experience business: Experience Data Model (XDM). The XDM Registry operationalizes XDM and  other industry-standard schemas and customer-extended schemas. Working with a standard data model brings direct value to customers because they don’t have to label, transform, and match their fields for every individual operation. 
+## Example Use Case: Interactive Voice Response System
 
-The XDM Registry also gives an overview of available vendor extensions for the various standard schemas and industry-specific use cases and verticalized solutions. A customer can create their own unique data model (Customer Data Model) according to their business needs, either by creating their own schemas or by extending the available standard schemas already available in the XDM Registry.
+To highlight a potential use case, consider the world of Interactive Voice Response (IVR) systems and call center management software. 
 
-### Catalog Service
-The centralized Catalog Service tracks and organizes metadata for the data stored in Experience Platform. As such, it contains references to all available datasets, connections to streaming sources, connectors to external systems, and identifies all datasets in the platform. This central service updates the state of datasets and new batches of data as they come in. 
+Experience Platform APIs can be used to ingest historical information of the customer’s call center activity into the Experience Data Lake. If the data is ingested into the ExperienceEvent Schema (an XDM schema that expresses customer interactions), these interactions can be ingested directly into Unified Profile Service. In this case, a `callerId` can be used as the unique customer identifier. Identity service will take care of identity resolution and assist Unified Profile Service in stitching together data points from recent interactions with the Call Center to flesh out the individual customer’s profile.
 
-The initial operation is to create a new dataset, based on a XDM Schema, before using the Ingestion Service to bring the actual data into the platform. The Catalog service also takes care of the data lineage. Using the Catalog Service API, you can create a new dataset, query the platform to discover what data is in the platform, and identify the state it is in. You can also view the amount of processed data, identify its XDM schema, find out what systems or processes have acted on it, understand the state of individual datasets, and more.
+The next time the customer calls into the call center, the IVR will be able to personalize the message and deliver an offer tailored to the caller thanks to API integration with Unified Profile.
 
-### Data Access
-The platform is an open system. Datasets available in the platform can be read and exported. The Data Access Service provides a single point of access to the available datasets. The Data Access Service, in turn, depends on the Catalog Service to discover data sets and retrieve them from the platform's data store. 
+When the customer calls, the IVR is able to make an API request to the Unified Profile Service for a point-lookup: consulting either the profile attributes that apply to call-center interactions or the full customer profile. By using identity resolution to combine data from multiple sources and the individual attributes stored in Unified Profile, the IVR can deliver a tailored customer experience unique to each individual.
 
-Using the Data Access API in conjunction with the Catalog Service API, developers can access data on any level—connection, dataset, or individual records—to extract it, transform it, and/or store it in a third-party system for further use, reference, and analysis.
+With Experience Platform, every interaction with your call center becomes an opportunity to engage customers, deliver a personalized brand experience, and gain insights toward providing additional targeted experiences in the future.
 
-### Unified Profile Service
-The Unified Profile Service is the central service to activate the audiences that are developed within Experience Platform. As multiple datasets come into the platform and are transformed, eventually they will be consumed by the Profile service. Based on the Customer Data Model (consisting of schemas in XDM and third-party schemas), the service creates an aggregated 360-degree view of the consumer and allows you to inspect individual consumer profile attributes. 
+## Development Process
 
-Using segment definitions, the profile can return an audience that meets the segment criteria by stitching together the multiple data points coming from multiple datasets. Unified Profile Service also supports individual point lookups to understand the preferences of a consumer and deliver the right experience. Unified Profile Service will be consumed by Adobe Solutions, but is also available for integration into third-party activation solutions.
+Adobe Experience Platform is built with the developer in mind. The API-first design of Experience Platform encourages developers to integrate, extend, and create apps and experiences within Platform to perform just about any function you can imagine.
 
-## An example use case – Interactive Voice Response system
-For integrators, Experience Platform APIs provide all capabilities of the platform that are offered through the user interface, but now with the ability to create customer workflows and automated data flows. As an integrator, you periodically check the status of datasets, set up new data ingestion procedures, and integrate your own audience activation solution with Unified Profile Service.
+### Adobe I/O Services
 
-To highlight a potential use case, consider the world of Interactive Voice Response (IVR) systems and Call Center management software. The supplier can use the platform APIs to ingest historical information of the customer’s call center activity in the Experience Data Lake.
+Adobe I/O provides a number of services to support developers with everything from documentation and tools, to the quick deployment of custom code. Adobe I/O Services include:
 
-If the data is ingested in the XDM ExperienceEvent Schema (a schema that expresses customer interactions), these interactions can be ingested with no friction directly into the Unified Profile Service. In this case, the `callerId` will be used as the customer’s identifier. The Identity service will take care of identity resolution and assist the Unified Profile Service to add any data points from recent interactions with the Call Center to the customer’s profile.
-
-The next time a customer calls into the Call Center, they will first be answered by the IVR. To personalize the message and deliver an offer tailored to the caller, the IVR system needs to understand more about the caller. This is where API integration with the Unified Profile comes in. 
-
-The IVR backend can contact the Unified Profile service for a point-lookup: consult either the profile attributes that apply to just the call-center interactions or the full customer profile, which also has attributes for interactions on other touchpoints. By combining data from multiple data sources, using identity resolution, and the Unified Profile, the call center and IVR provider can deliver a tailored customer experience, supported by Experience Platform.
-
-## Development process
-
-### Adobe I/O to integrate with Experience Platform
-Developing with the Platform is straightforward. Adobe I/O is the place for developers looking to integrate, extend, or create apps and experiences based on Adobe's products and technologies, including Experience Platform.
-
-Adobe I/O Service | Functionality
+Service | Description
 -----------------| ---------------
-www.adobe.io	| Adobe I/O is a single source for developer-focused product documentation, up-to-date information about Experience Platform and access to Adobe I/O Console, which enables you to register API keys, connect applications to Adobe cloud services and inspect log entries and debug messages.
-IO Gateway	| All Experience Platform APIs are exposed through the IO Gateway, located on platform.adobe.io. The gateway governs the access to the APIs.
-IO Console |	Adobe I/O Console gives you access to APIs, SDKs and developer tools to build on, integrate, and extend Adobe products. This is the central place to manage API keys and get API insights.
-IO Events	| With Adobe I/O Events, you can code event-driven experiences, applications, and custom workflows that leverage and combine Adobe Experience Cloud, Creative Cloud, and Document Cloud.
-IO Runtime | 	Adobe I/O Runtime is a serverless platform that allows you to quickly deploy custom code to respond to events and execute functions right in the cloud, all with no server setup required.
+www.adobe.io	|Adobe I/O is a single source for developer-focused product documentation, up-to-date information about Experience Platform and access to IO Console.
+I/O Gateway	|All Experience Platform APIs are exposed through the I/O Gateway, located on platform.adobe.io. The gateway governs the access to the APIs.
+I/O Console |I/O Console gives you access to APIs, SDKs and developer tools to integrate, extend, and build upon Adobe products. This is the central place to register and manage API keys, connect applications to Platform Services, and inspect log entries and debug messages.
+I/O Events	|With I/O Events, you can code event-driven experiences, applications, and custom workflows that leverage and combine Adobe Experience Cloud, Creative Cloud, and Document Cloud.
+I/O Runtime |I/O Runtime is a serverless platform that allows you to quickly deploy custom code to respond to events and execute functions right in the cloud, all with no server setup required.
 
-Applications that access APIs for Experience Platform or Adobe Solutions are called integrations. To create an integration, you can use any developer tool or language you like to build your application; to interact with Adobe, however, you have to register your application as an integration through Adobe I/O Console (https://console.adobe.io). Adobe I/O Console provides access to Adobe SDKs as well as registration for your integration. 
+Applications that access APIs for Experience Platform are called integrations. To create an integration, you can use any developer tool or language you like to build your application; to interact with Adobe, however, you have to register your application as an integration through [Adobe I/O Console](https://console.adobe.io). 
 
-When you register your Integration at Adobe I/O Console, the Adobe Identity Management Service (IMS) issues you an API key (a client ID) that determines the kind of access and permissions you have to Adobe APIs. To access APIs, the integration will authenticate itself using a JSON Web Token; your integration will need to get an access token from IMS and pass it along with any API requests. 
+Once you register your integration via I/O Console, the Identity Management Service (IMS) issues you an API key (a client ID) that determines the kind of access and permissions you have for Adobe APIs. To access APIs, the integration will authenticate itself using a JSON Web Token (JWT); your integration will also need to get an Access Token from IMS to pass as a header in any API requests. 
 
-In addition to, or instead of, API access, you can choose to integrate with Adobe solutions by means of events. Adobe Events are notifications published by Adobe solutions whenever certain activities occur in the solution, such as a user uploading an image to Creative Cloud Assets. 
+You can also choose to integrate with Adobe solutions by means of events. Adobe Events are notifications published by Adobe solutions whenever certain activities occur in the solution, such as a user uploading an image to Creative Cloud Assets. 
 
-Using Adobe I/O Console, you can register your integration to receive Adobe Events from your chosen solution, for which you create a webhook to receive HTTP POSTs that send the substance of the event as a JSON object. This provides a one-way communication whereby your integration can be automatically notified of events in Adobe solutions. Alternatively, you can use the Journaling API to pull lists of events as you wish. You can combine event integration with API access as well.
+Using I/O Console, you can define what type of events you want to subscribe to and the webhooks that Adobe I/O Events should call when that event happens. Respond to events when you want, how you want, to deliver effective, personalized experiences for your users.
 
-### Calling Experience Cloud solutions and Experience Platform
-So, once your integration has been registered with Adobe I/O Console, how do you actually call Adobe APIs from your integration? It’s as simple as HTTP. Your integration issues an HTTP GET request and the appropriate Adobe API responds via HTTP, usually with a JSON object containing the queried data.
- 
-Here’s an example using the Data Access API to download a file. Suppose your integration first found the file using a request to the Catalog API to obtain the file ID, which in this case is `f25a0dd3-rh6h-4ebe-b094`. You could then issue a GET request as a curl command:
+### Making API Calls
 
-	curl 	-X GET "https://platform.adobe.io/data/foundation/export/files/f25a0dd3-rh6h-4ebe-b094" 
-			-H "Authorization: Bearer <access_token>" -H "x-api-key: <api_key>" 
-			-H "x-gw-ims-org-id: <IMS_Org_for_caller>"
+Once your integration has been registered with Adobe I/O Console, you are ready to begin making API requests. Using HTTP, you can make requests to various API endpoints and return the queried data (typically in JSON format) in the response body.
 
-The API would respond with a JSON object, like this:
+The following sample requests and responses outline some of the functionality provided by the API. 
 
-	{
-	  "data": [
-	    {
-	      "name": "adobe_profiles.csv",
-	      "length": "2996",
-	      "_links": {
-	        "self": {
-	          "href":
-	            "https://platform.adobe.io:443/data/foundation/export/files/f25a0dd3-rh6h-4ebe-b094?path=adobe_profiles.csv"
-	        }
+For a complete list of available operations and endpoints, consult the Experience Platform [RESTful API](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html) documentation.
+
+#### GET - View a File
+
+Using the Data Access API, you are able to access and download dataset files, retrieve header information regarding files, and more. For this example, the unique file ID is known and will be used to view specific details of the file, including its name, size in bytes, and a link to download it.
+
+#### API Format
+
+```
+GET /files/{datasetFileId}
+```
+
+#### Request
+
+```
+curl -X GET \
+  https://platform.adobe.io/data/foundation/export/files/f25a0dd3-rh6h-4ebe-b094 \
+  -H 'Authorization: Bearer {ACCESS_TOKEN' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+```
+
+#### Response
+
+The response will point to either a single file or a directory of files. In this case, the response points to a single file where "name" is the name of the file and "href" shows the URl to download the file.
+
+```json
+{
+  "data": [
+    {
+      "name": "sample.parquet",
+      "length": "249058",
+      "_links": {
+        "self": {
+          "href": "https://platform.adobe.io/data/foundation/export/files/f25a0dd3-rh6h-4ebe-b094?path=sample.parquet"
 	      }
-	    }
-	  ],
-	  "_page": {
-	    "limit": 100,
-	    "count": 1
-	  }
-	}
+      }
+    }
+  ],
+  "_page": {
+    "limit": 100,
+    "count": 1
+  }
+}
+```
 
+### GET - View a List of Datasets
 
+It is possible to view a list of Catalog objects through a single API call (e.g. `GET /datasets`), but it is best practice to use filters when doing so because the response can be quite large. 
 
+For example, in cases where _full_ dataset information is being requested the response payload can reach past 3GB in size, which places a heavy load on the API and can slow overall performance.
 
-Here is another example of a call to the Catalog API to get a list of available datasets:
+#### API Format
 
-	curl 	-X GET "https://platform.adobe.io/data/foundation/catalog/dataSets" \
-			-H "Authorization: Bearer <access_token>"
-			-H "x-api-key: <api_key>" -H "x-gw-ims-org-id: <IMS_Org_for_caller>"`
-		
-Response
+```
+GET /datasets?{filter}={value}&{filter2}={value}
+```
 
+#### Request
 
-	{
-	  "598d6e81b2745f000015edcb": {
-	    "version": "1.0.0",
-	    "imsOrg": "AdobeIMSOrganization@AdobeOrg",
-	    "connectorId": "azure-blob",
-	    "name": "CredentialsTest",
-	    "created": 1502441089391,
-	    "updated": 1502441089669,
-	    "dule": {},
-	    "aspect": "production",
-	    "status": "enabled",
-	    "fields": [
-	      {
-	        "name": "name",
-	        "type": "string"
-	      },
-	      {
-	        "name": "age",
-	        "type": "string"
-	      }
-	    ],
-	    "fileDescription": {
-	      "persisted": false
-	    },
-	    "transforms":
-	      "@/dataSets/598d6e81b2745f000015edcb/views/598d6e81b2745f000015edcc/transforms",
-	    "files":
-	      "@/dataSets/598d6e81b2745f000015edcb/views/598d6e81b2745f000015edcc/files",
-	    "children": "@/dataSetViews/598d6e81b2745f000015edcc/children",
-	    "schema": {},
-	    "viewId": "598d6e81b2745f000015edcc"
-	  }
-	}
+The sample request below includes two query parameters to filter the response. When using multiple filters, you must separate them with an ampersand (`&`). Platform assumes an AND relationship when multiple query parameters are used. 
 
+```
+curl -X GET \
+  'https://platform.adobe.io/data/foundation/catalog/datasets?limit=5&properties=name,description,files' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
 
-To do a point lookup on the Unified Profile Service:
+#### Response
 
-	curl	-X GET "https://platform.adobe.io/data/core/ups/access/entities/?schema.name=<schema>&entityId=<id>&entityIdNS=<IDNS>" 
-			-H "Authorization: Bearer <access_token>" 
-			-H "x-api-key: <api_key>" -H "x-gw-ims-org-id: <IMS_Org_for_caller>"
-			
-Response
+The response body consists of a JSON object with individual objects for each returned dataset. The response is limited to the five most recent datasets (`limit=5`) and the requested properties (name, description, and files) are the only properties that will be displayed. If a dataset does not contain all of the requested properties, it will return any of the requested properties that it does include, as shown in "Sample Dataset 3" and "Sample Dataset 4" below.
 
-	{
-	  "GU8rb925s2L2fkF55boQKCbliQ8,GbZWRW8tXrZ4gABvwzC_gAAAAAAA,A2-s19jafhDickW6PP0c5dpi": {
-	      "record": {
-	          "extraField1": 1,
-	          "personalEmail": {
-	              "address": "vmountneyji@pcworld.com"
-	          },
-	          "extraField2": 2,
-	          "identities": [
-	              {
-	                  "xid": "GU8rb925s2L2fkF55boQKCbliQ8",
-	                  "namespace": {
-	                      "code": "CRMId",
-	                      "id": 11111
-	                  },
-	                  "id": "87374043487584731811119677934421981925"
-	              },
-	              {
-	                  "xid": "GbZWRW8tXrZ4gABvwzC_gAAAAAAA",
-	                  "namespace": {
-	                      "code": "AVID",
-	                      "id": 22222
-	                  },
-	                  "id": "2d5eb67880006fc3-30bf800000000000"
-	              },
-	              {
-	                  "xid": "A2-s19jafhDickW6PP0c5dpi",
-	                  "namespace": {
-	                      "code": "ecId",
-	                      "id": 4
-	                  },
-	                  "id": "82781972020839607487123257673310321221"
-	              }
-	          ],
-	          "homePhone": {
-	              "number": "878-183-0090"
-	          },
-	          "person": {
-	              "firstName": "Val",
-	              "lastName": "Mountney",
-	              "gender": "xy",
-	              "courtesyTitle": "Mr"
-	          }
-	      }
-	  }
-	}
-
-As you can see, the common procedure is to issue the GET request to the API endpoint with parameters that indicate what you’re requesting, plus other parameters that provide your authentication information and your organization identifier. In each case the response will be a JSON object.
+```json
+{
+    "5ba9452f7de80400007fc52a": {
+        "name": "Sample Dataset 1",
+        "description": "Description of dataset.",
+        "files": "@/dataSets/5ba9452f7de80400007fc52a/views/5ba9452f7de80400007fc52b/files"
+    },
+    "5bb276b03a14440000971552": {
+        "name": "Sample Dataset 2",
+        "description": "Description of dataset.",
+        "files": "@/dataSets/5bb276b03a14440000971552/views/5bb276b01250b012f9acc75b/files"
+    },
+    "5bceaa4c26c115000039b24b": {
+        "name": "Sample Dataset 3"
+    },
+    "5bda3a4228babc0000126377": {
+        "name": "Sample Dataset 4",
+        "files": "@/dataSets/5bda3a4228babc0000126377/views/5bda3a4228babc0000126378/files"
+    },
+    "5bde21511dd27b0000d24e95": {
+        "name": "Sample Dataset 5",
+        "description": "Description of dataset.",
+        "files": "@/dataSets/5bde21511dd27b0000d24e95/views/5bde21511dd27b0000d24e96/files"
+    }
+}
+```
 
 ## Conclusion
 
-Experience Platform provides a rich API surface to allow developers of customers, integration partners, and ISVs to build on and extend the platform’s capabilities. The number of services and capabilities we provide will be built out over time. 
+Adobe Experience Platform is the most powerful, flexible, and open system on the market for building and managing solutions that drive customer experience. 
 
-The website [www.adobe.io](https://www.adobe.io) will provide an one-stop-shop to understand what new capabilities will be available for Experience Platform. Use [www.adobe.io](https://www.adobe.io) to access SDKs for all Adobe Cloud solutions.
+Built on RESTful APIs, Experience Platform exposes the full functionality of the system to developers, supporting the easy integration of enterprise solutions and the building of custom solutions to meet your unique needs.
+
+With Adobe Experience Platform, you can control, customize, and integrate your data to deliver experiences that surprise and delight your customers, cement brand loyalty, and drive results. 
