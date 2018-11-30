@@ -1,19 +1,19 @@
 {
-	"name": "acp_architectural_overview",
+	"name": "Experience Platform Overview",
 	"version": "1.0.0",
-	"description": "ACP Architectural Overview",
-	"author": "Jeff Hanson",
+	"description": "Adobe Experience Platform Overview",
+	"author": "Wendy Braun",
 	"view_type": "mdview",
-	"meta_keywords": "ACP,Architecture,Adobe ACP",
-	"meta_description": "Adobe Cloud Platform Architectural Overview",
+	"meta_keywords": "Adobe, Experience Platform, overview, documentation, API, developers",
+	"meta_description": "Adobe Experience Platform Overview",
 	"publish_date": "22/03/2018",
 	"show_edit_github_banner": false,
 	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
 	"pages": [
 	    {
 					"pages": [],
-					"path": "api-specification/markdown/narrative/whitepapers/acp_extensibility/acp_extensibility.md",
-					"title": "ACP Architectural Overview"
+					"path": "api-specification/markdown/narrative/whitepapers/platform_extensibility/platform_extensibility.md",
+					"title": "Adobe Experience Platform Overview"
 	    }
 	]
 }
