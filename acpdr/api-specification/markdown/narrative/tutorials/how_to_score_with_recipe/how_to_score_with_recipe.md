@@ -52,17 +52,19 @@ We can fetch details about the model using the following API call.
 
 #### Request
 
-GET /model
+GET /models
 
 ```SHELL
 curl -X GET "https://platform.adobe.io/models/{MODEL_ID}" \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key: {API_KEY}`
 ```
 
-`{MODEL_ID}`: The ID corresponding to the details of the Scoring Run from the previous section.
+`{MODEL_ID}`: The ID corresponding to the details of the Scoring Run from the previous section.  
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
 `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 
 ##### Response
 
