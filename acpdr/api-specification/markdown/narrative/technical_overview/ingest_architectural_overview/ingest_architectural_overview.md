@@ -34,23 +34,15 @@ Size of batches = Max sum of file sizes in batch 10 GB.
 Upload chunk size = recommended 250 MB chunk sizes.
 
 ### Batch Ingestion Status
-* **Active**:  The batch has been successfully promoted and is available for downstream consumption.
-
-* **Loaded**: Data for the batch is complete and the batch is ready for promotion.
-
-* **Loading**: Data is being uploaded and converted for this batch and is currently NOT ready to be promoted.
-
-* **Staged**: The staging phase of the promotion process for a batch is complete and the ingestion job has been run.
-
-* **Staging**: Data for the batch is being processed by Data Tracker.
-
-* **Failed**: A terminal state that results from either a bad configuration and/or bad data.  In either case, it's mandatory that an actionable error is recorded along with the batch to enable you to make corrections and resubmit the data.
-
-* **Abandoned**: The batch has not completed in the expected timeframe.
-
-* **Aborted**: You has explicitly called an abort operation (via Batch Ingest API) for the specified batch.
-
-* **Inactive**: The batch was successfully promoted, but has been reverted or has expired.  The batch is no longer available for downstream consumption.  
+- **Active**:  The batch has been successfully promoted and is available for downstream consumption.
+- **Loaded**: Data for the batch is complete and the batch is ready for promotion.
+- **Loading**: Data for this batch is being uploaded and converted and the batch is currently **NOT** ready to be promoted.
+- **Staged**: The staging phase of the promotion process for a batch is complete and the ingestion job has been run.
+- **Staging**: Data for the batch is being processed by Data Tracker.
+- **Failed**: A terminal state that results from either a bad configuration and/or bad data.  In either case, it's mandatory that an actionable error is recorded along with the batch to enable you to make corrections and resubmit the data.
+- **Abandoned**: The batch has not completed in the expected timeframe.
+- **Aborted**: An abort operation has **explicitly** been called (via Batch Ingest API) for the specified batch.
+- **Inactive**: The batch was successfully promoted, but has been reverted or has expired.  The batch is no longer available for downstream consumption.  
 
 
 ## Creating a Batch
@@ -62,23 +54,20 @@ Before data can be added to a dataset, it must be linked to a batch, which will 
 #### Request
 POST /batches
 
-```SHELL
+```shell
 curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
--H "accept: application/json" \
--H "x-gw-ims-org-id: {IMS_ORG}" \
--H "Authorization: Bearer {ACCESS_TOKEN}" \
--H "x-api-key : {API_KEY}"
--d '{
-      "datasetId":"{DATASET_ID}"
-    }'
+  -H "accept: application/json" \
+  -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "Authorization: Bearer {ACCESS_TOKEN}" \
+  -H "x-api-key : {API_KEY}"
+  -d '{ 
+          "datasetId": "{DATASET_ID}" 
+      }'
 ```
-**IMS_ORG:** Your IMS organization credentials found in your unique Platform integration.
-
-**ACCESS_TOKEN:** Token provided after authentication.
-
-**API_KEY:** Your specific API key value found in your unique Platform integration.
-
-**DATASET_ID:** The ID of the dataset to upload the files into.
+`{IMS_ORG}`: Your IMS organization credentials found in your unique Adobe Experience Platform integration.  
+`{ACCESS_TOKEN}:` Token provided after authentication.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
+`{DATASET_ID}`: The ID of the dataset to upload the files into.
 
 #### Response
 ```JSON
@@ -100,11 +89,9 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
     "updatedUser": "string"
 }
 ```
-**BATCH_ID:** The ID of the batch that was just created (used in subsequent requests).
-
-**IMS_ORG:** Your IMS org specified in the request.
-
-**DATASET_ID:** The ID of the dataset to upload the files into.
+`{BATCH_ID:}` The ID of the batch that was just created (used in subsequent requests).  
+`{IMS_ORG:}` Your IMS org specified in the request.  
+`{DATASET_ID}`: The ID of the dataset to upload the files into.
 
 
 ### File Upload
@@ -116,27 +103,22 @@ You can upload files using the *Small File Upload API*. However, if your files a
 Once a batch is created, data can be uploaded to a preexisting dataset.  The file being uploaded must match its referenced XDM schema.
 
 #### Request
-PUT /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
+PUT /batches/{BATCH\_ID}/datasets/{DATASET\_ID}/files/{FILE\_NAME}
 
 ```SHELL
 curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.parquet" \
--H "content-type: application/octet-stream" \
--H "x-gw-ims-org-id: {IMS_ORG}" \
--H "Authorization: Bearer {ACCESS_TOKEN}" \
--H "x-api-key : {API_KEY}" \
---data-binary "@{FILE_PATH_AND_NAME}.parquet"
+  -H "content-type: application/octet-stream" \
+  -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "Authorization: Bearer {ACCESS_TOKEN}" \
+  -H "x-api-key : {API_KEY}" \
+  --data-binary "@{FILE_PATH_AND_NAME}.parquet"
 ```
-**BATCH_ID:** The ID of the batch.
-
-**DATASET_ID:** The ID of the dataset to upload files.
-
-**FILE_NAME:** Name of file as it will be seen in the dataset.
-
-**IMS_ORG:** Your IMS organization credentials for your unique Adobe Experience Platform integration.
-
-**ACCESS_TOKEN:** Token provided after authentication.
-
-**FILE\_PATH\_AND_NAME:** The path and filename of the file to be uploaded into the dataset.
+`{BATCH_ID}`: The ID of the batch.  
+`{DATASET_ID}`: The ID of the dataset to upload files.  
+`{FILE_NAME}`: Name of file as it will be seen in the dataset.  
+`{IMS_ORG}`: Your IMS organization credentials for your unique Adobe Experience Platform integration.  
+`{ACCESS_TOKEN}`: Token provided after authentication.  
+`{FILE_PATH_AND_NAME}`: The path and filename of the file to be uploaded into the dataset.  
 
 #### Response
 ```JSON
@@ -147,23 +129,19 @@ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}
 To upload a large file, the file must be split into smaller chunks and uploaded one at a time.
 
 #### Request
-POST /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}?action=initialize
+POST /batches/{BATCH\_ID}/datasets/{DATASET\_ID}/files/{FILE\_NAME}?action=initialize
 
 ```SHELL
 curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/part1=a/part2=b/{FILE_NAME}.parquet?action=initialize" \
--H "x-gw-ims-org-id: {IMS_ORG}" \
--H "Authorization: Bearer {ACCESS_TOKEN}" \
--H "x-api-key: {API_KEY}"
+  -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "Authorization: Bearer {ACCESS_TOKEN}" \
+  -H "x-api-key: {API_KEY}"
 ```
-**BATCH_ID:** The ID of the batch.
-
-**DATASET_ID:** The ID of the dataset ingesting the files.
-
-**IMS_ORG:** Your IMS org credentials found in your unique Experience Platform integration.
-
-**ACCESS_TOKEN:** Token provided after authentication.
-
-**API_KEY:** Your specific API key value found in your unique Experience Platform integration.
+`{BATCH_ID}`: The ID of the batch.  
+`{DATASET_ID}`: The ID of the dataset ingesting the files.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
+`{ACCESS_TOKEN}`: Token provided after authentication.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 
 #### Response
 ```JSON
@@ -174,30 +152,24 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID
 After the file has been created, all subsequent chunks can be uploaded by making repeated PATCH requests, one for each section of the file.
 
 #### Request
-PATCH /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
+PATCH /batches/{BATCH\_ID}/datasets/{DATASET\_ID}/files/{FILE\_NAME}
 
 ```SHELL
 curl -X PATCH "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/part1=a/part2=b/{FILE_NAME}.parquet" \
--H "content-type: application/octet-stream" \
--H "x-gw-ims-org-id: {IMS_ORG}" \
--H "Authorization: Bearer {ACCESS_TOKEN}" \
--H "x-api-key: {API_KEY}" \
--H "Content-Range: bytes {CONTENT_RANGE}" \
---data-binary "@{FILE_PATH_AND_NAME}.parquet"
+  -H "content-type: application/octet-stream" \
+  -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "Authorization: Bearer {ACCESS_TOKEN}" \
+  -H "x-api-key: {API_KEY}" \
+  -H "Content-Range: bytes {CONTENT_RANGE}" \
+  --data-binary "@{FILE_PATH_AND_NAME}.parquet"
 ```
-**BATCH_ID:** The ID of the batch.
-
-**DATASET_ID:** The ID of the dataset to upload the files into.
-
-**FILE_NAME:** Name of file as it will be seen in the dataset.
-
-**IMS_ORG:** Your IMS org credentials found in your unique Platform integration.
-
-**ACCESS_TOKEN:** Token provided after authentication.
-
-**FILE\_PATH\_AND_NAME:** The path and filename of the file to be uploaded into the dataset.
-
-**CONTENT_RANGE:** The range of bytes of the file being uploaded with this request. (for example: 0-82/164)
+`{BATCH_ID}`: The ID of the batch.  
+`{DATASET_ID}`: The ID of the dataset to upload the files into.  
+`{FILE_NAME}`:Name of file as it will be seen in the dataset.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
+`{ACCESS_TOKEN}`: Token provided after authentication.  
+`{FILE_PATH_AND_NAME}`: The path and filename of the file to be uploaded into the dataset.  
+`{CONTENT_RANGE}`: The range of bytes of the file being uploaded with this request. (for example: 0-82/164)  
 
 #### Response
 ```JSON
@@ -208,7 +180,7 @@ curl -X PATCH "https://platform.adobe.io/data/foundation/import/batches/{BATCH_I
 After all files have been uploaded to the batch, the batch can be signaled for completion. By doing this, the Catalog *DataSetFile* entries are created for the completed files and associated with the batch generated above. The Catalog batch is then marked as successful, which triggers downstream flows to ingest the available data.
 
 #### Request
-POST /batches/{BATCH_ID}?actions=COMPLETE
+POST /batches/{BATCH\_ID}?actions=COMPLETE
 
 ```SHELL
 curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=COMPLETE" \
@@ -216,15 +188,117 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID
 -H "Authorization: Bearer {ACCESS_TOKEN}" \
 -H "x-api-key : {API_KEY}"
 ```
-**BATCH_ID:** The ID of the batch to be uploaded into the dataset.
-
-**IMS_ORG:** Your IMS org credentials found in your unique Platform integration.
-
-**ACCESS_TOKEN:** Token provided after authentication.
-
-**API_KEY:** Your specific API key value found in your unique Platform integration.
+`{BATCH_ID}`: The ID of the batch to be uploaded into the dataset.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
+`{ACCESS_TOKEN}`: Token provided after authentication.  
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 
 #### Response
 ```JSON
 #Status 200 OK, with empty response
+```
+
+### Check Batch Status
+While waiting for the files to uploaded to the batch, the batch's status can be checked to see its progress.
+
+#### Request
+
+GET /batch/{BATCH_ID}
+
+```shell
+curl GET "https://platform.adobe.io/data/foundation/catalog/batch/{BATCH_ID}" \
+  -H "Authorization: Bearer {ACCESS_TOKEN}" \
+  -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-api-key: {API_KEY}"
+```
+
+#### Response
+
+```JSON
+{
+    "5911f88ae2f4bf657c5a8cb5": {
+        "imsOrg": "4F3BB22C5631222A7F000101@AdobeOrg",
+        "created": 1494349962314,
+        "createdClient": "MCDPCatalogServiceStage",
+        "createdUser": "MCDPCatalogServiceStage@AdobeID",
+        "updatedUser": "MCDPCatalogServiceStage@AdobeID",
+        "updated": 1494349963467,
+        "externalId": "/adobe/bulkingest/5af9ee67e4045c1b4945c209",
+        "status": "success",
+        "errors": [
+            {
+                "code": "err-1494349963436"
+            }
+        ],
+        "version": "1.0.3",
+        "availableDates": {
+            "startDate": 1337,
+            "endDate": 4000
+        },
+        "relatedObjects": [
+            {
+                "type": "batch",
+                "id": "foo_batch"
+            },
+            {
+                "type": "connection",
+                "id": "foo_connection"
+            },
+            {
+                "type": "connector",
+                "id": "foo_connector"
+            },
+            {
+                "type": "dataSet",
+                "id": "foo_dataSet"
+            },
+            {
+                "type": "dataSetView",
+                "id": "foo_dataSetView"
+            },
+            {
+                "type": "dataSetFile",
+                "id": "foo_dataSetFile"
+            },
+            {
+                "type": "expressionBlock",
+                "id": "foo_expressionBlock"
+            },
+            {
+                "type": "service",
+                "id": "foo_service"
+            },
+            {
+                "type": "serviceDefinition",
+                "id": "foo_serviceDefinition"
+            }
+        ],
+        "metrics": {
+            "foo": 1337
+        },
+        "tags": {
+            "foo_bar": [
+                "stuff"
+            ],
+            "bar_foo": [
+                "woo",
+                "baz"
+            ],
+            "foo/bar/foo-bar": [
+                "weehaw",
+                "wee:haw"
+            ]
+        },
+        "inputFormat": {
+            "format": "parquet",
+            "delimiter": ".",
+            "quote": "`",
+            "escape": "\\",
+            "nullMarker": "",
+            "header": "true",
+            "charset": "UTF-8"
+        }
+    }
+}
+
 ```

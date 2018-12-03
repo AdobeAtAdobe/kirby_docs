@@ -25,7 +25,7 @@ Let's start by creating a new Streaming Endpoint. Assuming you have an API Key a
 #### Request
 
 ```SHELL
-CURL -X POST https://platform.adobe.io/data/core/pipeline/inlet/registration/ \
+CURL -X POST "https://platform.adobe.io/data/core/edge/inlet" \
 -H "Cache-Control: no-cache" \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer {ACCESS_TOKEN}" \
