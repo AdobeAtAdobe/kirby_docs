@@ -130,7 +130,7 @@ You will be taken to the Integrations page. An *Integration* is a service accoun
 
 From this page we want to create a *New Integration*.
 
-![](new_integration.png)
+![](new_integration0.png)
 
 You will then be prompted to *Access an API* or to *Receive near-real-time events*. We will be accessing APIs so select *Access an API* and then *Continue*.
 
