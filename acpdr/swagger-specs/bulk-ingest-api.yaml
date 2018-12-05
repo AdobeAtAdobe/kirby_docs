@@ -2,10 +2,24 @@ swagger: '2.0'
 info:
   title: Adobe Experience Platform Data Ingestion
   version: v2
+  description: >-
+    Bulk Ingestion API documentation
+
+
+    Notes:
+      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * Base path for this API: /data/foundation/import
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
   contact:
-      name: Grp-Siphon-Core
+
+    name: Grp-Siphon-Core
 basePath: /data/foundation/import
-host: bulk-ingestion-dev-va7.dev.cloud.adobe.io
+host: platform.adobe.io
+consumes:
+  - application/json
+produces:
+  - application/json
+
 tags:
 - name: "Ingest Batch"
 paths:
@@ -50,6 +64,236 @@ paths:
           description: "Internal server error."
         503:
           description: "Service Unavailable. The bulk ingest api or dependency is unavailable."
+  /batches/{batchId}/datasets/{datasetId}/files/{filePath}:
+    put:
+      security:
+      - Bearer: []
+      tags:
+      - "Ingest Batch"
+      summary: "Upload file to a dataset in a batch"
+      description: "For a batch initialized by the bulk ingestion api, this endpoint lets you upload files under
+      datasets. Note that this puts the entire request stream as the file bytes under the path denoted by filePath
+      in the URL and is idempotent. Subsequent calls to this endpoint will replace the file existent on the referenced
+      path.
+      Noe that due to gateway size and timeout limits, there is a size threshold(currently 512MB) beyond which the clients
+      must use the large file upload mechanism."
+      operationId: "uploadSimpleFile"
+      consumes:
+      - "application/octet-stream"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "x-gw-ims-org-id"
+        in: "header"
+        required: true
+        type: "string"
+        description: "The id of the ims organization associated with the batch"
+      - name: "batchId"
+        in: "path"
+        required: true
+        type: "string"
+        description: "The id of the batch data is being uploaded to"
+      - name: "datasetId"
+        in: "path"
+        required: true
+        type: "string"
+        description: "The id of the dataset data is being uploaded to"
+      - name: "filePath"
+        in: "path"
+        required: true
+        type: "string"
+        description: "The complete path of the file. Note that the directory structure denoted in this path is preserved
+        and can be used to denote partitions that the file data belongs to"
+      responses:
+        200:
+          description: "Ok"
+        201:
+          description: "Created"
+        400:
+          description: "Bad Request. The request is malformed."
+        401:
+          description: "Unauthorized. The IMS token provided is invalid."
+        404:
+          description: "Batch or DataSet resource not found."
+        414:
+          description: "URL length exceeds the allowed 2000 characters."
+        415:
+          description: "Unsupported Media Type. The uploaded file media isn't supported."
+        503:
+          description: "Service Unavailable. The Push service or dependency is unavailable."
+    patch:
+      security:
+      - Bearer: []
+      tags:
+      - "Ingest Batch"
+      summary: "Upload file part to a resumable file being uploaded to a batch dataset"
+      description: "Files larger than 512MB are uploaded in parts and this PATCH endpoint provides you a way
+      to upload a part of your large file that was initialized via the POST endpoint above"
+      operationId: "uploadFilePart"
+      consumes:
+      - "multipart/form-data"
+      parameters:
+      - name: "batchId"
+        in: "path"
+        required: true
+        type: "string"
+        description: "The id of the batch data is being uploaded to"
+      - name: "datasetId"
+        in: "path"
+        required: true
+        type: "string"
+        description: "The id of the dataset data is being uploaded to"
+      - name: "filePath"
+        in: "path"
+        required: true
+        type: "string"
+        description: "The complete path of the file. Note that the directory structure denoted in this path is preserved
+        and can be used to denote partitions that the file data belongs to"
+      - name: "x-gw-ims-org-id"
+        in: "header"
+        required: true
+        type: "string"
+        description: "The id of the ims organization associated with the batch"
+      - name: "Content-Range"
+        in: "header"
+        required: true
+        type: "string"
+        description: "The range of bytes of the file being uploaded with this request"
+      - in: "formData"
+        name: "file"
+        type: "file"
+        required: true
+        description: The content bytes for the file or file part being uploaded
+      responses:
+        200:
+          description: "successful operation"
+          headers:
+            Range:
+              type: "string"
+              description: "bytes 0-512000000"
+          schema:
+            $ref: "#/definitions/File"
+        400:
+          description: "Bad Request. The request is malformed."
+        401:
+          description: "Unauthorized. The IMS token provided is invalid."
+        404:
+          description: "Batch or DataSet or File resource not found."
+        414:
+          description: "URL length exceeds the allowed 2000 characters."
+        415:
+          description: "Unsupported Media Type. The uploaded file media isn't supported."
+        500:
+          description: "Internal server error."
+        503:
+          description: "Service Unavailable. The bulk ingest api or dependency is unavailable."
+    post:
+      security:
+      - Bearer: []
+      tags:
+      - "Ingest Batch"
+      summary: "Operate on the identified file"
+      description: "Used to signal intialization and completion of the file that's uploaded in parts"
+      operationId: "completeFileUpload"
+      consumes:
+      - "multipart/form-data"
+      parameters:
+      - name: "batchId"
+        in: "path"
+        required: true
+        type: "string"
+        description: "The id of the batch data is being uploaded to"
+      - name: "datasetId"
+        in: "path"
+        required: true
+        type: "string"
+        description: "The id of the dataset data is being uploaded to"
+      - name: "filePath"
+        in: "path"
+        required: true
+        type: "string"
+        description: "The complete path of the file. Note that the directory structure denoted in this path is preserved
+        and can be used to denote partitions that the file data belongs to"
+      - name: "x-gw-ims-org-id"
+        in: "header"
+        required: true
+        type: "string"
+        description: "The id of the ims organization associated with the batch"
+      - name: "action"
+        in: "query"
+        required: true
+        type: "string"
+        description: "The action to perform on the file with the supported values currently being INITIALIZE and COMPLETE"
+        enum: ["INITIALIZE", "COMPLETE"]
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/File"
+        400:
+          description: "Bad Request. The request is malformed."
+        401:
+          description: "Unauthorized. The IMS token provided is invalid."
+        404:
+          description: "Batch or DataSet or File resource not found."
+        414:
+          description: "URL length exceeds the allowed 2000 characters."
+        500:
+          description: "Internal server error."
+        503:
+          description: "Service Unavailable. The bulk ingest api or dependency is unavailable."
+    head:
+      security:
+      - Bearer: []
+      tags:
+      - "Ingest Batch"
+      summary: "Get the status of the chunked file uploaded so far"
+      description: "Files larger than 512MB are uploaded in parts and this HEAD endpoint provides you a way
+      get the byte range information received by the server so far."
+      operationId: "getChunkedFileStatus"
+      parameters:
+      - name: "x-gw-ims-org-id"
+        in: "header"
+        required: true
+        type: "string"
+        description: "The id of the ims organization associated with the batch"
+      - name: "batchId"
+        in: "path"
+        required: true
+        type: "string"
+        description: "The id of the batch data is being uploaded to"
+      - name: "datasetId"
+        in: "path"
+        required: true
+        type: "string"
+        description: "The id of the dataset data is being uploaded to"
+      - name: "filePath"
+        in: "path"
+        required: true
+        type: "string"
+        description: "The complete path of the file. Note that the directory structure denoted in this path is preserved
+        and can be used to denote partitions that the file data belongs to"
+      responses:
+        200:
+          description: "successful operation"
+          headers:
+            Range:
+              type: "string"
+              description: "bytes 0-512000000"
+        400:
+          description: "Bad Request. The request is malformed."
+        401:
+          description: "Unauthorized. The IMS token provided is invalid."
+        404:
+          description: "Batch or DataSet or File resource not found."
+        414:
+          description: "URL length exceeds the allowed 2000 characters."
+        415:
+          description: "Unsupported Media Type. The uploaded file media isn't supported."
+        500:
+          description: "Internal server error."
+        503:
+          description: "Service Unavailable. The Push service or dependency is unavailable."
   /batches/{batchId}/datasets/{datasetId}/preview:
     get:
       security:
@@ -140,204 +384,15 @@ paths:
           description: "Internal server error."
         503:
           description: "Service Unavailable. The bulk ingest api or dependency is unavailable."
-  /batches/{batchId}/datasets/{datasetId}/files:
-    post:
-      security:
-      - Bearer: []
-      tags:
-      - "Ingest Batch"
-      summary: "Upload file to a dataset in a batch"
-      description: "For a batch initialized by the bulk ingestion api, this endpoint lets you upload files under
-      datasets. You can either upload the entire file in a single multipart request or upload the file in patches/parts
-      using the resumable upload option. We have soft size limits enforced by the gateways which is why a file larger than
-      512MB can only be uploaded via the resumable option.\n To choose the resumable upload, you need to specify the query
-      param uploadType=resumable and then use the file PATCH endpoint below to send the subsequent byte ranges"
-      operationId: "uploadFile"
-      consumes:
-      - "multipart/form-data"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "batchId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The id of the batch data is being uploaded to"
-      - name: "datasetId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The id of the dataset data is being uploaded to"
-      - name: "x-gw-ims-org-id"
-        in: "header"
-        required: true
-        type: "string"
-        description: "The id of the ims organization associated with the batch"
-      - name: "uploadType"
-        in: "query"
-        required: true
-        type: "string"
-        enum: ["resumable"]
-        description: "The optional uploadType with the only supported value being 'resumable'. By default, the files
-        are uploaded in a single multipart request but if the file is larger than 512MB, it needs to be sent in parts
-        or 512MB or lesser as multiple requests"
-      - in: "formData"
-        name: "file"
-        type: "file"
-        required: true
-        description: The content bytes for the file or file part being uploaded
-      responses:
-        201:
-          description: "Created"
-          headers:
-            Location:
-              type: "string"
-              description: "/batches/{batchId}/datasets/{datasetId}/files/{fileId}"
-          schema:
-            $ref: "#/definitions/File"
-        400:
-          description: "Bad Request. The request is malformed."
-        401:
-          description: "Unauthorized. The IMS token provided is invalid."
-        404:
-          description: "Batch or DataSet resource not found."
-        414:
-          description: "URL length exceeds the allowed 2000 characters."
-        415:
-          description: "Unsupported Media Type. The uploaded file media isn't supported."
-        500:
-          description: "Internal server error."
-        503:
-          description: "Service Unavailable. The bulk ingest api or dependency is unavailable."
-  /batches/{batchId}/datasets/{datasetId}/files/{fileId}:
-    patch:
-      security:
-      - Bearer: []
-      tags:
-      - "Ingest Batch"
-      summary: "Upload file part to a resumable file being uploaded to a batch dataset"
-      description: "Files larger than 512MB are uploaded in parts and this PATCH endpoint provides you a way
-      to upload a part of your large file that was initialized via the POST endpoint above"
-      operationId: "uploadFilePart"
-      consumes:
-      - "multipart/form-data"
-      parameters:
-      - name: "batchId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The id of the batch data is being uploaded to"
-      - name: "datasetId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The id of the dataset data is being uploaded to"
-      - name: "fileId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The id of the file the file part is being uploaded for"
-      - name: "x-gw-ims-org-id"
-        in: "header"
-        required: true
-        type: "string"
-        description: "The id of the ims organization associated with the batch"
-      - name: "Content-Range"
-        in: "header"
-        required: true
-        type: "string"
-        description: "The range of bytes of the file being uploaded with this request"
-      - in: "formData"
-        name: "file"
-        type: "file"
-        required: true
-        description: The content bytes for the file or file part being uploaded
-      responses:
-        200:
-          description: "successful operation"
-          headers:
-            Range:
-              type: "string"
-              description: "bytes 0-512000000"
-          schema:
-            $ref: "#/definitions/File"
-        400:
-          description: "Bad Request. The request is malformed."
-        401:
-          description: "Unauthorized. The IMS token provided is invalid."
-        404:
-          description: "Batch or DataSet or File resource not found."
-        414:
-          description: "URL length exceeds the allowed 2000 characters."
-        415:
-          description: "Unsupported Media Type. The uploaded file media isn't supported."
-        500:
-          description: "Internal server error."
-        503:
-          description: "Service Unavailable. The bulk ingest api or dependency is unavailable."
-    post:
-      security:
-      - Bearer: []
-      tags:
-      - "Ingest Batch"
-      summary: "Operate on the identified file"
-      description: "Used to signal completion of the file that's uploaded in parts"
-      operationId: "completeFileUpload"
-      consumes:
-      - "multipart/form-data"
-      parameters:
-      - name: "batchId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The id of the batch data is being uploaded to"
-      - name: "datasetId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The id of the dataset data is being uploaded to"
-      - name: "fileId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The id of the file the file part is being uploaded for"
-      - name: "x-gw-ims-org-id"
-        in: "header"
-        required: true
-        type: "string"
-        description: "The id of the ims organization associated with the batch"
-      - name: "action"
-        in: "query"
-        required: true
-        type: "string"
-        description: "The action to perform on the file with the only supported value currently being COMPLETE"
-        enum: ["COMPLETE"]
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/File"
-        400:
-          description: "Bad Request. The request is malformed."
-        401:
-          description: "Unauthorized. The IMS token provided is invalid."
-        404:
-          description: "Batch or DataSet or File resource not found."
-        414:
-          description: "URL length exceeds the allowed 2000 characters."
-        500:
-          description: "Internal server error."
-        503:
-          description: "Service Unavailable. The bulk ingest api or dependency is unavailable."
   /batches/{batchId}:
     post:
       security:
       - Bearer: []
       tags:
       - "Ingest Batch"
-      summary: "Promote batch"
-      description: "Update the batch to trigger the downstream data promotion workflow"
-      operationId: "promoteBatch"
+      summary: "Complete batch"
+      description: "Complete the batch to trigger the downstream data promotion workflow"
+      operationId: "completeBatch"
       produces:
       - "application/json"
       parameters:
@@ -469,12 +524,14 @@ definitions:
         type: string
         description: The current (mutable) status of this Batch.
         enum:
-          - processing
-          - success
-          - failure
-          - queued
-          - retrying
-          - stalled
+        - processing
+        - active
+        - success
+        - failed
+        - failure
+        - queued
+        - retrying
+        - stalled
       recordCount:
         type: integer
         description: >-
@@ -531,9 +588,29 @@ definitions:
           it understands.  Normally tags are not used for internal Catalog
           business logic
         properties: {}
+      inputFormat:
+        type: object
+        description: >-
+          Meta-data describing the ingest format of the batch being ingested
+        priperties:
+          format:
+            type: "string"
+            enum:
+            - parquet
+            - json
+          delimiter:
+            type: "string"
+          quote:
+            type: "string"
+          escape:
+            type: "string"
+          charset:
+            type: "string"
+          header:
+            type: "boolean"
     required:
-      - imsOrg
-      - status
+    - imsOrg
+    - status
   errors:
     type: object
     properties:
@@ -563,13 +640,13 @@ definitions:
         type: string
         description: The type of object processed in this Batch.
         enum:
-          - batch
-          - connection
-          - connector
-          - dataSet
-          - dataSetFile
-          - dataSetView
-          - transform
+        - batch
+        - connection
+        - connector
+        - dataSet
+        - dataSetFile
+        - dataSetView
+        - transform
       id:
         type: string
         description: ''
@@ -582,12 +659,14 @@ definitions:
         type: string
         description: The current (mutable) status of this dataset.
         enum:
-          - processing
-          - success
-          - failure
-          - queued
-          - retrying
-          - stalled
+        - processing
+        - active
+        - success
+        - failed
+        - failure
+        - queued
+        - retrying
+        - stalled
       errors:
         type: array
         description: ''
@@ -603,3 +682,33 @@ definitions:
     properties:
       datasetId:
         type: "string"
+      externalId:
+        description: >-
+          Client supplied batch identifier that is expected to be unique within an IMSOrg. Defaults to
+          BatchId if not specified.
+        type: "string"
+      replay:
+        description:  >-
+          List of client supplied ids that identify the Batches that this new batch is replacing.
+        type: "object"
+        properties:
+          reason:
+            type: "string"
+          predecessors:
+            type: "array"
+            items:
+              type: "string"
+          predecessorsByExternalId:
+            type: "array"
+            items:
+              type: "string"
+        items:
+          type: "string"
+      tags:
+        type: object
+        description:  >-
+          Additional batch tags.
+        additionalProperties:
+          type: "array"
+          items:
+            type: "string"

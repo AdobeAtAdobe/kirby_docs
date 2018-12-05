@@ -5,13 +5,22 @@ produces:
 swagger: '2.0'
 info:
   description: >-
-    Experience Platform Identity Namespace Service API is used to query and create Namespaces used with Identity Service & Unified Profile Service APIs
-  title: Experience Platform Identity Namespace Service
+    Adobe Experience Platform Identity Namespace Service API is used to query and create Namespaces used with Identity Service & Profile Service APIs
+
+
+    Notes:
+      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * Base path for this API: /data/core/idnamespace
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+
+  title: Adobe Experience Platform Identity Namespace Service
+
   contact:
-    url: 'http://www.adobe.io'
+    url: 'https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation.html'
   version: 0.0.1
-host: 'platform-int.adobe.io'
+host: platform.adobe.io
 basePath: /data/core/idnamespace
+
 paths:
   /identities/:
     get:
@@ -30,9 +39,6 @@ paths:
         - application/json
       produces:
         - application/json
-      schemes:
-        - http
-        - https
       summary: Lists all namespaces available to the client `x-gw-ims-org-id`
       operationId: ListAvailableDataSourcesByOrg
       responses:
@@ -68,9 +74,6 @@ paths:
         - application/json
       produces:
         - application/json
-      schemes:
-        - http
-        - https
       summary: Create namespace under `x-gw-ims-org-id` IMS Org .
       operationId: CreateNameSpace
       responses:
@@ -82,7 +85,7 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/Error'
-            
+
   /identities/{id}:
     get:
       parameters:
@@ -105,9 +108,6 @@ paths:
         - application/json
       produces:
         - application/json
-      schemes:
-        - http
-        - https
       summary: List details of a single namespace identified by `{id}` if it is accessible to `x-gw-ims-org-id`
       operationId: ListNameSpaceByID
       responses:
@@ -141,16 +141,13 @@ paths:
         - in: body
           required: true
           name: namespace_to_create
-          description: Namespace details as a json input
+          description: Namespace details as a JSON input
           schema:
             $ref: '#/definitions/NamespaceForCreate'
       consumes:
         - application/json
       produces:
         - application/json
-      schemes:
-        - http
-        - https
       summary: Update namespace owned by `x-gw-ims-org-id` and having the given `id`.
       operationId: UpdateDataSourcesByDPID
       responses:
@@ -186,9 +183,6 @@ paths:
         - application/json
       produces:
         - application/json
-      schemes:
-        - http
-        - https
       summary: Delete namespace owned by `x-gw-ims-org-id` and identified by the given `id`.
       operationId: DeleteDataSourcesByDPID
       responses:
@@ -221,9 +215,6 @@ paths:
         - application/json
       produces:
         - application/json
-      schemes:
-        - http
-        - https
       summary: Lists shared namespaces for the given `{imsorg}` or all owned if `{imsorg}` == `x-gw-ims-org-id`
       operationId: ListDataSourcesByOrg
       responses:
@@ -265,9 +256,6 @@ paths:
         - application/json
       produces:
         - application/json
-      schemes:
-        - http
-        - https
       summary: List details of a single namespace identified by `{id}` if it is accessible to `x-gw-ims-org-id`
       operationId: ListDataSourcesByDPID
       responses:

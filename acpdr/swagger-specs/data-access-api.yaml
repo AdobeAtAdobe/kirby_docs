@@ -4,6 +4,7 @@ info:
   version: "1.0.0"
   title: "Data Access API"
   description: >-
+
     The Data Access API provides users with the capability for data access and egress on Adobe Experience Platform.
 
     This includes, but not limited to, the following operations:
@@ -30,6 +31,9 @@ externalDocs:
   description: Find out more about the Data Access API
   url: https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md
 
+externalDocs:
+  description: Find out more about the Data Access API
+  url: 'https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md'
 host: "platform.adobe.io"
 basePath: "/data/foundation/export"
 

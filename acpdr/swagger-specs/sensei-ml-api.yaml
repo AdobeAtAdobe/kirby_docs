@@ -5,7 +5,7 @@ info:
   termsOfService: 'https://www.adobe.com/legal/terms.html'
   description: >-
     This API provides a mechanism for Data Scientists to organize and manage ML
-    services from algortithm onboarding through experimentation and to service
+    services from algorithm onboarding through experimentation and to service
     deployment.
 
 
@@ -20,10 +20,19 @@ info:
       **Experiment**  | The process by which a model's reliability and generalization is validated by scoring on a small fraction of real live traffic. This process can include changing datasets, changing features, changing learning parameters and hardware.
       **Published model** |  A finalized and versioned model arrived at after training, validation, and evaluation.
       **Sensei runtime**  | The shell in which a Sensei ML instance executes.
+
+
+    Notes:
+      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * Base path for this API: /data/sensei
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'
+
+
 externalDocs:
   description: Find out more about Sensei
   url: 'https://www.adobe.io/apis/cloudplatform/sensei.html'
 host: platform.adobe.io
+basePath: /data/sensei
 tags:
   - name: Engine
     description: >-
@@ -1420,6 +1429,40 @@ paths:
           $ref: '#/responses/503'
         '504':
           $ref: '#/responses/504'
+  '/insights/metrics':
+    parameters:
+      - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/algorithmQueryParam'
+    get:
+      tags:
+        - Metrics
+      summary: Get a list of default metrics for algorithms
+      description: Lists all default metrics available for algorithms
+      operationId: retrieveMetrics
+      produces:
+        - application/vnd.adobe.platform.sensei+json;profile=defaultMetricsListing.v1.json
+      responses:
+        '200':
+          description: List of Metrics
+          schema:
+            $ref: '#/definitions/DefaultMetricsListing'
+        '400':
+          $ref: '#/responses/400'
+        '401':
+          $ref: '#/responses/401'
+        '403':
+          $ref: '#/responses/403'
+        '406':
+          $ref: '#/responses/406'
+        '500':
+          $ref: '#/responses/500'
+        '502':
+          $ref: '#/responses/502'
+        '503':
+          $ref: '#/responses/503'
+        '504':
+          $ref: '#/responses/504'
+
 parameters:
   startQueryParam:
     name: start
@@ -1465,6 +1508,12 @@ parameters:
     collectionFormat: csv
     items:
       type: string
+  algorithmQueryParam:
+    name: algorithm
+    in: query
+    description: The identifier of the algorithm type
+    required: false
+    type: string
   engineIdPathParam:
     name: engineId
     in: path
@@ -2517,6 +2566,22 @@ definitions:
         type: string
       valueType:
         type: string
+  DefaultMetrics:
+    type: object
+    properties:
+      algorithm:
+        type: string
+      defaultMetrics:
+        type: array
+        items:
+          type: string
+  DefaultMetricsListing:
+    type: object
+    properties:
+      children:
+        type: array
+        items:
+            $ref: '#/definitions/DefaultMetrics'
   LinkObject:
     type: object
     required:
