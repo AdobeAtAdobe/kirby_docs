@@ -27,13 +27,6 @@ info:
 
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 
-externalDocs:
-  description: Find out more about the Data Access API
-  url: https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md
-
-externalDocs:
-  description: Find out more about the Data Access API
-  url: 'https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md'
 host: "platform.adobe.io"
 basePath: "/data/foundation/export"
 
