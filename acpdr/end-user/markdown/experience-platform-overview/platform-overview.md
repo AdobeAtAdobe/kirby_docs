@@ -8,7 +8,7 @@
 Building Experiences
 =============================
 
-From its core cloud support services to its API-first [link] architecture, integrated components, and easy-to-use digital marketing workshop, the Adobe Experience Platform is an infrastructure designed to be built upon. It lets you blend, govern, and enhance your data, and gain intelligence to meet your challenges and customer opportunities. 
+From its core cloud support services to its API-first [link] architecture, integrated components, and easy-to-use digital marketing workshop, Adobe Experience Platform is an infrastructure designed to be built upon. It lets you blend, govern, and enhance your data, and gain intelligence to meet your challenges and customer opportunities. 
 
 Adobe Experience Platform provides core features to ingest diverse data, standardize and blend the data, enrich and cleanse the data, and then share the distilled and now easily-accessible data across Adobe and partner datasets and integrated workflows. 
 
@@ -25,13 +25,13 @@ Unified Profile ultimately gives context to a customer's profile and associated 
 With integrated and standardized customer data, you can efficiently track customer experiences across multiple channels, segment data in detail, employ real-time decisioning, and apply artificial intelligence everywhere. 
 
 
-For a quick introduction to the Adobe Experience Platform and its services and underlying components, scroll below to the overview section. For additional resources, skip to the hands-on tutorials and other implementation guides and videos to get started. 
+For a quick introduction to Adobe Experience Platform and its services and underlying components, scroll below to the overview section. For additional resources, skip to the hands-on tutorials and other implementation guides and videos to get started. 
 
 ## Getting Started
 
-**For marketing teams and business analysts**, the Experience Platform furnishes easy-to-use user interfaces and integrated workflows syncing up campaigns, analytics, audience segmentation, targeting, and integrating solutions of the Adobe Experience Cloud [link].
+**For marketing teams and business analysts**, the Experience Platform furnishes easy-to-use user interfaces and integrated workflows syncing up campaigns, analytics, audience segmentation, targeting, and integrating solutions of Adobe Experience Cloud [link].
 
-* Go to platform.adobe.com [link] to test drive the Adobe Experience Cloud user interface. 
+* Go to platform.adobe.com [link] to test drive Adobe Experience Cloud user interface. 
 * See First-time Platform Setup to plan and scope your platform implementation.
 
 

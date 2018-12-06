@@ -1,6 +1,6 @@
 # Adobe Experience Cloud and GDPR
 
-Implementing the Adobe Experience Platform GDPR Service for streamlined GDPR requests\*
+Implementing Adobe Experience Platform GDPR Service for streamlined GDPR requests\*
 
 **March 22, 2018**
 
@@ -12,7 +12,7 @@ Implementing the Adobe Experience Platform GDPR Service for streamlined GDPR req
 - Key steps to GDPR readiness
 - Adobe Experience Platform GDPR Service: How it works
   - Preparing to send a GDPR request to Adobe Experience Cloud
-  - Submit data requests via the Adobe Experience Platform GDPR Service
+  - Submit data requests via Adobe Experience Platform GDPR Service
 - Example workflow: Submitting GDPR requests to Adobe Experience Cloud
 
 ## Introduction
@@ -118,7 +118,7 @@ _Tip: Operate from the presumption that under the wide definition personal data 
 Adobe Experience Platform GDPR Service automates consumer GDPR `access` and `delete` requests across Adobe platform components. Overall, the process consists of three steps:
 
 1. In advance of GDPR and as part of good data hygiene, the Controller should curate and label data in Adobe Experience Cloud Solutions
-2. Upon request of a consumer/Data Subject and to learn what data the brand has or to delete their data, the Controller collects identities from the Data Subject, verifies that data and submits it via the Adobe Experience Platform GDPR Service.
+2. Upon request of a consumer/Data Subject and to learn what data the brand has or to delete their data, the Controller collects identities from the Data Subject, verifies that data and submits it via Adobe Experience Platform GDPR Service.
 3. Adobe Experience Cloud responds to GDPR requests and returns data to the Controller
 
 Using Platform GDPR Service involves some up-front preparation on the part of brands. The following section outlines the technical documentation for these preparatory steps, as well as how to submit requests to Adobe Experience Cloud through the API.
@@ -173,14 +173,14 @@ Examples of personal data that can be sent to Adobe Experience Cloud include nam
 
 ### 3. Set up your Data Subject user portal and deploy Adobe Experience Cloud AdobePrivacy.js Library
 
-The Adobe Experience Cloud JavaScript library (AdobePrivacy.js) is a lightweight JavaScript library that helps you collect different types of Adobe cookies in a format compatible with how our Solutions identify data categories. Controllers can choose to deploy AdobePrivacy.js on the portals where they interact with Data Subjects. AdobePrivacy.js enables you to more easily collect relevant IDs so that you can submit these identities as part of `access` and `delete` requests via Platform GDPR Service. For certain workflows in solutions such as Adobe Advertising Cloud, the JavaScript library completes a GDPR `delete` request within the user&#39;s browser by deleting relevant Adobe cookies on the client side, i.e., from the same browsing session. For more information, see [documentation](https://www.adobe.io/apis/cloudplatform/gdpr/services/allservices.html#!api-specification/markdown/narrative/gdpr/use-cases/adobe-privacy-library.md) for the JavaScript library.
+ Adobe Experience Cloud JavaScript library (AdobePrivacy.js) is a lightweight JavaScript library that helps you collect different types of Adobe cookies in a format compatible with how our Solutions identify data categories. Controllers can choose to deploy AdobePrivacy.js on the portals where they interact with Data Subjects. AdobePrivacy.js enables you to more easily collect relevant IDs so that you can submit these identities as part of `access` and `delete` requests via Platform GDPR Service. For certain workflows in solutions such as Adobe Advertising Cloud, the JavaScript library completes a GDPR `delete` request within the user&#39;s browser by deleting relevant Adobe cookies on the client side, i.e., from the same browsing session. For more information, see [documentation](https://www.adobe.io/apis/cloudplatform/gdpr/services/allservices.html#!api-specification/markdown/narrative/gdpr/use-cases/adobe-privacy-library.md) for the JavaScript library.
 
 The AdobePrivacy.js enables two methods for the Controller to call:
 
 1. **retrieveIdentities (callback)** - Use to collect IDs for access and delete requests
 2. **removeIdentities (callback)** - Use to remove IDs from the browser for delete requests
 
-It is important to note that AdobePrivacy.js is not consumer-facing; that is, website or app visitors will not submit requests directly to the Adobe Experience Platform GDPR Service. Rather, the consumer IDs collected by the Controller need to be submitted by the Controller via the Adobe Experience Platform GDPR Service. Also please note that AdobePrivacy.js only needs to be deployed on your privacy portal; it is not needed anywhere else on your website.
+It is important to note that AdobePrivacy.js is not consumer-facing; that is, website or app visitors will not submit requests directly to Adobe Experience Platform GDPR Service. Rather, the consumer IDs collected by the Controller need to be submitted by the Controller via Adobe Experience Platform GDPR Service. Also please note that AdobePrivacy.js only needs to be deployed on your privacy portal; it is not needed anywhere else on your website.
 
 Following are steps to AdobePrivacy.js implementation, if you have decided to set up a privacy portal to interact with Data Subjects to receive GDPR requests:
 
@@ -201,7 +201,7 @@ You also may want to ensure your mobile apps and websites will provide relevant 
 You will need to provide privacy notices to individuals who engage with your brand detailing how you collect and use information, and obtain consents, if needed. Adobe Experience Cloud currently does not offer a consent management solution. A list of some of the emerging privacy vendors in this space, some of which offer consent products, can be found at: [https://iapp.org/media/pdf/resource\_center/2018-Privacy-Tech-Vendor-Report-V2.1e.pdf](https://iapp.org/media/pdf/resource_center/2018-Privacy-Tech-Vendor-Report-V2.1e.pdf)
 
 
-## Submit Data Requests via the Adobe Experience Platform GDPR Service
+## Submit Data Requests via Adobe Experience Platform GDPR Service
 
 Integrating with Platform GDPR Service helps Data Controllers orchestrate data collection across the majority of Adobe Experience Cloud Solutions. In response to a query, we, as the Processor, help you find relevant data in our Solutions based on the identities you&#39;ve supplied to us. If it&#39;s an `access` request, we return an archive of the data that was found. If it&#39;s a request to *delete*, we delete it and return a receipt of deletion.
 
@@ -240,7 +240,7 @@ Following are steps to prepare for submitting GDPR requests using HTTP, as well 
 - Submit request and capture return data (job ID&#39;s per user)
   - Make an HTTP request to API programmatically or download/access an HTTP utility and submit a request
 
-Following is more detailed information about the Adobe Experience Platform GDPR Service. The resource path for all requests to the service is [here](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md). The Platform GDPR Service method types are listed below:
+Following is more detailed information about Adobe Experience Platform GDPR Service. The resource path for all requests to the service is [here](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md). The Platform GDPR Service method types are listed below:
 
 |   **API Name** | **Method Type** | **Path** | **Description** | **Input parameters** | **Response** |
 | --- | --- | --- | --- | --- | --- |

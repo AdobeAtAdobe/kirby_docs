@@ -8,7 +8,7 @@ This document provides an overview of how to integrate with and consume Platform
 
 ## Platform GDPR Service
 
-Across the Adobe Experience Cloud there are many products that support your digital marketing needs. Each solution handles data and user identities in unique ways, according to their business goals. However, they also must support to the overall ExC goals for security and compliance. Platform GDPR Service has been developed to do exactly this: coordinate privacy and compliance requests across various solutions in the ExC, beginning with GDPR access and deletion requests.
+Across Adobe Experience Cloud there are many products that support your digital marketing needs. Each solution handles data and user identities in unique ways, according to their business goals. However, they also must support to the overall ExC goals for security and compliance. Platform GDPR Service has been developed to do exactly this: coordinate privacy and compliance requests across various solutions in the ExC, beginning with GDPR access and deletion requests.
 
 All Platform GDPR Service requests are REST-based with JSON used as the payload for requests and responses. Documentation on each of the supported APIs can be found at [Platform GDPR Service Specification](https://www.adobe.io/apis/cloudplatform/gdpr/api-reference.html)
 

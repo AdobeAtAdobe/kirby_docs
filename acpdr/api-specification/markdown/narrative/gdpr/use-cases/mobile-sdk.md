@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Adobe Experience Platform Mobile SDK provides General Data Protection Regulation (GDPR) - ready APIs for Controllers that allow users to perform the following tasks:
+Adobe Experience Platform Mobile SDK provides General Data Protection Regulation (GDPR) - ready APIs for Controllers that allow users to perform the following tasks:
 
 * Retrieve locally-stored identities
 * Set opt status flags for data collection & transmission

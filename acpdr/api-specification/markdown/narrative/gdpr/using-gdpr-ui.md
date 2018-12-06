@@ -1,4 +1,4 @@
-# Interacting with the Adobe Experience Platform GDPR Service through the UI
+# Interacting with Adobe Experience Platform GDPR Service through the UI
 
 ## Adobe Experience Platform GDPR Service access
 

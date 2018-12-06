@@ -1,7 +1,7 @@
 
 # GDPR on Adobe Experience Platform Overview
 
-Adobe Experience Platform GDPR Service provides a method to submit both access and delete requests by the data controller, in an effort to comply with the General Data Protection Regulation on the Adobe Experience Platform.
+Adobe Experience Platform GDPR Service provides a method to submit both access and delete requests by the data controller, in an effort to comply with the General Data Protection Regulation on Adobe Experience Platform.
 
 GDPR requests can be submitted to Adobe Experience Platform using the [GDPR Central Service API](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) or [GDPR UI](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/using-gdpr-ui.md). There are two different data stores on Experience Platform where requests are to be processed:
 

@@ -35,7 +35,7 @@ In ACP you can apply labels at the following levels:
 | Labels | AKA | Definition |
 | ------ | --- | ---------- |
 | **Contractual Data** | ***Contractual Data Labels*** | **Contractual data labels - "C" labels - are used to categorize data that has contractual obligations or is related to a customer's data governance policies.** |
-| **C1** | | Data can only be exported from the Adobe Experience Cloud, in an aggregated form without including individual or device identifiers. |
+| **C1** | | Data can only be exported from Adobe Experience Cloud, in an aggregated form without including individual or device identifiers. |
 | **C2** | | Data cannot be exported to a third party. |
 | **C3** | | Data cannot be used in conjunction with directly identifiable information. |
 | **C4** | | Data cannot be used for any targeting, including customer's own sites and apps. |
