@@ -256,7 +256,7 @@ The response gives the batch ID which will be used in subsequent calls to upload
 
 After successfully creating a new batch for uploading, files can be then be uploaded to a specific dataset. Note that in [Creating a Dataset](#creating-a-dataset) we specified the format of our data to be a parquet file. The files you upload must be in the same format which you specified.
 
-If the original file being uploaded is greater than 512 MB, it will need to be broken up into 512 MB chunks and uploaded one at a time.  Each 512 MB chunk can be uploaded to a dataset in the same batch by repeating this step (2.4.3) for each file, using the same batch ID.
+If the original file being uploaded is greater than 512 MB, it will need to be broken up into 512 MB chunks and uploaded one at a time.  Each 512 MB chunk can be uploaded to a dataset in the same batch by repeating this step for each file, using the same batch ID.
 
 #### Request
 
@@ -284,7 +284,7 @@ curl -X PUT 'https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}
 #Status 200 OK, with empty response
 ```
 
-#### 2.2.5. Signal Batch Completion
+#### Signal Batch Completion
 
 After all data files have been uploaded to the batch, it can be signaled for promotion.  By doing this, the service knows to start creating Catalog DataSetFile entries for the promoted files and associate them with the Batch generated above. The Catalog Batch is marked successful which triggers any downstream flows that can then work on the now available data.
 
@@ -309,7 +309,7 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID
 #Status 200 OK, with empty response
 ```
 
-#### 2.2.6. Read data from the dataset
+#### Read data from the dataset
 
 With the batch ID you can use the Data Access APIs to get a list of files in the batch that you uploaded previously. The response will return an array containing a list of files IDs which reference the files in the batch. Next the files can be downloaded with the Data Access APIs. The name, size in bytes, and a link to download the file or folder will be returned.
 
