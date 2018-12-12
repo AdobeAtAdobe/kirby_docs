@@ -1,6 +1,6 @@
 # Adobe Analytics Field Mapping to ExperienceEvent XDM
 
-Adobe Analytics report suites are published to Adobe Experience Platform as two separate datasets. These are referred to as postvalues and midvalues. The postvalues dataset reflects the data as it's used in Analysis Workspace and the midvalues reflect the data as collected after being transformed by Processing Rules and VISTA without the commerce or visitor profile processing. Making possible the Query Service's Adobe Defined Functions (ADFs) that allow for customized sessionization and attribution to be applied at query time. Both datasets are pre-filtered to exclude the standard bot traffic and rows flagged as excluded from reporting in Analytics.
+Adobe Analytics report suites are published to Adobe Experience Platform as two separate datasets. These are referred to as postvalues and midvalues. The postvalues dataset reflects the data as it's used in Analysis Workspace and the midvalues reflect the data as collected after being transformed by Processing Rules and VISTA without the commerce or visitor profile processing. Making possible Query Service's Adobe Defined Functions (ADFs) that allow for customized sessionization and attribution to be applied at query time. Both datasets are pre-filtered to exclude the standard bot traffic and rows flagged as excluded from reporting in Analytics.
 
 | Field Prefix | Description |
 | --- | --- |

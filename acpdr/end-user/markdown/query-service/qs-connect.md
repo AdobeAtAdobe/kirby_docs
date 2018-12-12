@@ -6,11 +6,15 @@ This exercise explains how to connect to Query Service from a variety of desktop
 
 ## Topics
 
-1. Using the Platform UI for Query Service
-2. Connect PSQL and verify 
-3. Connect Tableau and verify
-4. Bonus - connect Power BI (PC)
-5. Bonus - connect Postico (Mac)
+[1. Using the Platform UI for Query Service](#1.-Using-the-Platform-UI-for-Query-Service)
+
+[2. Connect PSQL and verify](#2.-Connect-PSQL-and-verify) 
+
+[3. Connect Tableau and verify](#3.-Connect-Tableau-and-verify)
+
+[4. Bonus - connect Power BI (PC)](#4.-Bonus---connect-Power-BI-(PC))
+
+[5. Bonus - connect Postico (Mac)](#5.-Bonus---connect-Postico-(Mac))
 
 ## 1. Using the Platform UI for Query Service
 

@@ -22,7 +22,7 @@ from_utc_timestamp(timestamp, timezone) - Given a timestamp like '2017-07-14 02:
 Example:
 
 ```
-SELECT from_utc_timestamp(timestamp, '')
+SELECT from_utc_timestamp(timestamp, 'America/New_York')
 FROM experience_events
 ORDER BY timestamp ASC
 ```
