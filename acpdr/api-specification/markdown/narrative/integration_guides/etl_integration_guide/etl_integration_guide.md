@@ -10,9 +10,9 @@ This guide outlines general steps for ingesting data into Adobe Experience Platf
 
 The ETL Connector for Adobe Experience Platform is located, installed, and operated entirely within the ETL Ecosystem. Experience Platform provides data storage, administration, access, usage controls, and other domain-specific data services. Experience Platform also exposes common RESTful APIs including:
 
--   [Catalog](../../../../../swagger-specs/catalog.yaml)
--   [Data Access](../../../../../swagger-specs/data-access-api.yaml)
--   [Batch Ingestion](../../../../../swagger-specs/bulk-ingest-api.yaml)
+-   [Catalog](../../../../../../acpdr/swagger-specs/catalog.yaml)
+-   [Data Access](../../../../../../acpdr/swagger-specs/data-access-api.yaml)
+-   [Batch Ingestion](../../../../../../acpdr/swagger-specs/bulk-ingest-api.yaml)
 -   [Authentication and Authorization APIs](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md)
 
 This guide also includes sample API calls for ETL partners to use when designing a connector, with links to documentation that outlines each Experience Platform service, and use of the API, in more detail. 
@@ -64,7 +64,7 @@ _**Note**_: Partners will also have to specify a time stamp filter marking the d
 
 ### View List of Datasets
 
-Using the source of data for mapping, a list of all available datasets can be fetched using the [Catalog API](../../../../../swagger-specs/catalog.yaml). 
+Using the source of data for mapping, a list of all available datasets can be fetched using the [Catalog API](../../../../../../acpdr/swagger-specs/catalog.yaml). 
 
 You can issue a single API request to view all available datasets (e.g. `GET /datasets`), with best practice being to include query parameters that limit the size of the response. 
 
@@ -95,7 +95,7 @@ curl -X GET "https://platform.adobe.io/data/foundation/catalog/datasets?limit=5&
   -H "x-gw-ims-org-id: {IMS_ORG}"
 ```
 
-Please refer to the [Catalog Service Overview](../../technical_overview/catalog_architectural_overview/catalog_architectural_overview.md) for detailed examples of how to use the [Catalog API](../../../../../swagger-specs/catalog.yaml).
+Please refer to the [Catalog Service Overview](../../technical_overview/catalog_architectural_overview/catalog_architectural_overview.md) for detailed examples of how to use the [Catalog API](../../../../../../acpdr/swagger-specs/catalog.yaml).
 
 ### View Dataset Schema
 
@@ -276,7 +276,7 @@ The response includes file IDs as top-level properties and file details containe
 
 The file IDs returned in the previous response can be used in a GET request to fetch further file details via the Data Access API. 
 
-The [Data Access Overview](../..//technical_overview/data_access_architectural_overview/data_access_architectural_overview.md) contains details on how to use the Data Access API.
+The [Data Access Overview](../../technical_overview/data_access_architectural_overview/data_access_architectural_overview.md) contains details on how to use the Data Access API.
 
 #### Request
 
@@ -304,7 +304,7 @@ curl -X GET "https://platform.adobe.io/data/foundation/export/files/ea40946ac031
 
 ### Preview File Data
 
-The "href" property an be used to fetch preview data via the [Data Access API](../..//technical_overview/data_access_architectural_overview/data_access_architectural_overview.md) .
+The "href" property an be used to fetch preview data via the [Data Access API](../../technical_overview/data_access_architectural_overview/data_access_architectural_overview.md) .
 
 #### Request
 
@@ -317,7 +317,7 @@ curl -X GET "https://platform.adobe.io/data/foundation/export/files/ea40946ac031
 
 The response to the above request will contains a preview of the file's contents. 
 
-More information on the Data Access API, including detailed requests and responses, is available in the [Data Access Overview](../..//technical_overview/data_access_architectural_overview/data_access_architectural_overview.md).
+More information on the Data Access API, including detailed requests and responses, is available in the [Data Access Overview](../../technical_overview/data_access_architectural_overview/data_access_architectural_overview.md).
 
 ### Get "fileDescription" from Dataset
 
@@ -333,6 +333,7 @@ curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets/{dataset
 ```
 
 #### Response
+
 ```json
 {
 "59c93f3da7d0c00000798f68": {
@@ -343,17 +344,18 @@ curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets/{dataset
     }
 }
 ```
-Data will be written to Experience Platform using the [Batch Ingestion API](../../../../../swagger-specs/bulk-ingest-api.yaml).  Writing of data is an asynchronous process. When data is written to Adobe Experience Platform, a batch is created and marked as a success only after data is fully written.
+
+Data will be written to Experience Platform using the [Batch Ingestion API](../../../../../../acpdr/swagger-specs/bulk-ingest-api.yaml).  Writing of data is an asynchronous process. When data is written to Adobe Experience Platform, a batch is created and marked as a success only after data is fully written.
 
 Data in Experience Platform should be written in the form of parquet files.
 
 ## Execution phase
 
-As the execution starts, the connector (as defined in the source component) will read the data from Experience Platform using the [Data Access API](../../../../../swagger-specs/data-access-api.yaml). The transformation process will read the data for a certain time range. Internally, it will query batches of source datasets. While querying, it will use a parameterized (rolling for time series data, or incremental data) start date and list dataset files for those batches, and start making requests for data for those dataset files.
+As the execution starts, the connector (as defined in the source component) will read the data from Experience Platform using the [Data Access API](../../../../../../acpdr/swagger-specs/data-access-api.yaml). The transformation process will read the data for a certain time range. Internally, it will query batches of source datasets. While querying, it will use a parameterized (rolling for time series data, or incremental data) start date and list dataset files for those batches, and start making requests for data for those dataset files.
 
 ### Read Data from Experience Platform
 
-Using the [Catalog API](../../../../../swagger-specs/catalog.yaml), you can fetch all batches between a specified start time and end time, and sort them by the order they were created.
+Using the [Catalog API](../../../../../../acpdr/swagger-specs/catalog.yaml), you can fetch all batches between a specified start time and end time, and sort them by the order they were created.
 
 #### Request 
 ```shell
@@ -368,7 +370,7 @@ Details on filtering batches can be found in the [How to Query Data via Data Acc
 
 ### Get Files out of a Batch
 
-Once you have the ID for the batch you are looking for (`{BATCH_ID}`), it is possible to retrieve a list of files belonging to a specific batch via the [Data Access API](../../../../../swagger-specs/data-access-api.yaml).  Details for doing so are available in the [How to Query Data via Data Access API](../../../tutorials/data_access_tutorial/data_access_tutorial.md) tutorial.
+Once you have the ID for the batch you are looking for (`{BATCH_ID}`), it is possible to retrieve a list of files belonging to a specific batch via the [Data Access API](../../../../../../acpdr/swagger-specs/data-access-api.yaml).  Details for doing so are available in the [How to Query Data via Data Access API](../../../tutorials/data_access_tutorial/data_access_tutorial.md) tutorial.
 
 #### Request
 ```shell
@@ -380,7 +382,7 @@ curl -X GET "https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}
 
 ### Access File Using File ID
 
-Using the unique ID of a file (`{FILE_ID`), the [Data Access API](../../../../../swagger-specs/data-access-api.yaml) can be used to access the specific details of the file, including its name, size in bytes, and a link to download it.
+Using the unique ID of a file (`{FILE_ID`), the [Data Access API](../../../../../../acpdr/swagger-specs/data-access-api.yaml) can be used to access the specific details of the file, including its name, size in bytes, and a link to download it.
 
 #### Request 
 
@@ -395,7 +397,7 @@ The response may point to a single file, or a directory. Details on each can be 
 
 ### Access File Content
 
-The [Data Access API](../../../../../swagger-specs/data-access-api.yaml) can be used to access the contents of a specific file. To fetch the contents, a GET request is made using the value returned for `_links.self.href` when [accessing a file using the file ID](#access-file-using-file-id).
+The [Data Access API](../../../../../../acpdr/swagger-specs/data-access-api.yaml) can be used to access the contents of a specific file. To fetch the contents, a GET request is made using the value returned for `_links.self.href` when accessing a file using the file ID.
 
 #### Request
 
@@ -420,7 +422,7 @@ Validation can be performed for logical XDM types, using attributes such as `min
 
 ### Create a Batch
 
-Once the data is processed, the ETL tool will write the data back to Experience Platform using the [Batch Ingestion API](../../../../../swagger-specs/bulk-ingest-api.yaml). Before data can be added to a dataset, it must be linked to a batch which will later be uploaded into a specific dataset.
+Once the data is processed, the ETL tool will write the data back to Experience Platform using the [Batch Ingestion API](../../../../../../acpdr/swagger-specs/bulk-ingest-api.yaml). Before data can be added to a dataset, it must be linked to a batch which will later be uploaded into a specific dataset.
 
 #### Request
 
@@ -478,7 +480,7 @@ In next transformation execution, likely by schedule or event invocation, the ET
 
 ### Get Last Batch Status
 
-Before running new tasks in the ETL tool, you must ensure that the last batch was successfully completed. The [Catalog Service API](../../../../../swagger-specs/catalog.yaml) provides a batch-specific option which provides the details of the relevant batches.
+Before running new tasks in the ETL tool, you must ensure that the last batch was successfully completed. The [Catalog Service API](../../../../../../acpdr/swagger-specs/catalog.yaml) provides a batch-specific option which provides the details of the relevant batches.
 
 #### Request
 ```shell
@@ -510,7 +512,7 @@ New tasks can be scheduled if the previous batch "status" value is "success" as 
 
 ### Get Last Batch Status by ID
 
-An individual batch status can be retrieved through the [Catalog Service API](../../../../../swagger-specs/catalog.yaml) by issuing a GET request using the `{BATCH_ID}`. The `{BATCH_ID}` used would be the same as the ID returned when the batch was created.
+An individual batch status can be retrieved through the [Catalog Service API](../../../../../../acpdr/swagger-specs/catalog.yaml) by issuing a GET request using the `{BATCH_ID}`. The `{BATCH_ID}` used would be the same as the ID returned when the batch was created.
 
 #### Request
 
@@ -529,11 +531,11 @@ The following response shows a "success":
 ```json
 "BATCHID": {
     "imsOrg": "{IMS_ORG}",
-    "created": xxxx,
+    "created": 1494349962314,
     "createdClient": "API_KEY",
     "createdUser": "CLIENT_USER_ID@AdobeID",
     "updatedUser": "CLIENT_USER_ID@AdobeID",
-    "updated": xxxx,
+    "updated": 1494349962314,
     "status": "success",
     "errors": [],
     "version": "1.0.1",
@@ -548,11 +550,11 @@ In case of failure the "errors" can be extracted from the response and surfaced 
 ```json
 "BATCHID": {
     "imsOrg": "{IMS_ORG}",
-    "created": xxxx,
+    "created": 1494349962314,
     "createdClient": "API_KEY",
     "createdUser": "CLIENT_USER_ID@AdobeID",
     "updatedUser": "CLIENT_USER_ID@AdobeID",
-    "updated": xxxx,
+    "updated": 1494349962314,
     "status": "failure",
     "errors": [
         {
