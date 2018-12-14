@@ -2,13 +2,13 @@
 
 ## Introduction
 
-Adobe Experience Platform GDPR Service provides a simple set of calls, enabling Adobe Customers to manage (access and delete) the personal data of their consumers (Data Subjects) across Adobe Experience Cloud (ExC) solutions. In addition to APIs for accessing and deleting data, Platform GDPR Service also provides a central audit and logging mechanism to surface job status and results from across the various solutions.
+Adobe Experience Platform GDPR Service provides a simple set of calls, enabling Adobe Customers to manage (access and delete) the personal data of their consumers (Data Subjects) across Adobe Experience Cloud solutions. In addition to APIs for accessing and deleting data, Platform GDPR Service also provides a central audit and logging mechanism to surface job status and results from across the various solutions.
 
 This document provides an overview of how to integrate with and consume Platform GDPR Service.
 
 ## Platform GDPR Service
 
-Across Adobe Experience Cloud there are many products that support your digital marketing needs. Each solution handles data and user identities in unique ways, according to their business goals. However, they also must support to the overall ExC goals for security and compliance. Platform GDPR Service has been developed to do exactly this: coordinate privacy and compliance requests across various solutions in the ExC, beginning with GDPR access and deletion requests.
+Across Adobe Experience Cloud there are many products that support your digital marketing needs. Each solution handles data and user identities in unique ways, according to their business goals. However, they also must support to the overall Experience Cloud goals for security and compliance. Platform GDPR Service has been developed to do exactly this: coordinate privacy and compliance requests across various solutions in Experience Cloud, beginning with GDPR access and deletion requests.
 
 All Platform GDPR Service requests are REST-based with JSON used as the payload for requests and responses. Documentation on each of the supported APIs can be found at [Platform GDPR Service Specification](https://www.adobe.io/apis/cloudplatform/gdpr/api-reference.html)
 
@@ -23,7 +23,7 @@ Below are the required steps for creating your first call into Platform GDPR Ser
 
 ## Platform GDPR Service POST request format
 
-Platform GDPR Service communicates, as mentioned previously, using JSON data for both request and response payloads. As part of a POST request, you as the data controller will need to collect information about the data subjects who are requesting to access their data or have it be deleted. Adobe has provided a few tools to assist in this complex effort, including the Adobe Privacy JS library to collect IDs for individual site visitors (cookie information, etc.) (see), as well as data labeling inside solutions such as Adobe Campaign and Adobe Analytics.
+Platform GDPR Service communicates, as mentioned previously, using JSON data for both request and response payloads. As part of a POST request, you, as the data controller, need to collect information about the data subjects who are requesting to access their data or have it be deleted. Adobe has provided a few tools to assist in this complex effort, including the Adobe Privacy JS library to collect IDs for individual site visitors (cookie information, etc.) (see), as well as data labeling inside solutions such as Adobe Campaign and Adobe Analytics.
 
 An example of this data is shown in listing 1 below.
 
@@ -85,7 +85,7 @@ An example of this data is shown in listing 1 below.
 Let's investigate the information contained in this payload
 ### Company Context
 
-The “companyContexts” section of the JSON payload is a qualifier for your organization within ExC solutions. Repeated here:
+The “companyContexts” section of the JSON payload is a qualifier for your organization within Experience Cloud solutions. Repeated here:
 ```json
 "companyContexts": [
     {
@@ -98,17 +98,17 @@ The “companyContexts” section of the JSON payload is a qualifier for your or
     }
 ```
 You can see that the company section is actually an array of contexts. There are two types of contexts supported:
-* IMS organization ID (or ExC organization ID)
-    * This is the organization ID that links your other solutions together in the ExC
+* IMS organization ID (or Experience Cloud organization ID)
+    * This is the organization ID that links your other solutions together in the Experience Cloud
 * Product-specific company qualifier
     * These identifiers are used for solutions that may not be linked to an organization
     * Often considered “legacy”, they are the account names, such as login company, client code, partner, tenant ID or other similar solution identifiers
 
-Platform GDPR Service interacts with the IMS organization ID to validate permissions of the user submitting the request. It then forwards this information on to the ExC solutions to process.
+Platform GDPR Service interacts with the IMS organization ID to validate permissions of the user submitting the request. It then forwards this information on to the Experience Cloud solutions to process.
 
 ### Users
 
-The “users” section of the JSON payload is a collection of users (one or many) being submitted by an ExC customer for GDPR request processing. It may contain more than one set of user IDs per user in the collection. Let’s examine it more closely. Here is a single user section from the example above:
+The “users” section of the JSON payload is a collection of users (one or many) being submitted by an Experience Cloud customer for GDPR request processing. It may contain more than one set of user IDs per user in the collection. Let’s examine it more closely. Here is a single user section from the example above:
 ```json
 "users": [
     {
@@ -134,13 +134,13 @@ The “users” section of the JSON payload is a collection of users (one or man
 Some notes about the format:
 * The **key** is a user identifier to wrap the various namespace entries and is used to qualify the separate job IDs in the response data, largely used by the data controller for reference and grouping and may be any string value.
 * The **action** field is a collection of desired actions, one or both of ["access" | "delete"] depending on the user’s request, and may be different for each user in the submission.
-* The combination of **key** and **action** dictate how many "jobs" are created in the service to track. A user key with a single action creates a single job, but a user with both an `access` and `delete` request will generate two separate jobs against that user key. Multiple keys in a file (indicating multiple user ID collections) will generate multiple jobs as well.
-* As mentioned above, users may have 1 or many JSON sub-documents including namespace, value and type that represent their identity in the ExC
+* The combination of **key** and **action** dictate how many "jobs" are created in the service to track. A user key with a single action creates a single job, but a user with both an `access` and `delete` request generates two separate jobs against that user key. Multiple keys in a file (indicating multiple user ID collections) generates multiple jobs as well.
+* As mentioned above, users may have 1 or many JSON sub-documents including namespace, value and type that represent their identity in the Experience Cloud
 * The namespace and type fields are detailed in the table [Namespace Qualifiers](#namespacequalifiers) below
-* The number of userIDs under each user while creating jobs for users is limited to 9. For example, the API will support accepting up to 9 userIDs under each user
+* The number of userIDs under each user while creating jobs for users is limited to 9. For example, the API supports accepting up to 9 userIDs under each user
 
 One key not detailed in the example above:
-* The key **isDeletedClientSide** is a Boolean (true/false) value that is handed in from Adobe's Privacy JS library, indicating the client-side cookie has been deleted. This flag resides at the userID level, as part of the `namespace`, `value` and `type` triumvirate, and should not be added to the request manually as it indicates additional processing work is not needed by some solutions
+* The key **isDeletedClientSide** is a Boolean (true/false) value that is handed in from the Adobe Privacy JS library, indicating the client-side cookie has been deleted. This flag resides at the userID level, as part of the `namespace`, `value` and `type` triumvirate, and should not be added to the request manually as it indicates additional processing work is not needed by some solutions
 
 ### Include
 
@@ -154,25 +154,26 @@ The include key is an optional parameter, but is highly recommended for use when
 
 See [Product Values](#productvalues).
 
-If the product you specify as part of an include or exclude key does not match the list of product values, you will receive an error message and the request will fail.
+If the product you specify as part of an include or exclude key does not match the list of product values, you receive an error message and the request fails.
 
 ### Additional flags and options
 
-The following flags my be specified at the root level (equivalent to the *users* or *companyContexts* keys) and will be applied for the complete set of user data included.
+The following flags might be specified at the root level (equivalent to the *users* or *companyContexts* keys) and applied for the complete set of user data included.
 
+* The **include** key is an optional parameter and supports an array of product strings to exclude in your processing. If you only support or integrate with Analytics, you could include only Analytics in the request. By default, all supported Experience Cloud solutions are included in every request. See [Product Values](#productvalues).
 * the **expandIds** key is an optional parameter and supports a boolean value of true|false. optional field that represents an optimization for processing the IDs in the solutions (currently only used by Analytics). If omitted, Analytics' default behavior is *false*
 * The **priority** key is an optional parameter (*normal*|*low*) for optimizing requests based on customer need. This key is inactive at the moment. 
-* The **analyticsDeleteMethod** is an optional parameter (*purge*|*anonymize*) for specifying how Analytics should handle the customer data. By default (if omitted), all data referenced by the given collection of user IDs is anonymized, thus maintaining data integrity for historical reporting and other functions. Purge will remove the data completely.
+* The **analyticsDeleteMethod** is an optional parameter (*purge*|*anonymize*) for specifying how Analytics should handle the customer data. By default (if omitted), all data referenced by the given collection of user IDs is anonymized, thus maintaining data integrity for historical reporting and other functions. Purge removes the data completely.
 
 ## Creating your API Integration
 
-Now that you have your data collection for submission, it's time to create your API integration. Any ExC API, such as Adobe's Platform GDPR Service, that accesses a service or content on behalf of an end user, authenticates using the OAuth and JSON Web Token (JWT) standards.
+Now that you have your data collection for submission, it's time to create your API integration. Any Experience Cloud API, such as Platform GDPR Service, that accesses a service or content on behalf of an end user, authenticates using the OAuth and JSON Web Token (JWT) standards.
 
-An ExC API client integration must be registered through the [Adobe I/O Console](https://console.adobe.io/). The I/O Console is where you can generate an API Key, an important requirement to obtaining client credentials.
+An Experience Cloud API client integration must be registered through the [Adobe I/O Console](https://console.adobe.io/). The I/O Console is where you can generate an API Key, an important requirement to obtaining client credentials.
 
-If your integration needs to access content or an API on behalf of an end user, that user must be authenticated as well. Your integration will need to pass an OAuth token granted by the Adobe [Identity Management System (IMS)](../gdpr-terminology.md#identitymanagementservicesims).
+If your integration needs to access content or an API on behalf of an end user, that user must be authenticated as well. Your integration needs to pass an OAuth token granted by the Adobe [Identity Management System (IMS)](../gdpr-terminology.md#identitymanagementservicesims).
 
-For service-to-service integrations, you will also need a JSON Web Token (JWT) that encapsulates your client credentials and authenticates the identity of your integration. You exchange the JWT for the OAuth token that authorizes access. See [Adobe I/O Authentication Overview](http://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for detailed instructions.
+For service-to-service integrations, you also need a JSON Web Token (JWT) that encapsulates your client credentials and authenticates the identity of your integration. You exchange the JWT for the OAuth token that authorizes access. See [Adobe I/O Authentication Overview](http://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for detailed instructions.
 
 ## GDPR Headers and Authorization
 
@@ -576,7 +577,7 @@ This results in this response:
 ```
 **Listing 8:** A sample status check for all jobs
 
-The above request will return jobs from 1 to 50.
+The above request returns jobs from 1 to 50.
  
 To fetch next four pages, you would request:
 
@@ -594,14 +595,14 @@ To request jobs 151 to 175:
 
 | Qualifier | Definition |
 | --------- | ---------- |
-| standard | One of the standard namespaces defined globally, not tied to an individual organization data set (e.g. email, phone number, etc.). Namespace ID will be provided. |
-| custom | A unique namespace created in the context of an organization, not shared across the Experience Cloud. The value represents the friendly name ("name" field) to be searched for. Namespace ID will be provided. |
-| integrationCode | Integration code - similar to "custom", but specifically defined as the integration code of a datasource to be searched for. Namespace ID will be provided. |
+| standard | One of the standard namespaces defined globally, not tied to an individual organization data set (e.g. email, phone number, etc.). Namespace ID is provided. |
+| custom | A unique namespace created in the context of an organization, not shared across the Experience Cloud. The value represents the friendly name ("name" field) to be searched for. Namespace ID is provided. |
+| integrationCode | Integration code - similar to "custom", but specifically defined as the integration code of a datasource to be searched for. Namespace ID is provided. |
 | namespaceId | Indicates the value is the actual ID of the namespace that was created or mapped through the namespace service. |
-| unregistered | A freeform string that is not defined in the namespace service and will be taken "as is". Any solution that handles these kinds of namespaces will check against them and handle if appropriate for the company context and data set. No namespace ID will be provided. |
-| analytics | A custom namespace that is mapped internally in Analytics, not in the namespace service. This will be passed in directly as specified by the original request, without a namespace ID |
+| unregistered | A freeform string that is not defined in the namespace service and is taken "as is". Any solution that handles these kinds of namespaces checks against them and handle if appropriate for the company context and data set. No namespace ID is provided. |
+| analytics | A custom namespace that is mapped internally in Analytics, not in the namespace service. This is passed in directly as specified by the original request, without a namespace ID |
 | dpsc | A custom field type for DPS mappings, which support a set of three standard namespaces. |
-| target | A custom namespace understood internally by Target, not in the namespace service. This will be passed in directly as specified by the original request, without a namespace ID |
+| target | A custom namespace understood internally by Target, not in the namespace service. This is passed in directly as specified by the original request, without a namespace ID |
 
 ### Product Values
 
@@ -620,9 +621,9 @@ product {
 ```
 
 ### Batching and Concurrency
-Adobe allows customers to group multiple GDPR user IDs to process as a single batch request. A batch request has an upper limit of 1000 IDs to process. In the event that customers submit more than 1000 IDs, Adobe will return an error rejecting the batch request. Customers can send multiple concurrent requests.
+Adobe allows customers to group multiple GDPR user IDs to process as a single batch request. A batch request has an upper limit of 1000 IDs to process. In the event that customers submit more than 1000 IDs, Adobe returns an error rejecting the batch request. Customers can send multiple concurrent requests.
 
 ## Summary
 
- Adobe Experience Platform GDPR Service provides a simple set of calls, enabling Adobe Customers to manage (access and delete) the personal data of their consumers (Data Subjects) across Adobe Experience Cloud (ExC) solutions. In addition to APIs for accessing and deleting data, Platform GDPR Service also provides a central audit and logging mechanism to surface job status and results from across the various solutions.
+ Adobe Experience Platform GDPR Service provides a simple set of calls, enabling Adobe Customers to manage (access and delete) the personal data of their consumers (Data Subjects) across Adobe Experience Cloud solutions. In addition to APIs for accessing and deleting data, Platform GDPR Service also provides a central audit and logging mechanism to surface job status and results from across the various solutions.
 

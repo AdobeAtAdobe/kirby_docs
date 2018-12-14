@@ -12,7 +12,7 @@ Authentication with an Adobe ID is required, and the context of that user will d
 
 ![](images/gdpr-ui-login.png)
 
-Once authenticated, you should see the Experience Cloud shell (ExC) where you can navigate to other solutions. If you click the product selector in the UI, you should see a link to the administrative tools.
+Once authenticated, you should see the Experience Cloud shell where you can navigate to other solutions. If you click the product selector in the UI, you should see a link to the administrative tools.
 
 ![GDPR UI Admin Menu](images/gdpr-ui-admin-menu.png)
 
@@ -57,7 +57,7 @@ After submitting the file successfully, you may choose to be taken to the Status
 
 - Easily switch back to submit new requests by clicking on the _Submit New Request_ button to the right, or by selecting the tab _Upload Request_ in the top left.
 
-- Each unique job ID is a link to a more detailed description of the job itself, containing updated status values and responses from each ExC product orchestrated by Platform GDPR Service. If you click on this, it takes you to the third UI screen, the Job Details Page.
+- Each unique job ID is a link to a more detailed description of the job itself, containing updated status values and responses from each Experience Cloud product orchestrated by Platform GDPR Service. If you click on this, it takes you to the third UI screen, the Job Details Page.
 
 ### Job Details Page
 
@@ -67,7 +67,7 @@ As mentioned above, navigating from the Status Tracker by clicking on a job ID g
 
 #### Details
 
-- This dialog contains status information about each ExC solution and its current state in relation to the overall job. As every GDPR job is asynchronous, you can see the latest communication date and time from each solution as well, as some will require more time than others to process the request.
+- This dialog contains status information about each Experience Cloud solution and its current state in relation to the overall job. As every GDPR job is asynchronous, you can see the latest communication date and time from each solution as well, as some will require more time than others to process the request.
 
 - If a solution has provided any additional data, it will be viewable in this dialog. You can expand the view by clicking on individual product rows and seeing what has been received.
 

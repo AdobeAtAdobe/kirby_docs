@@ -12,7 +12,7 @@ When Adobe Experience Cloud is providing software and services to an enterprise,
 
 As the data controller, you will determine the personal data that Adobe processes and stores on your behalf.
 
-If you use Adobe Experience Cloud (AEC) solutions, Adobe may host personal data for you depending on the solutions you use and the information you choose to send to your AEC account. For a detailed list of examples, see [https://www.adobe.com/privacy/marketing-cloud.html#collect](https://www.adobe.com/privacy/marketing-cloud.html#collect).
+If you use Adobe Experience Cloud solutions, Adobe may host personal data for you depending on the solutions you use and the information you choose to send to your Adobe Experience Cloud account. For a detailed list of examples, see [https://www.adobe.com/privacy/marketing-cloud.html#collect](https://www.adobe.com/privacy/marketing-cloud.html#collect).
 
 ## Adobe Readiness
 
@@ -22,11 +22,11 @@ Adobe either already meets, or is working towards meeting, the obligations set o
     * We have a long-standing practice of incorporating Privacy by Design in the development of our products and services. For example, we provide the capability in Adobe Analytics, Adobe Audience Manager, and Adobe Target to obfuscate IP addresses and allow individual level opt-outs
 * *Security measures*
   * We comply with industry–accepted standards, regulations and certifications, and have implemented technical and organizational measures, as well as hundreds of security processes and controls. ([see https://www.adobe.com/content/dam/acom/en/security/pdfs/MasterComplianceList.pdf](https://www.adobe.com/content/dam/acom/en/security/pdfs/MasterComplianceList.pdf))
-  * We have developed the Adobe Common Controls Framework, a foundational framework of security processes and controls to protect Adobe infrastructure, applications and services. For more information on Adobe's Common Controls Framework, see: [https://wwwimages2.adobe.com/content/dam/acom/en/security/pdfs/AdobeCloudServices_ComplianceOverview.pdf](https://wwwimages2.adobe.com/content/dam/acom/en/security/pdfs/AdobeCloudServices_ComplianceOverview.pdf)
+  * We have developed the Adobe Common Controls Framework, a foundational framework of security processes and controls to protect Adobe infrastructure, applications and services. For more information on the Adobe Common Controls Framework, see: [https://wwwimages2.adobe.com/content/dam/acom/en/security/pdfs/AdobeCloudServices_ComplianceOverview.pdf](https://wwwimages2.adobe.com/content/dam/acom/en/security/pdfs/AdobeCloudServices_ComplianceOverview.pdf)
 * *Data transfer*
   * Adobe has certified to the EU-US Privacy Shield for customer-related data. This provides our customers with the option of relying on the EU-US Privacy Shield, or entering into Standard Contractual Clauses (also known as EU Model Clauses), for the transfer of data from the EU to the US. More information on this can be found in our Privacy Center, as well information on how to request Standard Contractual Clauses. ([see https://www.adobe.com/privacy/eudatatransfers.html](https://www.adobe.com/privacy/eudatatransfers.html))
 * *Contract terms/Data Processing Agreement*
-  * We have updated Adobe's Data Processing Agreement to account for the GDPR requirements
+  * We have updated the Adobe Data Processing Agreement to account for the GDPR requirements
 * *Data Protection Officer (DPO)*
   * Adobe currently has a Chief Privacy Officer, an Irish Data Protection Officer and a dedicated privacy team, and we are continuing to evaluate if we need to take any additional steps in light of the new requirements.
 * *Records of processing*
@@ -40,11 +40,11 @@ We've built an API to help process "access" and "delete" requests on behalf of C
 
 Every solution and platform at Adobe will be able to help customers comply with their Data Subject's choices. Each solution must adhere to the Adobe Privacy Standards, including:
 
-* [Adobe's Privacy Standard](https://www.adobe.com/privacy.html)
+* [Adobe Privacy Standard](https://www.adobe.com/privacy.html)
 * [Adobe Experience Cloud Privacy](https://www.adobe.com/privacy/marketing-cloud.html)
 * [Controlling Your Data](https://www.adobe.com/privacy/opt-out.html)
 * [Adobe and GDPR](https://www.adobe.com/privacy/general-data-protection-regulation.html)
-* [Adobe's Policy for Using Cookies or Other Technology to Access Information on a User's Device](https://www.adobe.com/privacy/cookies.html)
+* [The Adobe Policy for Using Cookies or Other Technology to Access Information on a User's Device](https://www.adobe.com/privacy/cookies.html)
 
 ## Consent: Opt-in Management
 

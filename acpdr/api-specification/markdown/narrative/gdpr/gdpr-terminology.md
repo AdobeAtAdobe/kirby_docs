@@ -82,7 +82,7 @@ A controlling undertaking and its controlled undertakings.
 
 ## Identity Management Services (IMS)
 
-Adobe's implementation of Federated ID and OAuth 2.0 for authentication of Adobe ID users and authorization for Adobe resources. You must integrate IMS with your Adobe application or service to enable your users to log in and access Adobe services. Users can log in directly with Renga (Adobe's identity services provider), or log in through a trusted third party authentication domain (such as Google, Facebook, or a corporate/organization LDAP).
+The Adobe implementation of Federated ID and OAuth 2.0 for authentication of Adobe ID users and authorization for Adobe resources. You must integrate IMS with your Adobe application or service to enable your users to log in and access Adobe services. Users can log in directly with Renga (the Adobe identity services provider), or log in through a trusted third party authentication domain (such as Google, Facebook, or a corporate/organization LDAP).
 
 ## IMS Org ID
 
