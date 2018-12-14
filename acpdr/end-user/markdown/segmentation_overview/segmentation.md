@@ -7,7 +7,7 @@ The Segment Builder serves as a single workspace for Adobe Experience Platform f
 ### Terms used in this document
 
 * __Segmentation__: Dividing a large group of customers, prospects, or consumers into smaller groups that share similar traits and will respond similarly to marketing strategies
-* __Segment__: Also __Definition__. The rule set defining how to subdivide a customer base, such as 'Men over 50'. Once conceptualized, segments are then defined in terms of the conditions that must be met to qualify for a segment
+* __Segment Definition__: The rule set defining how to subdivide a customer base, such as 'Men over 50'. Once conceptualized, segments are then defined in terms of the conditions that must be met to qualify for a segment
 * __Audience__: The collection of profiles that meet the segment definition criteria
 
 ### How does segmentation work?
