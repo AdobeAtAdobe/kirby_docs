@@ -50,7 +50,7 @@ Note that if Spark is selected for Recipe Type and Binary is set for Recipe Sour
 
 * **Docker Host** - Link to the Docker host to upload your Docker image to
 * **Username/Password** - Credentials to the Docker host
-* **Configuration File** - This file expects a JSON object containing parameters for the training and scoring of the Instance. You can leave this blank when creating the Recipe as the workflow will prompt you to enter the configuration when creating an Instance or an Experiment. Here is an example of a [configuration file for the Retail Sales sample](https://github.com/adobe/acp-data-services-dsw-reference/blob/master/recipes/python/retail/retail.config.json) application:
+* **Configuration File** - This file expects a JSON object containing parameters for the training and scoring of the Instance. You can leave this blank when creating the Recipe as the workflow will prompt you to enter the configuration when creating an Instance or an Experiment. Here is an example of a [configuration file for the Retail Sales sample](https://github.com/adobe/experience-platform-dsw-reference/blob/master/recipes/python/retail/retail.config.json) application:
 
 ```JSON
 [

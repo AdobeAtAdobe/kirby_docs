@@ -22,18 +22,18 @@ A Docker image is a recipe for which a Docker container is created during the `d
 From there the Docker image we create will be stored in the Artifactory and can be accessed via a link by other users. The link will also be used in the Adobe Experience Platform UI when creating an instance. 
 
 Reference example for each intelligent service:
-* [Python](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/recipes/python)
-* [Tensorflow](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/recipes/tensorflow)
-* [R](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/recipes/r)
+* [Python](https://github.com/adobe/experience-platform-dsw-reference/tree/master/recipes/python)
+* [Tensorflow](https://github.com/adobe/experience-platform-dsw-reference/tree/master/recipes/tensorflow)
+* [R](https://github.com/adobe/experience-platform-dsw-reference/tree/master/recipes/R)
 <!---
-* [Scala](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/recipes/scala)
-* [PySpark](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/recipes/pyspark)
+* [Scala](https://github.com/adobe/experience-platform-dsw-reference/tree/master/recipes/scala)
+* [PySpark](https://github.com/adobe/experience-platform-dsw-reference/tree/master/recipes/pyspark)
 -->
 
 
 ### Building the Artifact for the Intelligent Service
 
-Depending on which sample you downloaded, there will be a different procedure for creating your intelligent service. The sample codebase can be found [here](https://github.com/adobe/acp-data-services-dsw-reference).
+Depending on which sample you downloaded, there will be a different procedure for creating your intelligent service. The sample codebase can be found [here](https://github.com/adobe/experience-platform-dsw-reference).
 
 This sample Retail Sales example leverages the wealth of historical data a retailer has access to, to predict future trends, and to optimize pricing decisions. The algorithm uses past sales data to train the model and to predict future sales trends. With this, the retailer will be able to have insights to help them when making pricing changes.
 
@@ -52,7 +52,7 @@ We will go over how to build each one. You can skip ahead to the section you nee
 To get the Python application, we run the following command to clone the Github repository to your local system.
 
 ```BASH
-git clone https://github.com/adobe/acp-data-services-dsw-reference.git
+git clone https://github.com/adobe/experience-platform-dsw-reference.git
 ```
 
 You can also download the application as a zip file. 
@@ -81,7 +81,7 @@ Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
 To get the Scala application, we run the following command to clone the Github repository to the local system.
 
 ```BASH
-git clone https://github.com/adobe/acp-data-services-dsw-reference.git
+git clone https://github.com/adobe/experience-platform-dsw-reference.git
 ```
 
 To create the assembly jar, follow the steps below.
@@ -106,7 +106,7 @@ Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
 To get the PySpark application, we run the following command to clone the Github repository to the local system.
 
 ```BASH
-git clone https://github.com/adobe/acp-data-services-dsw-reference.git
+git clone https://github.com/adobe/experience-platform-dsw-reference.git
 ```
 
 Now with the repository, we can run the following commands to create the `.egg` file which consists of project-related metadata files, code and resources which is well-suited to distribution and importing.
@@ -125,7 +125,7 @@ Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
 To get the Tensorflow application, we run the following command to clone the Github repository to the local system.
 
 ```BASH
-git clone https://github.com/adobe/acp-data-services-dsw-reference.git
+git clone https://github.com/adobe/experience-platform-dsw-reference.git
 ```
 
 Now in the repository, we can run the following commands to create the `.egg` file which consists of project-related metadata files, code and resources which is well-suited to distribution and importing.
@@ -144,14 +144,14 @@ Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
 For R the files needed to create the Docker image are already built in the repository. All we need to do is to clone it. The files are found in `/recipes/R` folder
 
 ```BASH
-git clone https://github.com/adobe/acp-data-services-dsw-reference.git
+git clone https://github.com/adobe/experience-platform-dsw-reference.git
 cd recipes/R/Retail\ -\ GradientBoosting/
 ```
 Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
 
 ### Create Dockerfile
 
-We will need to create a Dockerfile that first takes the base image, installs dependencies, and copies over the packaged intelligent service we did in section [Create Dockerfile](#create-dockerfile). Since you are using the Sample Intelligent Service, the Dockerfile is provided [in the directory](https://github.com/adobe/acp-data-services-dsw-reference/blob/master/recipes/python/retail/Dockerfile). The example for Python is shown below:
+We will need to create a Dockerfile that first takes the base image, installs dependencies, and copies over the packaged intelligent service we did in section [Create Dockerfile](#create-dockerfile). Since you are using the Sample Intelligent Service, the Dockerfile is provided [in the directory](https://github.com/adobe/experience-platform-dsw-reference/blob/master/recipes/python/retail/Dockerfile). The example for Python is shown below:
 
 ```BASH
 FROM <docker-runtime-path>

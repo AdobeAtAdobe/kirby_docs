@@ -50,9 +50,9 @@ Repeat the same steps as above but use the name `Retail-Scoring-<your-alias>`. T
 
 ### Ingest Data
 
-We will be ingesting data using the parquet format. The training and scoring parquet files can be found in this [public repository](https://github.com/adobe/acp-data-services-dsw-reference/tree/master/datasets/retail). The parquet files are listed here:
-* Training Data: [DSWRetailSales-Training.parquet](https://github.com/adobe/acp-data-services-dsw-reference/blob/master/datasets/retail/DSWRetailSales-Training.parquet)
-* Scoring Data: [DSWRetailSales-Scoring.parquet](https://github.com/adobe/acp-data-services-dsw-reference/blob/master/datasets/retail/DSWRetailSales-Scoring.parquet)
+We will be ingesting data using the parquet format. The training and scoring parquet files can be found in this [public repository](https://github.com/adobe/experience-platform-dsw-reference/tree/master/datasets/retail). The parquet files are listed here:
+* Training Data: [DSWRetailSales-Training.parquet](https://github.com/adobe/experience-platform-dsw-reference/blob/master/datasets/retail/DSWRetailSales-Training.parquet)
+* Scoring Data: [DSWRetailSales-Scoring.parquet](https://github.com/adobe/experience-platform-dsw-reference/blob/master/datasets/retail/DSWRetailSales-Scoring.parquet)
 
 The following steps show you how to ingest the data into the training and scoring dataset we created in the previous section.
 
