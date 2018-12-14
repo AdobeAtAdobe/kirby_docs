@@ -412,9 +412,9 @@ The response to this request contains the contents of the file. For more informa
 
 ### Validate Records for Schema Compliance
 
-When data is being written, users can opt to validate data according to the validation rules defined in the XDM schema. More information on schema validation can be found in the [ETL Ecosystem Integration Reference Code on GitHub](https://github.com/adobe/acp-data-services-etl-reference/blob/fd08dd9f74ae45b849d5482f645f859f330c1951/README.md#validation).
+When data is being written, users can opt to validate data according to the validation rules defined in the XDM schema. More information on schema validation can be found in the [ETL Ecosystem Integration Reference Code on GitHub](https://github.com/adobe/experience-platform-etl-reference/blob/fd08dd9f74ae45b849d5482f645f859f330c1951/README.md#validation).
 
-If you are using the reference implementation found on [GitHub](https://github.com/adobe/acp-data-services-etl-reference/blob/fd08dd9f74ae45b849d5482f645f859f330c1951/README.md#validation), you can turn on schema validation in this implementation using the system property `-DenableSchemaValidation=true`.
+If you are using the reference implementation found on [GitHub](https://github.com/adobe/experience-platform-etl-reference/blob/fd08dd9f74ae45b849d5482f645f859f330c1951/README.md), you can turn on schema validation in this implementation using the system property `-DenableSchemaValidation=true`.
 
 Validation can be performed for logical XDM types, using attributes such as `minLength` and `maxlength` for strings, `minimum` and `maximum` for integers, and more. The [Defining XDM Field Types](../../technical_overview/schema_registry/acp_schema_registry.md#defining-xdm-field-types-in-the-api) table in the [XDM Schema Registry Guide](../../technical_overview/schema_registry/acp_schema_registry.md) outlines XDM types and the properties that can be used for validation. 
 
