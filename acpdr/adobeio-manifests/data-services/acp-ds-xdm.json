@@ -1,10 +1,10 @@
 {
-	"name": "adobe_experience_platform_xdm_services",
+	"name": "adobe_experience_platform_xdm_system",
 	"version": "1.0.0",
-	"description": "Adobe Experience Platform XDM Services",
+	"description": "Adobe Experience Platform XDM System",
 	"author": "Emily Walpole",
 	"view_type": "mdbook",
-	"meta_keywords": "Adobe Experience Platform, Services, Experience Platform, Data Services, XDM, Experience Data Model, Schema Registry, Schema",
+	"meta_keywords": "Adobe Experience Platform, Services, Experience Platform, Data Services, XDM, Experience Data Model, Schema Registry, Schema, XDM System",
 	"meta_description": "Experience Data Model (XDM) supports the standard schema workflows in Adobe Experience Platform, including schema development principles, working with schemas in the Schema Registry, and the use of standard schemas by Platform services.",
 	"publish_date": "11/09/2018",
 	"show_edit_github_banner": false,
@@ -36,5 +36,9 @@
 					"description": "The Schema Registry provides a RESTful API to list, view, extend, create, and update standard schemas in the registry for Adobe Experience Platform."
 				}
 	],
-	"app2app_map": {"api-specification/markdown/narrative/tutorials/":"/apis/cloudplatform/dataservices/tutorials/alltutorials.html", "acpdr/swagger-specs/":"/apis/cloudplatform/dataservices/api-reference.html"}
+	"app2app_map": {
+		"api-specification/markdown/narrative/tutorials/":"/apis/cloudplatform/dataservices/tutorials/alltutorials.html", 
+		"acpdr/swagger-specs/":"/apis/cloudplatform/dataservices/api-reference.html",
+		"api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html"
+	}
 }

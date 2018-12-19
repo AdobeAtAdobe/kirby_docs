@@ -4,13 +4,15 @@
 
 This developer guide provides an introduction to the Schema Registry (aka XDM Registry) and outlines the steps necessary to perform the following actions via the Schema Registry API:
 
-- View a list of existing schemas
-- View a specific schema
-- Extend an existing schema
-- Add fields to an extension
-- Create and update a new schema
-- View schema descriptors
-- Create, update, and delete schema descriptors
+- [View a list of existing schemas](#get---view-all-xdm-schemas)
+- [View a specific schema](#get---view-a-specific-schema)
+- [Extend an existing schema](#put---extend-an-existing-schema)
+- [Add fields to an extension](#add-fields-to-an-extension)
+- [Create and update a new schema](#put---create-a-new-schema)
+- [View schema descriptors](#schema-descriptors)
+- [Create, update, and delete schema descriptors](#post---create-a-new-descriptor)
+- [Define XDM field types](#defining-xdm-field-types-in-the-api)
+- [Map XDM types to other formats](#mapping-xdm-types-to-other-formats)
 
 ## Schema Registry
 
@@ -1395,7 +1397,7 @@ Each schema can have one or more schema descriptor entities applied to it. Each 
 
 ### Descriptor Types
 
-All descriptors are described using the base SchemaDescriptor schema. The base can be extended by the RelationshipDescriptor or UpdatePolicyDescriptor schemas to add additional properties needed when defining certain types of descriptors.
+All descriptors are described using the base `SchemaDescriptor` schema. The base can be extended by the `RelationshipDescriptor`, `UpdatePolicyDescriptor`, or `IdentityDescriptor` schemas to add additional properties needed when defining certain types of descriptors.
 
 The following table provides an overview of available descriptors and details regarding proper API usage are outlined in subsequent sections below.
 
@@ -1413,7 +1415,7 @@ The following table provides an overview of available descriptors and details re
 
 <tr>
 <td>xdm:descriptorPrimaryKey</td>
-<td>Signals that the sourceProperty of the sourceSchema may be used as a primary key for data based on the schema.</td>
+<td>Signals that the "sourceProperty" of the "sourceSchema" may be used as a primary key for data based on the schema.</td>
 <td><strong>Required:</strong>
 <ul>
 <li>xdm:sourceSchema</li>
@@ -1422,10 +1424,10 @@ The following table provides an overview of available descriptors and details re
 </td>
 <td>
 <pre class="JSON language-JSON hljs">
-{<br/>
+{
 "@type":"xdm:descriptorPrimaryKey",
 "xdm:sourceSchema":"_customer/retail/geography",
-"xdm:sourceProperty":"/geographyId"<br/>
+"xdm:sourceProperty":"/geographyId"
 }
 </pre>
 </td>
@@ -1448,12 +1450,12 @@ The following table provides an overview of available descriptors and details re
 </td>
 <td>
 <pre class="JSON language-JSON hljs">
-{<br/>
+{
 "@type":"xdm:descriptorOneToOne",
 "xdm:sourceSchema":"_customer/retail/geography",
 "xdm:sourceProperty":"/geographyId",
 "xdm:destSchema":"core/Organization",
-"xdm:destProperty":"/id"<br/>
+"xdm:destProperty":"/id"
 }
 </pre>
 </td>
@@ -1472,12 +1474,12 @@ The following table provides an overview of available descriptors and details re
 </td>
 <td>
 <pre class="JSON language-JSON hljs">
-{<br/>
+{
 "@type":"xdm:descriptorOneToMany",
 "xdm:sourceSchema":"_customer/loyalty",
 "xdm:sourceProperty":"/programLevel",
 "xdm:destSchema":"_customer/retail",
-"xdm:destProperty":"/loyaltyLevel"<br/>
+"xdm:destProperty":"/loyaltyLevel"
 }
 </pre>
 </td>
@@ -1496,12 +1498,12 @@ The following table provides an overview of available descriptors and details re
 </td>
 <td>
 <pre class="JSON language-JSON hljs">
-{<br/>
+{
 "@type":"xdm:descriptorManyToMany",
 "xdm:sourceSchema":"_customer/web/flights",
 "xdm:sourceProperty":"/flightId",
 "xdm:destSchema":"context/person",
-"xdm:destProperty":"/_customer/properties/flights/properties/bookedFlights"<br/>
+"xdm:destProperty":"/_customer/properties/flights/properties/bookedFlights"
 }
 </pre>
 </td>
@@ -1521,42 +1523,73 @@ The following table provides an overview of available descriptors and details re
 </ul>
 <strong>Values for xdm:updatePolicy:</strong>
 <ul>
-<li>"xdm:updateMerge" - Merge rules should be applied to rollup the new data with any existing data.</li>
-<li>"xdm:updateReplace" - This data should always replace existing data if it exists.</li>
-<li>"xdm:updateTimeSeries" - This is time series data, and should be stored incrementally, not updated or rolled up.</li>
+<li>"xdm:updateMerge"<br/>Merge rules should be applied to rollup the new data with any existing data.</li>
+<li>"xdm:updateReplace"<br/>New data should always replace existing data if it exists.</li>
+<li>"xdm:updateTimeSeries"<br/>This is time series data, and should be stored incrementally, not updated or rolled up.</li>
 </ul>
 </td>
 <td>
 <pre class="JSON language-JSON hljs">
-{<br/>
+{
 "@type":"xdm:updatePolicy",
 "xdm:sourceSchema":"_customer/web/sitevisits",
-"xdm:updatePolicy":"xdm:updateTimeSeries"<br/>
+"xdm:updatePolicy":"xdm:updateTimeSeries"
 }
 </pre>
 <p>In the case of "xdm:updateMerge" and "xdm:updateReplace", existing data is identified via the primary key. Specifying a primary key and declaring an update policy must occur in two separate API calls as shown here:</p>
 
-<strong>Call 1:</strong>
+<strong>Call 1: Declare Primary Key</strong>
 <pre class="JSON language-JSON hljs">
 {
-
 "@type":"xdm:descriptorPrimaryKey",
 "xdm:sourceSchema":"_customer/retail/geography",
 "xdm:sourceProperty":"/geographyId"
-
 }
 </pre>
 
-<strong>Call 2:</strong>
+<strong>Call 2: Set Update Policy</strong>
 <pre class="JSON language-JSON hljs">
 { 
-
-"@type":"xdm:updatePolicy",
-"xdm:sourceSchema":"_customer/retail/geography",
-"xdm:updatePolicy":"xdm:updateReplace"
-
+  "@type":"xdm:updatePolicy",
+  "xdm:sourceSchema":"_customer/retail/geography",
+  "xdm:updatePolicy":"xdm:updateReplace"
 }
 </pre>
+</td>
+</tr>
+
+<tr>
+<td colspan=4><strong>IdentityDescriptor</strong></td>
+</tr>
+
+<tr>
+<td>xdm:descriptorIdentity</td>
+<td>Signals that the "sourceProperty" of the "sourceSchema" is an Identity field within <a href="../identity_services_architectural_overview/identity_services_architectural_overview.md">Adobe Experience Platform Identity Service</a>. </td>
+<td><strong>Required:</strong>
+<ul>
+<li>xdm:sourceSchema</li>
+<li>xdm:sourceProperty</li>
+<li>xdm:namespace</li>
+<li>xdm:property<br/><strong>Valid Values:</strong><br/>"xdm:id" or "xdm:code"</li>
+<li>xdm:isPrimary (boolean)</li>
+</ul>
+</td>
+<td>
+<pre class="JSON language-JSON hljs">
+{ 
+  "@type":"xdm:descriptorIdentity",
+  "xdm:sourceSchema":"_customer/retail/loyalty",
+  "xdm:sourceProperty":"/loyaltyNumber",
+  "xdm:namespace":"_customer",
+  "xdm:property":"xdm:id",
+  "xdm:isPrimary": false
+}
+</pre>
+<p><li><strong>xdm:namespace"</strong> is the identity namespace value for this ID (URI format). The value of "xdm:namespace", combined with the value of "sourceProperty", should be considered semantically equivalent to the definition of the Identity schema with the same values.</li>
+<li><strong>"xdm:property"</strong> is the identity property this value will map to (<strong>"xdm:id"</strong> value is an id that conforms to the definition of Identity@id. <strong>"xdm:code"</strong> value is a code that conforms to the definition of Identity@code.)</li>
+<li><strong>"xdm:isPrimary"</strong> when "true", indicates that this identity is to be considered the primary one. Behavior is undefined when more than one identity descriptor is flagged as primary. This setting may be used to override the "isPrimary" flag of the actual identity data. When this value and the value(s) in the data conflict, this value should be used. A common use of this override mechanism would be to handle the case where multiple sources of data are merged into a single dataset. Each source of data may choose a different type of identity to be primary. When the data is mixed and records are merged, multiple identities may carry the isPrimary flag. This descriptor can then be used to ensure that the data is treated consistently by specifying the desired primary identity. </li>
+</p>
+<p>It is important to think about Identity when designing your schema. For more information, see the <a href="schema_design/schema_principles.md#schema-and-identity">Schema and Identity</a> section of the <a href="schema_design/schema_principles.md">Schema Design Principles & Best Practices</a> guide.</p>
 </td>
 </tr>
 
@@ -1610,6 +1643,12 @@ The `descriptors` array inside each object lists the paths to each individual de
         "descriptorType": "updatePolicy",
         "descriptors": [
             "@/descriptors/3875cc1927e746e496cc2206f24e1567f46d7fb5"
+        ]
+    },
+    {
+        "descriptorType": "identity",
+        "descriptors": [
+            "@/descriptors/5523b1927e746e496cc2206f24e1567f46d722fe"
         ]
     }
 ]
@@ -1698,7 +1737,7 @@ curl -X GET \
 
 ```
 
-### POST - Create New Descriptor
+### POST - Create a New Descriptor
 
 To create a new descriptor, issue a POST request to `/descriptors` that includes all of the required fields (as indicated by the [Descriptor Types table](#descriptor-types)) in the payload.
 
@@ -2055,6 +2094,48 @@ Field of type "object" that is defined by a reference schema:
 Where "id" is the {id} of the reference schema.
 </td>
 </tr>
+
+<tr>
+<td>map</td>
+<td>type: object<br/><br/>
+<strong>Note:</strong><br/>
+Use of the 'map' data type is reserved for industry and vendor schema usage and is not available for use in tenant defined fields. It is used in standard schemas when data is represented as keys that map to some value, or where keys cannot reasonably be included in a static schema and must be treated as data values.
+</td>
+<td>A 'map' MUST NOT define any properties. It MUST define a single "additionalProperties" schema to describe the type of values contained in the 'map'. A 'map' in XDM can contain only a single data type. Values may be any valid XDM schema definition, including an array or an object, or as a reference to another schema (via $ref). <br/><br/>
+
+Map field with values of type 'string':
+<pre class="JSON language-JSON hljs">
+"sampleField": {
+  "type": "object",
+  "additionalProperties":{
+    "type": "string"
+  }
+}
+</pre>
+Map field with values being an array of strings:
+<pre class="JSON language-JSON hljs">
+"sampleField": {
+  "type": "object",  
+  "additionalProperties":{
+    "type": "array",
+    "items": {
+      "type": "string"
+    }
+  }
+}
+</pre>
+Map field that references another schema:
+<pre class="JSON language-JSON hljs">
+"sampleField": {
+  "type": "object",
+  "additionalProperties":{
+    "$ref": "id"
+  }
+}
+</pre>
+Where "id" is the {id} of the reference schema.
+</td>
+</tr>
 </table>
 
 ## Mapping XDM Types to Other Formats
@@ -2073,6 +2154,7 @@ serialization formats.
 |boolean|type:boolean|BOOLEAN|BooleanType|java.lang.Boolean|Boolean|System.Boolean|Boolean|bool|Integer|Integer|bool
 |date|type:string<br>format:date<br>(RFC 3339, section 5.6)|INT32/DATE|DateType|java.util.Date|java.util.Date|System.DateTime|String|date|Integer<br>(unix millis)|int64<br>(unix millis)
 |date-time|type:string<br>format:date-time<br>(RFC 3339, section 5.6)|INT64/TIMESTAMP_MILLIS|TimestampType|java.util.Date|java.util.Date|System.DateTime|String|timestamp|Integer<br>(unix millis)|int64<br>(unix millis)
+|map|object|MAP annotated group<br><br><key_type> MUST be STRING<br><br><value_type> type of map values|MapType<br><br>"keyType" MUST be StringType<br><br>"valueType" is type of map values.|java.util.Map|Map|---|object|object|map|map<key_type, value_type>|
 
 ## Profile Schema
 
