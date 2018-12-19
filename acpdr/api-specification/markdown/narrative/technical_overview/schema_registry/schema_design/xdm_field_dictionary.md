@@ -2,7 +2,9 @@
 
 Experience Data Model (XDM) defines a set of fields "out of the box" that can be used when extending principal schemas or building new schemas for use in Adobe Experience Platform. These XDM field types contain specific definitions that provide consistency in behavior for any fields sharing the same XDM field type.
 
-**Note:** A field with a Type of "directory/schemaname" is the path pointing to a specific reference schema that contains its own fields and connotations. The [Schema Design Principles and Best Practices](schema_principles.md) guide outlines referencing and extending schemas in more detail.
+A field with a Type of "directory/schemaname" is the path pointing to a specific reference schema that contains its own fields and connotations. The [Schema Design Principles and Best Practices](schema_principles.md) guide outlines referencing and extending schemas in more detail.
+
+_**Note:**_ If a field is marked "**DEPRECATED**", it means that it is no longer best practice to use this field. The field continues to be available for backwards compatibility, but should not be used in new implementations.
 
 ---
 
@@ -89,8 +91,8 @@ Experience Data Model (XDM) defines a set of fields "out of the box" that can be
 |xdm:droppedFrames|data/measure|||Dropped Frames|The number of frames dropped during playback of the main content.|
 |xdm:emailFormat|string||string|Email Format|Email format preferred by the profile. This can be rich text/plain text|
 |xdm:endDate|string|date|date|End Date|The date the current subscription term ends.|
-|xdm:endUserIDs|context/enduserids|||End User IDs|Condensed, normalized encapsulation of all end user identifiers.|
-|xdm:environment|context/environment|||Environment|Environment of the subscription.This can be either then known environment at the time of the subscriptionor the environment of the application for subscriptions related to anApplication.|
+|xdm:endUserIDs<br><strong>DEPRECATED</strong>|context/enduserids|||End User IDs|Condensed, normalized encapsulation of all end user identifiers. <br>_This field has been deprecated, use xdm:identityMap instead._|
+|xdm:environment|context/environment|||Environment|Environment of the subscription.This can be either then known environment at the time of the subscription or the environment of the application for subscriptions related to anApplication.|
 |xdm:errors|data/measure|||Errors|The number of errors that were encountered during playback.|
 |xdm:eventType|string||string|Type of the event received|The type for the external event received|
 |xdm:extension|string||string|Extension|The internal dialing number used to call from a private exchange, operator or switchboard.|
@@ -111,7 +113,8 @@ Experience Data Model (XDM) defines a set of fields "out of the box" that can be
 |xdm:homeAddress|common/address|||Home Address|A home postal address.|
 |xdm:homePhone|context/phonenumber|||Home Phone|Home phone number.|
 |xdm:id|string||string|Unique Identifier|Unique identifier of the measure. In cases of data collection using lossy communication channels, such as mobile apps or websites with offline functionality, where transmission of measures cannot be ensured, this property contains a client-generated, unique ID of the measure taken. It is best practice to make this sufficiently long to ensure enough entropy. Additionally, if information such as time stamp, device ID, IP or MAC address, or other potentially user-identifying values are incorporated in the generation of the xdm:id, the result should be hashed, so that no PII is encoded in the value, as the goal is not to identify user or device, but the specific measure in time.|
-|xdm:identities|array||array|All User Identities|Array of Identities. Condensed, normalized encapsulation of all end user identifiers.|
+|xdm:identities<br><strong>DEPRECATED</strong>|array||array|All User Identities|Array of Identities. Condensed, normalized encapsulation of all end user identifiers. <br>_This field has been deprecated, use xdm:identityMap instead._|
+|xdm:identityMap|object||map|Identity Map|Condensed, normalized encapsulation of all end user identifiers. Replaces `xdm:endUserIDs` and `xdm:identities` which are now deprecated. Learn more about [Adobe Experience Platform Identity Service](../../identity_services_architectural_overview/identity_services_architectural_overview.md).|
 |xdm:implementationDetails|context/implementationdetails|||Viewabiltity implementation details|The name and version of the library instrumented to measure viewability metrics.|
 |xdm:impressions|data/measure|||Impressions|Describes the intention to play a timed media asset. It does not measure success, as the user might abandon the content before the first frame is viewed.|
 |xdm:index|integer||int|Chapter Index|The index of the chapter inside the content.|

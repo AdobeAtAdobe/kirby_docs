@@ -5,11 +5,11 @@
 This document provides an introduction to schemas and the building blocks, principles, and best practices for designing schemas to be used with Adobe Experience Platform.
 
 After reading this document, you will be able to answer the following questions:
-- What is a schema?
-- How do you define a schema?
-- What are the building blocks of schema?
-- What are some best practices in schema design?
-- What is Experience Data Model?
+- [What is a schema?](#understanding-schema)
+- [What are the building blocks of schema?](#building-blocks-of-schema)
+- [How do you define a schema?](#defining-a-schema)
+- [What are some best practices in schema design?](#field-types)
+- [What is Experience Data Model?](#experience-data-model-xdm)
 
 ## Understanding Schemas
 
@@ -18,6 +18,12 @@ A schema is a set of rules to help represent and validate data. At a high-level,
 In addition to describing the structure of data, schemas provide constraints and expectations that can be applied and used to validate data as it is moved between systems. These standard definitions allow data to be interpreted consistently, regardless of origin, and remove the need for translation across applications.
 
 Think of the schema as the blueprint, and the dataset as a house built from that blueprint.
+
+### Relational Tables vs Embedded Objects
+
+When working with relational databases, best practices involve normalizing data, or taking an entity and dividing it into discrete pieces that are then displayed across multiple tables. In order to read the data as a whole or update the entity, read and write operations must be made across many individual tables using JOIN.
+
+Through the use of embedded objects, schemas denormalize data and store it in self-contained documents with a hierarchical structure. The data is encapsulated and stored as a complete record, allowing you to query the information without the need for expensive JOIN operations.
 
 ### Schema and Big Data
 
@@ -31,11 +37,13 @@ To ingest data into Experience Platform, a dataset is created which references a
 
 In some systems, observed and target schemas are stored alongside the data, providing important definitions for the data and how it should look.
 
-### Relational Tables vs Embedded Objects
+### Schema and Identity
 
-When working with relational databases, best practices involve normalizing data, or taking an entity and dividing it into discrete pieces that are then displayed across multiple tables. In order to read the data as a whole or update the entity, read and write operations must be made across many individual tables using JOIN.
+Schemas are used for ingesting data into Experience Platform. This data will ultimately be used across multiple services to create a single, unified view of each individual end customer. Therefore, it is important when thinking about schemas to think about "Identity" and which fields can be used to identify a single customer regardless of where the data may be coming from. To help with this process, key fields can be marked as "Identity" and, upon data ingestion, the data in those fields will be inserted into the "Identity Graph". The graph data can then be accessed by Unified Profile and other Experience Platform services to provide a stitched together view of each customer. 
 
-Through the use of embedded objects, schemas denormalize data and store it in self-contained documents with a hierarchical structure. The data is encapsulated and stored as a complete record, allowing you to query the information without the need for expensive JOIN operations.
+Fields that are commonly marked as "Identity" include: email address, phone number, [Experience Cloud ID (ECID)](https://marketing.adobe.com/resources/help/en_US/mcvid/), CRM ID, and loyalty program ID. You will want to consider any unique identifiers specific to your organization, as they may be good "Identity" fields as well. 
+
+It is important to think about customer identities during the schema planning phase, to help ensure data is being brought together to form the most robust Profile as possible for each customer. You can learn more about how identity information can help you deliver relevant digital experiences to your customers by bringing all of their information together in one place by reading the [Adobe Experience Platform Identity Service](../../identity_services_architectural_overview/identity_services_architectural_overview.md) documentation.
 
 ## Building Blocks of Schema
 
@@ -68,6 +76,7 @@ Once the fields for the schema have been identified, you will need to determine 
 - number
 - boolean
 - array
+- object
 
 The valid ranges of these scalar types can be further constrained to certain patterns, formats, minimums/maximums, or pre-defined values. Using these constraints, a wide range of more specific field types can be represented, including:
 
@@ -77,6 +86,9 @@ The valid ranges of these scalar types can be further constrained to certain pat
 - byte
 - date
 - date-time
+- map
+
+**Note:** The "map" field type allows for key-value pair data, including multiple values for a single key. Maps can only be defined at the system level, meaning you may encounter a map in an industry or vendor-defined schema, but it is not available for use in tenant-defined fields. For more information on field types, see the [Defining XDM Field Types in the API](../acp_schema_registry.md#defining-xdm-field-types-in-the-api) table in the [Schema Registry Guide](../acp_schema_registry.md).
 
 **Example:** The fields we defined for our Buyer schema would have the following types:
 
@@ -279,7 +291,7 @@ Time Series data provides a snapshot of the environment at the time an action wa
 
 Record data provides information about attributes of the subject. The Profile schema is not the only example of a Record schema, but it is the preferred schema for subject record data in Platform. Best practice encourages using the Profile schema to express Record data.
 
-Record schemas and Time Series schemas can contain one or more identity fields. These fields contain the identity representation of a subject, such as a CRM identifier, Experience Cloud ID (ECID), browser cookie, AdvertisingId, or other IDs in different domains.
+Record schemas and Time Series schemas contain a map of identities (xdm:identityMap). This field contains the identity representation of a customer, drawn from fields marked as "Identity" as outlined in the [Schema and Identity](#schema-and-identity) section at the beginning of this document.
 
 ## Experience Data Model (XDM)
 
