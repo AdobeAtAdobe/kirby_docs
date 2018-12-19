@@ -44,7 +44,7 @@ In addition to providing an introduction to working with Catalog Service, this d
 - [Link multiple requests](#post---multiple-requests-in-a-single-call)
 - [Filter responses using query parameters](#filtering-data-with-query-parameters)
 
-Most of the examples in this document use the `/datasets` endpoint, but the principles can be applied to other endpoints within Catalog. The complete [Catalog Service RESTful API Resource](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html#!acpdr/swagger-specs/catalog.yaml) shows all available calls and operations.
+Most of the examples in this document use the `/datasets` endpoint, but the principles can be applied to other endpoints within Catalog. The complete [Catalog Service RESTful API Resource](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html#!acpdr/swagger-specs/catalog.yaml) shows all available calls and operations. For more detailed information on how to follow these calls for the dataset endpoint, look at the [creating a dataset tutorial](../../tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md).
 
 ### Best Practices for Catalog Queries
 
