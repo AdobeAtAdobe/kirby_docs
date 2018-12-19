@@ -1,4 +1,4 @@
-# Tutorial: Creating and Populating a Dataset and ingesting data from a file
+# Tutorial: Configuring a Dataset
 
 ## Objective
 
