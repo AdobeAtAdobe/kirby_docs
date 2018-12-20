@@ -24,7 +24,7 @@ Using the Schema Registry API, you are able to perform basic CRUD operations aga
 
 ### XDM Compatibility Mode
 
-[Experience Data Model](https://www.adobe.io/open/standards/xdm.html) (XDM) is a publicly documented specification, driven by Adobe to improve the interoperability, expressiveness, and power of digital experiences. Adobe maintains the source code and formal XDM definitions in an open source project on [GitHub](https://github.com/adobe/xdm/). These definitions are written in XDM Standard Notation, using JSON-LD in addition to JSON Schema as the grammar for defining XDM schemas. 
+[Experience Data Model](https://www.adobe.io/open/standards/xdm.html) (XDM) is a publicly documented specification, driven by Adobe to improve the interoperability, expressiveness, and power of digital experiences. Adobe maintains the source code and formal XDM definitions in an open source project on [GitHub](https://github.com/adobe/xdm/). These definitions are written in XDM Standard Notation, using JSON-LD in addition to JSON Schema as the grammar for defining XDM schemas.
 
 When looking at formal XDM definitions in the public repository, you can see that standard XDM differs from what you see in Adobe Experience Platform. What you are seeing in Experience Platform is called Compatibility Mode, and it provides a simple mapping between standard XDM and the way it is used within Platform.
 
@@ -44,7 +44,7 @@ For example, the following is a side-by-side comparison of a snippet from the "P
 <pre class="JSON language-JSON hljs">
 "xdm:name": {
   "title": "Full name",
-  "$ref": 
+  "$ref":
     "https://ns.adobe.com/xdm/context/person-name",
   "description": "The person's full name"
 }
@@ -69,7 +69,7 @@ Adobe Experience Platform is designed to work with multiple solutions and servic
 
 Most Experience Platform services including Catalog, Data Lake, and Unified Profile Service use Compatibility Mode in lieu of standard XDM. The Schema Registry API also uses Compatibility Mode, and the examples in this document are all shown using Compatibility Mode.
 
-It is worthwhile to know that a mapping takes place between standard XDM and the way it is operationalized in Experience Platform, but it should not affect your use of Platform services. 
+It is worthwhile to know that a mapping takes place between standard XDM and the way it is operationalized in Experience Platform, but it should not affect your use of Platform services.
 
 The open source project is available to you as a resource, but when it comes to interacting with standard schemas through the Schema Registry, the API examples below and the UI steps outlined in the [Using Standard Schemas with Adobe Experience Platform](../schema_registry/standard_schemas/acp_standard_schemas.md) document provide the best practices that you should know and follow.
 
@@ -81,7 +81,7 @@ In the following example, the `Person` schema is shown to have a path of `"@/xdm
 
 ### Understanding the `_customer` Keyword
 
-Some of the API calls include the `_customer` keyword. `_customer` is a short-hand representation of your IMS Organization. Instead of needing to enter your full IMS Org for every call, you will use `_customer` instead. `_customer` represents the unique `customer` section that every Adobe provided schema can have. Behind the scenes, the schema registry converts `_customer` and stores everything under your IMS Org. 
+Some of the API calls include the `_customer` keyword. `_customer` is a short-hand representation of your IMS Organization. Instead of needing to enter your full IMS Org for every call, you will use `_customer` instead. `_customer` represents the unique `customer` section that every Adobe provided schema can have. Behind the scenes, the schema registry converts `_customer` and stores everything under your IMS Org.
 
 Within the registry, you have access to all of your `_customer` extensions and schemas. You do not see `_customer` extensions or schemas from other organizations, nor do they see yours.
 
@@ -93,7 +93,7 @@ A full list of available API calls can be found in the [RESTful API Resource](ht
 
 ### GET - View all XDM Schemas
 
-As mentioned above, you can view a list of all defined XDM schemas through a single API call. This allows you to find the `id` for each schema, and includes any schemas that you have defined or extensions that you have made. 
+As mentioned above, you can view a list of all defined XDM schemas through a single API call. This allows you to find the `id` for each schema, and includes any schemas that you have defined or extensions that you have made.
 
 ##### API Format
 
@@ -111,7 +111,7 @@ curl -X GET \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-- `{ACCESS_TOKEN}`: Token provided after authentication  
+- `{ACCESS_TOKEN}`: Token provided after authentication
 - `{API_KEY}`: Your specific API key for your unique Platform integration (available via [Adobe Console](https://console.adobe.io))
 - `{IMS_ORG}`: The IMS Organization credentials for your unique Platform integration
 
@@ -403,7 +403,7 @@ curl -X GET \
             "@/xdms/model/ExperienceEvent",
             "@/xdms/model/PhysicalLocation",
             "@/xdms/model/Product",
-            "@/xdms/model/Profile",
+            "@/xdms/context/profile",
             "@/xdms/model/Segment",
             "@/xdms/model/Store"
         ]
@@ -420,7 +420,7 @@ curl -X GET \
         "namespace": "extension",
         "type": "non-standard",
         "paths": [
-            "@/xdms/model/Profile/_customer/family"
+            "@/xdms/context/profile/_customer/family"
         ]
     }
 ]
@@ -428,7 +428,7 @@ curl -X GET \
 
 ### GET - View a Specific Schema
 
-Viewing a specific schema definition in its JSON Schema form requires a single GET request to the schema path. The following example shows how to perform a GET request for a specific schema. 
+Viewing a specific schema definition in its JSON Schema form requires a single GET request to the schema path. The following example shows how to perform a GET request for a specific schema.
 
 Sample requests and responses for two of the most commonly used schema, [Profile](#profile-schema) and [ExperienceEvent](#experienceevent-schema), are included at the end of this document.
 
@@ -618,8 +618,8 @@ In the `Person` schema above, the fields of the schema are listed within the `pr
 
 1. The name for the field object is written in camelCase. Example: `"fieldName"`
 1. The field should include a `"title"`, written in Title Case. Example: `"Field Name"`
-1. The field requires a scalar `"type"`.  
-a. Defining certain types may require an optional `"format"`.   
+1. The field requires a scalar `"type"`.
+a. Defining certain types may require an optional `"format"`.
 b. Where a specific formatting of data is required, `"examples"` can be added as an array.
 1. The `"description"` explains the field and pertinent information regarding field data. It should be written in full sentences with clear language so that anyone accessing the schema can understand the intention of the field.
 
@@ -638,11 +638,11 @@ PUT /xdms/{id}/_customer/{new extension name}
 ```
 
 - `{new extension name}`: The name you want to associate with the fields you are about to add or update.<br/>
-**Note:** Your organization can associate fields with different business units, teams, departments, etc. according to your preference. For example, you can have one team add and manage fields under the retail division (using extension name = retail) and another team manage the fields under the web division (using extension name = web).  
+**Note:** Your organization can associate fields with different business units, teams, departments, etc. according to your preference. For example, you can have one team add and manage fields under the retail division (using extension name = retail) and another team manage the fields under the web division (using extension name = web).
 
 ##### Request
 
-After making the API request below with the provided payload, a new `_customer.retail` hierarchy and fields will be added to the `context/person` schema. Anytime you use this `context/person` schema (as a list of fields in a dataset or embedded in another schema), those new fields will be automatically included.  
+After making the API request below with the provided payload, a new `_customer.retail` hierarchy and fields will be added to the `context/person` schema. Anytime you use this `context/person` schema (as a list of fields in a dataset or embedded in another schema), those new fields will be automatically included.
 
 ```
 curl -X PUT \
@@ -685,7 +685,7 @@ The response to the above request shows the path for the schema extension:
 
 ### GET - View Updated Schema
 
-The code below shows the new response when issuing a GET request for the `context/person` schema. You'll notice that there is a new top level field named `_customer` which contains a `retail` section that then includes the new fields that were added. 
+The code below shows the new response when issuing a GET request for the `context/person` schema. You'll notice that there is a new top level field named `_customer` which contains a `retail` section that then includes the new fields that were added.
 
 When this schema is used in a dataset those new fields are accessed using `_customer.retail.homeStoreId` and `_customer.retail.loyaltyMember`.
 
@@ -898,7 +898,7 @@ GET /xdms/{id}/_customer/{extension name}
 ```
 
 - `{extension name}`: The name of the extension you want to add fields to.<br/>
-**Note:** Your organization may have multiple extensions within the `_customer` section of a standard schema. It is important to perform a GET on the specific extension that you wish to add fields to. 
+**Note:** Your organization may have multiple extensions within the `_customer` section of a standard schema. It is important to perform a GET on the specific extension that you wish to add fields to.
 
 ##### Request
 
@@ -1075,7 +1075,7 @@ curl -X GET \
 
 ### PUT - Create a New Schema
 
-If an existing schema is not available to start from, you can always create a new schema. This is similar to extending a schema, but in this case the fields you are adding are part of a completely new schema. 
+If an existing schema is not available to start from, you can always create a new schema. This is similar to extending a schema, but in this case the fields you are adding are part of a completely new schema.
 
 An example of this would be if a travel company wanted a schema to store data for flights. Since there is no existing `Flights` schema, it would make sense to create a new one. Within the schema, information such as Flight ID, Flight Number, and Carrier will be stored.
 
@@ -1089,8 +1089,8 @@ In this scenario, `_customer` follows immediately after `/xdms/` because you are
 PUT /xdms/_customer/{id}
 ```
 
-- `{id}`: In the earlier examples, schema identifiers were referenced above using an `id` consisting of a path (`context/person`). When creating a new schema, you can create a directory of your own (similar to the `<new extension name>` used in the example above), which you would then combine with the new schema name that you are defining. For example, the new `Flights` schema will be maintained by the travel company's web team, so the path will be `web/flights`.  
-  
+- `{id}`: In the earlier examples, schema identifiers were referenced above using an `id` consisting of a path (`context/person`). When creating a new schema, you can create a directory of your own (similar to the `<new extension name>` used in the example above), which you would then combine with the new schema name that you are defining. For example, the new `Flights` schema will be maintained by the travel company's web team, so the path will be `web/flights`.
+
 **API vs UI:** The API allows you to define your own extension names as noted above. These schema will appear alongside all other schemas in the UI, with no discernible difference between them. When defining a schema in the UI, you will be directed to create your schema within the `default` extension, making it part of the `_customer.default` hierarchy. For better control over extension names (such as defining separate schema for "retail" and "web" teams), we recommend using the API when defining schemas.
 
 ##### Request
@@ -1102,25 +1102,25 @@ curl -X PUT \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -H 'content-type: application/json' \
-  -d '{ 
-        "title": "Flights", 
-        "type": "object", 
-        "description": "Data for all available flights.", 
-        "properties": { 
-          "flightId": { 
+  -d '{
+        "title": "Flights",
+        "type": "object",
+        "description": "Data for all available flights.",
+        "properties": {
+          "flightId": {
             "title": "Flight ID",
-            "type": "string", 
+            "type": "string",
             "description": "The unique ID of the flight."
-          }, 
-          "flightNumber": { 
+          },
+          "flightNumber": {
             "title": "Flight Number",
-            "type": "string", 
-            "description": "Flight Number provided by the carrier." 
-          }, 
-          "carrier": { 
+            "type": "string",
+            "description": "Flight Number provided by the carrier."
+          },
+          "carrier": {
             "title": "Carrier",
-            "type": "string", 
-            "description": "Name of the flight carrier." 
+            "type": "string",
+            "description": "Name of the flight carrier."
           },
           "carrierAddress": {
             "title": "Carrier Address",
@@ -1131,7 +1131,7 @@ curl -X PUT \
       }'
 ```
 
-The payload for this request is a JSON Schema object that represents your new schema and is able to use simple scalar field types (string, number, etc.) or fields that act as an entry point into a more complex embedded schema that you reference (using `$ref`). 
+The payload for this request is a JSON Schema object that represents your new schema and is able to use simple scalar field types (string, number, etc.) or fields that act as an entry point into a more complex embedded schema that you reference (using `$ref`).
 
 ##### Response
 
@@ -1145,7 +1145,7 @@ The response to the above request shows the path to the newly created schema
 
 ### Using the New Schema
 
-Once the schema is created, you can use it like any other schema. You can create datasets based on that schema, or reference it within other schemas. 
+Once the schema is created, you can use it like any other schema. You can create datasets based on that schema, or reference it within other schemas.
 
 In either case, this new schema can be accessed by the path provided in the response above.
 
@@ -1265,25 +1265,25 @@ curl -X PUT \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -H 'content-type: application/json' \
-  -d '{ 
-        "title": "Flights", 
-        "type": "object", 
-        "description": "Data for all available flights.", 
-        "properties": { 
-          "flightId": { 
+  -d '{
+        "title": "Flights",
+        "type": "object",
+        "description": "Data for all available flights.",
+        "properties": {
+          "flightId": {
             "title": "Flight ID",
-            "type": "string", 
+            "type": "string",
             "description": "The unique ID of the flight."
-          }, 
-          "flightNumber": { 
+          },
+          "flightNumber": {
             "title": "Flight Number",
-            "type": "string", 
-            "description": "Flight Number provided by the carrier." 
-          }, 
-          "carrier": { 
+            "type": "string",
+            "description": "Flight Number provided by the carrier."
+          },
+          "carrier": {
             "title": "Carrier",
-            "type": "string", 
-            "description": "Name of the flight carrier." 
+            "type": "string",
+            "description": "Name of the flight carrier."
           },
           "carrierAddress": {
             "title": "Carrier Address",
@@ -1316,7 +1316,7 @@ The response to the above request shows the path for the schema:
 
 #### GET - View the Updated Schema
 
-Now that the fields have been added, you can view the updated schema by issuing a GET request on the `Flights` schema. 
+Now that the fields have been added, you can view the updated schema by issuing a GET request on the `Flights` schema.
 
 ##### API Format
 
@@ -1549,7 +1549,7 @@ The following table provides an overview of available descriptors and details re
 
 <strong>Call 2: Set Update Policy</strong>
 <pre class="JSON language-JSON hljs">
-{ 
+{
   "@type":"xdm:updatePolicy",
   "xdm:sourceSchema":"_customer/retail/geography",
   "xdm:updatePolicy":"xdm:updateReplace"
@@ -1576,7 +1576,7 @@ The following table provides an overview of available descriptors and details re
 </td>
 <td>
 <pre class="JSON language-JSON hljs">
-{ 
+{
   "@type":"xdm:descriptorIdentity",
   "xdm:sourceSchema":"_customer/retail/loyalty",
   "xdm:sourceProperty":"/loyaltyNumber",
@@ -1604,7 +1604,7 @@ A single API call will allow you to view all existing descriptors within your or
 ##### API Format
 
 ```
-GET /descriptors 
+GET /descriptors
 ```
 
 ##### Request
@@ -1619,7 +1619,7 @@ curl -X GET \
 
 ##### Response
 
-If descriptors exist, the response is an array of objects with one object for each `descriptorType` that your organization has defined. In other words, if you have not declared any `schema` descriptors, you would not see a `"descriptorType": "schema"` object. 
+If descriptors exist, the response is an array of objects with one object for each `descriptorType` that your organization has defined. In other words, if you have not declared any `schema` descriptors, you would not see a `"descriptorType": "schema"` object.
 
 The `descriptors` array inside each object lists the paths to each individual descriptor of that type. The descriptors are shown in the format `@/descriptors/{descriptorId}`. There is more information about accessing individual descriptors by their `{descriptorId}` below.
 
@@ -1851,7 +1851,7 @@ As shown in the examples above, schemas are defined using JSON Schema standards 
 
 The following table outlines the appropriate formatting to define scalar field types and more specific field types using optional properties. More information regarding optional properties and type-specific keywords is available through the [JSON Schema Documentation](https://json-schema.org/understanding-json-schema/reference/type.html).
 
-To begin, find the desired field type and use the sample code provided to build your API request. 
+To begin, find the desired field type and use the sample code provided to build your API request.
 
 <table>
 <tr>
@@ -1934,7 +1934,7 @@ maximum: ±1.80×10^308
     "type": "number"
 }
 </pre>
-</tr>  
+</tr>
 
 <tr>
 <td>long</td>
@@ -1963,7 +1963,7 @@ maximum:2^53+1<br>minimum:-2^53+1</td>
     "maximum": 2147483648
 }
 </pre>
-</tr> 
+</tr>
 
 <tr>
 <td>short</td>
@@ -1977,7 +1977,7 @@ maximum:2^53+1<br>minimum:-2^53+1</td>
     "maximum": 32768
 }
 </pre>
-</tr> 
+</tr>
 <tr>
 <td>byte</td>
 <td>type: integer<br/>maximum:2^7<br>minimum:-2^7</td>
@@ -1990,7 +1990,7 @@ maximum:2^53+1<br>minimum:-2^53+1</td>
     "maximum": 128
 }
 </pre>
-</tr> 
+</tr>
 
 <tr>
 <td>boolean</td>
@@ -2007,7 +2007,7 @@ maximum:2^53+1<br>minimum:-2^53+1</td>
     "default": false
 }
 </pre>
-</tr> 
+</tr>
 
 <tr>
 <td>date</td>
@@ -2080,7 +2080,7 @@ Where "id" is the {id} of the reference schema.
     },
     "field2": {
       "type": "number"
-    } 
+    }
   }
 }
 </pre>
@@ -2115,7 +2115,7 @@ Map field with values of type 'string':
 Map field with values being an array of strings:
 <pre class="JSON language-JSON hljs">
 "sampleField": {
-  "type": "object",  
+  "type": "object",
   "additionalProperties":{
     "type": "array",
     "items": {

@@ -72,7 +72,7 @@ To check if your dataset has been enabled in UPS, use the Data Catalog Service A
 GET https://platform.adobe.io/data/foundation/catalog/dataSets/5b020a27e7040801dedbf46e HTTP/1.1
 ```
 
-__Example response__ 
+__Example response__
 
 ```
 {
@@ -210,7 +210,7 @@ One of the key features of UPS is being able to unify multi-channel data. Unifie
 * __Dataset/Datastream__ refers to where the data came from (e.g. catalog batch dataset, streaming datastream etc.). Each dataset/datastream conforms to exactly one XDM schema
 
 As Unified Profile ingests data, records within a profile fragment are updated at ingest time. However, records across profile fragments are merged at access time using merge policies.
- 
+
 ### Merge Policies
 
 A merge policy is a set of configurations controlling aspects of identity stitching and attribute merging. UPS provides the tools to manage various merge policies for unified profiles by way of the Merge Policies API. Merge policies are related to a schema, where an IMS Org can create any number of merge policies for a single schema.
@@ -300,7 +300,7 @@ __Example Unified Profile Service request - Get a Unified Profile by ID__
 GET https://platform.adobe.io/data/core/ups/access/entities/?schema.name={schema}&entityId={id}&entityIdNS={IDNS} HTTP/1.1
 ```
 
-__Example response__ 
+__Example response__
 
 ```
 {
@@ -371,7 +371,7 @@ __Example UPS request - Get ExperienceEvents for a Unified Profile__
 GET https://platform.adobe.io/data/core/ups/access/entities/?schema.name=_xdm.context.experienceevent&relatedschema.name=_xdm.context.profile&entityID={}&relatedentityIdNS={} HTTP/1.1
 ```
 
-__Example response__ 
+__Example response__
 
 ```
 {
@@ -477,7 +477,7 @@ UPS behaves on/with the following components:
 * __Segmentation Jobs__ are asynchronous processes which isolate members of your user base per the rules described by a Definition
 * An __Audience__ is the collection of XDM objects which met the qualifications, or conditions, as set out by the Segment Definition
 
-Segmentation is supported for XDM Profile and ExperienceEvent schemas, with plans to expand to include additional schemas in the future. Segmentation is handled in the steps described by the remainder of this section. 
+Segmentation is supported for XDM Profile and ExperienceEvent schemas, with plans to expand to include additional schemas in the future. Segmentation is handled in the steps described by the remainder of this section.
 
 In summary, the following tasks are involved in segmentation and are detailed in this section:
 
@@ -838,7 +838,7 @@ __Example body__
     "containerFormat": "parquet",
     "format": "parquet"
   },
-  "schema" : "@/xdms/model/Profile"
+  "schema" : "@/xdms/context/profile"
 }
 ```
 
@@ -929,9 +929,9 @@ GET https://platform.adobe.io/data/foundation/catalog/dataSets/{datasetId} HTTP/
 ```
 
 __Example response__
- 
+
 ```
-{ 
+{
   "5aa6885ecf70a301dabdfa49": {
      "version": "1.0.1",
      "imsOrg": "1BD6382559DF0C130A49422D@AdobeOrg",
@@ -952,7 +952,7 @@ __Example response__
      },
      "transforms": "@/dataSets/5aa6885ecf70a301dabdfa49/views/5aa6885fcf70a301dabdfa4a/transforms",
      "files": "@/dataSets/5aa6885ecf70a301dabdfa49/views/5aa6885fcf70a301dabdfa4a/files",
-     "schema": "@/xdms/model/Profile",
+     "schema": "@/xdms/context/profile",
      "observableSchema": {}
   }
 }

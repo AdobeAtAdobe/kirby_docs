@@ -33,15 +33,15 @@ curl -X POST "https://platform.adobe.io/data/foundation/catalog/dataSets?request
   -d "{JSON_PAYLOAD}"
 ```
 
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 `{JSON_PAYLOAD}`: Data set to be posted. The example we used in our tutorial is here:
 
 ```JSON
 {
     "name":"ProfileDataset",
-    "schema":"@/xdms/model/Profile",
+    "schema":"@/xdms/context/profile",
     "fileDescription": {
         "persisted": true,
         "containerFormat": "parquet",
@@ -82,8 +82,8 @@ curl -X PATCH "https://platform-int.adobe.io/data/foundation/catalog/dataSets/%7
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "content-type: application/json" \
   -d '{
-        "tags": { 
-          "unifiedProfile": ["enabled:true", "identityField:endUserIds.mcId.id"] 
+        "tags": {
+          "unifiedProfile": ["enabled:true", "identityField:endUserIds.mcId.id"]
         }
       }'
 ```
@@ -122,9 +122,9 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
 -H "x-api-key : {API_KEY}"
 -d '{"datasetId":"{DATASET_ID}"}'
 ```
-**IMS_ORG:** Your IMS org credentials found in your unique Adobe Experience Platform integration.  
-**ACCESS_TOKEN:** Token provided after authentication.  
-**API_KEY:** Your specific API key value found in your unique Adobe Experience Platform integration.  
+**IMS_ORG:** Your IMS org credentials found in your unique Adobe Experience Platform integration.
+**ACCESS_TOKEN:** Token provided after authentication.
+**API_KEY:** Your specific API key value found in your unique Adobe Experience Platform integration.
 **DATASET_ID:** The ID of the dataset to upload the files into.
 
 #### Response
@@ -147,8 +147,8 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
     "updatedUser": "string"
 }
 ```
-**BATCH_ID:** The ID of the batch that was just created (used in subsequent requests).  
-**IMS_ORG:** Your IMS org specified in the request.  
+**BATCH_ID:** The ID of the batch that was just created (used in subsequent requests).
+**IMS_ORG:** Your IMS org specified in the request.
 **DATASET_ID:** The ID of the dataset to upload the files into.
 
 After successfully creating a new batch for uploading, files can be then be uploaded to a specific dataset.
@@ -168,12 +168,12 @@ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}
 -H "x-api-key : {API_KEY}" \
 --data-binary "@{FILE_PATH_AND_NAME}.parquet"
 ```
-**BATCH_ID:** The ID of the batch to write files to.  
-**DATASET_ID:** The ID of the dataset to upload the files into.  
-**FILE_NAME:** Name of file as it will be seen in the dataset.  
-**IMS_ORG:** Your IMS org credentials found in your unique Adobe Experience Platform integration.  
-**ACCESS_TOKEN:** Token provided after authentication.  
-**FILE_PATH_AND_NAME:** The path and filename of the file to be uploaded into the dataset.  
+**BATCH_ID:** The ID of the batch to write files to.
+**DATASET_ID:** The ID of the dataset to upload the files into.
+**FILE_NAME:** Name of file as it will be seen in the dataset.
+**IMS_ORG:** Your IMS org credentials found in your unique Adobe Experience Platform integration.
+**ACCESS_TOKEN:** Token provided after authentication.
+**FILE_PATH_AND_NAME:** The path and filename of the file to be uploaded into the dataset.
 
 #### Response
 ```JSON

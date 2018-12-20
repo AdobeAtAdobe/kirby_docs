@@ -9,11 +9,11 @@ The Microsoft Azure Blob Connector for Adobe Experience Platform provides an API
 * Set a schedule and frequency for ingesting data.
 * Save the Azure Blob connector and modify it as needed.
 
-This article provides steps to set up and configure the Azure Blob connector through API calls. 
+This article provides steps to set up and configure the Azure Blob connector through API calls.
 
 
 ## Setting up the Azure Blob Connector
-Set up an account to access APIs and provide credentials to create a connector:  
+Set up an account to access APIs and provide credentials to create a connector:
 
 <!---### Prerequisites
 * Register the schema of the incoming file.
@@ -21,7 +21,7 @@ Set up an account to access APIs and provide credentials to create a connector:
 * Get the details of the file ingested using an API call to the Catalog API.--->
 
 
-### Set up an Adobe I/O account 
+### Set up an Adobe I/O account
 See [authenticating and accessing APIs](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to create an access token used to authenticate API calls from Adobe I/O.
 
 After setting up authorization for APIs, these values will be returned:
@@ -31,7 +31,7 @@ After setting up authorization for APIs, these values will be returned:
 * `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
 ### Set up a Platform connection to the Azure Blob
-After setting up an Adobe I/O account, use the POST call and provide the *imsOrgId*, *accessToken*, and *Blob* connection string to set up a connection. 
+After setting up an Adobe I/O account, use the POST call and provide the *imsOrgId*, *accessToken*, and *Blob* connection string to set up a connection.
 
 ```shell
 curl -X POST https://platform.adobe.io/data/foundation/ connectors/account/ \
@@ -52,13 +52,13 @@ curl -X POST https://platform.adobe.io/data/foundation/ connectors/account/ \
 ### Create a Dataset
 Once the account and connection are successfully created, the *Connection ID* can be used to create a dataset. You can configure Platform datasets, pipeline, and triggers with a successful POST call.
 
-You will want to provide a unique and identifiable name for the dataset, allowing you to identify it clearly when monitoring your data ingestion. 
+You will want to provide a unique and identifiable name for the dataset, allowing you to identify it clearly when monitoring your data ingestion.
 
 The following are various properties of JSON for creating a dataset.
 
 Property Name | Description
 ------------ | -------------
-params/datasets/name	| Mandatory. Name of the dataset 
+params/datasets/name	| Mandatory. Name of the dataset
 params/datasets/tags/* | Optional. Provide tags associated with dataset.
 params/datasets/fields/*	| Conditional. Needs to be specified if params/datasets/schema is not defined. This contains information about schema of files to be ingested. Can be retrieved from schema API call defined below.
 params/datasets/schema	| Conditional. Needs to be specified if params/datasets/fieldsis not specified. This is pointer to the schema in the schema registry.
@@ -87,7 +87,7 @@ curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<c
                         "persisted": true,
                         "format": "parquet"
                     },
-		            "schema":"@/xdms/model/Profile"
+		            "schema":"@/xdms/context/profile"
                 }
             ]
         }
@@ -121,7 +121,7 @@ curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<c
 
 In addition to the Create Account and Create Dataset APIs, you can use these for specific needs.
 
-**Object Listing API** 
+**Object Listing API**
 
 This API lists the content of an Azure blob.
 
@@ -133,7 +133,7 @@ curl -X GET \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
-  
+
 **Preview Object API**
 
 This API lists the content of the file. Currently only parquet files are supported for preview.
