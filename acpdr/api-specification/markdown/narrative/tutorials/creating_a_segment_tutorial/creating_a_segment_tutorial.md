@@ -27,7 +27,7 @@ The first task in segmentation is to define the segment, represented in a constr
 
 ### Using the API
 
-Using Segmentation via API, a segment definition is represented as construct which includes the PQL statement defining the segment itself using the [Unified Profile Segment Definitions API](../../../../../swagger-specs/profile-segment-definitions-api.yaml). For more information on PQL, a prerequisite, visit the [Profile Query Language Overview](../../technical_overview/unified_profile_architectural_overview/unified_profile_pql.md), or a reference [list of supported queries](../../technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md).
+Using Segmentation via API, a segment definition is represented as construct which includes the PQL statement defining the segment itself using the [Unified Profile Segment Definitions API](../../../../../../acpdr/swagger-specs/profile-segment-definitions-api.yaml). For more information on PQL, a prerequisite, visit the [Profile Query Language Overview](../../technical_overview/unified_profile_architectural_overview/unified_profile_pql.md), or a reference [list of supported queries](../../technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md).
 
 Name your definition in a way intuitive to viewing a list of your organization's segments in the UI.
 
@@ -71,7 +71,7 @@ __Example response__
 
 From the response, collect the `id`, which will be used in future steps.
 
-See [Develop a Segment Definition](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md#develop-a-segment-definition) in the [Unified Profile Overview](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md), or go straight to the [API reference for Unified Profile Segment Definitions API](../../../../../swagger-specs/profile-segment-definitions-api.yaml).
+See [Develop a Segment Definition](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md#develop-a-segment-definition) in the [Unified Profile Overview](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md), or go straight to the [API reference for Unified Profile Segment Definitions API](../../../../../../acpdr/swagger-specs/profile-segment-definitions-api.yaml).
 
 ### Using the Experience Platform UI
 
@@ -93,7 +93,7 @@ As you develop your segment definition, you can use Unified Profile's estimate a
 
 ### Using APIs
 
-Using the APIs to get an estimate of the number of profiles that would qualify for the segment definition varies only slightly from previewing a sample of the resulting audience. Working with the [Unified Profile Preview API](../../../../../swagger-specs/profile-preview-api.yaml), you'll supply PQL to create a preview job rather than a segment definition. In this way, you are able to test your PQL predicates until they produce the desirable results and then use that PQL to create a segment definition.
+Using the APIs to get an estimate of the number of profiles that would qualify for the segment definition varies only slightly from previewing a sample of the resulting audience. Working with the [Unified Profile Preview API](../../../../../../acpdr/swagger-specs/profile-preview-api.yaml), you'll supply PQL to create a preview job rather than a segment definition. In this way, you are able to test your PQL predicates until they produce the desirable results and then use that PQL to create a segment definition.
 
 To preview or get an estimate of your segment there are a couple of steps involved, as you must:
 
@@ -101,7 +101,7 @@ To preview or get an estimate of your segment there are a couple of steps involv
 * Get estimate or preview using the ID of the preview, the artifact of running the preview job
 * Delete the preview job
   
-See [Estimate and Preview Your Audience](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md#estimate-and-preview-your-audience) for a step by step in the [Unified Profile Overview](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md), or go straight to the API reference for [Unified Profile Preview API](../../../../../swagger-specs/profile-preview-api.yaml).
+See [Estimate and Preview Your Audience](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md#estimate-and-preview-your-audience) for a step by step in the [Unified Profile Overview](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md), or go straight to the API reference for [Unified Profile Preview API](../../../../../../acpdr/swagger-specs/profile-preview-api.yaml).
 
 ### Using the Experience Platform UI
 
@@ -115,13 +115,13 @@ For more details, see the section covering the [UI](../../../../../end-user/mark
 
 ## Step 3: Segment Your User Base
 
-Once you have perfected your segment definition and saved the definition, you are able to build the audience. Currently, segmenting your user base is only supported by use the [Unified Profile Segment Jobs API](../../../../../swagger-specs/profile-segment-jobs-api.yaml).
+Once you have perfected your segment definition and saved the definition, you are able to build the audience. Currently, segmenting your user base is only supported by use the [Unified Profile Segment Jobs API](../../../../../../acpdr/swagger-specs/profile-segment-jobs-api.yaml).
 
 ### Using APIs
 
 Using the APIs, a segmentation job is created referencing the segment definition, as well as merge policies controlling the manner by which Unified Profile merges overlapping attributes across your profile fragments.
 
-To build your segment, you will use the [Unified Profile Segment Jobs API](../../../../../swagger-specs/profile-segment-jobs-api.yaml) to:
+To build your segment, you will use the [Unified Profile Segment Jobs API](../../../../../../acpdr/swagger-specs/profile-segment-jobs-api.yaml) to:
 
 * Create a segment job
 * Periodically poll the status of the segment job until complete (its `status` is "SUCCEEDED")
@@ -134,11 +134,11 @@ For more details, visit the section on covering how to [create a segment job](..
 
 ## Step 4: Export Results
 
-After a segmentation job has successfully filtered through your user base, export your audience to a dataset where it can be acted upon by Platform solutions. Currently you can only export using the [Unified Profile Export API](../../../../../swagger-specs/profile-export-api.yaml).
+After a segmentation job has successfully filtered through your user base, export your audience to a dataset where it can be acted upon by Platform solutions. Currently you can only export using the [Unified Profile Export API](../../../../../../acpdr/swagger-specs/profile-export-api.yaml).
 
 ### Using APIs
 
-You'll use the [Unified Profile Export API](../../../../../swagger-specs/profile-export-api.yaml) to load a dataset with the qualifying audience members. Exporting your audience to a dataset entails:
+You'll use the [Unified Profile Export API](../../../../../../acpdr/swagger-specs/profile-export-api.yaml) to load a dataset with the qualifying audience members. Exporting your audience to a dataset entails:
 
 * Creating, or selecting, the audience dataset
 * Generating XDM Profiles for audience members
