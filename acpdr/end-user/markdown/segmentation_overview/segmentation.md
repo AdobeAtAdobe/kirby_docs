@@ -18,7 +18,7 @@ When a customer segment has been conceptually defined, the marketing department 
 
 The segment rules themselves, whether created via API or the Segment Builder UI (described in this document), are ultimately defined using Predicate Query Language, or PQL. This is where marketing's conceptual segment 'Men over 50' gets described in the language built to retrieve profiles meeting the criteria (e.g. `person.age > 50 and person.gender = "male"`). If a suitable segment doesn’t already exist, a user can create a new segment.
 
-To gain a deeper understanding of the Unified Profile Service and the role of PQL in segmentation on Platform, please review the [API documentation](api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md#segmenting-your-base-creating-and-working-with-audiences).
+To gain a deeper understanding of the Unified Profile Service and the role of PQL in segmentation on Platform, please review the [API documentation](../../../api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md#segmenting-your-base-creating-and-working-with-audiences).
 
 ## Using the Segment Builder
 
@@ -167,4 +167,4 @@ Using Adobe’s Segment Builder provides a consolidated workflow for building se
 * Use the drag and drop tiles on the left rail to add rules to your definition. You are able to base rules on XDM schema fields or other saved definitions
 * Containers are used to scope and to control the order of execution of your rules. You are able to create a subset of data within a container to then include to your results, exclude. PQL also allows containers to be used for functions such as `count()` to glean the size of the results of the rules in that container
 * As you build or edit your segment, the Segment Builder UI will display an estimation of the results of applying the definition to your entire profile store. These estimates are based on snapshots of your profile data which are loaded once per 24 hour period. The estimation information displayed includes the date of the sample being used to estimate. 
-* The Segment Builder is a visual interface for the Unified Profile's Segment API, which you can learn more about [here](api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md#5segmentingyourbasecreatingandworkingwithaudiences).
+* The Segment Builder is a visual interface for the Unified Profile's Segment API, which you can learn more about [here](../../../api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md#5segmentingyourbasecreatingandworkingwithaudiences).

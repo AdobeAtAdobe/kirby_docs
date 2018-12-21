@@ -107,7 +107,7 @@ __Example response__
 }
 ```
 
-For more details on this and other Data Catalog Service APIs, visit the [Swagger API reference](acpdr/swagger-specs/catalog.yaml).
+For more details on this and other Data Catalog Service APIs, visit the [Swagger API reference](../../../../../swagger-specs/catalog.yaml).
 
 ### Monitoring Ingestion
 
@@ -273,19 +273,19 @@ Using the merge policies API, you are able to:
 * GET a merge policy by id
 * DELETE a merge policy by id
 
-See the [Swagger API Reference](acpdr/swagger-specs/profile-access.yaml) for more details.
+See the [Swagger API Reference](../../../../../swagger-specs/profile-access.yaml) for more details.
 
 ---
 
 ## Accessing Profiles in the Unified Profile Service
 
-This following provide overview level detail covering using the Profile Access API to get Profiles and ExperienceEvents. Visit the [Swagger API Reference](acpdr/swagger-specs/profile-access.yaml) for complete coverage of the Profile Access API.
+This following provide overview level detail covering using the Profile Access API to get Profiles and ExperienceEvents. Visit the [Swagger API Reference](../../../../../swagger-specs/profile-access.yaml) for complete coverage of the Profile Access API.
 
 Profiles and time-series ExperienceEvent data are retrieved from separate `GET` calls.
 
 ### Access Unified Profile By Record ID
 
-This section highlights using the Profile Access API to get a Unified Profile, given the Profile's ID and Namespace. Visit the [Swagger API Reference](acpdr/swagger-specs/profile-access.yaml) for complete coverage of the Profile Access API.
+This section highlights using the Profile Access API to get a Unified Profile, given the Profile's ID and Namespace. Visit the [Swagger API Reference](../../../../../swagger-specs/profile-access.yaml) for complete coverage of the Profile Access API.
 
 The parameters for accessing a Profile are as follows:
 
@@ -353,7 +353,7 @@ __Example response__
 
 ### Access ExperienceEvents by Profile Record ID
 
-This section highlights using the Profile Access API to get a paginated list of ExperienceEvents for a given Profile, given the Profile's ID and Namespace. Visit the [Swagger API Reference](acpdr/swagger-specs/profile-access.yaml) for complete coverage of the Profile Access API.
+This section highlights using the Profile Access API to get a paginated list of ExperienceEvents for a given Profile, given the Profile's ID and Namespace. Visit the [Swagger API Reference](../../../../../swagger-specs/profile-access.yaml) for complete coverage of the Profile Access API.
 
 The parameters for accessing ExperienceEvents are as follows:
 
@@ -490,7 +490,7 @@ In summary, the following tasks are involved in segmentation and are detailed in
 
 A Segment Definition encapsulates the complete set of criteria that define a specific audience, written as a query in Adobe's proprietary Profile Query Language (PQL) specifically designed for building queries on XDM data. The following summarizes PQL, though more in-depth detail can be found [here](unified_profile_pql.md). In the context of this section, to develop the Segment Definition is to compose the PQL query describing the desired audience.
 
-Segment Definitions are built using the Profile Segment Definition API. The following examples serve as only a summary. Visit the [Swagger API Reference](acpdr/swagger-specs/profile-segment-definitions-api.yaml) for complete coverage of the Segment Definitions API.
+Segment Definitions are built using the Profile Segment Definition API. The following examples serve as only a summary. Visit the [Swagger API Reference](../../../../../swagger-specs/profile-segment-definitions-api.yaml) for complete coverage of the Segment Definitions API.
 
 #### Persist the Definition
 
@@ -552,7 +552,7 @@ You can find a list of supported PQL query examples [here](unified_profile_suppo
 
 ### Estimate and Preview Your Audience
 
-The Profile Preview API allows for a direct path between Definition query and a summary of the qualifying/relevant audience. The following are overview level examples demonstrating estimating and previewing audiences. Visit the [Swagger API Reference](acpdr/swagger-specs/profile-preview-api.md) for complete coverage of the Profile Preview API.
+The Profile Preview API allows for a direct path between Definition query and a summary of the qualifying/relevant audience. The following are overview level examples demonstrating estimating and previewing audiences. Visit the [Swagger API Reference](../../../../../swagger-specs/profile-preview-api.yaml) for complete coverage of the Profile Preview API.
 
 Because of the varying length of time required to run a query, the estimate and preview processes are asynchronous. Once the query execution has initiated, you would need to get the preview or estimate and determine its state as it progresses.
 
@@ -709,7 +709,7 @@ __Example response__
 
 A Segment Job is an asynchronous process which isolates members of your user base per one or more Definitions. The [Export API](#export-api) is used to access these audiences by the `segmentId` which is provided as the `id` attribute of the response upon creating the Segment Definition; "1234" in the example below.
 
-This section contains examples demonstrating use of the Segment Job API. For complete coverage of the Segment Job API, please visit the [Swagger API Reference](acpdr/swagger-specs/profile-segment-jobs-api.yaml).
+This section contains examples demonstrating use of the Segment Job API. For complete coverage of the Segment Job API, please visit the [Swagger API Reference](../../../../../swagger-specs/profile-segment-jobs-api.yaml).
 
 __Example request to create a Segment Job__
 
@@ -819,7 +819,7 @@ The Profile Export API is used to isolate an audience built by a Segment Job for
 * __Wait for audience Profiles to complete persisting__ - Export Jobs are asynchronous. Get an Export Job until its status indicates completion (its `status` attribute has reached "SUCCEEDED", or "FAILED")
 * __Read Audience Data__ - Using the Data Access SDK, retrieve the resulting XDM Profiles representing the members of your audience
 
-The following contains examples demonstrating use of the Profile Export API. Please visit the [Swagger API Reference](acpdr/swagger-specs/profile-export-api.yaml) for complete coverage of the Profile Export API.
+The following contains examples demonstrating use of the Profile Export API. Please visit the [Swagger API Reference](../../../../../swagger-specs/profile-export-api.yaml) for complete coverage of the Profile Export API.
 
 #### Export Audience - Step 1: Create or Select Audience DataSet
 
@@ -859,7 +859,7 @@ Trigger an Export Job to persist the audience members to the dataset from above 
 * `destination` (__required__) - Indicates the dataset into which to persist the members meeting the conditions of the related definition ("MyIsolatedProfilesDS_Id" from the example above)
 * `model` (__required__) - Names the XDM schema name of the members. A schema will only be relative to the IMS Org ID specified in API calls, preventing members from other Orgs' data from being accessible
 * `filter` (__required__) - When creating the Segment Job, you specified a `snapshot.name` value, naming the audience. This value, or `segment-id` are permissible values for this property
-* `schema` - Names the schema of the exported dataset <!-- TODO: Does this not come from destination? -->
+* `schema` - Names the schema of the exported dataset
 * `mergePolicyId` - Specify the merge policy to use for the exported data
 * `fields` - You can choose to limit the size of each audience member by using the `fields` property to limit the data populated within the members in the dataset.
 For example, a value of `name,workAddress.city` would result in Profile records which contain only the values of each member's `name` and `workAddress.city`.
@@ -958,4 +958,4 @@ __Example response__
 }
 ```
 
-With the `viewId` from the response, you are able to use the Data Access SDK to read data. For more information on using the Data Access SDK, [see the tutorial](api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md).
+With the `viewId` from the response, you are able to use the Data Access SDK to read data. For more information on using the Data Access SDK, [see the tutorial](../../tutorials/data_access_tutorial/data_access_tutorial.md).

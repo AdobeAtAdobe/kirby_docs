@@ -1,5 +1,4 @@
 # Identity Service - FAQ and Recommendations
-<!-- NO CHANGE CHANGE FOR PR FOR USE IN 9/13 REVIEW SESSION -->
 
 ## Overview
 

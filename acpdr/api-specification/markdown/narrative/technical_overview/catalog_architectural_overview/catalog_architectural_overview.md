@@ -409,7 +409,7 @@ The response now shows the expanded "transforms" field and its details.
 
 ### POST - Multiple Requests in a Single Call
 
-Catalog Service API provides a multi-request method that not only allows for multiple requests to be made on a single connection, but if those requests are modifications/additions to Catalog and any one of the changes fails, all changes will roll-back transactionally.
+Catalog Service API provides a multi-request method that not only allows for multiple requests to be made on a single connection, but if those requests are modifications/additions to Catalog and any one of the changes fails, all changes will roll-back the transaction.
 
 #### API Format
 
@@ -506,7 +506,7 @@ The response to a multi-request is an array with objects containing the `"id"` t
 
 ## Filtering Data with Query Parameters
 
-Catalog Service allows response data to be filtered by specifying query parameters and attributes during your request. Please refer to the [Catalog Service RESTful API](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html#!acpdr/swagger-specs/catalog.yaml) documentation to better understand what filters are available for a given API endpoint.  The following examples outline the most common types of filters used in Catalog.
+Catalog Service allows response data to be filtered by specifying query parameters and attributes during your request. Please refer to the [Catalog Service RESTful API](../../../../../swagger-specs/catalog.yaml) documentation to better understand what filters are available for a given API endpoint.  The following examples outline the most common types of filters used in Catalog.
 
 Best practices for Catalog Service include using query parameters to filter responses. Filters reduce the load on the API and help to improve overall performance.
 
