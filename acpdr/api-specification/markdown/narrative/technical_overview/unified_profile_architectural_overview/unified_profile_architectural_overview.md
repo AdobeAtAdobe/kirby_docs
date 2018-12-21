@@ -490,7 +490,7 @@ In summary, the following tasks are involved in segmentation and are detailed in
 
 A Segment Definition encapsulates the complete set of criteria that define a specific audience, written as a query in Adobe's proprietary Profile Query Language (PQL) specifically designed for building queries on XDM data. The following summarizes PQL, though more in-depth detail can be found [here](unified_profile_pql.md). In the context of this section, to develop the Segment Definition is to compose the PQL query describing the desired audience.
 
-Segment Definitions are built using the Profile Segment Definition API. The following examples serve as only a summary. Visit the [Swagger API Reference](acpdr/swagger-specs) for complete coverage of the Segment Definitions API.
+Segment Definitions are built using the Profile Segment Definition API. The following examples serve as only a summary. Visit the [Swagger API Reference](acpdr/swagger-specs/profile-segment-definitions-api.yaml) for complete coverage of the Segment Definitions API.
 
 #### Persist the Definition
 
