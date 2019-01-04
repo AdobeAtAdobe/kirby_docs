@@ -10,7 +10,7 @@ This document describes interacting with Identity Namespace Services using Adobe
 
 * All variations of Cluster and Mapping APIs support both XID and NID in their requests and response. One of the parameters is required - `xid` or combination of (`nsid`, `id`) to use these APIs
 * To limit the payload in response, APIs are adapt their responses to `xid` or `uid`. That is, if you pass XID your responses will have XIDs, if you pass NID responses will have NIDs
-* The below examples don't cover all usages of XIDs and NIDs. For the complete API, see the [Swagger API Reference](../../../../../swagger-specs/id-namespace-api.yaml)
+* The below examples don't cover all usages of XIDs and NIDs. For the complete API, see the [Swagger API Reference](../../../../../../acpdr/swagger-specs/id-namespace-api.yaml)
 
 ## Required Headers
 

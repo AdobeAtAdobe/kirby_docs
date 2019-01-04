@@ -44,7 +44,7 @@ In addition to providing an introduction to working with Catalog Service, this d
 - [Link multiple requests](#post---multiple-requests-in-a-single-call)
 - [Filter responses using query parameters](#filtering-data-with-query-parameters)
 
-Most of the examples in this document use the `/datasets` endpoint, but the principles can be applied to other endpoints within Catalog. The complete [Catalog Service RESTful API Resource](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html#!acpdr/swagger-specs/catalog.yaml) shows all available calls and operations. For more detailed information on how to follow these calls for the dataset endpoint, look at the [creating a dataset tutorial](../../tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md).
+Most of the examples in this document use the `/datasets` endpoint, but the principles can be applied to other endpoints within Catalog. The complete [Catalog Service RESTful API Resource](../../../../../../acpdr/swagger-specs/catalog.yaml) shows all available calls and operations. For more detailed information on how to follow these calls for the dataset endpoint, look at the [creating a dataset tutorial](../../tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md).
 
 ### Best Practices for Catalog Queries
 
@@ -506,7 +506,7 @@ The response to a multi-request is an array with objects containing the `"id"` t
 
 ## Filtering Data with Query Parameters
 
-Catalog Service allows response data to be filtered by specifying query parameters and attributes during your request. Please refer to the [Catalog Service RESTful API](../../../../../swagger-specs/catalog.yaml) documentation to better understand what filters are available for a given API endpoint.  The following examples outline the most common types of filters used in Catalog.
+Catalog Service allows response data to be filtered by specifying query parameters and attributes during your request. Please refer to the [Catalog Service RESTful API](../../../../../../acpdr/swagger-specs/catalog.yaml) documentation to better understand what filters are available for a given API endpoint.  The following examples outline the most common types of filters used in Catalog.
 
 Best practices for Catalog Service include using query parameters to filter responses. Filters reduce the load on the API and help to improve overall performance.
 
