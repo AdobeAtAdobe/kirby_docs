@@ -74,7 +74,7 @@
 		{
 			"pages": [],
 			"path": "acpdr/swagger-specs/qs-api.yaml",
-			"title": "Experience Query Service API"
+			"title": "Query Service API"
 		}
 
 	]

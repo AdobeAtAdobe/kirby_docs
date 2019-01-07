@@ -27,7 +27,7 @@
 					],
 					"path": "api-specification/markdown/narrative/technical_overview/schema_registry/standard_schemas/acp_standard_schemas.md",
 					"title": "Using Standard Schemas in Adobe Experience Platform",
-					"description": "Adobe Experience Platform uses a workflow based on standard schemas, making it easier to reliably share data across Platform services such as Data Catalog, Unified Profile Service, Experience Query Service, and Unified Segmentation."
+					"description": "Adobe Experience Platform uses a workflow based on standard schemas, making it easier to reliably share data across Platform services such as Data Catalog, Unified Profile Service, Query Service, and Unified Segmentation."
 				},
 				{
 					"pages": [],

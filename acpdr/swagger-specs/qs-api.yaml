@@ -1,9 +1,9 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: Experience Query Service API
+  title: Query Service API
   description: >-
-    Experience Query Service API.
+    Query Service API.
     
 
     Notes:
