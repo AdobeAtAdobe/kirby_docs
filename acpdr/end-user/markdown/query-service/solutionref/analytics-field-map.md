@@ -7,6 +7,7 @@ Adobe Analytics report suites are published to Adobe Experience Platform as two 
 | m\_ | Used to populate fields in the midvalues dataset. These mid values have data processing applied (Analytics VISTA and Processing Rules) but no attribution. |
 | post\_ | Used to populate the fields in the postvalues dataset. These post values have additional processing applied, including attribution, and include visit based fields. |
 
+![ADC Process](https://git.corp.adobe.com/raw/crhoades/documentation/master/end-user/markdown/query-service/graphics/Analytics%20Data%20Connector%20Process.png?token=AAAaGnEEYGCU6OxcnHfA8BUdznYMzDqcks5cJUGLwA%3D%3D)
 
 | Category | Analytics Field | XDM Field | Properties |
 | -------- | --------------- | --------- | ---------- |

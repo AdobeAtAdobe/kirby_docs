@@ -18,4 +18,5 @@ The following table points to articles outlining how to get GDPR-ready with your
 | [Target](https://marketing.adobe.com/resources/help/en_US/target/target/privacy-and-general-data-protection-regulation.html) | How to enable customers to delete data in their Target Visitor Profile. |
 | [Social](https://marketing.adobe.com/resources/help/en_US/social/c_gdpr-request.html) | How to use the GDPR request form to access or delete data collected in your use of Adobe Social. |
 | [Livefyre](https://marketing.adobe.com/resources/help/en_US/livefyre/c_gdpr_compliance.html) | How to complete access and deletion requests permitted under GDPR. |
-| [Campaign](https://www.adobe.com/marketing-cloud/campaign/general-data-protection-regulation.html) | Learn about new functionality in Adobe Campaign for GDPR. |
+| [Campaign Classic](https://docs.campaign.adobe.com/doc/AC/getting_started/EN/ACC_GDPR.html) | Learn about new GDPR functionality in Adobe Campaign Classic. |
+| [Campaign Standard](https://docs.campaign.adobe.com/doc/standard/getting_started/en/ACS_GDPR.html) | Learn about new GDPR functionality in Adobe Campaign Standard. |
