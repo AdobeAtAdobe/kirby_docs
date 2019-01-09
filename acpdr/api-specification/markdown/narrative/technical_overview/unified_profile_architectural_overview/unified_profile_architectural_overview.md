@@ -552,9 +552,17 @@ You can find a list of supported PQL query examples [here](unified_profile_suppo
 
 ### Estimate and Preview Your Audience
 
-The Profile Preview API allows for a direct path between Definition query and a summary of the qualifying/relevant audience. The following are overview level examples demonstrating estimating and previewing audiences. Visit the [Swagger API Reference](../../../../../../acpdr/swagger-specs/profile-preview-api.yaml) for complete coverage of the Profile Preview API.
+The Profile Preview API allows for a direct path between a segment definition PQL query and a summary of the qualifying/relevant audience. The following are overview level examples demonstrating estimating and previewing audiences. Visit the [Swagger API Reference](../../../../../../acpdr/swagger-specs/profile-preview-api.yaml) for complete coverage of the Profile Preview API.
 
-Because of the varying length of time required to run a query, the estimate and preview processes are asynchronous. Once the query execution has initiated, you would need to get the preview or estimate and determine its state as it progresses.
+Unified Profile uses data samples to evaluate segments and estimate the number of profiles which would qualify for profile stores containing more than 1 million profiles. New data is loaded into memory each morning (between 12AM-2AM PT, which is 7-9AM UTC), and all segmentation queries are estimated using that day's sample data. Consequently, any new fields added or additional data collected will be reflected in estimates the following day.
+
+The sample size depends on the overall number of profiles in your organization's profile store and breaks down into the following categories:
+
+* Up to 1 million profiles: use full data set
+* 1 to 20 million profiles: use a sample set of 1 million profiles
+* Over 20 million profiles: use a 5% sample size
+
+Estimates generally require 10-15 seconds to run.
 
 Unified Profile Service uses data samples to evaluate segments and estimate the number of profiles which would qualify. New data is loaded into memory each morning (between 12AM-2AM PT, which is 7-9AM UTC), and all segmentation queries are estimated using that day's sample data. Consequently, any new fields added or additional data collected will be reflected in estimates the following day.
 
@@ -568,7 +576,9 @@ Estimates generally run over 10-15 seconds, beginning with a rough estimate and 
 
 #### Estimate and Preview audience - Step 1: Create a Preview Job
 
-Run a query as a Preview Job using the `POST https://platform.adobe.io/data/core/ups/preview` API call. The response from this call includes a `previewId` which will be used to get estimate or preview results. In the body of this `POST` will be the query information. For example, the expression, type, model, graph type, and merge strategy. The `state` of the preview will be "RUNNING" until processing is complete, at which point it becomes "RESULT_READY" or "FAILED".
+Run a query as a Preview Job using the `POST https://platform.adobe.io/data/core/ups/preview` API call. The response from this call includes a `previewId` which will be used to `GET` estimate or preview results. In the body of this `POST` will be the query information. For example, the PQL expression, predicate type, predicate XDM model, graph type, and merge strategy. 
+
+Because of the varying length of time required to run a query, the estimate and preview processes are asynchronous. Once the query execution has initiated, you would need to `GET` the preview or estimate and determine its state as it progresses. The `state` of the preview will be "RUNNING" until processing is complete, at which point it becomes "RESULT_READY" or "FAILED".
 
 __Example request to create a Preview Job__
 

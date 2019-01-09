@@ -30,23 +30,19 @@ The Segment Builder is the visual development environment used to build segment 
 
 #### Header
 
-The header displays estimates summarizing the results of applying the segment as it is defined in the rules area to your user base.  
+The header displays information to provide constant feedback as to what the results of applying the segment to your user base as you build segment rule. Each time a segment rule is added, removed, or changed, the estimate is re-run to remain relative to the edited state of the segment. Estimates generally run over 10-15 seconds, beginning with a rough estimate and refining as more records are read.
 
 ![](builder-data-estimate.png)
 
-Unified Profile Service uses data samples to evaluate segments and estimate the number of profiles which would qualify. New data is loaded into memory each morning (between 12AM-2AM PT, which is 7-9AM UTC), and all segmentation queries are estimated using that day's sample data. Consequently, any new fields added or additional data collected will be reflected in estimates the following day.
+You can view a paginated preview of the audience as you build by selecting "Preview Profiles" in the header.
 
-Each time a segment rule is added, removed, or changed, the estimate is re-run to remain relative to the edited state of the segment. The sample size depends on the overall number of profiles in the customer data and breaks down into the following categories:
+![](builder-preview.png)
 
-* Up to 1 million profiles: use full data set
-* 1 to 20 million profiles: use a sample set of 1 million profiles
-* Over 20 million profiles: use a 5% sample size
-
-Estimates generally run over 10-15 seconds, beginning with a rough estimate and refining as more records are read.
+For more information on estimates and previews, visit the [Unified Profile architectural overview](api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md#estimate-and-preview-your-audience).
 
 #### Left rail - Building blocks
 
-The left rail provides access to draggable tiles representing any component you might use to build a segment. Such a component might be an XDM field, such as `person.age`, which a profile may be required to have a value greater than 50 to qualify for the segment. Segments can also be built using other segments. Consider the requirement for 'All customers who have placed any order, but have never ordered on mobile' which may then exclude the segment 'All customers who have ordered on mobile' from all profiles who have placed any order. 
+The left rail provides access to drag and drop tiles representing any data element you might use to build a segment. Such a component might be an XDM field, such as `person.age`, which a profile may be required to have a value greater than 50 to qualify for the segment. Segments can also be built using other segments. Consider the requirement for 'All customers who have placed any order, but have never ordered on mobile' which may then exclude the segment 'All customers who have ordered on mobile' from all profiles who have placed any order. 
 
 XDM attributes can be accessed by drilling down into attributes from a principal schema such as Profile or ExperienceEvent. Previously saved segments are listed, and can be used to include or exclude results for the segment being built.
 
