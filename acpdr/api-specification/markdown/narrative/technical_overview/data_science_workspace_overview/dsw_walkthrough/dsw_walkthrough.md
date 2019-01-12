@@ -69,7 +69,7 @@ Finally, we can take a peek at what our data looks like. We can use `df.head(n)`
 
 #### Statistical Summary
 
-We can leverage Python's pandas library to get the data type of each attribute. The output of the following call will gives us information about the number of entries and the data type for each of the columns:
+We can leverage Python's pandas library to get the data type of each attribute. The output of the following call will give us information about the number of entries and the data type for each of the columns:
 
 ```PYTHON
 df.info()
