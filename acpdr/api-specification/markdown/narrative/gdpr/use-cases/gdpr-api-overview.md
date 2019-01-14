@@ -142,9 +142,11 @@ Some notes about the format:
 One key not detailed in the example above:
 * The key **isDeletedClientSide** is a Boolean (true/false) value that is handed in from the Adobe Privacy JS library, indicating the client-side cookie has been deleted. This flag resides at the userID level, as part of the `namespace`, `value` and `type` triumvirate, and should not be added to the request manually as it indicates additional processing work is not needed by some solutions
 
-### Include
+### <a id="include"></a>Include
 
-The include key is an optional parameter, but is highly recommended for use when creating a POST request to GDPR. It supports an array of product strings to include in your processing. If you only support or integrate with Audience Manager, you could include only AudienceManager in your request, which has the effect of excluding all the other products. By default, all supported Experience Cloud solutions are included in every request. 
+*Note:* The former exclude key is no longer supported.
+
+The include key supports an array of product strings to include in your processing. If you only support or integrate with Audience Manager, you could include only AudienceManager in your request, which has the effect of excluding all the other products. If no products are included, the request will be rejected by the API.
 
 ```json
 
@@ -152,16 +154,15 @@ The include key is an optional parameter, but is highly recommended for use when
 
 ```
 
-See [Product Values](#productvalues).
+See [Product Values](#product-values) for information about the values you can use in the include statement.
 
-If the product you specify as part of an include or exclude key does not match the list of product values, you receive an error message and the request fails.
+If the product you specify as part of an include does not match the list of product values, you will receive an error message and the request will fail.
 
 ### Additional flags and options
 
 The following flags might be specified at the root level (equivalent to the *users* or *companyContexts* keys) and applied for the complete set of user data included.
 
-* The **include** key is an optional parameter and supports an array of product strings to exclude in your processing. If you only support or integrate with Analytics, you could include only Analytics in the request. By default, all supported Experience Cloud solutions are included in every request. See [Product Values](#productvalues).
-* the **expandIds** key is an optional parameter and supports a boolean value of true|false. optional field that represents an optimization for processing the IDs in the solutions (currently only used by Analytics). If omitted, Analytics' default behavior is *false*
+* The **expandIds** key is an optional parameter and supports a boolean value of true|false. optional field that represents an optimization for processing the IDs in the solutions (currently only used by Analytics). If omitted, Analytics' default behavior is *false*
 * The **priority** key is an optional parameter (*normal*|*low*) for optimizing requests based on customer need. This key is inactive at the moment. 
 * The **analyticsDeleteMethod** is an optional parameter (*purge*|*anonymize*) for specifying how Analytics should handle the customer data. By default (if omitted), all data referenced by the given collection of user IDs is anonymized, thus maintaining data integrity for historical reporting and other functions. Purge removes the data completely.
 
