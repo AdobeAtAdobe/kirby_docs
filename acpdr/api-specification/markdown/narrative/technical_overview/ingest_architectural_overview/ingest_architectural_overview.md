@@ -33,17 +33,6 @@ Size of batches = Max sum of file sizes in batch 10 GB.
 
 Upload chunk size = recommended 250 MB chunk sizes.
 
-### Batch Ingestion Status
-- **Active**:  The batch has been successfully promoted and is available for downstream consumption.
-- **Loaded**: Data for the batch is complete and the batch is ready for promotion.
-- **Loading**: Data for this batch is being uploaded and converted and the batch is currently **NOT** ready to be promoted.
-- **Staged**: The staging phase of the promotion process for a batch is complete and the ingestion job has been run.
-- **Staging**: Data for the batch is being processed by Data Tracker.
-- **Failed**: A terminal state that results from either a bad configuration and/or bad data.  In either case, it's mandatory that an actionable error is recorded along with the batch to enable you to make corrections and resubmit the data.
-- **Abandoned**: The batch has not completed in the expected timeframe.
-- **Aborted**: An abort operation has **explicitly** been called (via Batch Ingest API) for the specified batch.
-- **Inactive**: The batch was successfully promoted, but has been reverted or has expired.  The batch is no longer available for downstream consumption.  
-
 
 ## Creating a Batch
 
@@ -65,7 +54,7 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
       }'
 ```
 `{IMS_ORG}`: Your IMS organization credentials found in your unique Adobe Experience Platform integration.  
-`{ACCESS_TOKEN}:` Token provided after authentication.  
+`{ACCESS_TOKEN}`: Token provided after authentication.  
 `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 `{DATASET_ID}`: The ID of the dataset to upload the files into.
 
@@ -85,12 +74,12 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
     ],
     "version": "1.0.0",
     "tags": {},
-    "createdUser": "string",
-    "updatedUser": "string"
+    "createdUser": "{USER_ID}",
+    "updatedUser": "{USER_ID}"
 }
 ```
-`{BATCH_ID:}` The ID of the batch that was just created (used in subsequent requests).  
-`{IMS_ORG:}` Your IMS org specified in the request.  
+`{BATCH_ID}`: The ID of the batch that was just created (used in subsequent requests).  
+`{IMS_ORG}`: Your IMS organization specified in the request.  
 `{DATASET_ID}`: The ID of the dataset to upload the files into.
 
 
@@ -139,7 +128,7 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID
 ```
 `{BATCH_ID}`: The ID of the batch.  
 `{DATASET_ID}`: The ID of the dataset ingesting the files.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
+`{IMS_ORG}`: Your IMS organization credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Token provided after authentication.  
 `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 
@@ -166,7 +155,7 @@ curl -X PATCH "https://platform.adobe.io/data/foundation/import/batches/{BATCH_I
 `{BATCH_ID}`: The ID of the batch.  
 `{DATASET_ID}`: The ID of the dataset to upload the files into.  
 `{FILE_NAME}`:Name of file as it will be seen in the dataset.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
+`{IMS_ORG}`: Your IMS organization credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Token provided after authentication.  
 `{FILE_PATH_AND_NAME}`: The path and filename of the file to be uploaded into the dataset.  
 `{CONTENT_RANGE}`: The range of bytes of the file being uploaded with this request. (for example: 0-82/164)  
@@ -188,8 +177,9 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID
 -H "Authorization: Bearer {ACCESS_TOKEN}" \
 -H "x-api-key : {API_KEY}"
 ```
+
 `{BATCH_ID}`: The ID of the batch to be uploaded into the dataset.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
+`{IMS_ORG}`: Your IMS organization credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Token provided after authentication.  
 `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 
@@ -216,14 +206,14 @@ curl GET "https://platform.adobe.io/data/foundation/catalog/batch/{BATCH_ID}" \
 
 ```JSON
 {
-    "5911f88ae2f4bf657c5a8cb5": {
-        "imsOrg": "4F3BB22C5631222A7F000101@AdobeOrg",
+    "{BATCH_ID}": {
+        "imsOrg": "{IMS_ORG}",
         "created": 1494349962314,
         "createdClient": "MCDPCatalogServiceStage",
-        "createdUser": "MCDPCatalogServiceStage@AdobeID",
-        "updatedUser": "MCDPCatalogServiceStage@AdobeID",
+        "createdUser": "{USER_ID}",
+        "updatedUser": "{USER_ID}",
         "updated": 1494349963467,
-        "externalId": "/adobe/bulkingest/5af9ee67e4045c1b4945c209",
+        "externalId": "{EXTERNAL_ID}",
         "status": "success",
         "errors": [
             {
@@ -302,3 +292,26 @@ curl GET "https://platform.adobe.io/data/foundation/catalog/batch/{BATCH_ID}" \
 }
 
 ```
+
+`{BATCH_ID}`: The ID of the batch to be uploaded into the dataset.  
+`{IMS_ORG}`: Your IMS organization credentials found in your unique Adobe Experience Platform integration.  
+`{USER_ID}`: The ID of the user who created or updated the batch.  
+
+The `"status"` field is what shows the current status of the batch requested. The batches can have one of the following states:
+
+#### Batch Ingestion Status
+
+Status | Description 
+------ | -----------
+Abandoned | The batch has not completed in the expected timeframe.
+Aborted | An abort operation has **explicitly** been called (via Batch Ingest API) for the specified batch. Once the batch is in a **Loaded** state, it cannot be aborted.
+Active |  The batch has been successfully promoted and is available for downstream consumption. This status can be used interchangeably with **Success**.
+Deleted | Data for the batch has been completely removed. 
+Failed | A terminal state that results from either bad configuration and/or bad data. Data for a failed batch will **not** show up. This status can be used interchangeably with **Failure**.
+Inactive | The batch was successfully promoted, but has been reverted or has expired. The batch is no longer available for downstream consumption.
+Loaded | Data for the batch is complete and the batch is ready for promotion.
+Loading | Data for this batch is being uploaded and the batch is currently **not** ready to be promoted.
+Retrying | The data for this batch is being processed. However, due to a system or transient error, the batch failed - as a result, this batch is being retried.
+Staged | The staging phase of the promotion process for a batch is complete and the ingestion job has been run.
+Staging | Data for the batch is being processed.
+Stalled | The data for the batch is being processed. However, the batch promotion has stalled after a number of retries.
