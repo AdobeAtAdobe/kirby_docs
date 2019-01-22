@@ -363,35 +363,35 @@ paths:
     get:
       tags:
           - GDPR Product Management CRUD API
-        summary: Returns details of single product based on productName parameter
-        description: Returns details of a product.
-        operationId: getProductsByName
-        parameters:
-          - name: productName
-            in: path
-            description: Product Name for details
-            required: true
-            type: string
-          - name: x-gw-ims-org-id
-            in: header
-            description: XXXXX47E56F59C747FXXXXX@AdobeOrg
-            required: true
-            type: string
-          - name: Authorization
-            in: header
-            description: Bearer XXXXX
-            required: true
-            type: string
-          - name: x-api-key
-            in: header
-            description: 'acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io'
-            required: true
-            type: string
-          - name: Content-Type
-            in: header
-            description: application/json
-            required: true
-            type: string
+      summary: Returns details of single product based on productName parameter
+      description: Returns details of a product.
+      operationId: getProductsByName
+      parameters:
+        - name: productName
+          in: path
+          description: Product Name for details
+          required: true
+          type: string
+        - name: x-gw-ims-org-id
+          in: header
+          description: XXXXX47E56F59C747FXXXXX@AdobeOrg
+          required: true
+          type: string
+        - name: Authorization
+          in: header
+          description: Bearer XXXXX
+          required: true
+          type: string
+        - name: x-api-key
+          in: header
+          description: 'acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io'
+          required: true
+          type: string
+        - name: Content-Type
+          in: header
+          description: application/json
+          required: true
+          type: string
       responses:
         '200':
           description: Successful retrieval of product details
