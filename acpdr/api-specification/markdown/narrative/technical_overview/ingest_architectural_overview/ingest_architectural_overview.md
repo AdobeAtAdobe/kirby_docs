@@ -17,31 +17,28 @@ The Data Ingestion API allows you to ingest data as batches (a unit of data that
 
 
 ### Data Ingestion Prerequisites
-- Data to upload must be in [parquet](http://parquet.apache.org/documentation/latest/) format.
-
+- Data to upload must be either in [parquet](http://parquet.apache.org/documentation/latest/) or [JSON format][xdm-json].
 - A dataset created in the [Catalog services](../catalog_architectural_overview/catalog_architectural_overview.md).
-
 - Contents of the parquet file must match a subset of the schema of the dataset being uploaded into.
-
 - Have your unique Access Token after authentication.
 
-### Recommended Batch Sizes
+### Batch Ingestion Best Practices
 
-Number of files = No more than 1500 files in a batch.
+- The recommended batch size is between 256 MB and 100 GB.
+- Each batch should contain at most 1500 files.
 
-Size of batches = Max sum of file sizes in batch 10 GB.
-
-Upload chunk size = recommended 250 MB chunk sizes.
+To upload a file larger than 512MB, the file will need to be divided into smaller chunks. Instructions to upload a large file can be found [here](#large-file-upload---create-file).
 
 
-## Creating a Batch
-
-#### POST /batches
+### Creating a Batch
 
 Before data can be added to a dataset, it must be linked to a batch, which will later be uploaded into a specified dataset.
 
-#### Request
+```http
 POST /batches
+```
+
+#### Request
 
 ```shell
 curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
@@ -53,12 +50,14 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
           "datasetId": "{DATASET_ID}" 
       }'
 ```
+
 `{IMS_ORG}`: Your IMS organization credentials found in your unique Adobe Experience Platform integration.  
 `{ACCESS_TOKEN}`: Token provided after authentication.  
 `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 `{DATASET_ID}`: The ID of the dataset to upload the files into.
 
 #### Response
+
 ```JSON
 {
     "id": "{BATCH_ID}",
@@ -83,16 +82,19 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
 `{DATASET_ID}`: The ID of the dataset to upload the files into.
 
 
-### File Upload
+## File Upload
 After successfully creating a new batch for uploading, files can then be uploaded to a specific dataset.
 
-You can upload files using the *Small File Upload API*. However, if your files are too large and the gateway limit is exceeded (such as extended timeouts, requests for body size exceeded, and other constrictions), you can switch over to the *Large File Upload API*. This API uploads the file in chunks, and stitches data together using the *Large File Upload Complete API* call.
+You can upload files using the **Small File Upload API**. However, if your files are too large and the gateway limit is exceeded (such as extended timeouts, requests for body size exceeded, and other constrictions), you can switch over to the **Large File Upload API**. This API uploads the file in chunks, and stitches data together using the **Large File Upload Complete API** call.
 
 ### Small File Upload
 Once a batch is created, data can be uploaded to a preexisting dataset.  The file being uploaded must match its referenced XDM schema.
 
+```http
+PUT /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
+```
+
 #### Request
-PUT /batches/{BATCH\_ID}/datasets/{DATASET\_ID}/files/{FILE\_NAME}
 
 ```SHELL
 curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.parquet" \
@@ -102,6 +104,7 @@ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}
   -H "x-api-key : {API_KEY}" \
   --data-binary "@{FILE_PATH_AND_NAME}.parquet"
 ```
+
 `{BATCH_ID}`: The ID of the batch.  
 `{DATASET_ID}`: The ID of the dataset to upload files.  
 `{FILE_NAME}`: Name of file as it will be seen in the dataset.  
@@ -117,8 +120,11 @@ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}
 ### Large File Upload - Create File
 To upload a large file, the file must be split into smaller chunks and uploaded one at a time.
 
+```http
+POST /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}?action=initialize
+```
+
 #### Request
-POST /batches/{BATCH\_ID}/datasets/{DATASET\_ID}/files/{FILE\_NAME}?action=initialize
 
 ```SHELL
 curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/part1=a/part2=b/{FILE_NAME}.parquet?action=initialize" \
@@ -140,8 +146,11 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID
 ### Large File Upload - Upload Subsequent Parts
 After the file has been created, all subsequent chunks can be uploaded by making repeated PATCH requests, one for each section of the file.
 
+```http
+PATCH /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
+```
+
 #### Request
-PATCH /batches/{BATCH\_ID}/datasets/{DATASET\_ID}/files/{FILE\_NAME}
 
 ```SHELL
 curl -X PATCH "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/part1=a/part2=b/{FILE_NAME}.parquet" \
@@ -152,6 +161,7 @@ curl -X PATCH "https://platform.adobe.io/data/foundation/import/batches/{BATCH_I
   -H "Content-Range: bytes {CONTENT_RANGE}" \
   --data-binary "@{FILE_PATH_AND_NAME}.parquet"
 ```
+
 `{BATCH_ID}`: The ID of the batch.  
 `{DATASET_ID}`: The ID of the dataset to upload the files into.  
 `{FILE_NAME}`:Name of file as it will be seen in the dataset.  
@@ -166,10 +176,12 @@ curl -X PATCH "https://platform.adobe.io/data/foundation/import/batches/{BATCH_I
 ```
 
 ### Signal Batch Completion
-After all files have been uploaded to the batch, the batch can be signaled for completion. By doing this, the Catalog *DataSetFile* entries are created for the completed files and associated with the batch generated above. The Catalog batch is then marked as successful, which triggers downstream flows to ingest the available data.
+After all files have been uploaded to the batch, the batch can be signaled for completion. By doing this, the Catalog **DataSetFile** entries are created for the completed files and associated with the batch generated above. The Catalog batch is then marked as successful, which triggers downstream flows to ingest the available data.
 
 #### Request
-POST /batches/{BATCH\_ID}?actions=COMPLETE
+```http
+POST /batches/{BATCH_ID}?actions=COMPLETE
+```
 
 ```SHELL
 curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=COMPLETE" \
@@ -191,9 +203,11 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID
 ### Check Batch Status
 While waiting for the files to uploaded to the batch, the batch's status can be checked to see its progress.
 
-#### Request
-
+```http
 GET /batch/{BATCH_ID}
+```
+
+#### Request
 
 ```shell
 curl GET "https://platform.adobe.io/data/foundation/catalog/batch/{BATCH_ID}" \
@@ -209,7 +223,7 @@ curl GET "https://platform.adobe.io/data/foundation/catalog/batch/{BATCH_ID}" \
     "{BATCH_ID}": {
         "imsOrg": "{IMS_ORG}",
         "created": 1494349962314,
-        "createdClient": "MCDPCatalogServiceStage",
+        "createdClient": "MCDPCatalogService",
         "createdUser": "{USER_ID}",
         "updatedUser": "{USER_ID}",
         "updated": 1494349963467,
@@ -299,7 +313,7 @@ curl GET "https://platform.adobe.io/data/foundation/catalog/batch/{BATCH_ID}" \
 
 The `"status"` field is what shows the current status of the batch requested. The batches can have one of the following states:
 
-#### Batch Ingestion Status
+## Batch Ingestion Statuses
 
 Status | Description 
 ------ | -----------
@@ -315,3 +329,5 @@ Retrying | The data for this batch is being processed. However, due to a system 
 Staged | The staging phase of the promotion process for a batch is complete and the ingestion job has been run.
 Staging | Data for the batch is being processed.
 Stalled | The data for the batch is being processed. However, the batch promotion has stalled after a number of retries.
+
+[xdm-json]: ../schema_registry/acp_schema_registry.md
