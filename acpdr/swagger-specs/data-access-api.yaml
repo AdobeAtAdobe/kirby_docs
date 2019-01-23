@@ -9,21 +9,17 @@ info:
 
     This includes, but not limited to, the following operations:
 
-      * Access and download Dataset files under a batch
-      * Retrieve HEADER information regarding files
-      * Parallel / Resumable downloads using HTTP Range headers
-      * Pagination Support for Directory listings
-
-    An in depth technical overview of the Data Access API can be found here:
-      * https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md
-
-    Tutorial for getting started with the Data Access API:
-      * https://www.adobe.io/apis/cloudplatform/dataservices/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md
+      * Access and download dataset files under a batch
+      * Retrieve header information regarding files
+      * Parallel/Resumable downloads using HTTP Range headers
+      * Pagination support for directory listings
+      * List dataset files under a succeeded/failed batch
+      * Preview CSV and Parquet files
 
     Notes:
-          * PLATFORM Gateway URL: https://platform.adobe.io/
-          * Base path for this API: /data/foundation/export
-          * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * Base path for this API: /data/foundation/export
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
 
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 
