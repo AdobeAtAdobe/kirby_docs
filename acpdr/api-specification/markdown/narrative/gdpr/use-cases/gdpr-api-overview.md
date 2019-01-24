@@ -142,6 +142,7 @@ Some notes about the format:
 One key not detailed in the example above:
 * The key **isDeletedClientSide** is a Boolean (true/false) value that is handed in from the Adobe Privacy JS library, indicating the client-side cookie has been deleted. This flag resides at the userID level, as part of the `namespace`, `value` and `type` triumvirate, and should not be added to the request manually as it indicates additional processing work is not needed by some solutions
 
+
 ### <a id="include"></a>Include
 
 *Note:* The former exclude key is no longer supported.
