@@ -257,7 +257,7 @@ Listing 4 shows a typical example of a response payload from a `status` request 
     "jobs": [
         {
             "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076b0842b6",
-            "requestId": 979,
+            "requestId": "979",
             "ticketNumber": "TechAcctTest 1",
             "customer": {
                 "user": {
@@ -380,7 +380,7 @@ A job might remain in a processing state if a dependent child job is still in pr
     "jobs": [
         {
             "jobId": "d685625c-1292-4f8c-8890-9925c23c43e0",
-            "requestId": 1,
+            "requestId": "1",
             "lastUpdatedOn": "09/04/2018 2:18 PM",
             "productResponses": [
                 {
@@ -456,7 +456,7 @@ A job might remain in a processing state if a dependent child job is still in pr
             "childJobs": [
                 {
                     "jobId": "415cbe6f-d258-472d-a350-b78d2d6916b3",
-                    "requestId": 1,
+                    "requestId": "1",
                     "lastUpdatedOn": "09/05/2018 2:55 PM",
                     "productResponses": [
                         {
@@ -482,7 +482,7 @@ A job might remain in a processing state if a dependent child job is still in pr
                 },
                 {
                     "jobId": "d54e24f5-fc95-4f7c-ab80-eddae3e1a5b7",
-                    "requestId": 1,
+                    "requestId": "1",
                     "lastUpdatedOn": "09/04/2018 3:32 PM",
                     "productResponses": [
                         {
