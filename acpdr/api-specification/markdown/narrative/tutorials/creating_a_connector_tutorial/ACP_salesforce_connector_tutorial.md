@@ -29,7 +29,7 @@ After setting up authorization for APIs, these values will be returned:
 * `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
 
-### Set up a Platform connection to Amazon S3
+### Set up a Platform connection to Salesforce
 
 You will need the following credentials:
 
