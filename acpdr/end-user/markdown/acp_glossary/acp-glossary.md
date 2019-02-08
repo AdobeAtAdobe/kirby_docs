@@ -112,7 +112,7 @@ __Create Table as Select:__ Create Table as Select is a SQL command which, when 
 __Cross-site Data:__ Cross-site data is the combination of data from several sites, including a combination of on-site data and off-site data or a combination of data from several off-site sources.
 
 <a name="Custom Identity Type"></a>
-__Custom Identity Type:__ Custom identity types are customer created identifiers used to represent identities for a specific organization or business case.
+__Custom Identity Namespace:__ Custom identity types are customer created identifiers used to represent identities for a specific organization or business case.
  
 
 
@@ -217,11 +217,14 @@ __Identity "I" Data Labels:__ `Identity I` labels are used to categorize data th
 <a name="Identity Graph"></a>
 __Identity Graph:__ Identity Graph is the output of grouped, stitched, and linked identity types translated to a visual representation of an identity within Unified Profile.
 
+<a name="Identity Namespace"></a>
+__Identity Namespace:__ An identity namespace is an identifier such as cookie ID, device ID, or email ID to indicate the context from which data originates and is used to recognize and link identities across Experience Cloud.
+
 <a name="Identity Service"></a>
 __Identity Service:__ Experience Platform Identity Service UI enables the creation and management of identity types to enable linking of identities across devices and channels for a complete user-view from Unified Profile.
 
 <a name="Identity Type"></a>
-__Identity Type:__ An identity type is an identifier such as a cookie ID, device ID, or email ID to indicate the context from which data originates and is used to recognize and link identities across Experience Cloud.
+__Identity Namespace:__ An identity namespace is an identifier such as a cookie ID, device ID, or email ID to indicate the context from which data originates and is used to recognize and link identities across Experience Cloud.
 
 <a name="I1 Data Label"></a>
 __I1 Data Label:__ The `I1` data label is used to classify directly identifiable data that can identify or contact a specific person rather than a device.
@@ -366,7 +369,7 @@ __S1 Data Label:__ `S1` data label is used to classify data specifying latitude 
 __S2 Data Label:__ `S2` data label is used to classify data that can be used to determine a broadly defined geo-fence area.
 
 <a name="Standard Identity Type"></a>
-__Standard Identity Type:__ Standard identity types are Adobe pre-defined identifiers, including Adobe and industry standard solutions employed to identify users.
+__Standard Identity Namespace:__ Standard identity namespaces are Adobe pre-defined identifiers, including Adobe and industry standard solutions employed to identify users.
 
 <a name="Standard Schema"></a>
 __Standard Schema:__ Standard schemas consist of classes and mixins and are intended for reuse.
