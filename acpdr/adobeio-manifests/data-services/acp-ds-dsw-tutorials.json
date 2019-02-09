@@ -1,11 +1,11 @@
 {
-	"name": "ACP_Data_Science_Workspace_Tutorials",
+	"name": "AEP_Data_Science_Workspace_Tutorials",
 	"version": "1.0.0",
-	"description": "ACP Data Services Data Science Workspace Tutorials",
+	"description": "AEP Data Services Data Science Workspace Tutorials",
 	"author": "Emily Walpole",
 	"view_type": "mdbook",
-	"meta_keywords": "defaultkeyword,defaultkeyword2",
-	"meta_description": "default description",
+	"meta_keywords": "AEP, Data Science, Workspace, Adobe, Tutorial",
+	"meta_description": "Manifest file for DSW Tutorials",
 	"publish_date": "17/09/2018",
 	"show_edit_github_banner": false,
 	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
@@ -41,5 +41,6 @@
 		"title": "Scoring Using Recipe",
 		"description": "This tutorial shows you how to create a scoring run for an existing experiment run in the Data Science Workspace."
 		}
-	]
+	],
+	"app2app_map": {"api-specification/markdown/narrative/tutorials/":"/apis/cloudplatform/dataservices/tutorials/alltutorials.html"}
 }

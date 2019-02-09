@@ -169,7 +169,7 @@ You can use Jupyter Notebook to simplify data pre-processing - possibly starting
 ![](list_of_notebooks.png)
 
 For more information, check out this tutorial:
-* [How to Access and Explore Data in the Data Science Workspace](https://www.adobe.io/apis/cloudplatform/dataservices/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html#!api-specification/markdown/narrative/tutorials/ml_access_and_explore_data_tutorial/ml_access_and_explore_data_tutorial.md)
+* [How to Access and Explore Data in the Data Science Workspace](../../tutorials/dsw/ml_access_and_explore_data_tutorial/ml_access_and_explore_data_tutorial.md)
 
 ### Author the recipe
 
@@ -178,7 +178,7 @@ If you already found a recipe that meets all your needs, you can move on to expe
 You can also use the [Data Science Workspace](http://platform.adobe.com/studio) to import a recipe, so that you can take advantage of the experimentation workflows as you create your intelligent service.
 
 For more information, check out this tutorial:
-* [Package Recipe to Import into the Data Science Workspace](https://www.adobe.io/apis/cloudplatform/dataservices/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html#!api-specification/markdown/narrative/tutorials/package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md)
+* [Package Recipe to Import into the Data Science Workspace](../../tutorials/dsw/package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md)
 
 ### Experiment with the recipe
 
@@ -191,8 +191,8 @@ As you test, Data Science Workspace keeps track of evaluation metrics for each u
 ![](evaluation_metrics.png)
 
 For more information, check out these tutorials:
-* [Import, Train, and Evaluate Recipe Tutorial via UI](https://www.adobe.io/apis/cloudplatform/dataservices/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html#!api-specification/markdown/narrative/tutorials/how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial.md)
-* [Import, Train, and Evaluate Recipe Tutorial via API](https://www.adobe.io/apis/cloudplatform/dataservices/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html#!api-specification/markdown/narrative/tutorials/how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_api_tutorial.md)
+* [Import, Train, and Evaluate Recipe Tutorial via UI](../../tutorials/dsw/how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial.md)
+* [Import, Train, and Evaluate Recipe Tutorial via API](../../tutorials/dsw/how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_api_tutorial.md)
 
 
 ### Operationalize the model
