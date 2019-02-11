@@ -23,5 +23,5 @@
 					"description": "The Data Science Workspace offers predefined machine learning models you can use in your own solutions as well as the capability to create your own models."
 	    }
 	],
-	"app2app_map": {"api-specification/markdown/narrative/tutorials/":"/apis/cloudplatform/dataservices/tutorials/alltutorials.html", "api-specification/markdown/narrative/tutorials/dsw/":"/apis/cloudplatform/dataservices/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html", "acpdr/swagger-specs/":"/apis/cloudplatform/dataservices/api-reference.html"}
+	"app2app_map": {"api-specification/markdown/narrative/tutorials/dsw/":"/apis/experienceplatform/dataservices/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html", "acpdr/swagger-specs/":"/apis/experienceplatform/dataservices/api-reference.html"}
 }
