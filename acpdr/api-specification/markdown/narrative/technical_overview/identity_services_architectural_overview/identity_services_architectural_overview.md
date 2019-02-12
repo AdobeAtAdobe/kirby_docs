@@ -1,4 +1,4 @@
-# Identity Service - Overview
+# Identity Service Overview
 <!-- The majority of the documentation here came from: https://wiki.corp.adobe.com/display/DMSArchitecture/Unified+Identity+Service+-+API+Specification-->
 
 ## Overview
@@ -17,12 +17,6 @@ Identity Namespace fully qualifies an identity. Each of your end users could pot
 ### IMS Org Id
 
 Customer/Partner IMS Org Id as created in Adobe's customer onboarding process. For more information, see the [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html).
-
-### XID
-
-Experience ID (XID) is the identity object for Experience Platform, serving as the encapsulation of the Identity Namespace ID (NID) and the Identity Namespace value (ID). There are multiple representations of XIDs - including the existing solution specific representations such as AMO ID, Analytics ID, Target ID and AAM ID. All types of identities can be expressed as an XID, including a consumer identity or a physical device ID.
-
-An AMO cookie-id (for example `Was_2AAAAFZ7q3xO`) is an XID with a Namespace ID of 411.  Similarly an AAM cookie-id (for example `64077380566994308300716050799446918829`) is an XID with a namespace of 0. Identity Service provide a native serialized format of XID. A native format of XID can be obtained either using an SDK or using a REST API. The native serialized format also supports one way hashing of PII type of identities through the SDK. This is a feature pending implementation.
 
 ## Providing XDM Data to Identity Service
 
@@ -45,21 +39,18 @@ When uploading data conforming to the Profile XDM, specify the relevant IDs by a
 {
   "identities": [
     { 
-      "xid": "GU8rb925s2L2fkF55boQKCbliQ8", 
       "namespace": { 
         "code": "CRMId" 
       },
       "id": "87374043487584731811119677934421981925" 
     },
     { 
-      "xid": "GbZWRW8tXrZ4gABvwzC_gAAAAAAA", 
       "namespace": { 
         "code": "AVID" 
       },
       "id": "2d5eb67880006fc3-30bf800000000000" 
     },
     { 
-      "xid": "A2-s19jafhDickW6PP0c5dpi", 
       "namespace": { 
         "code": "ECID" 
       },
@@ -141,12 +132,14 @@ For data conforming to the ExperienceEvent XDM, identities can be provided as an
 
 ### Tag DataSet
 
-UIS maintains XDM data in the identity graph, where data can be uploaded and updated via [batch](../ingest_architectural_overview/ingest_architectural_overview.md) or [streaming ingestion](../streaming_ingest/getting_started_with_platform_streaming_ingestion.md). XDM data can be uploaded into the UIS based on and triggered by batch data being ingested and managed by [Data Catalog Service](../catalog_architectural_overview/catalog_architectural_overview.md).
+UIS maintains XDM data in the identity graph, where data can be uploaded and updated via [batch](../../../../../api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md) or [streaming ingestion](../../../../../api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md). XDM data can be uploaded into UIS based on and triggered by batch data being ingested and managed by [Catalog Service](../../../../../api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md).
 
-With batch ingestion, enablement for ingestion into the identity graph is handled by a tag on a dataset, named specifically "unifiedIdentity". Streaming data is ingested by UID and UP by default without configuration.
+You can enable Identity Service to automatically receive data uploaded to a dataset, which will enhance your organization's identity graph with the identifiers in your data. Using the API, this is accomplished by a tag on a dataset, named specifically "unifiedIdentity". 
+
+This configuration is not required for streamed data, as data delivered to a streaming endpoint is sent to UID and UP by default without configuration.
 
 ```
-PATCH https://platform.adobe.io/data/foundation/catalog/dataSets/5a7d26e92a6e55000086d459 HTTP/1.1
+PATCH https://platform.adobe.io/data/foundation/catalog/dataSets/5a7d26e92a6e55000086d459
 ```
 
 __Example body__
@@ -159,10 +152,10 @@ __Example body__
 }
 ```
 
-Most use cases require data to be used by both [Unified Profile Services](../unified_profile_architectural_overview/unified_profile_architectural_overview.md) (UPS) and UIS. Below is an example of adding tags enable your data to be ingested to both systems.
+Most use cases require data to be used by both [Unified Profile](../unified_profile_architectural_overview/unified_profile_architectural_overview.md) (UP) and UIS. Below is an example of adding tags enable your data to be ingested to both systems.
 
 ```
-PATCH https://platform.adobe.io/data/foundation/catalog/dataSets/5a7d26e92a6e55000086d459 HTTP/1.1
+PATCH https://platform.adobe.io/data/foundation/catalog/dataSets/5a7d26e92a6e55000086d459
 ```
 
 __Example body__
@@ -184,8 +177,50 @@ Platform supports batch and streaming ingestion of data conforming to an XDM sch
 
 #### Batch Ingestion
 
-Batches of data can be uploaded to datasets in Platform using [batch ingestion](../ingest_architectural_overview/ingest_architectural_overview.md).
+Batches of data can be uploaded to datasets in Platform using [batch ingestion](../../../../../api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md).
 
 #### Streaming Ingestion
 
-Use Platform's [streaming ingestion](../streaming_ingest/getting_started_with_platform_streaming_ingestion.md) to upload data, allowing you to react to changes to your consumers' data and to their interactions with your brand near real-time. 
+Use Platform's [streaming ingestion](../../../../../api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md) to upload data, allowing you to react to changes to your consumers' data and to their interactions with your brand near real-time. 
+
+## Advanced Topics
+
+This section highlights features that are either in early stages or are only used for very specific requirements.
+
+### XID
+
+We support a compact form for the aggregated ID and namespace, called native XID. Note that this format is mainly for internal Adobe use. Native XID as a singular value is more space efficient and is what is used internally within Platform solutions for storage and serialization. However it is not human readable and opaque.
+
+Users can generate this form using a call to `/identity` function in the API. This is base64 encoded binary String corresponding to a ID/namespace pair.
+
+#### Example interaction using XID
+
+__Step 1__
+
+Example request:  
+`https://platform.adobe.io/data/core/identity/identity?namespace=email&id=test@adobetest.com`
+
+Example response:  
+`{"xid":"BVrqzwVuzbXrLfmnaG3rXrLf3KJg"}`
+
+__Step 2__
+
+Example request:  
+`https://platform.adobe.io/data/core/identity/cluster/members?xid=BVrqzwVuzbXrLfmnaG3rXrLf3KJg`
+
+Example response:  
+```
+{
+  "version": "1.1.0",
+  "clusters": [{
+    "xid": "BVrqzwVuzbXrLfmnaG3rXrLf3KJg",
+    "members": ["BVrqzwVuzbXrLfmnaG3rXrLf3KJg", "A29UQ1ptvQnLDG1qYhYmledU"]
+  }],
+  "unprocessedXids": []
+}
+```
+
+Note that:
+
+* All member IDs returned will be in native XID form when native XID is used in the request
+* We recommend using ID/namespace form

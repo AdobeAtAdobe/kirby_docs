@@ -1,18 +1,16 @@
 swagger: '2.0'
 info:
-  title: Adobe Experience Platform Data Ingestion
+  title: Data Ingestion API
   version: v2
   description: >-
-    Bulk Ingestion API documentation
+    Bulk Ingestion API reference
 
 
     Notes:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/foundation/import
       * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
-  contact:
-
-    name: Grp-Siphon-Core
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
 basePath: /data/foundation/import
 host: platform.adobe.io
 consumes:

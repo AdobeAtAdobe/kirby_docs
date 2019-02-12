@@ -1,11 +1,7 @@
 swagger: "2.0"
 info:
   description: >-
-  
-    Experience Platform Unified Profile Segment Definition API
-    
-    
-    A Profile Segment Definition is the object encapsulation of a PQL Predicate which can be run to build a Profile Segment, or audience.
+    A profile segment definition is the object encapsulation of a PQL predicate which can be run to build a profile segment, or audience.
     
   
     For more information, see [Unified Profile Overview](https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).

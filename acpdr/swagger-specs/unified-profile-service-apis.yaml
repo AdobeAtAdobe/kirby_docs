@@ -1,11 +1,11 @@
 swagger: '2.0'
 info:
-  title: Adobe Experience Platform Unified Profile Service APIs
+  title: Unified Profile Service APIs
   version: beta
   termsOfService: 'https://www.adobe.com/legal/terms.html'
   description: >-
-    Unified Profile APIs provide mechanisms for ingesting, deleting and accessing Profiles, 
-    and for working with Profile Segments from creating, previewing, and estimating segments 
+    Unified Profile APIs provide mechanisms for ingesting, deleting and accessing profiles, 
+    and for working with profile segments from creating, previewing, and estimating segments 
     to exporting segment audiences to datasets that can be used throughout Adobe Experience Platform.
 
 

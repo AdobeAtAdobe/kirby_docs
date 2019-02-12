@@ -1,18 +1,18 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: Catalog Service RESTful API Resource
+  title: Catalog Service API
   description: >-
 
-    Catalog Service API documentation
+    Catalog Service API reference
 
 
     Notes:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/foundation/catalog
       * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
-  contact:
-    name: Catalog Team.
+
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
 basePath: /data/foundation/catalog
 host: platform.adobe.io
 

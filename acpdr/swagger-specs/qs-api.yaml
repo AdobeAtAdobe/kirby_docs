@@ -3,7 +3,7 @@ info:
   version: 1.0.0
   title: Query Service API
   description: >-
-    Query Service API.
+    Query Service API reference
     
 
     Notes:
@@ -11,6 +11,7 @@ info:
       * Base path for this API: /data/foundation/query
       * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'
 
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
 host: platform.adobe.io
 basePath: /data/foundation/query
 

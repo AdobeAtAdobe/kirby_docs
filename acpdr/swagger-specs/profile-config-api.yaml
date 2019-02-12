@@ -1,11 +1,7 @@
 swagger: '2.0'
 info:
   description: >-
-  
-    Experience Platform Unified Profile Configuration API
-
-
-    Use this API to control the manner by which Unified Profile merges XDM Schema objects on Adobe Experience Platform. 
+    Use this API to control the manner by which Unified Profile merges XDM schema objects on Adobe Experience Platform. 
 
 
     For more information, see [Unified Profile Overview](https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).

@@ -5,19 +5,21 @@ produces:
 swagger: '2.0'
 info:
   description: >-
-    Adobe Experience Platform Identity Namespace Service API is used to query and create Namespaces used with Identity Service & Profile Service APIs
+    Identity Namespace Service is used to query and create namespaces used with Identity Service & Unified Profile Service APIs on Adobe Experience Platform.
 
 
+    For more information, visit the [Identity Service Overview](https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md)
+
+    
     Notes:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core/idnamespace
       * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
 
-  title: Adobe Experience Platform Identity Namespace Service
 
-  contact:
-    url: 'https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation.html'
+  title: Identity Namespace Service API
   version: 0.0.1
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
 host: platform.adobe.io
 basePath: /data/core/idnamespace
 

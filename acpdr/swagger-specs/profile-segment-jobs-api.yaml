@@ -1,10 +1,7 @@
 swagger: '2.0'
 info:
   description: >-
-    Experience Platform Unified Profile Segment Jobs API
-    
-
-    Once your Segment has been built, use Unified Profile Segment Jobs to build the resulting audience which then can be exported to a dataset.
+    Once your segment has been built, use Unified Profile Segment Jobs to build the resulting audience which then can be exported to a dataset.
     
     
     For more information, see [Unified Profile Overview](https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
