@@ -154,7 +154,7 @@ After performing those preparatory steps, you can connect Power BI to Query Serv
 	SELECT web.webPageDetails.name as Page_Name, SUM(web.webPageDetails.pageviews.value) as Page_Views FROM _TABLE_ WHERE _ACP_YEAR=2018 AND _ACP_MONTH=11 AND _ACP_DAY=20 GROUP BY web.webPageDetails.name ORDER BY SUM(web.webPageDetails.pageviews.value) DESC LIMIT 10
 	```
 11. Click "OK"
-12. At this step Power BI will connect to the Query Service and if not errors, produce a Preview. (There is a known issue with the Preview rendering numeric columns. Proceed to the next step.) 
+12. At this step Power BI will connect to Query Service and if not errors, produce a Preview. (There is a known issue with the Preview rendering numeric columns. Proceed to the next step.) 
 13. Click Load, to bring the dataset into Power BI.
 
 ## 5. Bonus - connect Postico (Mac)

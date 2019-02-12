@@ -31,7 +31,7 @@ The components of ACP are independent systems that can be included and applied t
 
 **Experience Data Model (XDM)** is the common language employed across the Adobe Cloud Platform for all Adobe marketing and partner solutions. This standardized, canonical data model lets customers, Adobe solutions, and partner solutions employ commonly formatted data in defined schemas. XDM identifies the type of structured semantic data needed for customers and partners to share information across solutions and services.
 
-XDM allows data to flow freely through systems and ensures repeatable implementations of the Experience Cloud. The XDM supports all aspects of the ACP, including schema creation, data ingestion, dataset management, machine learning, scoring, and intelligent services. In addition, XDM also supports a Unified Profile, the Query Service, omni-channel experiences, and support for all commerce activities.
+XDM allows data to flow freely through systems and ensures repeatable implementations of the Experience Cloud. The XDM supports all aspects of the ACP, including schema creation, data ingestion, dataset management, machine learning, scoring, and intelligent services. In addition, XDM also supports a Unified Profile, Query Service, omni-channel experiences, and support for all commerce activities.
 
 
 **AI Studio** using machine learning allows you to extend your expertise and standardize analysis to all parts of your marketing ecosystem.
@@ -250,9 +250,12 @@ As you can see, the common procedure is to issue the GET request to the API endp
 # About the Adobe Cloud Platform API and XDM
 The Adobe Cloud Platform is more than just the platform on which the Experience, Document, and Creative Clouds run. The Adobe Cloud Platform (ACP) also synthesizes these three clouds into a cohesive offering: A whole that is greater than the sum of its parts. This is accomplished via the ACP Application Programming Interface (API), and via the Experience Data Model (XDM). Both API and XDM ultimately inform every aspect of the platform’s design.
 
-API and XDM accomplish this in two steps. First, the API mandates a system organization based on a minimal set of operations that transact against a wide variety of resources. Second, the XDM specifies the language and vocabulary in which resources are expressed, thus establishing fluency as resources are passed between system components. The two reinforce each other to achieve uniformity of design, without loss of expressivity.The underlying design philosophy is like that of Unix:
+API and XDM accomplish this in two steps. First, the API mandates a system organization based on a minimal set of operations that transact against a wide variety of resources. Second, the XDM specifies the language and vocabulary in which resources are expressed, thus establishing fluency as resources are passed between system components. The two reinforce each other to achieve uniformity of design, without loss of expressivity.
+The underlying design philosophy is like that of Unix:
 
-- Each system component is encouraged to focus on a specific task, and do it well. Standardization of API and model make it easier for component implementers to focus on their unique task.- System components are designed to work together, exchanging data via standard patterns (API) and constructs (model). In this way, focused components combine to solve larger problems.- A standardized resource format (JSON-LD for ACP, line-oriented text for UNIX) makes it possible to combine system components in new ways, not necessarily anticipated by their designers.
+- Each system component is encouraged to focus on a specific task, and do it well. Standardization of API and model make it easier for component implementers to focus on their unique task.
+- System components are designed to work together, exchanging data via standard patterns (API) and constructs (model). In this way, focused components combine to solve larger problems.
+- A standardized resource format (JSON-LD for ACP, line-oriented text for UNIX) makes it possible to combine system components in new ways, not necessarily anticipated by their designers.
 
 To bind a set of software components into a platform requires the application of organizing principles that govern their relationships to each other, and to the software that the platform hosts. In the Adobe Cloud Platform, the API and the XDM embody these principles.
 
@@ -263,7 +266,10 @@ To bind a set of software components into a platform requires the application of
 ## API: Create, Read, Update, Delete
 Components interact via synchronous, request-response invocation. When they do so, they invoke one of four standard CRUD operations on a target resource, including:
 
-- CREATE Creates a new resource. New resources are always created in the context of a container resource, such as a directory.- READ Fetch a representation of the targeted resource, which is returned in the response.- UPDATE An existing resource is updated. Updates may be specified as complete replacements or, in some cases, as deltas (patches) to the current version of a resource.- DELETE Removes an existing resource from the system.
+- CREATE Creates a new resource. New resources are always created in the context of a container resource, such as a directory.
+- READ Fetch a representation of the targeted resource, which is returned in the response.
+- UPDATE An existing resource is updated. Updates may be specified as complete replacements or, in some cases, as deltas (patches) to the current version of a resource.
+- DELETE Removes an existing resource from the system.
 
 The Adobe Cloud Platform API specifies the semantics of these four operations as mapped to HTTP semantics. The API is complete, in the sense that no system component is permitted to define additional semantics, applicable only to its implementation. The API definition is overseen by a working group that has responsibility for extending and clarifying these semantics.
 
@@ -271,8 +277,10 @@ Asynchronous operations are also supported, layered on top of these synchronous 
 
 ## Publish and Subscribe
 The platform is organized around a central event bus that permits its various components to remain loosely coupled, and to allow the system to evolve gracefully over time. Publishing to the event bus, as well as reading from the event bus, are both CRUD operations applied to topics. Thus, just as the API layers asynchronous invocation over synchronous, publish-and-subscribe communication is also overlaid onto the core, synchronous API operations.
-Events are posted to the event bus via a create operation on a topic. The topic is the container resource required for any create operation. New topics are created via operations on their logical container, which is the event bus resource itself. Note that the behaviors associated with creating resources of different types vary for topics and messages.
-Similarly, an event is read from the event bus via a read operation on one or more topics. Update and delete operations are not permitted on event resources, as messages may not be updated once created and are automatically deleted when read. The API defines the available operations but, as in this case, components may narrow—although not widen—the specification with relevant restrictions.
+
+Events are posted to the event bus via a create operation on a topic. The topic is the container resource required for any create operation. New topics are created via operations on their logical container, which is the event bus resource itself. Note that the behaviors associated with creating resources of different types vary for topics and messages.
+
+Similarly, an event is read from the event bus via a read operation on one or more topics. Update and delete operations are not permitted on event resources, as messages may not be updated once created and are automatically deleted when read. The API defines the available operations but, as in this case, components may narrow—although not widen—the specification with relevant restrictions.
 
 Here's the operation as applied to an event bust topic:
 **Create** broadcasts a new event.
@@ -284,25 +292,32 @@ The application of the four CRUD API operations is required to a publish and sub
 
 ## Everything is a Resource, But Only Some Resources are Entities
 As the Publish/Subscribe example illustrates, the API models everything as a resource. Those resources may be either blobs (e.g., binary data, perhaps conforming to some file format specification) or structured data (e.g., a business object, perhaps conforming to a schema). Resources are grouped into items: a file plus associated metadata, an address book entry with an associated image. This generalized model is easily applied to many use cases.
-An entity is one or more resources containing primarily structured data, such as the address book entry. Structured data always conforms to some schema. Entities are equivalent to what other systems might call business objects, and examples include constructs such as customer records, audience segments, and campaign email templates. Entities encode, in their contents and relationships, the structured knowledge that is stored in the platform.
-Entities have a privileged role in the API. First, update operations can apply incremental changes to entities via patch, in addition to complete replacement via put. Second, many system components restrict the resources on which they can operate either just to entities, or even more narrowly to specific types of entities. For example, the main event bus supports only specific entity types—messages, topics, and so on.
+
+An entity is one or more resources containing primarily structured data, such as the address book entry. Structured data always conforms to some schema. Entities are equivalent to what other systems might call business objects, and examples include constructs such as customer records, audience segments, and campaign email templates. Entities encode, in their contents and relationships, the structured knowledge that is stored in the platform.
+
+Entities have a privileged role in the API. First, update operations can apply incremental changes to entities via patch, in addition to complete replacement via put. Second, many system components restrict the resources on which they can operate either just to entities, or even more narrowly to specific types of entities. For example, the main event bus supports only specific entity types—messages, topics, and so on.
 
 ## Organizing Resources
 The API also organizes resources into a hierarchy of containers. This not because the API prohibits other organization models, but because a hierarchy is the simplest scalable model for coordinating across multiple system components. This is also why computer file systems remain dominantly hierarchical, even as the presentation of files to users has evolved to encompass search- and recommendation-based paradigms.
-In most system components, this hierarchy is imposed. That is, clients may be aware of and reason about the structure, but they cannot change it. To continue with the event bus example, topics are found at “/topics”, and messages at “/topics/<topic>/messages”. (Note that the API dictates the use of / as the separator character, and here we use <> to indicate a variable, restricted to a single path element.) Clients cannot, for example, successfully post a message to /topics; only topics can be created at that path.
-With respect to imposed hierarchy, the content repository is the outlier. It focuses primarily on the storage of resources that are files and composites, and not entities. It lets its clients determine the hierarchy in which files and composites are stored, including creating new container elements—i.e., directories. To support this case, the API imposes as little as possible in defining valid hierarchies. Most system components, however, will have quite specific rules.
+
+In most system components, this hierarchy is imposed. That is, clients may be aware of and reason about the structure, but they cannot change it. To continue with the event bus example, topics are found at “/topics”, and messages at “/topics/<topic>/messages”. (Note that the API dictates the use of / as the separator character, and here we use <> to indicate a variable, restricted to a single path element.) Clients cannot, for example, successfully post a message to /topics; only topics can be created at that path.
+
+With respect to imposed hierarchy, the content repository is the outlier. It focuses primarily on the storage of resources that are files and composites, and not entities. It lets its clients determine the hierarchy in which files and composites are stored, including creating new container elements—i.e., directories. To support this case, the API imposes as little as possible in defining valid hierarchies. Most system components, however, will have quite specific rules.
 
 ## Service Composition
 Nodes in the resource hierarchy provide a natural point at which different system elements are composed into a single namespace. This makes it possible to represent a set of system components in a uniform fashion, hiding the implementation detail from clients.
-For example, consider again the organization of the platform event bus into topics and messages. The uniformity of the path structure suggests a single system component behind the scenes, but this need not be the case. The /topics container might resolve to one system component, responsible for the provisioning and management of topics. Each /topics/<topic>/messages path, however, might resolve to a distinct system responsible for publishing and consuming the messages themselves. Clients are shielded from this decision.
-To broaden the example, the event bus itself forms only one subset of the resources that are available to a given client. A client will also have access to components that support entity storage, content storage, and so on. Thus, the root directory exposed to such a client might have children /entities, /content, and /eventbus. Again, these nodes in the hierarchy can delegate to appropriate components.
+
+For example, consider again the organization of the platform event bus into topics and messages. The uniformity of the path structure suggests a single system component behind the scenes, but this need not be the case. The /topics container might resolve to one system component, responsible for the provisioning and management of topics. Each /topics/<topic>/messages path, however, might resolve to a distinct system responsible for publishing and consuming the messages themselves. Clients are shielded from this decision.
+
+To broaden the example, the event bus itself forms only one subset of the resources that are available to a given client. A client will also have access to components that support entity storage, content storage, and so on. Thus, the root directory exposed to such a client might have children /entities, /content, and /eventbus. Again, these nodes in the hierarchy can delegate to appropriate components.
 
 <p style="text-align: center;"><img src="goldman2.PNG"  /></p>
 
 *The resource hierarchy is used to compose different services, backing different resource types, and providing their associated behavior.*
 
 Composition of services into a single hierarchy does require some coordination between system components. The parent and child components, per their relationship in the hierarchy, must be aware of their relationships to each other, provide links to each other, and, for some calls, capable of forwarding calls. These scenarios all relate to traversing the hierarchy itself. The most complex case is the resolve by path call, which allows a client to obtain a resource at a fully specified path in a single call, regardless of how many system components that path might traverse.
-Hierarchy and composition do not, on the other hand, impose on the division of system components into deployment units. The API distinguishes between resource paths and URIs, and while clients can reason about paths, they can only traverse links as provided by the platform. It is therefore straightforward to have clients’ requests traverse between system components as they navigate the resource hierarchy, including traversing links to components that may be deployed in different geographies.
+
+Hierarchy and composition do not, on the other hand, impose on the division of system components into deployment units. The API distinguishes between resource paths and URIs, and while clients can reason about paths, they can only traverse links as provided by the platform. It is therefore straightforward to have clients’ requests traverse between system components as they navigate the resource hierarchy, including traversing links to components that may be deployed in different geographies.
 
 ## Data Modeling for XDM
 Data models define the entities against which clients transact when applying the four API operations. The set of data models in the system is broad and open-ended, but designed with three key goals:
@@ -312,8 +327,10 @@ Data models define the entities against which clients transact when applying the
 - To be extensible so that customers can both define their own entities, and add additional information to system-defined entities.
 
 Experience Data Models (XDMs) are defined using JSON Schema. This matches with our choice of JSON as the primary serialization of entities when they are read or written. JSON Schema is flexible enough to describe the many entities we need to define. It supports composition of schema definitions, so we can define more complex entities as the aggregation of simpler constructs. Finally, it is reasonably well-known, with support for authoring and validation.
-To support extensibility, we use JSON-LD to associate a fully-qualified name with each property in each entity. Properties defined by Adobe are all in namespaces that Adobe controls. Customers can, as necessary, add additional properties in their own namespaces. Customers can keep these proprietary, or publish them for coordination. Regardless, the control over namespaces avoids conflicts.
-Implicit in the adoption of JSON-LD is that our entity resources become unambiguously machine-readable. This, in turn, promotes the fluent interoperability between system components. Components can establish basic interoperability by adopting a common set of media types. For structured data, deeper results are achieved by using JSON-LD to map properties in those media types to unifier identifiers (IRIs). This, in turn, allows components to transform the data in ways that do not conform to the media type, as well as support the addition of new properties into these data, without ever introducing ambiguity or loss of meaning.
+
+To support extensibility, we use JSON-LD to associate a fully-qualified name with each property in each entity. Properties defined by Adobe are all in namespaces that Adobe controls. Customers can, as necessary, add additional properties in their own namespaces. Customers can keep these proprietary, or publish them for coordination. Regardless, the control over namespaces avoids conflicts.
+
+Implicit in the adoption of JSON-LD is that our entity resources become unambiguously machine-readable. This, in turn, promotes the fluent interoperability between system components. Components can establish basic interoperability by adopting a common set of media types. For structured data, deeper results are achieved by using JSON-LD to map properties in those media types to unifier identifiers (IRIs). This, in turn, allows components to transform the data in ways that do not conform to the media type, as well as support the addition of new properties into these data, without ever introducing ambiguity or loss of meaning.
 
 ## Syntax and Serialization
 When entities are transferred to or form clients via the API, they are serialized as JSON-LD documents. Intrinsic entity types—that is, those that are defined by the API itself, such as directories, versions, and access control lists—have their own media types, all of which use the “+json” suffix. All other entities use the application/json media type, as defining, registering, and making clients aware of an open-ended set of media types is not tractable. Clients that treat entities generically must be prepared to accept the application/json media type and any media type ending in “+json”.
@@ -336,7 +353,9 @@ When entities are transferred to or form clients via the API, they are serialize
   
 The use of JSON Schema and JSON-LD creates tension between the validation, which is based on syntax, and property identification, which permits multiple, equivalent forms for any given property name. This is resolved by:
 
-- Defining a well-known JSON-LD context for each media type. This context varies for intrinsic media types to accommodate their specific property names.- Prohibiting the use of a context for extension properties, and instead requiring them to be specified using absolute IRIs.- Applying schema validation to entities only when they are expressed in compact form.
+- Defining a well-known JSON-LD context for each media type. This context varies for intrinsic media types to accommodate their specific property names.
+- Prohibiting the use of a context for extension properties, and instead requiring them to be specified using absolute IRIs.
+- Applying schema validation to entities only when they are expressed in compact form.
 
 By mandating contexts, the system can guarantee the literal property names, and can ensure syntactic validation is readily applied. Prohibiting terms for extensions guarantees that extension properties cannot be expressed as terms or compact IRIs that might conflict, either now or later, with the baseline context. This creates a hybrid solution that straddles the two standards.
 
@@ -380,17 +399,23 @@ In the platform implementation, these entities are realized by associated custom
 
 ## Relationship to the eXtensible Metatdata Platform (XMP)
  Prior to XDM, Adobe defined and standardized the Extensible Metadata Platform (XMP) for use throughout its digital media products. The vocabularies and operation of XMP entities are as essential for those products as is XDM for the Adobe Cloud Platform.
- In ACP, these two efforts are integrated via the Resource Description Framework (RDF), which is a W3C standard for data model interchange. XMP models are, at their core, RDF models expressed in an XML-based serialization. XDM models are, at their core, also RDF models, expressed in JSON-LD. Either can be translated to the other using the underlying RDF model as an intermediary.
-This fundamental interoperability means all existing XMP models (vocabularies, in XMP parlance) are intrinsically available for use in XDM. Accordingly, XDM preserves these models with their existing, fully-qualified property names and semantics. When ACP incorporates these properties into specific media types, a JSON Schema definition, and associated JSON-LD context, are also defined for these properties, as for any other XDM property.
+ 
+In ACP, these two efforts are integrated via the Resource Description Framework (RDF), which is a W3C standard for data model interchange. XMP models are, at their core, RDF models expressed in an XML-based serialization. XDM models are, at their core, also RDF models, expressed in JSON-LD. Either can be translated to the other using the underlying RDF model as an intermediary.
+
+This fundamental interoperability means all existing XMP models (vocabularies, in XMP parlance) are intrinsically available for use in XDM. Accordingly, XDM preserves these models with their existing, fully-qualified property names and semantics. When ACP incorporates these properties into specific media types, a JSON Schema definition, and associated JSON-LD context, are also defined for these properties, as for any other XDM property.
 
 <p style="text-align: center;"><img src="goldman3.PNG"  /></p>
 
-*ACP system components that work with digital media assets (PSD, PDF, and so on) are expected to support XMP as-is—that is, serialized in XMP—as well as expressed in JSON-LD. This latter requirement makes XMP-based data available to all other system components in ACP’s preferred format.*
+
+*ACP system components that work with digital media assets (PSD, PDF, and so on) are expected to support XMP as-is—that is, serialized in XMP—as well as expressed in JSON-LD. This latter requirement makes XMP-based data available to all other system components in ACP’s preferred format.*
 
 ## A Cohesive Developer Framework
 Like any framework, the ACP API and XDM accelerate work when leveraged, but require an up-front investment. It often seems easier, at the beginning of a project, to design a bespoke API, whip up an HTTP implementation, or write a quick-and-dirty JSON parser than to find a pattern, standard, or library that will do the job. In the short term, these efforts can be a great way to learn about the technology at hand. In the long run, however, there is no substitute for adopting a unified approach.
-Without a standard API and data model we risk a litany of problems. Service implementations will repeat the same mistakes in defining and implementing API behaviors. Clients will need different client code for every service, and trip up when those services handle the same situations in different ways. System components, such as our many ML models, will work independently but not together, because they will have no mechanism to establish a common vocabulary. Downstream, other components will have to each reproduce their own property mappings for these outputs, inevitably with different errors in each. This is a mistake we don’t need to make to learn from; the risk is apparent.
-The success of cohesive approaches is equally apparent. In our photography ecosystem, a singular technology and implementation—Adobe Camera Raw (ACR)—underpins every application. This implementation runs on every relevant platform, providing a consistent and reliable definition of inputs and outputs. More than any other single factor, it is the cohesiveness of ACR that has made it possible for Lightroom to make the shift to the cloud as quickly as it has.The Adobe Cloud Platform API and Experience Data Model hold the same promise, on an enormously larger scale. When adopted uniformly across all system components, it is these two elements that will synthesize our three clouds into one, cohesive whole.
+
+Without a standard API and data model we risk a litany of problems. Service implementations will repeat the same mistakes in defining and implementing API behaviors. Clients will need different client code for every service, and trip up when those services handle the same situations in different ways. System components, such as our many ML models, will work independently but not together, because they will have no mechanism to establish a common vocabulary. Downstream, other components will have to each reproduce their own property mappings for these outputs, inevitably with different errors in each. This is a mistake we don’t need to make to learn from; the risk is apparent.
+
+The success of cohesive approaches is equally apparent. In our photography ecosystem, a singular technology and implementation—Adobe Camera Raw (ACR)—underpins every application. This implementation runs on every relevant platform, providing a consistent and reliable definition of inputs and outputs. More than any other single factor, it is the cohesiveness of ACR that has made it possible for Lightroom to make the shift to the cloud as quickly as it has.
+The Adobe Cloud Platform API and Experience Data Model hold the same promise, on an enormously larger scale. When adopted uniformly across all system components, it is these two elements that will synthesize our three clouds into one, cohesive whole.
 
 ## ETL Connectors for Partners
 

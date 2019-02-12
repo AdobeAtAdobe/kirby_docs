@@ -16,7 +16,7 @@ You can use Query Service to build data analysis ecosystems, creating a picture 
 * Data collection debugging
 
 
-Query Service serves as a consolidated reporting SQL interface for solutions across Experience Cloud and other datasets loaded into Adobe Experience Platform. In its current implementation, the Query Service provides:
+Query Service serves as a consolidated reporting SQL interface for solutions across Experience Cloud and other datasets loaded into Adobe Experience Platform. In its current implementation, Query Service provides:
 
 *   A Query List UI to see all of the queries that have been run in your organization.
 *   The ability to connect external query clients.

@@ -1,7 +1,7 @@
 # Running Queries
-Query Service gives you the power to run SQL queries against datasets in Experience Data Lake. There are a few things to be aware of as you use SQL to interact with datasets in a data lake. The Query Service manages certain things, like creating SQL-safe table names for each dataset in the data lake. There are also considerations around working with the hierarchical data in the data lake: discovering schema, selecting just the right field in the hierarchical model are two important concepts. 
+Query Service gives you the power to run SQL queries against datasets in Experience Data Lake. There are a few things to be aware of as you use SQL to interact with datasets in a data lake. Query Service manages certain things, like creating SQL-safe table names for each dataset in the data lake. There are also considerations around working with the hierarchical data in the data lake: discovering schema, selecting just the right field in the hierarchical model are two important concepts. 
 
-Follow the exercises below to get a good idea for how the Query Service works. 
+Follow the exercises below to get a good idea for how Query Service works. 
 
 ## Datasets vs Tables and Schema
 
@@ -216,7 +216,7 @@ Structure with fields `(timestamp_diff, num, is_new, depth)`
 
 Attribution - Attribution is how you allocate metrics or conversions like revenue, order, or signups to some marketing effort.
 In Adobe Analytics attribution settings are configured per variables like an eVar and generated as data is ingested.
-The Attribution ADFs found in the query service allow those allocations to defined and generated at query time.
+The Attribution ADFs found in Query Service allow those allocations to defined and generated at query time.
 
 For this lab we're going to focus on last-touch attribution, but we also have first-touch and we're going to be working on
 other flavors with timeouts and event-based expiration.

@@ -1,6 +1,6 @@
 # Table of contents
 
-* [What is the Query Service?](qs-intro.md)
+* [What is Query Service?](qs-intro.md)
 * [Quick Start Guide](qs-quickstart.md)
 * [Connect a Query Client](qs-connect.md)
 * [Running Queries](qs-queries.md)
