@@ -24,14 +24,14 @@ Set up an account to access APIs and provide credentials to create a connector:
 ### Set up an Adobe I/O account
 See [authenticating and accessing APIs](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to create an access token used to authenticate API calls from Adobe I/O.
 
-After setting up authorization for APIs, these values will be returned:
+After you set up authorization for APIs, these values are returned:
 
 * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
 * `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
 * `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
 ### Set up a Platform connection to the Azure Blob
-After setting up an Adobe I/O account, use the POST call and provide the *imsOrgId*, *accessToken*, and *Blob* connection string to set up a connection.
+After you set up an Adobe I/O account, use the POST call and provide the *imsOrgId*, *accessToken*, and *Blob* connection string to set up a connection.
 
 ```shell
 curl -X POST https://platform.adobe.io/data/foundation/ connectors/account/ \
@@ -50,19 +50,19 @@ curl -X POST https://platform.adobe.io/data/foundation/ connectors/account/ \
       }'
 ```
 ### Create a Dataset
-Once the account and connection are successfully created, the *Connection ID* can be used to create a dataset. You can configure Platform datasets, pipeline, and triggers with a successful POST call.
+Once you create the account and connection, you can use the *Connection ID* to create a dataset. You can configure Platform datasets, pipeline, and triggers with a successful POST call.
 
-You will want to provide a unique and identifiable name for the dataset, allowing you to identify it clearly when monitoring your data ingestion.
+Provide a unique and identifiable name for the dataset, so you can identify it clearly when monitoring your data ingestion.
 
 The following are various properties of JSON for creating a dataset.
 
 Property Name | Description
 ------------ | -------------
-params/datasets/name	| Mandatory. Name of the dataset
+params/datasets/name	| Required. Name of the dataset.
 params/datasets/tags/* | Optional. Provide tags associated with dataset.
-params/datasets/fields/*	| Conditional. Needs to be specified if params/datasets/schema is not defined. This contains information about schema of files to be ingested. Can be retrieved from schema API call defined below.
-params/datasets/schema	| Conditional. Needs to be specified if params/datasets/fieldsis not specified. This is pointer to the schema in the schema registry.
-params/datasets/fileDescription	| Optional. Identify the kind of file to ingest: CSV (default) or parquet
+params/datasets/fields/*	| Conditional. Specify if params/datasets/schema is not defined. This property contains information about schema of files to ingest. Retrieve from schema API call (defined below).
+params/datasets/schema	| Conditional. Specify if params/datasets/fields is not set. This property points to the schema in the schema registry.
+params/datasets/fileDescription	| Optional. Identify the kind of file to ingest: CSV (default) or parquet.
 
 
 
@@ -93,9 +93,9 @@ curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<c
         }
 }'
 ```
-Note: The Schedule API is optional. Make this call only if you want to schedule the ingestion or send a blank JSON {} as the payload for a one-time run.
+*Note:* The Schedule API is optional. Make this call only if you want to schedule the ingestion or send a blank JSON {} as the payload for a one-time run.
 
-The following configuration will ingest data every 15 minutes.
+The following configuration ingests data every 15 minutes.
 
 ```shell
 curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<connectionId>/schedule \
@@ -119,7 +119,7 @@ curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<c
 
 ## Additional Adobe Experience Platform APIs
 
-In addition to the Create Account and Create Dataset APIs, you can use these for specific needs.
+In addition to the Create Account and Create Dataset APIs, you can use the following APIs for specific needs.
 
 **Object Listing API**
 
@@ -158,5 +158,3 @@ curl -X GET \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
-
-

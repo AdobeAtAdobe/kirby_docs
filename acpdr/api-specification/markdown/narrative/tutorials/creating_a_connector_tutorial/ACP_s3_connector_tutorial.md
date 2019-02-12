@@ -50,11 +50,11 @@ curl -X POST https://platform.adobe.io/data/foundation/ connectors/account/ \
 ```
 
 ### Create a Dataset
-Once the account and connection are successfully created, the *Connection ID* can be used to create a dataset. You can configure datasets, pipeline, and triggers with a successful POST call.
+Once you create the account and connection, you can use the *Connection ID* to create a dataset. You can configure datasets, pipeline, and triggers with a successful POST call.
 
-You will want to provide a unique and identifiable name for the dataset, allowing you to identify it clearly when monitoring your data ingestion.
+Provide a unique and identifiable name for the dataset, so you can identify it clearly when monitoring your data ingestion.
 
-The following are various properties of JSON for creating a dataset.
+The following are various properties of JSON for creating a dataset:
 
 Property Name | Description
 ------------ | -------------
@@ -94,7 +94,7 @@ curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<c
 ```
 Schedule API (OPTIONAL - Make this call only if you want to do scheduled ingestion or send a blank JSON {} as the payload for a one-time run).
 
-The following configuration will ingest data every 15 minutes.
+The following configuration ingests data every 15 minutes.
 
 ```shell
 curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<connectionId>/schedule \
@@ -116,16 +116,16 @@ curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<c
 ```
 
 ### Preview Data
-You can see a preview of the dataset by selecting it in the user interface and clicking the preview icon. This lets you view the dataset before ingestion.
+To see a preview of the dataset, select it in the user interface and click the preview icon. Preview lets you view the dataset before ingestion.
 
 
 #### Default Settings
-* For an incremental ingestion, you will have to clean up the data after every ingestion run.
-* Currently, the pipeline run is configured for a delay of 30 minutes between consecutive runs. This will be become configurable in coming sprint.
+* For an incremental ingestion, you must clean up the data after every ingestion run.
+* Currently, the pipeline run is configured for a delay of 30 minutes between consecutive runs. In the future, this will be configurable.
 
 ## Additional Adobe Experience Platform APIs
 
-In addition to the Create Account and Create Dataset APIs, you can use these for specific needs.
+In addition to the Create Account and Create Dataset APIs, you can use the following APIs for specific needs:
 
 **Object Listing API**
 
@@ -141,7 +141,7 @@ curl -X GET \
 ```
 
 **Preview Object API**
-This API lists the content of the file. Currently only CSV files are supported for preview.
+Lists the content of the file. You can only preview .csv files. 
 
 ```shell
 curl -X GET \
@@ -153,7 +153,7 @@ curl -X GET \
 ```
 **Schema Discovery API**
 
-This API lists fields of a file. Currently only CSV files are supported.
+Lists fields of a file. You can only preview .csv files. 
 
 ```shell
 curl -X GET \
