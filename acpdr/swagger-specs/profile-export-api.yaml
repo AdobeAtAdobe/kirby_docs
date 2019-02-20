@@ -12,7 +12,7 @@ info:
       * Base path for this API: /data/core/ups/export
       * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
 
-  version: 18.8.1
+  version: 0.0.1
   title: Unified Profile Export API
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 host: "platform.adobe.io"
@@ -34,12 +34,24 @@ paths:
       produces:
         - application/json
       parameters:
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: unified-profile
         - name: x-gw-ims-org-id
           in: header
           description: IMS Organization ID
           required: true
           type: string
-          x-example: southwest@adobe.com
+          x-example: 1BD6382559DF0C130A49422D@AdobeOrg
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
         - name: limit
           in: query
           description: Page Size
@@ -75,7 +87,19 @@ paths:
           description: IMS Organization ID
           required: true
           type: string
-          x-example: southwest@adobe.com
+          x-example: 1BD6382559DF0C130A49422D@AdobeOrg
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: unified-profile
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
         - name: x-profile-instance-id
           in: header
           description: Profile Instance Id
@@ -85,7 +109,7 @@ paths:
         - in: body
           name: body
           description: |2-
-             fields - Column filters (comma separated dot notation of columns)" +
+             fields - Column filters (comma separated dot notation of columns)
 
             mergePolicy - Takes id and version as nested parameters, if not provided, will take the same value as in segmentId or snapshotName
 
@@ -120,12 +144,24 @@ paths:
       produces:
         - application/json
       parameters:
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: unified-profile
         - name: x-gw-ims-org-id
           in: header
           description: IMS Organization ID
           required: true
           type: string
-          x-example: southwest@adobe.com
+          x-example: 1BD6382559DF0C130A49422D@AdobeOrg
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
         - name: exportJobId
           in: path
           description: Export Job Id
@@ -143,94 +179,102 @@ paths:
           description: Profile Export Job not found
         '503':
           description: Service Unavailable
-  /health-detailed:
-    get:
+    delete:
       tags:
-        - health-detailed
-      summary: Return a detailed health check message
+        - jobs
+      summary: Cancel Profile Export Job
       description: ''
-      operationId: detailedHealthRoute
+      operationId: cancelScanJobRoute
       produces:
         - application/json
-      parameters: []
+      parameters:
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: unified-profile
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          x-example: 1BD6382559DF0C130A49422D@AdobeOrg
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
+        - name: exportJobId
+          in: path
+          description: Export Job Id
+          required: true
+          type: string
+          x-example: '12345678'
       responses:
         '200':
-          description: Detailed health check succeeded
+          description: Profile Export Job cancelled successfully
           schema:
-            $ref: '#/definitions/HealthDetailedResponse'
+            $ref: '#/definitions/MessageResponse'
+        '403':
+          description: Forbidden
+        '404':
+          description: Profile Export Job not found
         '503':
-          description: Service is unavailable
-  /health:
-    get:
-      tags:
-        - health
-      summary: Return a health check message
-      description: ''
-      operationId: healthRoute
-      produces:
-        - application/json
-      parameters: []
-      responses:
-        '200':
-          description: Health check succeeded
-          schema:
-            $ref: '#/definitions/HealthResponse'
-        '503':
-          description: Service is unavailable
-  /ping:
-    get:
-      tags:
-        - ping
-      summary: Return a ping message
-      description: ''
-      operationId: pingRoute
-      produces:
-        - application/json
-      parameters: []
-      responses:
-        '200':
-          description: Ping succeeded
-          schema:
-            $ref: '#/definitions/PingResponse'
-        '503':
-          description: Service unavailable
-  /version:
-    get:
-      tags:
-        - version
-      summary: Return version information
-      description: ''
-      operationId: versionRoute
-      produces:
-        - application/json
-      parameters: []
-      responses:
-        '200':
-          description: Version info response succeeded
-          schema:
-            $ref: '#/definitions/VersionResponse'
-        '503':
-          description: Service unavailable
+          description: Service Unavailable
+securityDefinitions: {}
 definitions:
+  ComputeGatewayJobId:
+    type: object
+    properties:
+      exportJob:
+        type: string
+        example: f3058161-7349-4ca9-807d-212cee2c2e94
+        description: Compute Gateway job Id for Export Job
+      pushJob:
+        type: string
+        example: feaeca05-d137-4605-aa4e-21d19d801fc6
+        description: Compute Gateway job Id for Push Job
   DestinationResponse:
     type: object
     properties:
       datasetId:
         type: string
+        example: 5b7c86968f7b6501e21ba9df
         description: Dataset Id of the destination.
       batchId:
         type: string
+        example: da5cfb4de32c4b93a09f7e37fa53ad52
         description: Batch Id of the destination.
     description: The destination information for Exported data
+  ErrorResponse:
+    type: object
+    properties:
+      code:
+        type: string
+        example: '0100000003'
+      msg:
+        type: string
+        example: Error in Export Job
+      callStack:
+        type: string
+        example: com.adobe.aep.unifiedprofile.common.logging.Logger
   FeedbackMetrics:
     type: object
     properties:
       startTimeInMs:
         type: number
+        example: 123456789000
+        description: Start time in ms
       endTimeInMs:
         type: number
+        example: 123456799000
+        description: End time in ms
       totalTimeInMs:
         type: number
+        example: 10000
+        description: Total time in ms (End time - Start time)
     description: Feedback Metrics
   Filter:
     type: object
@@ -240,15 +284,21 @@ definitions:
         description: Array of filter values for Export Job.
         items:
           $ref: '#/definitions/SegmentValues'
+      fromTimestamp:
+        type: string
+        example: '2018-01-01T00:00:00Z'
+        description: Filters profiles and experience events updated after the given timestamp; RFC_3339 format
     description: Array of filter values for Export Job.
   MergePolicyObject:
     type: object
     properties:
       id:
         type: string
+        example: timestampOrdered-none-mp
         description: Merge policy id.
       version:
         type: number
+        example: 1
         description: 'Version for the given merge policy Id; Default value: Latest.'
     description: Merge Policy id and version.
   ScanJobMetrics:
@@ -269,24 +319,29 @@ definitions:
     properties:
       id:
         type: number
+        example: 100
         description: Id of the export job
       jobType:
         type: string
+        example: BATCH
         description: 'Job type: batch or streaming.'
       destination:
         description: Destination for Export Job results.
         $ref: '#/definitions/DestinationResponse'
       fields:
         type: string
+        example: 'identities.id,personalEmail.address'
         description: Column filters.
       schema:
         description: Schema name.
         $ref: '#/definitions/Schema'
       imsOrgId:
         type: string
+        example: 1BD6382559DF0C130A49422D@AdobeOrg
         description: ImsOrgId provided.
       status:
         type: string
+        example: FAILED
         description: NEW/PROCESSING/SUCCEEDED/FAILED.
       filter:
         description: Filter.
@@ -296,23 +351,32 @@ definitions:
         $ref: '#/definitions/MergePolicyObject'
       profileInstanceId:
         type: string
+        example: ups
         description: Profile Instance Id provided.
       errors:
-        type: string
+        type: array
         description: Errors in case of failure
+        items:
+          $ref: '#/definitions/ErrorResponse'
       metrics:
         description: Metrics for the job
         $ref: '#/definitions/ScanJobMetrics'
+      computeGatewayJobId:
+        description: Compute Gateway job Id for Export and Push Job
+        $ref: '#/definitions/ComputeGatewayJobId'
       creationTime:
         type: integer
         format: int64
+        example: 1538615973895
         description: The creation time of the job.
       updateTime:
         type: integer
         format: int64
+        example: 1538616233239
         description: The updated time for the job.
       requestId:
         type: string
+        example: d995479c-8a08-4240-903b-af469c67be1f
         description: Tracing Id for the job.
     description: The information after submitting a export job eg. job id.
   Schema:
@@ -320,6 +384,7 @@ definitions:
     properties:
       name:
         type: string
+        example: _xdm.context.profile
         description: Schema name.
     description: Schema value.
   SegmentValues:
@@ -327,9 +392,11 @@ definitions:
     properties:
       segmentId:
         type: string
+        example: 52c26d0d-45f2-47a2-ab30-ed06abc981ff
         description: Segment Id.
       snapshotName:
         type: string
+        example: peopleInCA
         description: Snapshot name from a successful segmentation job.
     description: Segment values for filter.
   Destination:
@@ -337,6 +404,7 @@ definitions:
     properties:
       datasetId:
         type: string
+        example: 5b7c86968f7b6501e21ba9df
         description: Dataset Id of the destination.
     description: Destination values for exported data.
   ScanJobEntityRequest:
@@ -344,6 +412,7 @@ definitions:
     properties:
       fields:
         type: string
+        example: 'identities.id,personalEmail.address'
         description: Column filters (comma separated dot notation of columns)
       mergePolicy:
         description: 'Takes id and version as nested parameters, if not provided, will take the same value as in segmentId or snapshotName'
@@ -370,16 +439,20 @@ definitions:
     properties:
       sortField:
         type: string
+        example: createdTime
         description: The order records are sorted. By default is creation time.
       sort:
         type: string
+        example: desc
         description: The sorting order. By default is descending order.
       pageOffset:
         type: string
+        example: '1540974701302_96'
         description: The offset of the page. By default is the creation time and job id for the last record on this page.
       pageSize:
         type: integer
         format: int32
+        example: 10
         description: The total number of records of this page.
     description: The page information of the response entity.
   ScanJobsPageResponse:
@@ -387,7 +460,7 @@ definitions:
     properties:
       records:
         type: array
-        description: The list of Export Job records.
+        description: The list of Scan Job records.
         items:
           $ref: '#/definitions/ScanJobResponse'
       page:
@@ -396,70 +469,15 @@ definitions:
       link:
         description: The href links.
         $ref: '#/definitions/Link'
-  HealthDetailedResponse:
+  MessageResponse:
     type: object
-    required:
-      - dependencies
-      - status
     properties:
       status:
         type: boolean
-      dependencies:
-        type: array
-        items:
-          $ref: '#/definitions/ServiceHealth'
-  ServiceHealth:
-    type: object
-    required:
-      - service
-      - status
-    properties:
-      service:
-        type: string
-      status:
-        type: boolean
-  HealthResponse:
-    type: object
-    required:
-      - status
-    properties:
-      status:
-        type: boolean
-  PingResponse:
-    type: object
-    required:
-      - code
-      - message
-    properties:
-      code:
-        type: string
+        example: true
+        description: Status of the request.
       message:
         type: string
-  VersionResponse:
-    type: object
-    required:
-      - branchName
-      - buildDate
-      - buildInfo
-      - cycleNumber
-      - gitCommit
-      - projectName
-      - projectVersion
-      - versionNumber
-    properties:
-      projectName:
-        type: string
-      projectVersion:
-        type: string
-      buildInfo:
-        type: string
-      versionNumber:
-        type: string
-      branchName:
-        type: string
-      cycleNumber:
-        type: string
-      gitCommit:
-        type: string
-      buildDate:
-        type: string
+        example: Export Job has been marked for cancelling
+        description: Message.
+    description: Response for Cancel Export Job call

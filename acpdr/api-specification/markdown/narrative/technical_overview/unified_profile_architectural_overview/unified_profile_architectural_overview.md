@@ -876,15 +876,14 @@ __Example body__
 
 ```
 {
-    "fields" : [] //list of fields,
-    "mergePolicyId" : 123, //only applicable if segment filter is not there
+    "fields" : [],
+    "mergePolicyId" : 123,
     "filter" : {
         "segments" : [{"id":"segment-name:snapshot-name"}]
-    }
-
+    },
     "destination" : {
         "dataSetId" : ""
-    }
+    },
     "schema" : {
         "name":"_xdm.context.profile"
     }
@@ -898,14 +897,14 @@ __Example response__
     "id": 111,
     "jobType": "BATCH",
     "destination" : {
-        "dataSetId" : ""
-        "batchId": "",
+        "dataSetId" : "5aa6885ecf70a301dabdfa49"
+        "batchId": "5b565efc0a488f01e2c19972",
       },
     "fields": "",
     "schema" : {
         "name":"_xdm.context.profile"
     },
-    "imsOrgId": "test@AdobeOrg",
+    "imsOrgId": "1BD6382559DF0C130A49422D@AdobeOrg",
     "status": "PROCESSING",
     "filter" : {
         "segments" : [{"id":"segment-name:snapshot-name"}]
@@ -914,6 +913,7 @@ __Example response__
     "updateTime": "2018-07-25 15:17:30",
     "creationTime": "2018-07-25 15:17:30"
 }
+
 ```
 
 #### Export Audience - Step 3: Wait for Export to Complete
@@ -922,40 +922,6 @@ Iteratively retrieve the Export Job by ID until the `status` reaches "SUCCEEDED"
 
 #### Export Audience - Step 4: Read Profiles from Audience Dataset
 
-To use the Data Access SDK to read data, you must have the `datasetId` of your audience dataset. The following is an example Data Catalog API call to retrieve the properties, including `datasetId`, for your dataset:
+Once export is complete, use the Data Access API to access the data using the `batchId` returned from the Export service call, "5b565efc0a488f01e2c19972" in the example above. Note that a segment may be chunked, and a batch could consist of several files. You must first list the files belonging to the batch, and download each Parquet file by file ID. 
 
-```
-GET https://platform.adobe.io/data/foundation/catalog/dataSets/{datasetId} HTTP/1.1
-```
-
-__Example response__
-
-```
-{
-  "5aa6885ecf70a301dabdfa49": {
-     "version": "1.0.1",
-     "imsOrg": "1BD6382559DF0C130A49422D@AdobeOrg",
-     "name": "untitled",
-     "created": 1520863326880,
-     "updated": 1520863327034,
-     "createdClient": "acp_core_unifiedProfile_feeds",
-     "createdUser": "acp_core_unifiedProfile_feeds@AdobeID",
-     "updatedUser": "acp_core_unifiedProfile_feeds@AdobeID",
-     "namespace": "ACP",
-     "viewId": "5aa6885fcf70a301dabdfa4a",
-     "aspect": "production",
-     "status": "enabled",
-     "fields": [...],
-     "basePath": "adl://foo.azuredatalakestore.net/platform/1234/dataSetViewId=67899",
-     "fileDescription": {
-         "persisted": false
-     },
-     "transforms": "@/dataSets/5aa6885ecf70a301dabdfa49/views/5aa6885fcf70a301dabdfa4a/transforms",
-     "files": "@/dataSets/5aa6885ecf70a301dabdfa49/views/5aa6885fcf70a301dabdfa4a/files",
-     "schema": "@/xdms/context/profile",
-     "observableSchema": {}
-  }
-}
-```
-
-With the `viewId` from the response, you are able to use the Data Access SDK to read data. For more information on using the Data Access SDK, [see the tutorial](../../tutorials/data_access_tutorial/data_access_tutorial.md).
+For more information on using the Data Access API, [see the tutorial](../data_access_tutorial/data_access_tutorial.md).
