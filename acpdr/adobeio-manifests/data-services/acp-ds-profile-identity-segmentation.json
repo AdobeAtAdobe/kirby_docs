@@ -66,6 +66,7 @@
 		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "/apis/cloudplatform/dataservices/data-ingestion/data-ingestion-services.html",
 		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
 		"acpdr/swagger-specs/": "/apis/cloudplatform/dataservices/api-reference.html",
-		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview": "/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html"
+		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview": "/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html",
+		"api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md": "/apis/experienceplatform/home/data-ingestion.html"
 	}
 }

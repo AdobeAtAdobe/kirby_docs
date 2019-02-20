@@ -3,6 +3,7 @@
 ## Objective
 
 This document serves as a tutorial on creating a segment in Adobe Experience Platform. 
+---
 
 ## Creating Segments
 
@@ -14,8 +15,9 @@ In this tutorial, we will walk through working with Platform Segmentation Servic
 * __Test as you develop your definition__ - As the testing step of the iterations of developing, testing, and refining your definition, you can apply your definition against a sample of your profile store, giving you summary information such as the estimated size of the resulting audience, or a sample set of qualifying profiles to spot-check against the results you expect.
 * __Then, segment your user base__ - Once your definition has been built, tested, and saved, export your audience to a dataset where it can be accessed directly or used by any Platform solution.
   
-There are basically two ways of working with Segmentation; using the Experience Platform UI and using Unified Profile APIs. This tutorial provides or links to instruction on how to work with either, on a step-by-step basis. This tutorial assumes you already have an understanding of Segmentation and know how to gain access to your method of choice. To catch up, see:
+There are basically two ways of working with Segmentation; using the Experience Platform UI and using Unified Profile APIs. This tutorial provides or links to instruction on how to work with either, on a step-by-step basis. This tutorial assumes you already have an understanding of Unified Profile and Segmentation and know how to gain access to your method of choice. To catch up, see:
 
+* [Unified Profile Overview](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
 * [Authenticating and accessing Adobe Experience Platform APIs](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) if you intend to work with Segmentation Service programmatically
 * [Using Adobe Unified Profile Segment Builder](../../../../../end-user/markdown/segmentation_overview/segmentation.md) if you intend to use the Experience Platform UI
 
@@ -158,4 +160,4 @@ After following this tutorial, which focuses on creating audience segments, the 
 * Getting from your entire profile store to marketable subsets of your user-base
 * Exporting your segment to a dataset to be accessed by Platform solutions
 
-
+For more in-depth information on Unified Profile, see the [Unified Profile Overview](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).

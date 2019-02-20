@@ -87,10 +87,11 @@
 		}
 	],
 	"app2app_map": {
-		"end-user/markdown/segmentation_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-		"api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
-    	        "api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/cloudplatform/dataservices/xdm/xdmservices.html",
-		"acpdr/swagger-specs/": "/apis/cloudplatform/dataservices/api-reference.html"
+    "end-user/markdown/segmentation_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+    "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+    "api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
+    "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/":"/apis/experienceplatform/home/services/allservices.html",
+    "api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html",
+    "acpdr/swagger-specs/": "/apis/cloudplatform/dataservices/api-reference.html"
 	}
 }

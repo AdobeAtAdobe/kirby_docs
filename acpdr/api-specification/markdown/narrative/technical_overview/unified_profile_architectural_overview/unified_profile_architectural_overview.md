@@ -925,3 +925,4 @@ Iteratively retrieve the Export Job by ID until the `status` reaches "SUCCEEDED"
 Once export is complete, use the Data Access API to access the data using the `batchId` returned from the Export service call, "5b565efc0a488f01e2c19972" in the example above. Note that a segment may be chunked, and a batch could consist of several files. You must first list the files belonging to the batch, and download each Parquet file by file ID. 
 
 For more information on using the Data Access API, [see the tutorial](../data_access_tutorial/data_access_tutorial.md).
+
