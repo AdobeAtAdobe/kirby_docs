@@ -3,6 +3,7 @@
 ## Objective
 
 This document serves as a tutorial on creating a segment in Adobe Experience Platform. 
+
 ---
 
 ## Creating Segments
