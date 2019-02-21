@@ -1,5 +1,30 @@
 # Data Science Workspace Walkthrough
 
+  - [Overview](#overview)
+  - [Prerequisites](#prerequisites)
+  - [Data Scientist's Motivation](#data-scientists-motivation)
+  - [Data Scientist's Solution](#data-scientists-solution)
+    - [Adobe Data Science Workspace Notebook](#adobe-data-science-workspace-notebook)
+    - [Setup](#setup)
+    - [Exploring Data](#exploring-data)
+      - [Loading Data](#loading-data)
+      - [Statistical Summary](#statistical-summary)
+      - [Visualizing Data](#visualizing-data)
+        - [Univariate Graphs](#univariate-graphs)
+        - [Multivariate Graphs](#multivariate-graphs)
+    - [Feature Engineering](#feature-engineering)
+      - [Add Week and Year Columns](#add-week-and-year-columns)
+      - [Convert storeType to Indicator Variable](#convert-storetype-to-indicator-variable)
+      - [Convert isHoliday to Numeric](#convert-isholiday-to-numeric)
+      - [Predict weeklySales of Next Week](#predict-weeklysales-of-next-week)
+    - [Training and Verification](#training-and-verification)
+      - [Split Dataset to Training and Testing Subsets](#split-dataset-to-training-and-testing-subsets)
+      - [Spot Check Algorithms](#spot-check-algorithms)
+      - [Visualize Predictions](#visualize-predictions)
+  - [Conclusion](#conclusion)
+
+---
+
 ## Overview
 
 This document provides a walkthrough for the Data Science Workspace in Adobe Experience Platform. Specifically we will go over the general workflow a data scientist would go through to solve a problem using machine learning.

@@ -1,29 +1,29 @@
 # Data Science Workspace Overview
 
-- [Data Science Workspace Overview](#data-science-workspace-overview)
-    - [Overview](#overview)
-    - [Introduction](#introduction)
-    - [Terminology](#terminology)
-    - [Why Data Science Workspace?](#why-data-science-workspace)
-        - [One-stop Data Access](#one-stop-data-access)
-        - [Prebuilt machine learning recipes](#prebuilt-machine-learning-recipes)
-        - [Workflow focused on the data scientist](#workflow-focused-on-the-data-scientist)
-        - [Data exploration](#data-exploration)
-        - [Authoring](#authoring)
-        - [Experimentation](#experimentation)
-        - [Operationalization](#operationalization)
-        - [Continuous improvement](#continuous-improvement)
-        - [Access to new features and datasets](#access-to-new-features-and-datasets)
-        - [Security and peace of mind](#security-and-peace-of-mind)
-    - [Data Science Workspace in action](#data-science-workspace-in-action)
-        - [Define the problem](#define-the-problem)
-        - [Explore and prepare the data](#explore-and-prepare-the-data)
-        - [Author the recipe](#author-the-recipe)
-        - [Experiment with the recipe](#experiment-with-the-recipe)
-        - [Operationalize the model](#operationalize-the-model)
-    - [Conclusion](#conclusion)
-    - [Additional Resources](#additional-resources)
+- [Overview](#overview)
+- [Introduction](#introduction)
+- [Terminology](#terminology)
+- [Why Data Science Workspace?](#why-data-science-workspace)
+    - [One-stop Data Access](#one-stop-data-access)
+    - [Prebuilt machine learning recipes](#prebuilt-machine-learning-recipes)
+    - [Workflow focused on the data scientist](#workflow-focused-on-the-data-scientist)
+    - [Data exploration](#data-exploration)
+    - [Authoring](#authoring)
+    - [Experimentation](#experimentation)
+    - [Operationalization](#operationalization)
+    - [Continuous improvement](#continuous-improvement)
+    - [Access to new features and datasets](#access-to-new-features-and-datasets)
+    - [Security and peace of mind](#security-and-peace-of-mind)
+- [Data Science Workspace in action](#data-science-workspace-in-action)
+    - [Define the problem](#define-the-problem)
+    - [Explore and prepare the data](#explore-and-prepare-the-data)
+    - [Author the recipe](#author-the-recipe)
+    - [Experiment with the recipe](#experiment-with-the-recipe)
+    - [Operationalize the model](#operationalize-the-model)
+- [Conclusion](#conclusion)
+- [Additional Resources](#additional-resources)
 
+---
 
 ## Overview
 
@@ -160,7 +160,7 @@ Your first step is to check the recipe gallery to see if an existing recipe meet
  
 ![](prebuilt_recipes2.png)
 
-If you're starting from scratch or configuring an existing recipe, you begin your data search in a centralized and standardized data catalog for you organization, which simplifies the hunt considerably. You might even find that another data scientist in your organization has already identified a similar dataset, and choose to fine-tune that dataset rather than start from scratch.
+If you're starting from scratch or configuring an existing recipe, you begin your data search in a centralized and standardized data catalog for your organization, which simplifies the hunt considerably. You might even find that another data scientist in your organization has already identified a similar dataset, and choose to fine-tune that dataset rather than start from scratch.
 All the data in Adobe Experience Platform complies with a standardized XDM schema, eliminating the need to create a complex model for joining data or obtain help from a data engineer.
 
 If you don't immediately find the data you need, but it exists outside Adobe Experience Platform, it's a relatively simple task to ingest additional datasets, which will also transform into the standardized XDM schema.  
@@ -213,5 +213,5 @@ With the marriage of brand expertise and Adobe's machine learning and AI prowess
 Adobe was recently named the only leader in "The Forrester Wave™: Digital Intelligence Platforms, Q2 2017" report, and received the highest scores possible in nine criteria, including behavioral targeting and online testing.
 
 ## Additional Resources
-For more information about Data Science Workspace, visit [https://www.adobe.io/apis/experienceplatform/home.html](https://adobe.io/apis/cloudplatform/dataservices.html).  
-To stay up to date, sign up for Adobe Sensei and AI news at [www.adobe.com/subscription/adobesenseinewsletter.html](www.adobe.com/subscription/adobesenseinewsletter.html).
+For more information, check out [our walkthrough](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html#!api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_walkthrough/dsw_walkthrough.md) where we will be working through a day to day workflow.  
+To access all our tutorials, visit [our tutorials page](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials.html).

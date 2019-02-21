@@ -1,5 +1,23 @@
 # Tutorial - Import, Train and Evaluate Recipe Tutorial via API
 
+  - [Objective](#objective)
+  - [Prerequisites](#prerequisites)
+  - [API Workflow](#api-workflow)
+    - [Creating a Recipe](#creating-a-recipe)
+    - [Creating an Instance](#creating-an-instance)
+    - [Creating an Experiment](#creating-an-experiment)
+      - [Creating a Scheduled Experiment for Training](#creating-a-scheduled-experiment-for-training)
+      - [Creating a Scheduled Experiment for Scoring](#creating-a-scheduled-experiment-for-scoring)
+      - [Creating an Experiment Run for Training](#creating-an-experiment-run-for-training)
+        - [Retrieving an Experiment Run Status](#retrieving-an-experiment-run-status)
+        - [Retrieving the Trained Model](#retrieving-the-trained-model)
+    - [Creating an Experiment Run for Scoring](#creating-an-experiment-run-for-scoring)
+      - [Retrieve an Experiment Run Status for Scheduled Experiment Run](#retrieve-an-experiment-run-status-for-scheduled-experiment-run)
+    - [Stop and Delete a Scheduled Experiment](#stop-and-delete-a-scheduled-experiment)
+  - [Next Steps](#next-steps)
+
+---
+
 ## Objective
 In this step by step tutorial, we will consume the APIs which allow us to create a Recipe, an Experiment, Scheduled Experiment Runs, and Trained Models. For a detailed list of API documentation please refer to [this document](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html).
 
@@ -796,3 +814,8 @@ The following is the Response notifying that the Experiment is successfully dele
 }
 ```
 
+---
+
+## Next Steps
+
+This tutorial went over how to consume the APIs to create a Recipe, an Experiment, Scheduled Experiment Runs, and Trained Models. In the [next exercise](../how_to_score_with_recipe/how_to_score_with_recipe.md), you will be making predictions by Scoring a new dataset using the top performing trained model.

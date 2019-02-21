@@ -1,5 +1,19 @@
 # Tutorial - Package Recipe to Import into the Data Science Workspace
 
+  - [Objective](#objective)
+  - [Prerequisites](#prerequisites)
+  - [Docker-Based Model Authoring](#docker-based-model-authoring)
+    - [Building the Artifact for the Intelligent Service](#building-the-artifact-for-the-intelligent-service)
+    - [Building Python Retail Intelligent Service](#building-python-retail-intelligent-service)
+      - [Building PySpark Sentiment Analysis Intelligent Service](#building-pyspark-sentiment-analysis-intelligent-service)
+      - [Building Tensorflow Perceptron Intelligent Service](#building-tensorflow-perceptron-intelligent-service)
+      - [Building R Retail Intelligent Service](#building-r-retail-intelligent-service)
+    - [Create Dockerfile](#create-dockerfile)
+    - [Build Docker Image](#build-docker-image)
+    - [Push Docker Image](#push-docker-image)
+
+---
+
 ## Objective
 The objective of this tutorial is to show users how to author a recipe using various options and to import them to the Data Science Workspace. The source options we will cover include Git, Docker, and JAR. The languages for the recipe will be Python, <!--Scala, PySpark, -->Tensorflow, and R.
 
@@ -14,6 +28,7 @@ Depending on which code base you clone, install the language of that intelligent
     * for [Windows 10](https://www.python.org/downloads/windows/)
 <!---* Scala - `brew install sbt`-->
 
+---
 
 ## Docker-Based Model Authoring
 
@@ -188,3 +203,11 @@ docker build -t <docker-path>/<intelligent-service>:<version_tag>
 ```BASH
 docker push <docker-path>/<intelligent-service>:<version_tag>
 ```
+
+---
+
+## Next Steps
+
+This tutorial went over how to build a recipe to be used in the Data Science Workspace. You should now have a link to the Docker image which can be used in the next section to import, train, and evaluate to generate insights.
+* [Import, Train, and Evaluate Recipe Tutorial via UI](../how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial.md)
+* [Import, Train, and Evaluate Recipe Tutorial via API](../how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial_api.md)

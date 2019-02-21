@@ -1,12 +1,34 @@
 # Tutorial: How to Access and Explore Data in the Data Science Workspace
 
-## Objective
-In this step by step tutorial, we will focus on how to create a new Jupyter notebook in the Data Science Workspace to access data from Adobe Experience Platform. We will then explore the dataset to get a better understanding of the data. The steps that will be explained in this tutorial are:
+  - [Objective](#objective)
+  - [Prerequisites](#prerequisites)
+  - [Create a Dataset Based on Schema](#create-a-dataset-based-on-schema)
+    - [Create Training Dataset](#create-training-dataset)
+    - [Create Scoring Dataset](#create-scoring-dataset)
+    - [Ingest Data](#ingest-data)
+  - [Exploring the Data Science Workspace Notebook](#exploring-the-data-science-workspace-notebook)
+    - [Choosing your Workspace](#choosing-your-workspace)
+    - [Create a new Notebook](#create-a-new-notebook)
+    - [Accessing Data](#accessing-data)
+      - [External Data](#external-data)
+      - [Adobe Experience Platform Data](#adobe-experience-platform-data)
+        - [By Dataset ID](#by-dataset-id)
+    - [Exploring our Data](#exploring-our-data)
+      - [Statistical Summary](#statistical-summary)
+      - [Data Visualization](#data-visualization)
+        - [Univariate Graphs](#univariate-graphs)
+        - [Multivariate Graphs](#multivariate-graphs)
+  - [Next Steps](#next-steps)
 
-1. Create a Dataset based on a Schema
-2. Creating a new Jupyter notebook
-3. Accessing Datasets and Schemas
-4. Exploring Datasets 
+---
+
+## Objective
+In this step by step tutorial, we will focus on how to create a new Jupyter notebook in the Data Science Workspace to access data from Adobe Experience Platform. You will also be able to upload data from external sources. We will then explore the dataset to get a better understanding of the data. The main points that will be covered in this tutorial are:
+
+* Creating a Dataset based on a Schema
+* Creating a new Jupyter notebook
+* Accessing Datasets and Schemas
+* Exploring Datasets 
 
 We will go through the UI flow in this tutorial. The API tutorial can be found [here](../ml_api_access_and_explore_data_tutorial.md). The example we will use in the tutorial is with Python. Note that the Data Science Workspace also supports the following languages, but they will not be used in this tutorial:
 
@@ -24,7 +46,7 @@ We will go through the UI flow in this tutorial. The API tutorial can be found [
 
 ---
 
-## Create a Dataset Based on Schema
+## Creating a Dataset Based on Schema
 
 In this section, we will be creating a dataset based on a schema. You will be populating the dataset by uploading data in the parquet format. There are a number of methods to ingest data into the platform. Later, we will use this dataset in our notebook and also in our training and scoring runs.
 
@@ -63,6 +85,8 @@ The following steps show you how to ingest the data into the training and scorin
 5. Select **Ingest**
 6. Once ingestion is complete (indicated by a Status of Success), click the Preview option to examine sample records and familiarize yourself with the dataset
 7. Repeat this step for the scoring dataset and DSWRetailSales-Scoring.parquet file
+
+---
 
 ## Exploring the Data Science Workspace Notebook
 
@@ -235,3 +259,15 @@ Using the same retail dataset, we can generate the correlation matrix.
 ![](correlation_1.png)
 
 Notice the diagonal of 1's down the center. This shows that when comparing a variable to itself, it has complete positive correlation. Strong positive correlation will have a magnitude closer to 1 while weak correlations will be closer to 0. Negative correlation is shown with a negative coefficient showing an inverse trend.
+
+---
+
+## Next Steps
+
+This tutorial went over how to create a new Jupyter notebook in the Data Science Workspace and how to access data externally as well as from Adobe Experience Platform. Specifically, we went over the following steps:
+* Creating a Dataset based on a Schema
+* Creating a new Jupyter notebook
+* Accessing Datasets and Schemas
+* Exploring Datasets 
+
+Now you are ready to go on to the [next section](../package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md) to package a recipe and to import into the Data Science Workspace.

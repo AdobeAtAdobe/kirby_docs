@@ -1,5 +1,24 @@
 # Tutorial - Import, Train and Evaluate Recipe Tutorial via UI
 
+  - [Objective](#objective)
+  - [Prerequisites](#prerequisites)
+  - [UI Workflow](#ui-workflow)
+    - [New Recipe](#new-recipe)
+      - [Build Docker Image](#build-docker-image)
+      - [Push Docker Image](#push-docker-image)
+    - [Create Instance](#create-instance)
+    - [Create Experiment](#create-experiment)
+    - [Creating an Experiment using Custom Hyperparameters](#creating-an-experiment-using-custom-hyperparameters)
+      - [Retail Sale Forecasting Hyperparameter](#retail-sale-forecasting-hyperparameter)
+    - [Evaluating Experiment Results](#evaluating-experiment-results)
+      - [Measures Chart](#measures-chart)
+      - [Receiver Operator Characteristics](#receiver-operator-characteristics)
+      - [Confusion Matrix](#confusion-matrix)
+    - [Review Logs](#review-logs)
+  - [Next Steps](#next-steps)
+
+---
+
 ## Objective
 In this step by step tutorial, we will go over how to import a Recipe into the Data Science Workspace. From there, we will go over an example where we train and evaluate the Recipe.
 
@@ -157,7 +176,7 @@ You can click on the Experiment to view the details about the Experiment. This c
 
 Create another experiment by selecting the **Create Experiment** on your Recipe Instance page. Select the same Training dataset you used in the Default Experiment. Then select the **Configuration** tab. Here you will modify the hyperparameters in the section below.
 
-#### Retails Sale Forecasting Hyperparameter
+#### Retail Sale Forecasting Hyperparameter
 
 Hyperparameters cannot be learned - they must be assigned before training of the model. Adjusting the parameters may change the accuracy of the Trained Model.
 
@@ -221,3 +240,9 @@ The total percentage of correctly predicted results is found by adding up the pe
 The ability to view the job logs is important if your job fails. To review the logs, click on the Experiment name, then select **View Activity Logs**. Select the log file you would like to examine.
 
 ![](review_logs.png)
+
+---
+
+## Next Steps
+
+This tutorial went over how to consume the APIs to create a Recipe, an Experiment, Scheduled Experiment Runs, and Trained Models. In the [next exercise](../how_to_score_with_recipe/how_to_score_with_recipe.md), you will be making predictions by Scoring a new dataset using the top performing trained model.
