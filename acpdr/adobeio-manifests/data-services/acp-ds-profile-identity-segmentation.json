@@ -61,12 +61,12 @@
 		}
 	],
 	"app2app_map": {
-		"api-specification/markdown/narrative/tutorials/": "/apis/cloudplatform/dataservices/tutorials/alltutorials.html",
-		"api-specification/markdown/narrative/technical_overview/streaming_ingest/": "/apis/cloudplatform/dataservices/data-ingestion/data-ingestion-services.html",
+		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/dataservices/tutorials/alltutorials.html",
+		"api-specification/markdown/narrative/gdpr/": "/apis/experienceplatform/gdpr/docs/alldocs.htm",
+		"acpdr/swagger-specs/": "/apis/experienceplatform/dataservices/api-reference.html",
+		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview": "/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "/apis/cloudplatform/dataservices/data-ingestion/data-ingestion-services.html",
-		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
-		"acpdr/swagger-specs/": "/apis/cloudplatform/dataservices/api-reference.html",
 		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/": "/apis/experienceplatform/home/services.html",
-		"api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md": "/apis/experienceplatform/home/data-ingestion.html"
+		"api-specification/markdown/narrative/technical_overview/streaming_ingest/": "/apis/experienceplatform/home/data-ingestion.html"
 	}
 }

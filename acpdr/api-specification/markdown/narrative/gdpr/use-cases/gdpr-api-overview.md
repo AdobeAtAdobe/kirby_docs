@@ -628,4 +628,3 @@ Adobe allows customers to group multiple GDPR user IDs to process as a single ba
 ## Summary
 
  Adobe Experience Platform GDPR Service provides a simple set of calls, enabling Adobe Customers to manage (access and delete) the personal data of their consumers (Data Subjects) across Adobe Experience Cloud solutions. In addition to APIs for accessing and deleting data, Platform GDPR Service also provides a central audit and logging mechanism to surface job status and results from across the various solutions.
-
