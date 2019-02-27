@@ -22,15 +22,69 @@
 		},
     {
 			"pages": [],
-			"path": "acpdr/end-user/markdown/query-service/qs-connect.md",
+			"path": "acpdr/end-user/markdown/query-service/qs-ui.md",
+			"title": "Query Service UI"
+		},    
+		{
+			"pages": [],
+			"path": "acpdr/end-user/markdown/query-service/qs-clients.md",
 			"title": "Connect a Query Client"
+		},   
+		{
+			"pages": 
+			[
+				{
+					"pages": [],
+					"path": "acpdr/end-user/markdown/query-service/qs-clients-psql.md",
+					"title": "Connect PSQL"
+				},
+				{
+					"pages": [],
+					"path": "acpdr/end-user/markdown/query-service/qs-clients-tableau.md",
+					"title": "Connect Tableau"
+				},
+				{
+					"pages": [],
+					"path": "acpdr/end-user/markdown/query-service/qs-clients-powerbi.md",
+					"title": "Connect Power BI"
+				},
+				{
+					"pages": [],
+					"path": "acpdr/end-user/markdown/query-service/qs-clients-postico.md",
+					"title": "Connect Postico"
+				},
+			],
 		},
     {
 			"pages": [],
 			"path": "acpdr/end-user/markdown/query-service/qs-queries.md",
 			"title": "Running Queries"
-		},
-    {
+		{
+			"pages": 
+			[
+				{
+						"pages": [],
+						"path": "acpdr/end-user/markdown/query-service/qs-queries-datasetsvtables.md",
+						"title": "Datasets vs Tables and Schema"
+				},
+				{
+						"pages": [],
+						"path": "acpdr/end-user/markdown/query-service/qs-queries-experienceevent.md",
+						"title": "Connect Tableau"
+				},
+				{
+						"pages": [],
+						"path": "acpdr/end-user/markdown/query-service/qs-queries-joiningdatasets.md",
+						"title": "Joining Datasets"
+				},
+				{
+						"pages": [],
+						"path": "acpdr/end-user/markdown/query-service/qs-queries-adobefunctions.md",
+						"title": "Using Adobe Functions"
+				},
+			],
+		},		
+    		{
 			"pages": [],
 			"path": "acpdr/end-user/markdown/query-service/qs-create-datasets.md",
 			"title": "Generating Datasets from Query Results"
