@@ -71,7 +71,7 @@
 				{
 						"pages": [],
 						"path": "acpdr/end-user/markdown/query-service/qs-queries-experienceevent.md",
-						"title": "Connect Tableau"
+						"title": "ExperienceEvent Queries"
 				},
 				{
 						"pages": [],
@@ -86,7 +86,7 @@
 			]
 		},
 		{		
-		
+
 			"pages": [],
 			"path": "acpdr/end-user/markdown/query-service/qs-create-datasets.md",
 			"title": "Generating Datasets from Query Results"
