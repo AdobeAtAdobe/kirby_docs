@@ -6,8 +6,11 @@
 <a name="Access key ID"></a>
 __Access key ID:__ Access key ID is a unique identifier that's associated with an Amazon S3 secret access key. The access key ID and secret access key are used together to sign AWS requests.
 
+<a name="Action"></a>
+__Action:__ In Experience Platform Launch, an action is a specific type of rule component that defines what should happen after an event occurs and conditions are evaluated and passed.
+
 <a name="Adobe Experience Platform"></a>
-__Adobe Experience Platform:__  Experience Platform centralizes and standardizes diverse content and data to identify a customer and deliver consistent and compelling experiences. It is the foundational structure for building and managing integrated Adobe and partner solutions.
+__Adobe Experience Platform:__  Adobe Experience Platform standardizes data and content across the enterprise, powering real-time consumer profiles, enabling data science, and accelerating content velocity to drive experience personalization across the customer journey.
 
 <a name="Adobe Connectors"></a>
 __Adobe Connectors:__ Adobe Connectors are pre-configured connections created by Adobe to enable data to flow in and out of Experience Platform. Connectors include Microsoft Dynamics, Salesforce, Amazon S3, and Azure Blob.
@@ -47,6 +50,9 @@ __Batch:__ Batch is a set of data collected over a period of time and processed 
 <a name="Batch ID"></a>
 __Batch ID:__ Batch ID is an Adobe-generated identifier for a batch of data.
 
+<a name="Build"></a>
+__Build:__ In Experience Platform Launch, a build is a deployed library. The build is a file or set of files that contain all the configurations and code needed to execute the business logic contained inside of that library.
+
 __Business intelligence tools:__ Business intelligence, also known as "BI" tools are primarily integrated with the Experience Platform Query Service. BI tools are types of application software that collect and process large amounts of unstructured data from internal and external systems.
 
 <a name="Business Intelligence Tools"></a>
@@ -55,7 +61,7 @@ __Business Intelligence Tools:__ Business intelligence tools, also known as "BI"
 ## C
 
 <a name="Class"></a>
-__Class__: Class defines the smallest set of behaviors used to build a schema and is the base behavior that describes the business object.
+__Class__: Class defines the smallest set of fields used to build a schema and is the base behavior that describes the business object.
 
 <a name="Client"></a>
 __Client:__ A client is an external tool or application which connects to Query Service via postgres protocol or HTTP API.
@@ -68,6 +74,9 @@ __Composition__: A composition is a grouping of components that form together to
 
 <a name="Connection"></a>
 __Connection:__ A connection is a virtual pipeline that enables data to flow in and out of Experience Platform.
+
+<a name="Condition"></a>
+__Condition:__ In Experience Platform Launch, a condition is a rule component that evaluates a logical statement that must return `true` or `false`. All conditions must evaluate to `true` and all exception conditions must evaluate to `false` before any actions on the rule are executed.
 
 <a name="Connection Labels"></a>
 __Connection Labels:__ Labels applied to a connection will result in all ingested datasets and fields to inherit the specified labels. 
@@ -111,12 +120,20 @@ __Create Table as Select:__ Create Table as Select is a SQL command which, when 
 <a name="Cross-site Data"></a>
 __Cross-site Data:__ Cross-site data is the combination of data from several sites, including a combination of on-site data and off-site data or a combination of data from several off-site sources.
 
-<a name="Custom Identity Type"></a>
-__Custom Identity Namespace:__ Custom identity types are customer created identifiers used to represent identities for a specific organization or business case.
+<a name="Custom Identity Namespace"></a>
+__Custom Identity Namespace:__ Custom identity namespaces are customer created identifiers used to represent identities for a specific organization or business case.
  
 
 
 ## D
+<a name="Data Dictionary"></a>
+__Data Dictionary:__ In Experience Platform Launch, a data dictionary is a set of data elements defined within a property.
+
+<a name="Data Element"></a>
+__Data Element:__ In Experience Platform Launch, a data element is a pointer used within rules and extensions to point to a specific piece of data that exists on the client device. 
+
+<a name="Data Layer"></a>
+__Data Layer:__ In Experience Platform Launch, a data layer is a data structure that exists on the client device that contains metadata about the context in which a page or screen is viewed. 
 
 <a name="Data Stream"></a>
 __Data Stream:__ A data stream is a set or collection of messages which share the same schema and are sent by the same source.
@@ -165,14 +182,27 @@ __DULE:__ DULE is an acronym for *Data Usage Labeling and Enforcement*. DULE is 
 
 ## E
 
+<a name="Embed Code"></a>
+__Embed Code:__ In Experience Platform Launch, the embed code is a script tag placed within the HTML on a site or environment. The embed code instructs the browser where to retrieve the build.
+
 <a name="Enumeration"></a>
 __Enumeration:__  An enum is a list of values that represent the valid data for a field.
 
+<a name="Environment"></a>
+__Environment:__ In Experience Platform Launch, an environment is a set of deployment instructions that specifies the host delivery and file format of a build. A library must be paired with an environment before it can be built.
+
+<a name="Event"></a>
+__Event__ In Experience Platform Launch, an event is a specific type of rule component, a trigger that occurs on a client device to begin the execution of a rule.
+
 <a name="Events"></a>
-__Events__: Events are the behavior data associated with a profile.
+__Events:__ Events are the behavior data associated with a profile.
 
 <a name="Experience Data Model"></a>
 __Experience Data Model (XDM):__ Experience Data Model (XDM) is the concept of using standard schemas to unify data for use with Experience Platform and Adobe Experience Cloud solutions. XDM standardizes how data is structured and speeds up and simplifies the process of gaining insights from massive amounts of data.
+
+<a name="Experience Platform Launch"></a>
+__Experience Platform Launch:__ Launch is a tag and SDK management ecosystem, integrated with Experience Platform and Experience Cloud Solutions. Launch provides tools to deploy, unify, and manage analytics, marketing, and advertising integrations that are necessary to power relevant customer experiences on all client devices. 
+
 
 <a name="Experiment"></a>
 __Experiment:__ An experiment is a process of creating a trained model by training the instance with a sample portion of the live production data.
@@ -182,6 +212,12 @@ __Experiments:__ Experiments is the process of applying a trained model to a sma
 
 <a name="ExperienceEvent"></a>
 __ExperienceEvent:__ ExperienceEvent is an Experience Platform standard schema used to define behavioral event data.
+
+<a name="Extension"></a>
+__Extension:__ In Experience Platform Launch, an extension is a package of functionality added to a Launch property.  An extension is usually focused around a particular marketing or analytics solution and provides the tools needed to deploy that technology into a client environment.
+
+<a name="Extension Package"></a>
+__Extension Package:__ In Experience Platform Launch, an extension package is a .zip file created and uploaded by an extension developer that provides everything necessary for Launch users to install the extension inside their property.  An extension package contains a manifest specifying information about the extension, HTML, and JavaScript needed for end-users to configure the behavior of the Launch extension and the executable JavaScript delivered to the client environment, if required.
 
 ## F
 
@@ -206,6 +242,8 @@ __GDPR:__ The General Data Protection Regulation (GDPR) is a legal framework tha
 __GDPR Data Label:__ GDPR governance label is used to define the fields that may contain personal identifiers for use in GDPR access and/or delete requests.
 
 ## H
+<a name="Host"></a>
+__Host:__ In Experience Platform Launch, a host specifies the location, domain, and user credentials necessary for Launch to deliver a build.
 
 ## I
 
@@ -223,7 +261,7 @@ __Identity Namespace:__ An identity namespace is an identifier such as cookie ID
 <a name="Identity Service"></a>
 __Identity Service:__ Experience Platform Identity Service UI enables the creation and management of identity types to enable linking of identities across devices and channels for a complete user-view from Unified Profile.
 
-<a name="Identity Type"></a>
+<a name="Identity Namespace"></a>
 __Identity Namespace:__ An identity namespace is an identifier such as a cookie ID, device ID, or email ID to indicate the context from which data originates and is used to recognize and link identities across Experience Cloud.
 
 <a name="I1 Data Label"></a>
@@ -256,6 +294,8 @@ __Jupyter Notebook:__ *Jupyter Notebook* is an open-source web application utili
 ## K
 
 ## L
+<a name="Library"></a>
+__Library:__ In Experience Platform Launch, a library is a set of business logic that contains instructions for how the Launch library should behave on the client device. 
 
 ## M
 
@@ -270,6 +310,9 @@ __Mixin:__ Mixin is a reusable component that defines one or more attributes tha
 
 <a name="Modified Data Column"></a>
 __Modified Date Column:__ Selecting a `Modified Date` column is an option when specifying third-party data via a connection. When the `Delta` save strategy is selected and the dataset contains multiple date related schema, the user must choose from the available date/time type schema to specify modified date key column. `Modified Date` option is not available when the `Overwrite` save strategy is selected.
+
+<a name="Module"></a>
+__Module:__ In Experience Platform Launch, a module is a snippet of executable JavaScript provided by an extension, which performs actions in a client environment without the need for the Launch user to create a rule.
 
 ## N
 
@@ -291,6 +334,10 @@ __Profile:__ Profile is an Experience Platform standard data model used to defin
 
 <a name="Profile ID"></a>
 __Profile ID:__ A profile ID is an auto-generated identifier associated with an identity type and represents a profile.
+
+<a name="Property"></a>
+__Property:__ In Experience Platform Launch, a property is a container for everything needed to deploy a set of tags. 
+
 
 
 ## Q
@@ -316,6 +363,16 @@ __Record:__ A record is data that persists as rows in a dataset.
 
 <a name="Recurrence"></a>
 __Recurrence:__ A recurrence defines whether a Query Service query is scheduled to run only once or on a recurring basis.
+
+<a name="Resource"></a>
+__Resource:__ In Experience Platform Launch, resource is a generic term that refers to options the Launch user can configure inside the client environment, including extensions, data elements, and rules.
+
+<a name="Rule"></a>
+__Rule:__ In Experience Platform Launch, a rule is a collection of rule components defining a specific set of events, conditions, and actions that should be grouped logically.
+
+<a name="Rule Component"></a>
+__Rule Component:__  In Experience Platform Launch, rule components are the events, conditions, and actions that make up a rule.
+
 
 ## S
 
@@ -368,7 +425,7 @@ __S1 Data Label:__ `S1` data label is used to classify data specifying latitude 
 <a name="S2 Data Label"></a>
 __S2 Data Label:__ `S2` data label is used to classify data that can be used to determine a broadly defined geo-fence area.
 
-<a name="Standard Identity Type"></a>
+<a name="Standard Identity Namespace"></a>
 __Standard Identity Namespace:__ Standard identity namespaces are Adobe pre-defined identifiers, including Adobe and industry standard solutions employed to identify users.
 
 <a name="Standard Schema"></a>
