@@ -7,5 +7,7 @@ This document contains information about new GDPR features, as well as significa
 * Enforce the `include` field in every POST submission
 * Enforce the `include` field in the JSON when you upload
 
+See [GDPR API](https://www.adobe.io/apis/experienceplatform/gdpr/api-reference.html)
+
 ### Bug fixes
 * Fixed an issue where customers could not load the GDPR UI.
