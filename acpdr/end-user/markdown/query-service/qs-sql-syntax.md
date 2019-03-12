@@ -88,7 +88,7 @@ CREATE TABLE Chairs AS (SELECT color, count(*) AS no_of_chairs FROM Inventory i 
 Please note that for a given CTAS query:
 
 1. the SELECT statement MUST have alias for the aggregate functions such as COUNT, SUM, MIN, etc. 
-2. the SELECT statement MUST be enclosed in parentheses().
+2. the SELECT statement can be provided with or without parentheses().
 
 ## INSERT INTO
 
