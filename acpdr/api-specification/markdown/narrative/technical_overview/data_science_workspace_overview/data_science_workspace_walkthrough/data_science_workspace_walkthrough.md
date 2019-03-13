@@ -2,14 +2,22 @@
 
 ## Overview
 
+<<<<<<< HEAD
 This document provides a walkthrough for the Data Science Workspace in Adobe Experience Platform. Specifically we will go over the general workflow a data scientist would go through to solve a problem using machine learning.
+=======
+This document provides a walkthrough for the Data Science Workspace in Adobe Cloud Platform. Specifically we will go over the general workflow a data scientist would go through to solve a problem using machine learning.
+>>>>>>> ce4fba8fe0701b6c547ecd30945b4b28a78deddb
 
 ---
 
 ## Prerequisites
 
 * A registered Adobe ID account
+<<<<<<< HEAD
     * The Adobe ID account must have been added to an Organization with access to Adobe Experience Platform and the Data Science Workspace
+=======
+    * The Adobe ID account must have been added to an Organization with access to "Adobe Cloud Platform"
+>>>>>>> ce4fba8fe0701b6c547ecd30945b4b28a78deddb
 
 ---
 
@@ -23,17 +31,29 @@ A retailer faces many challenges to stay competitive in the current market. One 
 
 A data scientist's solution is to leverage the wealth of historical data a retailer has access to, to predict future trends, and to optimize pricing decisions. We will use past sales data to train our machine learning model and use the model to predict future sale trends. With this, the retailer will be able to have insights to help them when making pricing changes.
 
+<<<<<<< HEAD
 In this overview, we will go over the steps a data scientist would go through to take a dataset and to create a model to predict weekly sales. We will go over the following sections in the Sample Retail Sales Notebook on Adobe Experience Platform Data Science Workspace:
 * [Setup](#setup)
 * [Exploring Data](#exploring-data)
 * [Feature Engineering](#feature-engineering)
 * [Training and Verification](#training-and-verification)
+=======
+In this overview, we will go over the steps a data scientist would go through to take a dataset and to create a model to predict weekly sales. We will go over the following sections in the Sample Retail Sales Notebook on Adobe Cloud Platform Data Science Workspace:
+* [Setup](#Setup)
+* [Exploring Data](#Exploring-Data)
+* [Feature Engineering](#Feature-Engineering)
+* [Training and Verification](#Training-and-Verification)
+>>>>>>> ce4fba8fe0701b6c547ecd30945b4b28a78deddb
 
 ### Adobe Data Science Workspace Notebook
 
 Firstly, we want to create a JupyterLab notebook to open the "Retail Sales" sample notebook. Following the steps done by the data scientist in the notebook will allow us to gain an understanding of a typical workflow.
 
+<<<<<<< HEAD
 In the Adobe Experience Platform UI, click on the Data Science tab in the top menu to take you to the Data Science Workspace. From this page, click on the JupyterLab tab which will open the JupyterLab launcher. You should see a page similar to this.
+=======
+In the Adobe Cloud Platform UI, click on the Data Science tab in the top menu to take you to the Data Science Workspace. From this page, click on the JupyterLab tab which will open the JupyterLab launcher. You should see a page similar to this.
+>>>>>>> ce4fba8fe0701b6c547ecd30945b4b28a78deddb
 
 ![](jupyterlab_launcher.png)
 
@@ -211,8 +231,15 @@ Finally, we will visualize our prediction model with the actual weekly sales val
 
 With this overview, we went over the workflow that a data scientist would go through to solve a retail sales problem. Specifically, we went over the following steps to reach a solution that predicts future weekly sales.
 
+<<<<<<< HEAD
 * [Setup](#setup)
 * [Exploring Data](#exploring-data)
 * [Feature Engineering](#feature-engineering)
 * [Training and Verification](#training-and-verification)
+=======
+* [Setup](#Setup)
+* [Exploring Data](#Exploring_Data)
+* [Feature Engineering](#Feature_Engineering)
+* [Training and Verification](#Training_and_Verification)
+>>>>>>> ce4fba8fe0701b6c547ecd30945b4b28a78deddb
 
