@@ -27,6 +27,7 @@ We will be consuming the APIs to create an Experiment Run for Training and Scori
 
 Here is a list of what we will cover this tutorial:
 
+<<<<<<< HEAD
 * [Creating a Recipe](#creating-a-recipe)
 * [Creating an Instance](#creating-an-instance)
 * [Creating an Experiment](#creating-an-experiment)
@@ -38,6 +39,19 @@ Here is a list of what we will cover this tutorial:
     * [Creating an Experiment Run for Scoring](#creating-an-experiment-run-for-scoring)
         * [Retrieve an Experiment Run Status for Scheduled Experiment Run](#retrieve-an-experiment-run-status-for-scheduled-experiment-run)
 * [Stop and Delete a Scheduled Experiment](#stop-and-delete-a-scheduled-experiment)
+=======
+* [Creating a Recipe](#creatingarecipe)
+* [Creating an Instance](#creatinganinstance)
+* [Creating an Experiment](#creatinganexperiment)
+    * [Creating a Scheduled Experiment for Training](#creatingascheduledexperimentfortraining)
+    * [Creating a Scheduled Experiment for Scoring](#creatingascheduledexperimentforscoring)
+    * [Creating an Experiment Run for Training](#creatinganexperimentrunfortraining)
+        * [Retrieving an Experiment Run Status](#retrievinganexperimentrunstatus)
+        * [Retrieving the Trained Model](#retrievingthetrainedmodel)
+    * [Creating an Experiment Run for Scoring](#creatinganexperimentrunforscoring)
+        * [Retrieve an Experiment Run Status for Scheduled Experiment Run](#retrieveanexperimentrunstatusforscheduledexperimentrun)
+* [Stop and Delete a Scheduled Experiment](#stopanddeleteascheduledexperiment)
+>>>>>>> ce4fba8fe0701b6c547ecd30945b4b28a78deddb
 
 
 ### Creating a Recipe

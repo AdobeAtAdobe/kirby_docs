@@ -33,14 +33,24 @@ Reference example for each intelligent service:
 
 ### Building the Artifact for the Intelligent Service
 
+<<<<<<< HEAD
 Depending on which sample you downloaded, there will be a different procedure for creating your intelligent service. The sample codebase can be found [here](https://github.com/adobe/experience-platform-dsw-reference).
+=======
+Depending on which sample you downloaded, there will be a different procedure for creating your intelligent service. The sample codebase can be found [here](https://github.com/adobe/acp-data-services-dsw-reference).
+>>>>>>> ce4fba8fe0701b6c547ecd30945b4b28a78deddb
 
 This sample Retail Sales example leverages the wealth of historical data a retailer has access to, to predict future trends, and to optimize pricing decisions. The algorithm uses past sales data to train the model and to predict future sales trends. With this, the retailer will be able to have insights to help them when making pricing changes.
 
 We will go over how to build each one. You can skip ahead to the section you need.
+<<<<<<< HEAD
 * [Building Python Retail Intelligent Service](#building-python-retail-intelligent-service)
 * [Building Tensorflow Perceptron Intelligent Service](#building-tensorflow-perceptron-intelligent-service)
 * [Building R Retail Intelligent Service](#building-r-retail-intelligent-service)
+=======
+* [Building Python Retail Intelligent Service](#buildingpythonretailintelligentservice)
+* [Building Tensorflow Perceptron Intelligent Service](#buildingtensorflowperceptronintelligentservice)
+* [Building R Retail Intelligent Service](#buildingrretailintelligentservice)
+>>>>>>> ce4fba8fe0701b6c547ecd30945b4b28a78deddb
 
 <!---
 * [Building Scala Sentiment Analysis Intelligent Service](#building-scala-sentiment-analysis-intelligent-service)
@@ -52,7 +62,11 @@ We will go over how to build each one. You can skip ahead to the section you nee
 To get the Python application, we run the following command to clone the Github repository to your local system.
 
 ```BASH
+<<<<<<< HEAD
 git clone https://github.com/adobe/experience-platform-dsw-reference.git
+=======
+git clone https://github.com/adobe/acp-data-services-dsw-reference.git
+>>>>>>> ce4fba8fe0701b6c547ecd30945b4b28a78deddb
 ```
 
 You can also download the application as a zip file. 
@@ -74,7 +88,11 @@ python3 setup.py install
 
 The `.egg` file is generated in the `dist` folder.
 
+<<<<<<< HEAD
 Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
+=======
+Now you can move on to the next section [Create Dockerfile](#createdockerfile)
+>>>>>>> ce4fba8fe0701b6c547ecd30945b4b28a78deddb
 
 <!---#### Building Scala Sentiment Analysis Intelligent Service
 
@@ -125,7 +143,11 @@ Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
 To get the Tensorflow application, we run the following command to clone the Github repository to the local system.
 
 ```BASH
+<<<<<<< HEAD
 git clone https://github.com/adobe/experience-platform-dsw-reference.git
+=======
+git clone https://github.com/adobe/acp-data-services-dsw-reference.git
+>>>>>>> ce4fba8fe0701b6c547ecd30945b4b28a78deddb
 ```
 
 Now in the repository, we can run the following commands to create the `.egg` file which consists of project-related metadata files, code and resources which is well-suited to distribution and importing.
@@ -137,13 +159,18 @@ python setup.py install
 
 The `.egg` file is generated in the `dist` folder.
 
+<<<<<<< HEAD
 Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
+=======
+Now you can move on to the next section [Create Dockerfile](#createdockerfile)
+>>>>>>> ce4fba8fe0701b6c547ecd30945b4b28a78deddb
 
 #### Building R Retail Intelligent Service
 
 For R the files needed to create the Docker image are already built in the repository. All we need to do is to clone it. The files are found in `/recipes/R` folder
 
 ```BASH
+<<<<<<< HEAD
 git clone https://github.com/adobe/experience-platform-dsw-reference.git
 cd recipes/R/Retail\ -\ GradientBoosting/
 ```
@@ -154,6 +181,18 @@ Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
 We will need to create a Dockerfile that first takes the base image, installs dependencies, and copies over the packaged intelligent service we did in section [Create Dockerfile](#create-dockerfile). Since you are using the Sample Intelligent Service, the Dockerfile is provided [in the directory](https://github.com/adobe/experience-platform-dsw-reference/blob/master/recipes/python/retail/Dockerfile). The example for Python is shown below:
 
 ```BASH
+=======
+git clone https://github.com/adobe/acp-data-services-dsw-reference.git
+cd recipes/R/Retail\ -\ GradientBoosting/
+```
+Now you can move on to the next section [Create Dockerfile](#createdockerfile)
+
+### Create Dockerfile
+
+We will need to create a Dockerfile that first takes the base image, installs dependencies, and copies over the packaged intelligent service we did in section [Create Dockerfile](#createdockerfile). Since you are using the Sample Intelligent Service, the Dockerfile is provided [in the directory](https://github.com/adobe/acp-data-services-dsw-reference/blob/master/recipes/python/retail/Dockerfile). The example for Python is shown below:
+
+```Docker
+>>>>>>> ce4fba8fe0701b6c547ecd30945b4b28a78deddb
 FROM <docker-runtime-path>
 
 #INSTALL NLTK and other modules needed by application
