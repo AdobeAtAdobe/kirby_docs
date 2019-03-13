@@ -108,3 +108,25 @@ Please note that for a given INSERT INTO query:
 
 1. the SELECT statement MUST NOT be enclosed in parentheses().
 2. Schema of the result of SELECT statement must conform to that of the table defined in the INSERT INTO.
+
+## Parameterised Query
+1. Prepare Statement
+```
+PREPARE <plan name >[( comma-separated list of datatypes)] AS [query]
+where query is any statement which may or maynot contains parameters ($1, $2, ...)
+Eg. PREPARE temp AS select * from csv10000rows where id >= $1 and id <= $2;
+ ```
+ 
+2. Execute Statement
+```
+EXECUTE <plan name>[(list of actual values of parameters)]
+Eg: EXECUTE  temp(10000, 10005);
+```
+ 
+3. Deallocate Statement
+```
+DEALLOCATE [PREAPRE ] <plan name> | ALL
+Eg 1 : DEALLOCATE temp;
+Eg 2 : DEALLOCATE PREPARE ALL;
+```
+
