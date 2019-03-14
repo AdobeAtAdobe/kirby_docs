@@ -150,7 +150,7 @@ Email Address []:
 
 After entering the information two files will be generated: `certificate_pub.crt` and `private.key`.
 
-> Note: `certificate_pub.crt` will expire in 365 days. You can make the period longer by changing the value of `days` in the `openssl` command above but rotating credentials periodically is a good security practice.
+> **Note:** `certificate_pub.crt` will expire in 365 days. You can make the period longer by changing the value of `days` in the `openssl` command above but rotating credentials periodically is a good security practice.
 
 The `private.key` will be used to generate our JWT in the later section.
 
@@ -238,7 +238,7 @@ You are now ready to make API requests in Adobe Experience Platform!
 
 To test if your access token is valid, you can try to make the following API call. This call will list all resources (schemas, classes, mixins, or data types) within a container:
 
-> **NOTE:** `{API_KEY}` and `{IMS_ORG}` refer to the values you generated above.
+> **Note:** `{API_KEY}` and `{IMS_ORG}` refer to the values you generated above.
 
 **Request**
 

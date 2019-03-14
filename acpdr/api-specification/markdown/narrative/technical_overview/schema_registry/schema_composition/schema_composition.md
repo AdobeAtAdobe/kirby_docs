@@ -88,7 +88,7 @@ Since maintaining backwards compatibility is crucial for schema evolution, Exper
 | |Removing or restricting previously supported field values|
 | |Moving attributes to a different location in the tree|
 
-_**Note:**_ If a schema has not yet been used to ingest data into Experience Platform, you may introduce a breaking change to that schema. However, once the schema has been used in Platform, it must adhere to the additive versioning policy.
+> **Note:** If a schema has not yet been used to ingest data into Experience Platform, you may introduce a breaking change to that schema. However, once the schema has been used in Platform, it must adhere to the additive versioning policy.
 
 ### Composition
 
@@ -163,7 +163,7 @@ The valid ranges of these scalar types can be further constrained to certain pat
 - date-time
 - map
 
-**Note:** The "map" field type allows for key-value pair data, including multiple values for a single key. Maps can only be defined at the system level, meaning you may encounter a map in an industry or vendor-defined schema, but it is not available for use in fields you define. The [Schema Registry API Developer Guide](../schema_registry_developer_guide.md) contains more information on defining field types.
+> **Note:** The "map" field type allows for key-value pair data, including multiple values for a single key. Maps can only be defined at the system level, meaning you may encounter a map in an industry or vendor-defined schema, but it is not available for use in fields you define. The [Schema Registry API Developer Guide](../schema_registry_developer_guide.md) contains more information on defining field types.
 
 ### XDM Fields
 
