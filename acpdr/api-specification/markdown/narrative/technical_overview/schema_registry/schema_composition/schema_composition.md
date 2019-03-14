@@ -144,7 +144,7 @@ Experience Platform provides a number of common data types as part of the Schema
 
 ### Field
 
-A field is the most basic building block of a schema. Fields provide constraints regarding the type of data they can contain by defining a specific data type. These basic data types define a single field, whereas the [data types](#data-type) previously mentioned allow you to define multiple sub-fields and re-use them throughout various schemas. So, in addition to defining a field's 'data type' as one of the data types defined in the registry, Experience Platform supports basic scalar types such as:
+A field is the most basic building block of a schema. Fields provide constraints regarding the type of data they can contain by defining a specific data type. These basic data types define a single field, whereas the [data types](#data-type) previously mentioned allow you to define multiple sub-fields and re-use the same multi-field structure throughout various schemas. So, in addition to defining a field's 'data type' as one of the data types defined in the registry, Experience Platform supports basic scalar types such as:
 
 - string
 - integer
@@ -191,7 +191,7 @@ While Experience Platform allows you to compose schema for specific use cases, i
 
 ![](images/union.png)
 
-By enabling a schema for use with [Unified Profile Service](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md) (UPS), it will be included in the union for that class type. UPS delivers robust, 360&deg; profiles of customer attributes as well as a timestamped account of every event that customer has had across any system integrated with Platform. UPS uses the union view to represent this data and provide a holistic view of each individual customer.
+By enabling a schema for use with Unified Profile Service (UPS), it will be included in the union for that class type. UPS delivers robust, 360&deg; profiles of customer attributes as well as a timestamped account of every event that customer has had across any system integrated with Platform. UPS uses the union view to represent this data and provide a holistic view of each individual customer.
 
 For more information on working with UPS, see the [Unified Profile Service Overview](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md).
 
@@ -201,6 +201,6 @@ Now that you understand the basics of schema composition, you are ready to begin
 
 The Schema Registry is used to access the Schema Library within Adobe Experience Platform, and provides a user interface and RESTful API from which all available library resources are accessible. The Schema Library contains Industry resources defined by Adobe, Vendor resources defined by Experience Platform partners, and classes, mixins, data types, and schemas that you compose within your organization.
 
-To begin composing schema using the UI, follow along with the [Schema Registry UI Tutorial](../schema_registry_ui_tutorial/schema_registry_ui_tutorial.md) to build the "Loyalty Members" schema mentioned throughout this document.
+To begin composing schema using the UI, follow along with the [Schema Editor Tutorial](../schema_editor_tutorial/schema_editor_tutorial.md) to build the "Loyalty Members" schema mentioned throughout this document.
 
 To begin using the Schema Registry API, begin by reading the [Schema Registry API Developer Guide](../schema_registry_developer_guide.md). After reading the developer guide, you will be ready to begin building the "Loyalty Members" schema using the API. 
