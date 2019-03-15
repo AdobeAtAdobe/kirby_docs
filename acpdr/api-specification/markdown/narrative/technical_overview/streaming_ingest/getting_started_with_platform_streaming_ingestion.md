@@ -18,7 +18,7 @@ This documentation will help you quickly get started with the Adobe Experience P
 
 ## How do I get started?
 
-Data inlet registration is the first step for you to start streaming data to Adobe Experience Platform. When registering a data inlet, you need to provide some key details like the source of streaming data, and whether or not you intend to send records expressed in the [XDM schema][xdminfo].
+Data inlet registration is the first step for you to start streaming data to Adobe Experience Platform. When registering a data inlet, you need to provide some key details like the source of streaming data, and whether or not you intend to send records expressed in [Experience Data Model (XDM) schema][xdminfo].
 
 After registering a data inlet, you, as the data producer, will have a unique URL which can be used to stream data to Platform.
 
@@ -1024,7 +1024,7 @@ With this knowledge, you should be able to easily get your data to Adobe Experie
 [identityapi]: ../identity_services_architectural_overview/identity_services_architectural_overview.md
 
 
-[xdminfo]: ../schema_registry/standard_composition/schema_composition.md
+[xdminfo]: ../schema_registry/schema_composition/schema_composition.md
 
 [profileapi]: ../unified_profile_architectural_overview/unified_profile_architectural_overview.md
 
