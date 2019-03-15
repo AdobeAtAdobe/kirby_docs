@@ -13,7 +13,11 @@ This developer guide provides steps to help you [start using the Schema Registry
 * [Use descriptors to describe schema metadata](#descriptors)
 * [Enable and view unions for Unified Profile Service](#unified-profile-views)
 
-The [Appendix](#appendix) to this document includes additional helpful resources for working with the Schema Registry, including a brief introduction to [XDM Compatibility Mode](#compatibility-mode) as well as tables to help you [define XDM Field Types in the API](#defining-xdm-field-types-in-the-api) and [map XDM Field Types to other Serialization Formats](#mapping-xdm-types-to-other-formats) (such as Parquet and Scala).
+The [Appendix](#appendix) to this document includes additional helpful resources for working with the Schema Registry, including:
+
+* A brief introduction to [XDM Compatibility Mode](#compatibility-mode)
+* How to [define XDM Field Types in the API](#defining-xdm-field-types-in-the-api) 
+* How to [map XDM Field Types to other Serialization Formats](#mapping-xdm-types-to-other-formats) (such as Parquet and Scala)
 
 ## Getting Started with the Schema Registry API
 
@@ -150,7 +154,7 @@ The global container holds all standard Adobe and Experience Platform partner pr
 
 Not to be confused with your unique `TENANT_ID`, the tenant container holds all classes, mixins, data types, schemas, and descriptors defined by an IMS Organization. These are unique to each organization, meaning they are not visible or manageable by other IMS Orgs. You may perform all CRUD operations (GET, POST, PUT, PATCH, DELETE) against resources that you create in the tenant container. 
 
-When you create a class, mixin, schema or datatype in the tenant container, it is saved to the Schema Registry and assigned an `$id` URI that includes your `TENANT_ID`. This `$id` is used throughout the API to reference a specific resource. Examples of the `$id` are shown in the [Schema Identification](#schema-identification) section that follows.
+When you create a class, mixin, schema or datatype in the tenant container, it is saved to the Schema Registry and assigned an `$id` URI that includes your `TENANT_ID`. This `$id` is used throughout the API to reference a specific resource. Examples of the `$id` are shown in the Schema Identification section that follows.
 
 ### Schema Identification
 
@@ -240,7 +244,7 @@ The most common query parameters include:
 * `properties` - Filter results on any top-level attributes. Example: `properties=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile` returns only mixins that are compatible with the XDM Profile class.
 * You may use an ampersand (`&`) to combine query parameters.
 
-### API Format
+#### API Format
 
 ```SHELL
 GET /{CONTAINER_ID}/{schemas|classes|datatypes|mixins}
@@ -251,7 +255,7 @@ GET /tenant/schemas?limit=3
 GET /global/classes?orderby=title&limit=4
 ```
 
-### Request
+#### Request
 
 ```SHELL
 curl -X GET \
@@ -268,7 +272,7 @@ Accept | Description
 application/vnd.adobe.xed-id+json | Returns a short summary of each resource, generally the preferred header for listing
 application/vnd.adobe.xed-full+json | Returns full JSON schema for each resource, with original $ref and allOf included
 
-### Response
+#### Response
 
 The request above used the `application/vnd.adobe.xed-id+json` Accept header, therefore the response includes only the `title`, `$id`, `meta:altId`, and `version` attributes for each resource. Substituting `full` into the Accept header returns all attributes of each resource. You can select the appropriate Accept header depending on the information you require in your response.
 
@@ -295,7 +299,7 @@ The request above used the `application/vnd.adobe.xed-id+json` Accept header, th
 
 If you would like to view a specific resource, be it a schema, class, mixin, or data type, you can perform a GET request that includes the `$id` (URL encoded URI) of the resource and, depending on the Accept header, some or all of the details of the resource.
 
-### API Format
+#### API Format
 
 ```SHELL
 GET /{CONTAINER_ID}/{schemas|classes|datatypes|mixins}/{meta:altId or the url encoded $id URI} 
@@ -307,7 +311,7 @@ GET /tenant/mixins/_{TENANT_ID}.mixins.bce6c11bbe4ad4155dd940c15dfe74e1
 GET /tenant/mixins/https%3A%2F%2Fns.adobe.com%2F{TENANT_ID}%2Fmixins%2Fbce6c11bbe4ad4155dd940c15dfe74e1
 ```
 
-### Request
+#### Request
 
 ```SHELL
 curl -X GET \
@@ -330,7 +334,7 @@ application/vnd.adobe.xed-full-desc+json; version={major version}	|$refs and all
 
 _**Note:**_ If supplying the `major` version only (1, 2, 3, etc), the registry will return the latest `minor` version (.1, .2, .3, etc) automatically.
 
-### Response
+#### Response
 
 Once again, the response format depends on the Accept header sent in the request. Experiment with different Accept headers to compare the responses and determine which header is best for your use case. 
 
@@ -876,13 +880,13 @@ If you ever need to modify or update a resource in the tenant container, this ca
 
 For more information on JSON Patch, including available operations, see the official [JSON Patch documentation](http://jsonpatch.com/).
 
-### API Format
+#### API Format
 
 ```SHELL
 PATCH /tenant/{schemas|classes|datatypes|mixins}/{meta:altId or the url encoded $id URI} 
 ```
 
-### Request
+#### Request
 
 Using a PATCH operation, you can update the Property Information schema to include the fields that were defined in the Property Details mixin. To do this, you must perform a PATCH request to the schema using its `meta:altId` or the url encoded `$id` URI. 
 
@@ -901,7 +905,7 @@ curl -X PATCH\
       ]'
 ```
 
-### Response
+#### Response
 
 The response shows that both operations were performed successfully. The mixin `$id` has been added to the `meta:extends` array and a reference (`$ref`) to the mixin `$id` now appears in the `allOf` array.
 
@@ -946,13 +950,13 @@ The response shows that both operations were performed successfully. The mixin `
 
 The Property Details mixin defines fields for property-related information, but additional information is required. In order to update the mixin, a PATCH request can be made that contains multiple changes to be performed.
 
-### API Format
+#### API Format
 
 ```SHELL
 PATCH /tenant/{schemas|classes|datatypes|mixins}/{meta:altId or the url encoded $id URI} 
 ```
 
-### Request
+#### Request
 
 The request body includes the operation (`op`), location (`path`), and information (`value`) needed to update the mixin. This request updates the Property Details mixin to remove the "propertyCity" field and add a new "propertyAddress" field the references a standard data type containing address information. It also adds a new "emailAddress" field that references a standard data type with email information.
 
@@ -982,7 +986,7 @@ curl -X PATCH\
       ]'
 ```
 
-### Response
+#### Response
 
 The response shows that the operations were completed successfully because the new fields are present and the "propertyCity" field has been removed.
 
@@ -1080,7 +1084,7 @@ In other words, you can perform a PUT request that essentially _re-writes_ the r
 
 This is especially useful if you want to update a lot of information in the resource at once. 
 
-### API Format
+#### API Format
 
 A PUT request can only be performed against resources that you define in the tenant container.
 
@@ -1088,7 +1092,7 @@ A PUT request can only be performed against resources that you define in the ten
 PUT /tenant/{schemas|classes|datatypes|mixins}/{meta:altId or the url encoded $id URI} 
 ```
 
-### Request
+#### Request
 
 This sample request replaces the Property Construction datatype that was created in a previous example. The request body looks similar to the POST request used to create the data type, except that it now contains an updated set of fields with new values replacing what was previously defined.
 
@@ -1139,7 +1143,7 @@ curl -X PUT \
       }'
 ```
 
-### Response
+#### Response
 
 The response includes the details of the data type, showing the updated fields and values as provided in the request.
 
@@ -1207,13 +1211,13 @@ The response includes the details of the data type, showing the updated fields a
 
 It may occasionally be necessary to remove (DELETE) a resource from the registry. Only resources that you create in the tenant container may be deleted. This is done by performing a DELETE request to the `$id` of the resource you wish to delete.
 
-### API Format
+#### API Format
 
 ```SHELL
 DELETE /tenant/{schemas|classes|datatypes|mixins}/{meta:altId or the url encoded $id URI} 
 ```
 
-### Request 
+#### Request 
 
 A DELETE request does not require an Accept header.
 
@@ -1225,7 +1229,7 @@ curl -X DELETE \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-### Response
+#### Response
 
 The response body will be blank with an HTTP Status 204 (No Content). 
 
@@ -1475,7 +1479,7 @@ To confirm the descriptor has been deleted, you can perform a lookup request aga
 
 The Unified Profile Service (UPS) provides a holistic view of an individual by building a robust, 360&deg; profile of attributes as well as a timestamped account of every event that individual has had across any system your organization has integrated with Experience Platform. 
 
-For more information on how unified profiles are used across Platform, see the [Unified Profile Overview](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md).
+For more information on how unified profiles are used across Platform, see the [Unified Profile Overview](../unified_profile_architectural_overview/unified_profile_architectural_overview.md).
 
 By enabling a schema for use with UPS, you are indicating that the data the schema defines should be included in the union view for the class that the schema implements.
 
@@ -1551,7 +1555,7 @@ The response shows that the operation was performed successfully, and the schema
 }
 ```
 
-### List Union Views
+### List Unions
 
 When you set the "union" tag on a schema, the Schema Registry will automatically create and maintain a union for the class upon which the schema is based. The `$id` for the union is similar to the standard `$id` of a class, with the only difference being that is appended by two underscores and the word "union" (`"__union"`).
 
@@ -1599,7 +1603,7 @@ If no unions have been defined, you will still receive an HTTP Status 200 (OK) b
 }
 ```
 
-### Lookup Specific Union View
+### Lookup Specific Union
 
 If you would like to view a specific union, you can perform a GET request that includes the `$id` (URL encoded URI) and, depending on the Accept header, some or all of the details of the union.
 
