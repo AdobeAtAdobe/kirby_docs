@@ -14,7 +14,7 @@ This tutorial uses the Schema Registry API to walk you through the steps to [com
 * [Define an Identity Descriptor](#define-identity-descriptor)
 * [Enable schema for use with Unified Profile Service](#enable-schema-for-use-in-unified-profile) and view a union schema
 
-If you would prefer to use the user interface in Experience Platform, the [Schema Editor Tutorial](../schema_editor_tutorial/schema_editor_tutorial.md) provides step-by-step instructions for performing similar actions in the schema editor.
+If you would prefer to use the user interface in Experience Platform, the [Schema Registry UI Tutorial](../schema_registry_ui_tutorial/schema_registry_ui_tutorial.md) provides step-by-step instructions for performing similar actions in the schema editor.
 
 ## Getting Started
 
@@ -36,7 +36,7 @@ A schema can be thought of as the blueprint for the data you wish to ingest into
 
 The schema composition process begins with the selection of a class. The class defines key behavioral aspects of the data (record vs time series), as well as the minimum fields that are required to describe the data that will be ingested.
 
-For this tutorial, you will be using the XDM Profile class. XDM Profile is an standard class provided by Adobe for defining record behavior. More information on behavior can be found in [Basics of Schema Composition](../schema_composition/schema_composition.md).
+For this tutorial, you will be using the XDM Profile class. XDM Profile is an standard class provided by Adobe for defining record behavior. More information on behavior can be found in [Schema Composition Basics](../schema_composition/schema_composition.md).
 
 To assign a class, an API call is made to create (POST) a new schema in the tenant container. This call includes the class the schema will implement. Each schema may only implement one class.
 

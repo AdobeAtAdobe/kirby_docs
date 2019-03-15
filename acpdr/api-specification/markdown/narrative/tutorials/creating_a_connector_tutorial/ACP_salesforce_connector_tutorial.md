@@ -191,7 +191,7 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 ]
 ```
 
-> **Note:** The return response is a partial list of all available Salesforce CRM objects. Use the `{OBJECT_ID}` as the `logicalName` of the objects.
+NOTE: The return response is a partial list of all available Salesforce CRM objects. Use the `{OBJECT_ID}` as the `logicalName` of the objects.
 
 #### Ingesting selected fields from the Salesforce object
 
@@ -221,7 +221,8 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 
 ##### Response
 
-The following code sample displays part of the response you will receive. You can choose to ingest all the fields of an object or only select the fields you are interested in.
+NOTE: The following code sample displays part of the response you will receive.
+You can choose to ingest all the fields of an object or only select the fields you are interested in.
 
 ```JSON
 [
