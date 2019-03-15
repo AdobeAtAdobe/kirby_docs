@@ -1,7 +1,5 @@
 # Data Usage Labeling and Enforcement (DULE) User Guide
 
-## Overview
-
 Adobe Experience Platform brings data from multiple enterprise systems together to better allow marketers to identify, understand, and engage customers. Experience Platform includes end-to-end data governance infrastructure to ensure the proper use of data within Platform and when being shared between systems.
 
 This guide provides an overview of the following concepts:
@@ -13,15 +11,15 @@ This guide provides an overview of the following concepts:
 * [Data Usage Policies](#data-usage-policies)
 * [How to create and work with Data Usage Policies](#how-to-create-and-work-with-data-usage-policies)
 
-At the end of this guide you will find a table outlining key [DULE Terminology](#appendix-dule-terminology) with definitions that will assist you when working with Data Governance concepts.
+At the end of this guide you will find a table outlining key [DULE Terminology](#appendix-dule-terminology) with definitions that will assist you when working with data governance concepts.
 
-## Data Governance
+## Data governance
 
 Data governance is a series of strategies and technologies used to manage customer data and ensure compliance with regulations, restrictions, and policies applicable to data use. It plays a key role within Experience Platform at various levels, including cataloging, data lineage, data usage labeling, data access policies, and access control on data for marketing actions.
 
 Getting started with data governance requires a strong understanding of the regulations, contractual obligations, and corporate policies that apply to your customer data. From there, data can be classified by applying the appropriate data usage labels, and its use can be controlled through the definition of data usage policies. 
 
-### Data Governance Roles
+### Data governance roles
 
 Data governance is neither automatic, nor does it occur in a vacuum. What began as a role for one individual, typically recognized as a _**data steward**_, has grown considerably as the data governance ecosystem has expanded. Today, data governance requires continual management and monitoring in order to be successful, and relies on data stewards having tools with which data can be properly labeled, usage policies can be created, and compliance with those policies can be enforced.
 
@@ -29,7 +27,7 @@ While data governance should be the responsibility of every individual in the or
 
 ![Data Governance Roles](dule_images/Data_Governance_roles.png "Essential Data Governance Roles")
 
-#### Data Steward
+#### Data steward
 
 Data stewards are the heart of data governance.  This role is responsible for interpreting regulations, contractual restrictions, and policies, and applying them directly to the data. Informed by their understanding of these regulations, restrictions, and policies, the role of a data steward includes:
 * Reviewing data, datasets, and data samples to apply and manage metadata DULE labeling.
@@ -43,7 +41,7 @@ Marketers are the end point of data governance. They request data from the data 
 * Marketing Specialists and Experience Designers use data to design new customer experiences. 
 
 
-## DULE Framework
+## DULE framework
 
 The Data Usage Labeling and Enforcement (DULE) framework simplifies and streamlines the process of categorizing data and creating data usage policies. Once data labels have been applied and data usage policies are in place, marketing actions can be evaluated to ensure the correct use of data.
 
@@ -53,7 +51,7 @@ There are three key elements to the DULE framework: Labels, Policies, and Enforc
 2. **Policies:** Describe what kind(s) of marketing actions are allowed or not allowed to be taken on specific data.
 3. **Enforcement:** Uses the policy framework to advise and enforce policies across different data access patterns. 
 
-## Data Usage Labels
+## Data usage labels
 
 Experience Platform includes infrastructure for data governance with DULE labeling at its core.  DULE features enable data stewards to apply usage labels at the connection-, dataset-, and field-level to categorize the data according to the type of policies that apply.
 
@@ -68,7 +66,7 @@ The DULE framework includes predefined data usage labels that can be used to cat
 
 See [Supported Data Usage Labels](dule_supported_labels.md) for a complete list of available labels, as well as definitions for each label type.
 
-### When and How to Apply Data Labels
+### When and how to apply data labels
 
 Data usage labels can be applied at three levels, and are inherited down from connections to datasets and fields, and from datasets to fields. This means that data usage labels applied at the connection level are propagated to all datasets and fields in the connection, while labels applied to datasets are propagated to all fields in the dataset. Labels can also be applied directly to individual fields (column headers) in a dataset, without propagation.
 
@@ -78,13 +76,13 @@ Step-by-step instructions for how to apply data usage labels to Connections, Dat
 
 ![Data Usage Label Hierarchy](dule_images/Data_usage_label_hierarchy.png "Data Usage Labels can be applied at three levels and are inherited from the top down.")
 
-## Data Usage Policies
+## Data usage policies
 
 In order for data usage labels to effectively support data compliance, data usage policies must be implemented. Data usage policies are rules that describe the kinds of marketing actions that you are allowed to, or restricted from, performing on data within Experience Platform.
 
 An example of a marketing action might be the desire to export a dataset to a third party service. If there is a policy in place saying that specific types of data, such as Personally Identifiable Information (PII), cannot be exported and an "I" label (Identity data) has been applied to the dataset, you will receive a response from the Policy Service telling you that a data usage policy has been violated.
 
-### How to Create and Work with Data Usage Policies
+### How to create and work with data usage policies
 
 Once data usage labels have been applied, data stewards can create policies via the DULE Policy Service API.
 
@@ -94,7 +92,7 @@ Within the Policy Service API, all policies and marketing actions are referred t
 
 The [Working with Data Usage Policies](dule_working_with_policies.md) tutorial walks you through key operations you can perform using the Policy Service API. These include creating and updating policies, determining the status of a policy, and working with marketing actions to evaluate if a specific action violates a data usage policy.
 
-## Future Releases
+## Future releases
 
 Adobe Experience Platform currently supports DULE labeling at three levels (connection, dataset, and field) with full support for inheritance between levels. Platform also supports the creation and management of data usage policies and marketing actions via the DULE Policy Service API.
 

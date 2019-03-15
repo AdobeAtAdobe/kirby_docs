@@ -10,7 +10,7 @@ The examples below will walk you through the steps necessary to add and edit lab
 
 More information regarding Data Usage Labeling and Enforcement can be found in the [DULE User Guide](dule_overview.md).
 
-### Adding Data Usage Labels at the Connection Level
+### Adding data usage labels at the connection-level
 Creating a connection requires login access to the connector. In this example, a connection will be made to Microsoft Dynamics.
 
 1. In Adobe Experience Platform, select the Data workspace from the top navigation.
@@ -28,7 +28,7 @@ Creating a connection requires login access to the connector. In this example, a
 1. The connection labels you selected will now appear on the Data Governance tab within the connection details.
 ![Data Governance Tab](dule_images/ConnectionDetailsDataGovernance.png)
 
-### Editing Data Usage Labels via Connection Details
+### Editing data usage labels via connection details
 1. Select the Connections tab in the Data workspace.
 1. From the list of connections, click on the name of the connection that you wish to edit.
 1. On the connection details page, select the Data Governance tab. All connection labels that have been applied to this connection are visible in the Connection Labels section, beside the connection name.
@@ -42,7 +42,7 @@ Creating a connection requires login access to the connector. In this example, a
 1. Once you have finished selecting data usage labels, click the "Save Changes" button. 
 1. You will now see all selected connection labels on the Data Governance tab within the connection details.
 
-### Adding Data Usage Labels at the Dataset Level During Data Ingestion
+### Adding data usage labels at the dataset-level during data ingestion
 1. In Adobe Experience Platform, select the Data workspace from the top navigation.
 1. From within the Data workspace, select the Dataset tab. If datasets have been created, they will be listed here with Dataset Name, Source, Schema, and Status of Last Batch.
 ![Dataset Tab within Data Workspace](dule_images/DatasetListView.png)
@@ -60,7 +60,7 @@ Creating a connection requires login access to the connector. In this example, a
 ![Labels Applied to Dataset](dule_images/DatasetAppliedLabels.png)
 1. Click the "Save" button to save your dataset.
 
-### Editing Data Usage Labels via Dataset Details
+### Editing data usage labels via dataset details
 1. Select the Datasets tab in the Data workspace.
 1. From the list of datasets, click on the name of the dataset you wish to edit.
 ![Select Dataset from List](dule_images/DatasetEditFromList.png)
@@ -78,11 +78,11 @@ Creating a connection requires login access to the connector. In this example, a
 
 The "Show Inherited Labels" toggle is off by default. If you toggle it on, you will see any inherited labels from the connection-level down to the dataset and fields. These inherited labels will not have an "x" next to them for easy removal, and will be "greyed out" in the Edit Data Labels dialog.
 
-This is because **inherited fields are read only**, meaning they cannot be removed at the dataset or field-level. Labels applied at the connection-level can only be removed by following the [_Editing Data Usage Labels via Connection Details_](#Editing-Data-Usage-Labels-via-Connection-Details) steps outlined above. 
+This is because **inherited fields are read only**, meaning they cannot be removed at the dataset or field-level. Labels applied at the connection-level can only be removed by following the [_Editing data usage labels via connection details_](#editing-data-usage-labels-via-connection-details) steps outlined above. 
 
-### Adding Data Usage Labels at the Field Level via Dataset Details 
+### Adding data usage labels at the field-level via dataset details 
 
-Continuing the workflow above for [_Editing Data Usage Labels via Dataset Details_](#editing-data-usage-labels-via-dataset-details), if the dataset contains data (meaning there is at least one column and one row) you will see a section in the dataset details called Field Labels.  Each column in a dataset is represented by a row in the Field Labels section.  
+Continuing the workflow above for [_Editing data usage labels via dataset details_](#editing-data-usage-labels-via-dataset-details), if the dataset contains data (meaning there is at least one column and one row) you will see a section in the dataset details called Field Labels.  Each column in a dataset is represented by a row in the Field Labels section.  
 
 1. Hover over the field row you wish to edit and a pencil "edit" icon will appear. Alternatively, click the checkbox beside the field name and an "Edit Data Labels" button will appear. To add and edit labels for multiple fields at once, select the "Fields in Dataset" checkbox to select all fields and the "Edit Data Labels" button will appear.
 ![Edit Field Labels](dule_images/FieldEditDataLabels.png)
@@ -94,4 +94,4 @@ Continuing the workflow above for [_Editing Data Usage Labels via Dataset Detail
 ![Field Labels Section](dule_images/FieldsFieldLabelSection.png)
 
 
-**Note:** It is important to remember that inheritance moves from the top-level down only (Connection → Dataset → Fields), meaning that labels applied at the field-level will not be propagated to other fields or upwards to the dataset or connection.
+>**Note:** It is important to remember that inheritance moves from the top-level down only (Connection → Dataset → Fields), meaning that labels applied at the field-level will not be propagated to other fields or upwards to the dataset or connection.
