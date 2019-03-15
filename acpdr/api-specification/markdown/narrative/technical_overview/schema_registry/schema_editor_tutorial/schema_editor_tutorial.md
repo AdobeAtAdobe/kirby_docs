@@ -73,7 +73,7 @@ Back in the canvas, the **Class** section now contains the class we selected, XD
 
 The fields appear in the format "fieldName | Data Type". The proper way to define a field in the UI will be discussed in more detail later.
 
-_**Note:**_ You can [change the class](#change-schema-class) at any point during the initial schema composition process before the schema has been saved, but this should only be done with extreme caution. Mixins are only compatible with certain classes, therefore changing the class will reset the canvas and any fields you have added to that point. 
+> **Note:** You can [change the class](#change-schema-class) at any point during the initial schema composition process before the schema has been saved, but this should only be done with extreme caution. Mixins are only compatible with certain classes, therefore changing the class will reset the canvas and any fields you have added to that point. 
 
 ## Add Mixin
 
@@ -97,7 +97,7 @@ After clicking **Add Mixin**, you will be returned to the schema canvas. The **M
 
 This mixin contributes several fields under the top-level name "person" with the data type "Person". This group of fields describes information about an individual, including name, birth date, and gender. 
 
-_**Note:**_ Remember that fields may use scalar types (such as string, integer, array, or date) as their data type, as well as any 'data type' (a group of fields representing a common concept) in the Schema Registry. 
+> **Note:** Remember that fields may use scalar types (such as string, integer, array, or date) as their data type, as well as any 'data type' (a group of fields representing a common concept) in the Schema Registry. 
 
 Notice that the "name" field has a data type of "Person Name", meaning it too describes a concept and contains name-related sub-fields such as first name, last name, and full name.
 
@@ -233,7 +233,7 @@ Now all data ingested into the "loyaltyId" field will be used to help identify t
 
 ![](images/identity_descriptor.png)
 
-_**Note:**_ Once a schema field has been set as the primary identity, you will receive an error message if you later attempt to set another field in the schema as the primary. Each schema may contain only one primary identity field.
+> **Note:** Once a schema field has been set as the primary identity, you will receive an error message if you later attempt to set another field in the schema as the primary. Each schema may contain only one primary identity field.
 
 To learn more about working with identities, please review the [Identity Service](../../identity_services_architectural_overview/identity_services_architectural_overview.md) documentation.
 
@@ -257,7 +257,7 @@ On the right-hand side of the editor, under **Schema Properties**, you will see 
 
 When you click to toggle-on Unified Profile, a pop-up will appear asking you to confirm that you wish to enable the schema for Unified Profile. 
 
-_**Note:**_ Once a schema has been enabled for Unified Profile and saved, it cannot be disabled.
+> **Note:** Once a schema has been enabled for Unified Profile and saved, it cannot be disabled.
 
 ![](images/enable_for_unified_profile.png)
 
@@ -283,13 +283,13 @@ You can then give your new class a **Display Name** (a short, descriptive, uniqu
 
 ![New Class Details](images/create_class.png)
 
-_**Note:**_ When building a schema that implements a class you define, remember that mixins are available for use only with compatible classes. Since the class you defined is new, there will be no compatible mixins listed in the **Add Mixin** dialog. Instead, you will need to select the radio button to **Create New Mixin** and define a mixin for use with that class. The next time you compose a schema that implements the new class, the mixin(s) that you defined will be listed and available for use.
+> **Note:** When building a schema that implements a class you define, remember that mixins are available for use only with compatible classes. Since the class you defined is new, there will be no compatible mixins listed in the **Add Mixin** dialog. Instead, you will need to select the radio button to **Create New Mixin** and define a mixin for use with that class. The next time you compose a schema that implements the new class, the mixin(s) that you defined will be listed and available for use.
 
 ## Assign New Schema Class
 
 At any time during the initial schema composition process, before the schema is saved, you are able to change the class upon which the schema is based. 
 
-_**Note:**_ Please exercise caution before changing the class. Mixins are only compatible with certain classes, therefore changing the class will reset the canvas and remove any fields you have added to that point. 
+> **Note:** Please exercise caution before changing the class. Mixins are only compatible with certain classes, therefore changing the class will reset the canvas and remove any fields you have added to that point. 
 
 In order to change the class, click **Assign** next to **Class** in the **Composition** section of the editor. 
 
