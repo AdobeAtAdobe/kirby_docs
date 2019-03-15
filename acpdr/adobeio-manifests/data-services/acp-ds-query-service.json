@@ -97,7 +97,7 @@
       [
         {
           "pages": [],
-          "path": "acpdr/end-user/markdown/query-service/qs-sql-ref.md",
+          "path": "acpdr/end-user/markdown/query-service/qs-sql-syntax.md",
           "title": "SQL reference"
 		    },
         {
@@ -111,6 +111,8 @@
           "title": "SQL metadata"
 		    }
       ],
+			"path": "acpdr/end-user/markdown/query-service/qs-sql-ref.md",
+			"title": "SQL reference"
 		},
     {
 			"pages": [],
