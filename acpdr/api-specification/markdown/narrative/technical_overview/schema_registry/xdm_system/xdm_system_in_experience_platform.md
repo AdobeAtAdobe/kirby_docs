@@ -5,8 +5,8 @@ In order to gain actionable insights from data, we need to ensure that similar d
 To gain consistency in data definitions, Adobe Experience Platform relies on schemas to describe the data and provide constraints about how the data should look and be interpreted as it moves between Platform services. This document provides an overview of the role of schemas within Experience Platform, including:
 
 * An introduction to [Experience Data Model and XDM System](#experience-data-model-and-xdm-system)
-* [Data Behaviors in Experience Platform](#data-behaviors-in-experience-platform)
-* The Use of Schema by Platform Components:
+* [Data behaviors in Experience Platform](#data-behaviors-in-experience-platform)
+* The use of schema by Platform Components:
   * [Schema Registry](#schema-registry)
   * [Catalog & Experience Data Lake](#catalog--experience-data-lake)
   * [Query Service](#query-service)
@@ -53,7 +53,7 @@ While not all events are easily categorized across all data sources, it is extre
 
 ![ExperienceEvent Customer Journey](images/ExperienceEvent_customer_journey.png "Experience Events show a customer journey over time")
 
-## Experience Platform Components and Use of Schema
+## Experience Platform components and use of schema
 
 Adobe Experience Platform is schema agnostic, meaning that any schema that conforms to the XDM standard is available for use by Experience Platform components. The ways in which various Platform services (such as Catalog, Unified Profile, and Segmentation) use schemas are outlined in more detail below.
 
@@ -127,7 +127,7 @@ These audiences, or subsets, of customers are based on shared characteristics an
 
 More information about segmentation is available in the [Segment Builder Overview](../../../../../../end-user/markdown/segmentation_overview/segmentation.md).
 
-## Next Steps
+## Next steps
 
 Now that you better understand the role of schemas throughout Experience Platform, you are ready to start composing your own. 
 

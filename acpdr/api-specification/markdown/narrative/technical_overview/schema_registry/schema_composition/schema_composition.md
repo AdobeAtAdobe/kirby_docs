@@ -4,15 +4,15 @@ This document provides an introduction to schemas and the building blocks, princ
 
 Within this document you will find information on the following topics:
 
-* [Understanding Schemas](#understanding-schemas)
-* [Schema-based Workflows](#schema-based-workflows-in-experience-platform)
+* [Understanding schemas](#understanding-schemas)
+* [Schema-based workflows](#schema-based-workflows-in-experience-platform)
 * [Planning a schema](#planning-your-schema), including: types of data, identity fields, and schema evolution principles
 * [Schema building blocks](#building-blocks-of-schema): class, mixin, data type, field
 * [Standard fields for use in schemas](#xdm-fields)
-* [Schema Composition](#composition-example)
-* [Union Schemas](#union)
+* [Schema composition](#composition-example)
+* [Union schemas](#union)
 
-## Understanding Schemas
+## Understanding schemas
 
 A schema is a set of rules to help represent and validate data. At a high-level, schemas provide an abstract definition of a real-world object (such as a Person) and outline what data should be included in each instance of that object (such as First Name, Last Name, Birthday, etc).
 
@@ -32,7 +32,7 @@ Modern digital systems generate vast amounts of behavioral signals (transaction 
 
 Schemas solve this big data problem by allowing data to be integrated from multiple sources, standardized through common structures and definitions, and shared across solutions. This allows subsequent processes and services to answer any type of question being asked of the data, moving away from the traditional approach to data modeling where all of the questions that will be asked of the data are known in advance and the data is modeled to suit.
 
-## Schema-based Workflows in Experience Platform
+## Schema-based workflows in Experience Platform
 
 Standardization is a key concept behind Experience Platform. Experience Data Model (XDM), driven by Adobe, is an effort to standardize customer experience data and define standard schemas for customer experience management. 
 
@@ -74,7 +74,7 @@ Fields that are commonly marked as "Identity" include: email address, phone numb
 
 It is important to think about customer identities during the schema planning phase, to help ensure data is being brought together to form the most robust profile possible. You can learn more about how identity information can help you deliver digital experiences to your customers by reading the [Identity Service Overview](../../identity_services_architectural_overview/identity_services_architectural_overview.md).
 
-### Schema Evolution Principles
+### Schema evolution principles
 
 As the nature of digital experiences continues to evolve, so must the schemas used to represent them. Therefore, a well designed schema is able to adapt and evolve as needed, without causing destructive changes to previous versions of the schema.
 
@@ -165,7 +165,7 @@ The valid ranges of these scalar types can be further constrained to certain pat
 
 > **Note:** The "map" field type allows for key-value pair data, including multiple values for a single key. Maps can only be defined at the system level, meaning you may encounter a map in an industry or vendor-defined schema, but it is not available for use in fields you define. The [Schema Registry API Developer Guide](../schema_registry_developer_guide.md) contains more information on defining field types.
 
-### XDM Fields
+### XDM fields
 
 In addition to basic fields and the ability to define your own data types, XDM provides a standard set of fields and data types that are implicitly understood by Experience Platform services and provide greater consistency when used across Platform components.
 
@@ -173,7 +173,7 @@ These fields, such as "First Name" and "Email Address" contain added connotation
 
 The complete list of fields is available through the [XDM Field Dictionary](xdm_field_dictionary.md). It is recommended to use XDM field and data types wherever possible to support consistency and standardization across Experience Platform.
 
-## Composition Example
+## Composition example
 
 Dataset schemas are built using a composition model. Experience Platform users compose schemas to represent data that will be ingested into Platform. As previously mentioned, these schemas are composed of a class and zero or more mixins that are compatible with that class.
 
@@ -183,19 +183,19 @@ Another dataset schema to track website traffic might be called "Web Visits". It
 
 The diagram below shows these schemas and the fields contributed by each mixin. It also contains two schemas based on the XDM Profile class, including the "Loyalty Members" schema we discussed earlier.
 
-![](images/composition.png)
+![](images/schema_composition.png)
 
 ### Union
 
 While Experience Platform allows you to compose schema for specific use cases, it also allows you to see a "union" of schemas for a specific class type. In the previous diagram we saw two schemas based on the XDM ExperienceEvent class and two schemas based on XDM Profile class. The union, shown below, aggregates the fields of all schemas that share the same class (XDM ExperienceEvent and XDM Profile, respectively). 
 
-![](images/union.png)
+![](images/union_schema.png)
 
 By enabling a schema for use with Unified Profile Service (UPS), it will be included in the union for that class type. UPS delivers robust, 360&deg; profiles of customer attributes as well as a timestamped account of every event that customer has had across any system integrated with Platform. UPS uses the union view to represent this data and provide a holistic view of each individual customer.
 
 For more information on working with UPS, see the [Unified Profile Service Overview](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md).
 
-## Next Steps
+## Next steps
 
 Now that you understand the basics of schema composition, you are ready to begin building schemas using the Schema Registry.
 

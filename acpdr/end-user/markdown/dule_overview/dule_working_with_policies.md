@@ -20,7 +20,7 @@ The examples in this document will walk you through key operations you can perfo
 
 Using the API requires you to have an Adobe ID and access to Adobe Experience Platform. Follow the steps for [getting started](getting-started-with-dule-policy-service) to ensure you have all of the information that you need and an understanding of core concepts before attempting to make calls to the Policy Service API.
 
-## Getting Started with DULE Policy Service
+## Getting started with DULE Policy Service
 
 Before beginning to work with the Policy Service, data on Experience Platform must have appropriate DULE labels applied. Complete step-by-step instructions for applying data usage labels at the connection-, dataset-, and field-level can be found in the [Working with Data Labels](duel_working_with_labels.md) guide. 
 
@@ -48,13 +48,13 @@ Calls in which a payload (body) are sent will require a fourth header:
 
 The necessary headers for each operation are included in the sample CURL requests below.
 
-### Core vs Custom Resources
+### Core vs custom resources
 
 Within the Policy Service API, all policies and marketing actions are referred to as either `core` or `custom` resources. 
 
 The `core` resources are ones defined and maintained by Adobe, whereas `custom` resources are created and maintained by individual customers and are therefore unique and visible solely to the IMS organization that created them. As such, listing and lookup operations (`GET`) are the only operations permitted on `core` resources, whereas listing, lookup and update operations (`POST`, `PUT`, `PATCH`, and `DELETE`) are available for `custom` resources.
 
-### Policy Status
+### Policy status
 
 Data usage policies can have one of three possible statuses: `DRAFT`, `ENABLED`, or `DISABLED`. 
 
@@ -62,13 +62,13 @@ By default, only "ENABLED" policies participate in policy evaluation.
 
 "DRAFT" policies can also be considered in policy evaluation, but only by setting the query parameter `?includeDraft=true`. More information on policy evaluation can be found in the [Policy Evaluation](#policy-evaluation) section at the end of this document.
 
-### Marketing Action Names
+### Marketing action names
 
-Marketing Action Names are unique identifiers for marketing actions. Each `core` marketing action has a unique name that applies across all IMS Orgs. These names are defined and maintained by Adobe. Meanwhile, all customer-defined marketing actions (`custom` resources) are unique within your individual organization and are not visible or shared with other IMS Orgs. 
+Marketing action names are unique identifiers for marketing actions. Each `core` marketing action has a unique name that applies across all IMS Orgs. These names are defined and maintained by Adobe. Meanwhile, all customer-defined marketing actions (`custom` resources) are unique within your individual organization and are not visible or shared with other IMS Orgs. 
 
 Steps for working with marketing actions in the Policy Service API are outlined in the [Marketing Actions](#marketing-actions) section later in this document.
 
-## Sample API Calls
+## Sample API calls
 
 The following API calls provide examples of basic Policy Service operations, including listing resources (GET), looking up specific resources (GET), creating (POST) and updating (PUT) resources, and deleting resources. As noted previously, the only operations available on `core` resources are those to view (GET) a resource. You will not be able to alter (POST, PUT, DELETE) `core` resources.
 
@@ -78,7 +78,7 @@ Data usage policies are rules that describe the kinds of marketing actions that 
 
 The `/policies` endpoint is used for all API calls related to viewing, creating, updating, or deleting data usage policies.
 
-### List All Policies
+### List all policies
 
 To view a list of policies, a GET request can be made to `/policies/core` or `/policies/custom` that returns all policies for the specified container. 
 
@@ -192,7 +192,7 @@ The response includes a "count" showing the total number of policies within the 
 }
 ```
 
-### Lookup Specific Policy
+### Lookup specific policy
 
 Each policy contains an `id` field that can be used to request the details of a specific policy. If the `id` of a policy is unknown, it can be found using the listing (GET) request to list all policies within a specific container (`core` or `custom`) as shown in the previous step.
 
@@ -260,7 +260,7 @@ The response contains the details of the policy, including key fields such as `i
 }
 ```
 
-### Create a Policy
+### Create a policy
 
 Creating a policy requires the inclusion of a marketing action with an expression of the DULE labels that prohibit that marketing action. Policy definitions must include a `deny` property, which is a boolean expression regarding the presence of DULE labels. 
 
@@ -367,7 +367,7 @@ If successfully created, you will receive an HTTP Status 201 (Created) and the r
 }
 ```
 
-### Update a Policy
+### Update a policy
 
 You may find that you need to update a data usage policy after it has been created. This is done through a PUT request to the policy `id` with a payload that includes the updated form of the policy, in its entirety. In other words, the PUT request is essentially _rewriting_ the policy, therefore the body must include all required information as shown in the example below.
 
@@ -458,7 +458,7 @@ If the update is successful, you will receive an HTTP Status 200 (OK) and the re
 }
 ```
 
-### Update a Portion of a Policy
+### Update a portion of a policy
 
 A specific portion of a policy may be updated using a PATCH request. Unlike PUT requests that _rewrite_ the policy, PATCH requests update only the path specified in the request body. This is especially useful when you want to enable or disable a policy, as you need only send the specific path that you wish to update (`/status`) and its value (`ENABLE` or `DISABLE`). 
 
@@ -559,7 +559,7 @@ If successfully updated, you will receive an HTTP Status 200 (OK) and the respon
 }
 ```
 
-### Delete a Policy
+### Delete a policy
 
 If you need to remove a policy that you have created, you can do so by issuing a DELETE request to the `id` of the policy you wish to delete. It is best practice to perform a lookup (GET) request first to view the policy and confirm it is the correct policy you wish to remove. **Once deleted, policies cannot be recovered.**
 
@@ -591,7 +591,7 @@ A marketing action, in the context of the data governance framework, is an actio
 
 Working with marketing actions in the API requires you to use the `/marketingActions` endpoint.
 
-### List All Marketing Actions
+### List all marketing actions
 
 To view a list of all marketing actions, a GET request can be made to `/marketingActions/core` or `/marketingActions/custom` that returns all policies for the specified container.
 
@@ -667,7 +667,7 @@ The response object provides the total number of marketing actions in the contai
 }
 ```
 
-### Lookup Specific Marketing Action
+### Lookup specific marketing action
 
 You can also perform a lookup (GET) request to view the details of a specific marketing action. This is done using the `name` of the marketing action. If the name is unknown, it can be found using the listing (GET) request shown previously.
 
@@ -711,7 +711,7 @@ The response object contains the details for the marketing action, including the
 }
 ```
 
-### Create or Update a Marketing Action
+### Create or update a marketing action
 
 The Policy Service API allows you to define your own marketing actions, as well as update existing ones. Creating and updating are both done using a PUT operation to the name of the marketing action. 
 
@@ -763,7 +763,7 @@ If successfully created, you will receive an HTTP Status 201 (Created) and the r
 }
 ```
 
-### Delete a Marketing Action
+### Delete a marketing action
 
 It is possible to delete marketing actions by sending a DELETE request to the `{marketingActionName}` of the marketing action you wish to remove. 
 
@@ -791,7 +791,7 @@ If the marketing action has been successfully deleted, the response body will be
 
 You can confirm the deletion by attempting to lookup (GET) the marketing action. You should receive an HTTP Status 404 (Not Found) along with a "Not Found" error message because the marketing action has been removed.
 
-## Policy Evaluation
+## Policy evaluation
 
 Once marketing actions have been created and policies have been defined, you can use the Policy Service API to evaluate if any policies are violated by certain actions. The returned constraints take the form of a set of policies that would be violated by attempting the marketing action.
 
@@ -801,7 +801,7 @@ Evaluation requests can be made in one of two ways:
 1. Given a set of DULE labels and a marketing action, does the action violate any policies?
 1. Given a dataset (and an optional subset of fields in the dataset) and a marketing action, does the action violate any policies?
 
-### DULE Labels and Marketing Action
+### DULE labels and marketing action
 
 Evaluating policy violations based on the presence of DULE labels requires you to specify the set of labels that would be present on the data during the request. This is done through the use of query parameters, where DULE labels are provided as a comma-separated list of values, as shown in the following example.
 
@@ -886,7 +886,7 @@ The response object includes a `duleLabels` array that should match the labels s
 }
 ```
 
-### Dataset ID and Marketing Action
+### Dataset ID and marketing action
 
 You can also evaluate policy violations by specifying the ID of a dataset from which DULE labels can be collected.
 
@@ -966,7 +966,7 @@ If the specified marketing action violates a policy involving the `duleLabels` w
 }
 ```
 
-### Dataset ID, Fields, and Marketing Action
+### Dataset ID, fields, and marketing action
 
 In addition to supplying a dataset ID, a sub-set of fields from within the dataset may also be specified, indicating that only the DULE labels on those fields should be evaluated. 
 
@@ -1056,7 +1056,7 @@ If a policy is violated by performing the specified marketing action on the data
 }
 ```
 
-## Next Steps
+## Next steps
 
 Now that you have learned how to use the DULE Policy Service API, you can begin creating and evaluating data usage policies of your own. 
 
