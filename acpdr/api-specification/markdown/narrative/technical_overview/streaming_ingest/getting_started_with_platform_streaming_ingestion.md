@@ -4,17 +4,17 @@
 
 This documentation will help you quickly get started with the Adobe Experience Platform Streaming APIs. Specifically, this documentation will help you:
 
-1. [Create a Data Inlet](#creating-a-data-inlet)
-2. [Stream a Profile Object to Adobe Experience Platform](#streaming-a-profile-object-to-adobe-experience-platform)
-   1. [Compose an XDM Profile Schema](#step-1-composing-an-xdm-profile-schema)
-   2. [Create a Dataset for XDM Profile Records](#step-2-creating-a-dataset-for-xdm-profile-records)
-   3. [Call Streaming Ingestion APIs to create a Profile Record](#step-3-calling-streaming-ingestion-apis-to-create-a-profile-record)
-   4. [Retrieve the newly created Profile](#step-4-retrieving-the-newly-created-profile)
-3. [Stream an ExperienceEvent to Adobe Experience Platform](#streaming-an-experienceevent-to-adobe-experience-platform)
-   1. [Compose an XDM ExperienceEvent Schema](#step-1-composing-an-xdm-experienceevent-schema)
-   2. [Create a Dataset for XDM ExperienceEvents](#step-2-creating-a-dataset-for-xdm-experienceevents)
-   3. [Call Streaming Ingestion APIs to record a time-series ExperienceEvent](#step-3-calling-streaming-ingestion-apis-to-record-a-time-series-experienceevent)
-   4. [Retrieve the newly persisted ExperienceEvent back from Unified Profile](#step-4-retrieving-the-newly-persisted-experienceevent-back-from-unified-profile)
+- [Create a Data Inlet](#creating-a-data-inlet)
+- [Stream a Profile Object to Adobe Experience Platform](#streaming-a-profile-object-to-adobe-experience-platform)
+    - [Compose an XDM Profile Schema](#step-1-composing-an-xdm-profile-schema)
+    - [Create a Dataset for XDM Profile Records](#step-2-creating-a-dataset-for-xdm-profile-records)
+    - [Call Streaming Ingestion APIs to create a Profile Record](#step-3-calling-streaming-ingestion-apis-to-create-a-profile-record)
+    - [Retrieve the newly created Profile](#step-4-retrieving-the-newly-created-profile)
+- [Stream an ExperienceEvent to Adobe Experience Platform](#streaming-an-experienceevent-to-adobe-experience-platform)
+    - [Compose an XDM ExperienceEvent Schema](#step-1-composing-an-xdm-experienceevent-schema)
+    - [Create a Dataset for XDM ExperienceEvents](#step-2-creating-a-dataset-for-xdm-experienceevents)
+    - [Call Streaming Ingestion APIs to record a time-series ExperienceEvent](#step-3-calling-streaming-ingestion-apis-to-record-a-time-series-experienceevent)
+    - [Retrieve the newly persisted ExperienceEvent back from Unified Profile](#step-4-retrieving-the-newly-persisted-experienceevent-back-from-unified-profile)
 
 ## How do I get started?
 
@@ -1024,7 +1024,7 @@ With this knowledge, you should be able to easily get your data to Adobe Experie
 [identityapi]: ../identity_services_architectural_overview/identity_services_architectural_overview.md
 
 
-[xdminfo]: ../schema_registry/standard_schemas/acp_standard_schemas.md
+[xdminfo]: ../schema_registry/standard_composition/schema_composition.md
 
 [profileapi]: ../unified_profile_architectural_overview/unified_profile_architectural_overview.md
 
