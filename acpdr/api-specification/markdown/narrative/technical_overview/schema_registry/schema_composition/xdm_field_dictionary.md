@@ -4,7 +4,7 @@ Experience Data Model (XDM) defines a set of standard fields that can be used wh
 
 See [Basics of Schema Composition](schema_composition.md) for more information about the building blocks of schemas, including principles and best practices in defining schemas.
 
-> **Note:** If a field is marked "**DEPRECATED**", it means that it should no longer be used in new implementations. The field continues to be available for backwards compatibility, but will no longer be supported in future releases.
+_**Note:**_ If a field is marked "**DEPRECATED**", it means that it should no longer be used in new implementations. The field continues to be available for backwards compatibility, but will no longer be supported in future releases.
 
 ---
 
