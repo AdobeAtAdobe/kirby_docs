@@ -62,7 +62,7 @@ Here is a list of what we will cover this tutorial:
 
 With the Docker image for the Recipe created in the [Package Recipe to Data Science Workspace tutorial](../package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md), we can create a Recipe. The Recipe is an umbrella entity holding all Instances. A Recipe is usually tied to one or more Docker images which is specified in the body of the request.
 
-> **Note:** The term "Recipe" and "Engine" (as seen in the API documentation) are interchangeably used and refer to the same thing.
+***Note that the term "Recipe" and "Engine" (as seen in the API documentation) are interchangeably used and refer to the same thing.***
 
 #### Request
 
@@ -98,7 +98,7 @@ curl -X POST \
 `{DOCKER_IMAGE}`: Link to the Docker image.  
 `{ARTIFACT_BINARIES}`: The binary Recipe artifact (eg. JAR, EGG) used for all operations by default.  
 
-> **Note:** If an image that is not `Spark` is used, the `type` and `executionType` fields should be set to the correct type (eg. `Python`, `Pyspark`).
+Note that if an image that is not `Spark` is used, the `type` and `executionType` fields should be set to the correct type (eg. `Python`, `Pyspark`).
 
 #### Response
 
@@ -220,7 +220,7 @@ curl -X POST \
 
 ```
 
-> **Note:** In the `{JSON_PAYLOAD}`, we define parameters used for training and scoring in the `tasks` array. The `{RECIPE_ID}` is the ID of the Recipe you want to use and the `tag` field is an optional parameter used to identify the Instance.
+Note that in the `{JSON_PAYLOAD}`, we define parameters used for training and scoring in the `tasks` array. The `{RECIPE_ID}` is the ID of the Recipe you want to use and the `tag` field is an optional parameter used to identify the Instance.
 
 The response will contain the `{INSTANCE_ID}` which represents the Instance that is created. Multiple model Instances with different configurations can be created.
 
@@ -800,7 +800,7 @@ curl -X DELETE \
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
 `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 
-> **Note:** The API call will disable creation of new Experiment runs. However, it will not stop execution of already running Experiment Runs.
+Note that the API call will disable creation of new Experiment runs. However, it will not stop execution of already running Experiment Runs.
 
 The following is the Response notifying that the Experiment is successfully deleted.
 
