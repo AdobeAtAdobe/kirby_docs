@@ -451,9 +451,9 @@ curl -X PUT  'https://platform.adobe.io/data/foundation/catalog/xdms/context/per
     }'
 ```
 
-> **Note:** The PUT request is, essentially, **re-writing** the existing extension, and is **not** appending to it. As a result, ensure your PUT request includes **ALL** the fields (old and new) that you wish to have in the updated extension.  
-> 
-> In addition, it is good to follow basic XDM principles - ensure **no** breaking changes are made - other good XDM principles can be found [here](../../technical_overview/schema_registry/schema_design/schema_principles.md).
+**Note:** The PUT request is, essentially, **re-writing** the existing extension, and is **not** appending to it. As a result, ensure your PUT request includes **ALL** the fields (old and new) that you wish to have in the updated extension.
+
+In addition, it is good to follow basic XDM principles - ensure **no** breaking changes are made - other good XDM principles can be found [here](../../technical_overview/schema_registry/schema_design/schema_principles.md).
 
 #### API Format - Verifying the Field is Added
 
