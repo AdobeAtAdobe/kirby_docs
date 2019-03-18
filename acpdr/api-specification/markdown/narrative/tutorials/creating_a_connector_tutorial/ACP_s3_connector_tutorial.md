@@ -1,6 +1,6 @@
 # Amazon S3 Connector for Adobe Experience Platform
 
-The Amazon S3 Connector for Adobe Experience Platform provides an API and wizard to ingest data from your S3 data store onto Adobe Experience Platform. The S3 connector for Platform allows you to:
+The Amazon S3 Connector for Adobe Experience Platform provides an API and user interface to ingest data from your S3 data store onto Adobe Experience Platform. The S3 connector for Platform allows you to:
 
 * Authenticate to your S3 account.
 * Select one or more datasets from a list of available datasets.
@@ -9,16 +9,11 @@ The Amazon S3 Connector for Adobe Experience Platform provides an API and wizard
 * Set a schedule and frequency for ingesting data.
 * Save the S3 connector and modify it as needed.
 
-This article provides steps to set up and configure the S3 connector using API calls.
+This article provides steps to set up and configure the Amazon S3 connector using API calls.
 
 ## Setting up the Amazon S3 Connector
 
 Set up an account to access APIs and provide credentials to create a connector:
-
-<!---### Prerequisites
-* Register the schema of the incoming file.
-* Register the metadata associated with the file, such as *DataSetName*, *UserID*, *IMSOrg*, and *ConnectionParameters*.
-* Platform data engineer should be able to get the details of the file ingested using an API call to the Catalog API.--->
 
 
 ### Set up an Adobe I/O account
@@ -29,7 +24,7 @@ See [authenticating and accessing APIs](../authenticate_to_acp_tutorial/authenti
 * `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
 ### Set up Platform connection to Amazon S3
-Use the below POST call and provide the *imsOrgId*, *accessToken*, and AWS access keys.
+Use the below POST call and provide the `imsOrgId`, `accessToken`, and AWS access keys.
 
 ```shell
 curl -X POST https://platform.adobe.io/data/foundation/ connectors/account/ \
@@ -52,7 +47,7 @@ curl -X POST https://platform.adobe.io/data/foundation/ connectors/account/ \
 ### Create a dataset
 Once you create the account and connection, you can use the *Connection ID* to create a dataset. You can configure datasets, pipeline, and triggers with a successful POST call.
 
-Provide a unique and identifiable name for the dataset, so you can identify it clearly when monitoring your data ingestion.
+Provide a unique and identifiable name for the dataset to identify it clearly when monitoring your data ingestion.
 
 The following are various properties of JSON for creating a dataset:
 
@@ -93,34 +88,34 @@ curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<c
     }'
 ```
 
-#### Incremental Ingestion
+#### Incremental ingestion
 
-Incremental Ingestion allows users to incrementally ingest their data based on their preferred frequency. Data is picked regularly from the specified location. `backfill` Date can be specified, wherein data will be picked up from that date.
+Incremental ingestion allows users to incrementally ingest data based on a preferred frequency and picked regularly from the specified location. A "backfill" date can be specified to start data ingestion from the specified date.
 
-Incremental Ingestion is supported in two ways: 
+Incremental ingestion is supported in two ways: 
 
-1. Vanilla Format on `lastModifiedDate` of files.
-2. Regular Expression (DateTime format) based Incremental Ingestion using 'connectors-objectDateTimeRegex' and 'isFolderRegex' tags in payload for POST Dataset. It provides capabilities to pick files and folders pertaining to a regex.
+* Generic format on `lastModifiedDate` of files.
+* Regular expression (`DateTime` format) based on incremental ingestion using `connectors-objectDateTimeRegex` and `isFolderRegex` tags in payload for POST dataset. It provides capabilities to pick files and folders pertaining to a regular expression (regex).
 
-Currently, incremental ingestion through regular expression (regex) is supported in two ways:
+Currently, incremental ingestion through regex is supported in two ways:
 
-1. Providing regex for files.
-2. Providing regex for folders. 
+* Providing regex for files.
+* Providing regex for folders. 
 
-Additionally, to leverage scheduled ingestion in a higher performing way, data should be partitioned with time based format - either in folders or in files as per application.
+Additionally, to leverage scheduled ingestion in a higher performing way, data should be partitioned with a time-based format either in folders or in files for each application.
 
 ##### Providing regex on folder name
 
-You can provide a DateTimeFormat in connectors-objectDateTimeRegex tag while posting a dataset, along with `isFolderRegex` tag. 
+You can provide a `DateTime` format in the `connectors-objectDateTimeRegex` tag while posting a dataset, along with the `isFolderRegex` tag. 
 
 | Property Name                  | Description   |
 | ------------------------------ |-------------  |
-| connectors-objectDateTimeRegex | Provide supported DateTime formats in this tag. Similar Frequency (Daily for ddMMyyyy, etc) should be set prior to post datasets.                                                              |
-| connectors-isFolderRegex       | Boolean value to determine if regex should be implemented on folders, the Default value is false. Can be used only if "connectors-objectDateTimeRegex" is also provided. |
+| `connectors-objectDateTimeRegex` | Provide supported DateTime formats in this tag. Similar Frequency (Daily for ddMMyyyy) should be set prior to post datasets.                                                              |
+| `connectors-isFolderRegex`       | Boolean value to determine if regex should be implemented on folders. The default value is *false*. This can be used only if `connectors-objectDateTimeRegex` is also provided. |
 
-Below are few examples for regex tag and file format at the source.
+Below are a few examples using the regex tag and file format at the source.
 
-| `connectors-objectDateTimeRegex` Tag | Example file names |
+| `connectors-objectDateTimeRegex` tag | Example file names |
 | -------------------------------------|--------------------|
 | dd-MM-yyyyTHH (Hourly) | <sample>-01-10-2018T08-<sample>.parquet, <sample>-01-10-2018T09-<sample>.parquet|
 | dd-MM-yyyy (Daily) | <sample>-01-10-2018-<sample>.parquet , <sample>-01-12-2018-<sample>.parquet |
@@ -133,7 +128,7 @@ Below are few examples for regex tag and file format at the source.
 | s3://<Bucket-Name/FolderA/ | true | Regex will be applied on folder names. All folders inside FolderA having names with <objectDateTimeRegex> values will be picked. All files within the matching folders will be picked. |
 | s3://<Bucket-Name/FolderA/FolderB | true | Regex will be applied on folder names. All folders inside FolderA having names starting with FolderB and containing regex <objectDateTimeRegex> values will be picked. Since path does not end with '/', it will be treated as folder regex prefix.  |
 
-Sample Payload Example for Regex based Incremental Ingestion on files.
+Sample payload example for regex-based incremental ingestion on files
 
 ```shell
 curl -X POST https: //platform.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json'
