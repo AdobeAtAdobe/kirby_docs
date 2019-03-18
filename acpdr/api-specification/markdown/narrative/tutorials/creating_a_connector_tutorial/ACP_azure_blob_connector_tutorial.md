@@ -30,7 +30,7 @@ After you set up authorization for APIs, these values are returned:
 * `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
 * `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
-### Set up a Platform connection to the Azure Blob
+### Set up Platform connection to the Azure Blob
 After you set up an Adobe I/O account, use the POST call and provide the *imsOrgId*, *accessToken*, and *Blob* connection string to set up a connection.
 
 ```shell
@@ -49,7 +49,7 @@ curl -X POST https://platform.adobe.io/data/foundation/ connectors/account/ \
         "type": "azure-blob-inbound"
       }'
 ```
-### Create a Dataset
+### Create a dataset
 Once you create the account and connection, you can use the *Connection ID* to create a dataset. You can configure Platform datasets, pipeline, and triggers with a successful POST call.
 
 Provide a unique and identifiable name for the dataset, so you can identify it clearly when monitoring your data ingestion.
@@ -66,7 +66,7 @@ params/datasets/fileDescription	| Optional. Identify the kind of file to ingest:
 
 
 
-#### Simple Payload Example
+#### Simple payload example
 ```shell
 curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
