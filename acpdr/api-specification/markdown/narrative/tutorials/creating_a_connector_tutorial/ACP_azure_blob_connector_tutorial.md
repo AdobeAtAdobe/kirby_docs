@@ -30,7 +30,7 @@ After you set up authorization for APIs, these values are returned:
 * `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
 * `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
-### Set up a Platform connection to the Azure Blob
+### Set up Platform connection to the Azure Blob
 After you set up an Adobe I/O account, use the POST call and provide the *imsOrgId*, *accessToken*, and *Blob* connection string to set up a connection.
 
 ```shell
@@ -49,7 +49,7 @@ curl -X POST https://platform.adobe.io/data/foundation/ connectors/account/ \
         "type": "azure-blob-inbound"
       }'
 ```
-### Create a Dataset
+### Create a dataset
 Once you create the account and connection, you can use the *Connection ID* to create a dataset. You can configure Platform datasets, pipeline, and triggers with a successful POST call.
 
 Provide a unique and identifiable name for the dataset, so you can identify it clearly when monitoring your data ingestion.
@@ -66,7 +66,7 @@ params/datasets/fileDescription	| Optional. Identify the kind of file to ingest:
 
 
 
-#### Simple Payload Example
+#### Simple payload example
 ```shell
 curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
@@ -93,6 +93,81 @@ curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<c
         }
 }'
 ```
+
+#### Incremental Ingestion
+
+Incremental Ingestion allows users to incrementally ingest their data based on their preferred frequency. Data is picked regularly from the specified location. `backfill` Date can be specified, wherein data will be picked up from that date.
+
+Incremental Ingestion is supported in two ways: 
+
+1. Vanilla Format on `lastModifiedDate` of files.
+2. Regular Expression (DateTime format) based Incremental Ingestion using 'connectors-objectDateTimeRegex' and 'isFolderRegex' tags in payload for POST Dataset. It provides capabilities to pick files and folders pertaining to a regex.
+
+Currently, incremental ingestion through regular expression (regex) is supported in two ways:
+
+1. Providing regex for files.
+2. Providing regex for folders. 
+
+Additionally, to leverage scheduled ingestion in a higher performing way, data should be partitioned with time based format - either in folders or in files as per application.
+
+##### Providing regex on folder name
+
+You can provide a DateTimeFormat in connectors-objectDateTimeRegex tag while posting a dataset, along with `isFolderRegex` tag. 
+
+| Property Name                  | Description   |
+| ------------------------------ |-------------  |
+| connectors-objectDateTimeRegex | Provide supported DateTime formats in this tag. Similar Frequency (Daily for ddMMyyyy, etc) should be set prior to post datasets.                                                              |
+| connectors-isFolderRegex       | Boolean value to determine if regex should be implemented on folders, the Default value is false. Can be used only if "connectors-objectDateTimeRegex" is also provided. |
+
+Below are few examples for regex tag and file format at the source.
+
+| `connectors-objectDateTimeRegex` Tag | Example file names |
+| -------------------------------------|--------------------|
+| dd-MM-yyyyTHH (Hourly) | <sample>-01-10-2018T08-<sample>.parquet, <sample>-01-10-2018T09-<sample>.parquet|
+| dd-MM-yyyy (Daily) | <sample>-01-10-2018-<sample>.parquet , <sample>-01-12-2018-<sample>.parquet |
+| MM-yyyy (Monthly) | <sample>-10-2018-<sample>.parquet |
+| yyyy (Yearly) | <sample>-2018-<sample>.parquet , <sample>-2019-<sample>.parquet |
+
+| S3 Path | isFolderRegex | Description |
+| ------- | ------------- | ----------- |
+| https://<blob-url>/<container-name>/<blob>/  | false | All files inside FolderA having names with <objectDateTimeRegex> values will be picked. |
+| https://<blob-url>/<container-name>/<blob>/ | true | Regex will be applied on folder names. All folders inside FolderA having names with <objectDateTimeRegex> values will be picked. All files within the matching folders will be picked. |
+| https://<blob-url>/<container-name>/<blob>/folderPath | true | Regex will be applied on folder names. All folders inside FolderA having names starting with FolderB and containing regex <objectDateTimeRegex> values will be picked. Since path does not end with '/', it will be treated as folder regex prefix.  |
+
+Sample Payload Example for Regex based Incremental Ingestion on files.
+
+```shell
+curl -X POST https: //platform.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets -H 'authorization: Bearer <accessToken>' -H 'content-type: application/json'
+-H 'x-api-key: <api_key>' -H 'x-gw-ims-org-id: <ImsOrgId>@AdobeOrg'-d
+'{ 
+   "params":{
+      "datasets":[ 
+         { 
+            "name":"<Dataset Name>",
+            "saveStrategy":"append",
+            "backfillDate":"2018-09-21 11:00:00",
+            "tags":{ 
+               "connectors-objectName":[ 
+                  "<Object-path>"
+               ],
+               "connectors-objectDateTimeRegex":[ 
+                  "<SupportedRegex>"
+               ],
+              "connectors-isFolderRegex":[ 
+                  "<True or False>"
+               ]
+            },
+            "fileDescription":{ 
+               "format":"parquet"
+            },
+            "schema":"@/xdms/model/Profile"
+         }
+      ]
+   }
+}'
+```
+
+
 *Note:* The Schedule API is optional. Make this call only if you want to schedule the ingestion or send a blank JSON {} as the payload for a one-time run.
 
 The following configuration ingests data every 15 minutes.
