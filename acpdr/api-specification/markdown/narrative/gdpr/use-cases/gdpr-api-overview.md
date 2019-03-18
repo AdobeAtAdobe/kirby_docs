@@ -1,4 +1,4 @@
-# Adobe Experience Platform GDPR Service overview
+# Adobe Experience Platform GDPR Service Overview
 
 ## Introduction
 
@@ -145,7 +145,7 @@ One key not detailed in the example above:
 
 ### <a id="include"></a>Include
 
-> **Note:** The former exclude key is no longer supported.
+*Note:* The former exclude key is no longer supported.
 
 The include key supports an array of product strings to include in your processing. If you only support or integrate with Audience Manager, you could include only AudienceManager in your request, which has the effect of excluding all the other products. If no products are included, the request will be rejected by the API.
 
@@ -167,7 +167,7 @@ The following flags might be specified at the root level (equivalent to the *use
 * The **priority** key is an optional parameter (*normal*|*low*) for optimizing requests based on customer need. This key is inactive at the moment. 
 * The **analyticsDeleteMethod** is an optional parameter (*purge*|*anonymize*) for specifying how Analytics should handle the customer data. By default (if omitted), all data referenced by the given collection of user IDs is anonymized, thus maintaining data integrity for historical reporting and other functions. Purge removes the data completely.
 
-## Creating your API integration
+## Creating your API Integration
 
 Now that you have your data collection for submission, it's time to create your API integration. Any Experience Cloud API, such as Platform GDPR Service, that accesses a service or content on behalf of an end user, authenticates using the OAuth and JSON Web Token (JWT) standards.
 
@@ -177,7 +177,7 @@ If your integration needs to access content or an API on behalf of an end user, 
 
 For service-to-service integrations, you also need a JSON Web Token (JWT) that encapsulates your client credentials and authenticates the identity of your integration. You exchange the JWT for the OAuth token that authorizes access. See [Adobe I/O Authentication Overview](http://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for detailed instructions.
 
-## GDPR headers and authorization
+## GDPR Headers and Authorization
 
 Once the integration is setup properly, you have everything you need to make a request to Platform GDPR Service. In order to populate the full header authorization keys, continue to use the instructions referenced above to exchange your JWT token for a valid technical account bearer token. Using that token and the account information from your integration, you are ready to populate the HTTP header. 
 
@@ -192,7 +192,7 @@ The following table outlines what is required for a POST request in Platform GDP
 | ticketId | Internal tracking ID | Optional - This ID allows you to link the jobs in this request to any internal tracking ID you may have in your systems |
 
 
-## Submitting an Adobe Experience Platform GDPR Service request
+## Submitting a Adobe Experience Platform GDPR Service request
 
 Platform GDPR Service supports three basic REST-type operations, HTTP verbs that indicate what type of action to be taken. The abbreviated table below shows these operations and additional detailed information for each API can be found here [docs](http://www.adobe.io). All requests are submitted to the following base URL:
 ```
@@ -593,7 +593,7 @@ To request jobs 151 to 175:
 
 `https://platform.adobe.io/data/privacy/gdpr?data=true&page=4&size=50`
 
-### Namespace qualifiers
+### Namespace Qualifiers
 
 | Qualifier | Definition |
 | --------- | ---------- |
@@ -606,7 +606,7 @@ To request jobs 151 to 175:
 | dpsc | A custom field type for DPS mappings, which support a set of three standard namespaces. |
 | target | A custom namespace understood internally by Target, not in the namespace service. This is passed in directly as specified by the original request, without a namespace ID |
 
-### Product values
+### Product Values
 
 ```javascript
 product {
@@ -622,7 +622,7 @@ product {
 }
 ```
 
-### Batching and concurrency
+### Batching and Concurrency
 Adobe allows customers to group multiple GDPR user IDs to process as a single batch request. A batch request has an upper limit of 1000 IDs to process. In the event that customers submit more than 1000 IDs, Adobe returns an error rejecting the batch request. Customers can send multiple concurrent requests.
 
 ## Summary
