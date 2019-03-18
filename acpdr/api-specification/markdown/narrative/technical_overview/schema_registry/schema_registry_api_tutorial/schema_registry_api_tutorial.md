@@ -1,4 +1,4 @@
-# Schema Registry API Tutorial
+# Schema Registry API tutorial
 
 The Schema Registry is used to access the Schema Library within Adobe Experience Platform. The Schema Library contains resources made available to you by Adobe, Experience Platform partners, and vendors whose applications you use. The registry provides a user interface and RESTful API from which all available library resources are accessible.
 
@@ -40,7 +40,7 @@ For this tutorial, you will be using the XDM Profile class. XDM Profile is an st
 
 To assign a class, an API call is made to create (POST) a new schema in the tenant container. This call includes the class the schema will implement. Each schema may only implement one class.
 
-#### API Format
+#### API format
 
 ```SHELL
 POST /tenant/schemas
@@ -113,7 +113,7 @@ You will receive an HTTP Response Status 201 (Created) and the response body wil
 
 To view your newly created schema, perform a lookup (GET) request using the `meta:altId` or the URL encoded `$id` URI for the schema.
 
-#### API Format
+#### API format
 
 ```SHELL
 GET /tenant/schemas/{schema meta:altId or URL encoded $id URI}
@@ -178,7 +178,7 @@ There are different standard mixins available for use, depending on the class of
 
 Mixins define concepts, such as "name" or "address", that can be reused in any schema that needs to capture that same information. 
 
-#### API Format
+#### API format
 
 ```SHELL
 PATCH /tenant/schemas/{schema meta:altId or url encoded $id URI}
@@ -258,7 +258,7 @@ GET /global/mixins?property=meta:intendedToExtend==https://ns.adobe.com/xdm/cont
 GET /tenant/mixins?property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile
 ```
 
-#### API Format
+#### API format
 
 ```SHELL
 PATCH /tenant/schemas/{schema meta:altId or url encoded $id URI}
@@ -341,7 +341,7 @@ In order to create (POST) a new mixin, your request must include a `meta:intende
 
 Any custom properties must be nested under your `TENANT_ID` to avoid collisions with other mixins or fields.
 
-#### API Format
+#### API format
 
 ```SHELL
 POST /tenant/mixins
@@ -490,7 +490,7 @@ You will receive an HTTP Response Status 201 (Created) and the response body wil
 
 You can now follow the same steps for [adding a standard mixin](#add-a-mixin) to add this newly created mixin to your schema.
 
-#### API Format
+#### API format
 
 ```SHELL
 PATCH /tenant/schemas/{schema meta:altId or url encoded $id URI}
@@ -569,7 +569,7 @@ You can see that the mixin has been successfully added because the response now 
 
 You can now perform a GET request to view the current schema and see how the added mixins have contributed to the overall structure of the schema.
 
-#### API Format
+#### API format
 
 ```SHELL
 GET /tenant/schemas/{schema meta:altId or URL encoded $id URI}
@@ -686,7 +686,7 @@ Data types allow you to define an object hierarchy once, and refer to it in a fi
 
 In other words, data types allow for the consistent use of multi-field structures, with more flexibility than mixins because they can be included anywhere in a schema by adding them as the "type" of a field. 
 
-#### API Format
+#### API format
 
 ```SHELL
 POST /tenant/datatypes
@@ -812,7 +812,7 @@ You may wish to perform a lookup (GET) request using the URL encoded `$id` URI t
 
 Now that the Loyalty Details data type has been created, you can update (PATCH) the "loyalty" field in the mixin you created to reference the data type in place of the fields that were previously there.
 
-#### API Format
+#### API format
 
 ```SHELL
 PATCH /tenant/mixins/{mixin meta:altId or URL encoded $id URI}
@@ -949,7 +949,7 @@ Fields that are commonly marked as "Identity" include: email address, phone numb
 
 Identity descriptors signal that the "sourceProperty" of the "sourceSchema" is a unique identifier that should be considered an "Identity". For more information on working with descriptors, see the [Schema Registry Developer Guide](../schema_registry_developer_guide.md)
 
-#### API Format
+#### API format
 
 ```SHELL
 POST /tenant/descriptors
@@ -1007,7 +1007,7 @@ For more information on working with union views, see the [Schema Registry Devel
 
 In order for a schema to be included in the merged union view, the "union" tag must be added to the `meta:immutableTags` attribute of the schema. This is done through a PATCH request to update the schema and add the `meta:immutableTags` array with a value of "union".
 
-#### API Format
+#### API format
 
 ```SHELL
 PATCH /tenant/schemas/{meta:altId or the url encoded $id URI}
@@ -1086,7 +1086,7 @@ The response shows that the operation was performed successfully, and the schema
 
 You can now view the union for the Profile class to see the new Loyalty Members schema included.
 
-#### API Format
+#### API format
 
 ```SHELL
 GET /tenant/unions/{meta:altId or the url encoded $id URI}

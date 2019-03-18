@@ -115,20 +115,20 @@ XDL is very granular and contains all information that has ever been collected. 
 
 UPS provides an aggregation of subject data, merging it together to create a single view of each individual in your user base. This information is therefore not as granular, and may lose fidelity over time as it is updated and merged together.
 
-#### Consuming Unified Profile Data
+#### Consuming Unified Profile data
 
 Unified Profile acts a generic lookup entity store and facilitates building personalization use cases by merging data across various enterprise data assets and providing access to that unified data. There are multiple methods for accessing Unified Profile data on Experience Platform, including performing a lookup for a specific entity (or entities) by an identifier (or array of identifiers).
 
-The [Consuming Unified Profile Data](../../../tutorials/consuming_unified_profile_data/consuming_unified_profile_data.md) tutorial contains a walk through of how to perform Unified Profile entity lookups using the API.
+The [Consuming Unified Profile data](../../../tutorials/consuming_unified_profile_data/consuming_unified_profile_data.md) tutorial contains a walk through of how to perform Unified Profile entity lookups using the API.
 
 Another common way of accessing UPS data is through segmentation. Specifically, Segment Builder is a workspace within Experience Platform for building segments from Unified Profiles. Using fields contained within the union view of the Profile class (such as "age", "region", "gender"), segmentation allows you to query profiles and create an audience based on the segment definition. 
 
 These audiences, or subsets, of customers are based on shared characteristics and allow you to target them with different messaging, offers, or solutions. Segment definitions can be stored and queried using the Unified Profile Service in order to generate audiences. 
 
-More information about segmentation is available in the [Segment Builder Overview](../../../../../../end-user/markdown/segmentation_overview/segmentation.md).
+More information about segmentation is available in the [Segment Builder overview](../../../../../../end-user/markdown/segmentation_overview/segmentation.md).
 
 ## Next steps
 
 Now that you better understand the role of schemas throughout Experience Platform, you are ready to start composing your own. 
 
-We recommend that you begin by reading the [Basics of Schema Composition](../schema_composition/schema_composition.md) to learn design principles and best practices in composing XDM schemas before beginning to work with the Schema Registry in the UI or API.
+We recommend that you begin by reading the [Basics of schema composition](../schema_composition/schema_composition.md) to learn design principles and best practices in composing XDM schemas before beginning to work with the Schema Registry in the UI or API.

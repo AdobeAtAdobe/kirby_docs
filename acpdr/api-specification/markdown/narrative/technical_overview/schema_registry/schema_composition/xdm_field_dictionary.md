@@ -1,8 +1,8 @@
-# Experience Data Model: Field Dictionary
+# Experience Data Model (XDM) field dictionary
 
 Experience Data Model (XDM) defines a set of standard fields that can be used when composing schemas for use in Adobe Experience Platform. These XDM field types contain specific definitions that provide consistency in behavior for any fields sharing the same XDM field type.
 
-See [Basics of Schema Composition](schema_composition.md) for more information about the building blocks of schemas, including principles and best practices in defining schemas.
+See [Basics of schema composition](schema_composition.md) for more information about the building blocks of schemas, including principles and best practices in defining schemas.
 
 > **Note:** If a field is marked "**DEPRECATED**", it means that it should no longer be used in new implementations. The field continues to be available for backwards compatibility, but will no longer be supported in future releases.
 

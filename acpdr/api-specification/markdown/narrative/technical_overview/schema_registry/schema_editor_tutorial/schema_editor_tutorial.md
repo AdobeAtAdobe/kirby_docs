@@ -1,4 +1,4 @@
-# Schema Editor Tutorial
+# Schema Editor tutorial
 
 The Schema Registry provides a user interface and RESTful API from which you can view and manage all resources in the Adobe Experience Platform Schema Library. The Schema Library contains resources made available to you by Adobe, Experience Platform partners, and vendors whose applications you use, as well as resources that you define and save to the Schema Registry.
 
@@ -265,9 +265,9 @@ When you click to toggle-on Unified Profile, a pop-up will appear asking you to 
 
 Now that you have finished composing a "Loyalty Members" schema, you can see the complete schema in the **Structure** section of the editor. Click **Save** and the schema will be saved to the Schema Library, making it accessible via the Schema Registry.
 
-Your new schema is now able to be used to ingest data into Platform. Remember that once the schema has been used to ingest data, only additive changes may be made. See [Schema Composition Basics](../schema_composition/schema_composition.md) for more information on schema versioning.
+Your new schema is now able to be used to ingest data into Platform. Remember that once the schema has been used to ingest data, only additive changes may be made. See [Basics of schema composition](../schema_composition/schema_composition.md) for more information on schema versioning.
 
-The "Loyalty Members" schema is also available to be viewed and managed via the Schema Registry API. To begin working with the API, start by reading the [Schema Registry API Developer Guide](../schema_registry_developer_guide.md).
+The "Loyalty Members" schema is also available to be viewed and managed via the Schema Registry API. To begin working with the API, start by reading the [Schema Registry API developer guide](../schema_registry_developer_guide.md).
 
 ## Appendix
 

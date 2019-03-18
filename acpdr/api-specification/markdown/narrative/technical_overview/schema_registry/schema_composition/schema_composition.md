@@ -1,4 +1,4 @@
-# Basics of Schema Composition: Design Principles and Best Practices
+# Basics of schema composition
 
 This document provides an introduction to schemas and the building blocks, principles, and best practices for composing schemas to be used with Adobe Experience Platform.
 
@@ -201,6 +201,6 @@ Now that you understand the basics of schema composition, you are ready to begin
 
 The Schema Registry is used to access the Schema Library within Adobe Experience Platform, and provides a user interface and RESTful API from which all available library resources are accessible. The Schema Library contains Industry resources defined by Adobe, Vendor resources defined by Experience Platform partners, and classes, mixins, data types, and schemas that you compose within your organization.
 
-To begin composing schema using the UI, follow along with the [Schema Editor Tutorial](../schema_editor_tutorial/schema_editor_tutorial.md) to build the "Loyalty Members" schema mentioned throughout this document.
+To begin composing schema using the UI, follow along with the [Schema Editor tutorial](../schema_editor_tutorial/schema_editor_tutorial.md) to build the "Loyalty Members" schema mentioned throughout this document.
 
-To begin using the Schema Registry API, begin by reading the [Schema Registry API Developer Guide](../schema_registry_developer_guide.md). After reading the developer guide, you will be ready to begin building the "Loyalty Members" schema using the API. 
+To begin using the Schema Registry API, begin by reading the [Schema Registry API developer guide](../schema_registry_developer_guide.md). After reading the developer guide, you will be ready to begin building the "Loyalty Members" schema using the API. 
