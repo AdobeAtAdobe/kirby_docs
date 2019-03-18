@@ -28,7 +28,7 @@ See [authenticating and accessing APIs](../authenticate_to_acp_tutorial/authenti
 * `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
 * `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
-### Set up Platform connection to Amazon S3
+### Set up a Platform connection to Amazon S3
 Use the below POST call and provide the *imsOrgId*, *accessToken*, and AWS access keys.
 
 ```shell
@@ -49,7 +49,7 @@ curl -X POST https://platform.adobe.io/data/foundation/ connectors/account/ \
     }'
 ```
 
-### Create a dataset
+### Create a Dataset
 Once you create the account and connection, you can use the *Connection ID* to create a dataset. You can configure datasets, pipeline, and triggers with a successful POST call.
 
 Provide a unique and identifiable name for the dataset, so you can identify it clearly when monitoring your data ingestion.
@@ -65,7 +65,7 @@ params/datasets/schema	| Conditional. Needs to be specified if params/datasets/f
 params/datasets/fileDescription	| Optional. Identify the kind of file to ingest: CSV (default) or parquet.
 
 
-#### Simple payload example
+#### Simple Payload Example
 ```shell
 curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<connectionId>/datasets \
   -H 'authorization: Bearer <accessToken>' \
@@ -115,11 +115,11 @@ curl -X POST https://platform.adobe.io/data/foundation/connectors/connections/<c
     }'
 ```
 
-### Preview data
+### Preview Data
 To see a preview of the dataset, select it in the user interface and click the preview icon. Preview lets you view the dataset before ingestion.
 
 
-#### Default settings
+#### Default Settings
 * For an incremental ingestion, you must clean up the data after every ingestion run.
 * Currently, the pipeline run is configured for a delay of 30 minutes between consecutive runs. In the future, this will be configurable.
 
