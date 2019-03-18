@@ -1,4 +1,4 @@
-# Gathering your IDs
+# Gathering Your IDs
 
 ## Overview
 
@@ -21,7 +21,7 @@ Adobe Experience Cloud customers have:
   - Multiple legacy org IDs
   - No organizational IDs
 
-## Standard ID namespaces
+## Standard ID Namespaces
 
 There are a few namespaces that are pre-defined and available to all customers. The ID values themselves are chosen to be backward-compatible with AAM and prior platform efforts. The standard namespaces make data-exchange and resolution easier among experience-cloud solutions.
 
@@ -37,7 +37,7 @@ There are a few namespaces that are pre-defined and available to all customers. 
 | Google Ad ID  | 20914 | GAID | &nbsp; |
 | Apple IDFA  | 20915 | IDFA | ID for Advertisers |
 
-## List namespaces for a company
+## List Namespaces for a Company
 
 ### GET Request
 **List all namespaces for given IMS-ORG**
