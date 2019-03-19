@@ -29,10 +29,10 @@
 	"app2app_map": {
 		"api-specification/markdown/narrative/tutorials/": "/apis/cloudplatform/dataservices/tutorials/alltutorials.html",
 		"acpdr/swagger-specs/": "/apis/cloudplatform/dataservices/api-reference.html",
-		"api-specification/markdown/narrative/technical_overview/schema_registry/schema_composition/": "/apis/experienceplatform/home/xdm/xdmservices.html",
+		"api-specification/markdown/narrative/technical_overview/schema_registry/standard_schemas/": "/apis/experienceplatform/home/xdm/xdmservices.html",
 		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/technical_overview/identity_namespace_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/": "/apis/experienceplatform/home/services/allservices.html"
     }
-  }
+}
