@@ -49,4 +49,3 @@ Every solution and platform at Adobe will be able to help customers comply with 
 ## Consent: Opt-in Management
 
 GDPR has new requirements for active and specific consent by Controllers. GDPR requires Controllers to demonstrate that the data subject has consented to processing of his or her personal data. This consent has to be written and unambiguous. Adobe does not currently offer a consent management solution. However, by using Adobe Launch, our customers could deploy plugins such as Evidon for consent management.
-nt.
