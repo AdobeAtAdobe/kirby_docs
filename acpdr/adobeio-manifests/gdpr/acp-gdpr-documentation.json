@@ -28,17 +28,17 @@
     {
 			"pages": [],
 			"path": "api-specification/markdown/narrative/gdpr/gdpr-positioning.md",
-			"title": "GDPR Positioning"
+			"title": "Adobe Experience Cloud GDPR positioning"
 		},
     {
 			"pages": [],
 			"path": "api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md",
-			"title": "GDPR API Overview"
+			"title": "Adobe Experience Platform GDPR Service overview"
 		},
     {
 			"pages": [],
 			"path": "api-specification/markdown/narrative/gdpr/gdpr-terminology.md",
-			"title": "GDPR Terminology"
+			"title": "GDPR terminology"
 		},
     {
 			"pages": [],
@@ -48,27 +48,27 @@
     {
 			"pages": [],
 			"path": "api-specification/markdown/narrative/gdpr/use-cases/mobile-sdk.md",
-			"title": "GDPR Mobile SDK"
+			"title": "Adobe Experience Platform Mobile SDK"
 		},
     {
 			"pages": [],
 			"path": "api-specification/markdown/narrative/gdpr/gdpr-cautions.md",
-			"title": "GDPR Cautions"
+			"title": "Adobe GDPR cautions"
 		},
     {
 			"pages": [],
 			"path": "api-specification/markdown/narrative/gdpr/using-gdpr-ui.md",
-			"title": "Using the GDPR UI"
+			"title": "Interacting with Adobe Experience Platform GDPR Service through the UI"
 		},
 		{
 			"pages": [],
 			"path": "api-specification/markdown/narrative/gdpr/solutions/index.md",
-			"title": "GDPR and Experience Cloud Solutions"
+			"title": "GDPR and Experience Cloud solutions"
 		},
 		{
 			"pages": [],
 			"path": "api-specification/markdown/narrative/gdpr/gdpr-on-platform-overview.md",
-			"title": "GDPR on Adobe Experience Platform"
+			"title": "GDPR on Adobe Experience Platform overview"
 		}
 
   ]
