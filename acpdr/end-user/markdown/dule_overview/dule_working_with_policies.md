@@ -1,4 +1,4 @@
-# Working with Data Usage Policies in Adobe Experience Platform
+# Working with data usage policies in Adobe Experience Platform
 
 Data Usage Labeling and Enforcement (DULE) is at the core of the data governance infrastructure included in Adobe Experience Platform. If you have not yet done so, you may wish to begin by reviewing the [DULE User Guide](dule_overview.md) to familiarize yourself with the DULE framework.
 
@@ -74,7 +74,7 @@ The following API calls provide examples of basic Policy Service operations, inc
 
 ## Policies
 
-Data usage policies are rules that describe the kinds of marketing actions that you are allowed to, or restricted from, performing on data within Experience Platform.
+Data usage policies are rules your organization adopts that describe the kinds of marketing actions that you are allowed to, or restricted from, performing on data within Experience Platform.
 
 The `/policies` endpoint is used for all API calls related to viewing, creating, updating, or deleting data usage policies.
 
@@ -82,7 +82,7 @@ The `/policies` endpoint is used for all API calls related to viewing, creating,
 
 To view a list of policies, a GET request can be made to `/policies/core` or `/policies/custom` that returns all policies for the specified container. 
 
-#### API Format
+#### API format
 
 ```SHELL
 GET /policies/core
@@ -196,7 +196,7 @@ The response includes a "count" showing the total number of policies within the 
 
 Each policy contains an `id` field that can be used to request the details of a specific policy. If the `id` of a policy is unknown, it can be found using the listing (GET) request to list all policies within a specific container (`core` or `custom`) as shown in the previous step.
 
-#### API Format
+#### API format
 
 ```SHELL
 GET /policies/core/{id}
@@ -282,7 +282,7 @@ This expression is called a `PolicyExpression` and is an object containing _eith
 }
 ```
 
-#### API Format
+#### API format
 
 ```SHELL
 POST /policies/custom
@@ -371,7 +371,7 @@ If successfully created, you will receive an HTTP Status 201 (Created) and the r
 
 You may find that you need to update a data usage policy after it has been created. This is done through a PUT request to the policy `id` with a payload that includes the updated form of the policy, in its entirety. In other words, the PUT request is essentially _rewriting_ the policy, therefore the body must include all required information as shown in the example below.
 
-#### API Format
+#### API format
 
 ```SHELL
 PUT /policies/custom/{id}
@@ -464,7 +464,7 @@ A specific portion of a policy may be updated using a PATCH request. Unlike PUT 
 
 The Policy Service API currently supports "add", "replace", and "remove" PATCH operations, and allows you to combine several updates together into a single call by adding each as an object within the array, as shown in the following examples.
 
-#### API Format
+#### API format
 
 ```SHELL
 PATCH /policies/custom/{id}
@@ -563,7 +563,7 @@ If successfully updated, you will receive an HTTP Status 200 (OK) and the respon
 
 If you need to remove a policy that you have created, you can do so by issuing a DELETE request to the `id` of the policy you wish to delete. It is best practice to perform a lookup (GET) request first to view the policy and confirm it is the correct policy you wish to remove. **Once deleted, policies cannot be recovered.**
 
-#### API Format
+#### API format
 
 ```SHELL
 DELETE /policies/custom/{id}
@@ -585,7 +585,7 @@ If the policy has been successfully deleted, the response body will be blank wit
 
 You can confirm the deletion by attempting to lookup (GET) the policy again. You should receive an HTTP Status 404 (Not Found) along with a "Not Found" error message because the policy has been removed.
 
-## Marketing Actions
+## Marketing actions
 
 A marketing action, in the context of the data governance framework, is an action that an Experience Platform data consumer takes, for which there is a need to check for violations of data usage policies.
 
@@ -595,7 +595,7 @@ Working with marketing actions in the API requires you to use the `/marketingAct
 
 To view a list of all marketing actions, a GET request can be made to `/marketingActions/core` or `/marketingActions/custom` that returns all policies for the specified container.
 
-#### API Format
+#### API format
 
 ```SHELL
 GET /marketingActions/core
@@ -671,7 +671,7 @@ The response object provides the total number of marketing actions in the contai
 
 You can also perform a lookup (GET) request to view the details of a specific marketing action. This is done using the `name` of the marketing action. If the name is unknown, it can be found using the listing (GET) request shown previously.
 
-#### API Format
+#### API format
 
 ```SHELL
 GET /marketingActions/core/{marketingActionName}
@@ -715,7 +715,7 @@ The response object contains the details for the marketing action, including the
 
 The Policy Service API allows you to define your own marketing actions, as well as update existing ones. Creating and updating are both done using a PUT operation to the name of the marketing action. 
 
-#### API Format
+#### API format
 
 ```SHELL
 PUT /marketingActions/custom/{marketingActionName}
@@ -769,7 +769,7 @@ It is possible to delete marketing actions by sending a DELETE request to the `{
 
 _**Note:**_ You are not able to delete marketing actions that are referenced by exiting policies. Trying to do so will result in a 400 Error (Bad Request) along with an error message that includes the `id` (or multiple IDs) of any policy (or policies) containing a reference to the marketing action you are trying to delete.
 
-#### API Format
+#### API format
 
 ```SHELL
 DELETE /marketingActions/custom/{marketingActionName}
@@ -809,7 +809,7 @@ _**Important Notes for Policy Evaluation using DULE labels:**_
 * **DULE labels are case sensitive.** The request shown below returns a violated policy, whereas making the same request using lowercase DULE labels (e.g. `"c1,c3"`, `"C1,c3"`, `"c1,C3"`) does not.
 * **Be aware of the `AND` and `OR` operators in your policy expressions.** In this example, if either DULE label (`C1` or `C3`) had appeared alone in the request, the marketing action would not have violated this policy. It takes both labels (`C1 AND C3`) being included in the request to return the violated policy. Ensure you are evaluating policies carefully and defining policy expressions with equal care.
 
-#### API Format
+#### API format
 
 ```SHELL
 GET /marketingActions/core/{marketingActionName}/constraints?duleLabels={value1},{value2}
@@ -892,7 +892,7 @@ You can also evaluate policy violations by specifying the ID of a dataset from w
 
 In order to see the DULE labels associated with a given dataset, the Catalog Service API provides a `/dataSets/{id}/dule` operation. For more information, see the [Catalog Service API](../../../../acpdr/swagger-specs/catalog.yaml) reference documentation.
 
-#### API Format
+#### API format
 
 ```SHELL
 GET /marketingActions/core/{marketingActionName}/constraints?datasetId={datasetId}
@@ -976,7 +976,7 @@ _**Important Notes for Policy Evaluation using Datasets:**_
 * **Field names are case sensitive.** If providing fields, they must be written exactly as they appear in the dataset. (e.g. `firstName` vs `firstname`)
 * **Connection-, dataset-, and field-level labels.** DULE labels can be applied at multiple levels and are inherited downward. If your policy evaluations are not returning they way you thought they might, be sure to check the inherited labels in addition to those at the field-level.
 
-#### API Format
+#### API format
 
 In order to include dataset fields in the query parameter, the fields must be URL encoded, meaning `/properties/firstName` becomes `%2Fproperties%2FfirstName`. 
 

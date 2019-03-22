@@ -1,17 +1,17 @@
-# Data Usage Labeling and Enforcement (DULE) User Guide
+# Data Usage Labeling and Enforcement (DULE) user guide
 
-Adobe Experience Platform brings data from multiple enterprise systems together to better allow marketers to identify, understand, and engage customers. Experience Platform includes end-to-end data governance infrastructure to ensure the proper use of data within Platform and when being shared between systems.
+Adobe Experience Platform allows companies to bring data from multiple enterprise systems together to better allow marketers to identify, understand, and engage customers. Experience Platform includes end-to-end data governance infrastructure to help companies ensure the proper use of data within Platform and when being shared between systems.
 
 This guide provides an overview of the following concepts:
 
-* [Data Governance](#data-governance)
-* [DULE Framework](#dule-framework)
-* [Data Usage Labels](#data-usage-labels) 
-* [When and how to apply Data Usage Labels](#when-and-how-to-apply-data-labels)
-* [Data Usage Policies](#data-usage-policies)
-* [How to create and work with Data Usage Policies](#how-to-create-and-work-with-data-usage-policies)
+* [Data governance](#data-governance)
+* [DULE framework](#dule-framework)
+* [Data usage labels](#data-usage-labels) 
+* [When and how to apply data usage labels](#when-and-how-to-apply-data-labels)
+* [Data usage policies](#data-usage-policies)
+* [How to create and work with data usage policies](#how-to-create-and-work-with-data-usage-policies)
 
-At the end of this guide you will find a table outlining key [DULE Terminology](#appendix-dule-terminology) with definitions that will assist you when working with data governance concepts.
+At the end of this guide you will find a table outlining key [DULE terminology](#appendix-dule-terminology) with definitions that will assist you when working with data governance concepts.
 
 ## Data governance
 
@@ -21,7 +21,7 @@ Getting started with data governance requires a strong understanding of the regu
 
 ### Data governance roles
 
-Data governance is neither automatic, nor does it occur in a vacuum. What began as a role for one individual, typically recognized as a _**data steward**_, has grown considerably as the data governance ecosystem has expanded. Today, data governance requires continual management and monitoring in order to be successful, and relies on data stewards having tools with which data can be properly labeled, usage policies can be created, and compliance with those policies can be enforced.
+Data governance is neither automatic, nor does it occur in a vacuum. What began as a role for one individual, typically recognized as a _**data steward**_, has grown considerably as the data governance ecosystem has expanded. Today, data governance requires continual management and monitoring in order to be successful and relies on data stewards having tools with which data can be properly labeled, usage policies can be created, and compliance with those policies can be enforced.
 
 While data governance should be the responsibility of every individual in the organization, here are some of the essential roles within the data governance cycle:
 
@@ -29,14 +29,14 @@ While data governance should be the responsibility of every individual in the or
 
 #### Data steward
 
-Data stewards are the heart of data governance.  This role is responsible for interpreting regulations, contractual restrictions, and policies, and applying them directly to the data. Informed by their understanding of these regulations, restrictions, and policies, the role of a data steward includes:
+Data stewards are the heart of data governance. This role is responsible for interpreting regulations, contractual restrictions, and policies, and applying them directly to the data. Informed by their understanding of these regulations, restrictions, and policies, the role of a data steward includes:
 * Reviewing data, datasets, and data samples to apply and manage metadata DULE labeling.
 * Creating data policies and applying them to a data connection, dataset, or field.
 * Communicating data policies to the organization.
 
 #### Marketer
 
-Marketers are the end point of data governance. They request data from the data governance infrastructure created by data stewards, scientists, and engineers.  Marketers encompass a number of different specialties under the marketing umbrella, including the following:
+Marketers are the end point of data governance. They request data from the data governance infrastructure created by data stewards, scientists, and engineers. Marketers encompass a number of different specialties under the marketing umbrella, including the following:
 * Marketing Analysts request data to enable understanding of customers, both as individuals and in groups (also known as segments).
 * Marketing Specialists and Experience Designers use data to design new customer experiences. 
 
@@ -53,7 +53,7 @@ There are three key elements to the DULE framework: Labels, Policies, and Enforc
 
 ## Data usage labels
 
-Experience Platform includes infrastructure for data governance with DULE labeling at its core.  DULE features enable data stewards to apply usage labels at the connection-, dataset-, and field-level to categorize the data according to the type of policies that apply.
+Experience Platform includes infrastructure that supports data governance with DULE labeling at the core of that infrastructure. DULE features enable data stewards to apply usage labels at the connection-, dataset-, and field-level to categorize the data according to the type of policies that apply.
 
 The DULE framework includes predefined data usage labels that can be used to categorize data in four ways:
 
@@ -68,7 +68,7 @@ See [Supported Data Usage Labels](dule_supported_labels.md) for a complete list 
 
 ### When and how to apply data labels
 
-Data usage labels can be applied at three levels, and are inherited down from connections to datasets and fields, and from datasets to fields. This means that data usage labels applied at the connection level are propagated to all datasets and fields in the connection, while labels applied to datasets are propagated to all fields in the dataset. Labels can also be applied directly to individual fields (column headers) in a dataset, without propagation.
+Data usage labels can be applied at three levels. Those data labels are inherited down from connections to datasets and fields, and from datasets to fields. This means that data usage labels applied at the connection level are propagated to all datasets and fields in the connection, while labels applied to datasets are propagated to all fields in the dataset. Labels can also be applied directly to individual fields (column headers) in a dataset, without propagation.
 
 Labels can be applied at any time, providing flexibility in how you choose to govern data. Best practice encourages labeling data as soon as it is ingested into Experience Platform, or as soon as data becomes available in Platform.
 
@@ -80,7 +80,7 @@ Step-by-step instructions for how to apply data usage labels to Connections, Dat
 
 In order for data usage labels to effectively support data compliance, data usage policies must be implemented. Data usage policies are rules that describe the kinds of marketing actions that you are allowed to, or restricted from, performing on data within Experience Platform.
 
-An example of a marketing action might be the desire to export a dataset to a third party service. If there is a policy in place saying that specific types of data, such as Personally Identifiable Information (PII), cannot be exported and an "I" label (Identity data) has been applied to the dataset, you will receive a response from the Policy Service telling you that a data usage policy has been violated.
+An example of a marketing action might be the desire to export a dataset to a third-party service. If there is a policy in place saying that specific types of data, such as Personally Identifiable Information (PII), cannot be exported and an "I" label (Identity data) has been applied to the dataset, you will receive a response from the Policy Service telling you that a data usage policy has been violated.
 
 ### How to create and work with data usage policies
 
@@ -102,7 +102,7 @@ Subsequent releases will provide the following features:
 * Policy Enforcement: Use the policy framework to advise and enforce policies across different data access patterns.
 * Auditing: Monitor data access activities and identify and report on compliance issues.
 
-## Appendix: DULE Terminology
+## Appendix: DULE terminology
 
 |Term|Definition |
 |---|---|
