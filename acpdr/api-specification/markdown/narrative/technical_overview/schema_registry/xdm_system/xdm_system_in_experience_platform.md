@@ -5,8 +5,8 @@ In order to gain actionable insights from data, we need to ensure that similar d
 To gain consistency in data definitions, Adobe Experience Platform relies on schemas to describe the data and provide constraints about how the data should look and be interpreted as it moves between Platform services. This document provides an overview of the role of schemas within Experience Platform, including:
 
 * An introduction to [Experience Data Model and XDM System](#experience-data-model-and-xdm-system)
-* [Data behaviors in Experience Platform](#data-behaviors-in-experience-platform)
-* The use of schema by Platform Components:
+* [Data Behaviors in Experience Platform](#data-behaviors-in-experience-platform)
+* The Use of Schema by Platform Components:
   * [Schema Registry](#schema-registry)
   * [Catalog & Experience Data Lake](#catalog--experience-data-lake)
   * [Query Service](#query-service)
@@ -53,7 +53,7 @@ While not all events are easily categorized across all data sources, it is extre
 
 ![ExperienceEvent Customer Journey](images/ExperienceEvent_customer_journey.png "Experience Events show a customer journey over time")
 
-## Experience Platform components and use of schema
+## Experience Platform Components and Use of Schema
 
 Adobe Experience Platform is schema agnostic, meaning that any schema that conforms to the XDM standard is available for use by Experience Platform components. The ways in which various Platform services (such as Catalog, Unified Profile, and Segmentation) use schemas are outlined in more detail below.
 
@@ -83,7 +83,7 @@ Query Service allows you to use standard SQL to query Experience Platform data t
 
 After a schema has been composed, and a dataset has been created which references that schema, data is then ingested and stored in the data lake. Through Query Service, you can join any datasets in Experience Data Lake and capture the query results as a new dataset for use in reporting, Data Science Workspace, or for ingestion into Unified Profile Service. 
 
-Learn more about Query Service by reading the [Query Service Introduction](../../../../../../acpdr/end-user/markdown/query-service/qs-intro.md). 
+Learn more about Query Service by reading the [Query Service Introduction](../../../../../../end-user/markdown/query-service/qs-intro.md). 
 
 ### Data Science Workspace
 
@@ -115,20 +115,20 @@ XDL is very granular and contains all information that has ever been collected. 
 
 UPS provides an aggregation of subject data, merging it together to create a single view of each individual in your user base. This information is therefore not as granular, and may lose fidelity over time as it is updated and merged together.
 
-#### Consuming Unified Profile data
+#### Consuming Unified Profile Data
 
 Unified Profile acts a generic lookup entity store and facilitates building personalization use cases by merging data across various enterprise data assets and providing access to that unified data. There are multiple methods for accessing Unified Profile data on Experience Platform, including performing a lookup for a specific entity (or entities) by an identifier (or array of identifiers).
 
-The [Consuming Unified Profile data](../../../tutorials/consuming_unified_profile_data/consuming_unified_profile_data.md) tutorial contains a walk through of how to perform Unified Profile entity lookups using the API.
+The [Consuming Unified Profile Data](../../../tutorials/consuming_unified_profile_data/consuming_unified_profile_data.md) tutorial contains a walk through of how to perform Unified Profile entity lookups using the API.
 
 Another common way of accessing UPS data is through segmentation. Specifically, Segment Builder is a workspace within Experience Platform for building segments from Unified Profiles. Using fields contained within the union view of the Profile class (such as "age", "region", "gender"), segmentation allows you to query profiles and create an audience based on the segment definition. 
 
 These audiences, or subsets, of customers are based on shared characteristics and allow you to target them with different messaging, offers, or solutions. Segment definitions can be stored and queried using the Unified Profile Service in order to generate audiences. 
 
-More information about segmentation is available in the [Segment Builder overview](../../../../../../end-user/markdown/segmentation_overview/segmentation.md).
+More information about segmentation is available in the [Segment Builder Overview](../../../../../../end-user/markdown/segmentation_overview/segmentation.md).
 
-## Next steps
+## Next Steps
 
 Now that you better understand the role of schemas throughout Experience Platform, you are ready to start composing your own. 
 
-We recommend that you begin by reading the [Basics of schema composition](../schema_composition/schema_composition.md) to learn design principles and best practices in composing XDM schemas before beginning to work with the Schema Registry in the UI or API.
+We recommend that you begin by reading the [Basics of Schema Composition](../schema_composition/schema_composition.md) to learn design principles and best practices in composing XDM schemas before beginning to work with the Schema Registry in the UI or API.
