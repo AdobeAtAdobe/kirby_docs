@@ -1,5 +1,5 @@
 
-# SQL Syntax
+# SQL syntax
 
 ## Define a SELECT query
 
@@ -81,7 +81,7 @@ CREATE TABLE table_name AS (select_query)
 
 where select_query is a SELECT statement, syntax of which is defined above in this document.
 
-Eg:
+Example:
 ```
 CREATE TABLE Chairs AS (SELECT color, count(*) AS no_of_chairs FROM Inventory i WHERE i.type=="chair" GROUP BY i.color)
 ```
@@ -100,7 +100,7 @@ INSERT INTO table_name select_query
 
 where select_query is a SELECT statement, syntax of which is defined above in this document.
 
-Eg:
+Example:
 ```
 INSERT INTO Customers SELECT SupplierName, City, Country FROM OnlineCustomers;
 ```
