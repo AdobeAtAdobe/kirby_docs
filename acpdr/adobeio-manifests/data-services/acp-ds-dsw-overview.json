@@ -21,6 +21,16 @@
 			"path": "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_overview.md",
 			"title": "Data Science Workspace Overview",
 			"description": "The Data Science Workspace offers predefined machine learning models you can use in your own solutions as well as the capability to create your own models."
+		},
+		{
+			"path": "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_prebuilt_recipes/product_purchase_prediction_recipe/product_purchase_prediction.md",
+			"title":"Product Purchase Prediction Recipe",
+			"description":"The Product Purchase Prediction recipe enables you to predict the likelihood of a certain type of customer purchase event. Learn more about this recipe to see if it is a right fit for your use case."
+		},
+		{
+			"path":"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_prebuilt_recipes/retail_sales_recipe/retail_sales_recipe.md",
+			"title":"Retail Sales Recipe",
+			"description":"The Retail Sales recipe enables you to predict sales forecast for all stores seeded for a certain time period. Learn more about this recipe to see if it is a right fit for your use case."
 		}
 	],
 	"app2app_map": {"api-specification/markdown/narrative/tutorials/dsw/":"/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html", 
