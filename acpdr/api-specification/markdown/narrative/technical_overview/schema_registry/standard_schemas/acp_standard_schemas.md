@@ -150,7 +150,7 @@ Using the same steps as above, you can now add references to the Phone Number, E
 
 ![Buyer schema with multiple reference schemas](Buyer_with_references.png "The Buyer schema now references multiple reference schema")
 
-**Note:** The Person schema has been minimized (you can minimize a schema by clicking on the schema name) in order to show the other reference schemas.
+> **Note:** The Person schema has been minimized (you can minimize a schema by clicking on the schema name) in order to show the other reference schemas.
 
 ### Extensibility
 
