@@ -65,7 +65,7 @@ The first step in building a schema is to determine the concept, or real world o
         companyName
 ```
 
-> **Note:** Best practices for defining fields include writing field names in camelCase, as shown above.
+**Note:** Best practices for defining fields include writing field names in camelCase, as shown above.
 
 ### Field Types
 
@@ -88,7 +88,7 @@ The valid ranges of these scalar types can be further constrained to certain pat
 - date-time
 - map
 
-> **Note:** The "map" field type allows for key-value pair data, including multiple values for a single key. Maps can only be defined at the system level, meaning you may encounter a map in an industry or vendor-defined schema, but it is not available for use in tenant-defined fields. For more information on field types, see the [Defining XDM Field Types in the API](../acp_schema_registry.md#defining-xdm-field-types-in-the-api) table in the [Schema Registry Guide](../acp_schema_registry.md).
+**Note:** The "map" field type allows for key-value pair data, including multiple values for a single key. Maps can only be defined at the system level, meaning you may encounter a map in an industry or vendor-defined schema, but it is not available for use in tenant-defined fields. For more information on field types, see the [Defining XDM Field Types in the API](../acp_schema_registry.md#defining-xdm-field-types-in-the-api) table in the [Schema Registry Guide](../acp_schema_registry.md).
 
 **Example:** The fields we defined for our Buyer schema would have the following types:
 
@@ -102,7 +102,7 @@ The valid ranges of these scalar types can be further constrained to certain pat
         companyName (string)
 ```
 
-> **Note:** When specifying field types, scalar types such as 'string' don't strongly enforce the data that can be contained within a field. Experience Data Model (XDM) defines an additional [dictionary](#xdm-field-dictionary) of stronger field types that are recommended for common fields such as "firstName" and "phoneNumber". These [XDM field types](#xdm-field-types) contain specific definitions that provide consistency in behavior across Experience Platform services for any fields sharing the same XDM field type.
+**Note:** When specifying field types, scalar types such as 'string' don't strongly enforce the data that can be contained within a field. Experience Data Model (XDM) defines an additional [dictionary](#xdm-field-dictionary) of stronger field types that are recommended for common fields such as "firstName" and "phoneNumber". These [XDM field types](#xdm-field-types) contain specific definitions that provide consistency in behavior across Experience Platform services for any fields sharing the same XDM field type.
 
 ### Principal Schemas
 
@@ -118,7 +118,7 @@ A reference schema is a schema definition that is intended to be used as a field
 
 As you define a schema, you may notice that you have defined a set of fields that describe a particular concept you would like to reuse across other schemas that describe your business domain. These fields would be better collected into their own schema and included as a reference within a principal schema.
 
-> **Note:** There are a number of reference schemas available in Adobe Experience Platform, and similar to XDM field types, these existing schemas contain definitions that are understood across Platform and provide added functionality with Experience Platform services.
+**Note:** There are a number of reference schemas available in Adobe Experience Platform, and similar to XDM field types, these existing schemas contain definitions that are understood across Platform and provide added functionality with Experience Platform services.
 
 **Example:** The Buyer schema contains several fields that are very common and are likely to be reused across multiple schemas. Person, Address, Email Address, and Phone Number are all pre-existing schemas and can therefore be _referenced_ by the Buyer schema. 
 
