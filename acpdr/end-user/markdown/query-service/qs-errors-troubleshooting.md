@@ -1,6 +1,6 @@
-# Errors and Troubleshooting
+# Errors and troubleshooting
 
-## REST API Errors
+## REST API errors
 
 | HTTP Status Code | Description | Possible Causes |
 | ---------------- | ----------- | --------------- |
@@ -8,7 +8,7 @@
 | 401 | Authentication failed | Invalid auth token |
 | 500 | Internal server error | Internal system failure |
 
-## PostgreSQL API Errors
+## PostgreSQL API errors
 
 | Error Code and Connection State | Description | Possible Cause |
 | ------------------------------- | ----------- | -------------- |
