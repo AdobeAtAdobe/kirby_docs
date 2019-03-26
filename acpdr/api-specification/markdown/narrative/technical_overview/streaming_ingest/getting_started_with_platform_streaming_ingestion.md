@@ -2,21 +2,21 @@
 
 ## Overview
 
-This documentation will help you quickly get started with the Adobe Experience Platform Streaming APIs. Specifically, this documentation will help you:
+This documentation will help you quickly get started with the Adobe Experience Platform Streaming Ingestion APIs. Specifically, this documentation will help you:
 
-- [Create a Data Inlet](#creating-a-data-inlet)
-- [Stream a Profile Object to Adobe Experience Platform](#streaming-a-profile-object-to-adobe-experience-platform)
-    - [Compose an XDM Profile Schema](#step-1-composing-an-xdm-profile-schema)
-    - [Create a Dataset for XDM Profile Records](#step-2-creating-a-dataset-for-xdm-profile-records)
-    - [Call Streaming Ingestion APIs to create a Profile Record](#step-3-calling-streaming-ingestion-apis-to-create-a-profile-record)
-    - [Retrieve the newly created Profile](#step-4-retrieving-the-newly-created-profile)
-- [Stream an ExperienceEvent to Adobe Experience Platform](#streaming-an-experienceevent-to-adobe-experience-platform)
-    - [Compose an XDM ExperienceEvent Schema](#step-1-composing-an-xdm-experienceevent-schema)
-    - [Create a Dataset for XDM ExperienceEvents](#step-2-creating-a-dataset-for-xdm-experienceevents)
-    - [Call Streaming Ingestion APIs to record a time-series ExperienceEvent](#step-3-calling-streaming-ingestion-apis-to-record-a-time-series-experienceevent)
-    - [Retrieve the newly persisted ExperienceEvent back from Unified Profile](#step-4-retrieving-the-newly-persisted-experienceevent-back-from-unified-profile)
+- [Create a data inlet](#create-a-data-inlet)
+- [Stream an XDM Profile object to Adobe Experience Platform](#stream-an-xdm-profile-object-to-adobe-experience-platform)
+    - [Compose an XDM Profile schema](#step-1-compose-an-xdm-profile-schema)
+    - [Create a dataset for XDM profile records](#step-2-create-a-dataset-for-xdm-profile-records)
+    - [Call Streaming Ingestion APIs to create an XDM profile record](#step-3-call-streaming-ingestion-apis-to-create-an-xdm-profile-record)
+    - [Retrieve the newly created Customer Profile](#step-4-retrieve-the-newly-created-customer-profile)
+- [Stream an XDM ExperienceEvent to Adobe Experience Platform](#stream-an-xdm-experienceevent-to-adobe-experience-platform)
+    - [Compose an XDM ExperienceEvent schema](#step-1-compose-an-xdm-experienceevent-schema)
+    - [Create a dataset for XDM ExperienceEvents](#step-2-create-a-dataset-for-xdm-experienceevents)
+    - [Call Streaming Ingestion APIs to ingest an XDM ExperienceEvent](#step-3-call-streaming-ingestion-apis-to-ingest-an-xdm-experienceevent)
+    - [Retrieve the newly persisted XDM ExperienceEvent back from Unified Profile](#step-4-retrieve-the-newly-persisted-xdm-experienceevent-back-from-unified-profile)
 
-## How do I get started?
+## Getting started
 
 Data inlet registration is the first step for you to start streaming data to Adobe Experience Platform. When registering a data inlet, you need to provide some key details like the source of streaming data, and whether or not you intend to send records expressed in [Experience Data Model (XDM) schema][xdminfo].
 
@@ -24,20 +24,20 @@ After registering a data inlet, you, as the data producer, will have a unique UR
 
 To complete this tutorial, you will first need to obtain your **developer credentials** and an **authorization token**. Follow this [tutorial][1] or this [blog post][2] for detailed information on how to go through this process.
 
-## Creating a Data Inlet
+## Create a data inlet
 
-Let's start by creating a new data inlet. Assuming you have an API Key and Access Token, you can insert them to the cURL command below, providing other details, like data inlet Name and Description, which are meaningful to you.
+Firstly, start by creating a new data inlet. Assuming you have an API Key and Access Token, you can insert them into the cURL command below, providing other details, like data inlet Name and Description, which are meaningful to you.
 
 ### Request
 
 ```SHELL
 CURL -X POST "https://platform.adobe.io/data/core/edge/inlet" \
--H "Cache-Control: no-cache" \
--H "Content-Type: application/json" \
--H "Authorization: Bearer {ACCESS_TOKEN}" \
--H "x-api-key: {API_KEY}" \
--H "x-gw-ims-org-id: {IMS_ORG}" \
--d '{JSON_PAYLOAD}'
+  -H "Cache-Control: no-cache" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer {ACCESS_TOKEN}" \
+  -H "x-api-key: {API_KEY}" \
+  -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -d '{JSON_PAYLOAD}'
 ```
 
 > **Note:** To find your API Key and IMS Org ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
@@ -70,18 +70,18 @@ An example of a successful response can be seen below:
 
 ```JSON
 {
-  "inletId": "{DATA_INLET_ID}",
-  "imsOrg": "{IMS_ORG}",
-  "sourceId": "website",
-  "dataType": "xdm",
-  "name": "My Data Inlet",
-  "description": "Collects streaming data from my website",
-  "createdBy": "{API_KEY}",
-  "authenticationRequired": false,
-  "validationRequired": true,
-  "createdDate": 1532624324022,
-  "modifiedDate": 1532624324022,
-  "inletUrl": "https://dcs.data.adobe.net/collection/{DATA_INLET_ID}"
+    "inletId": "{DATA_INLET_ID}",
+    "imsOrg": "{IMS_ORG}",
+    "sourceId": "website",
+    "dataType": "xdm",
+    "name": "My Data Inlet",
+    "description": "Collects streaming data from my website",
+    "createdBy": "{API_KEY}",
+    "authenticationRequired": false,
+    "validationRequired": true,
+    "createdDate": 1532624324022,
+    "modifiedDate": 1532624324022,
+    "inletUrl": "https://dcs.data.adobe.net/collection/{DATA_INLET_ID}"
 }
 ```
 
@@ -92,7 +92,7 @@ Where:
 - `{SOURCE_ID}`: The meaningful identifier or name of the source you sent in your request.    
 - `{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
 
-## Retrieving your Data Inlet
+## Retrieve your data inlet
 
 Once you've created your data inlet, you can verify its creation, in addition to checking on other inlets created.
 
@@ -144,13 +144,15 @@ With the above call, you will receive a list of all the data inlets created.
 - `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 
 
-## Streaming a Profile object to Adobe Experience Platform
+## Stream an XDM Profile object to Adobe Experience Platform
 
-Once you've created a data inlet, you can create use it to stream XDM records and create or update [Customer Profiles][customerprofiles].
+Once you've created a data inlet, you can use it to stream XDM records and create or update [Customer Profiles][customerprofiles].
 
-### Step 1: Composing an XDM Profile Schema
+### Step 1: Compose an XDM Profile schema
 
-This guide will use a few mixins which are natively provided by Platform to hold personal and work related details. So, let's first call the XDM Registry APIs to create a new composed schema of class Profile XDM, and enable that schema for Unified Profile.
+This guide composes a schema using standard mixins provided by Platform to describe personal and work-related details. You will begin by calling the Schema Registry API to create a schema that implements XDM Profile, a standard class, and enables the schema for use with Unified Profile Service (UPS).
+
+> **Note:** For more information about how to create schemas, check out the [Schema Registry API Developer Guide][schema-registry].
 
 #### Request
 
@@ -190,12 +192,6 @@ Where:
             "$ref": "https://ns.adobe.com/xdm/context/profile-work-details"
         }
     ],
-    "meta:extends": [
-        "https://ns.adobe.com/xdm/context/profile",
-        "https://ns.adobe.com/xdm/context/identitymap",
-        "https://ns.adobe.com/xdm/context/profile-person-details",
-        "https://ns.adobe.com/xdm/context/profile-work-details"        
-    ],
     "meta:immutableTags": [
         "union"
     ]
@@ -204,7 +200,7 @@ Where:
 
 Where:
 
-- `{SCHEMA_NAME}`: The name you want to use for your schema. 
+- `{SCHEMA_NAME}`: The name you want to use for your schema. This name must be unique.
 - `{SCHEMA_DESCRIPTION}`: A meaningful description for the schema you're creating.
 
 #### Response
@@ -247,9 +243,9 @@ With this call, you will get a response similar to the one below:
     "meta:extensible": false,
     "meta:containerId": "tenant",
     "imsOrg": "{IMS_ORG_ID}",
-    "meta:altId": "{IMS_ORG}.schemas.{SCHEMA_ID}",
+    "meta:altId": "_{TENANT_ID}.schemas.{SCHEMA_ID}",
     "meta:xdmType": "object",
-    "$id": "https://ns.adobe.com/{IMS_ORG}/schemas/{SCHEMA_ID}",
+    "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}",
     "version": "{SCHEMA_VERSION}",
     "meta:resourceType": "schemas",
     "meta:registryMetadata": {
@@ -265,15 +261,15 @@ Where:
 - `{SCHEMA_NAME}`: The name of the schema you created.
 - `{SCHEMA_DESCRIPTION}`: The description of the schema you created. 
 - `{IMS_ORG_ID}`: The ID of the IMS Org that created the schema.
-- `{IMS_ORG}`: The name of the IMS Org that created the schema.
+- `{TENANT_ID}`: This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Org.
 - `{SCHEMA_ID}`: The ID of your newly created schema.
 - `{SCHEMA_VERSION}`: The version of your newly created schema.
 
 Please take note of the `id` (specifically the schema ID) as well as the `version` attributes, as both of these will be used when sending records to the Streaming Ingest APIs.
 
-### Step 2: Creating a Dataset for XDM Profile Records
+### Step 2: Create a dataset for XDM profile records
 
-Now, you need to create a Dataset so any profile records you stream, assuming it passes XDM validation, will be persisted into it. 
+Now, you need to create a Dataset so any XDM profile records you stream, assuming it passes XDM validation, will be persisted into it. 
 
 There are **two** important things to note about this dataset:
 
@@ -308,7 +304,7 @@ Where:
     "name": "{DATASET_NAME}",
     "description": "{DATASET_DESCRIPTION}",
     "schemaRef": {
-        "id": "https://ns.adobe.com/{IMS_ORG_ID}/schemas/{SCHEMA_ID}",
+        "id": "https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}",
         "contentType": "application/vnd.adobe.xed-full+json;version={SCHEMA_VERSION}"
     },
     "fileDescription": {
@@ -342,9 +338,9 @@ An example of a successful response can be found below:
 ]
 ```
 
-### Step 3: Calling Streaming Ingestion APIs to create a Profile Record
+### Step 3: Call Streaming Ingestion APIs to create an XDM profile record
 
-Now, let's send some XDM formatted JSON records to create a Profile record within Platform. 
+Now, you can send some XDM formatted JSON records to create an XDM profile record within Platform. 
 
 #### Request
 
@@ -364,7 +360,7 @@ Where:
 
 Where:
  
-- `xdmSchema`: The Experience Data Model (XDM) of the streamed record. For more information about XDM, check out [this article][xdminfo].    
+- `schemaRef`: The $id value of the schema that describes the streamed record.
 - `imsOrgId`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
 - `source`: The source of the streamed record - this should be the **same** as the one specified earlier, when you created the data inlet.
 
@@ -374,7 +370,7 @@ Where:
 {
     "header": {
         "schemaRef": {
-            "id": "https://ns.adobe.com/{IMS_ORG}/schemas/{SCHEMA_ID}",
+            "id": "https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}",
             "contentType": "application/vnd.adobe.xed-full+json;version={SCHEMA_VERSION}"
         },
         "imsOrgId": "{IMS_ORG_ID}",
@@ -386,7 +382,7 @@ Where:
     "body": {
         "xdmMeta": {
             "schemaRef": {
-                "id": "https://ns.adobe.com/{IMS_ORG_ID}/schemas/{SCHEMA_ID}",
+                "id": "https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}",
                 "contentType": "application/vnd.adobe.xed-full+json;version={SCHEMA_VERSION}"
             }
         },
@@ -448,9 +444,9 @@ An example of a successful response can be seen below:
 
 ```JSON
 {
-  "inletId": "{INLET_ID}",
-  "xactionId": "1532625558467:0001:13", 
-  "receivedTimeMs": 1532625558467
+    "inletId": "{INLET_ID}",
+    "xactionId": "1532625558467:0001:13", 
+    "receivedTimeMs": 1532625558467
 }
 ```
 
@@ -460,9 +456,9 @@ Where:
 - `xactionId`: The xactionID is a unique identifier generated server-side for the XDM record you just sent. This ID helps Adobe trace this record's lifecycle through various systems and with debugging.    
 - `receivedTimeMs`: receivedTimeMs is a timestamp (epoch in milliseconds) that shows what time the request was received.
 
-### Step 4: Retrieving the newly created Profile
+### Step 4: Retrieve the newly created Customer Profile
 
-To validate the Profile records you just sent, you can use the [Profile Access API][profileapi] to read it back.
+To validate the XDM profile records you just sent, you can use the [Profile Access API][profileapi] to read it back.
 
 Let's look using the identities you used previously:
 
@@ -581,20 +577,20 @@ An example of a successful response can be seen below. As you can see, this is t
 
 ---
 
-- Try making more calls with different values for **ecid** and **email** in the “identities” block to create additional Profile records, and see if you can read them back
+- Try making more calls with different values for **ecid** and **email** in the “identities” block to create additional XDM profile records, and see if you can read them back
 - Also try changing other attributes like birthYear, gender, or workEmail for a given Profile, and retrieve their updated values.
 
 ---
 
-## Streaming an ExperienceEvent to Adobe Experience Platform
+## Stream an XDM ExperienceEvent to Adobe Experience Platform
 
 Once you've confirmed your Profile can be properly accessed, you can use Adobe's Streaming Ingestion APIs to stream ExperienceEvents as they happen. Streamed ExperienceEvents will be instantaneously available on Adobe Experience Platform services, such as Unified Profile. 
 
 The example below associates a new ExperienceEvent with the Consumer Profile you created above. It captures some details about the browser, the product items they viewed, and the web page they viewed it on.
 
-### Step 1: Composing an XDM ExperienceEvent Schema
+### Step 1: Compose an XDM ExperienceEvent schema
 
-Firstly, you'll, once again, need to create a new mixin and enable it for ExperienceEvent schema.
+To begin, you will need to create a new schema that implements the XDM ExperienceEvent class.
 
 #### Request
 
@@ -635,12 +631,6 @@ Where:
         {
             "$ref": "https://ns.adobe.com/xdm/context/identitymap"
         }
-    ],
-    "meta:extends": [
-        "https://ns.adobe.com/xdm/context/experienceevent",
-        "https://ns.adobe.com/xdm/context/identitymap",
-        "https://ns.adobe.com/xdm/context/experienceevent-environment-details",
-        "https://ns.adobe.com/xdm/context/experienceevent-commerce"        
     ],
     "meta:immutableTags": [
         "union"
@@ -697,9 +687,9 @@ An example of a successful response can be found below:
     "meta:extensible": false,
     "meta:containerId": "tenant",
     "imsOrg": "{IMS_ORG_ID}",
-    "meta:altId": "_{IMS_ORG}.schemas.{SCHEMA_ID}",
+    "meta:altId": "_{TENANT_ID}.schemas.{SCHEMA_ID}",
     "meta:xdmType": "object",
-    "$id": "https://ns.adobe.com/{IMS_ORG}/schemas/{SCHEMA_ID}",
+    "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}",
     "version": "{SCHEMA_VERSION}",
     "meta:resourceType": "schemas",
     "meta:registryMetadata": {
@@ -716,19 +706,19 @@ Where:
 - `{SCHEMA_NAME}`: The name of the schema you created.
 - `{SCHEMA_DESCRIPTION}`: The description of the schema you created. 
 - `{IMS_ORG_ID}`: The ID of the IMS Org that created the schema.
-- `{IMS_ORG}`: The name of the IMS Org that created the schema.
+- `{TENANT_ID}`: This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Org.
 - `{SCHEMA_ID}`: The ID of your newly created schema.
 - `{SCHEMA_VERSION}`: The version of your newly created schema.
 
 Please take note of the `id` (specifically the schema ID) as well as the `version` attributes, as both of these will be used when sending records to the Streaming Ingest APIs.
 
-### Step 2: Creating a Dataset for XDM ExperienceEvents
+### Step 2: Create a dataset for XDM ExperienceEvents
 
-Like before, you'll want need to create a dataset so any ExperienceEvents streamed, assuming it passes XDM validation, will be persisted into it.
+Like before, you'll need to create a dataset so any ExperienceEvents streamed, assuming they pass XDM validation, will be persisted into the dataset.
 
 There are **two** important things to note about this dataset:
 
-1. This dataset will be **streaming enabled**, which will be signaled to Catalog by setting the **streamingIngestionEnabled** filed to true. This signals to Platform Services, such as Identity and Profile, that they can read data sent to these datasets **instantaneously**, rather than waiting for it to be batched into the data lake. Other consumers that work with data in the data lake, such as Data Science Workspace and Query Service will safely ignore this attribute.
+1. This dataset will be **streaming enabled**, which will be signaled to Catalog by setting the **streamingIngestionEnabled** field to true. This signals to Platform Services, such as Identity and Profile, that they can read data sent to these datasets **instantaneously**, rather than waiting for it to be batched into the data lake. Other consumers that work with data in the data lake, such as Data Science Workspace and Query Service will safely ignore this attribute.
 2. This dataset will be enabled for **Unified Profile** and **Unified Identity** by setting the appropriate tags.
 
 #### Request
@@ -756,7 +746,7 @@ Where:
     "name": "{DATASET_NAME}",
     "description": "{DATASET_DESCRIPTION}",
     "schemaRef": {
-        "id": "https://ns.adobe.com/{IMS_ORG}/schemas/{SCHEMA_ID}",
+        "id": "https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}",
         "contentType": "application/vnd.adobe.xed-full+json;version={SCHEMA_VERSION}"
     },
     "fileDescription": {
@@ -776,7 +766,7 @@ Where:
 
 - `{DATASET_NAME}`: The name of the dataset you're creating.
 - `{DATASET_DESCRIPTION}`: A meaningful description for the dataset you're creating.
-- `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.
+- `{TENANT_ID}`: This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Org.
 - `{SCHEMA_ID}`: The ID of the previously created schema. 
 - `{SCHEMA_VERSION}`: The version of the previously created schema.
 
@@ -792,9 +782,9 @@ An example of a successful response can be found below:
 ```
 
 
-### Step 3: Calling Streaming Ingestion APIs to record a time-series ExperienceEvent
+### Step 3: Call Streaming Ingestion APIs to ingest an XDM ExperienceEvent
 
-Now, let's send some XDM formatted JSON records to create an ExperienceEvent within Platform.
+Now, you can send some XDM formatted JSON records to create an ExperienceEvent within Platform.
 
 #### Request
 
@@ -814,7 +804,7 @@ curl -X POST "https://dcs.data.adobe.net/collection/{INLET_ID}" \
 {
     "header": {
         "schemaRef": {
-            "id": "https://ns.adobe.com/{IMS_ORG}/schemas/{SCHEMA_ID}",
+            "id": "https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}",
             "contentType": "application/vnd.adobe.xed-full+json;version={SCHEMA_VERSION}"
         },
         "imsOrgId": "{IMS_ORG}",
@@ -826,7 +816,7 @@ curl -X POST "https://dcs.data.adobe.net/collection/{INLET_ID}" \
     "body": {
         "xdmMeta": {
             "schemaRef": {
-                "id": "https://ns.adobe.com/{IMS_ORG}/schemas/{SCHEMA_ID}",
+                "id": "https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}",
                 "contentType": "application/vnd.adobe.xed-full+json;version={SCHEMA_VERSION}"
             }
         },
@@ -900,9 +890,9 @@ Where:
 - `receivedTimeMs`: receivedTimeMs is a timestamp (epoch in milliseconds) that shows what time the request was received.
 
 
-### Step 4: Retrieving the newly persisted ExperienceEvent back from Unified Profile
+### Step 4: Retrieve the newly persisted XDM ExperienceEvent back from Unified Profile
 
-Now, let's use the Profile Access APIs to read the ExperienceEvent you just sent back.
+Now, you can use the Profile Access APIs to read the ExperienceEvent you just sent back.
 
 #### Request
 
@@ -1003,8 +993,8 @@ An example of a successful response can be seen below. As you can see, this is t
 
 Following this guide, you should be able to do the following actions:
 - Request a Data Inlet
-- Stream and Retrieve Profile Events
-- Stream and Retrieve ExperienceEvents from Adobe Experience Platform
+- Stream and retrieve Profile Events
+- Stream and retrieve ExperienceEvents from Adobe Experience Platform
 
 With this knowledge, you should be able to easily get your data to Adobe Experience Platform. Now that you can stream and retrieve your own events, try repeating these steps with other data and see if you can replicate your results.
 
@@ -1025,6 +1015,8 @@ With this knowledge, you should be able to easily get your data to Adobe Experie
 
 
 [xdminfo]: ../schema_registry/schema_composition/schema_composition.md
+
+[schema-registry]: ../schema_registry/schema_registry_developer_guide.md
 
 [profileapi]: ../unified_profile_architectural_overview/unified_profile_architectural_overview.md
 

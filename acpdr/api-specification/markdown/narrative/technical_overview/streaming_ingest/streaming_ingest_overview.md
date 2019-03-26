@@ -2,19 +2,19 @@
 
 ## Overview
 
-Streaming Ingestion for Adobe Experience Platform provides users a method to send data from client and server-side devices to the Platform in real-time.
+Streaming Ingestion for Adobe Experience Platform provides users a method to send data from client and server-side devices to Experience Platform in real-time.
 
 ## What can you do with Streaming Ingestion?
 
-The most important goal of Adobe Experience Platform is to create a complete, high fidelity, and real-time Unified Profile that can drive hyper-personalized experiences. Streaming Ingestion plays a key role in delivering data to Unified Profile and Data Lake with as little latency as possible.
+The most important goal of Platform is to create a complete, high fidelity, and real-time Unified Profile that can drive hyper-personalized experiences. Streaming Ingestion plays a key role in delivering data to Unified Profile and Data Lake with as little latency as possible.
 
-### Stream Profile Records & Experience Events
+### Stream profile records and ExperienceEvents
 
-With streaming ingestion, users can stream profile records and exeprience events to Adobe Experience Platform in seconds to help drive real-time personalization. All data sent to streaming ingestion APIs is automatically persisted in the Data Lake.
+With streaming ingestion, users can stream profile records and ExperienceEvents to Platform in seconds to help drive real-time personalization. All data sent to streaming ingestion APIs is automatically persisted in the Data Lake.
 
 Check out this [guide][getting-started] to learn more.
 
-### Automatically Stream to Specific Datasets
+### Automatically stream to specific datasets
 
 Publishers can send data to an existing dataset or have one created automatically for them. 
 

@@ -1,6 +1,6 @@
 # Retrieving Failed Batches
 
-So what happens if you post data that has a failure? Let's say, for example, you stream in data with an incorrectly formatted timestamp, by making the month's value to be **00**, like so:
+So what happens if you post data that has formatting errors? For example, when you stream in data with an incorrectly formatted timestamp, by making the month's value to be **00**, like so:
 
 <pre style="color:#183691">
 {
@@ -28,7 +28,7 @@ So what happens if you post data that has a failure? Let's say, for example, you
 
 The payload above will not properly validate against the XDM schema due to the malformed timestamp.
 
-Let's assume you didn't know the reason for failure upfront. To find out what might have happened to this record, you'll need to log into [Adobe Platform][platform], and click the "Data" tab, and find the failed batch. 
+Let's assume you didn't know the reason for failure upfront. To find out what might have happened to this record, you'll need to log into [Adobe Experience Platform][platform], and click the "Data" tab, and find the failed batch. 
 
 From here, you can search for the dataset that you've attempted to insert the data into, by searching for the dataset's name:
 
@@ -66,7 +66,7 @@ curl -X GET "https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}
             "length": "0",
             "_links": {
                 "self": {
-                    "href": "https://platform-stage.adobe.io:443/data/foundation/export/batches/17384fa9eaf5444cb226a71914bfc537/failed?path=_SUCCESS"
+                    "href": "https://platform.adobe.io:443/data/foundation/export/batches/{BATCH_ID}/failed?path=_SUCCESS"
                 }
             }
         },
@@ -75,7 +75,7 @@ curl -X GET "https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}
             "length": "1800",
             "_links": {
                 "self": {
-                    "href": "https://platform-stage.adobe.io:443/data/foundation/export/batches/17384fa9eaf5444cb226a71914bfc537/failed?path=part-00000-44c7b669-5e38-43fb-b56c-a0686dabb982-c000.json"
+                    "href": "https://platform.adobe.io:443/data/foundation/export/batches/{BATCH_ID}/failed?path=part-00000-44c7b669-5e38-43fb-b56c-a0686dabb982-c000.json"
                 }
             }
         }
@@ -129,9 +129,9 @@ Since the previous ingested batch had an invalid date-time, the following valida
 }
 ```
 
-## Other Error Types
+## Other error types
 
-### Missing or Invalid IMS Org ID
+### Missing or invalid IMS Org ID
 
 This error is shown if the IMS Org ID is either missing from the payload is invalid.
 
@@ -146,7 +146,7 @@ This error is shown if the IMS Org ID is either missing from the payload is inva
 }
 ```
 
-### Missing XDM Schema
+### Missing XDM schema
 
 This error is shown if the `schemaRef` for the `xdmMeta` is missing.
 
@@ -161,7 +161,7 @@ This error is shown if the `schemaRef` for the `xdmMeta` is missing.
 }
 ```
 
-### Missing Source Name
+### Missing source name
 
 This error is shown if the `source` in the header is missing its `name`.
 
@@ -177,7 +177,7 @@ This error is shown if the `source` in the header is missing its `name`.
 }
 ```
 
-### Missing XDM Entity
+### Missing XDM entity
 
 This error is shown if there is no `xdmEntity` present.
 
@@ -191,7 +191,7 @@ This error is shown if there is no `xdmEntity` present.
 }
 ```
 
-### Other Validation Errors
+### Other validation errors
 
 Like the timestamp error in the previous example flow, these errors are due to incorrectly formatted XDM. These error messages will vary quite a bit depending on the nature of the problem.
 
