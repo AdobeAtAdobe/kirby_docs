@@ -49,6 +49,7 @@
 		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/technical_overview/identity_namespace_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/": "/apis/experienceplatform/home/services/allservices.html"
+		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/": "/apis/experienceplatform/home/services/allservices.html",
+        "api-specification/markdown/narrative/technical_overview/streaming_ingest": "/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
     }
   }

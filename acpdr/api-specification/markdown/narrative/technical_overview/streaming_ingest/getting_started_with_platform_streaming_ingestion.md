@@ -28,6 +28,8 @@ To complete this tutorial, you will first need to obtain your **developer creden
 
 Firstly, start by creating a new data inlet. Assuming you have an API Key and Access Token, you can insert them into the cURL command below, providing other details, like data inlet Name and Description, which are meaningful to you.
 
+If you want to create a data inlet with authenticated data collection, check out the [authenticated data collection][adc] guide.
+
 ### Request
 
 ```SHELL
