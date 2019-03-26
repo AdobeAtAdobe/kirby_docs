@@ -1,8 +1,8 @@
-# Streaming to Datasets in Data Lake
+# Streaming to datasets in data lake
 
-## Streaming to Specific Datasets
+## Streaming to specific datasets
 
-Let's say that you have a specific dataset in mind to which you want to send data. 
+Now, what if you wanted to send data to a specific dataset?
 
 You can insert the dataset ID in the message header to have that message be directly ingested into it. The dataset ID can be found on [Adobe Experience Platform][aep] by going to the "Datasets" tab, clicking on the dataset you want the ID for, and copying it from the details.
 
@@ -26,7 +26,7 @@ curl -X POST "https://dcs.data.adobe.net/collection/{DATA_INLET_ID}" \
 {
     "header": {
         "schemaRef": {
-            "id": "https://ns.adobe.com/{IMS_ORG}/schemas/{SCHEMA_ID}",
+            "id": "https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}",
             "contentType": "application/vnd.adobe.xed-full+json;version={SCHEMA_VERSION}"
         },
         "imsOrgId": "{IMS_ORG}",
@@ -38,7 +38,7 @@ curl -X POST "https://dcs.data.adobe.net/collection/{DATA_INLET_ID}" \
     "body": {
         "xdmMeta": {
             "schemaRef": {
-                "id": "https://ns.adobe.com/{IMS_ORG}/schemas/{SCHEMA_ID}",
+                "id": "https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}",
                 "contentType": "application/vnd.adobe.xed-full+json;version={SCHEMA_VERSION}"
             }
         },
@@ -89,6 +89,7 @@ curl -X POST "https://dcs.data.adobe.net/collection/{DATA_INLET_ID}" \
 ```
 
 - `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
+- `{TENANT_ID}`: This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Org.
 - `{DATASET_ID}`: The ID of the dataset you will be ingesting the data into.
 
 ### Response
@@ -103,9 +104,9 @@ An example of a successful response can be seen below:
 }
 ```
 
-## Streaming to an Auto-Created Dataset
+## Streaming to an auto-created dataset
 
-Now, let's say you don't have a dataset or dataset ID to stream to. That isn't an issue at all - a dataset will automatically be created and be streamed to, even without the ID. In order for the dataset to be automatically created, the header must have the following fields:
+Now, what if you don't have a dataset or dataset ID to stream to? That isn't an issue at all - a dataset will automatically be created and be streamed to, even without the ID. In order for the dataset to be automatically created, the header must have the following fields:
 
 - IMS Org ID
 - Source Name
@@ -129,7 +130,7 @@ curl -X POST "https://dcs.data.adobe.net/collection/{DATA_INLET_ID}" \
 {
     "header": {
         "schemaRef": {
-            "id": "https://ns.adobe.com/{IMS_ORG}/schemas/{SCHEMA_ID}",
+            "id": "https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}",
             "contentType": "application/vnd.adobe.xed-full+json;version={SCHEMA_VERSION}"
         },
         "imsOrgId": "{IMS_ORG}",
@@ -140,7 +141,7 @@ curl -X POST "https://dcs.data.adobe.net/collection/{DATA_INLET_ID}" \
     "body": {
         "xdmMeta": {
             "schemaRef": {
-                "id": "https://ns.adobe.com/{IMS_ORG}/schemas/{SCHEMA_ID}",
+                "id": "https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}",
                 "contentType": "application/vnd.adobe.xed-full+json;version={SCHEMA_VERSION}"
             }
         },
@@ -189,6 +190,10 @@ curl -X POST "https://dcs.data.adobe.net/collection/{DATA_INLET_ID}" \
     }
 }
 ```
+
+
+- `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
+- `{TENANT_ID}`: This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Org.
 
 ### Response
 
