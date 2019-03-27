@@ -1,4 +1,4 @@
-# Authenticated Data Collection vis Streaming Ingestion APIs
+# Authenticated Data Collection via Streaming Ingestion APIs
 
 ## Introduction
 
