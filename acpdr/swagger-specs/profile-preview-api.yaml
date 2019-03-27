@@ -1,0 +1,520 @@
+swagger: "2.0"
+info:
+  description: >-
+    Run your PQL predicate using Unified Profile Preview Service for a summary of the resulting profile segment.
+    
+    
+    For more information, see [Unified Profile Overview](https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
+
+
+    Notes:
+      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * Base path for this API: /data/core/ups
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+
+  version: 18.8.1
+  title: Unified Profile Preview API
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
+host: "platform.adobe.io"
+basePath: "/data/core/ups"
+tags:
+- name: "estimate"
+- name: "preview"
+- name: "health-detailed"
+- name: "health"
+- name: "ping"
+- name: "version"
+paths:
+  /preview:
+    post:
+      tags:
+      - "preview"
+      summary: "SESSIONLESS: Submits a Preview Job for a Profile Query"
+      description: "Supply a PQL expression to retrieve a preview of the resulting segment.\
+        \ \nThe response from this call includes a previewId which will be used to GET estimate or preview results."
+      operationId: "postSessionlessPreviewRoute"
+      produces:
+      - "application/json"
+      parameters:
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: "<replace with your api key>"
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
+        - name: "x-gw-ims-org-id"
+          in: "header"
+          description: "IMS Organization ID"
+          required: true
+          type: "string"
+          x-example: "1BD@Adobe.com"
+        - in: "body"
+          name: "body"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/PreviewQuerySessionlessRequest"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PreviewQueryResponse"
+        201:
+          description: "Profile Preview successfully Posted"
+          schema:
+            $ref: "#/definitions/PreviewQueryResponse"
+          headers:
+            X-Location:
+              type: "string"
+              description: "HRef to the Profile Preview"
+        403:
+          description: "Forbidden"
+        503:
+          description: "Service Unavailable"
+  /preview/{previewId}:
+    get:
+      tags:
+      - "preview"
+      summary: "SESSIONLESS: Gets result of the Preview Job in a paginated fashion, ordered by objectId."
+      description: ""
+      operationId: "getSessionlessPreviewStatusRoute"
+      produces:
+      - "application/json"
+      parameters:
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: "<replace with your api key>"
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
+        - name: "x-gw-ims-org-id"
+          in: "header"
+          description: "IMS Organization ID"
+          required: true
+          type: "string"
+          x-example: "1BD@Adobe.com"
+        - name: "previewId"
+          in: "path"
+          description: "Preview Id."
+          required: true
+          type: "string"
+          x-example: "MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA=="
+        - name: "previewId"
+          in: "query"
+          description: "Preview Job ID"
+          required: true
+          type: "string"
+          x-example: "ce775645-e8ca-41e2-a74f-5729fe478ef0"
+        - name: "offset"
+          in: "query"
+          description: "Page offset"
+          required: false
+          type: "string"
+          x-example: "offset=10200"
+        - name: "limit"
+          in: "query"
+          description: "How many entries should be present in a page. 1000 if not specified."
+          required: false
+          type: "integer"
+          x-example: 100
+      responses:
+        200:
+          description: "XDM model objects of given {jobId} successfully returned. "
+          schema:
+            $ref: "#/definitions/EndCustomerEntityPageResponse"
+        403:
+          description: "You are forbidden to make this request."
+        404:
+          description: " Preview jobId {jobId} does not exist."
+        503:
+          description: "Service unavailable"
+    delete:
+      tags:
+      - "preview"
+      summary: "SESSIONLESS: Cancels the execution of the Preview Job"
+      description: ""
+      operationId: "deleteSessionLessPreviewStatusRoute"
+      produces:
+      - "application/json"
+      parameters:
+        - name: "previewId"
+          in: "path"
+          description: "Preview Id."
+          required: true
+          type: "string"
+          x-example: "MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA=="
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: "<replace with your api key>"
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
+        - name: "x-gw-ims-org-id"
+          in: "header"
+          description: "IMS Organization ID"
+          required: true
+          type: "string"
+          x-example: "1BD@Adobe.com"
+      responses:
+        200:
+          description: "Job Successfully cancelled "
+          schema:
+            $ref: "#/definitions/MessageResponse"
+        403:
+          description: "You are forbidden to make this request."
+        404:
+          description: "Preview jobId {jobId} does not exist."
+        503:
+          description: "Service unavailable"
+  /estimate/{previewId}:
+    get:
+      tags:
+      - "estimate"
+      summary: "SESSIONLESS: Gets result of the Estimate Job."
+      description: ""
+      operationId: "getEstimateStatusRoute"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "previewId"
+        in: "path"
+        description: "Preview Id."
+        required: true
+        type: "string"
+        x-example: "123421"
+      - name: x-api-key
+        in: header
+        description: API Key
+        required: true
+        type: string
+        x-example: "<replace with your api key>"
+      - name: Authorization
+        in: header
+        description: Authorization token
+        required: true
+        type: string
+        x-example: "Bearer <replace with your token>"
+      - name: "x-gw-ims-org-id"
+        in: "header"
+        description: "IMS Organization ID"
+        required: true
+        type: "string"
+        x-example: "1BD@Adobe.com"
+      responses:
+        200:
+          description: "Estimate Successfully retrieved."
+          schema:
+            $ref: "#/definitions/EstimateResponse"
+        403:
+          description: "You are forbidden to make this request."
+        404:
+          description: "Preview id {previewId} does not exist."
+        503:
+          description: "Service unavailable"
+  /preview/health-detailed:
+    get:
+      tags:
+      - "health-detailed"
+      summary: "Return a detailed health check message"
+      description: ""
+      operationId: "detailedHealthRoute"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Detailed health check succeeded"
+          schema:
+            $ref: "#/definitions/HealthDetailedResponse"
+        503:
+          description: "Service is unavailable"
+  /preview/health:
+    get:
+      tags:
+      - "health"
+      summary: "Return a health check message"
+      description: ""
+      operationId: "healthRoute"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Health check succeeded"
+          schema:
+            $ref: "#/definitions/HealthResponse"
+        503:
+          description: "Service is unavailable"
+  /preview/ping:
+    get:
+      tags:
+      - "ping"
+      summary: "Return a ping message"
+      description: ""
+      operationId: "pingRoute"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Ping succeeded"
+          schema:
+            $ref: "#/definitions/PingResponse"
+        503:
+          description: "Service unavailable"
+  /preview/version:
+    get:
+      tags:
+      - "version"
+      summary: "Return version information"
+      description: ""
+      operationId: "versionRoute"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Version info response succeeded"
+          schema:
+            $ref: "#/definitions/VersionResponse"
+        503:
+          description: "Service unavailable"
+
+securityDefinitions: {}
+definitions:
+  HealthDetailedResponse:
+    type: "object"
+    required:
+    - "dependencies"
+    - "status"
+    properties:
+      status:
+        type: "boolean"
+      dependencies:
+        type: "array"
+        items:
+          $ref: "#/definitions/ServiceHealth"
+  ServiceHealth:
+    type: "object"
+    required:
+    - "service"
+    - "status"
+    properties:
+      service:
+        type: "string"
+      status:
+        type: "boolean"
+  HealthResponse:
+    type: "object"
+    required:
+    - "status"
+    properties:
+      status:
+        type: "boolean"
+  PingResponse:
+    type: "object"
+    required:
+    - "code"
+    - "message"
+    properties:
+      code:
+        type: "string"
+      message:
+        type: "string"
+  VersionResponse:
+    type: "object"
+    required:
+    - "branchName"
+    - "buildDate"
+    - "buildInfo"
+    - "cycleNumber"
+    - "gitCommit"
+    - "projectName"
+    - "projectVersion"
+    - "versionNumber"
+    properties:
+      projectName:
+        type: "string"
+      projectVersion:
+        type: "string"
+      buildInfo:
+        type: "string"
+      versionNumber:
+        type: "string"
+      branchName:
+        type: "string"
+      cycleNumber:
+        type: "string"
+      gitCommit:
+        type: "string"
+      buildDate:
+        type: "string"
+  EstimateResponse:
+    type: "object"
+    required:
+    - "_links"
+    - "confidenceInterval"
+    - "estimatedSize"
+    - "profilesMatchedSoFar"
+    - "profilesReadSoFar"
+    - "standardError"
+    - "state"
+    - "totalRows"
+    properties:
+      estimatedSize:
+        type: "integer"
+        format: "int32"
+      standardError:
+        type: "integer"
+        format: "int32"
+      confidenceInterval:
+        type: "string"
+      profilesReadSoFar:
+        type: "integer"
+        format: "int32"
+      profilesMatchedSoFar:
+        type: "integer"
+        format: "int32"
+      totalRows:
+        type: "integer"
+        format: "int32"
+      state:
+        type: "string"
+      _links:
+        $ref: "#/definitions/PreviewLink"
+  PreviewLink:
+    type: "object"
+    required:
+    - "preview"
+    properties:
+      preview:
+        type: "string"
+  DatabaseService:
+    type: "object"
+  EndCustomerEntityPageResponse:
+    type: "object"
+    properties:
+      page:
+        description: "The page information of the current response entity."
+      link:
+        description: "The href links."
+      state:
+        type: "string"
+        description: "The execution State of the query"
+      results:
+        type: "array"
+        description: "The list of endcustomer entities."
+        items:
+          $ref: "#/definitions/PreviewSegmentsWrapperResponse"
+    description: "The endcustomer entity response, with current page information and\
+      \ next page link."
+  MessageResponse:
+    type: "object"
+    required:
+    - "message"
+    - "status"
+    properties:
+      status:
+        type: "boolean"
+      message:
+        type: "string"
+  PreviewQueryResponse:
+    type: "object"
+    required:
+    - "previewExecutionId"
+    - "previewQueryId"
+    - "previewQueryStatus"
+    - "state"
+    properties:
+      previewQueryId:
+        type: "string"
+      previewExecutionId:
+        type: "integer"
+        format: "int32"
+      previewQueryStatus:
+        type: "string"
+      state:
+        type: "string"
+  PreviewQuerySessionlessRequest:
+    type: "object"
+    properties:
+      predicateExpression:
+        type: "string"
+        description: "Expression of the predicate that is to be evaluated."
+      predicateType:
+        type: "string"
+        description: "Default: PQL The only value that is available to use for this is PQL for now."
+      predicateModel:
+        type: "string"
+        description: "Default: xdm.model.profile\
+            \ The model against which this predicate is to be evaulated. Please note\
+            \ that 'touchpoint' is not treated as model as it can be associated with\
+            \ any of the models like profile."
+      graphType:
+        type: "string"
+        description: "Graph Type you want to get the cluster from. Possible values are ['coop' -\
+          \ graph built by using coop data, 'pdg' - private device graph, 'psr' - propriatery stiched rules]"
+      mergeStrategy:
+        type: "string"
+        description: "The ID of the preexisting Merge Policy."
+  Link:
+    type: "object"
+    properties:
+      nextPage:
+        type: "string"
+        description: "The href link to the next page of the records."
+    description: "The link information."
+  Page:
+    type: "object"
+    properties:
+      offset:
+        type: "integer"
+        format: "int32"
+        description: "The offset of the page. By default is the internal id for the\
+          \ first record."
+      size:
+        type: "integer"
+        format: "int32"
+        description: "The total number of records of this page."
+    description: "The page information of the response entity."
+  PreviewSegmentsIndividualResponse:
+    type: "object"
+    properties:
+      objectId:
+        type: "string"
+        description: "Unique identifier of XDM Model object."
+      _href:
+        type: "string"
+        description: "Profile Access Link to the Contents of the XDM Object"
+  PreviewSegmentsWrapperResponse:
+    type: "object"
+    properties:
+      objectId:
+        type: "string"
+        description: "Unique identifier of XDM Model object."
+      _href:
+        type: "string"
+        description: "Profile Access Link to the Contents of the XDM Object"
+      relatedObjects:
+        type: "array"
+        description: "List of related objectIds"
+        items:
+          $ref: "#/definitions/PreviewSegmentsIndividualResponse"
