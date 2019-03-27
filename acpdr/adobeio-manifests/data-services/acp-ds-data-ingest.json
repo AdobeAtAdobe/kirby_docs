@@ -23,7 +23,12 @@
       {
         "pages": [
           {
-            "pages": [ ],
+            "pages": [
+                {
+                    "path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/authenticated_data_collection.md",
+                    "title": "Authenticated data collection"
+                }
+             ],
             "path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md",
             "title": "Getting started with streaming ingestion"
           },
@@ -39,7 +44,7 @@
           }
         ],
         "path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_ingest_overview.md",
-        "title": "Streaming ingestion overview"
+        "title": "Streaming ingestion"
       }
     ],
 	"app2app_map": {
