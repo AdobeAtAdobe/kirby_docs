@@ -1,4 +1,4 @@
-# Datasets vs Tables and Schema
+# Datasets vs tables and schema
 
 1. Review the Dataset list in the UI - https://platform.adobe.com/datasets. 
 
