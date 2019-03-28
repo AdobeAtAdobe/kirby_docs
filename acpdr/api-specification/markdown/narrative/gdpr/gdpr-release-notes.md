@@ -1,4 +1,5 @@
-# GDPR Release notes
+# GDPR release notes
+
 This document contains information about new GDPR features, as well as significant bug fixes and enhancements.
 
 ## 14 February, 2019

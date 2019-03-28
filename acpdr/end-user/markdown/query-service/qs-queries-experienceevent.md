@@ -1,4 +1,4 @@
-# ExperienceEvent Queries
+# ExperienceEvent queries
 
 1. Create a trended report of events by day over a specific date range.
 
