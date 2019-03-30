@@ -70,9 +70,9 @@ Before diving into details of Data Science Workspace, here is a brief summary of
 | Hyperparameters | Different from standard model parameters, hyperparameters are high-level properties of a model that are usually fixed (hence not learned) during model training. Examples are: depth of decision tree, number of hidden layers, prior of NB, learning rate. |
 | Unified Edge | A cohesive collection of components and services which, when used together, power aggregation, sharing, and processing of data for real-time analysis and execution of customer experiences. |
 
-The following chart outlines the hierarchical relationship between recipes, instances, and trained models. 
+The following chart outlines the hierarchical relationship between recipes, instances, experiments, and trained models. 
 
-![](./images/recipe_hiearchy.png)
+![](recipe_hiearchy.png)
 
 ## Why Data Science Workspace?
 
@@ -146,7 +146,7 @@ It all starts with a business problem. For example, an online call center needs 
 
 There's plenty of data about the customer. They've browsed the site, put items in their cart, and even placed orders. They might have received emails, used coupons, or contacted the call center previously. The recipe, then, needs to use the data available about the customer and their activities to determine propensity to buy and recommend an offer that the customer is likely to appreciate and use.
 
-![](./images/example_problem.png)
+![](example_problem.png)
  
 At the time of the call center contact, the customer still has two pairs of shoes in the cart, but removed a shirt. With this information, the intelligent service might recommend that the call center agent offer a coupon for 20% off on shoes during the call. If the customer uses the coupon, that information is added to the dataset and the predictions become even better the next time the customer calls.
 
@@ -158,7 +158,7 @@ A data scientist typically spends up to 75% of the time required to create a rec
 
 Your first step is to check the recipe gallery to see if an existing recipe meets your needs, or comes close. An alternative is to import a recipe you created outside of Adobe Experience Platform. Starting with an existing recipe often streamlines the data exploration phase and makes it easier for a data scientist.
  
-![](./images/list_of_notebooks.png)
+![](prebuilt_recipes2.png)
 
 If you're starting from scratch or configuring an existing recipe, you begin your data search in a centralized and standardized data catalog for your organization, which simplifies the hunt considerably. You might even find that another data scientist in your organization has already identified a similar dataset, and choose to fine-tune that dataset rather than start from scratch.
 All the data in Adobe Experience Platform complies with a standardized XDM schema, eliminating the need to create a complex model for joining data or obtain help from a data engineer.
@@ -166,7 +166,7 @@ All the data in Adobe Experience Platform complies with a standardized XDM schem
 If you don't immediately find the data you need, but it exists outside Adobe Experience Platform, it's a relatively simple task to ingest additional datasets, which will also transform into the standardized XDM schema.  
 You can use Jupyter Notebook to simplify data pre-processing - possibly starting with a notebook template or a notebook you've used previously for propensity to buy.  
  
-![](./images/list_of_notebooks.png)
+![](list_of_notebooks.png)
 
 For more information, check out this tutorial:
 * [How to Access and Explore Data in the Data Science Workspace](../../tutorials/dsw/ml_access_and_explore_data_tutorial/ml_access_and_explore_data_tutorial.md)
@@ -184,11 +184,11 @@ For more information, check out this tutorial:
 
 With a recipe that incorporates your core algorithms in hand, you'll create one or more unique instances of the recipe, and change the parameters for each instance so you can experiment. Then you'll test each unique recipe instance. 
 
-![](./images/recipe_hiearchy.png)
+![](recipe_hiearchy.png)
 
 As you test, Data Science Workspace keeps track of evaluation metrics for each unique recipe instance and each trained instance. You'll check Data Science Workspace's evaluation metrics as you experiment to find the instance that performs best. 
 
-![](./images/evaluation_metrics.png)
+![](evaluation_metrics.png)
 
 For more information, check out these tutorials:
 * [Import, Train, and Evaluate Recipe Tutorial via UI](../../tutorials/dsw/how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial.md)
