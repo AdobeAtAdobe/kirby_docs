@@ -1,4 +1,4 @@
-# GDPR FAQ
+# GDPR faq
 
 **When is the GDPR coming into effect?**
 
