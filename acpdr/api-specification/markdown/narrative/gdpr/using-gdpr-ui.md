@@ -18,11 +18,11 @@ Once authenticated, you should see the Experience Cloud shell where you can navi
 
 Once in the Administration tools, you will see an option to launch the GDPR UI.
 
-## The user interface
+## The User Interface
 
 Currently, the user interface consists of three main screens, the job submission screen, status tracker, and job details page. We will cover each in depth here.
 
-### Job Submission screen
+### Job Submission Screen
 
 ![GDPR UI Job Submission Screen](images/gdpr-ui-job-submission.png)
 
@@ -59,7 +59,7 @@ After submitting the file successfully, you may choose to be taken to the Status
 
 - Each unique job ID is a link to a more detailed description of the job itself, containing updated status values and responses from each Experience Cloud product orchestrated by Platform GDPR Service. If you click on this, it takes you to the third UI screen, the Job Details Page.
 
-### Job Details page
+### Job Details Page
 
 ![GDPR UI Job Details](images/gdpr-ui-job-details.png)
 
