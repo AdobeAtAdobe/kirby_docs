@@ -3,7 +3,7 @@
 title: Adobe Experience Platform Release Notes
 description: Template for Experience Platform release notes
 doc-type: release notes
-last-update: January 2019
+last-update: April 2019
 author: crhoades
 
 ---
@@ -16,7 +16,7 @@ New features and fixes in Adobe Experience Platform.
 
 >**Note:** Subscribe to the [Adobe Priority Product Update](https://www.adobe.com/subscription/priority-product-update.html) to be notified via email about upcoming releases. You will receive the notice three to five business days in advance of the release. New information published after the release will be marked with the publication date.
 
-MONTH 2019
+May 2019
 
 * [Data Ingestion and Management](#ingestion)
 * [Experience Data Model (XDM) and Schema Composition](#xdm)
