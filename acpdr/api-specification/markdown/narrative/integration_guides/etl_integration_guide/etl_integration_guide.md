@@ -1,66 +1,60 @@
-# Data Integration Patterns for ETL Tools
+# Developing ETL Integrations for Adobe Experience Platform
 
-Partners are key to the success of Adobe Experience Platform, and the [Adobe Exchange program](https://partners.adobe.com/exchangeprogram/experiencecloud.html) assists with varying levels of partner integration through multiple benefit packages, including Experience Platform, with the ETL Ecosystem. To support Adobe Exchange partners participating in the ETL Ecosystem program, Adobe and their partners can create premium ETL connectors to integrate with Adobe Experience Platform.
+The ETL integration guide outlines general steps for creating high-performance, secure connectors for Experience Platform and ingesting data into Platform.
 
-In this guide you will learn how to create high-performance, secure connectors for Adobe/partner integration, including implementation of Experience Platform functions. Building secure connectors allows Adobe and partners to effectively implement both Adobe Experience Platform and partner ETL capabilities.
+Experience Platform provides data storage, administration, access, usage controls, and other domain-specific data services while also exposing common RESTful APIs including:
 
-## Developing ETL Integrations for Adobe Experience Platform
+* [Catalog](../../../../../../acpdr/swagger-specs/catalog.yaml)
+* [Data Access](../../../../../../acpdr/swagger-specs/data-access-api.yaml)
+* [Batch Ingestion](../../../../../../acpdr/swagger-specs/bulk-ingest-api.yaml)
+* [Authentication and Authorization APIs](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md)
+* [Schema Registry](../../../../../../acpdr/swagger-specs/schema-registry.yaml)
 
-This guide outlines general steps for ingesting data into Adobe Experience Platform.
+This guide also includes sample API calls to use when designing an ETL connector, with links to documentation that outlines each Experience Platform service, and use of its API, in more detail. 
 
-The ETL Connector for Adobe Experience Platform is located, installed, and operated entirely within the ETL Ecosystem. Experience Platform provides data storage, administration, access, usage controls, and other domain-specific data services. Experience Platform also exposes common RESTful APIs including:
-
--   [Catalog](../../../../../../acpdr/swagger-specs/catalog.yaml)
--   [Data Access](../../../../../../acpdr/swagger-specs/data-access-api.yaml)
--   [Batch Ingestion](../../../../../../acpdr/swagger-specs/bulk-ingest-api.yaml)
--   [Authentication and Authorization APIs](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md)
-
-This guide also includes sample API calls for ETL partners to use when designing a connector, with links to documentation that outlines each Experience Platform service, and use of the API, in more detail. 
-
-A sample reference integration is available as Apache 2.0 license on [Github](https://github.com/adobe/acp-data-services-etl-reference).
-
+A sample integration is available on GitHub via the [ETL Ecosystem Integration Reference Code](https://github.com/adobe/acp-data-services-etl-reference) under the Apache License Version 2.0.
 
 ## Workflow
 
-The following workflow diagram provides a high-level overview for the integration of Adobe Experience Platform components and the ETL application and connector.
+The following workflow diagram provides a high-level overview for the integration of Adobe Experience Platform components with an ETL application and connector.
 
 ![](media/etl.png)
 
 
 ## Adobe Experience Platform Components 
 
-There are multiple Experience Platform components involved in ETL partner integration. The following list outlines several key components and functionalities for ETL partners:
+There are multiple Experience Platform components involved in ETL connector integrations. The following list outlines several key components and functionalities:
 
--   **Data Discovery** - Records the metadata of ingested and transformed data in Experience Platform.
--   **Data Access** - Provides users the interface to access their data in Experience Platform.
--   **Data Ingestion** – Pushes data to Experience Platform with Data Ingestion APIs.
--   **Adobe Identity Management System (IMS)** - Provides framework for authentication to Adobe services.
--   **IMS Organization** - A corporate entity that can own or license products and services and allow access to its members.
--   **IMS User** - Members of an IMS Organization. The Organization to User relationship is many to many.
+* **Adobe Identity Management System (IMS)** - Provides framework for authentication to Adobe services.
+* **IMS Organization** - A corporate entity that can own or license products and services and allow access to its members.
+* **IMS User** - Members of an IMS Organization. The Organization to User relationship is many to many.
+* **Data Discovery** - Records the metadata of ingested and transformed data in Experience Platform.
+* **Data Access** - Provides users with an interface to access their data in Experience Platform.
+* **Data Ingestion** – Pushes data to Experience Platform with Data Ingestion APIs.
+* **Schema Registry** - Defines and stores schema that describe the structure of data to be used in Experience Platform. 
+
 
 ## Authenticating to Adobe Experience Platform
 
-Adobe is committed to privacy and security. Nearly all Adobe services require your application to authenticate through the Adobe IMS to receive client credentials. Client credentials determine the access and permissions granted to your application.
+Adobe is committed to privacy and security. All requests for services or content on behalf of end-users or service accounts must authenticate using OAuth or JSON Web Token (JWT).
 
-Any API that accesses a service or content on behalf of an end-user must authenticate using OAuth and JSON Web Token (JWT) standards.
+* Your application must be registered through the Adobe I/O Console to use OAuth and JWT authentication. The I/O Console is where you can generate the API Key, a requirement for the authentication flow.
+* If your integration needs to access content or services on behalf of an end-user, the integration will need to pass the OAuth token granted by Adobe IMS for that end-user.
+* For service-to-service integrations, your application will use JWT. JWT encapsulates your client credentials and authenticates your integration with the identity of the service account to be used for the API invocations. The JWT is exchanged for the OAuth token that authorizes access and is used in the same manner as the direct end-user authentication flow. 
 
--   Your application must be registered through the Adobe I/O Console. The I/O Console is where you can generate an API Key, an important requirement to obtain client credentials.
--   If your integration needs to access content or a service for an end user, that user must be authenticated as well. Your integration will need to pass the OAuth token granted by Adobe IMS.
--   For service-to-service integrations, you will also need a JSON Web Token (JWT) that encapsulates your client credentials and authenticates the identity of your integration. You can exchange the JWT for the OAuth token that authorizes access. 
+The [Adobe I/O Authentication](https://www.adobe.io/apis/experienceplatform/console/authentication/gettingstarted.html) guide provides step-by-step instructions for authenticating to Experience Platform.
 
-The [Adobe I/O Authentication](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) guide provides step-by-step instructions for authenticating to Experience Platform.
+## General User Flow
 
-## Design Phase
+To begin, an ETL user logs into the Experience Platform user interface (UI) and creates datasets for ingestion using a standard connector or push-service connector.
 
-To begin, a partner logs in to the user interface (UI) for Experience Platform and creates datasets for ingestion using a standard connector or push-service connector.
+In the UI, the user creates the output dataset by selecting a dataset schema. The choice of schema depends on the type of data (record or time series) being ingested into Platform. By clicking on the Schemas tab within the UI, the user will be able to view all available schemas, including the behavior type that the schema supports.
 
-In the UI, the partner creates the output dataset by selecting Profile, ExperienceEvent, or other schema in the Experience Data Model (XDM) Registry.
+In the ETL tool, the user will start designing their mapping transforms after configuring the appropriate connection (using their credentials). The ETL tool is assumed to already have Experience Platform connectors installed (process not defined in this Integration Guide).
 
-In the ETL tool, the partner will start designing their mapping transforms after configuring the appropriate connection (using their credentials). The ETL tool is assumed to already have Experience Platform connectors installed (process not defined in this Integration Guide).
+Mockups for a sample ETL tool and workflow have been provided in the [ETL Workflow](etl_workflow.md). While ETL tools may differ in format, most expose similar functionality.
 
-Generic mockups for a sample ETL tool and workflow have been provided in the [ETL Workflow](etl_workflow.md) guide. While ETL tools may differ in format, most expose similar functionality.
-
-_**Note**_: Partners will also have to specify a time stamp filter marking the date to ingest data and offset (i.e. The window for which data is to be read). The ETL tool should support taking these two parameters in this or another relevant UI. In Adobe Experience Platform, these parameters will be mapped to either available dates (if present) or captured date present in batch object of dataset.
+_**Note**_: The ETL connector must specify a time stamp filter marking the date to ingest data and offset (i.e. The window for which data is to be read). The ETL tool should support taking these two parameters in this or another relevant UI. In Adobe Experience Platform, these parameters will be mapped to either available dates (if present) or captured date present in batch object of dataset.
 
 ### View List of Datasets
 
@@ -70,93 +64,157 @@ You can issue a single API request to view all available datasets (e.g. `GET /da
 
 In cases where _full_ dataset information is being requested the response payload can reach past 3GB in size, which can slow overall performance. Therefore, using query parameters to filter only the information needed will make Catalog queries more efficient.
 
-Refer to the [Catalog Service Overview](../../technical_overview/catalog_architectural_overview/catalog_architectural_overview.md) for detailed information on querying datasets and available response filters.
+#### List Filtering
 
-#### Best Practices When Querying Datasets
+When filtering responses, you can use multiple filters in a single call by separating parameters with an ampersand (`&`). Some query parameters accept comma-separated lists of values, such as the "properties" filter in the sample request below. 
 
-It is best practice to use query parameters whenever possible when using Experience Platform APIs. You can use multiple filters in a single call by separating parameters with an ampersand (`&`). Some query parameters accept comma-separated lists of values, such as the "properties" filter in the sample request below. 
+Catalog responses are automatically metered according to configured limits, however the "limit" query parameter can be used to customize the constraints and limit the number of objects returned. The pre-configured Catalog response limits are:
 
-The "limit" query parameter constrains the number of objects returned. Catalog responses are automatically metered according to configured limits:
-
-- If a limit parameter is not specified, the maximum number of objects per response payload is 20.
-- The global limit for all other Catalog queries is 100 objects.
-- For dataset queries, if observableSchema is requested using the properties query parameter, the maximum number of datasets returned is 20.
-- Invalid limit parameters (including `limit=0`) are met with an HTTP 400 error that outlines proper ranges.
-- If limits or offsets are passed as query parameters, they take precedence over those passed as headers.
+* If a limit parameter is not specified, the maximum number of objects per response payload is 20.
+* The global limit for all other Catalog queries is 100 objects.
+* For dataset queries, if observableSchema is requested using the properties query parameter, the maximum number of datasets returned is 20.
+* Invalid limit parameters (including `limit=0`) are met with an HTTP 400 error that outlines proper ranges.
+* If limits or offsets are passed as query parameters, they take precedence over those passed as headers.
 
 Query parameters are covered in more detail in the [filtering data with query parameters](../../technical_overview/catalog_architectural_overview/catalog_architectural_overview.md#filtering-data-with-query-parameters) section of the [Catalog Service Overview](../../technical_overview/catalog_architectural_overview/catalog_architectural_overview.md).
+
+#### API Format
+```SHELL
+GET /catalog/datasets
+GET /catalog/datasets?{filter1}={value1},{value2}&{filter2}={value3}
+```
 
 #### Request
 
 ```SHELL
-curl -X GET "https://platform.adobe.io/data/foundation/catalog/datasets?limit=5&properties=name,description,schema" \
+curl -X GET "https://platform.adobe.io/data/foundation/catalog/datasets?limit=3&properties=name,description,schemaRef" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key: {API_KEY}" \
   -H "x-gw-ims-org-id: {IMS_ORG}"
 ```
 
-Please refer to the [Catalog Service Overview](../../technical_overview/catalog_architectural_overview/catalog_architectural_overview.md) for detailed examples of how to use the [Catalog API](../../../../../../acpdr/swagger-specs/catalog.yaml).
+Please refer to the [Catalog Service Overview](../../technical_overview/catalog_architectural_overview/catalog_architectural_overview.md) for detailed examples of how to make calls to the [Catalog API](../../../../../../acpdr/swagger-specs/catalog.yaml).
+
+#### Response
+
+The response includes three (`limit=3`) datasets showing the "name", "description", and "schemaRef" as indicated by the `properties` query parameter.
+
+```json
+{
+    "5b95b155419ec801e6eee780": {
+        "name": "Store Transactions",
+        "description": "Retails Store Transactions",
+        "schemaRef": {
+            "id": "https://ns.adobe.com/{TENANT_ID}/schemas/274f17bc5807ff307a046bab1489fb18",
+            "contentType": "application/vnd.adobe.xed+json;version=1"
+        }
+    },
+    "5c351fa2f5fee300000fa9e8": {
+        "name": "Loyalty Members",
+        "description": "Loyalty Program Members",
+        "schemaRef": {
+            "id": "https://ns.adobe.com/{TENANT_ID}/schemas/fbc52b243d04b5d4f41eaa72a8ba58be",
+            "contentType": "application/vnd.adobe.xed+json;version=1"
+        }
+    },
+    "5c1823b19e6f400000993885": {
+        "name": "Web Traffic",
+        "description": "Retail Web Traffic",
+        "schemaRef": {
+            "id": "https://ns.adobe.com/{TENANT_ID}/schemas/2025a705890c6d4a4a06b16f8cf6f4ca",
+            "contentType": "application/vnd.adobe.xed+json;version=1"
+        }
+    }
+}
+```
 
 ### View Dataset Schema
 
-The "schema" property of a dataset contains an API link pointing to an external definition in the [XDM Schema Registry](../../technical_overview/schema_registry/acp_schema_registry.md). The registry schema represents the list of all _potential_ fields that could be used by the dataset, not necessarily the fields that _are_ being used (see "observableSchema" below). 
+The "schemaRef" property of a dataset contains a URI referencing the XDM schema upon which the dataset is based. The XDM schema ("schemaRef") represents all _potential_ fields that could be used by the dataset, not necessarily the fields that _are_ being used (see "observableSchema" below). 
 
-This is the schema you use when you need to present the user with a list of all available fields that could be written to.
+The XDM schema is the schema you use when you need to present the user with a list of all available fields that could be written to.
 
-The schema being referenced by a dataset can be found by looking at the "schema" property. 
+The first "schemaRef.id" value in the previous response object (`https://ns.adobe.com/{TENANT_ID}/schemas/274f17bc5807ff307a046bab1489fb18`) is a URI that points to a specific XDM schema in the Schema Registry. The schema can be retrieved by making a lookup (GET) request to the Schema Registry API.
 
-```json
-{
-    "5ba9452f7de80400007fc52a": {
-        "name": "Sample Dataset 1",
-        "description": "Description of Sample Dataset 1.",
-        "schema": "@/xdms/context/person"
-    }
-}
+_**Note:**_ The "schemaRef" property replaces the now deprecated "schema" property. If "schemaRef" is absent from the dataset or does not contain a value, you will need to check for the presence of a "schema" property. This could be done by replacing "schemaRef" with "schema" in the `properties` query parameter in the previous call. More details on the "schema" property are available in the [Dataset "schema" Property](#dataset-schema-property-deprecated---eol-2019-05-30) section that follows.
+
+#### API Format
+
 ```
-
-The "schema" value (`@/xdms/context/person` above) points to a specific schema in the XDM Schema Registry. Detailed use of the XDM Schema Registry API and best practices in defining XDM Field Types can be found in the [XDM Schema Registry Guide](../../technical_overview/schema_registry/acp_schema_registry.md).
-
-You can retrieve the schema by sending a request as shown in the sample request below.
+GET /schemaregistry/tenant/schemas/{url encoded schemaRef.id}
+```
 
 #### Request
 
+The request uses the URL encoded `id` URI of the schema (the value of the "schemaRef.id" attribute) and requires an Accept header. 
+
 ```SHELL
-curl -X GET "https://platform.adobe.io/data/foundation/catalog/xdms/context/person?expansion=xdm" \
-  -H "Accept: application/json" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key: {API_KEY}"
+curl -X GET \
+  https://platform.adobe.io/data/foundation/schemaregistry/tenant/schemas/https%3A%2F%2Fns.adobe.com%2F{TENANT_ID}%2Fschemas%2F274f17bc5807ff307a046bab1489fb18 \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'Accept: application/vnd.adobe.xed-full+json; version=1' \
 ``` 
 
-_**Note:**_ `expansion=xdm` is an optional query parameter that tells the API to fully expand and in-line any referenced schemas. You may want to do this when presenting a list of all potential fields to the user.
+The response format depends on the type of Accept header sent in the request. Lookup requests also require a `version` be included in the Accept header. The following table outlines available Accept headers for lookups:
 
-The JSON schema that is returned describes the structure and field level "type", "format", "minimum", and "maximum" that represents the data serialized as JSON. If using a serialization format other then JSON for ingestion, you should use data types that match the "meta:xdmType" as described in the [Mapping XDM Types to Other Formats](../../technical_overview/schema_registry/acp_schema_registry.md#mapping-xdm-types-to-other-formats) table. This table, along with in-depth examples of how to use the XDM Schema Registry API can be found in the [Schema Registry Guide](../../technical_overview/schema_registry/acp_schema_registry.md).
+Accept | Description
+-------|------------
+application/vnd.adobe.xed-id+json|List (GET) requests, titles, ids and versions
+application/vnd.adobe.xed-full+json; version={major version} |$refs and allOf resolved, has titles and descriptions
+application/vnd.adobe.xed+json; version={major version}	|Raw with $ref and allOf, has titles and descriptions
+application/vnd.adobe.xed-notext+json; version={major version}	|Raw with $ref and allOf, no titles or descriptions
+application/vnd.adobe.xed-full-notext+json; version={major version}	|$refs and allOf resolved, no titles or descriptions
+application/vnd.adobe.xed-full-desc+json; version={major version}	|$refs and allOf resolved, descriptors included
 
-#### Dataset "fields" Property (DEPRECATED - EOL 2019-01-19)
+_**Note:**_ `application/vnd.adobe.xed-id+json` and `application/vnd.adobe.xed-full+json; version={major version}` are the most commonly used Accept headers. `application/vnd.adobe.xed-id+json` is preferred for listing resources in the Schema Registry as it returns only the "title", "id", and "version". `application/vnd.adobe.xed-full+json; version={major version}` is preferred for viewing a specific resource (by its "id"), as it returns all fields (nested under "properties"), as well as titles and descriptions.
 
-Datasets contain a "fields" property that is deprecated and remains available temporarily for backwards compatibility. It should only be used if the "schema" property is NOT populated. 
+#### Response
 
-The "fields" property represents the schema for both reading and writing. The JSON structure of the "fields" attribute is different from the standard JSON schema format used by the schema registry and the "observableSchema" property (outlined below).
+The JSON schema that is returned describes the structure and field-level information ("type", "format", "minimum", "maximum", etc.) of the data, serialized as JSON. If using a serialization format other than JSON for ingestion (such as Parquet or Scala), the [Schema Registry Guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md) contains a table showing the desired JSON type ("meta:xdmType") and its corresponding representation in other formats.
+
+Along with this table, the Schema Registry Developer Guide contains in-depth examples of all possible calls that can be made using the Schema Registry API.
+
+### Dataset "schema" Property (DEPRECATED - EOL 2019-05-30)
+
+Datasets may contain a "schema" property that is now deprecated and remains available temporarily for backwards compatibility. For example, a listing (GET) request similar to the one made previously, where "schema" was substituted for "schemaRef" in the `properties` query parameter, might return the following:
 
 ```json
 {
-    "598d6e81b2745f000015edcb": {
-        "fields": [
-            {
-                "name": "name",
-                "type": "string"
-            },
-            {
-                "name": "age",
-                "type": "string"
-            }
-        ],
-    }
+  "5ba9452f7de80400007fc52a": {
+    "name": "Sample Dataset 1",
+    "description": "Description of Sample Dataset 1.",
+    "schema": "@/xdms/context/person"
+  }
 }
 ```
 
-#### The "observableSchema" Property
+If the "schema" property of a dataset is populated, this signals that the schema is a deprecated `/xdms` schema and, where supported, the ETL connector should use the value in the "schema" property with the `/xdms` endpoint (a deprecated endpoint in the [Catalog API](../../../../../../acpdr/swagger-specs/catalog.yaml)) to retrieve the legacy schema. 
+
+#### API Reference
+
+```
+GET /catalog/{"schema" property without the "@"}
+```
+
+#### Request
+
+```
+curl -X GET "https://platform.adobe.io/data/foundation/catalog/xdms/context/person?expansion=xdm" \
+  -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "Authorization: Bearer {ACCESS_TOKEN}" \
+  -H "x-api-key: {API_KEY}"
+```
+_**Note:**_ An optional query parameter, `expansion=xdm`, tells the API to fully expand and in-line any referenced schemas. You may want to do this when presenting a list of all potential fields to the user.
+
+#### Response
+
+Similar to the steps for [viewing dataset schema](#view-dataset-schema), the response contains a JSON schema that describes the structure and field-level information of the data, serialized as JSON.
+
+_**Note:**_ When the "schema" field is empty or absent entirely, the connector should read the "schemaRef" field and use the [Schema Registry API](../../../../../../acpdr/swagger-specs/schema-registry.yaml) as shown in the previous steps to [view a dataset schema](#view-dataset-schema).
+
+### The "observableSchema" Property
 
 The "observableSchema" property of a dataset has a JSON structure matching that of the XDM schema JSON. The "observableSchema" contains the fields that were present in the incoming input files. When writing data to Experience Platform, a user is not required to use every field from the target schema. Instead they should supply only those fields that are being used. 
 
@@ -183,7 +241,7 @@ The observable schema is the schema that you would use if reading the data or pr
 
 ### Preview Data
 
-The ETL application may provide a capability to preview data (["Figure 8" in the ETL Workflow](etl_workflow.md)). The Data Access API also provide several options to preview data. 
+The ETL application may provide a capability to preview data (["Figure 8" in the ETL Workflow](etl_workflow.md)). The Data Access API provides several options to preview data. 
 
 Additional information, including step-by-step guidance for previewing data using the Data Access API, can be found in the [How to Query Data via Data Access API](../../tutorials/data_access_tutorial/data_access_tutorial.md) tutorial.
 
@@ -192,6 +250,12 @@ Additional information, including step-by-step guidance for previewing data usin
 As shown in the steps above to [view a list of datasets](#view-list-of-datasets), you can request "files" using the "properties" query parameter.
 
 You can refer to the [Catalog Service Overview](../../technical_overview/catalog_architectural_overview/catalog_architectural_overview.md) for detailed information on querying datasets and available response filters.
+
+#### API Format
+
+```
+GET /catalog/datasets?limit={value}&properties={value}
+```
 
 #### Request
 
@@ -218,6 +282,12 @@ The response will include one dataset (`limit=1`) showing the "files" property.
 
 You can also use a GET request to fetch file details using the "files" attribute.
 
+#### API Format
+
+```
+GET /catalog/datasets/{DATASET_ID}/views/{VIEW_ID}/files
+```
+
 #### Request
 ```shell
 curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets/5bf479a6a8c862000050e3c7/views/5bf479a654f52014cfffe7f1/files" \
@@ -227,9 +297,9 @@ curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets/5bf479a6
   -H "x-api-key : {API_KEY}"
 ```
 
-##### Response
+#### Response
 
-The response includes file IDs as top-level properties and file details contained within each file object.
+The response includes the Dataset File ID as the top-level property, with file details contained within the Dataset File ID object.
 
 ```json
 {
@@ -274,9 +344,15 @@ The response includes file IDs as top-level properties and file details containe
 
 ### Fetch File Details
 
-The file IDs returned in the previous response can be used in a GET request to fetch further file details via the Data Access API. 
+The Dataset File IDs returned in the previous response can be used in a GET request to fetch further file details via the Data Access API. 
 
 The [Data Access Overview](../../technical_overview/data_access_architectural_overview/data_access_architectural_overview.md) contains details on how to use the Data Access API.
+
+#### API Format
+
+```
+GET /export/files/{Dataset File ID}
+```
 
 #### Request
 
@@ -295,7 +371,7 @@ curl -X GET "https://platform.adobe.io/data/foundation/export/files/ea40946ac031
     "length": 2576,
     "_links": {
         "self": {
-            "href": "https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?path={FILE_NAME}.parquet"
+            "href": "https://platform.adobe.io/data/foundation/export/files/ea40946ac03140ec8ac4f25da360620a-1?path=samplefile.parquet"
             }
         }
     }
@@ -304,7 +380,13 @@ curl -X GET "https://platform.adobe.io/data/foundation/export/files/ea40946ac031
 
 ### Preview File Data
 
-The "href" property an be used to fetch preview data via the [Data Access API](../../technical_overview/data_access_architectural_overview/data_access_architectural_overview.md) .
+The "href" property can be used to fetch preview data via the [Data Access API](../../technical_overview/data_access_architectural_overview/data_access_architectural_overview.md) .
+
+#### API Format
+
+```
+GET /export/files/{FILE_ID}?path={FILE_NAME}.{FILE_FORMAT}
+```
 
 #### Request
 
@@ -315,7 +397,7 @@ curl -X GET "https://platform.adobe.io/data/foundation/export/files/ea40946ac031
   -H "x-api-key : {API_KEY}"
 ```
 
-The response to the above request will contains a preview of the file's contents. 
+The response to the above request will contains a preview of the contents of the file. 
 
 More information on the Data Access API, including detailed requests and responses, is available in the [Data Access Overview](../../technical_overview/data_access_architectural_overview/data_access_architectural_overview.md).
 
@@ -323,9 +405,16 @@ More information on the Data Access API, including detailed requests and respons
 
 The destination component as output of transformed data, the Data Engineer will choose an Output Dataset (["Figure 12" in the ETL Workflow](etl_workflow.md)). The XDM schema is associated with the output Dataset. The data to be written will be identified by the "fileDescription" attribute of the dataset entity from the Data Discovery APIs. This information can be fetched using a dataset ID (`{DATASET_ID}`). The "fileDescription" property in the JSON response will provide the requested information. 
 
+#### API Format
+
+```SHELL
+GET /catalog/datasets/{DATASET_ID}
+```
+
 #### Request
+
 ```shell
-curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets/{dataset_ID}" \
+curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets/59c93f3da7d0c00000798f68" \
 -H "accept: application/json" \
 -H "x-gw-ims-org-id: {IMS_ORG}" \
 -H "Authorization: Bearer {ACCESS_TOKEN}" \
@@ -334,14 +423,15 @@ curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets/{dataset
 
 #### Response
 
-```json
+```JSON
 {
-"59c93f3da7d0c00000798f68": {
+  "59c93f3da7d0c00000798f68": {
     "version": "1.0.4",
     "fileDescription": {
         "persisted": false,
         "format": "parquet"
     }
+  }
 }
 ```
 
@@ -353,11 +443,16 @@ Data in Experience Platform should be written in the form of parquet files.
 
 As the execution starts, the connector (as defined in the source component) will read the data from Experience Platform using the [Data Access API](../../../../../../acpdr/swagger-specs/data-access-api.yaml). The transformation process will read the data for a certain time range. Internally, it will query batches of source datasets. While querying, it will use a parameterized (rolling for time series data, or incremental data) start date and list dataset files for those batches, and start making requests for data for those dataset files.
 
+### Example Transformations
+
+The [Sample ETL Transformations](etl_transformation.md) document contains a number of example transformations, including identity handling and data-type mappings. Please use these transformations for reference.
+
 ### Read Data from Experience Platform
 
 Using the [Catalog API](../../../../../../acpdr/swagger-specs/catalog.yaml), you can fetch all batches between a specified start time and end time, and sort them by the order they were created.
 
 #### Request 
+
 ```shell
 curl -X GET "https://platform.adobe.io/data/foundation/catalog/batches?dataSet=DATASETID&createdAfter=START_TIMESTAMP&createdBefore=END_TIMESTAMP&sort=desc:created" \
   -H "accept: application/json" \
@@ -366,13 +461,14 @@ curl -X GET "https://platform.adobe.io/data/foundation/catalog/batches?dataSet=D
   -H "x-api-key : {API_KEY}"
 ```
 
-Details on filtering batches can be found in the [How to Query Data via Data Access API](../../../tutorials/data_access_tutorial/data_access_tutorial.md) tutorial.
+Details on filtering batches can be found in the [How to Query Data via Data Access API](../../tutorials/data_access_tutorial/data_access_tutorial.md) tutorial.
 
 ### Get Files out of a Batch
 
-Once you have the ID for the batch you are looking for (`{BATCH_ID}`), it is possible to retrieve a list of files belonging to a specific batch via the [Data Access API](../../../../../../acpdr/swagger-specs/data-access-api.yaml).  Details for doing so are available in the [How to Query Data via Data Access API](../../../tutorials/data_access_tutorial/data_access_tutorial.md) tutorial.
+Once you have the ID for the batch you are looking for (`{BATCH_ID}`), it is possible to retrieve a list of files belonging to a specific batch via the [Data Access API](../../../../../../acpdr/swagger-specs/data-access-api.yaml).  Details for doing so are available in the [How to Query Data via Data Access API](../../tutorials/data_access_tutorial/data_access_tutorial.md) tutorial.
 
 #### Request
+
 ```shell
 curl -X GET "https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/files" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
@@ -393,7 +489,7 @@ curl -X GET "https://platform.adobe.io/data/foundation/export/files/{FILE_ID}" \
   -H "x-api-key : {API_KEY}"
 ```
 
-The response may point to a single file, or a directory. Details on each can be found in the [How to Query Data via Data Access API](../../../tutorials/data_access_tutorial/data_access_tutorial.md) tutorial.
+The response may point to a single file, or a directory. Details on each can be found in the [How to Query Data via Data Access API](../../tutorials/data_access_tutorial/data_access_tutorial.md) tutorial.
 
 ### Access File Content
 
@@ -408,7 +504,7 @@ curl -X GET "https://platform.adobe.io/data/foundation/export/files/{DATASET_FIL
   -H "x-api-key: {API_KEY}"
 ```
 
-The response to this request contains the contents of the file. For more information, including details on response pagination, see the [How to Query Data via Data Access API](../../../tutorials/data_access_tutorial/data_access_tutorial.md) tutorial.
+The response to this request contains the contents of the file. For more information, including details on response pagination, see the [How to Query Data via Data Access API](../../tutorials/data_access_tutorial/data_access_tutorial.md) tutorial.
 
 ### Validate Records for Schema Compliance
 
@@ -416,7 +512,7 @@ When data is being written, users can opt to validate data according to the vali
 
 If you are using the reference implementation found on [GitHub](https://github.com/adobe/experience-platform-etl-reference/blob/fd08dd9f74ae45b849d5482f645f859f330c1951/README.md), you can turn on schema validation in this implementation using the system property `-DenableSchemaValidation=true`.
 
-Validation can be performed for logical XDM types, using attributes such as `minLength` and `maxlength` for strings, `minimum` and `maximum` for integers, and more. The [Defining XDM Field Types](../../technical_overview/schema_registry/acp_schema_registry.md#defining-xdm-field-types-in-the-api) table in the [XDM Schema Registry Guide](../../technical_overview/schema_registry/acp_schema_registry.md) outlines XDM types and the properties that can be used for validation. 
+Validation can be performed for logical XDM types, using attributes such as `minLength` and `maxlength` for strings, `minimum` and `maximum` for integers, and more. The [Schema Registry API Developer Guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md) contains a table that outlines XDM types and the properties that can be used for validation. 
 
 **_Note:_** The minimum and maximum values provided for various `integer` types are the MIN and MAX values that the type can support, but these values can be further constrained to minimums and maximums of your choosing.
 
@@ -529,12 +625,12 @@ curl -X GET "https://platform.adobe.io/data/foundation/catalog/batches/{BATCH_ID
 The following response shows a "success":
 
 ```json
-"BATCHID": {
+"{BATCH_ID}": {
     "imsOrg": "{IMS_ORG}",
     "created": 1494349962314,
-    "createdClient": "API_KEY",
-    "createdUser": "CLIENT_USER_ID@AdobeID",
-    "updatedUser": "CLIENT_USER_ID@AdobeID",
+    "createdClient": "{API_KEY}",
+    "createdUser": "{CREATED_USER}",
+    "updatedUser": "{UPDATED_USER}",
     "updated": 1494349962314,
     "status": "success",
     "errors": [],
@@ -548,12 +644,12 @@ The following response shows a "success":
 In case of failure the "errors" can be extracted from the response and surfaced on the ETL tool as error messages.
 
 ```json
-"BATCHID": {
+"{BATCH_ID}": {
     "imsOrg": "{IMS_ORG}",
     "created": 1494349962314,
-    "createdClient": "API_KEY",
-    "createdUser": "CLIENT_USER_ID@AdobeID",
-    "updatedUser": "CLIENT_USER_ID@AdobeID",
+    "createdClient": "{API_KEY}",
+    "createdUser": "{CREATED_USER}",
+    "updatedUser": "{UPDATED_USER}",
     "updated": 1494349962314,
     "status": "failure",
     "errors": [
@@ -624,4 +720,7 @@ Adobe Experience Platform does not identify deferred data currently, so client i
 
 Date|Action|Description
 ---|---|---
-2018-01-19|EOL and Remove "fields" property from Dataset|Previously, datasets had a "fields" property containing a copy of the schema. This capability should no longer be used. If the "fields" property is found, it should be ignored and the Observed / Target schema used instead.
+2019-01-19|Removed "fields" property from datasets|Datasets previously included a "fields" property that contained a copy of the schema. This capability should no longer be used. If the "fields" property is found, it should be ignored and the "observedSchema" or "schemaRef" used instead.
+2019-03-15| "schemaRef" property added to datasets|The "schemaRef" property of a dataset contains a URI referencing the XDM schema upon which the dataset is based and represents all potential fields that could be used by the dataset.|
+2019-03-15| All end-user identifiers map to "identityMap" property | The "identityMap" is an encapsulation of all unique identifiers of a subject, such as CRM ID, ECID, or loyalty program ID. This map is used by [Unified Identity Service](../../technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md) to resolve all known and anonymous identities of a subject, forming a single identity graph for each end-user.|
+2019-05-30|EOL and Remove "schema" property from datasets|The dataset "schema" property provided a reference link to the schema using the deprecated `/xdms` endpoint in the Catalog API. This has been replaced by a "schemaRef" that provides the "id", "version", and "contentType" of the schema as referenced in the new Schema Registry API.
