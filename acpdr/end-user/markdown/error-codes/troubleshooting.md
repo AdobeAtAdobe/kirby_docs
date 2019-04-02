@@ -1,27 +1,57 @@
-# Adobe Experience Platform Troubleshooting Guides
+# Adobe Experience Platform Error Codes and Troubleshooting Guides
+  
+  - [Batch Ingestion](#batch-ingestion)
+  - [Catalog](#catalog)
+  - [Data Science](#Batch-ingestion)
+  - [Data Usage Labeling and Enforcement (DULE)](#Data-Usage-Labeling-and-Enforcement-(DULE))
+   - [ETL Ecosystem](#ETL-Ecosystem)
+  - [Experience Data Model (XDM)](#Experience-Data-Model-(XDM))
+  - [Identity](#identity)
+  - [Profile](#profile)
+  - [Query](#query)
+  - [Streaming Ingestion](#profile)
+
 
 ## Batch Ingestion 
+Troubleshoot issues and identify errors during batch ingestion. 
 
-Troubleshoot issues and identify errors during batch ingestion.
+See 
+[Batch Ingestion Troubleshooting FAQ](https://git.corp.adobe.com/pages/experience-platform/siphon-troubleshooting-guide/) for additional troubleshooting details and frequently asked questions. 
 
-See [Batch Ingestion Troubleshooting and FAQ.](https://git.corp.adobe.com/pages/experience-platform/siphon-troubleshooting-guide/)
 
-## Streaming Ingestion
-Troubleshoot issues and identify errors during streaming ingestion.
+## Catalog
 
-## Experience Data Model (XDM)
+## Data Science
 
 ## Data Usage Labeling and Enforcement (DULE) 
 
 ## ETL Ecosystem
 
-## Catalog service
+## Experience Data Model (XDM)
 
-## Data Science service
+## Identity
 
-## Profile service
+## Profile
 
-## Identity service
+## Query
 
-## Query service
+## Streaming Ingestion
+Troubleshoot issues and identify errors during streaming ingestion.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

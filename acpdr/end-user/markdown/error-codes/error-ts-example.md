@@ -34,15 +34,15 @@
   - [Should inputRecordCount always equal outputRecordCount?](#should-inputrecordcount-always-equal-outputrecordcount)
 
 ## Error codes
-| Error Codes        | Description          
+| Error Codes        | Description           
 | ------------- |:-------------| 
 | 106      |  Dataset file is empty. Please upload file with data.     |
 | 118      |  CSV file contains empty header row.     |
 | 200      | The batch has been accepted for processing and will transition to a final state (e.g., active, failure, etc.). Once submitted, the batch can be monitored via the Catalog services `GetBatch` endpoint. | 
-|      |       |
+| 300      |  Stalled Batch.     |
 | 400  | Bad request. The large file upload works on co-operation model where server expects client to upload file chunks. The byte range of the chunk is specified via the Content-Range header and is validated against the Content-Length of the same request. It is possible however to upload overlapping chunks as the range validations are done at the time of file completion when the file chunks are stitched together. If the chunks are found overlapping or missing, the server responds with a 400 Bad Request.  
 
-## CompleteBatch API returned a 200 OK response. Why isn't my batch active?
+## CompleteBatch API returned 200, why isn't my batch active?
 
 It is important to note that the CompleteBatch endpoint is a signal mechanism that triggers batch promotion asynchronously. A 200 OK response from the API means that the batch has been accepted for processing and will transition to a final state (for example active or failure). Once submitted, the batch can be monitored via the Catalog services GetBatch endpoint. See [How do I monitor batch ingestion?](#how-do-i-monitor-batch-ingestion)
 
