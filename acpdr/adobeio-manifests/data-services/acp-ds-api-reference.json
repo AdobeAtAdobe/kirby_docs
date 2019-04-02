@@ -1,15 +1,20 @@
 {
-	"name": "ACP_data_services_swagger",
+	"name": "data_services_api_swagger",
 	"version": "2.0.0",
-	"description": "Data Services API Reference Swagger Spec",
-	"author": "Emily Walpole",
+	"description": "Adobe Experience Platform API Reference",
+	"author": "Wendy Braun",
 	"view_type": "swaggerbook",
-	"meta_keywords": "defaultkeyword,defaultkeyword2",
-	"meta_description": "default description",
+	"meta_keywords": "Adobe, Adobe Experience Platform, Experience, Platform, API, Swagger, API Reference, developer, schema, catalog, ingestion, data",
+	"meta_description": "Swagger API reference documentation for Adobe Experience Platform services.",
 	"publish_date": "24/09/2018",
 	"show_edit_github_banner": false,
 	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master",
 	"pages": [
+		{
+			"pages": [],
+			"path": "acpdr/swagger-specs/schema-registry.yaml",
+			"title": "Schema Registry"
+		},
 		{
 			"pages": [],
 			"path": "acpdr/swagger-specs/catalog.yaml",
@@ -24,6 +29,11 @@
 			"pages": [],
 			"path": "acpdr/swagger-specs/data-access-api.yaml",
 			"title": "Data Access Service"
+		},
+		{
+			"pages": [],
+			"path": "acpdr/swagger-specs/dule-policy-service.yaml",
+			"title": "DULE Policy Service"
 		},
 		{
 			"path": "acpdr/swagger-specs/unified-profile-service-apis.yaml",
@@ -68,14 +78,13 @@
 		},
 		{
 			"pages": [],
-			"path": "acpdr/swagger-specs/sensei-ml-api.yaml",
-			"title": "Sensei Unified Machine Learning API"
+			"path": "acpdr/swagger-specs/qs-api.yaml",
+			"title": "Query Service API"
 		},
 		{
 			"pages": [],
-			"path": "acpdr/swagger-specs/qs-api.yaml",
-			"title": "Query Service API"
+			"path": "acpdr/swagger-specs/sensei-ml-api.yaml",
+			"title": "Sensei Unified Machine Learning API"
 		}
-
 	]
 }
