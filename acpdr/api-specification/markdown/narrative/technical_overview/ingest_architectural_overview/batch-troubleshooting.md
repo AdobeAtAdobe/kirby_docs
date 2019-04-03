@@ -5,7 +5,7 @@
 - [**Error Codes**](#error-codes)
 
 - **Bulk Ingestion API**
-  - [CompleteBatch API returned 200, why isn't my batch active?](#completebatch-api-returned-200-why-isnt-my-batch-active)
+  - [CompleteBatch API returned 200. Why isn't my batch active?](#completebatch-api-returned-200-Why-isnt-my-batch-active)
   - [CompleteBatch API failed. Is it safe to retry?](#completebatch-api-failed-is-it-safe-to-retry)
   - [When should I use the Large File Upload feature?](#when-should-i-use-the-large-file-upload-feature)
   - [Why is my Large File Complete api call failing with 400 Bad Request?](#why-is-my-large-file-complete-api-call-failing-with-400-bad-request)
@@ -40,11 +40,11 @@
 | 118      |  CSV file contains empty header row.     |
 | 200      | The batch has been accepted for processing and will transition to a final state (e.g., active, failure, etc.). Once submitted, the batch can be monitored via the Catalog services `GetBatch` endpoint. | 
 |      |       |
-| 400  | Bad request. The large file upload works on co-operation model where server expects client to upload file chunks. The byte range of the chunk is specified via the Content-Range header and is validated against the Content-Length of the same request. It is possible however to upload overlapping chunks as the range validations are done at the time of file completion when the file chunks are stitched together. If the chunks are found overlapping or missing, the server responds with a 400 Bad Request.  
+| 400  | Bad request. The large file upload expects the client to upload file chunks to the server. The byte range of the chunk is specified via the Content-Range header and is validated against the Content-Length of the same request. It is possible however to upload overlapping chunks as the range validations are done at the time of file completion when the file chunks are stitched together. If the chunks are found overlapping or missing, the server responds with a 400 Bad Request.  
 
 ## CompleteBatch API returned a 200 OK response. Why isn't my batch active?
 
-It is important to note that the CompleteBatch endpoint is a signal mechanism that triggers batch promotion asynchronously. A 200 OK response from the API means that the batch has been accepted for processing and will transition to a final state (for example active or failure). Once submitted, the batch can be monitored via the Catalog services GetBatch endpoint. See [How do I monitor batch ingestion?](#how-do-i-monitor-batch-ingestion)
+It is important to note that the `CompleteBatch` endpoint is a signal mechanism that triggers batch promotion asynchronously. A 200 OK response from the API means that the batch has been accepted for processing and will transition to a final state (for example active or failure). Once submitted, the batch can be monitored via the Catalog services `GetBatch` endpoint. See [How do I monitor batch ingestion?](#how-do-i-monitor-batch-ingestion)
 
 ## CompleteBatch API failed. Is it safe to retry?
 
@@ -56,7 +56,7 @@ The file upload endpoint supports simple file PUTs, which is an easier way of up
 
 ## Why is my Large File Complete API call failing with 400 Bad Request?
 
-The large file upload works on a co-operation model where the server expects the client to upload file chunks. The byte range of the chunk is specified via the Content-Range header and is validated against the Content-Length of the same request. It is possible however to upload overlapping chunks as the range validations are done at the time of file completion when the file chunks are stitched together. If the chunks are found overlapping or missing, the server responds with a 400 Bad Request.
+The large file upload expects the client to upload file chunks to the server. The byte range of the chunk is specified via the Content-Range header and is validated against the Content-Length of the same request. It is possible however to upload overlapping chunks as the range validations are done at the time of file completion when the file chunks are stitched together. If the chunks are found overlapping or missing, the server responds with a 400 Bad Request.
 
 ## What are the supported ingestion formats?
 
@@ -64,7 +64,7 @@ We currently support parquet and json for ingestion. There's legacy support for 
 
 ## Where do I specify the batch input format?
 
-The input format defines how the batch should be scanned and parsed, and is specified at the time of batch creation via the inputFormat api section. Here is a sample request that demonstrates setting the format
+The input format defines how the batch should be scanned and parsed, and is specified at the time of batch creation via the `inputFormat` API section. Here is a sample request that demonstrates setting the format:
 
 ```
 curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
@@ -80,11 +80,11 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
       }'
 ```
 
-<!---## How do I ingest multiline json?--->
+<!---## How do I ingest multiline json?
 
-## What CSV ingest support do I get?
+<!---## What CSV ingest support do I get?
 
-CSV is not fully supported yet. There's legacy support that promotes the file to master location but there's no Spark ingestion of the data provided. Hence, features like data conversion, schema validation, partitioning, row-level validation, and batch metrics aren't available on CSV ingest. To get the full ingestion features, please use JSON or Parquet format.
+CSV is not fully supported yet. There's legacy support that promotes the file to a master location but there's no Spark ingestion of the data provided. Hence, features like data conversion, schema validation, partitioning, row-level validation, and batch metrics aren't available on CSV ingest. To get the full ingestion features, please use JSON or Parquet format.--->
 
 ## What are direct writers and how do I become one?
 
