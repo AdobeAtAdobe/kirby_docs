@@ -1,4 +1,4 @@
-# Schema Registry API tutorial
+# Schema Registry API Tutorial
 
 The Schema Registry is used to access the Schema Library within Adobe Experience Platform. The Schema Library contains resources made available to you by Adobe, Experience Platform partners, and vendors whose applications you use. The registry provides a user interface and RESTful API from which all available library resources are accessible.
 
@@ -10,13 +10,13 @@ This tutorial uses the Schema Registry API to walk you through the steps to [com
 * [Create a new mixin](#define-a-new-mixin) with custom fields
 * [Add a custom mixin](#add-custom-mixin-to-schema) to an existing schema
 * [Define a data type](#create-a-data-type) for use in multiple schemas
-* [Use the data type](#use-data-type-in-schema) in your schema
+* [Add a data type](#add-data-type-to-schema) to your newly created schema
 * [Define an Identity Descriptor](#define-identity-descriptor)
-* [Enable schema for use with Unified Profile Service](#enable-schema-for-use-in-unified-profile-service) and view a union schema
+* [Enable schema for use with Unified Profile Service](#enable-schema-for-use-in-unified-profile) and view a union schema
 
-If you would prefer to use the user interface in Experience Platform, the [Schema Editor Tutorial](../schema_editor_tutorial/schema_editor_tutorial.md) provides step-by-step instructions for performing similar actions in the schema editor.
+If you would prefer to use the user interface in Experience Platform, the [Schema Registry UI Tutorial](../schema_registry_ui_tutorial/schema_registry_ui_tutorial.md) provides step-by-step instructions for performing similar actions in the schema editor.
 
-## Getting started
+## Getting Started
 
 Before beginning this tutorial, first review the [Basics of Schema Composition](../schema_composition/schema_composition.md) to learn more about schemas, including key principles and best practices in schema composition.
 
@@ -28,19 +28,19 @@ This tutorial demonstrates API calls using cURL commands. To follow along, you m
 
 Throughout this tutorial, you will be composing a Loyalty Members schema that describes data related to the members of a retail loyalty program. Before beginning, you may wish to preview the [complete Loyalty Members schema](#complete-loyalty-members-schema) in the [Appendix](#appendix).
 
-## Compose a schema with a standard class
+## Compose a Schema with a Standard Class
 
 A schema can be thought of as the blueprint for the data you wish to ingest into Experience Platform. Each schema is composed of a class and zero or more mixins. In other words, you do not have to add a mixin in order to define a schema, but in most cases at least one mixin will be used. 
 
-### Assign a class
+### Assign a Class
 
 The schema composition process begins with the selection of a class. The class defines key behavioral aspects of the data (record vs time series), as well as the minimum fields that are required to describe the data that will be ingested.
 
-For this tutorial, you will be using the XDM Profile class. XDM Profile is an standard class provided by Adobe for defining record behavior. More information on behavior can be found in [Basics of Schema Composition](../schema_composition/schema_composition.md).
+For this tutorial, you will be using the XDM Profile class. XDM Profile is an standard class provided by Adobe for defining record behavior. More information on behavior can be found in [Schema Composition Basics](../schema_composition/schema_composition.md).
 
 To assign a class, an API call is made to create (POST) a new schema in the tenant container. This call includes the class the schema will implement. Each schema may only implement one class.
 
-#### API format
+#### API Format
 
 ```SHELL
 POST /tenant/schemas
@@ -109,11 +109,11 @@ You will receive an HTTP Response Status 201 (Created) and the response body wil
 }
 ```
 
-### Lookup a schema
+### Lookup a Schema
 
 To view your newly created schema, perform a lookup (GET) request using the `meta:altId` or the URL encoded `$id` URI for the schema.
 
-#### API format
+#### API Format
 
 ```SHELL
 GET /tenant/schemas/{schema meta:altId or URL encoded $id URI}
@@ -170,7 +170,7 @@ The response format depends on the Accept header sent with the request. You may 
 }
 ```
 
-### Add a mixin
+### Add a Mixin
 
 Now that the Loyalty Members schema has been created and confirmed, mixins can be added to it. 
 
@@ -178,7 +178,7 @@ There are different standard mixins available for use, depending on the class of
 
 Mixins define concepts, such as "name" or "address", that can be reused in any schema that needs to capture that same information. 
 
-#### API format
+#### API Format
 
 ```SHELL
 PATCH /tenant/schemas/{schema meta:altId or url encoded $id URI}
@@ -247,7 +247,7 @@ The response will show the newly added mixin in the `meta:extends` array and con
 }
 ```
 
-### Add another mixin
+### Add Another Mixin
 
 You can now add another standard mixin by repeating the steps using another mixin. 
 
@@ -258,7 +258,7 @@ GET /global/mixins?property=meta:intendedToExtend==https://ns.adobe.com/xdm/cont
 GET /tenant/mixins?property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile
 ```
 
-#### API format
+#### API Format
 
 ```SHELL
 PATCH /tenant/schemas/{schema meta:altId or url encoded $id URI}
@@ -331,7 +331,7 @@ The Loyalty Members schema should now contain three `$ref` values in the `allOf`
 }
 ```
 
-### Define a new mixin
+### Define a New Mixin
 
 The Loyalty Members schema needs to capture information that is unique to the loyalty program. This information is not included in any of the standard mixins.  
 
@@ -341,7 +341,7 @@ In order to create (POST) a new mixin, your request must include a `meta:intende
 
 Any custom properties must be nested under your `TENANT_ID` to avoid collisions with other mixins or fields.
 
-#### API format
+#### API Format
 
 ```SHELL
 POST /tenant/mixins
@@ -486,11 +486,11 @@ You will receive an HTTP Response Status 201 (Created) and the response body wil
 }
 ```
 
-### Add custom mixin to schema
+### Add Custom Mixin to Schema
 
 You can now follow the same steps for [adding a standard mixin](#add-a-mixin) to add this newly created mixin to your schema.
 
-#### API format
+#### API Format
 
 ```SHELL
 PATCH /tenant/schemas/{schema meta:altId or url encoded $id URI}
@@ -565,11 +565,11 @@ You can see that the mixin has been successfully added because the response now 
 }
 ```
 
-### View the current schema
+### View the Current Schema
 
 You can now perform a GET request to view the current schema and see how the added mixins have contributed to the overall structure of the schema.
 
-#### API format
+#### API Format
 
 ```SHELL
 GET /tenant/schemas/{schema meta:altId or URL encoded $id URI}
@@ -678,7 +678,7 @@ Under "properties", you can see the "_{TENANT_ID}" namespace that was created wh
 }
 ```
 
-### Create a data type
+### Create a Data Type
 
 The Loyalty mixin that you created contains specific loyalty properties that might be useful in other schemas. For example, the data might be ingested as part of an experience event or used by a schema that implements a different class. In this case it makes sense to save the object hierarchy as a data type in order to make it easier to reuse the definition elsewhere. 
 
@@ -686,7 +686,7 @@ Data types allow you to define an object hierarchy once, and refer to it in a fi
 
 In other words, data types allow for the consistent use of multi-field structures, with more flexibility than mixins because they can be included anywhere in a schema by adding them as the "type" of a field. 
 
-#### API format
+#### API Format
 
 ```SHELL
 POST /tenant/datatypes
@@ -808,11 +808,11 @@ You will receive an HTTP Response Status 201 (Created) and the response body wil
 
 You may wish to perform a lookup (GET) request using the URL encoded `$id` URI to view the new data type directly. Be sure to include the `version` in your Accept header for a lookup request.
 
-### Use data type in schema
+### Add Data Type to Schema
 
 Now that the Loyalty Details data type has been created, you can update (PATCH) the "loyalty" field in the mixin you created to reference the data type in place of the fields that were previously there.
 
-#### API format
+#### API Format
 
 ```SHELL
 PATCH /tenant/mixins/{mixin meta:altId or URL encoded $id URI}
@@ -941,7 +941,7 @@ Performing a GET request to lookup the schema now will show the reference to the
 }
 ```
 
-### Define Identity descriptor
+### Define Identity Descriptor
 
 Schemas are used for ingesting data into Experience Platform. This data will ultimately be used across multiple services to create a single, unified view of an individual. To help with this process, key fields can be marked as "Identity" and, upon data ingestion, the data in those fields will be inserted into the "Identity Graph" for that individual. The graph data can then be accessed by [Unified Profile Service](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md) (UPS) and other Experience Platform services to provide a stitched together view of each individual customer.
 
@@ -949,7 +949,7 @@ Fields that are commonly marked as "Identity" include: email address, phone numb
 
 Identity descriptors signal that the "sourceProperty" of the "sourceSchema" is a unique identifier that should be considered an "Identity". For more information on working with descriptors, see the [Schema Registry Developer Guide](../schema_registry_developer_guide.md)
 
-#### API format
+#### API Format
 
 ```SHELL
 POST /tenant/descriptors
@@ -997,17 +997,17 @@ You will receive an HTTP Status 201 (Created) and a response object containing t
 }
 ```
 
-## Enable schema for use in Unified Profile Service
+## Enable Schema for use in Unified Profile Service
 
 By adding the "union" tag to the `meta:immutableTags` attribute, you can enable the Loyalty Members schema for use by the Unified Profile Service (UPS). 
 
 For more information on working with union views, see the [Schema Registry Developer Guide](../schema_registry_developer_guide.md). 
 
-### Add "union" tag
+### Add Union Tag
 
 In order for a schema to be included in the merged union view, the "union" tag must be added to the `meta:immutableTags` attribute of the schema. This is done through a PATCH request to update the schema and add the `meta:immutableTags` array with a value of "union".
 
-#### API format
+#### API Format
 
 ```SHELL
 PATCH /tenant/schemas/{meta:altId or the url encoded $id URI}
@@ -1082,11 +1082,11 @@ The response shows that the operation was performed successfully, and the schema
 }
 ```
 
-### Lookup a specific union
+### Lookup Union View
 
 You can now view the union for the Profile class to see the new Loyalty Members schema included.
 
-#### API format
+#### API Format
 
 ```SHELL
 GET /tenant/unions/{meta:altId or the url encoded $id URI}
@@ -1141,7 +1141,7 @@ The response object provides a union view of all schemas that implement the Prof
 }
 ```
 
-## Next steps
+## Next Steps
 
 You have now successfully composed a schema using both standard mixins and a mixin that you defined. You can now use this schema to create a dataset and ingest record data into Adobe Experience Platform.
 
@@ -1153,7 +1153,7 @@ Remember that this tutorial only includes one possible workflow and does not cov
 
 The following information supplements the API tutorial.
 
-## Complete Loyalty Members schema
+## Complete Loyalty Members Schema
 
 Throughout this tutorial, a schema is composed to describe the members of a retail loyalty program. 
 
