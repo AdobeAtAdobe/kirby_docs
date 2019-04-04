@@ -298,7 +298,6 @@ paths:
         503:
           description: "Service unavailable"
 
-securityDefinitions: {}
 definitions:
   HealthDetailedResponse:
     type: "object"
