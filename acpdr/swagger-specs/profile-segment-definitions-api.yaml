@@ -1,24 +1,22 @@
 swagger: "2.0"
 info:
   description: >-
-    Segment Definition Service allows you to define rules which provide criteria for a
-    marketable subset of your user profiles in Unified Profile. These rules are defined
-    using the proprietary PQL (Predicate Query Language).
+    A profile segment definition is the object encapsulation of a PQL predicate which can be run to build a profile segment, or audience.
     
   
-    For more information on Unified Profile, see the [architectural overview](../api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
+    For more information, see [Unified Profile Overview](https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
 
 
     Notes:
       * PLATFORM Gateway URL: https://platform.adobe.io/
-      * Base path for this API: /data/core/ups/segment
+      * Base path for this API: /data/core/ups
       * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
 
   version: 18.11.1
   title: Unified Profile Segment Definition API
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 host: "platform.adobe.io"
-basePath: /data/core/ups/segment
+basePath: /data/core/ups
 tags:
 - name: "definitions"
 - name: "health-detailed"
@@ -26,7 +24,7 @@ tags:
 - name: "ping"
 - name: "version"
 paths:
-  "/definitions":
+  "/segment/definitions":
     get:
       tags:
       - segment
@@ -160,7 +158,7 @@ paths:
             to update.
         '503':
           description: Service Unavailable
-  "/definitions/{segmentId}":
+  "/segment/definitions/{segmentId}":
     get:
       tags:
       - segment
@@ -326,7 +324,7 @@ paths:
           description: Forbidden
         '503':
           description: Service Unavailable
-  "/conversion":
+  "/segment/conversion":
     post:
       tags:
       - segment
@@ -388,6 +386,7 @@ paths:
           description: Invalid profile segment
         '503':
           description: Service Unavailable
+securityDefinitions: {}
 definitions:
   SegmentStoreEntity:
     type: object
