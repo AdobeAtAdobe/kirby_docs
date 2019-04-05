@@ -74,10 +74,9 @@ Decisioning | Create optimized and personalized experiences in applications to p
 Governance	| Manages Data Usage Labelling and Enforcement (DULE) metadata for registered datasets and enforces the usage labels as data travels through Experience Platform.
 Unified Identity	| Every customer can be identified in a number of different ways, ranging from unknown identities like a cookie, to an authenticated identity like a ECID. The Identity service provides identity stitching and identity resolution by bringing interactions together.
 Unified Profile	| Creates a single 360-degree view of the consumer. The profile is populated with information provided in Experience Platform datasets and can be consumed by any service, either using point lookups or segmentation queries.
-
-
-Experience Data Model (XDM) Registry	|Manages the library of available XDM standard schemas as well as customer-defined schemas and extensions. 
+Experience Data Model (XDM) Registry	|Manages the library of available XDM standard schemas as well as customer-defined schemas and extensions.
  
+
 Additional information on each of these services can be found by visiting [Platform Services on Adobe I/O](https://www.adobe.io/apis/cloudplatform/dataservices/services.html).
 
 ## Example Use Case: Interactive Voice Response System
