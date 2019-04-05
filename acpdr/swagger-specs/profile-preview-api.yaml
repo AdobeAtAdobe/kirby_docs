@@ -2,9 +2,11 @@ swagger: "2.0"
 info:
   description: >-
     Run your PQL predicate using Unified Profile Preview Service for a summary of the resulting profile segment.
-    
-    
-    For more information, see [Unified Profile Overview](https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
+    This API facilitates access to both estimation information, such as the projected audience size, and a preview the
+    qualified audience members.
+
+
+    For more information on Unified Profile, see the [architectural overview](../api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
 
 
     Notes:
@@ -298,7 +300,6 @@ paths:
         503:
           description: "Service unavailable"
 
-securityDefinitions: {}
 definitions:
   HealthDetailedResponse:
     type: "object"
