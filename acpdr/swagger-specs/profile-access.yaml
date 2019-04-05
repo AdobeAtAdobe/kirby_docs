@@ -4,9 +4,12 @@ info:
     Work with XDM Model objects individually on Adobe Experience Platform using Unified Profile Access API.
    
 
-    For more information on Unified Profile, see the [architectural overview](../api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
-    
+    Related documentation:
 
+      * [Unified Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
+      * [Consuming Unified Profile data](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/consuming_unified_profile_data/consuming_unified_profile_data.md)
+
+    
     Notes:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core/ups/access

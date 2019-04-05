@@ -33,6 +33,6 @@ info:
 
 externalDocs:
   description: Find out more about Unified Profile
-  url: ../api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md
+  url: https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md
 host: platform.adobe.io
 paths:

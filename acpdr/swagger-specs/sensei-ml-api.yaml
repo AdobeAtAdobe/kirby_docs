@@ -21,7 +21,7 @@ info:
       **Published model** |  A finalized and versioned model arrived at after training, validation, and evaluation.
       **Sensei runtime**  | The shell in which a Sensei ML instance executes.
 
-    For more information about Sensei, try the [architectural overview](../api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_overview.md).
+    For more information about Sensei, try the [architectural overview](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html).
 
     Notes:
       * PLATFORM Gateway URL: https://platform.adobe.io/

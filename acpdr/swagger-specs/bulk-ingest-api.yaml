@@ -8,8 +8,8 @@ info:
 
 
     Related documentation:
-      * [Batch Ingestion Overview](../api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md)
-      * Tutorial - [Creating and Populating a Dataset and Ingesting Data From a File](../api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
+      * [Batch Ingestion Overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md)
+      * Tutorial - [Creating and Populating a Dataset and Ingesting Data From a File](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
 
 
     Notes:

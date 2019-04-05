@@ -3,13 +3,13 @@ info:
   version: 1.0.0
   title: Catalog Service API
   description: >-
-    Data Catalog Service is the system of record for data location, lineage, schema definition, 
+    Catalog Service is the system of record for data location, lineage, schema definition, 
     and usage labeling for Adobe Experience Platform.
 
 
     Related documentation:
-      * [Catalog Service Overview](../api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md)
-      * Tutorial - [Creating and Populating a Dataset and Ingesting Data From a File](../api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
+      * [Catalog Service Overview](https://www.adobe.io/apis/experienceplatform/home/services/allservices.html#!api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md)
+      * Tutorial - [Creating and Populating a Dataset and Ingesting Data From a File](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
 
 
     Notes:
