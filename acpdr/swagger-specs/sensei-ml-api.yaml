@@ -1,10 +1,10 @@
 swagger: '2.0'
 info:
-  title: Sensei Machine Learning API
+  title: Sensei Unified Machine Learning API
   version: beta
   termsOfService: 'https://www.adobe.com/legal/terms.html'
   description: >-
-    Sensei provides a mechanism for Data Scientists to organize and manage ML
+    This API provides a mechanism for Data Scientists to organize and manage ML
     services from algorithm onboarding through experimentation and to service
     deployment.
 
@@ -21,12 +21,12 @@ info:
       **Published model** |  A finalized and versioned model arrived at after training, validation, and evaluation.
       **Sensei runtime**  | The shell in which a Sensei ML instance executes.
 
-    For more information about Sensei, try the [architectural overview](../api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_overview.md).
 
     Notes:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/sensei
       * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'
+
 
 externalDocs:
   description: Find out more about Sensei
