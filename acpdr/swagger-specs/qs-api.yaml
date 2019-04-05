@@ -2,15 +2,9 @@ swagger: '2.0'
 info:
   version: 1.0.0
   title: Query Service API
-  description: >- 
-    Experience Query Service gives you the ability to use standard SQL to query data on Adobe Experience Platform
-    to support many different use cases. It is a serverless tool which allows you to join any datasets
-    in Experience Data Lake and capture the query results as a new dataset for use in reporting, Data 
-    Science Workspace, or for ingestion into Unified Profile Service.
-
-
-    For more information on Experience Query Service, start with [the introduction](../../acpdr/end-user/markdown/query-service/qs-intro.md).
-
+  description: >-
+    Query Service API reference
+    
 
     Notes:
       * PLATFORM Gateway URL: https://platform.adobe.io/
