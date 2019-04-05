@@ -1,10 +1,15 @@
 swagger: '2.0'
 info:
   description: >-
-    The GDPR core service is a proposed service to provide a common,centralized facilitation of GDPR access/delete requests for customers. 
-    The service includes a UI for selecting and creating requests, a business layer (API) that will primarily drive all traffic out and 
-    process all traffic into the system, and a DB that can store audit and logging information along with temporary data retrieval storage 
-    while requests are pending or waiting to be viewed.
+    GDPR service is a service providing a common, centralized facilitation of GDPR access/delete requests for customers. 
+    The service includes a UI for selecting and creating requests, a business layer that will primarily drive all traffic out and 
+    process all traffic into the system, and a data store that can store audit and logging information along with temporary 
+    data retrieval storage while requests are pending or waiting to be viewed.
+
+
+    Related documentation:
+      * [GDPR on Adobe Experience Platform Overview](../api-specification/markdown/narrative/gdpr/gdpr-on-platform-overview.md)
+      * [Adobe Experience Platform GDPR Service Overview](../api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md)
 
 
     Notes:
