@@ -1,10 +1,12 @@
 swagger: '2.0'
 info:
   description: >-
-    Once your segment has been built, use Unified Profile Segment Jobs to build the resulting audience which then can be exported to a dataset.
+    Unified Profile Segment Jobs process a previously built and persisted segment definition against your
+    profile store to generate a segment audience. The artifact of a complete and successful run of a Profile
+    Segment Job cannot be used directly and is instead exported to a dataset as a separate step.
     
-    
-    For more information, see [Unified Profile Overview](https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
+
+    For more information on Unified Profile, see the [architectural overview](../api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
 
 
     Notes:

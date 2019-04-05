@@ -1,15 +1,22 @@
 swagger: '2.0'
 info:
   title: Data Ingestion API
-  version: v2
   description: >-
-    Bulk Ingestion API reference
+    Data Ingestion allows you to ingest data into Adobe Experience Platform as batch files.
+    Data being ingested can be the profile data from a flat file in a CRM system (such as a parquet file), 
+    or data that conforms to a known schema in the Experience Data Model (XDM) registry.
+
+
+    Related documentation:
+      * [Batch Ingestion Overview](../api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md)
+      * Tutorial - [Creating and Populating a Dataset and Ingesting Data From a File](../api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
 
 
     Notes:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/foundation/import
       * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+  version: v2
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 basePath: /data/foundation/import
 host: platform.adobe.io

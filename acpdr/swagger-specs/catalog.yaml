@@ -3,19 +3,22 @@ info:
   version: 1.0.0
   title: Catalog Service API
   description: >-
+    Data Catalog Service is the system of record for data location, lineage, schema definition, 
+    and usage labeling for Adobe Experience Platform.
 
-    Catalog Service API reference
+
+    Related documentation:
+      * [Catalog Service Overview](../api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md)
+      * Tutorial - [Creating and Populating a Dataset and Ingesting Data From a File](../api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
 
 
     Notes:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/foundation/catalog
       * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
-
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 basePath: /data/foundation/catalog
 host: platform.adobe.io
-
 tags:
   - name: Accounts
   - name: Batches

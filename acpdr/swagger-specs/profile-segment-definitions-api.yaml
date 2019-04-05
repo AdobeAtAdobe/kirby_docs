@@ -1,10 +1,12 @@
 swagger: "2.0"
 info:
   description: >-
-    A profile segment definition is the object encapsulation of a PQL predicate which can be run to build a profile segment, or audience.
+    Segment Definition Service allows you to define rules which provide criteria for a
+    marketable subset of your user profiles in Unified Profile. These rules are defined
+    using the proprietary PQL (Predicate Query Language).
     
   
-    For more information, see [Unified Profile Overview](https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
+    For more information on Unified Profile, see the [architectural overview](../api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
 
 
     Notes:

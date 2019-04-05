@@ -86,5 +86,17 @@
 			"path": "acpdr/swagger-specs/sensei-ml-api.yaml",
 			"title": "Sensei Unified Machine Learning API"
 		}
-	]
+	],
+	"app2app_map": {
+		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html",
+		"api-specification/markdown/narrative/technical_overview/identity_namespace_overview/": "/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html",
+		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
+		"api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
+		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
+		"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/": "/apis/cloudplatform/dataservices/data-science-workspace/dsw-overview.html",
+		"api-specification/markdown/narrative/gdpr/": "/apis/experienceplatform/gdpr/docs/alldocs.html",
+		"acpdr/end-user/markdown/query-service/": "/apis/cloudplatform/dataservices/query-service/query-service.html",
+		"api-specification/markdown/narrative/tutorials/": "/apis/cloudplatform/dataservices/tutorials/alltutorials.html"
+	}
+
 }
