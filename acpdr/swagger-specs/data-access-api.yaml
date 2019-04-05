@@ -1,10 +1,11 @@
 swagger: "2.0"
+
 info:
   version: "1.0.0"
   title: "Data Access API"
   description: >-
 
-    Data Access provides users with the capability for data access and egress on Adobe Experience Platform.
+    The Data Access API provides users with the capability for data access and egress on Adobe Experience Platform.
 
     This includes, but not limited to, the following operations:
       * Access and download Dataset files under a batch
@@ -16,8 +17,8 @@ info:
 
 
     Related documentation:
-      * [Technical overview of the Data Access API](../api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md)
-      * [Tutorial: How to Query Data via Data Access API](../api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md)
+      * [Technical overview of the Data Access API](https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md)
+      * [Tutorial for getting started with the Data Access API](https://www.adobe.io/apis/cloudplatform/dataservices/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md)
 
 
     Notes:
