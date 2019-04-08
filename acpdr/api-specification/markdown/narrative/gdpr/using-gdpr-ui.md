@@ -72,3 +72,4 @@ As mentioned above, navigating from the Status Tracker by clicking on a job ID g
 - If a solution has provided any additional data, it will be viewable in this dialog. You can expand the view by clicking on individual product rows and seeing what has been received.
 
 - You also have the ability to download the complete job data as viewed in this dialog as a .CSV file. Click on the download button and feel free to open the file to examine its contents.
+ownload button and feel free to open the file to examine its contents.
