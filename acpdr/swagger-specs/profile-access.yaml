@@ -271,7 +271,6 @@ paths:
             type: array
             items:
               $ref: '#/definitions/TooManyRequestError'
-securityDefinitions: {}
 definitions:
   SchemaEntity:
     type: object

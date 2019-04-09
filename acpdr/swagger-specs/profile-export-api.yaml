@@ -227,7 +227,6 @@ paths:
           description: Profile Export Job not found
         '503':
           description: Service Unavailable
-securityDefinitions: {}
 definitions:
   ComputeGatewayJobId:
     type: object

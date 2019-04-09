@@ -25,7 +25,7 @@ basePath: /data/core/ups/segment/jobs
 tags:
 - name: segmentjobs
 paths:
-  '/'':
+  '/':
     get:
       tags:
         - segmentjobs
