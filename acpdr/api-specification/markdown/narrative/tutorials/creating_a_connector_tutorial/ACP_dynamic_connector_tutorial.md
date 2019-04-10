@@ -46,7 +46,7 @@ After you are authorized to make API calls from the Adobe I/O Gateway and your M
 ## Setting up the Microsoft Dynamics Connector
 Follow these steps to create a dataset from Microsoft Dynamics and trigger a daily ingestion. 
 
-#### 1. Create a Catalog Account entity
+#### 1. Create a Catalog account entity
 
 First, create a Catalog account entity corresponding to your Microsoft Dynamics CRM credentials. This request requires your Microsoft Dynamics user name, password, and security token. The response to this request includes the *Account ID*.
 
@@ -71,7 +71,7 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/accounts/ \
     "connector": "dynamics-online"
 }'
 ```
-For on premise
+For on premise:
 
 ```shell
 {
@@ -150,7 +150,7 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/connections/ \
 
 `{CONNECTION_ID}`: ID of the connector you just created. 
 
-#### 3. Select an Microsoft Dynamics Object
+#### 3. Select an Microsoft Dynamics object
 
 Next, select the Microsoft Dynamics CRM object to ingest. You can get the entire list of available objects from the MS Dynamic CRM connection using the following request:
 
@@ -298,7 +298,7 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 
 Note that the above request is only a segment of the actual response. You can choose to have all the fields of an object ingested or selected fields. 
 
-#### 4. Create Catalog Dataset Entity
+#### 4. Create Catalog dataset entity
 
 The last step is to create the MS Dynamic Catalog entity. The dataset defines the structure of the data that the connector ingests.
 
