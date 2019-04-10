@@ -1,4 +1,4 @@
-# SQL Metadata
+# SQL metadata
 
 For metadata on your dataset, the following PSQL commands are currently supported for querying:
 
