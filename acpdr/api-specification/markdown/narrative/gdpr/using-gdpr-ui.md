@@ -18,11 +18,11 @@ Once authenticated, you should see the Experience Cloud shell where you can navi
 
 Once in the Administration tools, you will see an option to launch the GDPR UI.
 
-## The User Interface
+## The user interface
 
 Currently, the user interface consists of three main screens, the job submission screen, status tracker, and job details page. We will cover each in depth here.
 
-### Job Submission Screen
+### Job Submission screen
 
 ![GDPR UI Job Submission Screen](images/gdpr-ui-job-submission.png)
 
@@ -50,7 +50,7 @@ After submitting the file successfully, you may choose to be taken to the Status
   - Status: the overall status of the job, compiled from the individual solution statuses that have reported back to the service – either complete, expired, processing, error, or submitted.
   - Type: the type of the request, either an **access** or **delete** request
   - User key: the key associated with the job ID created from your JSON data in the request
-  - And more…
+  - Submitted on: The date and time the job was submitted, in the GMT time zone.
 
 
 - The UI provides the ability to filter on any of the fields by simply typing in the search field. The search is executed against all visible columns, so go ahead and test it out. Experiment with showing and hiding fields and combine it with searching.
@@ -59,7 +59,7 @@ After submitting the file successfully, you may choose to be taken to the Status
 
 - Each unique job ID is a link to a more detailed description of the job itself, containing updated status values and responses from each Experience Cloud product orchestrated by Platform GDPR Service. If you click on this, it takes you to the third UI screen, the Job Details Page.
 
-### Job Details Page
+### Job Details page
 
 ![GDPR UI Job Details](images/gdpr-ui-job-details.png)
 
@@ -67,7 +67,7 @@ As mentioned above, navigating from the Status Tracker by clicking on a job ID g
 
 #### Details
 
-- This dialog contains status information about each Experience Cloud solution and its current state in relation to the overall job. As every GDPR job is asynchronous, you can see the latest communication date and time from each solution as well, as some will require more time than others to process the request.
+- This dialog contains status information about each Experience Cloud solution and its current state in relation to the overall job. As every GDPR job is asynchronous, you can see the latest communication date and time (GMT) from each solution as well, as some will require more time than others to process the request.
 
 - If a solution has provided any additional data, it will be viewable in this dialog. You can expand the view by clicking on individual product rows and seeing what has been received.
 
