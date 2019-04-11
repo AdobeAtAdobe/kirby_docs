@@ -1,4 +1,4 @@
-# Spark SQL functions
+# Spark SQL Functions
 
 The Spark SQL helpers provide built-in Spark SQL functions to extend SQL funcationality.
 
