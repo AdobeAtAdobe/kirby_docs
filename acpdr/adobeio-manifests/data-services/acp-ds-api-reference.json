@@ -1,20 +1,15 @@
 {
-	"name": "data_services_api_swagger",
+	"name": "ACP_data_services_swagger",
 	"version": "2.0.0",
-	"description": "Adobe Experience Platform API Reference",
-	"author": "Wendy Braun",
+	"description": "Data Services API Reference Swagger Spec",
+	"author": "Emily Walpole",
 	"view_type": "swaggerbook",
-	"meta_keywords": "Adobe, Adobe Experience Platform, Experience, Platform, API, Swagger, API Reference, developer, schema, catalog, ingestion, data",
-	"meta_description": "Swagger API reference documentation for Adobe Experience Platform services.",
+	"meta_keywords": "defaultkeyword,defaultkeyword2",
+	"meta_description": "default description",
 	"publish_date": "24/09/2018",
 	"show_edit_github_banner": false,
 	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master",
 	"pages": [
-		{
-			"pages": [],
-			"path": "acpdr/swagger-specs/schema-registry.yaml",
-			"title": "Schema Registry"
-		},
 		{
 			"pages": [],
 			"path": "acpdr/swagger-specs/catalog.yaml",
@@ -29,11 +24,6 @@
 			"pages": [],
 			"path": "acpdr/swagger-specs/data-access-api.yaml",
 			"title": "Data Access Service"
-		},
-		{
-			"pages": [],
-			"path": "acpdr/swagger-specs/dule-policy-service.yaml",
-			"title": "DULE Policy Service"
 		},
 		{
 			"path": "acpdr/swagger-specs/unified-profile-service-apis.yaml",
@@ -78,25 +68,14 @@
 		},
 		{
 			"pages": [],
-			"path": "acpdr/swagger-specs/qs-api.yaml",
-			"title": "Query Service API"
+			"path": "acpdr/swagger-specs/sensei-ml-api.yaml",
+			"title": "Sensei Unified Machine Learning API"
 		},
 		{
 			"pages": [],
-			"path": "acpdr/swagger-specs/sensei-ml-api.yaml",
-			"title": "Sensei Unified Machine Learning API"
+			"path": "acpdr/swagger-specs/qs-api.yaml",
+			"title": "Query Service API"
 		}
-	],
-	"app2app_map": {
-		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html",
-		"api-specification/markdown/narrative/technical_overview/identity_namespace_overview/": "/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html",
-		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
-		"api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
-		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
-		"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/": "/apis/cloudplatform/dataservices/data-science-workspace/dsw-overview.html",
-		"api-specification/markdown/narrative/gdpr/": "/apis/experienceplatform/gdpr/docs/alldocs.html",
-		"acpdr/end-user/markdown/query-service/": "/apis/cloudplatform/dataservices/query-service/query-service.html",
-		"api-specification/markdown/narrative/tutorials/": "/apis/cloudplatform/dataservices/tutorials/alltutorials.html"
-	}
 
+	]
 }
