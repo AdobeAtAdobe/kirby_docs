@@ -1,4 +1,4 @@
-# Generating Datasets from Query Results
+# Generating datasets from query results
 The true power of Query Service is revealed when queries are used to generate datasets in Data Lake to be used as input into more queries or in other services like Data Science Workspace, Profile Service, or Analysis Workspace. 
 
 The Alpha Query Service allows the creation of datasets from the UI. Follow these steps:
@@ -15,5 +15,5 @@ The Alpha Query Service allows the creation of datasets from the UI. Follow thes
 
 After a dataset is created, it can be accessed like any other dataset in the Data Lake and used for a variety of use cases. Be advised: in a live implementation you will need to apply Data Governance labels after the dataset is created. 
 
-### A Note on CTAS Functionality
+### A note on CTAS functionality
 Creating a dataset from a query leverages a capability of SQL known as ```create table as SELECT```. In the Alpha, this functionality is only available through the UI. It is also limited to generating a new dataset each time the button is pushed. Our Beta version will allow for CTAS to be invoked from a connected client and it will allow the option for appending the output of a query to an existing dataset with matching schema. 
