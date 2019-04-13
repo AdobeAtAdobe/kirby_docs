@@ -17,7 +17,7 @@ The Data Ingestion API allows you to ingest data as batches (a unit of data that
 
 
 ### Data Ingestion Prerequisites
-- Data to upload must be either in Parquet or JSON formats.
+- Data to upload must be either in [parquet](http://parquet.apache.org/documentation/latest/) or [JSON format][xdm-json].
 - A dataset created in the [Catalog services](../catalog_architectural_overview/catalog_architectural_overview.md).
 - Contents of the parquet file must match a subset of the schema of the dataset being uploaded into.
 - Have your unique Access Token after authentication.
