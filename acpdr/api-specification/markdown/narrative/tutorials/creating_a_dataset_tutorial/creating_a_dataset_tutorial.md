@@ -1,240 +1,233 @@
-# Tutorial: Configure a dataset using a file
+# Tutorial: Configuring a Dataset
 
-This tutorial will walk you through the steps to create and populate a dataset using a file. 
+## Objective
 
-The steps involved include:
+This document explains how to create and populate a customer dataset using a file. To create a dataset::
 
-1. Create a dataset based on a schema
-1. Create a batch for uploading data into the dataset
-1. Upload the files to the batch
-1. Signal to the server that the batch has been completed
-1. Verify that the operation was successful by reading back the data in the dataset
+1. Extend an existing XDM schema with custom properties.
+1. Create a new Dataset using the updated schema.
+1. Create a Batch for uploading data into the new Dataset.
+1. Upload the files to the batch using the Bulk Ingestion API.
+1. Signal to the server that the Batch has been completed.
+1. Verify that the operation was successful by reading back the data in the dataset using Data Access APIs.
+1. Add additional fields to an XDM schema.
 
-## Getting started
+You can set a connector to ingest data. For information about, how to create and populate a dataset using a connector, see [Creating a Connector](../creating_a_connector_tutorial/creating_a_connector_tutorial.md).
 
-You can ingest data into a dataset in two different ways:
+---
+
+## Datasets from a Schema
+
+You can ingest data into a dataset in the following ways:
 
 * Batch ingestion using file upload
-* Set up a connector to ingest files
 
-Batch ingestion using a file will be covered by this tutorial. For information about how to create and populate a dataset using a connector, see the [Setting up Connectors](../creating_a_connector_tutorial/creating_a_connector_tutorial.md) documentation.
+* [Set up a connector to ingest files](../creating_a_connector_tutorial/creating_a_connector_tutorial.md)
 
-### Reading the API calls
+### Prerequisites
 
-Before making calls to the API, it is important to understand how to read the calls in this document. 
+Follow this [Tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to set up authorization for API calls and gather the following values:
 
-Each API call is shown in two different ways. First, the command is presented in its "API format", a template representation showing only the operation (GET, POST, PUT, PATCH, DELETE) and the endpoint being used (e.g. `/datasets`). Some templates also include examples or show the location of variables to help illustrate how a call should be formulated, such as `GET /datasets/{variable}`.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
-The calls are then shown as [curl](https://curl.haxx.se/docs/faq.html#What_is_cURL) commands in a "Request", which includes the necessary headers and full "base path" needed to successfully interact with the API.
+### Creating Dataset and Ingest File
 
-For example, the base path for the Catalog Service API is: `https://platform.adobe.io/data/foundation/catalog`. 
+Create a dataset by:
 
-The base path should be pre-pended to all endpoints. For example, the `/datasets` endpoint becomes: `https://platform.adobe.io/data/foundation/catalog/datasets` in order to make a call to the API.
+* Extending the `Profile` XDM schema
+* Populating the XDM schema by uploading a file through the Bulk Ingestion API.
 
-You will see the API format / Request pattern throughout the tutorial, and should be sure to use the complete path shown in the sample Request, as the calls in this tutorial use multiple services with different base paths.
+#### Extending the standard Schema
 
-### Authentication and request headers
+The `Person` standard schema describes the qualities of a person. For example their name, gender, and birthday. Extend the `Person` schema with the custom property, `hairColor`.
 
-The calls in this tutorial require specific request headers be sent with each call in order to successfully use the APIs. 
+Use the following API call in the terminal to create a custom object. The response indicates the path where the schema is stored.
 
-The headers, and the values required, are:
+#### API Format
 
-* Authorization: Bearer `{ACCESS_TOKEN}` - The token provided after [authentication](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). 
-* x-api-key: `{API_KEY}` - Your specific API key for your unique Platform integration.
-* x-gw-ims-org-id: `{IMS_ORG}` - The IMS Organization credentials for your unique Platform integration.
-
-You will also occasionally need the following headers:
-
-* Content-Type: Used to specify acceptable media types in the request body
-* Accept: Used to specify acceptable media types in the response body
-
-The correct headers are included in the Request example for each call.
-
-## Tutorial
-
-In order to create a dataset, a schema must first be defined. A schema is a set of rules to help represent data. In addition to describing the structure of data, schemas provide constraints and expectations that can be applied and used to validate data as it is moved between systems. 
-
-These standard definitions allow data to be interpreted consistently, regardless of origin, and remove the need for translation across applications. For more information about composing schemas, read [Basics of Schema Composition](../../technical_overview/schema_registry/schema_composition/schema_composition.md)
-
-## Lookup dataset schema
-
-This tutorial begins where the [Schema Registry API Tutorial](../../technical_overview/schema_registry/schema_registry_api_tutorial/schema_registry_api_tutorial.md) ends, making use of the Loyalty Members schema created during that tutorial. 
-
-If you have not completed the Schema Registry tutorial, please start there and continue with this dataset tutorial only once you have composed the necessary schema.
-
-The following call can be used to view the Loyalty Members schema you created during the [Schema Registry API Tutorial](../../technical_overview/schema_registry/schema_registry_api_tutorial/schema_registry_api_tutorial.md).
-
-#### API format
-
-```HTTP
-GET /tenant/schemas/{schema meta:altId or URL encoded $id URI}
+```http
+PUT /xdms/{namespace}/{objectName}/_customer/{extensionNS}
 ```
 
 #### Request
 
 ```SHELL
-curl -X GET \
-  https://platform.adobe.io/data/foundation/schemaregistry/tenant/schemas/_{TENANT_ID}.schemas.533ca5da28087c44344810891b0f03d9 \
-  -H 'Accept: application/vnd.adobe.xed-full+json; version=1' \
+curl -X PUT 'https://platform.adobe.io/data/foundation/catalog/xdms/context/person/_customer/CustomerCompany' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
+  -H 'x-api-key: {CLIENT_ID}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'content-type: application/json' \
+  -d '{JSON_PAYLOAD}'
 ```
 
-#### Response
+In the example, the `Person` object in JSON format is in the `{objectName}` field, `context` is in the `{namespace}` field and `CustomerCompany` is in the `{extensionNS}` field. Using names in additional fields extends the context `person` entity in the IMS organization's namespace. Modifying this context entity reflects other datasets that use the `person` entity. The `CustomerCompany` value creates an extension namespace you can use for different branches of a company. In the example, `CustomerCompany` is an extension of the namespace value `CustomerCompany`.
 
-The format of the response object depends on the Accept header sent in the request. Individual properties in this response have been minimized for space.
+
+`{namespace}`: The base namespace (for example, `context`).
+`{objectName}`: Name of the entity to extend.
+`{extensionNS}`: Name of the extension namespace in which to put the extension, for example, Customer's company,
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+`{JSON_PAYLOAD}`: Data set to post. Following the same logic as the examples, `JSON_PAYLOAD` is:
 
 ```JSON
 {
+    "title": "Company Customer Hair-Related Information",
     "type": "object",
-    "title": "Loyalty Members",
-    "description": "Information for all members of the loyalty program",
-    "meta:class": "https://ns.adobe.com/xdm/context/profile",
-    "meta:abstract": false,
-    "meta:extensible": false,
-    "meta:extends": [
-        "https://ns.adobe.com/xdm/context/profile",
-        "https://ns.adobe.com/xdm/data/record",
-        "https://ns.adobe.com/xdm/context/identitymap",
-        "https://ns.adobe.com/xdm/common/extensible",
-        "https://ns.adobe.com/xdm/common/auditable",
-        "https://ns.adobe.com/xdm/context/profile-person-details",
-        "https://ns.adobe.com/xdm/context/profile-personal-details",
-        "https://ns.adobe.com/{TENANT_ID}/mixins/bb118e507bb848fd85df68fedea70c62"
-    ],
-    "meta:containerId": "tenant",
-    "imsOrg": "{IMS_ORG}",
-    "meta:immutableTags": [
-        "union"
-    ],
-    "meta:altId": "_{TENANT_ID}.schemas.533ca5da28087c44344810891b0f03d9",
-    "meta:xdmType": "object",
+    "description": "Custom fields for customers to track hair-related queries",
+    "extNamespace": "CustomerCompany",
     "properties": {
-        "repositoryCreatedBy": {},
-        "repositoryLastModifiedBy": {},
-        "createdByBatchID": {},
-        "modifiedByBatchID": {},
-        "_repo": {},
-        "identityMap": {},
-        "_id": {},
-        "timeSeriesEvents": {},
-        "person": {},
-        "homeAddress": {},
-        "personalEmail": {},
-        "homePhone": {},
-        "mobilePhone": {},
-        "faxPhone": {},
-        "_{TENANT_ID}": {
-            "type": "object",
-            "meta:xdmType": "object",
-            "properties": {
-                "loyalty": {
-                    "title": "Loyalty",
-                    "description": "Loyalty Info",
-                    "type": "object",
-                    "meta:xdmType": "object",
-                    "meta:referencedFrom": "https://ns.adobe.com/{TENANT_ID}/datatypes/49b594dabe6bec545c8a6d1a0991a4dd",
-                    "properties": {
-                        "loyaltyId": {
-                            "title": "Loyalty Identifier",
-                            "type": "string",
-                            "description": "Loyalty Identifier.",
-                            "meta:xdmType": "string"
-                        },
-                        "loyaltyLevel": {
-                            "title": "Loyalty Level",
-                            "type": "string",
-                            "meta:xdmType": "string"
-                        },
-                        "loyaltyPoints": {
-                            "title": "Loyalty Points",
-                            "type": "integer",
-                            "description": "Loyalty points total.",
-                            "meta:xdmType": "int"
-                        },
-                        "memberSince": {
-                            "title": "Member Since",
-                            "type": "string",
-                            "format": "date-time",
-                            "description": "Date the member joined the Loyalty Program.",
-                            "meta:xdmType": "date-time"
-                        }
-                    }
-                }
-            }
+        "hairColor":{
+            "title": "Hair Color",
+            "type": "string",
+            "description": "Hair color of the individual."
         }
-    },
-    "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/533ca5da28087c44344810891b0f03d9",
-    "version": "1.4",
-    "meta:resourceType": "schemas",
-    "meta:registryMetadata": {
-        "repo:createDate": 1551836845496,
-        "repo:lastModifiedDate": 1551843052271,
-        "xdm:createdClientId": "{CREATED_CLIENT}",
-        "xdm:repositoryCreatedBy": "{CREATED_BY}"
     }
 }
 ```
 
-## Create a dataset
+#### Response
 
-With the Loyalty Members schema in place, you can now create a dataset that references the schema.
+```shell
+@/xdms/context/person/_customer/CustomerCompany/
+```
 
-#### API format
+Query the `person` entity object using a separate API call to verify the extension.
 
-```HTTP
+#### API Format
+
+```http
+GET /xdms/{namespace}/{objectName}
+```
+
+#### Request
+
+```SHELL
+curl -X GET 'https://platform.adobe.io/data/foundation/catalog/xdms/context/person' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {CLIENT_ID}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
+`{namespace}`: The base namespace. (E.g. context)
+`{objectName}`: Name of the entity to extend.
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+
+#### Response
+
+```JSON
+{
+    "created": "number",
+    "updated": "number",
+    "title": "Person",
+    "type": "object",
+    "description": "An individual actor, contact, or owner.",
+    "properties": {
+        "firstName": {},
+        "lastName": {},
+        "middleName": {},
+        "courtesyTitle": {},
+        "birthDay": {},
+        "birthMonth": {},
+        "birthYear": {},
+        "gender": {},
+        "audit": {},
+        "_customer": {
+            "type": "object",
+            "properties": {
+                "default": {},
+                "CustomerCompany": {
+                    "version": "1",
+                    "created": "number",
+                    "updated": "number",
+                    "createdClient": "{API_KEY}",
+                    "updatedUser": "string",
+                    "imsOrg": "{IMS_ORG}",
+                    "title": "Company Customer Hair-Related Information",
+                    "type": "object",
+                    "description": "Custom fields for customers to track hair-related queries",
+                    "properties": {
+                        "hairColor": {
+                            "title": "Hair Color",
+                            "type": "string",
+                            "description": "Hair color of the individual."
+                        }
+                    },
+                    "extNamespace": "{extensionNS}"
+                }
+            }
+        }
+    },
+    "id": "context/person",
+    "xdmVersion": "0.9.9.8",
+}
+```
+
+The `hairColor` extension displays under the `properties` key of `Person`. By extending the `Person` entity here, datasets in the same IMS organization with the parent schema (for example, `Profile`) inherit the newly extended property. If a user in the same IMS organization extends the `Person` entity with another property (for example, `hairLength`), existing datasets with schemas with the `Person` entity also gain the `hairLength` property.
+
+
+#### Creating a Dataset
+
+After you extend the `Person` entity, you can create a dataset with the parent schema `Profile`. Thge parent schema includes the `hairColor` extended property. You can create the dataset using the following API call.
+
+#### API Format
+
+```http
 POST /dataSets
 ```
 
 #### Request
 
 ```SHELL
-curl -X POST \
-  'https://platform.adobe.io/data/foundation/catalog/dataSets?requestDataSource=true' \
+curl -X POST 'https://platform.adobe.io/data/foundation/catalog/dataSets?requestDataSource=true' \
+  -H 'accept: application/json' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'Content-Type: application/json' \
-  -H 'x-api-key: {API_KEY}' \
+  -H 'x-api-key: {CLIENT_ID}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -d '{
-    "name":"LoyaltyMembersDataset",
-    "schemaRef": {
-        "id": "https://ns.adobe.com/{TENANT_ID}/schemas/719c4e19184402c27595e65b931a142b",
-        "contentType": "application/vnd.adobe.xed+json;version=1"
-    },
+  -H 'content-type: application/json' \
+  -d '{JSON_PAYLOAD}'
+```
+
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+`{JSON_PAYLOAD}`: Data set to be posted. The example we used in our tutorial is here:
+
+```JSON
+{
+    "name":"ProfileDataset",
+    "schema":"@/xdms/context/profile",
     "fileDescription": {
         "persisted": true,
         "containerFormat": "parquet",
         "format": "parquet"
     }
-}'
+}
 ```
 
-For the file format, this tutorial uses [parquet](https://parquet.apache.org/documentation/latest/).
+The example used the `Profile` schema for this dataset. For information about other schemas you can use, see the [XDM registry](https://github.com/adobe/xdm/blob/master/docs/reference/README.md). For the file format, the examples uses [parquet](https://parquet.apache.org/documentation/latest/).
 
-#### Response
-
-You will receive an HTTP Status 201 (Created) and a response body that consists of an array containing the ID of the newly created dataset in the format `"@/datasets/{DATASET_ID}"`. The dataset ID is a read-only, system-generated string that will be used to reference the dataset throughout this tutorial.
-
+#### Response ####
 ```JSON
-[
-    "@/dataSets/5c8c3c555033b814b69f947f"
-]
+["@/dataSets/{DATASET_ID}"]
 ```
 
-## Create a batch
+`{DATASET_ID}`: The ID of the dataset. Use this ID when creating a batch in the next section.
 
-Before you can add data to a dataset, you must create a batch that is linked to the dataset. The batch will then be used for uploading.
+#### Creating a Batch
 
-#### API format
+Before you can add data to a dataset, you must link it to a batch that you upload into a specified dataset.
 
-```HTTP
+#### API Format
+```http
 POST /batches
 ```
 
 #### Request
-
-The request body includes a "datasetId" field, the value of which is the `{DATASET_ID}` generated in the previous step.
 
 ```SHELL
 curl -X POST 'https://platform.adobe.io/data/foundation/import/batches' \
@@ -243,57 +236,53 @@ curl -X POST 'https://platform.adobe.io/data/foundation/import/batches' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key : {API_KEY}' \
   -H 'content-type: application/json' \
-  -d '{
-        "datasetId":"5c8c3c555033b814b69f947f"
-      }'
+  -d '{"datasetId":"{DATASET_ID}"}'
 ```
+`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+`{DATASET_ID}`: The ID of the dataset to upload the files into.
+
 
 #### Response
-
-You will receive an HTTP Status 201 (Created) and a response object containing details of the newly created batch, including its `id`, a read-only, system generated string.
-
 ```JSON
 {
-    "id": "5d01230fc78a4e4f8c0c6b387b4b8d1c",
-    "imsOrg": "{IMS_ORG}",
-    "updated": 1552694873602,
+    "id": "{BATCH_ID}",
+    "imsOrg": "{IMG_ORG}",
+    "updated": 1520368161969,
     "status": "loading",
-    "created": 1552694873602,
+    "created": 1520368161969,
     "relatedObjects": [
-        {
-            "type": "dataSet",
-            "id": "5c8c3c555033b814b69f947f"
-        }
+
     ],
     "version": "1.0.0",
     "tags": {
         "acp_producer": [
-            "{CREATED_CLIENT}"
+            "e6be7e083490427b8aab60ba4abfb981"
         ],
         "acp_stagePath": [
-            "{CREATED_CLIENT}/stage/5d01230fc78a4e4f8c0c6b387b4b8d1c"
-        ],
-        "use_plan_b_batch_status": [
-            "false"
+            "acp_foundation_push/stage/18dda765fa6048e4901add83f926f399"
         ]
     },
-    "createdUser": "{CREATED_BY}",
-    "updatedUser": "{CREATED_BY}",
-    "externalId": "5d01230fc78a4e4f8c0c6b387b4b8d1c",
-    "createdClient": "{CREATED_CLIENT}",
-    "inputFormat": {
-        "format": "parquet"
-    }
+    "createdUser": "{CREATED_USER}@AdobeID",
+    "updatedUser": "{UPDATED_USER}@AdobeID"
 }
 ```
 
-## File upload
+The response gives the batch ID that you use to upload files and signal for promotion in future calls.
 
-After successfully creating a new batch for uploading, you can now upload files to the specific dataset. It is important to remember that when you defined the dataset, you specified the file format as parquet. Therefore, the files you upload must be in that format.
+`{BATCH_ID}`: The ID of the batch that was just created (used in future calls).
+`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration
 
-> **Note:** If the file being uploaded is greater than 512 MB, you must break it into 512 MB chunks and upload each file one at a time. You can upload each 512 MB chunk to a dataset in the same batch by repeating this step for each file, using the same batch ID.
 
-#### API format
+
+#### File Upload
+
+After successfully creating a new batch for uploading, you can upload files to a specific dataset. Note that in [Creating a Dataset](#creating-a-dataset) the example specified the format of the data as parquet. The files you upload must be in the same format which you specified.
+
+If the original file being uploaded is greater than 512 MB, you must break it up into 512 MB chunks and upload each file one at a time. Upload each 512 MB chunkto a dataset in the same batch by repeating this step for each file, using the same batch ID.
+
+#### API Format
 
 ```http
 PUT /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
@@ -302,7 +291,7 @@ PUT /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
 #### Request
 
 ```SHELL
-curl -X PUT 'https://platform.adobe.io/data/foundation/import/batches/5d01230fc78a4e4f8c0c6b387b4b8d1c/datasets/5c8c3c555033b814b69f947f/files/loyaltyData.parquet' \
+curl -X PUT 'https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.parquet' \
   -H 'content-type: application/octet-stream' \
   -H 'x-api-key : {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMG_ORG}' \
@@ -310,47 +299,210 @@ curl -X PUT 'https://platform.adobe.io/data/foundation/import/batches/5d01230fc7
   --data-binary '@{FILE_PATH_AND_NAME}.parquet'
 ```
 
+`{BATCH_ID}`: The ID of the batch that was just created (used in future calls).
+`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+`{DATASET_ID}`: The ID of the dataset to upload the files into.
+`{FILE_NAME}` Name of file as it will be seen in the dataset.
+`{FILE_PATH_AND_NAME}`: The path and filename of the file to be uploaded into the dataset.
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+
 #### Response
+```http
+#Status 200 OK, with empty response
+```
 
-A successfully uploaded file returns a blank response body and HTTP Status 200 (OK).
+#### Signal Batch Completion
 
-## Signal batch completion
+After you upload all data files to the batch, you can signal for promotion. Signaling for a promotion causes the service to create Catalog DataSetFile entries for the promoted files and associate them with the Batch generated above. The Catalog Batch is marked successful which triggers any downstream flows that can then work on the now available data.
 
-After you upload all of your data files to the batch, you can signal the batch for completion. Signaling completion causes the service to create Catalog DataSetFile entries for the uploaded files and associate them with the batch generated previously. The Catalog batch is marked successful, which triggers any downstream flows that can then work on the now available data.
+#### API Format
 
-#### API format
-
-```HTTP
-POST /batches/{BATCH_ID}?action=COMPLETE
+```http
+POST /batches/{BATCH_ID}?actions=PROMOTE
 ```
 
 #### Request
 
 ```SHELL
-curl -X POST "https://platform.adobe.io/data/foundation/import/batches/5d01230fc78a4e4f8c0c6b387b4b8d1c?action=COMPLETE" \
+curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=COMPLETE" \
   -H 'x-api-key : {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMG_ORG}' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}'
 ```
 
+`{BATCH_ID}`: The ID of the batch that was just created (used in future calls).
+`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+
+#### Response
+```http
+#Status 200 OK, with empty response
+```
+
+#### Read data from the dataset
+
+With the batch ID you can use the Data Access APIs to get a list of files in the batch that you uploaded previously. The response will return an array containing a list of files IDs which reference the files in the batch. Next the files can be downloaded with the Data Access APIs. The name, size in bytes, and a link to download the file or folder will be returned.
+
+Detailed steps to do this can be found in the [Data Access Tutorial](../data_access_tutorial/data_access_tutorial.md).
+
+#### Adding additional fields
+
+There may be times that you need to add fields to a dataset you've already extended. To do this, you'll need to first **view** the extension as it exists currently.
+
+#### API Format - Retrieving Current Extension
+
+```http
+GET /xdms/{namespace}/{objectName}/_customer/{extensionNS}
+```
+
+#### Request
+
+```shell
+curl -X GET 'https://platform.adobe.io/data/foundation/catalog/xdms/context/person/_customer/CustomerCompany' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
 #### Response
 
-A successfully completed batch returns a blank response body and HTTP Status 200 (OK).
+Let's use the previous example of the `CustomerCompany` object.
 
-## Read data from the dataset
+```JSON
+{
+    "title": "Company Customer Hair-Related Information",
+    "type": "object",
+    "description": "Custom fields for customers to track hair-related queries",
+    "properties": {
+        "hairColor": {
+            "title": "Hair Color",
+            "type": "string",
+            "description": "Hair color of the individual."
+        }
+    },
+    "extNamespace": "CustomerCompany",
+    "version": "1",
+    "created": 1536877166554,
+    "updated": 1536877452280,
+    "createdClient": "{API_KEY}",
+    "updatedUser": "{UPDATED_USER}@AdobeID",
+    "imsOrg": "{IMS_ORG}"
+}
+```
 
-With the batch ID, you can use the Data Access API to read-back and verify all of the files uploaded to the batch. The response will return an array containing a list of file IDs, each referencing a file in the batch. 
+As it currently exists, it has the property `hairColor`, but now, let's add the property `hairLength`.
 
-You can also use the Data Access API to return the name, size in bytes, and a link to download the file or folder.
+#### API Format - Adding Fields to the Extension
 
-Detailed steps for working with the Data Access API can be found in the [Data Access Tutorial](../data_access_tutorial/data_access_tutorial.md).
+```http
+PUT /xdms/{namespace}/{objectName}/_customer/{extensionNS}
+```
 
-## Updating the dataset schema
+After confirming that the GET request's response is, in fact, the correct extension, you can now add fields to the extension and issue a PUT request.
 
-In the future, you may find yourself needing to add fields and ingest additional data into a dataset that you have created. To do this, you first need to update the schema to add additional properties to define the new data. This can be done using PATCH and/or PUT operations to update the existing schema.
+#### Request
+Since to add the property `hairLength`, you would need to take all the previous properties, and add the property `hairLength`, along with its title, type, and description.
 
-For more information about updating schemas, see the [Schema Registry API Developer Guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md).
+```json
+    ...
+    "title": "Company Customer Hair-Related Information",
+    "type": "object",
+    "description": "Custom fields for customers to track hair-related queries",
+    "properties": {
+        "hairColor": {
+            "title": "Hair Color",
+            "type": "string",
+            "description": "Hair Color"
+        },
+        "hairLength": {
+            "title": "Hair Length",
+            "type": "string",
+            "description": "Hair Length"
+        }
+    },
+    ...
+```
 
-Once you have updated the schema, you can re-follow the steps in this tutorial to ingest new data that conforms to the revised schema.
+Or, to put in a full CURL request:
 
-It is important to remember that schema evolution is purely additive, meaning you cannot introduce a breaking change to a schema once it has been saved to the registry and used for data ingestion. To learn more about best practices for composing schema for use with Adobe Experience Platform, read the [Basics of Schema Composition](../../technical_overview/schema_registry/schema_composition/schema_composition.md).
+```shell
+curl -X PUT  'https://platform.adobe.io/data/foundation/catalog/xdms/context/person/_customer/CustomerCompany' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'content-type: application/json' \
+  -d ' {
+        "title": "Company Customer Hair-Related Information",
+        "type": "object",
+        "description": "Custom fields for customers to track hair-related queries",
+        "properties": {
+            "hairColor": {
+                "title": "Hair Color",
+                "type": "string",
+                "description": "Hair Color"
+            },
+            "hairLength": {
+                "title": "Hair Length",
+                "type": "string",
+                "description": "Hair Length"
+            }
+        }
+    }'
+```
+
+**Note:** The PUT request is, essentially, **re-writing** the existing extension, and is **not** appending to it. As a result, ensure your PUT request includes **ALL** the fields (old and new) that you wish to have in the updated extension.
+
+In addition, it is good to follow basic XDM principles - ensure **no** breaking changes are made - other good XDM principles can be found [here](../../technical_overview/schema_registry/schema_design/schema_principles.md).
+
+#### API Format - Verifying the Field is Added
+
+```http
+GET /xdms/{namespace}/{objectName}/_customer/{extensionNS}
+```
+
+#### Request
+
+Now that you've PUT in a new field, you can perform the same GET request on the `CustomerCompany` object to ensure the updated field has been added.
+
+```shell
+curl -X GET 'https://platform.adobe.io/data/foundation/catalog/xdms/context/person/_customer/CustomerCompany' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
+
+#### Response
+
+```json
+{
+    "title": "Company Customer Hair-Related Information",
+    "type": "object",
+    "description": "Custom fields for customers to track hair-related queries",
+    "properties": {
+        "hairColor": {
+            "title": "Hair Color",
+            "type": "string",
+            "description": "Hair color of the individual."
+        },
+        "hairLength": {
+            "title": "Hair Length",
+            "type": "string",
+            "description": "Hair length of the individual"
+        }
+    },
+    "extNamespace": "CustomerCompany",
+    "version": "2",
+    "created": 1536877166554,
+    "updated": 1536877452280,
+    "createdClient": "{API_KEY}",
+    "updatedUser": "{UPDATED_USER}@AdobeID",
+    "imsOrg": "{IMS_ORG}"
+}
+```
+
+More detailed steps to add fields to an extension can be found in the [schema registry developer guide](../../technical_overview/schema_registry/acp_schema_registry.md#add-fields-to-an-extension).
+
+Now that the schema has been updated with the additional field, you can re-follow the tutorial to ingest new data that conforms to the revised schema.
+
+Remember, that any changes to the schema must be **non-breaking**, meaning that schema evolution is purely additive. More details can be found in the [Schema Design Principles and Best Practices guide](../../technical_overview/schema_registry/schema_design/schema_principles.md).
