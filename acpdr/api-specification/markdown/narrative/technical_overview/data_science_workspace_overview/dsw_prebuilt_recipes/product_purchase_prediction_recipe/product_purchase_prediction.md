@@ -9,7 +9,6 @@ The Product Purchase Prediction recipe enables you to predict the likelihood of 
 The following document will answer questions such as:
 * Who is this recipe built for?
 * What does this recipe do?
-* How do I get started?
 
 ## Who is this recipe built for?
 
