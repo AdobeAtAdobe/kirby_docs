@@ -63,7 +63,7 @@ Choose Recipe and a "New Recipe" dialog will popup on the screen. The `*` indica
 * **Recipe Type** - What language or tool you're going to use
 * **Recipe Source** - Where your image is uploaded to. Currently only supports Docker images or Binary artifacts, based on the selected Recipe type
 
-> **Note:** If Spark is selected for Recipe Type and Binary is set for Recipe Source, the asset that is expected will be a `.jar` file.
+Note that if Spark is selected for Recipe Type and Binary is set for Recipe Source, the asset that is expected will be a `.jar` file.
 
 ![](new_recipe_binary.png)
 
@@ -154,13 +154,11 @@ After creating the new Instance, you should see an overview page as seen below.
 
 To create a new Experiment, you can use either of the "Create Experiment" buttons in the overview page. Once clicking on the "Create Experiment" buttons, a "New Experiment" dialog will appear. 
 
-> **Note:** With the Instance creation, adding a configuration file in this step is not required. If you do add a configuration file, it will merge with your existing configuration and add new fields. Some Recipes have parameters hard-coded within its code. These Recipes will not require a configuration file until the Recipe is updated.
+Note that as with the Instance creation, adding a configuration file in this step is not required. If you do add a configuration file, it will merge with your existing configuration and add new fields. Some Recipes have parameters hard-coded within its code. These Recipes will not require a configuration file until the Recipe is updated.
 
 ![](newExperiment.png)
 
-In the Create New Experiment page, the Data Source field specifies which dataset to use in the Experiment. Select the Training dataset you ingested in the [previous tutorial](../ml_access_and_explore_data_tutorial/ml_access_and_explore_data_tutorial.md).
-
-Note that you can adjust the **FEATURES (INPUT)** and **TARGET FEATURES (OUTPUT)** at the Experiment level. We will leave the values as default for now.
+In the Create New Experiment page, the Data Source field specifies which dataset to use in the Experiment. Select the Training dataset you ingested in the [previous tutorial](../ml_access_and_explore_data_tutorial/ml_access_and_explore_data_tutorial.md). Note that you can adjust the **FEATURES (INPUT)** and **TARGET FEATURES (OUTPUT)** at the Experiment level. We will leave the values as default for now.
 
 In the Configuration tab, you are shown the default configurations for your Experiment. You can add or edit the parameters in this page. We will leave the parameters as default.
 
