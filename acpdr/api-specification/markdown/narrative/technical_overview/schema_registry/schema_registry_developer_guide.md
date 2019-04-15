@@ -1,4 +1,4 @@
-# Schema Registry API Developer Guide
+# Schema Registry API developer guide
 
 The Schema Registry is used to access the Schema Library within Adobe Experience Platform. The registry provides a user interface and RESTful API from which all available library resources are accessible.
 
@@ -11,23 +11,27 @@ This developer guide provides steps to help you [start using the Schema Registry
 * [Replace a schema, class, mixins, or data types](#replace-a-resource)
 * [Delete a schema, class, mixin, or data type](#delete-a-resource)
 * [Use descriptors to describe schema metadata](#descriptors)
-* [Enable and view unions for Unified Profile Service](#unified-profile-views)
+* [Enable and view unions for Unified Profile Service](#unified-profile)
 
-The [Appendix](#appendix) to this document includes additional helpful resources for working with the Schema Registry, including a brief introduction to [XDM Compatibility Mode](#compatibility-mode) as well as tables to help you [define XDM Field Types in the API](#defining-xdm-field-types-in-the-api) and [map XDM Field Types to other Serialization Formats](#mapping-xdm-types-to-other-formats) (such as Parquet and Scala).
+The [Appendix](#appendix) to this document includes additional helpful resources for working with the Schema Registry, including:
 
-## Getting Started with the Schema Registry API
+* A brief introduction to [XDM Compatibility Mode](#compatibility-mode)
+* How to [define XDM Field Types in the API](#defining-xdm-field-types-in-the-api) 
+* How to [map XDM Field Types to other Serialization Formats](#mapping-xdm-types-to-other-formats) (such as Parquet and Scala)
+
+## Getting started with the Schema Registry API
 
 Using the Schema Registry API, you are able to perform basic CRUD operations in order to view and manage all schemas and related resources available to you within Adobe Experience Platform. This includes those defined by Adobe, Experience Platform partners, and vendors whose applications you use. You can also use API calls to create new schemas and resources for your organization, as well as view and edit resources that you have already defined.
 
-It is recommended that you review [Schema Composition Basics](schema_composition/schema_composition.md) before beginning to work with the Schema Registry.
+It is recommended that you review the [basics of schema composition](schema_composition/schema_composition.md) before beginning to work with the Schema Registry.
 
 The following sections provide additional information that you will need to know or have on-hand in order to successfully make calls to the Schema Registry API.
 
-### Reading the Calls
+### Reading the calls
 
 Before making calls to the API, it is important to understand how to read the calls in this document. 
 
-Each API call is shown in two different ways. First, the command is presented in its "API Format", a template representation showing only the operation (GET, POST, PUT, PATCH, DELETE) and the endpoint being used (e.g. `/tenant/schemas`). Some templates also include examples or show the location of variables to help illustrate how a call should be formulated, such as `GET /{variable}/classes/{anotherVariable}`.
+Each API call is shown in two different ways. First, the command is presented in its "API format", a template representation showing only the operation (GET, POST, PUT, PATCH, DELETE) and the endpoint being used (e.g. `/tenant/schemas`). Some templates also include examples or show the location of variables to help illustrate how a call should be formulated, such as `GET /{variable}/classes/{anotherVariable}`.
 
 The calls are then shown as curl commands in a "Request", which includes the necessary headers and full "base path" needed to successfully interact with the registry.
 
@@ -35,13 +39,13 @@ The Schema Registry base path is: `https://platform.adobe.io/data/foundation/sch
 
 The base path should be pre-pended to all endpoints. For example, the aforementioned `/tenant/schemas` endpoint becomes: `https://platform.adobe.io/data/foundation/schemaregistry/tenant/schemas` in order to make a call to the registry.
 
-You will see the API Format / Request pattern throughout the developer guide, and should be sure to use the complete path shown in the sample Request when making your own calls to the schema registry.
+You will see the API format / Request pattern throughout the developer guide, and should be sure to use the complete path shown in the sample Request when making your own calls to the schema registry.
 
-### Know Your `TENANT_ID`
+### Know your `TENANT_ID`
 
 Throughout the developer guide you will see references to a `TENANT_ID`. This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Organization. If you are unsure of your ID, you can access it by performing the following GET request.
 
-#### API Format
+#### API format
 
 ```SHELL
 GET /stats
@@ -142,17 +146,17 @@ The response includes a "tenantId" attribute, the value of which is your `TENANT
 
 Calls to the Schema Registry API require the use of a `CONTAINER_ID`. There are two containers against which API calls can be made, the "global" container and the "tenant" container.
 
-#### Global Container
+#### Global container
 
 The global container holds all standard Adobe and Experience Platform partner provided classes, mixins, data types, and schemas. You may only perform list and lookup (GET) requests against the global container.
 
-#### Tenant Container
+#### Tenant container
 
 Not to be confused with your unique `TENANT_ID`, the tenant container holds all classes, mixins, data types, schemas, and descriptors defined by an IMS Organization. These are unique to each organization, meaning they are not visible or manageable by other IMS Orgs. You may perform all CRUD operations (GET, POST, PUT, PATCH, DELETE) against resources that you create in the tenant container. 
 
-When you create a class, mixin, schema or datatype in the tenant container, it is saved to the Schema Registry and assigned an `$id` URI that includes your `TENANT_ID`. This `$id` is used throughout the API to reference a specific resource. Examples of the `$id` are shown in the [Schema Identification](#schema-identification) section that follows.
+When you create a class, mixin, schema or datatype in the tenant container, it is saved to the Schema Registry and assigned an `$id` URI that includes your `TENANT_ID`. This `$id` is used throughout the API to reference a specific resource. Examples of the `$id` are shown in the Schema Identification section that follows.
 
-### Schema Identification
+### Schema identification
 
 Schemas are identified with an `$id` attribute in the form of a URI, such as: 
 * `https://ns.adobe.com/xdm/context/profile` 
@@ -166,7 +170,7 @@ Calls to the Schema Registry API will support either the url encoded `$id` URI o
 * `https%3A%2F%2Fns.adobe.com%2Fxdm%2Fcontext%2Fprofile`
 * `https%3A%2F%2Fns.adobe.com%2F{TENANT_ID}%2Fschemas%2F7442343-abs2343-21232421`
 
-### Request Headers
+### Request headers
 
 The Schema Registry requires four request headers be sent with each call in order to successfully use the API. 
 
@@ -181,7 +185,7 @@ And either of the following:
 * Content-Type: application/json (when sending a request body)   
 * Accept (see table of values in the [Accept Header section](#accept-header) that follows.) 
 
-#### Accept Header
+#### Accept header
 
 Accept | Description
 -------|------------
@@ -195,7 +199,7 @@ application/vnd.adobe.xed-full-desc+json; version={major version}	|$refs and all
 
 _**Note:**_ If supplying the `major` version only (e.g. 1, 2, 3), the registry will return the latest `minor` version (e.g. .1, .2, .3) automatically.
 
-### Defining Fields
+### Defining fields
 
 Fields are listed within the `properties` object. Each field is itself an object, containing attributes to describe and constrain the data that the field can contain. 
 
@@ -222,15 +226,15 @@ Here is a sample field that illustrates some best practices to follow when defin
 1. The field requires a `"type"`.  
     * Defining certain types may require an optional `"format"`.  
     * Where a specific formatting of data is required, `"examples"` can be added as an array.
-    * The field type may also be defined using any data type in the registry. This is explained in more detail in the [Create a Data Type](#create-a-data-type) section later in this document. 
+    * The field type may also be defined using any data type in the registry. This is explained in more detail in the [Create a data type](#create-a-data-type) section later in this document. 
 1. The `"description"` explains the field and pertinent information regarding field data. It should be written in full sentences with clear language so that anyone accessing the schema can understand the intention of the field.
 
 
-## Sample API Calls
+## Sample API calls
 
 Now that you know your `TENANT_ID`, are familiar with 'containers', understand which headers to use, and have reviewed best practices for defining resources, you are ready to begin making calls to the Schema Registry API. The following sections walk through the most common API calls you will make using the Schema Registry. Each call includes the general API format, a sample request showing required headers, and a sample response. 
 
-## List Resources
+## List resources
 
 You are able to view a list of all resources (schemas, classes, mixins, or data types) within a container by performing a single GET request. To help filter results, the Schema Registry supports the use of query parameters when listing resources.
 
@@ -240,7 +244,7 @@ The most common query parameters include:
 * `properties` - Filter results on any top-level attributes. Example: `properties=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile` returns only mixins that are compatible with the XDM Profile class.
 * You may use an ampersand (`&`) to combine query parameters.
 
-### API Format
+#### API format
 
 ```SHELL
 GET /{CONTAINER_ID}/{schemas|classes|datatypes|mixins}
@@ -251,7 +255,7 @@ GET /tenant/schemas?limit=3
 GET /global/classes?orderby=title&limit=4
 ```
 
-### Request
+#### Request
 
 ```SHELL
 curl -X GET \
@@ -268,7 +272,7 @@ Accept | Description
 application/vnd.adobe.xed-id+json | Returns a short summary of each resource, generally the preferred header for listing
 application/vnd.adobe.xed-full+json | Returns full JSON schema for each resource, with original $ref and allOf included
 
-### Response
+#### Response
 
 The request above used the `application/vnd.adobe.xed-id+json` Accept header, therefore the response includes only the `title`, `$id`, `meta:altId`, and `version` attributes for each resource. Substituting `full` into the Accept header returns all attributes of each resource. You can select the appropriate Accept header depending on the information you require in your response.
 
@@ -291,11 +295,11 @@ The request above used the `application/vnd.adobe.xed-id+json` Accept header, th
 }
 ```
 
-## Lookup Specific Resource
+## Lookup specific resource
 
 If you would like to view a specific resource, be it a schema, class, mixin, or data type, you can perform a GET request that includes the `$id` (URL encoded URI) of the resource and, depending on the Accept header, some or all of the details of the resource.
 
-### API Format
+#### API format
 
 ```SHELL
 GET /{CONTAINER_ID}/{schemas|classes|datatypes|mixins}/{meta:altId or the url encoded $id URI} 
@@ -307,7 +311,7 @@ GET /tenant/mixins/_{TENANT_ID}.mixins.bce6c11bbe4ad4155dd940c15dfe74e1
 GET /tenant/mixins/https%3A%2F%2Fns.adobe.com%2F{TENANT_ID}%2Fmixins%2Fbce6c11bbe4ad4155dd940c15dfe74e1
 ```
 
-### Request
+#### Request
 
 ```SHELL
 curl -X GET \
@@ -330,7 +334,7 @@ application/vnd.adobe.xed-full-desc+json; version={major version}	|$refs and all
 
 _**Note:**_ If supplying the `major` version only (1, 2, 3, etc), the registry will return the latest `minor` version (.1, .2, .3, etc) automatically.
 
-### Response
+#### Response
 
 Once again, the response format depends on the Accept header sent in the request. Experiment with different Accept headers to compare the responses and determine which header is best for your use case. 
 
@@ -379,11 +383,11 @@ Once again, the response format depends on the Accept header sent in the request
 }
 ```
 
-## Create a Resource
+## Create a resource
 
 The Schema Registry allows you to create new resources within the tenant container. These resources are unique to your IMS Organization, meaning they are not discoverable, editable, or usable by other organizations. 
 
-### Create a Class
+### Create a class
 
 The primary building block of a schema is a class. The class contains the minimum set of fields that must be defined in order to capture the core data of a schema. For example, if you were designing a schema for cars and trucks they would most likely use a class called Vehicle that described the basic common properties of all vehicles.
 
@@ -391,7 +395,7 @@ There are several standard classes provided by Adobe and other Experience Platfo
 
 _**Note:**_ When composing a schema based on a class that you define, you will not be able to use standard mixins. Mixins define the class(es) they are compatible with in the `meta:intendedToExtend` attribute. Once you begin defining mixins that are compatible with your new class (by using the `$id` of your new class in the `meta:intendedToExtend` field of the mixin), you will be able to reuse those mixins every time you define a schema that implements the class you defined. Details for creating schemas and mixins appear further on in this developer guide.
 
-#### API Format
+#### API format
 
 ```SHELL
 POST /tenant/classes
@@ -519,13 +523,13 @@ You will receive an HTTP Response Status 201 (Created) and the response body wil
 
 Performing a GET request to list all classes in the tenant container would now include the Property class. You can also perform a lookup (GET) request using the URL encoded `$id` URI to view the new class directly. Be sure to include the `version` in the Accept header when performing a lookup request.
 
-### Create a Data Type
+### Create a data type
 
 When there are common data structures that your organization wishes to use in multiple ways, you may wish to define a data type. Data types allow for the consistent use of multi-field structures, with more flexibility than mixins because they can be included anywhere in a schema by adding them as the ‘type’ of a field. 
 
 In other words, data types allow you to define an object hierarchy once, and refer to it in a field much like you would for any other scalar type.
 
-#### API Format
+#### API format
 
 ```SHELL
 POST /tenant/datatypes
@@ -624,7 +628,7 @@ You will receive an HTTP Response Status 201 (Created) and the response body wil
 
 Performing a GET request to list all data types in the tenant container would now include the Property Construction data type. You can also perform a lookup (GET) request using the url encoded `$id` URI to view the new data type directly. Be sure to include the `version` in your Accept header for a lookup request.
 
-### Create a Mixin
+### Create a mixin
 
 Mixins are a set of fields used to describe a particular concept, such as "address" or "profile preferences". There are numerous standard mixins available, or you can define your own when you wish to capture information that is unique to your organization. Each mixin contains a `meta:intendedToExtend` field which lists the class(es) the mixin is compatible with. 
 
@@ -635,7 +639,7 @@ GET /global/mixins?property=meta:intendedToExtend==https://ns.adobe.com/xdm/cont
 GET /tenant/mixins?property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile
 ```
 
-#### API Format
+#### API format
 
 ```SHELL
 POST /tenant/mixins
@@ -797,13 +801,13 @@ You will receive an HTTP Response Status 201 (Created) and the response body wil
 
 Performing a GET request to list all mixins in the tenant container would now include the Vehicle Details mixin, or you can perform a lookup (GET) request using the URL encoded `$id` URI to view the new mixin directly. Remember to include the `version` in the Accept header for all lookup requests.
 
-### Create a Schema
+### Create a schema
 
 A schema can be thought of as the blueprint for the data you wish to ingest into Experience Platform. Each schema is composed of a class and zero or more mixins. In other words, you do not have to add a mixin in order to define a schema, but in most cases at least one mixin will be used. 
 
 The schema composition process begins by assigning a class. The class defines key behavioral aspects of the data (record vs time series), as well as the minimum fields that are required to describe the data that will be ingested.
 
-#### API Format
+#### API format
 
 ```SHELL
 POST /tenant/schemas
@@ -870,19 +874,19 @@ You will receive an HTTP Response Status 201 (Created) and the response body wil
 
 Performing a GET request to list all schemas in the tenant container would now include the Property Information schema, or you can perform a lookup (GET) request using the URL encoded `$id` URI to view the new schema directly. Remember to include the `version` in the Accept header for all lookup requests.
 
-## Update a Resource
+## Update a resource
 
 If you ever need to modify or update a resource in the tenant container, this can be done using a PATCH request. The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace. 
 
 For more information on JSON Patch, including available operations, see the official [JSON Patch documentation](http://jsonpatch.com/).
 
-### API Format
+#### API format
 
 ```SHELL
 PATCH /tenant/{schemas|classes|datatypes|mixins}/{meta:altId or the url encoded $id URI} 
 ```
 
-### Request
+#### Request
 
 Using a PATCH operation, you can update the Property Information schema to include the fields that were defined in the Property Details mixin. To do this, you must perform a PATCH request to the schema using its `meta:altId` or the url encoded `$id` URI. 
 
@@ -901,7 +905,7 @@ curl -X PATCH\
       ]'
 ```
 
-### Response
+#### Response
 
 The response shows that both operations were performed successfully. The mixin `$id` has been added to the `meta:extends` array and a reference (`$ref`) to the mixin `$id` now appears in the `allOf` array.
 
@@ -942,17 +946,17 @@ The response shows that both operations were performed successfully. The mixin `
 }
 ```
 
-## Additional Update (PATCH) Example
+## Additional update (PATCH) example
 
 The Property Details mixin defines fields for property-related information, but additional information is required. In order to update the mixin, a PATCH request can be made that contains multiple changes to be performed.
 
-### API Format
+#### API format
 
 ```SHELL
 PATCH /tenant/{schemas|classes|datatypes|mixins}/{meta:altId or the url encoded $id URI} 
 ```
 
-### Request
+#### Request
 
 The request body includes the operation (`op`), location (`path`), and information (`value`) needed to update the mixin. This request updates the Property Details mixin to remove the "propertyCity" field and add a new "propertyAddress" field the references a standard data type containing address information. It also adds a new "emailAddress" field that references a standard data type with email information.
 
@@ -982,7 +986,7 @@ curl -X PATCH\
       ]'
 ```
 
-### Response
+#### Response
 
 The response shows that the operations were completed successfully because the new fields are present and the "propertyCity" field has been removed.
 
@@ -1072,7 +1076,7 @@ The response shows that the operations were completed successfully because the n
 }
 ```
 
-## Replace a Resource
+## Replace a resource
 
 In the previous examples, a PATCH operation was used to update part of a resource, and the payload included only the path and value that you wanted to update. The Schema Registry also allows you to _replace_ an entire resource through a PUT operation where the payload includes all required values for defining that resource.
 
@@ -1080,7 +1084,7 @@ In other words, you can perform a PUT request that essentially _re-writes_ the r
 
 This is especially useful if you want to update a lot of information in the resource at once. 
 
-### API Format
+#### API format
 
 A PUT request can only be performed against resources that you define in the tenant container.
 
@@ -1088,7 +1092,7 @@ A PUT request can only be performed against resources that you define in the ten
 PUT /tenant/{schemas|classes|datatypes|mixins}/{meta:altId or the url encoded $id URI} 
 ```
 
-### Request
+#### Request
 
 This sample request replaces the Property Construction datatype that was created in a previous example. The request body looks similar to the POST request used to create the data type, except that it now contains an updated set of fields with new values replacing what was previously defined.
 
@@ -1139,7 +1143,7 @@ curl -X PUT \
       }'
 ```
 
-### Response
+#### Response
 
 The response includes the details of the data type, showing the updated fields and values as provided in the request.
 
@@ -1203,17 +1207,17 @@ The response includes the details of the data type, showing the updated fields a
 }
 ```
 
-## Delete a Resource
+## Delete a resource
 
 It may occasionally be necessary to remove (DELETE) a resource from the registry. Only resources that you create in the tenant container may be deleted. This is done by performing a DELETE request to the `$id` of the resource you wish to delete.
 
-### API Format
+#### API format
 
 ```SHELL
 DELETE /tenant/{schemas|classes|datatypes|mixins}/{meta:altId or the url encoded $id URI} 
 ```
 
-### Request 
+#### Request 
 
 A DELETE request does not require an Accept header.
 
@@ -1225,7 +1229,7 @@ curl -X DELETE \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-### Response
+#### Response
 
 The response body will be blank with an HTTP Status 204 (No Content). 
 
@@ -1239,7 +1243,7 @@ Schema descriptors are tenant-level metadata, meaning they are unique to your IM
 
 Each schema can have one or more schema descriptor entities applied to it. Each schema descriptor entity includes a descriptor `@type` and the `sourceSchema` to which it applies. Once applied, these descriptors will apply to all datasets created using the schema.
 
-Sample descriptor calls are shown below. For a complete list of available descriptors, and the fields required for defining each type, see the [Defining Descriptors in the API](#defining-descriptors-in-the-api) section in the Appendix.
+Sample descriptor calls are shown below. For a complete list of available descriptors, and the fields required for defining each type, see the [Defining descriptors in the API](#defining-descriptors-in-the-api) section in the Appendix.
 
 _**Note:**_ Descriptors require unique Accept headers that replace `xed` with `xdm`, but otherwise look very similar to Accept headers used elsewhere in the Schema Registry. The proper Accept headers have been included in the sample calls below, but take extra caution to ensure the correct headers are being used.
 
@@ -1247,7 +1251,7 @@ _**Note:**_ Descriptors require unique Accept headers that replace `xed` with `x
 
 A single GET request can be used to return a list of all descriptors that have been defined by your organization.
 
-#### API Format
+#### API format
 
 ```SHELL
 GET /tenant/descriptors
@@ -1300,7 +1304,7 @@ When using the `link` Accept header, each descriptor is shown as an array item i
 
 If you wish to view the details of a specific descriptor, you can lookup (GET) an individual descriptor using its `@id`.
 
-#### API Format
+#### API format
 
 ```SHELL
 GET /tenant/descriptors/{descriptor @id}
@@ -1344,9 +1348,9 @@ The response provides details of the descriptor, including its `@type` and `sour
 
 ### Create descriptor
 
-The Schema Registry allows you to define several different descriptor types. Each descriptor type requires its own specific fields be sent in the POST request. A complete list of descriptors, and the fields necessary to define them, is available in the [Defining Descriptors in the API](#defining-descriptors-in-the-api) table in the Appendix.
+The Schema Registry allows you to define several different descriptor types. Each descriptor type requires its own specific fields be sent in the POST request. A complete list of descriptors, and the fields necessary to define them, is available in the [Defining descriptors in the API](#defining-descriptors-in-the-api) table in the Appendix.
 
-#### API Format
+#### API format
 
 ```SHELL
 POST /tenant/descriptors
@@ -1375,7 +1379,7 @@ curl -X POST \
       }'
 ```
 
-_**Note:**_ For details regarding the fields required to define a descriptor, see the [Defining Descriptors in the API](#defining-descriptors-in-the-api) table in the Appendix.
+_**Note:**_ For details regarding the fields required to define a descriptor, see the [Defining descriptors in the API](#defining-descriptors-in-the-api) table in the Appendix.
 
 #### Response
 
@@ -1399,7 +1403,7 @@ You will receive an HTTP Status 201 (Created) and a response object containing t
 
 To update a descriptor, a PUT request is made to the registry referencing the `@id` of the descriptor you wish to update.
 
-#### API Format
+#### API format
 
 ```SHELL
 PUT /tenant/descriptors/{@id of descriptor to be updated}
@@ -1429,7 +1433,7 @@ curl -X PUT \
       }'
 ```
 
-Details regarding `xdm:namespace` and `xdm:property`, including how to access them, are available in the [Defining Descriptors in the API](#defining-descriptors-in-the-api) table.
+Details regarding `xdm:namespace` and `xdm:property`, including how to access them, are available in the [Defining descriptors in the API](#defining-descriptors-in-the-api) table.
 
 #### Response
 
@@ -1447,7 +1451,7 @@ Performing a lookup (GET) request to view the descriptor will show that the fiel
 
 Occasionally you may need to remove a descriptor that you have defined from the Schema Registry. This is done by sending a DELETE request to the `@id` of the descriptor you wish to remove.
 
-#### API Format
+#### API format
 
 ```SHELL
 DELETE /tenant/descriptors/{@id of descriptor to be deleted}
@@ -1471,23 +1475,23 @@ The response body will be blank and you will receive an HTTP Status 204 (No Cont
 
 To confirm the descriptor has been deleted, you can perform a lookup request against the descriptor `@id`. It will return an HTTP Status 404 (Not Found) because the descriptor has been removed from the Schema Registry.
 
-## Unified Profile Views
+## Unified Profile
 
 The Unified Profile Service (UPS) provides a holistic view of an individual by building a robust, 360&deg; profile of attributes as well as a timestamped account of every event that individual has had across any system your organization has integrated with Experience Platform. 
 
-For more information on how unified profiles are used across Platform, see the [Unified Profile Overview](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md).
+For more information on how unified profiles are used across Platform, see the [Unified Profile Overview](../unified_profile_architectural_overview/unified_profile_architectural_overview.md).
 
 By enabling a schema for use with UPS, you are indicating that the data the schema defines should be included in the union view for the class that the schema implements.
 
 This is done through the use of the `meta:immutableTags` attribute. 
 
-### Enable Union Tag
+### Enable "union" tag
 
 In order for a schema to be included in the merged union view, the "union" tag must be added to the `meta:immutableTags` attribute of the schema. This is done through a PATCH request to update the schema and add the `meta:immutableTags` array with a value of "union".
 
 _**Note:**_ Immutable Tags are tags that are intended to be set, but never removed.
 
-#### API Format
+#### API format
 
 ```SHELL
 PATCH /tenant/schemas/{meta:altId or the url encoded $id URI}
@@ -1551,13 +1555,13 @@ The response shows that the operation was performed successfully, and the schema
 }
 ```
 
-### List Union Views
+### List unions
 
 When you set the "union" tag on a schema, the Schema Registry will automatically create and maintain a union for the class upon which the schema is based. The `$id` for the union is similar to the standard `$id` of a class, with the only difference being that is appended by two underscores and the word "union" (`"__union"`).
 
 To view a list of available unions, you can perform a GET request to the `/unions` endpoint.
 
-#### API Format
+#### API format
 
 ```SHELL
 GET /tenant/unions
@@ -1599,13 +1603,13 @@ If no unions have been defined, you will still receive an HTTP Status 200 (OK) b
 }
 ```
 
-### Lookup Specific Union View
+### Lookup specific union
 
 If you would like to view a specific union, you can perform a GET request that includes the `$id` (URL encoded URI) and, depending on the Accept header, some or all of the details of the union.
 
 _**Note:**_ Union lookups are available using the `/unions` and `/schemas` endpoint to enable them for use in UPS exports into a dataset. 
 
-#### API Format
+#### API format
 
 ```SHELL
 GET /tenant/unions/{meta:altId or the url encoded $id URI}
@@ -1674,7 +1678,7 @@ The response format depends on the Accept header sent in the request. Experiment
 }
 ```
 
-## Next Steps
+## Next steps
 
 Now that you have learned how to make calls using the Schema Registry API, follow the [Schema Registry API Tutorial](schema_registry_api_tutorial/schema_registry_api_tutorial.md) to begin composing a schema of your own.
 
@@ -1693,7 +1697,7 @@ Experience Data Model (XDM) is a publicly documented specification, driven by Ad
 
 When looking at formal XDM definitions in the public repository, you can see that standard XDM differs from what you see in Adobe Experience Platform. What you are seeing in Experience Platform is called Compatibility Mode, and it provides a simple mapping between standard XDM and the way it is used within Platform.
 
-#### How Compatibility Mode Works
+#### How Compatibility Mode works
 
 Compatibility Mode allows the XDM JSON-LD model to work with existing data infrastructure by altering values within standard XDM while keeping the semantics the same. It uses a nested JSON structure, displaying schemas in a tree-like format.
 
@@ -1756,7 +1760,7 @@ The following is a side-by-side comparison showing birthday-related fields (with
 </tr>
 </table>
 
-#### Why Do We Need Compatibility Mode?
+#### Why do we need Compatibility Mode?
 
 Adobe Experience Platform is designed to work with multiple solutions and services, each with their own technical challenges and limitations (for example, how certain technologies handle special characters). In order to overcome these limitations, Compatibility Mode was developed.
 
@@ -1766,7 +1770,7 @@ It is worthwhile to know that a mapping takes place between standard XDM and the
 
 The open source project is available to you, but when it comes to interacting with resources through the Schema Registry, the API examples in this document provide the best practices you should know and follow.
 
-### Defining XDM Field Types in the API
+### Defining XDM field types in the API
 
 As shown in the examples above, schemas are defined using JSON Schema standards and basic field types. XDM allows you to define additional field types through the use of formats and optional constraints. The XDM field types are exposed by the field-level attribute, "meta:xdmType".
 
@@ -2059,7 +2063,7 @@ Where "id" is the {id} of the reference schema.
 </tr>
 </table>
 
-### Mapping XDM Types to Other Formats
+### Mapping XDM types to other formats
 
 The table below describes the mapping between "meta:xdmType" and other serialization formats.
 
@@ -2076,7 +2080,7 @@ The table below describes the mapping between "meta:xdmType" and other serializa
 |date-time|type:string<br>format:date-time<br>(RFC 3339, section 5.6)|INT64/TIMESTAMP_MILLIS|TimestampType|java.util.Date|java.util.Date|System.DateTime|String|timestamp|Integer<br>(unix millis)|int64<br>(unix millis)
 |map|object|MAP annotated group<br><br><key_type> MUST be STRING<br><br><value_type> type of map values|MapType<br><br>"keyType" MUST be StringType<br><br>"valueType" is type of map values.|java.util.Map|Map|---|object|object|map|map<key_type, value_type>|
 
-### Defining Descriptors in the API
+### Defining descriptors in the API
 
 The following table provides an overview of available descriptor types, including the required fields for defining a descriptor of each type.
 
