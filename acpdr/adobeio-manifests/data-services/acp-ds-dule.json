@@ -5,30 +5,39 @@
 	"author": "Wendy Braun",
 	"view_type": "mdbook",
 	"meta_keywords": "Adobe Experience Platform, Services, Experience Platform, Data Services, DULE, Data Usage Labeling Enforcement, Data Usage, Labels, Data Policies",
-	"meta_description": "Adobe Experience Platform Data Usage Labeling and Enforcement",
+	"meta_description": "Adobe Experience Platform Data Usage Labeling and Enforcement (DULE)",
 	"publish_date": "11/09/2018",
 	"show_edit_github_banner": false,
 	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
 	"pages": [
-				{
-					"pages": [
-						{
-							"pages": [],
-							"path": "end-user/markdown/dule_overview/dule_supported_labels.md",
-							"title": "Supported Data Usage Labels",
-							"description": "DULE features enable the application of data usage labels to connections, datasets, and fields to categorize data according to the type of data usage policies that apply. This list outlines all data usage labels currently supported by Experience Platform."
-						}
-					],
-					"path": "end-user/markdown/dule_overview/dule_overview.md",
-          "title": "Data Usage Labeling & Enforcement (DULE) User Guide",
-          "description": "Adobe Experience Platform brings data from multiple enterprise systems together to better allow marketers to identify, understand, and engage customers. Experience Platform includes end-to-end data governance infrastructure, including Data Usage Labeling & Enforcement (DULE) to ensure the proper use of data within Platform and when being shared between systems."
-				},
+		{
+			"pages": [
 				{
 					"pages": [],
-					"path": "end-user/markdown/dule_overview/dule_working_with_labels.md",
-					"title": "Working with Data Usage Labels",
-					"description": "Follow these step-by-step instructions to properly add and edit labels at the Connection, Dataset, and Field level in Adobe Experience Platform."
+					"path": "end-user/markdown/dule_overview/dule_supported_labels.md",
+					"title": "Supported Data Usage Labels",
+					"description": "DULE features enable the application of data usage labels to connections, datasets, and fields to categorize data according to the type of data usage policies that apply. This list outlines all data usage labels currently supported by Experience Platform."
 				}
+			],
+			"path": "end-user/markdown/dule_overview/dule_overview.md",
+			"title": "DULE User Guide",
+			"description": "Adobe Experience Platform brings data from multiple enterprise systems together to better allow marketers to identify, understand, and engage customers. Experience Platform includes end-to-end data governance infrastructure, including Data Usage Labeling & Enforcement (DULE) to ensure the proper use of data within Platform and when being shared between systems."
+		},
+		{
+			"pages": [],
+			"path": "end-user/markdown/dule_overview/dule_working_with_labels.md",
+			"title": "Working with Data Usage Labels",
+			"description": "Follow these step-by-step instructions to properly add and edit labels at the Connection, Dataset, and Field level in Adobe Experience Platform."
+		},
+		{
+			"pages": [],
+			"path": "end-user/markdown/dule_overview/dule_working_with_policies.md",
+			"title": "Working with Data Usage Policies",
+			"description": "A step-by-step guide to using the DULE Policy Service API to manage DULE policies and marketing actions within Adobe Experience Platform."
+		}
 	],
-	"app2app_map": {"api-specification/markdown/narrative/tutorials/":"/apis/cloudplatform/dataservices/tutorials/alltutorials.html", "acpdr/swagger-specs/":"/apis/cloudplatform/dataservices/api-reference.html"}
+	"app2app_map": {
+		"api-specification/markdown/narrative/tutorials/":"/apis/cloudplatform/dataservices/tutorials/alltutorials.html", 
+		"acpdr/swagger-specs/":"/apis/cloudplatform/dataservices/api-reference.html"
+	}
 }
