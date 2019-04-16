@@ -18,18 +18,17 @@
     {
 			"pages": [],
 			"path": "acpdr/end-user/markdown/query-service/qs-quickstart.md",
-			"title": "Quick start guide"
+			"title": "Quickstart Guide"
 		},
     {
 			"pages": [],
 			"path": "acpdr/end-user/markdown/query-service/qs-ui.md",
-
-			"title": "Using the Platform UI for Query Service"
+			"title": "Query Service UI"
 		},    
 		{
 			"pages": [],
 			"path": "acpdr/end-user/markdown/query-service/qs-clients.md",
-			"title": "Connect clients to Query Service"
+			"title": "Connect a Query Client"
 		},   
 		{
 			"pages": 
@@ -47,19 +46,19 @@
 				{
 					"pages": [],
 					"path": "acpdr/end-user/markdown/query-service/qs-clients-powerbi.md",
-					"title": "Connect Power BI (PC)"
+					"title": "Connect Power BI"
 				},
 				{
 					"pages": [],
 					"path": "acpdr/end-user/markdown/query-service/qs-clients-postico.md",
-					"title": "Connect Postico (Mac)"
+					"title": "Connect Postico"
 				}
 			]
 		},
     	{
 			"pages": [],
 			"path": "acpdr/end-user/markdown/query-service/qs-queries.md",
-			"title": "Running queries"
+			"title": "Running Queries"
 		},
 		{
 			"pages": 
@@ -67,22 +66,22 @@
 				{
 						"pages": [],
 						"path": "acpdr/end-user/markdown/query-service/qs-queries-datasetsvtables.md",
-						"title": "Datasets vs tables and schema"
+						"title": "Datasets vs Tables and Schema"
 				},
 				{
 						"pages": [],
 						"path": "acpdr/end-user/markdown/query-service/qs-queries-experienceevent.md",
-						"title": "ExperienceEvent queries"
+						"title": "ExperienceEvent Queries"
 				},
 				{
 						"pages": [],
 						"path": "acpdr/end-user/markdown/query-service/qs-queries-joiningdatasets.md",
-						"title": "Joining datasets"
+						"title": "Joining Datasets"
 				},
 				{
 						"pages": [],
 						"path": "acpdr/end-user/markdown/query-service/qs-queries-adobefunctions.md",
-						"title": "Using Adobe functions"
+						"title": "Using Adobe Functions"
 				}
 			]
 		},
@@ -90,7 +89,7 @@
 
 			"pages": [],
 			"path": "acpdr/end-user/markdown/query-service/qs-create-datasets.md",
-			"title": "Generating datasets from query results"
+			"title": "Generating Datasets from Query Results"
 		},
     {
 			"pages": 
@@ -98,31 +97,31 @@
         {
           "pages": [],
           "path": "acpdr/end-user/markdown/query-service/qs-sql-syntax.md",
-          "title": "SQL reference"
+          "title": "SQL Syntax"
 		    },
         {
           "pages": [],
           "path": "acpdr/end-user/markdown/query-service/qs-sql-functions.md",
-          "title": "ADF functions"
+          "title": "ADF Functions"
 		    },
         {
           "pages": [],
           "path": "acpdr/end-user/markdown/query-service/qs-sql-metadata.md",
-          "title": "SQL metadata"
+          "title": "SQL Metadata"
 		    }
       ],
 			"path": "acpdr/end-user/markdown/query-service/qs-sql-ref.md",
-			"title": "SQL reference"
+			"title": "SQL Reference"
 		},
     {
 			"pages": [],
 			"path": "acpdr/end-user/markdown/query-service/qs-errors-troubleshooting.md",
-			"title": "Errors and troubleshooting"
+			"title": "Errors and Troubleshooting"
 		},
     {
 			"pages": [],
 			"path": "acpdr/end-user/markdown/query-service/solutionref/analytics-field-map.md",
-			"title": "Adobe Analytics field mapping to ExperienceEvent XDM"
+			"title": "Adobe Analytics Field Map"
 		}
 	]
 }
