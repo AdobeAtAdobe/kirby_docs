@@ -46,6 +46,6 @@ After performing those preparatory steps, you can connect Power BI to Query Serv
 
     At this step Power BI connects to the Query Service and, if there are no errors, produces a preview.
     
-    **Note:** There is a known issue with the Preview rendering numeric columns. Proceed to the next step.
+    > **Note:** There is a known issue with the Preview rendering numeric columns. Proceed to the next step.
 
 8. Click **Load** to bring the dataset into Power BI.
