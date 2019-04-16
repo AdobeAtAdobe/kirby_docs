@@ -1,4 +1,4 @@
-## GDPR and Experience Cloud Solutions ##
+# GDPR and Experience Cloud solutions
 
 On May 25, 2018, the General Data Protection Regulation (GDPR) went into effect. GDPR is a legal framework that sets guidelines for the collection and processing of personal information of individuals within the European Union (EU). GDPR sets out the principles for data management and the rights of the individual. GDPR covers all companies that deal with the data of EU citizens, so it is a critical regulation for corporate compliance officers at banks, insurers, and other financial companies.
 
