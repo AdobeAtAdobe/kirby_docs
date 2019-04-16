@@ -17,7 +17,7 @@ info:
       __Cluster__ | Given an identity, a "cluster" represents that identity and all identities linked to it in the identity graph. These related IDs are considered to be part of the same "cluster".
       __Mapping__ | Mapping allows you to provide a fully qualified identity and will return the linked identity from another namespace.
 
-    For more information, see [Unified Profile Overview](https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
+    For more information, see [Identity Service Overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md).
 
 
     __Notes__:
