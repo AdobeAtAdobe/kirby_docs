@@ -1,8 +1,8 @@
 {
-	"name": "adobe_experience_platform_tutorials",
+	"name": "adobe_experience_paltform_data_tutorials",
 	"version": "1.0.0",
-	"description": "Adobe Experience Platform Tutorials",
-	"author": "Wendy Braun",
+	"description": "Adobe Experience Platform Data Tutorials",
+	"author": "Caleb Kwan",
 	"view_type": "mdbook",
 	"meta_keywords": "Tutorials, Adobe Experience Platform, Experience Platform, Platform, Connector, Data Access, Dataset, Data set, Creating a dataset, Creating a Connector",
 	"meta_description": "Adobe Experience Platform tutorials",
@@ -20,7 +20,7 @@
 			"importedFileName": "creating_a_dataset_tutorial",
 			"pages": [],
 			"path": "api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md",
-			"title": "Configuring a dataset"
+			"title": "Configuring a Dataset"
 		},
 		{
 			"importedFileName": "creating_a_connector_tutorial",
@@ -28,38 +28,38 @@
 				{
 					"pages": [],
 					"path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_salesforce_connector_tutorial.md",
-					"title": "Salesforce connector"
+					"title": "Salesforce Connector"
 				},
 				{
 					"pages": [],
 					"path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md",
-					"title": "Microsoft Dynamics connector"
+					"title": "Microsoft Dynamics Connector"
 				},
 				{
 					"pages": [],
 					"path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md",
-					"title": "Amazon S3 connector"
+					"title": "Amazon S3 Connector"
 				},
 				{
 					"pages": [],
 					"path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md",
-					"title": "Azure Blob connector"
+					"title": "Azure Blob Connector"
 				}
 			],
 			"path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/creating_a_connector_tutorial.md",
-			"title": "Configuring a connector"
+			"title": "Configuring a Connector"
 		},
 		{
 			"importedFileName": "data_access_tutorial",
 			"pages": [],
 			"path": "api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md",
-			"title": "Querying data via Data Access API"
+			"title": "Querying Data via Data Access API"
 	        },
 		{
 			"importedFileName": "unified_profile_dataset_tutorial",
 			"pages": [],
 			"path": "api-specification/markdown/narrative/tutorials/unified_profile_dataset_tutorial/unified_profile_dataset_tutorial.md",
-			"title": "Configuring a dataset for Unified Profile and Identity Service "
+			"title": "Configuring a Dataset for Unified Profile and Identity Service "
 		},
 		{
 			"importedFileName": "activating_up_tutorial",
@@ -71,19 +71,19 @@
 			"importedFileName": "adding_data_to_unified_profile",
 			"pages": [],
 			"path": "api-specification/markdown/narrative/tutorials/adding_data_to_unified_profile/adding_data_to_unified_profile.md",
-			"title": "Adding data to Unified Profile"
+			"title": "Adding Data to Unified Profile"
 		},
 		{
 			"importedFileName": "consuming_unified_profile_data",
 			"pages": [],
 			"path": "api-specification/markdown/narrative/tutorials/consuming_unified_profile_data/consuming_unified_profile_data.md",
-			"title": "Consuming Unified Profile data"
+			"title": "Consuming Unified Profile Data"
 		},
 		{
 			"importedFileName": "creating_a_segment_tutorial",
 			"pages": [],
 			"path": "api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md",
-			"title": "Creating a segment"
+			"title": "Creating a Segment"
 		}
 	],
 	"app2app_map": {
