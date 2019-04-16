@@ -1,0 +1,1213 @@
+consumes:
+  - application/json
+produces:
+  - application/json
+swagger: '2.0'
+info:
+  description: >-
+    Identity Service (IS) provides API based access to consumer identity graphs which resolves a known or anonymous identity to all other known
+    and anonymous identities of a person. IS solves the fundamental challenge posed by the fragmentation of identities and thus profiles, across multiple
+    devices owned by a consumer, and is needed for improving the accuracy and reach of digital marketing campaigns.
+
+    Some common terminology used in this API document:
+      Term | Definition
+      --- | ---
+      __Identity__ |  An identity on Experience Platform is the fully qualified identifier (the ID plus the relevant namespace OR the XID) for a given profile.
+      __Identity Namespace__ |  The namespace of an identity relates it to its system of origin. The ID value plus the namespace fully qualify an identity.
+      __Cluster__ | Given an identity, a "cluster" represents that identity and all identities linked to it in the identity graph. These related IDs are considered to be part of the same "cluster".
+      __Mapping__ | Mapping allows you to provide a fully qualified identity and will return the linked identity from another namespace.
+
+    For more information, see [Unified Profile Overview](https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
+
+
+    __Notes__:
+      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * Base path for this API: /data/core
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+
+  title: Identity Service
+
+  contact:
+    url: 'https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation.html'
+  version: 0.0.1
+host: platform.adobe.io
+basePath: /data/core
+tags:
+  - name: Identity
+    description: >-
+      Identity services provide access to a profile identity in XID form.
+  - name: Identity Namespace
+    description: >-
+      Identity Namespace services allow you to work with Namespaces for your organization, such as to list all Namespaces available or to create a custom Namespace.
+  - name: Cluster
+    description: >-
+      Cluster services provide access to groupings of identities as linked in the identity graph.
+  - name: Mappings
+    description: >-
+      Mapping allows you to provide a fully qualified identity and will return the linked identity from another namespace.
+
+
+paths:
+
+  /identity/identity:
+    get:
+      tags:
+        - Identity
+      summary: Given an id and namespace returns an identity string
+      description: 'Given the namespace and id in that namespace, returns XID string.'
+      operationId: getIdentityBlob
+      produces:
+        - application/json
+      parameters:
+        - name: nsid
+          in: query
+          description: namespace id
+          required: true
+          type: integer
+          default: 411
+        - name: namespace
+          in: query
+          description: namespace code
+          required: false
+          type: string
+          default: 'adcloud'
+        - name: id
+          in: query
+          description: Id in given namespace
+          required: true
+          type: string
+          default: '2521328045094711779817'
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Org Id of requesting client
+          required: true
+          type: string
+          default: 2ASDRTGUIytrOURsdr1001
+        - name: x-uis-cst-ctx
+          in: header
+          description: Customer context to be used for stub response
+          required: false
+          type: string
+          default: stub
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: Should be a valid IMS token for authenticating with Identity Services
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+          description: Should be a valid client ID
+        - name: Accept
+          in: header
+          description: The version of the resource's representation.
+          required: false
+          type: string
+          default: application/vnd.adobe.identity+json;version=1.2
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              identity:
+                type: string
+                example: HHDAHDKYYD
+          headers:
+            content-type:
+              description: Response is a JSON document with UTF-8 encoding
+              type: string
+              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
+            cache-control:
+              description: caching policy for response
+              type: string
+              default: no-cache
+        '400':
+          description: Bad Request from the client
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '401':
+          description: IMS token is missing or invalid
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '500':
+          description: Unexpected Internal application error
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '503':
+          description: The service is unavailable
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+
+  /identity/cluster/members:
+    get:
+      tags:
+        - Cluster
+      summary: 'Given an identity, returns all linked identities in that cluster.'
+      description: 'Given an XID return all XIDs, in the same or other namespaces, that are linked to it by the device graph type. The related XIDs are considered to be part of the same cluster. It is required to pass either xid or (namespace/nsid & id) pair to get cluster members.'
+      operationId: getClusterMembers
+      produces:
+        - application/json
+      parameters:
+        - name: xid
+          in: query
+          description: Identity string as returned by /identity GET api
+          type: string
+          default: '2521328045094711779817'
+        - name: nsid
+          in: query
+          description: namespace id
+          required: false
+          type: integer
+          default: '411'
+        - name: namespace
+          in: query
+          description: namespace code
+          required: false
+          type: string
+          default: 'adcloud'
+        - name: id
+          in: query
+          description: Id in given namespace
+          required: false
+          type: string
+          default: '2521328045094711779817'
+        - name: graph-type
+          in: query
+          description: Graph type (output type) you want to get the cluster from
+          required: false
+          type: string
+          default: coop
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Org Id of requesting client
+          required: true
+          type: string
+          default: 2ASDRTGUIytrOURsdr1001
+        - name: x-uis-cst-ctx
+          in: header
+          description: Customer context to be used for stub response
+          required: false
+          type: string
+          default: stub
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: Should be a valid IMS token for authenticating with Identity Services
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+          description: Should be a valid client ID
+        - name: Accept
+          in: header
+          description: The version of the resource's representation.
+          required: false
+          type: string
+          default: application/vnd.adobe.identity+json;version=1.2
+      responses:
+        '200':
+          examples:
+            value:
+              version: '1.0'
+              clusters:
+                - xid: '27064814400205787570627663430729680462'
+                  xidsInCluster:
+                    - e8138f65-d3d3-4485-a7e1-6712e047349d
+                    - '21312343536983537571245438594'
+              unprocessedXids: '[cb0665db616f49758713252d8a335c1e]'
+          description: OK
+          schema:
+            $ref: '#/definitions/ClusterMembers'
+          headers:
+            content-type:
+              description: Response is a JSON document with UTF-8 encoding
+              type: string
+              default: 'application/vnd.adobe.identity+json;version=1.2;charset=utf-8;profile= https://ns.adobe.com/schemas/json/identity-cluster-response'
+            cache-control:
+              description: caching policy for response
+              type: string
+              default: no-cache
+        '400':
+          description: Bad Request from the client
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '401':
+          description: IMS token is missing or invalid
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '500':
+          description: Unexpected Internal application error
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '503':
+          description: The service is unavailable
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+  /identity/clusters/members:
+    post:
+      tags:
+        - Cluster
+      summary: 'Given set of identities, returns all linked identities in cluster corresponding to each identity.'
+      description: ''
+      operationId: getListOfClusterMembers
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: List of ID's for which we need to find related IDs
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ListOfIdentity'
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Org Id of requesting client
+          required: true
+          type: string
+          default: 2ASDRTGUIytrOURsdr1001
+        - name: x-uis-cst-ctx
+          in: header
+          description: Customer context to be used for stub response
+          required: false
+          type: string
+          default: stub
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: Should be a valid IMS token for authenticating with Identity Services
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+          description: Should be a valid client ID
+        - name: Accept
+          in: header
+          description: The version of the resource's representation.
+          required: false
+          type: string
+          default: application/vnd.adobe.identity+json;version=1.2
+      responses:
+        '200':
+          examples:
+            value:
+              version: '1.0'
+              clusters:
+                - xid: '27064814400205787570627663430729680462'
+                  xidsInCluster:
+                    - e8138f65-d3d3-4485-a7e1-6712e047349d
+                    - '21312343536983537571245438594'
+                - xid: WTCpVgAAAFq14FMF
+                  xidsInCluster: []
+              unprocessedXids: '[cb0665db616f49758713252d8a335c1e]'
+          description: OK
+          schema:
+            $ref: '#/definitions/ClusterMembers'
+          headers:
+            content-type:
+              description: Response is a JSON document with UTF-8 encoding
+              type: string
+              default: 'application/vnd.adobe.identity+json;version=1.2;charset=utf-8;profile= https://ns.adobe.com/schemas/json/identity-cluster-response'
+            cache-control:
+              description: caching policy for response
+              type: string
+              default: no-cache
+        '400':
+          description: Bad Request from the client
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '401':
+          description: IMS token is missing or invalid
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '500':
+          description: Unexpected Internal application error
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '503':
+          description: The service is unavailable
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+  /identity/cluster/history:
+    get:
+      tags:
+        - Cluster
+      summary: 'Given an XID, return all cluster association statistics for that XID'
+      description: 'Given an XID, return all cluster associations with that XID. It is required to pass either xid or (namespace/nsid & id) pair to get cluster history.'
+      operationId: getClusterHistory
+      produces:
+        - application/json
+      parameters:
+        - name: xid
+          in: query
+          description: Identity string as returned by /identity GET api
+          type: string
+          default: '2521328045094711779817'
+        - name: nsid
+          in: query
+          description: namespace id
+          required: false
+          type: integer
+          default: '411'
+        - name: namespace
+          in: query
+          description: namespace code
+          required: false
+          type: string
+          default: 'adcloud'
+        - name: id
+          in: query
+          description: Id in given namespace
+          required: false
+          type: string
+          default: '2521328045094711779817'
+        - name: graph-type
+          in: query
+          description: Graph type (output type) you want to get the cluster from
+          required: false
+          type: string
+          default: coop
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Org Id of requesting client
+          required: true
+          type: string
+          default: 2ASDRTGUIytrOURsdr1001
+        - name: x-uis-cst-ctx
+          in: header
+          description: Customer context to be used for stub response
+          required: false
+          type: string
+          default: stub
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: Should be a valid IMS token for authenticating with Identity Services
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+          description: Should be a valid client ID
+        - name: Accept
+          in: header
+          description: The version of the resource's representation.
+          required: false
+          type: string
+          default: application/vnd.adobe.identity+json;version=1.2
+      responses:
+        '200':
+          examples:
+            value:
+              version: '1'
+              xidsClusterHistory:
+                - xid: '27064814400205787570627663430729680462'
+                  clusterHistory:
+                    - clusterId: 4c686f23-0871-41c2-b4f4-adef89f6bd2c
+                      cRecordedTS: '1504741401382'
+                    - clusterId: 29bf066c-971a-11e7-abc4-cec278b6b50a
+                      cRecordedTS: '1502063001629'
+                    - clusterId: aeb2f60c-b0f1-446a-91dd-d28ab6a44ff9
+                      cRecordedTS: '1499384601763'
+              unprocessedXids: '[cb0665db616f49758713252d8a335c1e]'
+          description: OK
+          schema:
+            $ref: '#/definitions/ClusterHistory'
+          headers:
+            content-type:
+              description: Response is a JSON document with UTF-8 encoding
+              type: string
+              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
+            cache-control:
+              description: caching policy for response
+              type: string
+              default: no-cache
+        '400':
+          description: Bad Request from the client
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '401':
+          description: IMS token is missing or invalid
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '500':
+          description: Unexpected Internal application error
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '503':
+          description: The service is unavailable
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+  /identity/clusters/history:
+    post:
+      tags:
+        - Cluster
+      summary: 'Given a set of XIDs, return all corresponding cluster association statistics'
+      description: ''
+      operationId: getListOfClusterHistory
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: List of ID's for which we need to find related cluster IDs
+          required: true
+          schema:
+            $ref: '#/definitions/ListOfIdentity'
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Org Id of requesting client
+          required: true
+          type: string
+          default: 2ASDRTGUIytrOURsdr1001
+        - name: x-uis-cst-ctx
+          in: header
+          description: Customer context to be used for stub response
+          required: false
+          type: string
+          default: stub
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: Should be a valid IMS token for authenticating with Identity Services
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+          description: Should be a valid client ID
+        - name: Accept
+          in: header
+          description: The version of the resource's representation.
+          required: false
+          type: string
+          default: application/vnd.adobe.identity+json;version=1.2
+      responses:
+        '200':
+          examples:
+            value:
+              version: '1'
+              xidsClusterHistory:
+                - xid: '27064814400205787570627663430729680462'
+                  clusterHistory:
+                    - clusterId: 4c686f23-0871-41c2-b4f4-adef89f6bd2c
+                      cRecordedTS: '1504741401382'
+                    - clusterId: 29bf066c-971a-11e7-abc4-cec278b6b50a
+                      cRecordedTS: '1502063001629'
+                    - clusterId: aeb2f60c-b0f1-446a-91dd-d28ab6a44ff9
+                      cRecordedTS: '1499384601763'
+                - xid: WTCpVgAAAFq14FMF
+                  clusterHistory:
+                    - clusterId: 4c686f23-0871-41c2-b4f4-adef89f6bd2c
+                      cRecordedTS: '1504741401937'
+              unprocessedXids: '[cb0665db616f49758713252d8a335c1e]'
+          description: OK
+          schema:
+            $ref: '#/definitions/ClusterHistory'
+          headers:
+            content-type:
+              description: Response is a JSON document with UTF-8 encoding
+              type: string
+              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
+            cache-control:
+              description: caching policy for response
+              type: string
+              default: no-cache
+        '400':
+          description: Bad Request from the client
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '401':
+          description: IMS token is missing or invalid
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '500':
+          description: Unexpected Internal application error
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '503':
+          description: The service is unavailable
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+  /identity/mapping:
+    get:
+      tags:
+        - Mappings
+      summary: 'Given an identity and target namespace, returns the linked identity'
+      description: 'Given an XID, returns all XID mappings in the requested namespace (targetNs). It is required to pass either xid or (namespace/nsid & id) pair to get mappings in required namespace.'
+      operationId: getMappings
+      produces:
+        - application/json
+      parameters:
+        - name: xid
+          in: query
+          description: Identity string as returned by /identity GET api
+          type: string
+          default: '2521328045094711779817'
+        - name: nsid
+          in: query
+          description: namespace id
+          required: false
+          type: integer
+          default: '411'
+        - name: namespace
+          in: query
+          description: namespace code
+          required: false
+          type: string
+          default: 'adcloud'
+        - name: id
+          in: query
+          description: Id in given namespace
+          required: false
+          type: string
+          default: '2521328045094711779817'
+        - name: targetNs
+          in: query
+          required: true
+          description: The namespace you want to get the mappings from
+          type: integer
+          default: 411
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Org Id of requesting client
+          required: true
+          type: string
+          default: 2ASDRTGUIytrOURsdr1001
+        - name: x-uis-cst-ctx
+          in: header
+          description: Customer context to be used for stub response
+          required: false
+          type: string
+          default: stub
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: Should be a valid IMS token for authenticating with Identity Services
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+          description: Should be a valid client ID
+        - name: Accept
+          in: header
+          description: The version of the resource's representation.
+          required: false
+          type: string
+          default: application/vnd.adobe.identity+json;version=1.2
+      responses:
+        '200':
+          examples:
+            value:
+              version: 1
+              mappings:
+                - xid: CAESEPl1uYyma1kMDWxx7dhbwGo
+                  mapping:
+                    - xid: '81218968060697815473313992060878182012'
+                      lastAssociationTime: '1493310475047'
+                  regions:
+                    - regionId: 10
+                      lastAssociationTime: '1493310475047'
+              unprocessedXids: cb0665db616f49758713252d8a335c1e
+          description: OK
+          schema:
+            $ref: '#/definitions/mappingResponse'
+          headers:
+            content-type:
+              description: Response is a JSON document with UTF-8 encoding
+              type: string
+              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
+            cache-control:
+              description: caching policy for response
+              type: string
+              default: no-cache
+        '400':
+          description: Bad Request from the client
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '401':
+          description: IMS token is missing or invalid
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '500':
+          description: Unexpected Internal application error
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '503':
+          description: The service is unavailable
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+  /identity/mappings:
+    post:
+      tags:
+        - Mappings
+      summary: 'Given set of identities and target namespace, returns the corresponding linked identities.'
+      description: |
+        Given an identity, returns all identity mappings in requested namespace (target namespace).
+      operationId: getListOfMappings
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: List of identities for which we need to find related mappings
+          required: true
+          schema:
+            $ref: '#/definitions/ListOfMappings'
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Org Id of requesting client
+          required: true
+          type: string
+          default: 2ASDRTGUIytrOURsdr1001
+        - name: x-uis-cst-ctx
+          in: header
+          description: Customer context to be used for stub response
+          required: false
+          type: string
+          default: stub
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: Should be a valid IMS token for authenticating with Identity Services
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+          description: Should be a valid client ID
+        - name: Accept
+          in: header
+          description: The version of the resource's representation.
+          required: false
+          type: string
+          default: application/vnd.adobe.identity+json;version=1.2
+      responses:
+        '200':
+          examples:
+            value:
+              version: 1
+              mappings:
+                - xid: CAESEPl1uYyma1kMDWxx7dhbwGo
+                  mapping:
+                    - xid: '81218968060697815473313992060878182012'
+                      lastAssociationTime: '1493310475047'
+                  regions:
+                    - regionId: 10
+                      lastAssociationTime: '1493310475047'
+                - xid: VtZu9QAABVHLXi37
+                  mapping:
+                    - xid: '21684852643374208863181383242303716482'
+                      lastAssociationTime: '1493310475047'
+                  regions:
+                    - regionId: 9
+                      lastAssociationTime: '1499463357424'
+              unprocessedXids: '[cb0665db616f49758713252d8a335c1e]'
+          description: OK
+          schema:
+            $ref: '#/definitions/mappingResponse'
+          headers:
+            content-type:
+              description: Response is a JSON document with UTF-8 encoding
+              type: string
+              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
+            cache-control:
+              description: caching policy for response
+              type: string
+              default: no-cache
+        '400':
+          description: Bad Request from the client
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '401':
+          description: IMS token is missing or invalid
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '500':
+          description: Unexpected Internal application error
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+        '503':
+          description: The service is unavailable
+          schema:
+            $ref: '#/definitions/ServiceErrorStatus'
+  /idnamespace/identities:
+    get:
+      tags:
+        - Identity Namespace
+      parameters:
+        - in: header
+          name: x-gw-ims-org-id
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+        - in: header
+          name: x-api-key
+          type: string
+          required: true
+          description: The API Key (IMS ClientID) that has already been whitelisted with the Identity Namespace API
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      summary: Lists all namespaces available to the client `x-gw-ims-org-id`
+      operationId: ListAvailableDataSourcesByOrg
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Namespace'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - Identity Namespace
+      parameters:
+        - in: header
+          name: x-gw-ims-org-id
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+        - in: header
+          name: x-api-key
+          type: string
+          required: true
+          description: The API Key (IMS ClientID) that has already been whitelisted with the Identity Namespace API
+        - in: body
+          required: true
+          name: namespace_to_create
+          description: Namespace details as a JSON input
+          schema:
+            $ref: '#/definitions/NamespaceForCreate'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      summary: Create namespace under `x-gw-ims-org-id` IMS Org .
+      operationId: CreateNameSpace
+      responses:
+        201:
+          description: Created. Namespace created sucessfully.
+          schema:
+            $ref: '#/definitions/Namespace'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /idnamespace/identities/{id}:
+    get:
+      tags:
+        - Identity Namespace
+      parameters:
+        - in: header
+          name: x-gw-ims-org-id
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+        - in: header
+          name: x-api-key
+          type: string
+          required: true
+          description: The API Key (IMS ClientID) that has already been whitelisted with the Identity Namespace API
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: The numeric value of the namespace-id (Example - 771)
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      summary: List details of a single namespace identified by `{id}` if it is accessible to `x-gw-ims-org-id`
+      operationId: ListNameSpaceByID
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Namespace'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+        - Identity Namespace
+      parameters:
+        - in: header
+          name: x-gw-ims-org-id
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+        - in: header
+          name: x-api-key
+          type: string
+          required: true
+          description: The API Key (IMS ClientID) that has already been whitelisted with the Identity Namespace API
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: The Namespace ID (Example - 123)
+        - in: body
+          required: true
+          name: namespace_to_create
+          description: Namespace details as a JSON input
+          schema:
+            $ref: '#/definitions/NamespaceForCreate'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      summary: Update namespace owned by `x-gw-ims-org-id` and having the given `id`.
+      operationId: UpdateDataSourcesByDPID
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Namespace'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - Identity Namespace
+      parameters:
+        - in: header
+          name: x-gw-ims-org-id
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+        - in: header
+          name: x-api-key
+          type: string
+          required: true
+          description: The API Key (IMS ClientID) that has already been whitelisted with the Identity Namespace API
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: The Namespace ID (Example - 123 )
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      summary: Delete namespace owned by `x-gw-ims-org-id` and identified by the given `id`.
+      operationId: DeleteDataSourcesByDPID
+      responses:
+        204:
+          description: No Content. Delete Successful
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /idnamespace/orgs/{imsorg}/identities:
+    get:
+      tags:
+        - Identity Namespace
+      parameters:
+        - in: header
+          name: x-gw-ims-org-id
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+        - in: header
+          name: x-api-key
+          type: string
+          required: true
+          description: The API Key (IMS ClientID) that has already been whitelisted with the Identity Namespace API
+        - in: path
+          name: imsorg
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      summary: Lists shared namespaces for the given `{imsorg}` or all owned if `{imsorg}` == `x-gw-ims-org-id`
+      operationId: ListDataSourcesByOrg
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Namespace'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /idnamespace/orgs/{imsorg}/identities/{id}:
+    get:
+      tags:
+        - Identity Namespace
+      parameters:
+        - in: header
+          name: x-gw-ims-org-id
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+        - in: header
+          name: x-api-key
+          type: string
+          required: true
+          description: The API Key (IMS ClientID) that has already been whitelisted with the Identity Namespace API
+        - in: path
+          name: imsorg
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: The Namespace ID (Example - 123 )
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      summary: List details of a single namespace identified by `{id}` if it is accessible to `x-gw-ims-org-id`
+      operationId: ListDataSourcesByDPID
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Namespace'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+  Id:
+    type: object
+    properties:
+      xid:
+        type: string
+  identityTimestamp:
+    type: object
+    properties:
+      xid:
+        $ref: '#/definitions/Id'
+      lastAssociationTime:
+        type: string
+  region:
+    type: object
+    properties:
+      regionId:
+        type: integer
+      lastAssociationTime:
+        type: string
+  Cluster:
+    type: object
+    properties:
+      xid:
+        $ref: '#/definitions/Id'
+      xidsInCluster:
+        type: array
+        items:
+          $ref: '#/definitions/Id'
+  ListOfIdentity:
+    type: object
+    properties:
+      xids:
+        type: array
+        items:
+          $ref: '#/definitions/Id'
+      graph-type:
+        type: string
+      version:
+        type: string
+  clusterInfo:
+    type: object
+    properties:
+      clusterId:
+        type: string
+      cRecordedTS:
+        type: string
+        format: date-time
+  xidClusterHistory:
+    type: object
+    properties:
+      xid:
+        $ref: '#/definitions/Id'
+      clusterHistory:
+        type: array
+        items:
+          $ref: '#/definitions/clusterInfo'
+  ClusterHistory:
+    type: object
+    properties:
+      xidsClusterHistory:
+        type: array
+        items:
+          $ref: '#/definitions/xidClusterHistory'
+      unprocessedXids:
+        type: array
+        items:
+          $ref: '#/definitions/Id'
+      version:
+        type: string
+  ClusterMembers:
+    type: object
+    properties:
+      clusters:
+        type: array
+        items:
+          $ref: '#/definitions/Cluster'
+      unprocessedXids:
+        type: array
+        items:
+          $ref: '#/definitions/Id'
+      version:
+        type: string
+  mapping:
+    type: object
+    properties:
+      identity:
+        $ref: '#/definitions/Id'
+      identityTimestamps:
+        type: array
+        items:
+          $ref: '#/definitions/identityTimestamp'
+      regions:
+        type: array
+        items:
+          $ref: '#/definitions/region'
+  ListOfMappings:
+    type: object
+    properties:
+      xids:
+        type: array
+        items:
+          $ref: '#/definitions/Id'
+      targetNs:
+        type: integer
+      version:
+        type: string
+  mappingResponse:
+    type: object
+    properties:
+      mappings:
+        type: array
+        items:
+          $ref: '#/definitions/mapping'
+      unprocessedXids:
+        type: array
+        items:
+          $ref: '#/definitions/Id'
+      version:
+        type: integer
+  legacyHistoryRequest:
+    type: object
+    properties:
+      partnerId:
+        type: integer
+        default: 1166
+      imsOrgId:
+        type: string
+        default: 20C8B4E354AFE3E10A4C98A5@AdobeOrg
+      ids:
+        type: array
+        items:
+          type: object
+          properties:
+            dataSourceId:
+              type: integer
+            uuids:
+              type: array
+              items:
+                default: [11122334455, 112567889]
+      lookupDataSourceIds:
+        type: array
+        items:
+          default: [85670]
+
+      latestOnly:
+        type: boolean
+        default: true
+  ServiceErrorStatus:
+    type: object
+    properties:
+      title:
+        type: string
+        description: 'A short, human-readable summary of the problem type'
+      status:
+        type: integer
+        description: HTTP error code describing the problem
+      detail:
+        type: string
+        description: A human-readable explanation specific to this occurrence of the problem
+  Namespace:
+    type: object
+    properties:
+      shared:
+        type: boolean
+      custom:
+        type: boolean
+      createTime:
+        type: integer
+        format: int64
+      description:
+        type: string
+      idType:
+        type: string
+      code:
+        type: string
+      name:
+        type: string
+      id:
+        type: integer
+        format: int64
+      status:
+        type: string
+      updateTime:
+        type: integer
+        format: int64
+  NamespaceForCreate:
+    type: object
+    properties:
+      shared:
+        type: boolean
+      description:
+        type: string
+      idType:
+        type: string
+        enum: [COOKIE, MOBILE]
+      code:
+        type: string
+      name:
+        type: string
+  Error:
+    type: object
+    properties:
+      code:
+        type: string
+      detail:
+        type: string
+      message:
+        type: string

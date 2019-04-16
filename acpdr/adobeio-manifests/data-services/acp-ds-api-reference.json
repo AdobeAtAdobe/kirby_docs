@@ -73,8 +73,8 @@
 		},
 		{
 			"pages": [],
-			"path": "acpdr/swagger-specs/id-namespace-api.yaml",
-			"title": "Identity Namespace Service"
+			"path": "acpdr/swagger-specs/id-service-api.yaml",
+			"title": "Identity Service"
 		},
 		{
 			"pages": [],
