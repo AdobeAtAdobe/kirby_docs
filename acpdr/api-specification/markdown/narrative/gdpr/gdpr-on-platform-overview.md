@@ -1,5 +1,5 @@
 
-# GDPR on Adobe Experience Platform overview
+# GDPR on Adobe Experience Platform Overview
 
 Adobe Experience Platform GDPR Service provides a method to submit both access and delete requests by the data controller, in an effort to comply with the General Data Protection Regulation on Adobe Experience Platform.
 
@@ -36,7 +36,7 @@ identities: [
 ]
 ```
 
-## Step 2: Label datasets persisted to data lake
+## Step 2: Label datasets persisted to Data Lake
 
 For the data lake to process GDPR requests, you should first identify fields in Platform datasets that have to be labeled with the appropriate GDPR namespaces with which you expect to send GDPR requests. 
 
