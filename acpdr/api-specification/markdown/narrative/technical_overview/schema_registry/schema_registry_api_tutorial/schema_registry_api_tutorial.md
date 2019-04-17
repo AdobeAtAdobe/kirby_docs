@@ -251,7 +251,7 @@ The response will show the newly added mixin in the `meta:extends` array and con
 
 You can now add another standard mixin by repeating the steps using another mixin. 
 
-_**Note:**_ You may find it helpful to review all available mixins to familiarize yourself with the fields included in each. You can list (GET) all mixins available for use with a particular class by performing a request against each of the "global" and "tenant" containers, returning only those mixins where the "meta:intendedToExtend" field matches the class you're using. In this case, it is the XDM Profile class, so the XDM Profile `$id` is used: 
+> **Note:** You may find it helpful to review all available mixins to familiarize yourself with the fields included in each. You can list (GET) all mixins available for use with a particular class by performing a request against each of the "global" and "tenant" containers, returning only those mixins where the "meta:intendedToExtend" field matches the class you're using. In this case, it is the XDM Profile class, so the XDM Profile `$id` is used: 
 
 ```SHELL
 GET /global/mixins?property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile
@@ -977,7 +977,7 @@ curl -X POST \
       }'
 ```
 
-_**Note:**_ You can list available "xdm:namespace" values, or create new ones, using the [Identity Namespace Service API](../../../../../../acpdr/swagger-specs/id-namespace-api.yaml). The value for "xdm:property" will be either "xdm:code" or "xdm:id", depending on the "xdm:namespace" used.
+> **Note:** You can list available "xdm:namespace" values, or create new ones, using the [Identity Namespace Service API](../../../../../../acpdr/swagger-specs/id-namespace-api.yaml). The value for "xdm:property" will be either "xdm:code" or "xdm:id", depending on the "xdm:namespace" used.
 
 #### Response
 
