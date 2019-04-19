@@ -9,7 +9,6 @@ The Product Purchase Prediction recipe enables you to predict the likelihood of 
 The following document will answer questions such as:
 * Who is this recipe built for?
 * What does this recipe do?
-* How do I get started?
 
 ## Who is this recipe built for?
 
@@ -19,7 +18,7 @@ Your brand seeks to boost quarterly sales for your product line through effectiv
 
 The Product Purchase Prediction recipe utilizes machine learning to predict customer purchase behavior. It does this by applying a customized random forest classifier and a two-tiered Experience Data Model (XDM) to predict the probability of a purchase event. The model utilizes input data incorporating customer profile information and past purchase history and defaults to pre-determined configuration parameters determined by our Data Scientists to enhance predictive accuracy. 
 
-## Data Schema
+## Data schema
 
 This recipe uses [XDM schema](../../../../technical_overview/schema_registry/standard_schemas/acp_standard_schemas.md) as the dataset. The schema used is the **ProductPrediction** dataset shown below.
 
