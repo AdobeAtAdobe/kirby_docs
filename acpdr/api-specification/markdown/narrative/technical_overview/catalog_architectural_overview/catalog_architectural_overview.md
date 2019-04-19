@@ -156,7 +156,7 @@ The response shows the specified dataset with only the requested fields (name, d
 
 The distinction between PUT and PATCH is an important one, as PUT will replace the entire resource with the request payload (i.e. _re-writing_ the resource to contain only the contents of the request payload), whereas PATCH will modify the current resource values for the fields provided in the request payload and leave the rest unaltered. 
 
-> **Note:** Neither PATCH nor PUT will modify expandable fields.  Modifications to any related objects must be done directly on that object.
+_**Note:**_ Neither PATCH nor PUT will modify expandable fields.  Modifications to any related objects must be done directly on that object.
 
 ### PATCH - Update an Object
 
@@ -268,7 +268,7 @@ Performing a GET request on the deleted `{id}` should return an HTTP Status Code
 ]
 ```
 
-> **Note:** If no objects match the request, you may still receive an HTTP Status Code 200, but the response array will be empty.
+_**Note:**_ If no objects match the request, you may still receive an HTTP Status Code 200, but the response array will be empty.
 
 ### GET - View Multiple Objects
 
@@ -347,7 +347,7 @@ curl -X GET \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-> **Note:** You can expand multiple fields in a single GET request by using a comma-delimited list, such as `expansion=transforms,files`.
+_**Note:**_ You can expand multiple fields in a single GET request by using a comma-delimited list, such as `expansion=transforms,files`.
 
 #### Response
 
@@ -802,7 +802,7 @@ GET /datasets?property={VALUE}
 |~|Match the (string) value against a regular expression|
 |< , > , <= , >= , == , !=|Comparison of the field value against another field or value|
 
-> **Note:** Simple filters support the ability to pass in a set of values.  If a set is passed in, it is treated like an "in" clause for an array (i.e. is the value of this field in the provided list).  You can invert the query by prefixing a `!` character to the list to return "where the value is not in the provided list" (e.g. `/datasets?name=!samplename,anothername`).
+_**Note:**_ Simple filters support the ability to pass in a set of values.  If a set is passed in, it is treated like an "in" clause for an array (i.e. is the value of this field in the provided list).  You can invert the query by prefixing a `!` character to the list to return "where the value is not in the provided list" (e.g. `/datasets?name=!samplename,anothername`).
 
 #### Additional Examples
 
@@ -813,7 +813,7 @@ GET /datasets?property={VALUE}
 |`GET /datasets?property=name~^Sample`|Returns only datasets whose name starts with the word `Sample`|
 |`GET /datasets?property=version>1.0.0`|Returns only datasets whose version are greater than 1.0.0|
 
-> **Note:** The `name` property supports the use of a wildcard `*` character within, or as, the search string. Wildcards match empty/no character, such that the search string `te*st` will match the value "test". Asterisks are escaped using `**` (double asterisk) to represent a single asterisk as a literal string in your search string.
+_**Note:**_ The `name` property supports the use of a wildcard `*` character within, or as, the search string. Wildcards match empty/no character, such that the search string `te*st` will match the value "test". Asterisks are escaped using `**` (double asterisk) to represent a single asterisk as a literal string in your search string.
 
 #### Request
 
