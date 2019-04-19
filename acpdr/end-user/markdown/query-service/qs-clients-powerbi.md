@@ -40,12 +40,12 @@ After performing those preparatory steps, you can connect Power BI to Query Serv
 
     `SELECT web.webPageDetails.name as Page_Name, SUM(web.webPageDetails.pageviews.value) as Page_Views FROM _TABLE_ WHERE _ACP_YEAR=2018 AND _ACP_MONTH=11 AND _ACP_DAY=20 GROUP BY web.webPageDetails.name ORDER BY SUM(web.webPageDetails.pageviews.value) DESC LIMIT 10`
     
-    **Note:** Query Service currently supports import, but not direct query in Power BI. You need to identify the query that will import the data you need for your project.
+    > **Note:** Query Service currently supports import, but not direct query in Power BI. You need to identify the query that will import the data you need for your project.
 
 7. Click **OK**.
 
     At this step Power BI connects to the Query Service and, if there are no errors, produces a preview.
     
-    **Note:** There is a known issue with the Preview rendering numeric columns. Proceed to the next step.
+    > **Note:** There is a known issue with the Preview rendering numeric columns. Proceed to the next step.
 
 8. Click **Load** to bring the dataset into Power BI.
