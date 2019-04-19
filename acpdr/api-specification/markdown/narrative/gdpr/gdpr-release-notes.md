@@ -1,4 +1,5 @@
-# GDPR Release notes
+# GDPR release notes
+
 This document contains information about new GDPR features, as well as significant bug fixes and enhancements.
 
 ## 14 February, 2019
@@ -11,4 +12,3 @@ See [GDPR API](https://www.adobe.io/apis/experienceplatform/gdpr/api-reference.h
 
 ### Bug fixes
 * Fixed an issue where customers could not load the GDPR UI.
-
