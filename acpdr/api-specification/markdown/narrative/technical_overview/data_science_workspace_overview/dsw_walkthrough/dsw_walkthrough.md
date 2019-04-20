@@ -1,27 +1,27 @@
-# Data Science Workspace Walkthrough <!-- omit in toc -->
+# Data Science Workspace Walkthrough
 
-- [Overview](#overview)
-- [Prerequisites](#prerequisites)
-- [Data scientist's motivation](#data-scientists-motivation)
-- [Data scientist's solution](#data-scientists-solution)
-  - [Notebooks in Data Science Workspace](#notebooks-in-data-science-workspace)
-  - [Setup](#setup)
-  - [Explore data](#explore-data)
-    - [Load data](#load-data)
-    - [Statistical summary](#statistical-summary)
-    - [Visualize data](#visualize-data)
-      - [Univariate graphs](#univariate-graphs)
-      - [Multivariate graphs](#multivariate-graphs)
-  - [Feature engineering](#feature-engineering)
-    - [Add week and year columns](#add-week-and-year-columns)
-    - [Convert storeType to indicator variable](#convert-storetype-to-indicator-variable)
-    - [Convert isHoliday to numeric type](#convert-isholiday-to-numeric-type)
-    - [Predict weeklySales of next week](#predict-weeklysales-of-next-week)
-  - [Training and verification](#training-and-verification)
-    - [Split dataset to training and testing subsets](#split-dataset-to-training-and-testing-subsets)
-    - [Spot check algorithms](#spot-check-algorithms)
-    - [Visualize predictions](#visualize-predictions)
-- [Conclusion](#conclusion)
+  - [Overview](#overview)
+  - [Prerequisites](#prerequisites)
+  - [Data Scientist's Motivation](#data-scientists-motivation)
+  - [Data Scientist's Solution](#data-scientists-solution)
+    - [Adobe Data Science Workspace Notebook](#adobe-data-science-workspace-notebook)
+    - [Setup](#setup)
+    - [Exploring Data](#exploring-data)
+      - [Loading Data](#loading-data)
+      - [Statistical Summary](#statistical-summary)
+      - [Visualizing Data](#visualizing-data)
+        - [Univariate Graphs](#univariate-graphs)
+        - [Multivariate Graphs](#multivariate-graphs)
+    - [Feature Engineering](#feature-engineering)
+      - [Add Week and Year Columns](#add-week-and-year-columns)
+      - [Convert storeType to Indicator Variable](#convert-storetype-to-indicator-variable)
+      - [Convert isHoliday to Numeric](#convert-isholiday-to-numeric)
+      - [Predict weeklySales of Next Week](#predict-weeklysales-of-next-week)
+    - [Training and Verification](#training-and-verification)
+      - [Split Dataset to Training and Testing Subsets](#split-dataset-to-training-and-testing-subsets)
+      - [Spot Check Algorithms](#spot-check-algorithms)
+      - [Visualize Predictions](#visualize-predictions)
+  - [Conclusion](#conclusion)
 
 ---
 
@@ -38,13 +38,13 @@ This document provides a walkthrough for the Data Science Workspace in Adobe Exp
 
 ---
 
-## Data scientist's motivation
+## Data Scientist's Motivation
 
 A retailer faces many challenges to stay competitive in the current market. One of the retailer's main concerns is to decide on the optimal pricing of their products and to predict sale trends. With an accurate prediction model, the retailer would be able to find the relationship between demand and pricing policies and make optimized pricing decisions to maximize sales and revenue.
 
 ---
 
-## Data scientist's solution
+## Data Scientist's Solution
 
 A data scientist's solution is to leverage the wealth of historical data a retailer has access to, to predict future trends, and to optimize pricing decisions. We will use past sales data to train our machine learning model and use the model to predict future sale trends. With this, the retailer will be able to have insights to help them when making pricing changes.
 
@@ -54,7 +54,7 @@ In this overview, we will go over the steps a data scientist would go through to
 * [Feature Engineering](#feature-engineering)
 * [Training and Verification](#training-and-verification)
 
-### Notebooks in Data Science Workspace
+### Adobe Data Science Workspace Notebook
 
 Firstly, we want to create a JupyterLab notebook to open the "Retail Sales" sample notebook. Following the steps done by the data scientist in the notebook will allow us to gain an understanding of a typical workflow.
 
@@ -76,9 +76,9 @@ With the Retail Sales notebook opened, the first thing we do is to load the libr
 * **sklearn** - machine learning library that features classification, regression, support vector, and cluster algorithms
 * **warnings** - library that controls warning messages  
 
-### Explore data
+### Exploring Data
 
-#### Load data
+#### Loading Data
 
 After the libraries are loaded, we can start looking at the data. The following Python code uses pandas' `DataFrame` data structure and the [read_csv()](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html#pandas.read_csv) function to read the CSV hosted on Github into the pandas DataFrame:
 
@@ -92,7 +92,7 @@ Finally, we can take a peek at what our data looks like. We can use `df.head(n)`
 
 ![](df_head.png)
 
-#### Statistical summary
+#### Statistical Summary
 
 We can leverage Python's pandas library to get the data type of each attribute. The output of the following call will give us information about the number of entries and the data type for each of the columns:
 
@@ -120,11 +120,11 @@ Looking at the minimum and maximum values for `store`, we can see that there are
 
 This means 22 stores are of `storeType A` , 17 are `storeType B`, and 6 are `storeType C`.
 
-#### Visualize data
+#### Visualizing Data
 
 Now that we know our data frame values, we want to supplement this with visualizations to make things clearer and easier to identify patterns. These graphs are also useful when conveying results to an audience. 
 
-##### Univariate graphs 
+##### Univariate Graphs 
 
 Univariate graphs are plots of an individual variable. A common univariate graph used to visualize your data are box and whisker plots.
 
@@ -140,7 +140,7 @@ Next, we can plot the weekly sales with time. We will only show the output of th
 
 With this diagram, we can compare the weekly sales over a period of 2 years. It is easy to see sale peaks and trough patterns over time.
 
-##### Multivariate graphs
+##### Multivariate Graphs
 
 Multivariate plots are used to see the interaction between variables. With the visualization, data scientists can see if there are any correlations or patterns between the variables. A common multivariate graph used is a correlation matrix. With a correlation matrix, dependencies between multiple variables are quantified with the correlation coefficient. 
 
@@ -150,7 +150,7 @@ Using the same retail dataset, we can generate the correlation matrix.
 
 Notice the diagonal of ones down the center. This shows that when comparing a variable to itself, it has complete positive correlation. Strong positive correlation will have a magnitude closer to 1 while weak correlations will be closer to 0. Negative correlation is shown with a negative coefficient showing an inverse trend.
 
-### Feature engineering
+### Feature Engineering
 
 In this section, we will be making modifications to our Retail dataset. We will perform the following operations:
 * add week and year columns
@@ -158,7 +158,7 @@ In this section, we will be making modifications to our Retail dataset. We will 
 * convert isHoliday to a numeric variable
 * predict weeklySales of next week
 
-#### Add week and year columns
+#### Add Week and Year Columns
 
 The current format for date (`2010-02-05`) is hard to differentiate that the data is for every week. Because of this, we will convert the date to the week and year.
 
@@ -168,7 +168,7 @@ Now the week and date are as follows:
 
 ![](date_week_year.png)
 
-#### Convert storeType to indicator variable
+#### Convert storeType to Indicator Variable
 
 Next, we want to convert the storeType column to columns representing each `storeType`. There are 3 store types, (`A`, `B`, `C`), from which we are creating 3 new columns. The value set in each will be a boolean value where a '1' will be set depending on what the `storeType` was and `0` for the other 2 columns.
 
@@ -176,14 +176,14 @@ Next, we want to convert the storeType column to columns representing each `stor
 
 The current `storeType` column will be dropped.
 
-#### Convert isHoliday to numeric type
+#### Convert isHoliday to Numeric
 
 The next modification is to change the `isHoliday` boolean to a numerical representation.
 
 ![](isHoliday.png)
 
 
-#### Predict weeklySales of next week
+#### Predict weeklySales of Next Week
 
 Now we want to add previous and future weekly sales to each of our datasets. We are doing this by offsetting our `weeklySales`. Additionally, we are calculating the `weeklySales` difference. This is done by subtracting `weeklySales` with the previous week's `weeklySales`.
 
@@ -199,7 +199,7 @@ A summary of the dataset after our modifications is shown below:
 
 
 
-### Training and verification
+### Training and Verification
 
 Now, it is time to create some models of the data and select which model is the best performer for predicting future sales. We will evaluate the 5 following algorithms:
 * Linear Regression
@@ -208,7 +208,7 @@ Now, it is time to create some models of the data and select which model is the 
 * Gradient Boosting
 * K Neighbors
 
-#### Split dataset to training and testing subsets
+#### Split Dataset to Training and Testing Subsets
 
 We need a way to know how accurate our model will be able to predict values. This evaluation can be done by allocating part of dataset to use as validation and the rest as training data. Since `weeklySalesAhead` is the actual future values of `weeklySales`, we can use this to evaluate how accurate the model is at predicting the value. The splitting is done below:
 
@@ -216,7 +216,7 @@ We need a way to know how accurate our model will be able to predict values. Thi
 
 We now have `X_train` and `y_train` for preparing the models and `X_test` and `y_test` for evaluation later.
 
-#### Spot check algorithms
+#### Spot Check Algorithms
 
 In this section, we will declare all the algorithms into an array called `model`. Next, we iterate through this array and for each algorithm, input our training data with `model.fit()` which creates a model `mdl`. Using this model, we will predict `weeklySalesAhead` with our `X_test` data.
 
@@ -224,7 +224,7 @@ In this section, we will declare all the algorithms into an array called `model`
 
 For the scoring, we are taking the mean percentage difference between the predicted `weeklySalesAhead` with the actual values in the `y_test` data. Since we want to minimize the difference between our prediction and the actual, Gradient Boosting Regressor is the best performing model.
 
-#### Visualize predictions
+#### Visualize Predictions
 
 Finally, we will visualize our prediction model with the actual weekly sales values. The blue line represents the actual numbers, while the green represents our prediction using Gradient Boosting. The following code generates 6 plots which represent 6 of the 45 stores in our dataset. Only `Store 1` is shown here:
 
