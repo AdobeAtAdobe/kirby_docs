@@ -31,7 +31,7 @@ The following is an example `PATCH` request adding the "unifiedProfile" Tag to a
 __Example Data Catalog Service request - Add Unified Profile configuration Tag__
 
 ```
-PATCH https://platform.adobe.io/data/foundation/catalog/dataSets/5a7d26e92a6e55000086d459
+PATCH https://platform.adobe.io/data/foundation/catalog/dataSets/5a7d26e92a6e55000086d459 HTTP/1.1
 ```
 
 __Example body__
@@ -50,7 +50,7 @@ __Example body__
 The following is an example `PATCH` request adding the "unifiedProfile" Tag for an ExperienceEvent dataset using the `datasetId`. Initial releases limit ExperienceEvents to being related to only XDM Profiles, or extensions of the XDM Profile schema.
 
 ```
-PATCH https://platform.adobe.io/data/foundation/catalog/dataSets/5a7d26e92a6e55000086d459
+PATCH https://platform.adobe.io/data/foundation/catalog/dataSets/5a7d26e92a6e55000086d459 HTTP/1.1
 ```
 
 __Example body__
@@ -69,7 +69,7 @@ __Example body__
 To check if your dataset has been enabled in UPS, use the Data Catalog Service API to get the dataset using the `datasetId`. A dataset is enabled if it contains a `unifiedProfile` Tag with a colon-delimited property string for `enabledAt`. The value of this tuple reports the time after which ingested Profile data would be made accessible via UPS.
 
 ```
-GET https://platform.adobe.io/data/foundation/catalog/dataSets/5b020a27e7040801dedbf46e
+GET https://platform.adobe.io/data/foundation/catalog/dataSets/5b020a27e7040801dedbf46e HTTP/1.1
 ```
 
 __Example response__
@@ -116,7 +116,7 @@ Depending on the size of the data, batches take varying lengths of time to inges
 __Example request for related Unified Profile batches__
 
 ```
-GET https://platform-stage.adobe.io/data/foundation/catalog/batches?batch=29285e08378f4a41827e7e70fb7cb8f0&createdClient=acp_core_unifiedProfile_feeds
+GET https://platform-stage.adobe.io/data/foundation/catalog/batches?batch=29285e08378f4a41827e7e70fb7cb8f0&createdClient=acp_core_unifiedProfile_feeds HTTP/1.1
 ```
 
 __Arguments__
@@ -238,7 +238,7 @@ Identity Stitching refers to determining when multiple fragments of a Profile re
 When multiple profile fragments contain the same data elements, merge policies can be used to tune prioritization of your data by allowing you to specify the order of data precedence by dataset. When a merge policy is created with an attribute merge type of "dataSetPrecedence", you supply a list of datasets sorted from highest to lowest precedence. The following demonstrates creating a merge policy wherein a dataset "ds1" should be regarded as highest priority data when the records' `createdAt` value fails to distinguish.
 
 ```
-POST https://platform.adobe.io/data/core/ups/config/mergePolicies
+POST https://platform.adobe.io/data/core/ups/config/mergePolicies HTTP/1.1
 ```
 
 __Example body__
@@ -277,9 +277,9 @@ See the [Swagger API Reference](../../../../../../acpdr/swagger-specs/profile-ac
 
 ---
 
-## Accessing Data using IDs
+## Accessing Profiles in the Unified Profile Service
 
-This section discusses using the Profile Access API to get Profiles and ExperienceEvents. Visit the [Swagger API Reference](../../../../../../acpdr/swagger-specs/profile-access.yaml) for complete coverage of the Profile Access API.
+This following provide overview level detail covering using the Profile Access API to get Profiles and ExperienceEvents. Visit the [Swagger API Reference](../../../../../../acpdr/swagger-specs/profile-access.yaml) for complete coverage of the Profile Access API.
 
 Profiles and time-series ExperienceEvent data are retrieved from separate `GET` calls.
 
@@ -297,7 +297,7 @@ The parameters for accessing a Profile are as follows:
 __Example Unified Profile Service request - Get a Unified Profile by ID__
 
 ```
-GET https://platform.adobe.io/data/core/ups/access/entities/?schema.name={schema}&entityId={id}&entityIdNS={IDNS}
+GET https://platform.adobe.io/data/core/ups/access/entities/?schema.name={schema}&entityId={id}&entityIdNS={IDNS} HTTP/1.1
 ```
 
 __Example response__
@@ -368,7 +368,7 @@ The parameters for accessing ExperienceEvents are as follows:
 __Example UPS request - Get ExperienceEvents for a Unified Profile__
 
 ```
-GET https://platform.adobe.io/data/core/ups/access/entities/?schema.name=_xdm.context.experienceevent&relatedschema.name=_xdm.context.profile&entityID={}&relatedentityIdNS={}
+GET https://platform.adobe.io/data/core/ups/access/entities/?schema.name=_xdm.context.experienceevent&relatedschema.name=_xdm.context.profile&entityID={}&relatedentityIdNS={} HTTP/1.1
 ```
 
 __Example response__
@@ -462,290 +462,6 @@ __Example response__
 
 ---
 
-## Understanding Your Profile Data
-
-XDM schemas provide robust structures for very detailed and fine-tuned data. The data you choose to add to Unified Profile may vary, however, as you may not provide data for every data field in a schema.
-
-Some Unified Profile services require XDM data field names, such as `field` parameters indicating specific data fields to retrieve, or when building segment rules. For cases such as these, you are able to list all fields for a given schema for which data has been supplied during any ingest. In this way, you have a view of the schema fields used by your data, rather than all fields available.
-
-__Service endpoint__
-
-`https://platform.adobe.io/data/core/ups/observedschemanonnull`
-
-__Example request__
-
-```
-curl -X GET \
-  https://platform.adobe.io/data/core/ups/observedschemanonnull \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
-  -H 'Content-Type: application/json' \
-  -H 'cache-control: no-cache' \
-  -H 'model-name: _xdm.context.profile'
-```
-
-__Example response__
-
-```
-{
-    "nonNullCols": [
-        "pf.identities.id",
-        "pf.identities.namespace.code",
-        "pf.identities.primary",
-        "pf.person.name.firstName",
-        "pf.person.name.lastName",
-        "pf.person.name.courtesyTitle",
-        "pf.person.birthYear",
-        "pf.homeAddress._schema.latitude",
-        "pf.homeAddress._schema.longitude",
-        "pf.homeAddress.countryCode",
-        "pf.homeAddress.stateProvince",
-        "pf.homeAddress.city",
-        "pf.homeAddress.postalCode",
-        "pf.homeAddress.street1",
-        "pf.homeAddress.country",
-        "pf.workAddress._schema.latitude",
-        "pf.workAddress._schema.longitude",
-        "pf.workAddress.countryCode",
-        "pf.workAddress.stateProvince",
-        "pf.workAddress.city",
-        "pf.workAddress.postalCode",
-        "pf.workAddress.street1",
-        "pf.workAddress.country",
-        "pf.personalEmail.address",
-        "pf.workEmail.address",
-        "pf.homePhone.number",
-        "tps._id",
-        "tps.timestamp",
-        "tps.endUserIDs._experience.mcid.id",
-        "tps.endUserIDs._experience.mcid.namespace.code",
-        "tps.endUserIDs._experience.aacustomid.id",
-        "tps.endUserIDs._experience.aacustomid.namespace.code",
-        "tps.endUserIDs._experience.aacustomid.primary",
-        "tps.endUserIDs._experience.acid.id",
-        "tps.endUserIDs._experience.acid.namespace.code",
-        "tps.environment.browserDetails.userAgent",
-        "tps.environment.browserDetails.acceptLanguage",
-        "tps.environment.browserDetails.cookiesEnabled",
-        "tps.environment.browserDetails.javaScriptVersion",
-        "tps.environment.browserDetails.javaEnabled",
-        "tps.environment.colorDepth",
-        "tps.environment.viewportHeight",
-        "tps.environment.viewportWidth",
-        "tps.placeContext.localTime",
-        "tps.placeContext.geo._schema.latitude",
-        "tps.placeContext.geo._schema.longitude",
-        "tps.placeContext.geo.countryCode",
-        "tps.placeContext.geo.stateProvince",
-        "tps.placeContext.geo.city",
-        "tps.placeContext.geo.postalCode"
-    ]
-}
-```
-
-As in the response above, all fields prefixed with "pf" are Profile (_xdm.context.profile) fields, where those prefixed with "tps" are ExperienceEvent (_xdm.context.experienceevent) fields. Using them in service calls, you would exclude those prefixes, whereby just the field name remains. For instance, using one of these fields in a request to preview all audiences where a home address city (referred to as "pf.homeAddress.city") has been specified, the field `predicateExpression` would be set to "homeAddress.city":
-
-```
-curl -X POST \
-  https://platform.adobe.io/data/core/ups/preview \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
-  -H 'Content-Type: application/json' \
-  -H 'cache-control: no-cache' \
-  -d '{
-        "predicateExpression": "homeAddress.city",
-        "predicateType": "pql/text",
-        "predicateModel": "_xdm.context.profile",
-        "graphType": "simple",
-        "mergeStrategy": "simple"
-    } 
-```
-
-## Summarizing Data 
-
-Unified Profile provides summarizations of data for fields containing continuous values such as age, or where values are restricted to a set of possible values such as state or eye color. Use the summary behavior to glean value distribution for values that occur within your profile store a minimum 5%.
-
-![Unified Profile Summary](up-summary.png)
-
-Numeric fields are automatically partitioned according to the clustering of values across your profile store for the field being summarized. The distributions are given for those automatically generated partitions.
-
-If the field to summarize has no values that occur more than 5%, such as fields with high cardinality like email or system ID, a failure response will be returned as these fields do not convey useful information.
-
-The service endpoint to get a summary of the data for an XDM field is as follows:
-
-```
-GET https://platform.adobe.io/data/core/ups/preview/data/summary/{SCHEMA-FIELD}
-```
-
-Where `SCHEMA-FIELD` names the XDM schema field to summarize. For instance, "pf.homeAddress._schema.longitude".
-
-### Longitude Example
-
-Get summary data to understand the demographics of your consumer base by longitude.
-
-__Example request for summary of longitude values__
-
-```
-GET https://platform.adobe.io/data/core/ups/preview/data/summary/pf.homeAddress._schema.longitude
-```
-
-__Example response__
-
-```
-{
-	"quantiles": {
-		"pct40": -98.76600142249998,
-		"pct50": -94.0084823,
-		"pct100": -52.6912126,
-		"pct10": -118.118266245,
-		"pct80": -78.37563784266666,
-		"pct0": -157.86,
-		"pct70": -82.47644212,
-		"pct60": -87.99093141600001,
-		"pct30": -99.581649195,
-		"pct20": -106.34355807714286,
-		"pct90": -73.75254579999998
-	},
-	"summaries": [{
-		"percentage": 0.09627375471568593,
-		"exclusiveUpperBound": -106.34355807714286,
-		"cardinality": 965.9216479850512,
-		"inclusiveLowerBound": -118.118266245,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-118.118266245:-106.34355807714286"
-	}, {
-		"percentage": 0.10656123243076433,
-		"exclusiveUpperBound": -99.581649195,
-		"cardinality": 1069.1366670471361,
-		"inclusiveLowerBound": -106.34355807714286,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-106.34355807714286:-99.581649195"
-	}, {
-		"percentage": 0.10114427374702012,
-		"exclusiveUpperBound": -78.37563784266666,
-		"cardinality": 1014.7879229442261,
-		"inclusiveLowerBound": -82.47644212,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-82.47644212:-78.37563784266666"
-	}, {
-		"percentage": 0.1034787975412938,
-		"exclusiveUpperBound": -73.75254579999998,
-		"cardinality": 1038.2103715366227,
-		"inclusiveLowerBound": -78.37563784266666,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-78.37563784266666:-73.75254579999998"
-	}, {
-		"percentage": 0.09902487161178347,
-		"exclusiveUpperBound": -98.76600142249998,
-		"cardinality": 993.5238057478365,
-		"inclusiveLowerBound": -99.581649195,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-99.581649195:-98.76600142249998"
-	}, {
-		"percentage": 0.08931089503860541,
-		"exclusiveUpperBound": -87.99093141600001,
-		"cardinality": 896.0627657399768,
-		"inclusiveLowerBound": -94.0084823,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-94.0084823:-87.99093141600001"
-	}, {
-		"percentage": 0.10901006611982293,
-		"exclusiveUpperBound": -94.0084823,
-		"cardinality": 1093.7059952047655,
-		"inclusiveLowerBound": -98.76600142249998,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-98.76600142249998:-94.0084823"
-	}, {
-		"percentage": 0.10358499159862096,
-		"exclusiveUpperBound": -118.118266245,
-		"cardinality": 1039.275824308903,
-		"inclusiveLowerBound": -157.86,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-157.86:-118.118266245"
-	}, {
-		"percentage": 0.10040217006872898,
-		"exclusiveUpperBound": -82.47644212,
-		"cardinality": 1007.3423422662145,
-		"inclusiveLowerBound": -87.99093141600001,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-87.99093141600001:-82.47644212"
-	}, {
-		"percentage": 0.08741707457716474,
-		"exclusiveUpperBound": -52.6912126,
-		"cardinality": 877.0619260354822,
-		"inclusiveLowerBound": -73.75254579999998,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-73.75254579999998:-52.6912126"
-	}],
-	"id": "1BD6382559DF0C130A49422D@AdobeOrg-pf.homeAddress._schema.longitude",
-	"summaryType": "NUMBER",
-	"fieldName": "pf.homeAddress._schema.longitude"
-}
-```
-
-In the response above, you can glean that your user base is within the boundaries of -157.86 and -52.6912126, and the number of estimated consumers per logical grouping. The groups your values are split into is determined by the summary services and returned in the response JSON in the `quantiles` property.
-
-### Country Code Example
-
-Get summary data to understand the demographics of your consumer base by country code.
-
-__Example request for summary of country code values__
-
-```
-GET https://platform.adobe.io/data/core/ups/preview/data/summary/pf.homeAddress.countryCode
-```
-
-__Example response__
-
-```
-{
-  "quantiles": {
-    "pct40": 0.0,
-    "pct50": 0.0,
-    "pct100": 0.0,
-    "pct10": 0.0,
-    "pct80": 0.0,
-    "pct0": 0.0,
-    "pct70": 0.0,
-    "pct60": 0.0,
-    "pct30": 0.0,
-    "pct20": 0.0,
-    "pct90": 0.0
-  },
-  "summaries": [{
-    "percentage": 0.2637181166795846,
-    "exclusiveUpperBound": 0.0,
-    "cardinality": 2646.717948309003,
-    "inclusiveLowerBound": 0.0,
-    "hll": "NOT-SUPPORTED-CURRENTLY",
-    "value": "CA"
-  }, {
-    "percentage": 0.48713712210991167,
-    "exclusiveUpperBound": 0.0,
-    "cardinality": 4888.987456035888,
-    "inclusiveLowerBound": 0.0,
-    "hll": "NOT-SUPPORTED-CURRENTLY",
-    "value": "US"
-  }, {
-    "percentage": 0.24914476121050375,
-    "exclusiveUpperBound": 0.0,
-    "cardinality": 2500.4573804998995,
-    "inclusiveLowerBound": 0.0,
-    "hll": "NOT-SUPPORTED-CURRENTLY",
-    "value": "MX"
-  }],
-  "id": "1BD6382559DF0C130A49422D@AdobeOrg-pf.homeAddress.countryCode",
-  "summaryType": "STRING",
-  "fieldName": "pf.homeAddress.countryCode"
-}
-```
-
-In the response above, notice the lack of discernable values in `quantiles`. This is due to the values being non-numeric. 
-
----
-
 ## Segmenting Your Base - Creating and Working with Audiences
 
 The cornerstone of your marketing campaign is your audience. UPS provides the tools for segmenting your user base into audiences consisting of members meeting criteria with exactly the precision you require. With segmentation, you can isolate members of your user base by criteria such as:
@@ -793,7 +509,7 @@ Definitions are persisted to Experience Platform as a predicate expression in PQ
 __Example Unified Profile request - Create a new Definition__
 
 ```
-POST https://platform.adobe.io/data/core/ups/segment/definitions
+POST https://platform.adobe.io/data/core/ups/segment/definitions HTTP/1.1
 ```
 
 __Example body__
@@ -857,7 +573,7 @@ Because of the varying length of time required to run a query, the estimate and 
 __Example request to create a Preview Job__
 
 ```
-POST https://platform.adobe.io/data/core/ups/preview
+POST https://platform.adobe.io/data/core/ups/preview HTTP/1.1
 ```
 
 __Example body__
@@ -893,7 +609,7 @@ Using the `previewId` returned from Step 1, periodically get the estimate or pre
 ##### Estimate
 
 ```
-GET https://platform.adobe.io/data/core/ups/estimate/{previewId}
+GET https://platform.adobe.io/data/core/ups/estimate/{previewId} HTTP/1.1
 ```
 
 __Example response__
@@ -920,7 +636,7 @@ __Example response__
 ##### Preview
 
 ```
-GET https://platform.adobe.io/data/core/ups/preview/{previewId}
+GET https://platform.adobe.io/data/core/ups/preview/{previewId} HTTP/1.1
 ```
 
 __Example response__
@@ -977,7 +693,7 @@ __Example response__
 You can delete a Preview Job by using the following API:
 
 ```
-DELETE https://platform.adobe.io/data/core/ups/preview/{previewId}
+DELETE https://platform.adobe.io/data/core/ups/preview/{previewId} HTTP/1.1
 ```
 
 __Example response__
@@ -998,7 +714,7 @@ This section contains examples demonstrating use of the Segment Job API. For com
 __Example request to create a Segment Job__
 
 ```
-POST https://platform.adobe.io/data/core/ups/segment/jobs
+POST https://platform.adobe.io/data/core/ups/segment/jobs HTTP/1.1
 ```
 
 __Example body__
@@ -1060,7 +776,7 @@ __Example response__
 Segment Jobs run asynchronously, and a job's `status` can be checked by retrieving a Segment Job by ID (returned from creating the Segment Job), which will return its status.
 
 ```
-GET https://platform.adobe.io/data/core/ups/segment/jobs/3456
+GET https://platform.adobe.io/data/core/ups/segment/jobs/3456 HTTP/1.1
 ```
 
 __Example response__
@@ -1110,7 +826,7 @@ The following contains examples demonstrating use of the Profile Export API. Ple
 A dataset used to store audiences can be reused, but must exist prior to running the export, and must have been created with the following properties (either via the API or UI), where `schema` must be a standard XDM Profile or an extension of a standard XDM Profile. The following is an example:
 
 ```
-POST https://platform.adobe.io/data/foundation/catalog/dataSets
+POST https://platform.adobe.io/data/foundation/catalog/dataSets HTTP/1.1
 ```
 
 __Example body__
@@ -1153,7 +869,7 @@ The result of successfully running an export job is a dataset populated with onl
 __Example Unified Profile request - Run an Export Job__
 
 ```
-POST https://platform.adobe.io/data/core/ups/export/jobs
+POST https://platform.adobe.io/data/core/ups/export/jobs HTTP/1.1
 ```
 
 __Example body__
