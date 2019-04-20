@@ -29,7 +29,7 @@ After you set up authorization for APIs, these values are returned:
 * `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
 
-### Set up a Platform connection to Salesforce
+### Set up Platform connection to Salesforce
 
 You must have the following credentials:
 
@@ -47,7 +47,7 @@ After you set up authorization to make API calls from the Adobe I/O Gateway and 
 
 Follow these steps to create a dataset from Salesforce and set up a connector to trigger a daily ingestion. The example uses the Salesforce `Account` object.
 
-### Create a dataset from a Salesforce Object
+### Create a dataset from a Salesforce object
 
 #### 1. Create a Catalog Account entity
 
@@ -191,7 +191,7 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 ]
 ```
 
-NOTE: The return response is a partial list of all available Salesforce CRM objects. Use the `{OBJECT_ID}` as the `logicalName` of the objects.
+> **Note:** The return response is a partial list of all available Salesforce CRM objects. Use the `{OBJECT_ID}` as the `logicalName` of the objects.
 
 #### Ingesting selected fields from the Salesforce object
 
@@ -221,8 +221,7 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 
 ##### Response
 
-NOTE: The following code sample displays part of the response you will receive.
-You can choose to ingest all the fields of an object or only select the fields you are interested in.
+The following code sample displays part of the response you will receive. You can choose to ingest all the fields of an object or only select the fields you are interested in.
 
 ```JSON
 [
