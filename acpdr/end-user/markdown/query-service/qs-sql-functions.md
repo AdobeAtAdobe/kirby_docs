@@ -1,10 +1,10 @@
-# ADF functions
+# ADF Functions
 
 The Spark SQL helpers provide Spark SQL user-defined functions to encapsulate the Analytics business logic like Sessionization and Attribution.
 
 
 
-## Window functions
+## Window Functions
 
 The majority of the business logic requires gathering the touchpoints for a customer and ordering them by time. This support is provided by Spark SQL in the form of window functions. Window functions are part of standard SQL and are supported by many other SQL engines.
 
@@ -29,7 +29,7 @@ ORDER BY endUserIds._experience.mcid.id, timestamp ASC
 
 ### Attribution
 
-**First touch attribution**
+**First Touch Attribution**
 
 Determines the allocation for the first, single channel.
 
@@ -48,7 +48,7 @@ FROM experience_events
 ORDER BY endUserIds._experience.mcid.id, timestamp ASC
 ```
 
-**Last touch attribution**
+**Last Touch Attribution**
 
 Determines the allocation for the last, single channel.
 
@@ -67,9 +67,9 @@ FROM experience_events
 ORDER BY endUserIds._experience.mcid.id, timestamp ASC
 ```
 
-### Previous/next touch
+### Previous/Next touch
 
-**Previous touch**
+**Previous Touch**
 
 Determines the previous value of a particular field within the window.
 
@@ -88,7 +88,7 @@ FROM experience_events
 ORDER BY endUserIds._experience.mcid.id, _experience.analytics.session.num, timestamp ASC
 ```
 
-**Next touch**
+**Next Touch**
 
 Determines the next value of a particular field within the window.
 
@@ -107,11 +107,11 @@ FROM experience_events
 ORDER BY endUserIds._experience.mcid.id, _experience.analytics.session.num, timestamp ASC
 ```
 
-### Time-between
+### Time-Between
 
-**Time-between previous match**
+**Time-Between Previous Match**
 
-Provides a new dimension, which measures the time that has elapsed since a particular incident.
+Provides a new dimension, that measures the time which has elapsed since a particular incident.
 
 Syntax: `TIME_BETWEEN_PREVIOUS_MATCH(time, eventDefintion, [timeUnit]) OVER ([partition] [order] [frame])`
 
@@ -128,7 +128,7 @@ FROM experience_events
 ORDER BY endUserIds._experience.mcid.id, _experience.analytics.session.num, timestamp ASC
 ```
 
-**Time-between next match**
+**Time-Between Next Match**
 
 Provides a new dimension, that measures the time before which a particular event occured.
 
