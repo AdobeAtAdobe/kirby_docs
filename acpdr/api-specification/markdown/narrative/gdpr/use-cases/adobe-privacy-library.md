@@ -33,7 +33,7 @@ The signatures for the functions presented by the Adobe Privacy JavaScript libra
         Promise< Object: `{ array: validIDs, array: failedIDs }`>
         callback implementation: function: `callback(Object: { array: validIDs, array: failedIDs })`
 
-**Note:**
+> **Note:**
 
 * AdobePrivacy.js does not submit information to the Experience Cloud Central Service. The customer must do that. This library only provides the IDs that are stored in the browser a that specific visitor.
 * **`removeIdentities`** and **`retrieveThenRemoveIdentities`** only remove identities from the browser for specific Adobe solutions that support them. For example, AAM does not delete the demdex ID that is stored in a 3rd party cookie, but Target deletes the cookies storing their IDs.
