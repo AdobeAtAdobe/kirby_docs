@@ -6,7 +6,7 @@ Adobe is committed to privacy and security. Nearly all Adobe APIs require your a
 
 Any API that accesses a service or content on behalf of an end user, authenticates using the OAuth and JSON Web Token standards.
 
-> **Note:** *To manage certificates in [Adobe I/O Console](https://console.adobe.io/), make sure you have System administrator rights on the organization.*
+**Note:** *To manage certificates in [Adobe I/O Console](https://console.adobe.io/), make sure you have System administrator rights on the organization.*
 
 [Adobe API](https://www.adobe.io/apis/experiencecloud.html) access is set up through the steps below. Each of these steps is detailed in Adobe IO documentation, in this section.
 
