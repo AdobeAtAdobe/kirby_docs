@@ -2,12 +2,12 @@
 
 ## Overview
 
-Adobe Experience Platform Mobile SDK provides General Data Protection Regulation (GDPR) - ready APIs for Controllers that allow users to perform the following tasks:
+Adobe Experience Platform Mobile SDK provides General Data Protection Regulation (GDPR) ready APIs for Controllers that allow users to perform the following tasks:
 
 * Retrieve locally-stored identities
 * Set opt status flags for data collection & transmission
 
-## Retrieving Stored Identifiers
+## Retrieving stored identifiers
 
 This information helps you retrieve locally stored, SDK identities from your Android app and with GDPR data access requests.
 
@@ -42,7 +42,7 @@ Here is an example of the ```ADBMobile getAllIdentifiersAsync``` method for iOS:
 }]
 ```
 
-## Setting the User's Opt Status
+## Setting the user's opt status
 
 You can control whether the Analytics, Target, and Audience Manager activity is allowed on a device by using the following settings:
 
