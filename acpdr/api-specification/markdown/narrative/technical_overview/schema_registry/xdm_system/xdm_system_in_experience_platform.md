@@ -1,24 +1,29 @@
 # XDM System in Adobe Experience Platform
 
-Standardization and interoperability are key concepts behind Experience Platform. Experience Data Model (XDM), driven by Adobe, is an effort to standardize customer experience data and define schemas for customer experience management. 
+In order to gain actionable insights from data, we need to ensure that similar data is consistently defined in the same way. When data definitions are consistent, this removes the need for translation and improves the interoperability of data across systems.
 
-XDM is a publicly documented specification designed to improve the power of digital experiences. It provides common structures and definitions for any application to use to communicate with services on Adobe Experience Platform. By adhering to XDM standards, all customer experience data can be incorporated into a common representation delivering insights in a faster, more integrated way. You can gain valuable insights from customer actions, define customer audiences through segments, and express customer attributes for personalization purposes.
+To gain consistency in data definitions, Adobe Experience Platform relies on schemas to describe the data and provide constraints about how the data should look and be interpreted as it moves between Platform services. This document provides an overview of the role of schemas within Experience Platform, including:
 
-XDM is the fuel that allows Experience Cloud, powered by Adobe Experience Platform, to deliver the right message to the right person, on the right channel, at exactly the right moment.
-
-The methodology on which Experience Platform is built, XDM System, operationalizes Experience Data Model schemas for use by Experience Platform components.
-
-This document provides an overview of the role of schemas within Experience Platform, including:
-
-* [Data behaviors in Experience Platform](#data-behaviors-in-experience-platform)
-* The use of schema by Platform Components:
+* An introduction to [Experience Data Model and XDM System](#experience-data-model-and-xdm-system)
+* [Data Behaviors in Experience Platform](#data-behaviors-in-experience-platform)
+* The Use of Schema by Platform Components:
   * [Schema Registry](#schema-registry)
   * [Catalog & Experience Data Lake](#catalog--experience-data-lake)
   * [Query Service](#query-service)
   * [Data Science Workspace](#data-science-workspace)
   * [Unified Profile Service](#unified-profile-service)
 
-## Data behaviors in Experience Platform
+## Experience Data Model and XDM System
+
+Standardization and interoperability are key concepts behind Experience Platform. Experience Data Model (XDM), driven by Adobe, is an effort to standardize customer experience data and define schemas for customer experience management. 
+
+XDM is a publicly documented specification designed to improve the power of digital experiences. It provides common structures and definitions for any application to use in order to communicate with services on Adobe Experience Platform. By adhering to XDM standards, all customer experience data can be incorporated into a common representation delivering insights in a faster, more integrated way. You can gain valuable insights from customer actions, define customer audiences through segments, and express customer attributes for personalization purposes.
+
+XDM is the fuel that allows Experience Cloud, powered by Adobe Experience Platform, to deliver the right message to the right person, on the right channel, at exactly the right moment.
+
+The methodology on which Experience Platform is built, XDM System, operationalizes Experience Data Model schemas for use by Experience Platform components.
+
+## Data in Experience Platform
 
 Data intended for use in Experience Platform is grouped into two behavior types: Record and Time Series.
 
@@ -48,7 +53,7 @@ While not all events are easily categorized across all data sources, it is extre
 
 ![ExperienceEvent Customer Journey](images/ExperienceEvent_customer_journey.png "Experience Events show a customer journey over time")
 
-## Experience Platform components and use of schema
+## Experience Platform Components and Use of Schema
 
 Adobe Experience Platform is schema agnostic, meaning that any schema that conforms to the XDM standard is available for use by Experience Platform components. The ways in which various Platform services (such as Catalog, Unified Profile, and Segmentation) use schemas are outlined in more detail below.
 
@@ -78,11 +83,11 @@ Query Service allows you to use standard SQL to query Experience Platform data t
 
 After a schema has been composed, and a dataset has been created which references that schema, data is then ingested and stored in the data lake. Through Query Service, you can join any datasets in Experience Data Lake and capture the query results as a new dataset for use in reporting, Data Science Workspace, or for ingestion into Unified Profile Service. 
 
-Learn more about Query Service by reading the [Query Service Introduction](../../../../../../acpdr/end-user/markdown/query-service/qs-intro.md). 
+Learn more about Query Service by reading the [Query Service Introduction](../../../../../../end-user/markdown/query-service/qs-intro.md). 
 
 ### Data Science Workspace
 
-Data Science Workspace (DSW) uses machine learning and artificial intelligence to unleash insights from data stored within Experience Platform. Using XDM Profile and XDM ExperienceEvent data, DSW allows data scientists to build recipes based on data about customers and their activities and make predictions such as buying propensity and recommended offers that the individual is likely to appreciate and use.
+Data Science Workspace (DSW) uses machine learning and artificial intelligence to unleash insights from data stored within Experience Platform. Using Profile and ExperienceEvent data, DSW allows data scientists to build recipes based on data about customers and their activities in order to make predictions such as buying propensity and recommended offers that the individual is likely to appreciate and use.
 
 With Data Science Workspace, data scientists can easily create intelligent services APIs powered by machine learning. These services work with other Adobe solutions, including Adobe Target and Adobe Analytics Cloud, to help you automate personalized, targeted digital experiences.
 
@@ -92,13 +97,13 @@ For more information on using Experience Platform data to power insights, see th
 
 Unified Profile Service (UPS) provides a 360&deg; profile for every individual in your customer base. Each profile contains data that is aggregated across all systems, as well as actionable timestamped accounts of events involving the individual that have taken place in any of the systems you use with Experience Platform.
 
-UPS consumes schema formatted data, typically based on the XDM Profile or XDM ExperienceEvent classes, and responds to queries based on that data. 
+UPS consumes schema formatted data, typically based on the Profile or ExperienceEvent classes, and responds to queries based on that data. 
 
 Unified Profile maintains an instance of each profile, merging data together to form a "single source of truth" for the individual using what is known as a 'union view' to represent the data. A union view aggregates the fields of all schemas that implement the same class (such as ExperienceEvent or Profile) into a single schema.  When composing a schema via the UI or API, you can enable the schema for use with UPS and tag it for inclusion in the union view. The tagged schema will then participate in the schema definition being fed to UPS.
 
-As XDM Profile and XDM ExperienceEvent data is ingested and managed by Catalog, it triggers UPS to begin ingesting data that has been enabled for its use. The more interactions and details that are ingested, the more robust individual profiles become.
+As Profile and ExperienceEvent data is ingested and managed by Catalog, it triggers UPS to begin ingesting data that has been enabled for its use. The more interactions and details that are ingested, the more robust individual profiles become.
 
-XDM Profile data helps inform and empower actions across any channel or Adobe solution integration, and when paired with a rich history of behavioral and interaction data, this data is used to power machine learning. Unified Profile APIs can also be used to enrich the functionality of third-party solutions, CRMs, and proprietary solutions.
+Profile data helps inform and empower actions across any channel or Adobe solution integration, and when paired with a rich history of behavioral and interaction data, this data is used to power machine learning. Unified Profile APIs can also be used to enrich the functionality of third-party solutions, CRMs, and proprietary solutions.
 
 To learn more about UPS, begin by reading the [Unified Profile Overview](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md).
 
@@ -110,18 +115,20 @@ XDL is very granular and contains all information that has ever been collected. 
 
 UPS provides an aggregation of subject data, merging it together to create a single view of each individual in your user base. This information is therefore not as granular, and may lose fidelity over time as it is updated and merged together.
 
-#### Consuming Unified Profile data
+#### Consuming Unified Profile Data
 
 Unified Profile acts a generic lookup entity store and facilitates building personalization use cases by merging data across various enterprise data assets and providing access to that unified data. There are multiple methods for accessing Unified Profile data on Experience Platform, including performing a lookup for a specific entity (or entities) by an identifier (or array of identifiers).
 
-The [Consuming Unified Profile data](../../../tutorials/consuming_unified_profile_data/consuming_unified_profile_data.md) tutorial contains a walk through of how to perform Unified Profile entity lookups using the API.
+The [Consuming Unified Profile Data](../../../tutorials/consuming_unified_profile_data/consuming_unified_profile_data.md) tutorial contains a walk through of how to perform Unified Profile entity lookups using the API.
 
-Another common way of accessing UPS data is through segmentation. Specifically, Segment Builder is a workspace within Experience Platform for building segments from Unified Profiles. Using fields contained within the union view of the XDM Profile class (such as "age", "region", "gender"), segmentation allows you to query profiles and create an audience based on the segment definition. These audiences, or subsets, of customers are based on shared characteristics and allow you to target them with different messaging, offers, or solutions.  
+Another common way of accessing UPS data is through segmentation. Specifically, Segment Builder is a workspace within Experience Platform for building segments from Unified Profiles. Using fields contained within the union view of the Profile class (such as "age", "region", "gender"), segmentation allows you to query profiles and create an audience based on the segment definition. 
 
-More information about segmentation is available in the [Segment Builder overview](../../../../../../end-user/markdown/segmentation_overview/segmentation.md).
+These audiences, or subsets, of customers are based on shared characteristics and allow you to target them with different messaging, offers, or solutions. Segment definitions can be stored and queried using the Unified Profile Service in order to generate audiences. 
 
-## Next steps
+More information about segmentation is available in the [Segment Builder Overview](../../../../../../end-user/markdown/segmentation_overview/segmentation.md).
+
+## Next Steps
 
 Now that you better understand the role of schemas throughout Experience Platform, you are ready to start composing your own. 
 
-To learn design principles and best practices for composing schemas to be used with Experience Platform, begin by reading the [basics of schema composition](../schema_composition/schema_composition.md).
+We recommend that you begin by reading the [Basics of Schema Composition](../schema_composition/schema_composition.md) to learn design principles and best practices in composing XDM schemas before beginning to work with the Schema Registry in the UI or API.
