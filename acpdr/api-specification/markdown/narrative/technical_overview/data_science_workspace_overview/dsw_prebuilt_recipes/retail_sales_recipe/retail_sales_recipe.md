@@ -23,7 +23,7 @@ You can get started by following this [tutorial](../../package_recipe_to_import_
 
 This tutorial will help you get started by going through how to package the Retail Sales Recipe with Docker and import it into the Data Science Workspace in Adobe Experience Platform.
 
-## Data schema
+## Data Schema
 
 This recipe uses an [XDM schema](../../../../technical_overview/schema_registry/standard_schemas/acp_standard_schemas.md) as the dataset. The schema used is the DSWRetailSales dataset shown below.
 
