@@ -1,25 +1,25 @@
-# Tutorial - Import, Train and Evaluate Recipe Tutorial via API
+# Tutorial: Import, train, and evaluate a Recipe via the API <!-- omit in toc -->
 
-  - [Objective](#objective)
-  - [Prerequisites](#prerequisites)
-  - [API Workflow](#api-workflow)
-    - [Creating a Recipe](#creating-a-recipe)
-    - [Creating an Instance](#creating-an-instance)
-    - [Creating an Experiment](#creating-an-experiment)
-      - [Creating a Scheduled Experiment for Training](#creating-a-scheduled-experiment-for-training)
-      - [Creating a Scheduled Experiment for Scoring](#creating-a-scheduled-experiment-for-scoring)
-      - [Creating an Experiment Run for Training](#creating-an-experiment-run-for-training)
-        - [Retrieving an Experiment Run Status](#retrieving-an-experiment-run-status)
-        - [Retrieving the Trained Model](#retrieving-the-trained-model)
-    - [Creating an Experiment Run for Scoring](#creating-an-experiment-run-for-scoring)
-      - [Retrieve an Experiment Run Status for Scheduled Experiment Run](#retrieve-an-experiment-run-status-for-scheduled-experiment-run)
-    - [Stop and Delete a Scheduled Experiment](#stop-and-delete-a-scheduled-experiment)
-  - [Next Steps](#next-steps)
+- [Objective](#objective)
+- [Prerequisites](#prerequisites)
+- [API workflow](#api-workflow)
+  - [Create a Recipe](#create-a-recipe)
+  - [Create an Instance](#create-an-instance)
+  - [Create an Experiment](#create-an-experiment)
+    - [Create a scheduled Experiment for training](#create-a-scheduled-experiment-for-training)
+    - [Create a scheduled Experiment for scoring](#create-a-scheduled-experiment-for-scoring)
+    - [Create an Experiment Run for training](#create-an-experiment-run-for-training)
+      - [Retrieve an Experiment Run status](#retrieve-an-experiment-run-status)
+      - [Retrieve the trained Model](#retrieve-the-trained-model)
+  - [Create an Experiment Run for scoring](#create-an-experiment-run-for-scoring)
+    - [Retrieve an Experiment Run status for scheduled Experiment Run](#retrieve-an-experiment-run-status-for-scheduled-experiment-run)
+  - [Stop and delete a scheduled Experiment](#stop-and-delete-a-scheduled-experiment)
+- [Next steps](#next-steps)
 
 ---
 
 ## Objective
-In this step by step tutorial, we will consume the APIs which allow us to create a Recipe, an Experiment, Scheduled Experiment Runs, and Trained Models. For a detailed list of API documentation please refer to [this document](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html).
+In this step by step tutorial, we will consume the APIs which allow us to create a Recipe, an Experiment, scheduled Experiment Runs, and trained Models. For a detailed list of API documentation please refer to [this document](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html).
 
 ---
 
@@ -37,34 +37,20 @@ From the tutorial you should now have the following values:
 
 ---
 
-## API Workflow
+## API workflow
 
-We will be consuming the APIs to create an Experiment Run for Training and Scoring. For this tutorial, we will be focused on Recipes, Instances, and Experiments. The following chart outlines the relationship between the three and also introduces the idea of a trained model. 
+We will be consuming the APIs to create an Experiment Run for training and scoring. For this tutorial, we will be focused on Recipes, Instances, and Experiments. The following chart outlines the relationship between the three and also introduces the idea of a trained model. 
 
 ![](./recipe_hierarchy.png)
 
-Here is a list of what we will cover this tutorial:
 
-* [Creating a Recipe](#creating-a-recipe)
-* [Creating an Instance](#creating-an-instance)
-* [Creating an Experiment](#creating-an-experiment)
-    * [Creating a Scheduled Experiment for Training](#creating-a-scheduled-experiment-for-training)
-    * [Creating a Scheduled Experiment for Scoring](#creating-a-scheduled-experiment-for-scoring)
-    * [Creating an Experiment Run for Training](#creating-an-experiment-run-for-training)
-        * [Retrieving an Experiment Run Status](#retrieving-an-experiment-run-status)
-        * [Retrieving the Trained Model](#retrieving-the-trained-model)
-    * [Creating an Experiment Run for Scoring](#creating-an-experiment-run-for-scoring)
-        * [Retrieve an Experiment Run Status for Scheduled Experiment Run](#retrieve-an-experiment-run-status-for-scheduled-experiment-run)
-* [Stop and Delete a Scheduled Experiment](#stop-and-delete-a-scheduled-experiment)
-
-
-### Creating a Recipe
+### Create a Recipe
 
 With the Docker image for the Recipe created in the [Package Recipe to Data Science Workspace tutorial](../package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md), we can create a Recipe. The Recipe is an umbrella entity holding all Instances. A Recipe is usually tied to one or more Docker images which is specified in the body of the request.
 
-***Note that the term "Recipe" and "Engine" (as seen in the API documentation) are interchangeably used and refer to the same thing.***
+> **Note:** The term "Recipe" and "Engine" (as seen in the API documentation) are interchangeably used and refer to the same thing.
 
-#### Request
+#### Request <!-- omit in toc -->
 
 ```SHELL
 curl -X POST \
@@ -98,9 +84,9 @@ curl -X POST \
 `{DOCKER_IMAGE}`: Link to the Docker image.  
 `{ARTIFACT_BINARIES}`: The binary Recipe artifact (eg. JAR, EGG) used for all operations by default.  
 
-Note that if an image that is not `Spark` is used, the `type` and `executionType` fields should be set to the correct type (eg. `Python`, `Pyspark`).
+> **Note:** If an image that is not `Spark` is used, the `type` and `executionType` fields should be set to the correct type (eg. `Python`, `Pyspark`).
 
-#### Response
+#### Response <!-- omit in toc -->
 
 The response from the Recipe creation call is captured below.
 
@@ -147,11 +133,11 @@ The response from the Recipe creation call is captured below.
 `{RECIPE_ID}`: This ID returned can be used to create a number of Instances.
 
 
-### Creating an Instance
+### Create an Instance
 
 Creating an Instance can be done using the following request. We will be using the `{RECIPE_ID}` that was returned when creating an Recipe.
 
-#### Request
+#### Request <!-- omit in toc -->
 
 ```SHELL
 curl -X POST \
@@ -220,11 +206,11 @@ curl -X POST \
 
 ```
 
-Note that in the `{JSON_PAYLOAD}`, we define parameters used for training and scoring in the `tasks` array. The `{RECIPE_ID}` is the ID of the Recipe you want to use and the `tag` field is an optional parameter used to identify the Instance.
+> **Note:** In the `{JSON_PAYLOAD}`, we define parameters used for training and scoring in the `tasks` array. The `{RECIPE_ID}` is the ID of the Recipe you want to use and the `tag` field is an optional parameter used to identify the Instance.
 
 The response will contain the `{INSTANCE_ID}` which represents the Instance that is created. Multiple model Instances with different configurations can be created.
 
-#### Response
+#### Response <!-- omit in toc -->
 
 ```JSON
 {
@@ -259,11 +245,11 @@ The response will contain the `{INSTANCE_ID}` which represents the Instance that
 `{RECIPE_ID}`: This ID representing the Recipe the Instance is created under.  
 `{INSTANCE_ID}`: The ID that represents the Instance.
 
-### Creating an Experiment
+### Create an Experiment
 
 An Experiment is used by a data scientist to arrive at a high performing model while training. Multiple Experiments include changing datasets, features, learning parameters, and hardware. The following is an example of creating an Experiment.
 
-#### Request
+#### Request <!-- omit in toc -->
 
 ```SHELL
 curl -X POST \
@@ -294,7 +280,7 @@ curl -X POST \
 
 The response from the Experiment creation looks like this.
 
-#### Response
+#### Response <!-- omit in toc -->
 
 ```JSON
 {
@@ -313,13 +299,13 @@ The response from the Experiment creation looks like this.
 `{EXPERIMENT_ID}`: The ID that represents the Experiment you have just created.
 `{INSTANCE_ID}`: The ID that represents the Instance.
 
-#### Creating a Scheduled Experiment for Training
+#### Create a scheduled Experiment for training
 
 Scheduled Experiments are used so that we do not need to create each single Experiment Runs via an API call. Instead, we provide all necessary parameters during Experiment creation and each run will be created periodically.  
 
-To indicate the creation of a Scheduled Experiment, we must add a `template` section in the body of the request. In `template`, all necessary parameters for scheduling runs are included such as `tasks`, which indicate what action, and `schedule`, which indicates the timing of the scheduled runs.
+To indicate the creation of a scheduled Experiment, we must add a `template` section in the body of the request. In `template`, all necessary parameters for scheduling runs are included such as `tasks`, which indicate what action, and `schedule`, which indicates the timing of the scheduled runs.
 
-##### Request
+##### Request <!-- omit in toc -->
 
 ```Shell
 curl -X POST \
@@ -365,9 +351,9 @@ curl -X POST \
 }
 ```
 
-When we create an Experiment, the body, `{JSON_PAYLOAD}`, should contain either the `mlInstanceId` or the `mlInstanceQuery` parameter. In this example, a Scheduled Experiment will invoke a run every 20 minutes, set in the `cron` parameter, starting from the `startTime` until the `endTime`.
+When we create an Experiment, the body, `{JSON_PAYLOAD}`, should contain either the `mlInstanceId` or the `mlInstanceQuery` parameter. In this example, a scheduled Experiment will invoke a run every 20 minutes, set in the `cron` parameter, starting from the `startTime` until the `endTime`.
 
-##### Response
+##### Response <!-- omit in toc -->
 
 ```JSON
 {
@@ -403,13 +389,13 @@ When we create an Experiment, the body, `{JSON_PAYLOAD}`, should contain either 
 `{INSTANCE_ID}`: The ID that represents the Instance.  
 
 
-#### Creating a Scheduled Experiment for Scoring
+#### Create a scheduled Experiment for scoring
 
-Similar to Scheduled Experiments for Training, creating a Scheduled Experiment for Scoring is also done by including a `template` section to the body parameter. Additionally, the `name` field under `tasks` in the body is set as `score`.
+Similar to scheduled Experiments for training, creating a scheduled Experiment for scoring is also done by including a `template` section to the body parameter. Additionally, the `name` field under `tasks` in the body is set as `score`.
 
 The following is an example of creating an Experiment that will run every 20 minutes starting from `startTime` and will run until `endTime`.
 
-##### Request
+##### Request <!-- omit in toc -->
 
 ```Shell
 curl -X POST \
@@ -455,11 +441,11 @@ curl -X POST \
 ```
 
 `{INSTANCE_ID}`: The ID that represents the Instance.  
-`{MODEL_ID}`: The ID that represents the Trained Model.  
+`{MODEL_ID}`: The ID that represents the trained Model.  
 
-The following is the response after creating the Scheduled Experiment.
+The following is the response after creating the scheduled Experiment.
 
-##### Response
+##### Response <!-- omit in toc -->
 
 ```JSON
 {
@@ -492,11 +478,11 @@ The following is the response after creating the Scheduled Experiment.
 `{EXPERIMENT_ID}`: The ID that represents the Experiment.  
 `{INSTANCE_ID}`: The ID that represents the Instance.  
 
-#### Creating an Experiment Run for Training
+#### Create an Experiment Run for training
 
 With an Experiment entity created, a training run can be created and run using the call below. You will need the `{EXPERIMENT_ID}` and state what `mode` you want to trigger in the request body.
 
-#### Request
+#### Request <!-- omit in toc -->
 
 ```Shell
 curl -X POST \
@@ -541,7 +527,7 @@ You can also override the configuration parameters by including a `tasks` array:
 
 You will get the following response which will let you know the `{EXPERIMENT_RUN_ID}` and the configuration under `tasks`.
 
-#### Response
+#### Response <!-- omit in toc -->
 
 ```JSON
 {
@@ -563,11 +549,11 @@ You will get the following response which will let you know the `{EXPERIMENT_RUN
 `{EXPERIMENT_RUN_ID}`:  The ID that represents the Experiment Run.  
 `{EXPERIMENT_ID}`: The ID that represents the Experiment which the Experiment Run is under.  
 
-##### Retrieving an Experiment Run Status
+##### Retrieve an Experiment Run status
 
 The status of the Experiment run can be queried with the `{EXPERIMENT_RUN_ID}`.
 
-##### Request
+##### Request <!-- omit in toc -->
 ```JSON
 curl -X GET \
   https://platform.adobe.io/data/sensei/experiments/{EXPERIMENT_ID}/runs/{EXPERIMENT_RUN_ID}/status \
@@ -582,7 +568,7 @@ curl -X GET \
 `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 
-##### Response
+##### Response <!-- omit in toc -->
 
 The GET call will provide the status in the `state` parameter as shown below:
 
@@ -627,11 +613,11 @@ In addition to the `DONE` state, other states include:
 
 To get more information, the detailed logs can be found under the `tasklogs` parameter.
 
-##### Retrieving the Trained Model
+##### Retrieve the trained Model
 
-In order to get the Trained Model created above during training, we make the following request:
+In order to get the trained Model created above during training, we make the following request:
 
-##### Request
+##### Request <!-- omit in toc -->
 
 ```Shell
 curl -X GET \
@@ -643,19 +629,19 @@ curl -X GET \
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
 `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 
-The response represents the Trained Model that was created.
+The response represents the trained Model that was created.
 
-##### Response
+##### Response <!-- omit in toc -->
 
 ```JSON
 {
     "children": [
         {
             "id": "{MODEL_ID}",
-            "name": "Tutorial Trained Model",
+            "name": "Tutorial trained Model",
             "experimentId": "{EXPERIMENT_ID}",
             "experimentRunId": "{EXPERIMENT_RUN_ID}",
-            "description": "Trained model for ID",
+            "description": "trained model for ID",
             "modelArtifactUri": "wasb://test-models@mlpreprodstorage.blob.core.windows.net/{MODEL_ID}",
             "created": "2018-01-01T11:11:11.011Z",
             "updated": "2018-01-01T11:11:11.011Z",
@@ -674,11 +660,11 @@ The response represents the Trained Model that was created.
 `{EXPERIMENT_RUN_ID}`: The ID corresponding to the Experiment Run.  
 
 
-### Creating an Experiment Run for Scoring
+### Create an Experiment Run for scoring
 
 Now with the trained model, we can create an Experiment Run for scoring. The value of the `modelId` parameter is the `id` parameter returned in the GET Model request above.
 
-#### Request
+#### Request <!-- omit in toc -->
 
 ```Shell
 curl -X POST \
@@ -717,7 +703,7 @@ curl -X POST \
 
 The response from the Experiment Run creation is shown below:
 
-#### Response
+#### Response <!-- omit in toc -->
 
 ```JSON
 {
@@ -740,11 +726,11 @@ The response from the Experiment Run creation is shown below:
 `{EXPERIMENT_RUN_ID}`: The ID corresponding to the Experiment Run you just created.  
 
 
-#### Retrieve an Experiment Run Status for Scheduled Experiment Run
+#### Retrieve an Experiment Run status for scheduled Experiment Run
 
 To get Experiment Runs for scheduled Experiments, the query is shown below:
 
-##### Request
+##### Request <!-- omit in toc -->
 
 ```Shell
 curl -X GET \
@@ -759,7 +745,7 @@ curl -X GET \
 
 Since there are multiple Experiment Runs for a specific Experiment, the response returned will have an array of Run IDs.
 
-##### Response
+##### Response <!-- omit in toc -->
 
 ```JSON
 {
@@ -783,11 +769,11 @@ Since there are multiple Experiment Runs for a specific Experiment, the response
 `{EXPERIMENT_RUN_ID}`: The ID corresponding to the Experiment Run.  
 `{EXPERIMENT_ID}`:  The ID corresponding to the Experiment the Run is under.  
 
-### Stop and Delete a Scheduled Experiment
+### Stop and delete a scheduled Experiment
 
 If you want to stop execution of a scheduled Experiment before its `endTime`, this can be done by querying a DELETE request to the `{EXPERIMENT_ID}`
 
-#### Request
+#### Request <!-- omit in toc -->
 
 ```Shell
 curl -X DELETE \
@@ -800,11 +786,11 @@ curl -X DELETE \
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
 `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 
-Note that the API call will disable creation of new Experiment runs. However, it will not stop execution of already running Experiment Runs.
+> **Note:** The API call will disable creation of new Experiment runs. However, it will not stop execution of already running Experiment Runs.
 
 The following is the Response notifying that the Experiment is successfully deleted.
 
-#### Response
+#### Response <!-- omit in toc -->
 
 ```JSON
 {
@@ -816,6 +802,6 @@ The following is the Response notifying that the Experiment is successfully dele
 
 ---
 
-## Next Steps
+## Next steps
 
-This tutorial went over how to consume the APIs to create a Recipe, an Experiment, Scheduled Experiment Runs, and Trained Models. In the [next exercise](../how_to_score_with_recipe/how_to_score_with_recipe.md), you will be making predictions by Scoring a new dataset using the top performing trained model.
+This tutorial went over how to consume the APIs to create a Recipe, an Experiment, scheduled Experiment Runs, and trained Models. In the [next exercise](../how_to_score_with_recipe/how_to_score_with_recipe.md), you will be making predictions by scoring a new dataset using the top performing trained model.
