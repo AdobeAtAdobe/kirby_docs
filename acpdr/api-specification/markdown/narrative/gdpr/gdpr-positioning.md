@@ -1,20 +1,20 @@
-# Adobe Experience Cloud GDPR positioning
+# Adobe Experience Cloud GDPR Positioning
 
 On May 25, 2018, the European Union's General Data Protection Regulation (GDPR) will go into effect. Adobe believes this presents a new opportunity for companies to strengthen their brand loyalty by focusing on consumer privacy while delivering amazing experiences. Think of it as experiential privacy - having privacy be a key part of the customer experience through relevant privacy notices presented in context and choices that are on brand. For more information, please refer to [GDPR and Your Business.](https://www.adobe.com/privacy/general-data-protection-regulation.html)
 
 The General Data Protection Regulation (GDPR) will come into full effect on May 25, 2018. Adobe is already working towards readiness with the new requirements. As compliance will be a shared responsibility with your enterprise, we look forward to partnering with you to address any new obligations for data governance and privacy by design features.
 
-## Adobe as a processor
+## Adobe as a Processor
 
 When Adobe Experience Cloud is providing software and services to an enterprise, Adobe is acting as a data processor for any personal data it processes and stores as part of providing the services. As a data processor, Adobe only processes personal data in accordance with your company's permission and instructions (for example, as set out in your agreement with Adobe).
 
-## Personal data processed by Adobe
+## Personal Data Processed by Adobe
 
 As the data controller, you will determine the personal data that Adobe processes and stores on your behalf.
 
 If you use Adobe Experience Cloud solutions, Adobe may host personal data for you depending on the solutions you use and the information you choose to send to your Adobe Experience Cloud account. For a detailed list of examples, see [https://www.adobe.com/privacy/marketing-cloud.html#collect](https://www.adobe.com/privacy/marketing-cloud.html#collect).
 
-## Adobe readiness
+## Adobe Readiness
 
 Adobe either already meets, or is working towards meeting, the obligations set out for data processors. For example:
 
@@ -34,9 +34,9 @@ Adobe either already meets, or is working towards meeting, the obligations set o
 
 ## GDPR API
 
-Adobe has built an API to help process "access" and "delete" requests on behalf of Controllers for their data stored in Experience Cloud
+We've built an API to help process "access" and "delete" requests on behalf of Controllers for their data stored in Experience Cloud
 
-## Consent: opt-out management
+## Consent: Opt-out Management
 
 Every solution and platform at Adobe will be able to help customers comply with their Data Subject's choices. Each solution must adhere to the Adobe Privacy Standards, including:
 
@@ -46,6 +46,6 @@ Every solution and platform at Adobe will be able to help customers comply with 
 * [Adobe and GDPR](https://www.adobe.com/privacy/general-data-protection-regulation.html)
 * [The Adobe Policy for Using Cookies or Other Technology to Access Information on a User's Device](https://www.adobe.com/privacy/cookies.html)
 
-## Consent: opt-in management
+## Consent: Opt-in Management
 
 GDPR has new requirements for active and specific consent by Controllers. GDPR requires Controllers to demonstrate that the data subject has consented to processing of his or her personal data. This consent has to be written and unambiguous. Adobe does not currently offer a consent management solution. However, by using Adobe Launch, our customers could deploy plugins such as Evidon for consent management.
