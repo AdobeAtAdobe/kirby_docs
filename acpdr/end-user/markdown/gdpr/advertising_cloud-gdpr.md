@@ -16,7 +16,7 @@ As a data controller, you will determine the personal data that Adobe Experience
 *   Check the status of one or all existing requests.
     
 
-**Note:**  If your company has multiple Adobe Experience Cloud Identity Management Service Organization IDs (IMS Org IDs), then you must send separate API requests for each. You can, however make one API request to multiple Advertising Cloud sub-solutions (Search, Creative, DSP, and DCO), with one account per sub-solution.
+> **Note:**  If your company has multiple Adobe Experience Cloud Identity Management Service Organization IDs (IMS Org IDs), then you must send separate API requests for each. You can, however make one API request to multiple Advertising Cloud sub-solutions (Search, Creative, DSP, and DCO), with one account per sub-solution.
 
 ## Required Setup to Send Requests for Advertising Cloud
 
@@ -30,7 +30,7 @@ To make automated requests to access and delete data for Advertising Cloud, you'
     
     When the data subject asks to delete personal data, the library also deletes the data subject's cookie from the data subject's browser.
     
-    **Note:**  Deleting personal data is different than Opt-Out, which stops the targeting of an end user with audience segments. However, when a data subject asks to delete personal data from Creative, DSP, or DCO, the library also sends a request to Advertising Cloud to opt out the data subject from segment targeting.  For advertisers with Search, we recommend that you provide your data subjects a link to [https://www.adobe.com/privacy/opt-out.html](https://www.adobe.com/privacy/opt-out.html), which explains how to opt out of audience segment targeting.
+    > **Note:**  Deleting personal data is different than Opt-Out, which stops the targeting of an end user with audience segments. However, when a data subject asks to delete personal data from Creative, DSP, or DCO, the library also sends a request to Advertising Cloud to opt out the data subject from segment targeting.  For advertisers with Search, we recommend that you provide your data subjects a link to [https://www.adobe.com/privacy/opt-out.html](https://www.adobe.com/privacy/opt-out.html), which explains how to opt out of audience segment targeting.
     
 2.  Use either the Adobe Experience Cloud GDPR API (for automated requests) or the GDPR UI (for ad-hoc requests) to submit access and delete requests to Advertising Cloud on behalf of your data subjects, and to check the status of existing requests.
     
@@ -179,7 +179,7 @@ See the API documentation for more information about where to add these fields.
 
 ### Example 4: Combined solution request with 1 account per sub-solution
 
-**Note:**  If you have multiple accounts per sub-solution, you will need to submit these requests separately.
+> **Note:**  If you have multiple accounts per sub-solution, you will need to submit these requests separately.
 
 ```
 {
