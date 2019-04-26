@@ -1,4 +1,4 @@
-# Joining datasets
+# Joining DataSets
 
 Joining datasets allows you to include data from other datasets in your query. This example uses a custom operating system dataset to map the `operatingsystemID` to the `operatingsystem` value.
 
