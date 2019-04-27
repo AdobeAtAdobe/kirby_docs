@@ -48,7 +48,19 @@
 			],
 			"path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/creating_a_connector_tutorial.md",
 			"title": "Configuring a connector"
-		},
+        },
+        {
+            "importedFileName": "schema_editor_tutorial",
+            "pages": [],
+            "path": "api-specification/markdown/narrative/tutorials/schema_editor_tutorial/schema_editor_tutorial.md",
+            "title": "Using the schema editor"
+        },
+        {
+            "importedFileName": "schema_registry_api_tutorial",
+            "pages": [],
+            "path": "api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md",
+            "title": "Using the schema API"
+        },
 		{
 			"importedFileName": "data_access_tutorial",
 			"pages": [],
@@ -87,11 +99,11 @@
 		}
 	],
 	"app2app_map": {
-    "end-user/markdown/segmentation_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-    "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-    "api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
-    "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/":"/apis/experienceplatform/home/services/allservices.html",
-    "api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html",
-    "acpdr/swagger-specs/": "/apis/cloudplatform/dataservices/api-reference.html"
+        "end-user/markdown/segmentation_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+        "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+        "api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
+        "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/":"/apis/experienceplatform/home/services/allservices.html",
+        "api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html",
+        "acpdr/swagger-specs/": "/apis/cloudplatform/dataservices/api-reference.html"
 	}
 }
