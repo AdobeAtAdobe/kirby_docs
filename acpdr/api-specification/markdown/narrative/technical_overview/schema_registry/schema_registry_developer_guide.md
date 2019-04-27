@@ -197,7 +197,7 @@ application/vnd.adobe.xed-notext+json; version={major version}	|Raw with $ref an
 application/vnd.adobe.xed-full-notext+json; version={major version}	|$refs and allOf resolved, no titles or descriptions
 application/vnd.adobe.xed-full-desc+json; version={major version}	|$refs and allOf resolved, descriptors included
 
-> **Note:** If supplying the `major` version only (e.g. 1, 2, 3), the registry will return the latest `minor` version (e.g. .1, .2, .3) automatically.
+_**Note:**_ If supplying the `major` version only (e.g. 1, 2, 3), the registry will return the latest `minor` version (e.g. .1, .2, .3) automatically.
 
 ### Defining fields
 
@@ -332,7 +332,7 @@ application/vnd.adobe.xed-notext+json; version={major version}	|Raw with $ref an
 application/vnd.adobe.xed-full-notext+json; version={major version}	|$refs and allOf resolved, no titles or descriptions
 application/vnd.adobe.xed-full-desc+json; version={major version}	|$refs and allOf resolved, descriptors included
 
-> **Note:** If supplying the `major` version only (1, 2, 3, etc), the registry will return the latest `minor` version (.1, .2, .3, etc) automatically.
+_**Note:**_ If supplying the `major` version only (1, 2, 3, etc), the registry will return the latest `minor` version (.1, .2, .3, etc) automatically.
 
 #### Response
 
@@ -393,7 +393,7 @@ The primary building block of a schema is a class. The class contains the minimu
 
 There are several standard classes provided by Adobe and other Experience Platform partners, but you may also define your own classes and save them to the Schema Registry. You can then compose a schema that implements the class you created, and define mixins that are compatible with your newly defined class.
 
-> **Note:** When composing a schema based on a class that you define, you will not be able to use standard mixins. Mixins define the class(es) they are compatible with in the `meta:intendedToExtend` attribute. Once you begin defining mixins that are compatible with your new class (by using the `$id` of your new class in the `meta:intendedToExtend` field of the mixin), you will be able to reuse those mixins every time you define a schema that implements the class you defined. Details for creating schemas and mixins appear further on in this developer guide.
+_**Note:**_ When composing a schema based on a class that you define, you will not be able to use standard mixins. Mixins define the class(es) they are compatible with in the `meta:intendedToExtend` attribute. Once you begin defining mixins that are compatible with your new class (by using the `$id` of your new class in the `meta:intendedToExtend` field of the mixin), you will be able to reuse those mixins every time you define a schema that implements the class you defined. Details for creating schemas and mixins appear further on in this developer guide.
 
 #### API format
 
@@ -632,7 +632,7 @@ Performing a GET request to list all data types in the tenant container would no
 
 Mixins are a set of fields used to describe a particular concept, such as "address" or "profile preferences". There are numerous standard mixins available, or you can define your own when you wish to capture information that is unique to your organization. Each mixin contains a `meta:intendedToExtend` field which lists the class(es) the mixin is compatible with. 
 
-> **Note:** You may find it helpful to review all available mixins to familiarize yourself with the fields included in each. You can list (GET) all mixins compatible with a particular class by performing a request against each of the "global" and "tenant" containers, returning only those mixins where the "meta:intendedToExtend" field matches the class you're using. The examples below will return all mixins that can be used with the XDM Profile class: 
+_**Note:**_ You may find it helpful to review all available mixins to familiarize yourself with the fields included in each. You can list (GET) all mixins compatible with a particular class by performing a request against each of the "global" and "tenant" containers, returning only those mixins where the "meta:intendedToExtend" field matches the class you're using. The examples below will return all mixins that can be used with the XDM Profile class: 
 
 ```SHELL
 GET /global/mixins?property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile
@@ -1245,7 +1245,7 @@ Each schema can have one or more schema descriptor entities applied to it. Each 
 
 Sample descriptor calls are shown below. For a complete list of available descriptors, and the fields required for defining each type, see the [Defining descriptors in the API](#defining-descriptors-in-the-api) section in the Appendix.
 
-> **Note:** Descriptors require unique Accept headers that replace `xed` with `xdm`, but otherwise look very similar to Accept headers used elsewhere in the Schema Registry. The proper Accept headers have been included in the sample calls below, but take extra caution to ensure the correct headers are being used.
+_**Note:**_ Descriptors require unique Accept headers that replace `xed` with `xdm`, but otherwise look very similar to Accept headers used elsewhere in the Schema Registry. The proper Accept headers have been included in the sample calls below, but take extra caution to ensure the correct headers are being used.
 
 ### List descriptors
 
@@ -1379,7 +1379,7 @@ curl -X POST \
       }'
 ```
 
-> **Note:** For details regarding the fields required to define a descriptor, see the [Defining descriptors in the API](#defining-descriptors-in-the-api) table in the Appendix.
+_**Note:**_ For details regarding the fields required to define a descriptor, see the [Defining descriptors in the API](#defining-descriptors-in-the-api) table in the Appendix.
 
 #### Response
 
@@ -1489,7 +1489,7 @@ This is done through the use of the `meta:immutableTags` attribute.
 
 In order for a schema to be included in the merged union view, the "union" tag must be added to the `meta:immutableTags` attribute of the schema. This is done through a PATCH request to update the schema and add the `meta:immutableTags` array with a value of "union".
 
-> **Note:** Immutable Tags are tags that are intended to be set, but never removed.
+_**Note:**_ Immutable Tags are tags that are intended to be set, but never removed.
 
 #### API format
 
@@ -1607,7 +1607,7 @@ If no unions have been defined, you will still receive an HTTP Status 200 (OK) b
 
 If you would like to view a specific union, you can perform a GET request that includes the `$id` (URL encoded URI) and, depending on the Accept header, some or all of the details of the union.
 
-> **Note:** Union lookups are available using the `/unions` and `/schemas` endpoint to enable them for use in UPS exports into a dataset. 
+_**Note:**_ Union lookups are available using the `/unions` and `/schemas` endpoint to enable them for use in UPS exports into a dataset. 
 
 #### API format
 
@@ -1680,7 +1680,7 @@ The response format depends on the Accept header sent in the request. Experiment
 
 ## Next steps
 
-Now that you have learned how to make calls using the Schema Registry API, follow the [Schema Registry API tutorial](../../tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md) to begin composing a schema of your own.
+Now that you have learned how to make calls using the Schema Registry API, follow the [Schema Registry API Tutorial](schema_registry_api_tutorial/schema_registry_api_tutorial.md) to begin composing a schema of your own.
 
 ## Appendix
 
