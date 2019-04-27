@@ -38,7 +38,11 @@ Now, you'll be able to see a list of batches and consequently the batch ID of th
 
 ![](images/batches.png)
 
-As a result, you can now get more information about the failed batch with the following request.
+Next, you can select the failed batch to view the batch details page
+
+![](images/batch-detail.png)
+
+Using the failed batch ID, you can now get more information about the failed batch with the following request.
 
 ## Request
 
