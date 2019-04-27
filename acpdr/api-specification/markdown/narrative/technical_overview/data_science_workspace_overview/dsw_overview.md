@@ -1,27 +1,27 @@
-# Data Science Workspace Overview <!-- omit in toc -->
+# Data Science Workspace Overview
 
 - [Overview](#overview)
 - [Introduction](#introduction)
 - [Terminology](#terminology)
 - [Why Data Science Workspace?](#why-data-science-workspace)
-  - [One-stop data access](#one-stop-data-access)
-  - [Prebuilt machine learning recipes](#prebuilt-machine-learning-recipes)
-  - [Workflow focused on the data scientist](#workflow-focused-on-the-data-scientist)
-  - [Data exploration](#data-exploration)
-  - [Authoring](#authoring)
-  - [Experimentation](#experimentation)
-  - [Operationalization](#operationalization)
-  - [Continuous improvement](#continuous-improvement)
-  - [Access to new features and datasets](#access-to-new-features-and-datasets)
-  - [Security and peace of mind](#security-and-peace-of-mind)
+    - [One-stop Data Access](#one-stop-data-access)
+    - [Prebuilt machine learning recipes](#prebuilt-machine-learning-recipes)
+    - [Workflow focused on the data scientist](#workflow-focused-on-the-data-scientist)
+    - [Data exploration](#data-exploration)
+    - [Authoring](#authoring)
+    - [Experimentation](#experimentation)
+    - [Operationalization](#operationalization)
+    - [Continuous improvement](#continuous-improvement)
+    - [Access to new features and datasets](#access-to-new-features-and-datasets)
+    - [Security and peace of mind](#security-and-peace-of-mind)
 - [Data Science Workspace in action](#data-science-workspace-in-action)
-  - [Define the problem](#define-the-problem)
-  - [Explore and prepare the data](#explore-and-prepare-the-data)
-  - [Author the recipe](#author-the-recipe)
-  - [Experiment with the recipe](#experiment-with-the-recipe)
-  - [Operationalize the model](#operationalize-the-model)
+    - [Define the problem](#define-the-problem)
+    - [Explore and prepare the data](#explore-and-prepare-the-data)
+    - [Author the recipe](#author-the-recipe)
+    - [Experiment with the recipe](#experiment-with-the-recipe)
+    - [Operationalize the model](#operationalize-the-model)
 - [Conclusion](#conclusion)
-- [Additional resources](#additional-resources)
+- [Additional Resources](#additional-resources)
 
 ---
 
@@ -78,7 +78,7 @@ The following chart outlines the hierarchical relationship between recipes, inst
 
 With Data Science Workspace, your data scientists can streamline the cumbersome process of uncovering insights in large datasets. Built on a common machine learning framework and runtime, Data Science Workspace delivers advanced workflow management, model management, and scalability. Intelligent services support re-use of machine learning recipes to power a variety of applications created using Adobe products and solutions. 
 
-### One-stop data access
+### One-stop Data Access
 
 Data is the cornerstone of AI and machine learning.  
 
@@ -212,6 +212,6 @@ With the marriage of brand expertise and Adobe's machine learning and AI prowess
 
 Adobe was recently named the only leader in "The Forrester Wave™: Digital Intelligence Platforms, Q2 2017" report, and received the highest scores possible in nine criteria, including behavioral targeting and online testing.
 
-## Additional resources
+## Additional Resources
 For more information, check out [our walkthrough](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html#!api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_walkthrough/dsw_walkthrough.md) where we will be working through a day to day workflow.  
 To access all our tutorials, visit [our tutorials page](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials.html).
