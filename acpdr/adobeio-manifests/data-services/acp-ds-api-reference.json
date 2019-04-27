@@ -36,7 +36,7 @@
 			"title": "DULE Policy Service"
 		},
 		{
-			"path": "api-specification/markdown/apis/core_services/unified-profile/unified-profile-service-apis.md",
+			"path": "acpdr/swagger-specs/unified-profile-service-apis.yaml",
 			"title": "Unified Profile Service",
 			"pages": [
 				{
@@ -73,8 +73,8 @@
 		},
 		{
 			"pages": [],
-			"path": "acpdr/swagger-specs/id-namespace-api.yaml",
-			"title": "Identity Namespace Service"
+			"path": "acpdr/swagger-specs/id-service-api.yaml",
+			"title": "Identity Service"
 		},
 		{
 			"pages": [],
