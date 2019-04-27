@@ -136,7 +136,7 @@ The XDM schema is the schema you use when you need to present the user with a li
 
 The first "schemaRef.id" value in the previous response object (`https://ns.adobe.com/{TENANT_ID}/schemas/274f17bc5807ff307a046bab1489fb18`) is a URI that points to a specific XDM schema in the Schema Registry. The schema can be retrieved by making a lookup (GET) request to the Schema Registry API.
 
-_**Note:**_ The "schemaRef" property replaces the now deprecated "schema" property. If "schemaRef" is absent from the dataset or does not contain a value, you will need to check for the presence of a "schema" property. This could be done by replacing "schemaRef" with "schema" in the `properties` query parameter in the previous call. More details on the "schema" property are available in the [Dataset "schema" Property](#dataset-schema-property-deprecated---eol-2019-05-30) section that follows.
+> **Note:** The "schemaRef" property replaces the now deprecated "schema" property. If "schemaRef" is absent from the dataset or does not contain a value, you will need to check for the presence of a "schema" property. This could be done by replacing "schemaRef" with "schema" in the `properties` query parameter in the previous call. More details on the "schema" property are available in the [Dataset "schema" Property](#dataset-schema-property-deprecated---eol-2019-05-30) section that follows.
 
 #### API Format
 
@@ -168,7 +168,7 @@ application/vnd.adobe.xed-notext+json; version={major version}	|Raw with $ref an
 application/vnd.adobe.xed-full-notext+json; version={major version}	|$refs and allOf resolved, no titles or descriptions
 application/vnd.adobe.xed-full-desc+json; version={major version}	|$refs and allOf resolved, descriptors included
 
-_**Note:**_ `application/vnd.adobe.xed-id+json` and `application/vnd.adobe.xed-full+json; version={major version}` are the most commonly used Accept headers. `application/vnd.adobe.xed-id+json` is preferred for listing resources in the Schema Registry as it returns only the "title", "id", and "version". `application/vnd.adobe.xed-full+json; version={major version}` is preferred for viewing a specific resource (by its "id"), as it returns all fields (nested under "properties"), as well as titles and descriptions.
+> **Note:** `application/vnd.adobe.xed-id+json` and `application/vnd.adobe.xed-full+json; version={major version}` are the most commonly used Accept headers. `application/vnd.adobe.xed-id+json` is preferred for listing resources in the Schema Registry as it returns only the "title", "id", and "version". `application/vnd.adobe.xed-full+json; version={major version}` is preferred for viewing a specific resource (by its "id"), as it returns all fields (nested under "properties"), as well as titles and descriptions.
 
 #### Response
 
@@ -206,13 +206,13 @@ curl -X GET "https://platform.adobe.io/data/foundation/catalog/xdms/context/pers
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key: {API_KEY}"
 ```
-_**Note:**_ An optional query parameter, `expansion=xdm`, tells the API to fully expand and in-line any referenced schemas. You may want to do this when presenting a list of all potential fields to the user.
+> **Note:** An optional query parameter, `expansion=xdm`, tells the API to fully expand and in-line any referenced schemas. You may want to do this when presenting a list of all potential fields to the user.
 
 #### Response
 
 Similar to the steps for [viewing dataset schema](#view-dataset-schema), the response contains a JSON schema that describes the structure and field-level information of the data, serialized as JSON.
 
-_**Note:**_ When the "schema" field is empty or absent entirely, the connector should read the "schemaRef" field and use the [Schema Registry API](../../../../../../acpdr/swagger-specs/schema-registry.yaml) as shown in the previous steps to [view a dataset schema](#view-dataset-schema).
+> **Note:** When the "schema" field is empty or absent entirely, the connector should read the "schemaRef" field and use the [Schema Registry API](../../../../../../acpdr/swagger-specs/schema-registry.yaml) as shown in the previous steps to [view a dataset schema](#view-dataset-schema).
 
 ### The "observableSchema" Property
 
