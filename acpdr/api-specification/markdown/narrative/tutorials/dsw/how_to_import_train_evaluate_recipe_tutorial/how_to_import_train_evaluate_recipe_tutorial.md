@@ -1,21 +1,21 @@
-# Tutorial - Import, Train and Evaluate Recipe Tutorial via UI
+# Tutorial: Import, train, and evaluate a Recipe via the UI <!-- omit in toc -->
 
-  - [Objective](#objective)
-  - [Prerequisites](#prerequisites)
-  - [UI Workflow](#ui-workflow)
-    - [New Recipe](#new-recipe)
-      - [Build Docker Image](#build-docker-image)
-      - [Push Docker Image](#push-docker-image)
-    - [Create Instance](#create-instance)
-    - [Create Experiment](#create-experiment)
-    - [Creating an Experiment using Custom Hyperparameters](#creating-an-experiment-using-custom-hyperparameters)
-      - [Retail Sale Forecasting Hyperparameter](#retail-sale-forecasting-hyperparameter)
-    - [Evaluating Experiment Results](#evaluating-experiment-results)
-      - [Measures Chart](#measures-chart)
-      - [Receiver Operator Characteristics](#receiver-operator-characteristics)
-      - [Confusion Matrix](#confusion-matrix)
-    - [Review Logs](#review-logs)
-  - [Next Steps](#next-steps)
+- [Objective](#objective)
+- [Prerequisites](#prerequisites)
+- [UI workflow](#ui-workflow)
+  - [Create a Recipe](#create-a-recipe)
+    - [Build Docker image](#build-docker-image)
+    - [Push Docker image](#push-docker-image)
+  - [Create an Instance](#create-an-instance)
+  - [Create an Experiment](#create-an-experiment)
+  - [Create an Experiment using custom hyperparameter](#create-an-experiment-using-custom-hyperparameter)
+    - [Retail Sale forecasting hyperparameter](#retail-sale-forecasting-hyperparameter)
+  - [Evaluating Experiment results](#evaluating-experiment-results)
+    - [Measures chart](#measures-chart)
+    - [Receiver Operator Characteristics](#receiver-operator-characteristics)
+    - [Confusion Matrix](#confusion-matrix)
+  - [Review logs](#review-logs)
+- [Next steps](#next-steps)
 
 ---
 
@@ -29,7 +29,7 @@ In this step by step tutorial, we will go over how to import a Recipe into the D
 * A registered Adobe ID account
     * The Adobe ID account must have been added to an Organization with access to "Adobe Experience Platform"
 
-## UI Workflow
+## UI workflow
 
 In this section, you will go over creating a Recipe where you can import your Docker image. We went through the steps to create a Docker image in the [Package Recipe to Data Science Workspace tutorial](../package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md).
 
@@ -46,9 +46,9 @@ The Recipe section is a carousel that lists the recipes that you or others in yo
 
 The Instances section is a list of recently updated Recipe Instances. An Instance is a snapshot of a Recipe that will be tailored towards solving a specific business problem. One Recipe can create many Instances.
 
-In the UI, an Experiment is run within the context of an Instance and the Experiment Run will correspond to a Trained Model. Note that currently, a single Experiment will only associate with a single Experiment Run and thus a single Trained Model as well.
+In the UI, an Experiment is run within the context of an Instance and the Experiment Run will correspond to a trained Model. Note that currently, a single Experiment will only associate with a single Experiment Run and thus a single trained Model as well.
 
-### New Recipe
+### Create a Recipe
 
 You first want to create a new Recipe. From the Data Science Workspace overview page, click on the "New" button on the top right. From there, you will be given an option to create a Notebook or a Recipe. 
 
@@ -111,7 +111,7 @@ Choose Recipe and a "New Recipe" dialog will popup on the screen. The `*` indica
 
 For this tutorial, you will be creating a Python Recipe using the Docker image that you created in the [Package Recipe tutorial](../package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md). We are provided with the Docker host, username, and password values which you will be able to use to build our Docker image.
 
-#### Build Docker Image
+#### Build Docker image
 With the Dockerfile, you can build the Docker image. In the directory with your Dockerfile type the following commands:
 
 ```BASH
@@ -122,7 +122,7 @@ docker login -u <username> -p <password> <Docker host>
 docker build -t <Docker host>/<intelligent-service>:<version_tag> 
 ```
 
-#### Push Docker Image
+#### Push Docker image
 
 ```BASH
 #  This URL is the same as the one in your build command.
@@ -134,7 +134,7 @@ docker push <Docker host>/<intelligent-service>:<version_tag>
 Now insert the URL you have just built and pushed to the Docker host into the Source File field. After pressing "Save", you are taken to the new Recipe's overview page. From here you are able to view information about the Recipe you just created and are able to create Recipe Instances to run experiments.
 
 
-### Create Instance
+### Create an Instance
 
 Now that you created a new Python Recipe and are taken to the Recipe Overview, you can create a Recipe Instance. Remember that an Instance is a snapshot of the Recipe configured that will be tailored to help solve specific business problems. One Recipe can create many Instances. Since the Recipe you created is new, it has no existing Instances so the user interface will show that you have an empty list of Instances and ask if you want to create your first Instance.
 
@@ -146,7 +146,7 @@ Click on either of the two "Create Instance" buttons and a New Instance dialog s
 
 Click on Save once you have everything filled out. You will be taken to your Instance overview page.
 
-### Create Experiment
+### Create an Experiment
 
 After creating the new Instance, you should see an overview page as seen below.
 
@@ -158,7 +158,7 @@ To create a new Experiment, you can use either of the "Create Experiment" button
 
 ![](newExperiment.png)
 
-In the Create New Experiment page, the Data Source field specifies which dataset to use in the Experiment. Select the Training dataset you ingested in the [previous tutorial](../ml_access_and_explore_data_tutorial/ml_access_and_explore_data_tutorial.md).
+In the Create New Experiment page, the Data Source field specifies which dataset to use in the Experiment. Select the training dataset you ingested in the [previous tutorial](../ml_access_and_explore_data_tutorial/ml_access_and_explore_data_tutorial.md).
 
 Note that you can adjust the **FEATURES (INPUT)** and **TARGET FEATURES (OUTPUT)** at the Experiment level. We will leave the values as default for now.
 
@@ -174,13 +174,13 @@ You can click on the Experiment to view the details about the Experiment. This c
 
 ![](experiment_configuration.png)
 
-### Creating an Experiment using Custom Hyperparameters
+### Create an Experiment using custom hyperparameter
 
-Create another experiment by selecting the **Create Experiment** on your Recipe Instance page. Select the same Training dataset you used in the Default Experiment. Then select the **Configuration** tab. Here you will modify the hyperparameters in the section below.
+Create another experiment by selecting the **Create Experiment** on your Recipe Instance page. Select the same training dataset you used in the Default Experiment. Then select the **Configuration** tab. Here you will modify the hyperparameters in the section below.
 
-#### Retail Sale Forecasting Hyperparameter
+#### Retail Sale forecasting hyperparameter
 
-Hyperparameters cannot be learned - they must be assigned before training of the model. Adjusting the parameters may change the accuracy of the Trained Model.
+Hyperparameters cannot be learned - they must be assigned before training of the model. Adjusting the parameters may change the accuracy of the trained Model.
 
 The Retail Sales Forecasting Recipe uses the Gradient Boosting algorithm. Here are the associated hyperparameters:
 
@@ -190,7 +190,7 @@ learning_rate | Learning rate shrinks the contribution of each tree by learning_
 n_estimators | The number of boosting stages to perform. Gradient boosting is fairly robust to over-fitting so a large number usually results in better performance. | 100 | 100 - 1000
 max_depth | Maximum depth of the individual regression estimators. The maximum depth limits the number of nodes in the tree. Tune this parameter for best performance; the best value depends on the interaction of the input variables. | 3 | 4 - 10
 
-### Evaluating Experiment Results
+### Evaluating Experiment results
 
 After the evaluation is finished running, results will be shown under the "Evaluation Metrics" tab in the experiment page. Metrics are automatically generated depending on your model's algorithm type. For binary classification, the following metrics are generated:
 * Measures
@@ -200,7 +200,7 @@ After the evaluation is finished running, results will be shown under the "Evalu
 For other model types (e.g. regression), only the following metric is generated
 * Measures
 
-#### Measures Chart
+#### Measures chart
 
 The Measures chart displays key values which describe your results.
 
@@ -237,7 +237,7 @@ The Confusion Matrix shows the distribution of predictions into the following fo
 
 The total percentage of correctly predicted results is found by adding up the percentages for true positive and true negative results.
 
-### Review Logs
+### Review logs
 
 The ability to view the job logs is important if your job fails. To review the logs, click on the Experiment name, then select **View Activity Logs**. Select the log file you would like to examine.
 
@@ -245,6 +245,6 @@ The ability to view the job logs is important if your job fails. To review the l
 
 ---
 
-## Next Steps
+## Next steps
 
-This tutorial went over how to consume the APIs to create a Recipe, an Experiment, Scheduled Experiment Runs, and Trained Models. In the [next exercise](../how_to_score_with_recipe/how_to_score_with_recipe.md), you will be making predictions by Scoring a new dataset using the top performing trained model.
+This tutorial went over how to consume the APIs to create a Recipe, an Experiment, and trained Models. In the [next exercise](../how_to_score_with_recipe/how_to_score_with_recipe.md), you will be making predictions by scoring a new dataset using the top performing trained model.
