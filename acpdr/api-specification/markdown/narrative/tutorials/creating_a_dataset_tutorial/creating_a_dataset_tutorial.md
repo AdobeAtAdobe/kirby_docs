@@ -58,11 +58,11 @@ These standard definitions allow data to be interpreted consistently, regardless
 
 ## Lookup dataset schema
 
-This tutorial begins where the [Schema Registry API tutorial](../schema_registry_api_tutorial/schema_registry_api_tutorial.md) ends, making use of the Loyalty Members schema created during that tutorial. 
+This tutorial begins where the [Schema Registry API Tutorial](../../technical_overview/schema_registry/schema_registry_api_tutorial/schema_registry_api_tutorial.md) ends, making use of the Loyalty Members schema created during that tutorial. 
 
 If you have not completed the Schema Registry tutorial, please start there and continue with this dataset tutorial only once you have composed the necessary schema.
 
-The following call can be used to view the Loyalty Members schema you created during the [Schema Registry API tutorial](../../tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md).
+The following call can be used to view the Loyalty Members schema you created during the [Schema Registry API Tutorial](../../technical_overview/schema_registry/schema_registry_api_tutorial/schema_registry_api_tutorial.md).
 
 #### API format
 
