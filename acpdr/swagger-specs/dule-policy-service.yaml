@@ -341,7 +341,7 @@ paths:
       summary: View policies violated if marketing action attempted on certain entities.
       description: >-
         Returns a set of constraints that would govern an attempt to perform the given marketing action on a DULE-labeled source of data. The source data is specified by the "entityType" and "entityId" of the elements in the request body. In the case of a dataset entity, a set of fields may also be specified in the "entityMeta" to indicate that only those fields from that dataset would be used. The returned constraints take the form of a set of policies that would be violated by attempting the marketing action.
-      operationId: postCustomMarketingActionConstraints
+      operationId: postCoreMarketingActionConstraints
       tags:
         - Marketing Actions
       parameters:
