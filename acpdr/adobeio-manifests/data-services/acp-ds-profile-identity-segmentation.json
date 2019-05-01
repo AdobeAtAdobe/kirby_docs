@@ -66,7 +66,7 @@
 		"api-specification/markdown/narrative/gdpr/": "/apis/experienceplatform/gdpr/docs/alldocs.htm",
 		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/": "/apis/experienceplatform/home/services.html",
 		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "/apis/cloudplatform/dataservices/data-ingestion/data-ingestion-services.html",
-		"api-specification/markdown/narrative/technical_overview/schema_registry/schema_composition/": "/apis/experienceplatform/home/xdm/xdmservices.html",
+		"api-specification/markdown/narrative/technical_overview/schema_registry/": "/apis/cloudplatform/dataservices/xdm/xdmservices.html",
 		"api-specification/markdown/narrative/technical_overview/streaming_ingest/": "/apis/experienceplatform/home/data-ingestion.html",
 		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/dataservices/tutorials/alltutorials.html"
 	}
