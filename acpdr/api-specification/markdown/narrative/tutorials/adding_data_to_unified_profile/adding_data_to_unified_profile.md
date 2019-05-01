@@ -35,7 +35,7 @@ Unified Profile can sync your profile store with data uploaded to datasets, addi
 
 Before data uploaded to a dataset will be automatically sent to Unified Profile, the dataset has to be specially configured.
 
-For complete instructions on configuring a dataset for Unified Profile, visit [Configuring a Dataset for Unified Profile and Identity Service Using APIs](../unified_profile_dataset_tutorial/unified_profile_dataset_tutorial.md).
+For complete instructions on configuring a dataset for Unified Profile, visit [Configuring a Dataset for Unified Profile and Identity Service Using APIs](../unified_profile_dataset_tutorial/unified_profile_dataset_api_tutorial.md).
 
 ---
 

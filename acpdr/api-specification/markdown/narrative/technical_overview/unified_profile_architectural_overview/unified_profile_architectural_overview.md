@@ -231,7 +231,7 @@ There are two parts to merging Profile data across stores:
 
 #### Identity stitching
 
-Identity Stitching refers to determining when multiple fragments of a Profile refer to a single person. For more information, see [Identity Services](../identity_services_architectural_overview/identity_services_architectural_overview.md).
+Identity Stitching refers to determining when multiple fragments of a Profile refer to a single person. For more information, see [Identity Service overview](../identity_services_architectural_overview/identity_services_architectural_overview.md).
 
 #### Attribute merging
 
