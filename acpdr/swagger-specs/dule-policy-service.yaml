@@ -296,7 +296,7 @@ paths:
         description: The name of the marketing action
         type: string
     get:
-      summary: View policies violated by the presence of DULE labels.
+      summary: View policies violated be the presence of DULE labels.
       description: >-
         Returns a set of constraints that would govern an attempt to perform the
         given marketing action on a DULE-labeled source of data.  The source
@@ -320,48 +320,8 @@ paths:
           description: The name of the marketing action
           type: string
         - $ref: '#/parameters/duleLabelsConstraintsQuery'
-        - $ref: '#/parameters/includeDraftConstraintsQuery'
-      responses:
-        '200':
-          description: >-
-            Constraints on attempting to perform this marketing action on data
-            bearing the given set of DULE labels, including the set of policies
-            that would be violated.
-          schema:
-            $ref: '#/definitions/MarketingActionConstraints'
-        '400':
-          description: A bad request; see response body for details
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
-          description: No marketing action was found for the given name
-          schema:
-            $ref: '#/definitions/Error'
-    post:
-      summary: View policies violated if marketing action attempted on certain entities.
-      description: >-
-        Returns a set of constraints that would govern an attempt to perform the given marketing action on a DULE-labeled source of data. The source data is specified by the "entityType" and "entityId" of the elements in the request body. In the case of a dataset entity, a set of fields may also be specified in the "entityMeta" to indicate that only those fields from that dataset would be used. The returned constraints take the form of a set of policies that would be violated by attempting the marketing action.
-      operationId: postCoreMarketingActionConstraints
-      tags:
-        - Marketing Actions
-      parameters:
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/authorization'
-        - name: marketingActionName
-          in: path
-          required: true
-          description: The name of the marketing action
-          type: string
-        - $ref: '#/parameters/contentType'
-        - name: entityList
-          description: The list of entities (such as multiple dataset IDs) for which to retrieve labels.
-          required: true
-          in: body
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/EntityLabelRequest'
+        - $ref: '#/parameters/dataSetIdConstraintsQuery'
+        - $ref: '#/parameters/fieldsConstraintsQuery'
         - $ref: '#/parameters/includeDraftConstraintsQuery'
       responses:
         '200':
@@ -503,48 +463,8 @@ paths:
           description: The name of the marketing action
           type: string
         - $ref: '#/parameters/duleLabelsConstraintsQuery'
-        - $ref: '#/parameters/includeDraftConstraintsQuery'
-      responses:
-        '200':
-          description: >-
-            Constraints on attempting to perform this marketing action on data
-            bearing the given set of DULE labels, including the set of policies
-            that would be violated.
-          schema:
-            $ref: '#/definitions/MarketingActionConstraints'
-        '400':
-          description: A bad request; see response body for details
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
-          description: No marketing action was found for the given name
-          schema:
-            $ref: '#/definitions/Error'
-    post:
-      summary: View policies violated if marketing action attempted on certain entities.
-      description: >-
-        Returns a set of constraints that would govern an attempt to perform the given marketing action on a DULE-labeled source of data. The source data is specified by the "entityType" and "entityId" of the elements in the request body. In the case of a dataset entity, a set of fields may also be specified in the "entityMeta" to indicate that only those fields from that dataset would be used. The returned constraints take the form of a set of policies that would be violated by attempting the marketing action.
-      operationId: postCustomMarketingActionConstraints
-      tags:
-        - Marketing Actions
-      parameters:
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/authorization'
-        - name: marketingActionName
-          in: path
-          required: true
-          description: The name of the marketing action
-          type: string
-        - $ref: '#/parameters/contentType'
-        - name: entityList
-          description: The list of entities (such as multiple dataset IDs) for which to retrieve labels.
-          required: true
-          in: body
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/EntityLabelRequest'
+        - $ref: '#/parameters/dataSetIdConstraintsQuery'
+        - $ref: '#/parameters/fieldsConstraintsQuery'
         - $ref: '#/parameters/includeDraftConstraintsQuery'
       responses:
         '200':
@@ -647,7 +567,8 @@ parameters:
     name: duleLabels
     description: >-
       A comma-separated list of DULE labels whose presence on data should be
-      tested for violation of policies.
+      tested for violation of policies.  Use of this query parameter is mutually
+      exclusive with using the `dataSetId` parameter.
     required: false
     type: array
     collectionFormat: csv
@@ -780,7 +701,7 @@ definitions:
           If a custom resource, the imsOrg which maintains this resource.  If
           built-in, then the string `core`.
         type: string
-        example: {IMS_ORG}
+        example: FEDCBA9876543210FEDCBA01@AdobeOrg
       created:
         description: Timestamp in milliseconds when this resource was originally created
         type: integer
@@ -1001,48 +922,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/PolicyResponse'
-      marketingActionRefs:
-        description: List of marketing action URI references to which this policy applies
-        type: array
-        example:
-          - ../marketingActions/core/emailMarketing
-        items:
-          type: string
-          format: uri
-      description:
-        description: >-
-          A verbal description of what this policy enforces; the reasoning
-          behind the denial of these marketing actions in the presence of the
-          DULE labels
-        type: string
-        example: Conditions under which we won't send marketing-based email
-  EntityTypeAndId:
-    required:
-      - entityType
-      - entityId
-    properties:
-      entityType:
-        description: >-
-          The type of entity on which to discover labels. Currently only "dataSet"
-          is supported
-        type: string
-        enum:
-          - dataSet
-      entityId:
-        description: The id of the entity on which to discover labels.
-        type: string
-  EntityLabelRequest:
-    allOf:
-      - $ref: '#/definitions/EntityTypeAndId'
-      - type: object
-        properties:
-          entityMeta:
-            type: object
-            properties:
-              fields:
-                type: array
-                items:
-                  type: string
   PatchDocument:
     description: A JSONPatch document as defined by RFC 6902
     required:
