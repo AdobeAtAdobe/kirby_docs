@@ -668,3 +668,424 @@ __Example of an ExperienceEvent, where an event was taken on a device with certa
   ]
 }
 ```
+
+### Q12
+__Customers whose profile has changed within the last 30 minutes__ - Time series
+
+```
+    "type": "PQL",
+    "format": "pql/text",
+    "value": "_repo.lastModifiedDate occurs <= 30 minutes before now",
+    "meta": "ACS reverse replication time range predicate"
+```
+
+## JSON formatted queries
+
+The above examples are all PQL as articulated in text, for example "workAddress.stateProvince = homeAddress.stateProvince".  This is the recommended approach to formatting PQL, as it is terse and easiest to understand. Queries will incur some overhead over their JSON counterparts as formatting PQL in text requires the parser/grammar in order to process.
+
+However, there are certain cases wherein formatting in JSON is preferable. The JSON structure is more verbose. Though reading PQL in JSON is harder to understand, it is more suitable for machine to machine interaction. UI and other integrations mostly work with JSON structures. PQL scales better in JSON format for very large queries as it is semantically very close to internal representation of PQL.
+
+The following examples offer demonstrations of how PQL might be structured as JSON.
+
+### JQ1
+__Customers whose name is "Andres Monroy" and who has a birth day on the 6th of any month__
+
+![](ui-jq1.png)
+
+#### PQL JSON pseudocode
+
+```
+{
+  segmentDefinition: {
+    container: {
+      items: [
+        segmentRule {
+          comparisonType: 'eq',
+          id: 'profile.person.firstName'
+          value: 'Andres'
+        },
+        segmentRule {
+          comparisonType: 'eq',
+          id: 'profile.person.lastName'
+          value: 'Monroy'
+        },
+        segmentRule {
+          comparisonType: 'eq',
+          id: 'profile.person.birthDay'
+          value: 6
+        }
+      ]
+    }
+  }
+}
+```
+
+#### PQL JSON
+
+The following is the JSON form of the PQL
+
+```
+{
+  "nodeType": "fnApply",
+  "fnName": "and",
+  "params": [
+    {
+      "nodeType": "fnApply",
+      "fnName": "=",
+      "params": [
+        {
+          "literalType": "string",
+          "nodeType": "literal",
+          "value": "Andres"
+        },
+        {
+          "nodeType": "fieldLookup",
+          "fieldName": "firstName",
+          "object": {
+            "nodeType": "fieldLookup",
+            "fieldName": "person",
+            "object": {
+              "nodeType": "literal",
+              "literalType": "XDMObject",
+              "value": "profile"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "nodeType": "fnApply",
+      "fnName": "=",
+      "params": [
+        {
+          "literalType": "string",
+          "nodeType": "literal",
+          "value": "Monroy"
+        },
+        {
+          "nodeType": "fieldLookup",
+          "fieldName": "lastName",
+          "object": {
+            "nodeType": "fieldLookup",
+            "fieldName": "person",
+            "object": {
+              "nodeType": "literal",
+              "literalType": "XDMObject",
+              "value": "profile"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "nodeType": "fnApply",
+      "fnName": "=",
+      "params": [
+        {
+          "literalType": "integer",
+          "nodeType": "literal",
+          "value": "6"
+        },
+        {
+          "nodeType": "fieldLookup",
+          "fieldName": "birthDay",
+          "object": {
+            "nodeType": "fieldLookup",
+            "fieldName": "person",
+            "object": {
+              "nodeType": "literal",
+              "literalType": "XDMObject",
+              "value": "profile"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+### JQ2
+__Customers whose name is "Andres" and also either a last name of "Monroy" or a birth day on the 6th of any month__
+
+![](ui-jq2.png)
+
+#### PQL JSON pseudocode
+
+```
+{
+  definition: {
+    container: {
+      logicalOperator: 'and',
+      items: [
+        segmentRule: {
+          id: 'profile.person.firstName',
+          value: 'Andres',
+          comparisonType: 'eq'
+        },
+        segmentContainer: {
+          logicalOperator: 'or',
+          items: [
+            segmentRule: {
+              id: 'profile.person.lastName',
+              value: 'Monroy',
+              comparisonType: 'eq'
+            },
+            segmentRule: {
+              id: 'profile.person.birthDay',
+              value: 6,
+              comparisonType: 'eq'
+            },
+          ]
+        },
+      ]
+    }
+  }
+}
+```
+
+#### PQL JSON
+
+```
+{
+  "fnName": "and",
+  "nodeType": "fnApply",
+  "params": [
+    {
+      "nodeType": "fnApply",
+      "fnName": "=",
+      "params": [
+        {
+          "literalType": "string",
+          "nodeType": "literal",
+          "value": "Andres"
+        },
+        {
+          "nodeType": "fieldLookup",
+          "fieldName": "firstName",
+          "object": {
+            "nodeType": "fieldLookup",
+            "fieldName": "person",
+            "object": {
+              "nodeType": "literal",
+              "literalType": "XDMObject",
+              "value": "profile"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "nodeType": "fnApply",
+      "fnName": "or",
+      "params": [
+        {
+          "nodeType": "fnApply",
+          "fnName": "=",
+          "params": [
+            {
+              "literalType": "string",
+              "nodeType": "literal",
+              "value": "Monroy"
+            },
+            {
+              "nodeType": "fieldLookup",
+              "fieldName": "lastName",
+              "object": {
+                "nodeType": "fieldLookup",
+                "fieldName": "person",
+                "object": {
+                  "nodeType": "literal",
+                  "literalType": "XDMObject",
+                  "value": "profile"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "nodeType": "fnApply",
+          "fnName": "=",
+          "params": [
+            {
+              "literalType": "integer",
+              "nodeType": "literal",
+              "value": "6"
+            },
+            {
+              "nodeType": "fieldLookup",
+              "fieldName": "birthDay",
+              "object": {
+                "nodeType": "fieldLookup",
+                "fieldName": "person",
+                "object": {
+                  "nodeType": "literal",
+                  "literalType": "XDMObject",
+                  "value": "profile"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+### JQ3
+__Example of an ExperienceEvent, where an event was taken on a device with certain parameters__
+
+#### PQL JSON pseudocode
+
+```
+{
+  segmentDefinition: {
+    container: {
+      items: [
+        segmentRule {
+          id: profile.person.firstName,
+          value: Andres,
+          comparisonType: eq,
+        },
+        segmentRule {
+          id: xEvent.device.model,
+          value: 1,
+          comparisonType: eq,
+        },
+        segmentRule {
+          id: xEvent.productListItems.name,
+          value: 1,
+          comparisonType: eq,
+        },
+      ]
+    }
+  }
+}
+```
+
+#### PQL JSON
+
+```
+{
+  "nodeType": "set",
+  "variables": [
+    {
+      "nodeType": "fnApply",
+      "fnName": "=",
+      "params": [
+        {
+          "literalType": "string",
+          "nodeType": "literal",
+          "value": "Andres"
+        },
+        {
+          "nodeType": "fieldLookup",
+          "fieldName": "firstName",
+          "object": {
+            "nodeType": "fieldLookup",
+            "fieldName": "person",
+            "object": {
+              "nodeType": "literal",
+              "literalType": "XDMObject",
+              "value": "profile"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "nodeType": "varDecl",
+      "varName": "_",
+      "range": {
+        "nodeType": "fnApply",
+        "function": {
+          "nodeType": "fnCreate",
+          "params": [
+            {
+              "varName": "X1"
+            }
+          ],
+          "body": {
+            "nodeType": "fnApply",
+            "fnName": "=",
+            "params": [
+              {
+                "literalType": "string",
+                "nodeType": "literal",
+                "value": "1"
+              },
+              {
+                "nodeType": "fieldLookup",
+                "fieldName": "model",
+                "object": {
+                  "nodeType": "fieldLookup",
+                  "fieldName": "device",
+                  "object": {
+                    "nodeType": "varRef",
+                    "varName": "X1"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "nodeType": "fieldLookup",
+            "fieldName": "xEvent",
+            "object": {
+              "nodeType": "varRef",
+              "varName": "_"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "nodeType": "varDecl",
+      "varName": "_",
+      "range": {
+        "nodeType": "fnApply",
+        "function": {
+          "nodeType": "fnCreate",
+          "params": [
+            {
+              "varName": "X1"
+            }
+          ],
+          "body": {
+            "nodeType": "fnApply",
+            "fnName": "=",
+            "params": [
+              {
+                "literalType": "string",
+                "nodeType": "literal",
+                "value": "1"
+              },
+              {
+                "nodeType": "fieldLookup",
+                "fieldName": "name",
+                "object": {
+                  "nodeType": "varRef",
+                  "varName": "X1"
+                }
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "nodeType": "fieldLookup",
+            "fieldName": "productListItems",
+            "object": {
+              "nodeType": "varRef",
+              "varName": "_"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+```

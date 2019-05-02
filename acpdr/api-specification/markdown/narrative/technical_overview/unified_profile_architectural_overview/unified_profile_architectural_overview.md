@@ -1,6 +1,6 @@
 # Unified Profile in Adobe Experience Platform
 
-Unified Profile in Adobe Experience Platform provides a unified, real time consumer profile that enables marketers to drive coordinated, consistent and relevant experiences with their audiences across channels. With Unified Profile, you have one place to go to get a holistic view of your consumer base aggregated across all systems, as well as actionable timestamped account of every event they've had in any of your systems, when you need it.
+Unified Profile in Adobe Experience Platform provides a unified, real-time consumer profile that enables marketers to drive coordinated, consistent and relevant experiences with their audiences across channels. With Unified Profile, you have one place to go to get a holistic view of your consumer base aggregated across all systems, as well as actionable timestamped account of every event they've had in any of your systems, when you need it.
 
 This overview describes the role and use of Unified Profile. In specific:
 
@@ -25,7 +25,7 @@ Unified Profile's relationship with these and other solutions is highlighted in 
 
 ## The profile
 
-A profile is a representation of a subject, an organization or an individual, also referred to as record data. The profile of a product may include a SKU and description, where the profile of a person contains information like first name, last name, and email address. On Experience Platform, these types of data are built per your agenda. The XDM Profile standard schema, the preferred schema to implement when describing consumer record data, supplies the data integral to supporting the interaction of many Platform solutions. In specific, it contains:
+A profile is a representation of a subject, an organization or an individual, also referred to as record data. The profile of a product may include a SKU and description, whereas the profile of a person contains information like first name, last name, and email address. On Experience Platform, these types of data are built per your agenda. The XDM Profile standard schema, the preferred schema to implement when describing consumer record data, supplies the data integral to supporting the interaction of many Platform solutions. In specific, it contains:
 
 * Time series events
 * Identities
@@ -164,4 +164,5 @@ The cornerstone of your marketing campaign is your audience. Unified Profile pro
 For step by step instructions to create and work with segmentation using the API, see the tutorial [Creating Segments in Experience Platform](../../tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md).
 
 For information on working with segmentation using the Adobe Experience Platform UI, visit [Segment Builder](../../../../../end-user/markdown/segmentation_overview/segmentation.md).
+
 
