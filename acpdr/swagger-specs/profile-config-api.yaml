@@ -22,7 +22,6 @@ host: platform.adobe.io
 basePath: /data/core/ups/config
 tags:
   - name: mergePolicies
-  - name: health
 paths:
   /mergePolicies:
     get:
@@ -54,7 +53,7 @@ paths:
           x-example: "1BD@Adobe.com"
         - name: start
           in: query
-          description: Page Offset - As per created Time of resource
+          description: Page Offset - As per created time of resource
           required: false
           type: integer
           format: int64
@@ -65,18 +64,33 @@ paths:
           required: false
           type: integer
           x-example: 10
-        - name: order
+        - name: orderBy
           in: query
           description: Page Order - Asc/Desc
           required: false
           type: string
-          x-example: Asc
-        - name: id
+          x-example: timestamp
+        - name: "schema.name"
           in: query
-          description: Id of the merge policy
-          required: false
           type: string
-          x-example: 0e530929-0054-45b9-ac35-97140863db54
+          description: Filter results, limiting to only merge policies for a given schema class
+          required: false
+          x-example: _xdm.context.profile
+        - name: identityGraph.type
+          in: query
+          type: string
+          description: Filter results, limiting to only merge policies that use the specified identity graph
+          x-example: auto
+        - name: attributeMerge.type
+          in: query
+          type: string
+          description: Filter results, limiting to only merge policies that use the specified attribute merge type
+          x-example: "timestampOrdered"
+        - name: default
+          in: query
+          type: boolean
+          description: Filter results, limiting to only merge policies that are or are not the default for the schema they are associated with.
+          x-example: true
       responses:
         '200':
           description: List of Profile mergepolicy returned
@@ -85,7 +99,7 @@ paths:
         '403':
           description: Forbidden
         '500':
-          description: ''
+          description: 'Internal Server Error'
         '503':
           description: Service Unavailable
     post:
@@ -138,69 +152,17 @@ paths:
           description: ''
         '503':
           description: Service Unavailable
-    patch:
-      tags:
-        - mergePolicies
-      summary: 'Patches a merge policy when provided with merge policy id as query param. Primary use is to make a merge policy default for a (schema,imsOrg) pair'
-      description: ''
-      operationId: patchMergePoliciesByIdRoute
-      produces:
-        - application/json
-      parameters:
-        - name: x-api-key
-          in: header
-          description: API Key
-          required: true
-          type: string
-          x-example: "<replace with your api key>"
-        - name: Authorization
-          in: header
-          description: Authorization token
-          required: true
-          type: string
-          x-example: "Bearer <replace with your token>"
-        - name: "x-gw-ims-org-id"
-          in: "header"
-          description: "IMS Organization ID"
-          required: true
-          type: "string"
-          x-example: "1BD@Adobe.com"
-        - name: id
-          in: path
-          description: Id of the merge policy
-          required: true
-          type: string
-          x-example: 0e530929-0054-45b9-ac35-97140863db54
-        - in: body
-          name: body
-          description: ''
-          required: true
-          schema:
-            $ref: '#/definitions/MergePolicyEntityUpdate'
-      responses:
-        '200':
-          description: Profile MergePolicy successfully Patched
-          schema:
-            $ref: '#/definitions/MergePolicyEntity'
-        '403':
-          description: Forbidden
-        '404':
-          description: Profile MergePolicy not found
-        '500':
-          description: ''
-        '503':
-          description: Service Unavailable
-  '/mergePolicies/{internalId}':
+  '/mergePolicies/{mergePolicyId}':
     get:
       tags:
         - mergePolicies
-      summary: Returns the Profile MergePolicy
+      summary: Returns the Profile MergePolicy for the ID specified
       description: ''
       operationId: getMergePolicyRoute
       produces:
         - application/json
       parameters:
-        - name: internalId
+        - name: mergePolicyId
           in: path
           description: ID of the Merge Policy
           required: true
@@ -240,13 +202,13 @@ paths:
     delete:
       tags:
         - mergePolicies
-      summary: Deletes the mergepolicy given it's internal id
+      summary: Deletes the mergepolicy given its internal id
       description: ''
       operationId: deleteMergePolicyRoute
       produces:
         - application/json
       parameters:
-        - name: internalId
+        - name: mergePolicyId
           in: path
           description: ID of the Merge Policy
           required: true
@@ -284,9 +246,9 @@ paths:
     patch:
       tags:
         - mergePolicies
-      summary: 'Patches a merge policy given it''s internal id. Primary use is to make a merge policy default for a (schema,imsOrg) pair.'
+      summary: 'Update a field of a merge policy.'
       description: ''
-      operationId: patchMergePoliciesByInternalIdRoute
+      operationId: patchMergePoliciesByIdRoute
       produces:
         - application/json
       parameters:
@@ -308,18 +270,68 @@ paths:
           required: true
           type: "string"
           x-example: "1BD@Adobe.com"
-        - name: internalId
+        - name: mergePolicyId
           in: path
-          description: MergePolicy Id
+          description: Id of the merge policy
           required: true
           type: string
-          x-example: '12345678'
+          x-example: "e5bc94de-cd14-4cdf-a2bc-88b6e8cbfac2"
         - in: body
           name: body
           description: ''
           required: true
           schema:
             $ref: '#/definitions/MergePolicyEntityUpdate'
+      responses:
+        '200':
+          description: Profile MergePolicy successfully Patched
+          schema:
+            $ref: '#/definitions/MergePolicyEntity'
+        '400':
+          description: Bad request
+        '500':
+          description: 'Internal Server Error'
+        '503':
+          description: Service Unavailable
+    put:
+      tags:
+        - mergePolicies
+      summary: 'Overwrite a merge policy.'
+      description: ''
+      operationId: overwriteMergePoliciesByIdRoute
+      produces:
+        - application/json
+      parameters:
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: "<replace with your api key>"
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
+        - name: "x-gw-ims-org-id"
+          in: "header"
+          description: "IMS Organization ID"
+          required: true
+          type: "string"
+          x-example: "1BD@Adobe.com"
+        - name: mergePolicyId
+          in: path
+          description: Id of the merge policy
+          required: true
+          type: string
+          x-example: "e5bc94de-cd14-4cdf-a2bc-88b6e8cbfac2"
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/MergePolicyEntityRequest'
       responses:
         '200':
           description: Profile MergePolicy successfully Patched
@@ -338,100 +350,98 @@ definitions:
     type: object
     required:
       - attributeMerge
-      - creationTime
-      - current
       - default
-      - id
+      - name
       - identityGraph
-      - imsOrgId
-      - schemaId
-      - schemaName
-      - updateTime
-      - version
+      - schema
     properties:
-      internalId:
-        type: number
       imsOrgId:
         type: string
-      schemaId:
+        example: "1BD6382559DF0C130A49422D@AdobeOrg"
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            description: "Fully qualified name of the XDM Schema Class"
+            example: "_xdm.context.profile"
+      name:
         type: string
-      schemaName:
-        type: string
+        example: "All-ID-Order-By-CMS-Loyalty"
       id:
         type: string
+        example: "e5bc94de-cd14-4cdf-a2bc-88b6e8cbfac2"
       identityGraph:
-        type: string
+        $ref: "#/definitions/IdentityGraph"
       attributeMerge:
-        type: string
+        $ref: "#/definitions/AttributeMerge"
       default:
         type: boolean
       version:
         type: integer
         format: int32
-      current:
-        type: boolean
-      creationTime:
+        example: 1
+      updateEpoch:
         type: integer
         format: int64
-      updateTime:
-        type: integer
-        format: int64
+        example: 1551898378
   MergePolicyEntityRequest:
     type: object
     required:
-      - concatenatedMssg$default$2
       - default
     properties:
-      imsOrgId:
-        type: string
       schema:
         type: object
-        additionalProperties:
-          type: number
-      id:
+        properties:
+          name:
+            type: string
+            description: "Fully qualified name of the XDM Schema Class"
+            example: "_xdm.context.profile"
+      name:
         type: string
+        example: "All-ID-Order-By-CMS-Loyalty"
       identityGraph:
-        type: object
-        additionalProperties:
-          type: number
+        $ref: "#/definitions/IdentityGraph"
       attributeMerge:
-        type: object
-        additionalProperties:
-          type: number
+        $ref: "#/definitions/AttributeMerge"
       default:
         type: boolean
-      concatenatedMssg$default$2:
-        type: string
   MergePoliciesResponse:
     type: object
     required:
-      - mergePolicies
+      - _page
     properties:
-      mergePolicies:
+      _page:
+        description: Page details for the data being viewed
+        $ref: '#/definitions/Page'
+      _links:
+        description: number
+        $ref: '#/definitions/Links'
+      children:
         type: array
         items:
           $ref: '#/definitions/MergePolicyEntity'
   MergePolicyEntityUpdate:
     type: object
     properties:
-      identityGraph:
-        type: object
-        additionalProperties:
-          type: number
-      attributeMerge:
-        type: object
-        additionalProperties:
-          type: number
-      default:
-        type: number
-      version:
-        type: number
-      current:
-        type: number
-      creationTime:
-        type: number
-      updateTime:
-        type: number
+      op:
+        type: string
+        example: "add"
+      path:
+        type: string
+        description: 'The path of the field to update. Valid values are <ul>
+        <li>"/name" - Provide a new name for the merge policy</li>
+        <li>"/identityGraph.type" - Change the identity graph type used</li>
+        <li>"/attributeMerge.type" - Change the method used to choose values in the event of a data conflict</li>
+        <li>"/schema.name" - Change the schema for which this merge policy can be used</li>
+        <li>"/version" - Choose the version number to consider this merge policy</li>
+        <li>"/default" - Set this merge policy as the default. Only true is accepted by this service as it cannot be used to remove the default status of a merge policy for a schema. If you wish to assign a different merge policy as the default for a given schema, set it as default. That will result in the original default merge policy no longer being considered default.</li>
+        </ul>'
+        example: "/default"
+      value:
+        type: string
+        description: Provide the new value for the attribute specified as path
+        example: true
   MessageResponse:
     type: object
     required:
@@ -442,3 +452,47 @@ definitions:
         type: boolean
       message:
         type: string
+  Page:
+    type: object
+    properties:
+      next:
+        type: string
+        description: The start value for the next page
+        example: K1JJRDpFaWc5QUpZWHY1c2JBQUFBQUFBQUFBPT0jUlQ6MSNUUkM6MiNGUEM6QWdFQUFBQldBQkVBQVBnaFFQLzM4VUIvL2tKQi8rLysvMUpBLzMrMi8wRkFmLzR4UUwvL0VrRC85em4zRTBEcmNmYi92Kzh4UUwvL05rQVgzRi8rMStqNS80WHQwN2NhUUVzQUFBUUFleGpLQ1JnVXRVcEFCQUFFQVBBRA==
+      count:
+        type: integer
+        description: The number of items on this page
+        example: 2
+  Links:
+    type: object
+    properties:
+      next:
+        type: object
+        properties:
+          href:
+            type: string
+            example: "@/mergePolicies?start=K1JJRDpFaWc5QUpZWHY1c2JBQUFBQUFBQUFBPT0jUlQ6MSNUUkM6MiNGUEM6QWdFQUFBQldBQkVBQVBnaFFQLzM4VUIvL2tKQi8rLysvMUpBLzMrMi8wRkFmLzR4UUwvL0VrRC85em4zRTBEcmNmYi92Kzh4UUwvL05rQVgzRi8rMStqNS80WHQwN2NhUUVzQUFBUUFleGpLQ1JnVXRVcEFCQUFFQVBBRA==&orderBy=&limit=2"
+            description: "URI to access the subsequent page of data."
+  IdentityGraph:
+    type: object
+    properties:
+      type:
+        type: string
+        description: 'Name the identity graph that the merge policy should obtain related identities to merge. Valid values are "none", "pdg", "auto".'
+        example: "auto"
+  AttributeMerge:
+    type: object
+    properties:
+      type:
+        type: string
+        description: 'In the event of data conflicts, where data fragments supply different values for a single attribute, this provides instruction for which value to use in the merged result. Valid values are "dataSetPrecedence" and "timestampOrdered".'
+        example: "dataSetPrecedence"
+      data:
+        type: object
+        properties:
+          order:
+            type: array
+            items:
+              type: string
+            example: ["5b020a27e7040801dedbf46e","5b565efc0a488f01e2c19972"]
+        description: 'If the attribute merge type was specified as "dataSetPrecedence", this field supplies the list of datasets to include in the merge prioritized in the order specified. Any datasets not included in this array will not be included in the merged result. <br/>Otherwise, this value is not required'
