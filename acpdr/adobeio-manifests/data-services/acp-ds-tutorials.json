@@ -68,16 +68,16 @@
 			"title": "Querying data via Data Access API"
 	        },
 		{
-			"importedFileName": "unified_profile_dataset_tutorial",
+			"importedFileName": "unified_profile_dataset_api_tutorial",
 			"pages": [],
-			"path": "api-specification/markdown/narrative/tutorials/unified_profile_dataset_tutorial/unified_profile_dataset_tutorial.md",
-			"title": "Configuring a dataset for Unified Profile and Identity Service "
+			"path": "api-specification/markdown/narrative/tutorials/unified_profile_dataset_tutorial/unified_profile_dataset_api_tutorial.md",
+			"title": "Configuring a dataset for Unified Profile and Identity Service via API"
 		},
 		{
 			"importedFileName": "activating_up_tutorial",
 			"pages": [],
 			"path": "api-specification/markdown/narrative/tutorials/activating_up_tutorial/activating_up_tutorial.md",
-			"title": "Activating Unified Profile"
+			"title": "Configuring Unified Profile via API"
 		},
 		{
 			"importedFileName": "adding_data_to_unified_profile",
@@ -89,13 +89,13 @@
 			"importedFileName": "consuming_unified_profile_data",
 			"pages": [],
 			"path": "api-specification/markdown/narrative/tutorials/consuming_unified_profile_data/consuming_unified_profile_data.md",
-			"title": "Consuming Unified Profile data"
+			"title": "Consuming Unified Profile data via API"
 		},
 		{
 			"importedFileName": "creating_a_segment_tutorial",
 			"pages": [],
 			"path": "api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md",
-			"title": "Creating a segment"
+			"title": "Creating a segment via API"
 		}
 	],
 	"app2app_map": {
