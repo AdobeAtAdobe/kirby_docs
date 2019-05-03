@@ -1,30 +1,28 @@
-# Consuming Unified Profile Data
+# Accessing Unified Profile data via API
 
 ## Overview
 
-Unified Profile is the centrally accessible source of data for Adobe Experience Platform solutions, providing access to unified customer profile data that helps inform and empower actions across any channel, platform and Adobe Solution integrations. This customer data, paired with a rich history of behavioral and interaction data, is used to power machine learning & Sensei. Unified Profile APIs can also be directly used to enrich the functionality of third-party solutions, CRMs, and proprietary solutions.
-
-### Objective
-
 This tutorial covers methods of accessing your Unified Profile data on Experience Platform. In specific, it covers the following:
 
-[Accessing Profile Data by Identity](#accessing-data-by-identity) - Access a single entity by the primary identifier.  
-[Accessing Profile Data by List of Identities](#accessing-data-by-list-of-identities) - Access multiple entities by an array of identities.  
-[Accessing Touch Point Events for a Profile by Identity](#accessing-touch-point-events-for-a-profile-by-identity) - ExperienceEvents represent customer touch points and are only accessible relative to the entity to which they are related. Access ExperienceEvents for a given profile.  
-[Accessing Touch Point Events for Multiple Profiles by Identity](#accessing-touch-point-events-for-multiple-profiles-by-identity) - Access ExperienceEvents for a collection of Profile identities.
-[Accessing an Exported Segment](#accessing-an-exported-segment) - The final step in segmentation is to export the segment to a dataset. Access segment data using the Data Access API.  
+[Understanding your Unified Profile data](#understanding-your-unified-profile-data) - In this section, we demonstrate how to gain visibility into the data fields that are populated across the profiles in your profile store.  
+[Summarizing your data](#summarizing-data) - This section walks you through using the API to inspect the distribution of values populated in your profile store for a particular field.  
+[Accessing profile data by identity](#accessing-profile-data-by-identity) - Access a single entity by a given identity.  
+[Accessing profile data by list of identities](#accessing-data-by-list-of-identities) - Access multiple entities by an array of identities.  
+[Accessing time series events for a profile by identity](#accessing-time-series-events-for-a-profile-by-identity) - ExperienceEvents represent customer time series events, or touch points, and are only accessible relative to the entity to which they are related. Access time series events for a given profile.  
+[Accessing time series events for multiple profiles by identities](#accessing-time-series-events-for-multiple-profiles-by-identities) - Access time series events for a collection of profile identities.  
+[Accessing an exported segment](#accessing-an-exported-segment) - The final step in segmentation is to export the segment to a dataset. Access segment data using the Data Access API.  
 
-### Prerequisite Topics
+### Prerequisite topics
 
-[__Unified Profile__](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md) is a generic lookup entity store, and is used to manage any XDM Platform data. Unified Profile facilitates building customer personalization use cases by merging data across various enterprise data assets and providing access to that unified data. Unified Profile provides tools for looking up entities by ID, as well as robust segmentation tools.  
-[__Authenticating and Accessing Adobe Experience Platform APIs__](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) - This tutorial shows the initial steps to set up an integration in Adobe I/O Console and use the created integration to access Platform APIs. The steps in this tutorial describe how to create an integration and gain access to the following values needed for required headers:
+[Unified Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md) is a generic lookup entity store, and is used to manage any XDM Platform data. Unified Profile facilitates building customer personalization use cases by merging data across various enterprise data assets and providing access to that unified data. Unified Profile provides tools for looking up entities by identity, as well as robust segmentation tools.  
+[Authenticating and Accessing Adobe Experience Platform APIs](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) - This tutorial shows the initial steps to set up an integration in Adobe I/O Console and use an integration to access Platform APIs. The steps in this tutorial describe how to create an integration and gain access to the following values needed for required headers:
 * IMS Organization ID
 * API Key (Client ID)
 * Access Token 
 
-### Related Topics
+### Related topics
 
-[__Experience Data Model (XDM)__](../../technical_overview/schema_registry/standard_schemas/acp_standard_schemas.md) provides the framework to refer to and manage the schemas that your data must conform to for use as entities on Platform.
+[Experience Data Model (XDM)](../../technical_overview/schema_registry/standard_schemas/acp_standard_schemas.md) provides the framework to refer to and manage the schemas that your data must conform to for use as entities on Platform.
 
 ### Requirements
 
@@ -32,80 +30,329 @@ All APIs in this document require the following headers. Some require additional
 
 |Header|Description|Example Value|
 |---|---|---|
-|__`Authorization`__|The Access Token as described in [Prerequisite Topics](#prerequisite-topics), prefixed with "Bearer "|Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ....|
-|__`x-gw-ims-org-id`__|The IMS Organization ID as described in [Prerequisite Topics](#prerequisite-topics)|17FA2AFD56CF35747F000101@AdobeOrg|
-|__`x-api-key`__|The API Key (Client ID) as described in [Prerequisite Topics](#prerequisite-topics)|25622d14d3894ea590628717f2cb7462|
+|`Authorization`|The Access Token as described in [Prerequisite Topics](#prerequisite-topics), prefixed with "Bearer "|Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ....|
+|`x-gw-ims-org-id`|The IMS Organization ID as described in [Prerequisite Topics](#prerequisite-topics)|17FA2AFD56CF35747F000101@AdobeOrg|
+|`x-api-key`|The API Key (Client ID) as described in [Prerequisite Topics](#prerequisite-topics)|25622d14d3894ea590628717f2cb7462|
 
 ---
 
-## Merging Profiles
+## Understanding your Unified Profile data
 
-Unified Profile can supply you with a merged view of entities being accessed, across datasets and for linked identities, referred to as the unified profile. 
+XDM tools allow you to build schemas that are very robust structures for very detailed and fine-tuned data. The data you choose to add to Unified Profile may vary, however, as you may not provide data for every data field in a schema.
 
-On Experience Platform, "profile" is a term used to describe the attributes of an entity. The profile of a product may include a SKU and description, where the profile of a person contains information like first name, last name, and email address. Speaking in terms of a user, it's easy to imagine the numerous systems maintaining its own profile data and where time series activities are occurring. Each of those systems, perhaps an eCommerce system, commissions engine, and call center CRM, should be added to a dataset on Platform specific to that system. An entity as it exists in a single dataset is considered a "profile fragment".
+Some Unified Profile services require XDM data field names, such as `field` parameters indicating specific data fields to retrieve, or when building segment rules. For cases such as these, you are able to list all fields for a given schema for which data has been supplied during any ingest. In this way, you have a view of the schema fields used by your data, rather than all fields available.
 
-### Merge Policies
+#### Service endpoint
 
-Profile merging occurs on data access in Unified Profile. Some use cases handled by Merge Policies include:
+```
+GET https://platform.adobe.io/data/core/ups/observedschemanonnull
+```
 
-* Accessing data from a specific dataset
-* Placing a higher priority on data coming from a dataset more likely than others to have updated and maintained information
-* Adhering to legal concerns such as contractual or DULE obligations, where use of data from a particular dataset is not allowed, perhaps for a particular purpose
-* Getting a unified profile made up of all profile data found for all linked identities
+#### Example request
 
-Any API providing access Unified Profile data, namely Profile Access and Profile Export APIs, requires a Merge Policy. When you don't specify a Merge Policy explicitly, a default will be used. Platform provides a default Merge Policy for any XDM schema, or you can create a Merge Policy and mark it as your organization's default for a schema. If no merge policy ID is defined, and the `schema.name` or `relatedSchema.name` is "_xdm.context.profile", profile access will fetch and merge all related identities.
+```
+curl -X GET \
+  https://platform.adobe.io/data/core/ups/observedschemanonnull \
+  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
+  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
+  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
+  -H 'Content-Type: application/json' \
+  -H 'cache-control: no-cache' \
+  -H 'model-name: _xdm.context.profile'
+```
 
-Merge Policies are specific to a single schema, and can only be used to access entities adhering to that schema. Merge policies are private to an organization and, though there may be several for a single schema, there can only be one default for each schema. 
+#### Example response
 
-For information on working with Merge Policies, see the tutorial [Activating Unified Profile](../activating_up_tutorial/activating_up_tutorial.md).
+```
+{
+    "nonNullCols": [
+        "pf.identities.id",
+        "pf.identities.namespace.code",
+        "pf.identities.primary",
+        "pf.person.name.firstName",
+        "pf.person.name.lastName",
+        "pf.person.name.courtesyTitle",
+        "pf.person.birthYear",
+        "pf.homeAddress._schema.latitude",
+        "pf.homeAddress._schema.longitude",
+        "pf.homeAddress.countryCode",
+        "pf.homeAddress.stateProvince",
+        "pf.homeAddress.city",
+        "pf.homeAddress.postalCode",
+        "pf.homeAddress.street1",
+        "pf.homeAddress.country",
+        "pf.workAddress._schema.latitude",
+        "pf.workAddress._schema.longitude",
+        "pf.workAddress.countryCode",
+        "pf.workAddress.stateProvince",
+        "pf.workAddress.city",
+        "pf.workAddress.postalCode",
+        "pf.workAddress.street1",
+        "pf.workAddress.country",
+        "pf.personalEmail.address",
+        "pf.workEmail.address",
+        "pf.homePhone.number",
+        "tps._id",
+        "tps.timestamp",
+        "tps.endUserIDs._experience.mcid.id",
+        "tps.endUserIDs._experience.mcid.namespace.code",
+        "tps.endUserIDs._experience.aacustomid.id",
+        "tps.endUserIDs._experience.aacustomid.namespace.code",
+        "tps.endUserIDs._experience.aacustomid.primary",
+        "tps.endUserIDs._experience.acid.id",
+        "tps.endUserIDs._experience.acid.namespace.code",
+        "tps.environment.browserDetails.userAgent",
+        "tps.environment.browserDetails.acceptLanguage",
+        "tps.environment.browserDetails.cookiesEnabled",
+        "tps.environment.browserDetails.javaScriptVersion",
+        "tps.environment.browserDetails.javaEnabled",
+        "tps.environment.colorDepth",
+        "tps.environment.viewportHeight",
+        "tps.environment.viewportWidth",
+        "tps.placeContext.localTime",
+        "tps.placeContext.geo._schema.latitude",
+        "tps.placeContext.geo._schema.longitude",
+        "tps.placeContext.geo.countryCode",
+        "tps.placeContext.geo.stateProvince",
+        "tps.placeContext.geo.city",
+        "tps.placeContext.geo.postalCode"
+    ]
+}
+```
 
-### Data Governance 
+As in the response above, all fields prefixed with "pf" are Profile (_xdm.context.profile) fields, where those prefixed with "tps" are ExperienceEvent (_xdm.context.experienceevent) fields. Using them in service calls, you would exclude those prefixes, whereby just the field name remains. For instance, using one of these fields in a request to preview all audiences where a home address city (referred to as "pf.homeAddress.city") has been specified, the field `predicateExpression` would be set to "homeAddress.city":
 
-Data governance is a series of strategies and technologies used to manage customer data and ensure compliance with regulations, restrictions, and policies applicable to data use. As it relates to accessing data, it plays a key role within Experience Platform at various levels, including data usage labeling, data access policies, and access control on data for marketing actions.
+```
+curl -X POST \
+  https://platform.adobe.io/data/core/ups/preview \
+  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
+  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
+  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
+  -H 'Content-Type: application/json' \
+  -H 'cache-control: no-cache' \
+  -d '{
+        "predicateExpression": "homeAddress.city",
+        "predicateType": "pql/text",
+        "predicateModel": "_xdm.context.profile",
+        "graphType": "simple",
+        "mergeStrategy": "simple"
+    } 
+```
 
-Data governance is managed at several points, from deciding what data to add to Platform to what specific data fields to retrieve on accessing that data as well as from what datasets. 
+## Summarizing data
 
-#### Data Usage Labeling and Enforcement (DULE)
+Unified Profile provides summarizations of data for fields containing continuous values such as age, or where values are restricted to a set of possible values such as state or eye color. Use the summary behavior to glean value distribution for values that occur within your profile store a minimum 5%.
 
-Field names can be specified in data access services requests, allowing you to specify what fields to populate in your result. Data Usage Labeling and Enforcement (DULE) framework is a means to control how fields are used from the schema level using usage labels. Usage labels categorize data that falls into the following:
+![Unified Profile Summary](up-summary.png)
 
-* Contractual Data - Used to indicate data that is controlled by contractual obligations, including that the data cannot be exported to a 3rd party or that it isn't permissible for use in Data Science workflows.
-* Identity Data - Indicates data that could be used to identify or contact a person. These labels indicate whether data can directly or indirectly identify a person.
-* Sensitive Data - These labels categorize sensitive geographic data.
+Numeric fields are automatically partitioned according to the clustering of values across your profile store for the field being summarized. The distributions are given for those automatically generated partitions.
 
-For more information on usage labeling, start with the [Data Usage Labeling and Enforcement (DULE) User Guide](https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html).
+If the field to summarize has no values that occur more than 5%, such as fields with high cardinality like email or system ID, a failure response will be returned as these fields do not convey useful information.
 
-#### Dataset Selection
+The service endpoint to get a summary of the data for an XDM field is as follows:
 
-Using Merge Policies, you are able to indicate what datasets to include where a merge would occur; during Segmentation, Access, and Export. Any datasets not included would not be merged into the unified profile.
+```
+GET https://platform.adobe.io/data/core/ups/preview/data/summary/{SCHEMA-FIELD}
+```
+
+Where `SCHEMA-FIELD` names the XDM schema field to summarize. For instance, "pf.homeAddress._schema.longitude".
+
+### Longitude example
+
+Get summary data to understand the demographics of your consumer base by longitude.
+
+#### Example request for summary of longitude values
+
+```
+GET https://platform.adobe.io/data/core/ups/preview/data/summary/pf.homeAddress._schema.longitude
+```
+
+#### Example response
+
+```
+{
+	"quantiles": {
+		"pct40": -98.76600142249998,
+		"pct50": -94.0084823,
+		"pct100": -52.6912126,
+		"pct10": -118.118266245,
+		"pct80": -78.37563784266666,
+		"pct0": -157.86,
+		"pct70": -82.47644212,
+		"pct60": -87.99093141600001,
+		"pct30": -99.581649195,
+		"pct20": -106.34355807714286,
+		"pct90": -73.75254579999998
+	},
+	"summaries": [{
+		"percentage": 0.09627375471568593,
+		"exclusiveUpperBound": -106.34355807714286,
+		"cardinality": 965.9216479850512,
+		"inclusiveLowerBound": -118.118266245,
+		"hll": "NOT-SUPPORTED-CURRENTLY",
+		"value": "-118.118266245:-106.34355807714286"
+	}, {
+		"percentage": 0.10656123243076433,
+		"exclusiveUpperBound": -99.581649195,
+		"cardinality": 1069.1366670471361,
+		"inclusiveLowerBound": -106.34355807714286,
+		"hll": "NOT-SUPPORTED-CURRENTLY",
+		"value": "-106.34355807714286:-99.581649195"
+	}, {
+		"percentage": 0.10114427374702012,
+		"exclusiveUpperBound": -78.37563784266666,
+		"cardinality": 1014.7879229442261,
+		"inclusiveLowerBound": -82.47644212,
+		"hll": "NOT-SUPPORTED-CURRENTLY",
+		"value": "-82.47644212:-78.37563784266666"
+	}, {
+		"percentage": 0.1034787975412938,
+		"exclusiveUpperBound": -73.75254579999998,
+		"cardinality": 1038.2103715366227,
+		"inclusiveLowerBound": -78.37563784266666,
+		"hll": "NOT-SUPPORTED-CURRENTLY",
+		"value": "-78.37563784266666:-73.75254579999998"
+	}, {
+		"percentage": 0.09902487161178347,
+		"exclusiveUpperBound": -98.76600142249998,
+		"cardinality": 993.5238057478365,
+		"inclusiveLowerBound": -99.581649195,
+		"hll": "NOT-SUPPORTED-CURRENTLY",
+		"value": "-99.581649195:-98.76600142249998"
+	}, {
+		"percentage": 0.08931089503860541,
+		"exclusiveUpperBound": -87.99093141600001,
+		"cardinality": 896.0627657399768,
+		"inclusiveLowerBound": -94.0084823,
+		"hll": "NOT-SUPPORTED-CURRENTLY",
+		"value": "-94.0084823:-87.99093141600001"
+	}, {
+		"percentage": 0.10901006611982293,
+		"exclusiveUpperBound": -94.0084823,
+		"cardinality": 1093.7059952047655,
+		"inclusiveLowerBound": -98.76600142249998,
+		"hll": "NOT-SUPPORTED-CURRENTLY",
+		"value": "-98.76600142249998:-94.0084823"
+	}, {
+		"percentage": 0.10358499159862096,
+		"exclusiveUpperBound": -118.118266245,
+		"cardinality": 1039.275824308903,
+		"inclusiveLowerBound": -157.86,
+		"hll": "NOT-SUPPORTED-CURRENTLY",
+		"value": "-157.86:-118.118266245"
+	}, {
+		"percentage": 0.10040217006872898,
+		"exclusiveUpperBound": -82.47644212,
+		"cardinality": 1007.3423422662145,
+		"inclusiveLowerBound": -87.99093141600001,
+		"hll": "NOT-SUPPORTED-CURRENTLY",
+		"value": "-87.99093141600001:-82.47644212"
+	}, {
+		"percentage": 0.08741707457716474,
+		"exclusiveUpperBound": -52.6912126,
+		"cardinality": 877.0619260354822,
+		"inclusiveLowerBound": -73.75254579999998,
+		"hll": "NOT-SUPPORTED-CURRENTLY",
+		"value": "-73.75254579999998:-52.6912126"
+	}],
+	"id": "1BD6382559DF0C130A49422D@AdobeOrg-pf.homeAddress._schema.longitude",
+	"summaryType": "NUMBER",
+	"fieldName": "pf.homeAddress._schema.longitude"
+}
+```
+
+In the response above, you can glean that your user base is within the boundaries of -157.86 and -52.6912126, and the number of estimated consumers per logical grouping. The groups your values are split into is determined by the summary services and returned in the response JSON in the `quantiles` property.
+
+### Country code example
+
+Get summary data to understand the demographics of your consumer base by country code.
+
+#### Example request for summary of country code values
+
+```
+GET https://platform.adobe.io/data/core/ups/preview/data/summary/pf.homeAddress.countryCode
+```
+
+#### Example response
+
+```
+{
+  "quantiles": {
+    "pct40": 0.0,
+    "pct50": 0.0,
+    "pct100": 0.0,
+    "pct10": 0.0,
+    "pct80": 0.0,
+    "pct0": 0.0,
+    "pct70": 0.0,
+    "pct60": 0.0,
+    "pct30": 0.0,
+    "pct20": 0.0,
+    "pct90": 0.0
+  },
+  "summaries": [{
+    "percentage": 0.2637181166795846,
+    "exclusiveUpperBound": 0.0,
+    "cardinality": 2646.717948309003,
+    "inclusiveLowerBound": 0.0,
+    "hll": "NOT-SUPPORTED-CURRENTLY",
+    "value": "CA"
+  }, {
+    "percentage": 0.48713712210991167,
+    "exclusiveUpperBound": 0.0,
+    "cardinality": 4888.987456035888,
+    "inclusiveLowerBound": 0.0,
+    "hll": "NOT-SUPPORTED-CURRENTLY",
+    "value": "US"
+  }, {
+    "percentage": 0.24914476121050375,
+    "exclusiveUpperBound": 0.0,
+    "cardinality": 2500.4573804998995,
+    "inclusiveLowerBound": 0.0,
+    "hll": "NOT-SUPPORTED-CURRENTLY",
+    "value": "MX"
+  }],
+  "id": "1BD6382559DF0C130A49422D@AdobeOrg-pf.homeAddress.countryCode",
+  "summaryType": "STRING",
+  "fieldName": "pf.homeAddress.countryCode"
+}
+```
+
+In the response above, notice the lack of discernable values in `quantiles`. This is due to the values being non-numeric. 
 
 ---
 
-## Accessing Profile Data by Identity
+## Accessing Profile data by identity
 
-Access an entity by an identifier, which would consist of the ID value and the identity namespace.
+Access an entity by an identity, which would consist of the ID value and the identity namespace.
 
-__Service endpoint__
+> **Note:** If a related graph links more than 50 identities, this service will return an HTTP status code of 422 and a message "UPS-ACCSDK-1000005:Too many related identities. Got: 446, max: 50".
 
-`GET https://platform.adobe.io/data/core/ups/access`
+#### Service endpoint
 
-__Request parameters__
+```
+GET https://platform.adobe.io/data/core/ups/access
+```
+
+#### Request parameters
 
 |Parameter|Description|Example|
 |---|---|---|
-|__`schema.name`__|The XDM schema of the entity to retrieve|_xdm.context.profile|
-|__`relatedSchema.name`__|If `schema.name` is "_xdm.context.experienceevent", this value names the schema of the entity related to the ExperienceEvents.|_xdm.context.profile|
-|__`entityId`__|The value of this can be set one of two ways; using a fully qualified identifier consisting of ID value and namespace, or providing an XID.|5558525235|
-|__`entityIdNS`__|This field specifies the identity namespace when `entityId` is not provided as an XID.|phone|
-|__`relatedEntityId`__|If `schema.name` is "ExperienceEvent", this value specifies the namespace of the identity of the related entity. This value follows the same rules as `entityId`.|69935279872410346619186588147492736556|
-|__`relatedEntityIdNS`__|If `schema.name` is "ExperienceEvent", this value specifies the namespace of the value provided by `relatedEntityId` identity of the entity related to the ExperienceEvents.|CRMID|
-|__`fields`__|This value allows you to isolate the data returned to what you need. Use this field to specify which schema field values to include in data retrieved.|personalEmail,person.name,person.gender|
-|__`mergePolicyId`__|Identifies the Merge Policy by which to govern the data returned. If one is not specified in the service call, your organization's default for that schema will be used. If not default Merge Policy has been configured, the default is no profile merge and no identity stitching.|5aa6885fcf70a301dabdfa4a|
-|__`startTime`__|Specify the start time to filter time-series objects, at millisecond granularity.|1539838505|
-|__`endTime`__|Specify the end time to filter time-series objects, at millisecond granularity.|1539838510|
-|__`limit`__|Numeric value specifying the maximum number of objects to return. <br>__Default: 1000__|100|
+|`schema.name`|The XDM schema of the entity to retrieve|_xdm.context.profile|
+|`relatedSchema.name`|If `schema.name` is "_xdm.context.experienceevent", this value names the schema of the entity related to the ExperienceEvents.|_xdm.context.profile|
+|`entityId`|The value of this can be set one of two ways; using a fully qualified identity consisting of ID value and namespace, or providing an XID.|5558525235|
+|`entityIdNS`|This field specifies the identity namespace when `entityId` is not provided as an XID.|phone|
+|`relatedEntityId`|If `schema.name` is "ExperienceEvent", this value specifies the namespace of the identity of the related entity. This value follows the same rules as `entityId`.|69935279872410346619186588147492736556|
+|`relatedEntityIdNS`|If `schema.name` is "ExperienceEvent", this value specifies the namespace of the value provided by `relatedEntityId` identity of the entity related to the ExperienceEvents.|CRMID|
+|`fields`|This value allows you to isolate the data returned to what you need. Use this field to specify which schema field values to include in data retrieved.|personalEmail,person.name,person.gender|
+|`mergePolicyId`|Identifies the Merge Policy by which to govern the data returned. If one is not specified in the service call, your organization's default for that schema will be used. If not default Merge Policy has been configured, the default is no profile merge and no identity stitching.|5aa6885fcf70a301dabdfa4a|
+|`startTime`|Specify the start time to filter time-series objects, at millisecond granularity.|1539838505|
+|`endTime`|Specify the end time to filter time-series objects, at millisecond granularity.|1539838510|
+|`limit`|Numeric value specifying the maximum number of objects to return. <br>__Default: 1000__|100|
 
-__Example request - Get consumer email and name by ID__
+#### Example request
+
+This example will get a consumer's email and name using an identity:
 
 ```
 curl -X GET \
@@ -114,7 +361,8 @@ curl -X GET \
   -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
   -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
 ```
-__Example response__
+
+#### Example response
 
 ```
 {
@@ -138,18 +386,6 @@ __Example response__
                     }
                 },
                 {
-                    "id": "05DD23564EC4607F0A490D44",
-                    "namespace": {
-                        "code": "ecid"
-                    }
-                },
-                {
-                    "id": "89149270342662559642753730269986316603",
-                    "namespace": {
-                        "code": "ecid"
-                    }
-                },
-                {
                     "id": "janesmith@example.com",
                     "namespace": {
                         "code": "email"
@@ -157,18 +393,6 @@ __Example response__
                 },
                 {
                     "id": "89149270342662559642753730269986316604",
-                    "namespace": {
-                        "code": "ecid"
-                    }
-                },
-                {
-                    "id": "89149270342662559642753730269986316700",
-                    "namespace": {
-                        "code": "ecid"
-                    }
-                },
-                {
-                    "id": "89149270342662559642753730269986316701",
                     "namespace": {
                         "code": "ecid"
                     }
@@ -209,15 +433,22 @@ __Example response__
 
 ---
 
-## Accessing Profile Data by List of Identities
+## Accessing profile data by list of identities
 
-Access a number of entities by their identifiers, where an identifier consists of the ID value and the identity namespace.
+Access a number of entities by their identities, where an identity consists of the ID value and the identity namespace.
 
-__Service endpoint__
 
-`POST https://platform.adobe.io/data/core/ups/access/entities`
+> **Note:** If a related graph links more than 50 identities, this service will return an HTTP status code of 422 and a message "UPS-ACCSDK-1000005:Too many related identities. Got: 446, max: 50".
 
-__Example request - Get email and name for several consumers by IDs__
+#### Service endpoint
+
+```
+POST https://platform.adobe.io/data/core/ups/access/entities
+```
+
+#### Example request
+
+This example demonstrates getting an email and name for several consumers by list of identities:
 
 ```
 curl -X POST \
@@ -254,7 +485,7 @@ curl -X POST \
 }'
 ```
 
-__Example response__
+#### Example response
 
 ```
 {
@@ -395,33 +626,38 @@ __Example response__
 
 ---
 
-## Accessing Touch Point Events for a Profile by Identity
+## Accessing time series events for a profile by identity
 
-Look up ExperienceEvents by the identifier of the associated profile.
+Look up ExperienceEvents by the identity of the associated profile.
 
-__Service endpoint__
+> **Note:** If a related graph links more than 50 identities, this service will return an HTTP status code of 422 and a message "UPS-ACCSDK-1000005:Too many related identities. Got: 446, max: 50".
 
-`GET https://platform.adobe.io/data/core/ups/access/entities`
+#### Service endpoint
 
-__Request parameters__
+```
+GET https://platform.adobe.io/data/core/ups/access/entities
+```
+
+#### Request parameters
 
 |Parameter|Description|Example|
 |---|---|---|
-|__`schema.name`__|The XDM schema of the entity to retrieve|_xdm.context.profile|
-|__`relatedSchema.name`__|If `schema.name` is "ExperienceEvent", this value names the schema of the entity related to the ExperienceEvents.|_xdm.context.profile|
-|__`entityId`__|The value of this can be set one of two ways; using a fully qualified identifier consisting of ID value and namespace, or providing an XID.|5558525235|
-|__`entityIdNS`__|This field specifies the identity namespace when `entityId` is not provided as an XID.|phone|
-|__`relatedEntityId`__|If `schema.name` is "ExperienceEvent", this value specifies the namespace of the identity of the related entity. This value follows the same rules as `entityId`.|69935279872410346619186588147492736556|
-|__`relatedEntityIdNS`__|If `schema.name` is "ExperienceEvent", this value specifies the namespace of the value provided by `relatedEntityId` identity of the entity related to the ExperienceEvents.|CRMID|
-|__`fields`__|This value allows you to isolate the data returned to what you need. Use this field to specify which schema field values to include in data retrieved.|personalEmail,person.name,person.gender|
-|__`mergePolicyId`__|Identifies the Merge Policy by which to govern the data returned. If one is not specified in the service call, your organization's default for that schema will be used. If not default Merge Policy has been configured, the default is no profile merge and no identity stitching.|5aa6885fcf70a301dabdfa4a|
-|__`timeFilter.startTime`__|Specify the start time to filter time-series objects, at millisecond granularity.|1539838505|
-|__`timeFilter.endTime`__|Specify the end time to filter time-series objects, at millisecond granularity.|1539838510|
-|__`limit`__|Numeric value specifying the maximum number of objects to return. <br>__Default: 1000__|100|
+|`schema.name`|The XDM schema of the entity to retrieve|_xdm.context.profile|
+|`relatedSchema.name`|If `schema.name` is "ExperienceEvent", this value names the schema of the entity related to the ExperienceEvents.|_xdm.context.profile|
+|`entityId`|The value of this can be set one of two ways; using a fully qualified identifier consisting of ID value and namespace, or providing an XID.|5558525235|
+|`entityIdNS`|This field specifies the identity namespace when `entityId` is not provided as an XID.|phone|
+|`relatedEntityId`|If `schema.name` is "ExperienceEvent", this value specifies the namespace of the identity of the related entity. This value follows the same rules as `entityId`.|69935279872410346619186588147492736556|
+|`relatedEntityIdNS`|If `schema.name` is "ExperienceEvent", this value specifies the namespace of the value provided by `relatedEntityId` identity of the entity related to the ExperienceEvents.|CRMID|
+|`fields`|This value allows you to isolate the data returned to what you need. Use this field to specify which schema field values to include in data retrieved.|personalEmail,person.name,person.gender|
+|`mergePolicyId`|Identifies the merge policy by which to govern the data returned. If one is not specified in the service call, your organization's default for that schema will be used. If not default merge policy has been configured, the default is no profile merge and no identity stitching.|5aa6885fcf70a301dabdfa4a|
+|`orderBy`|Specify the field by which to order results as in `orderBy=timestamp` or `orderBy=+timestamp` to sort by name in ascending order (the default), or `orderBy=-timestamp`, to sort in descending order. To omit this value would result in the default sorting of `timestamp` in ascending order.|
+|`timeFilter.startTime`|Specify the start time to filter time-series objects, at millisecond granularity.|1539838505|
+|`timeFilter.endTime`|Specify the end time to filter time-series objects, at millisecond granularity.|1539838510|
+|`limit`|Numeric value specifying the maximum number of objects to return. <br>__Default: 1000__|100|
 
-__Example request - Get ExperienceEvents by Profile ID__
+__Example request - Get ExperienceEvents by profile identity__
 
-The following example retrieves the end user identities, web and channel for all ExperienceEvents for a given Profile by Profile ID between a date/time range. Results are paginated. 
+The following example retrieves the end user identities, web and channel for all ExperienceEvents for a given profile by identity between a date/time range. Results are paginated. 
 
 ```
 curl -X GET \
@@ -431,7 +667,7 @@ curl -X GET \
   -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
 ```
 
-__Example response__
+#### Example Response
 
 ```
 {
@@ -480,11 +716,15 @@ __Example response__
 }
 ```
 
-### Accessing a Subsequent Page of Touch Point Events
+### Accessing a subsequent page of time series events
 
-Results are paginated when retrieving ExperienceEvents, where the initial call would produce the first page. If there are subsequent pages of results, there will be a non-empty value in the result for `_page.next`. Additionally, the resulting JSON will produce a fully qualified request URL for retrieving the subsequent page, as `_links.next`. Notice the URL begins with "/entities", to which you must prefix "https://platform.adobe.io/data/core/ups/access" to make the service call.
+Results are paginated when retrieving ExperienceEvents, where the initial call would produce the first page. If there are subsequent pages of results, there will be a non-empty value in the result for `_page.next`. Additionally, the resulting JSON will produce a fully qualified request URL for retrieving the subsequent page, as `_links.next`. 
 
-__Example request - Get next page of ExperienceEvents by Profile ID__
+> **Note:** In the example response above, notice the URL begins with "/entities", to which you must prefix "https://<span></span>platform.adobe.<span></span>io/data/core/ups/access" to make the service call.
+> 
+> **Note:** If a related graph links more than 50 identities, this service will return an HTTP status code of 422 and a message "UPS-ACCSDK-1000005:Too many related identities. Got: 446, max: 50".
+
+#### Example request
 
 The following example retrieves a subsequent (any page after the first) page of a request using the request URI as provided in a result, as `_links.next.href`.
 
@@ -496,7 +736,7 @@ curl -X GET \
   -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
 ```
 
-__Example response__
+#### Example response
 
 This example demonstrates a result where there are no subsequent pages of results.
 
@@ -551,28 +791,35 @@ The above example shows an empty `_links.next.href` indicating there are no more
 
 ---
 
-## Accessing Touch Point Events for Multiple Profiles by Identity
+## Accessing time series events for multiple profiles by identities
 
-Look up ExperienceEvents by the identifiers of a collection associated profiles.
+Look up ExperienceEvents by the identities of a collection associated profiles.
 
-__Service endpoint__
+> **Note:** If a related graph links more than 50 identities, this service will return an HTTP status code of 422 and a message "UPS-ACCSDK-1000005:Too many related identities. Got: 446, max: 50".
 
-`POST https://platform.adobe.io/data/core/ups/access/entities`
+#### Service endpoint
 
-__Request body__
+```
+POST https://platform.adobe.io/data/core/ups/access/entities
+```
+
+#### Request body
 
 |Parameter|Description|Example|
 |---|---|---|
-|__`schema.name`__|The XDM schema of the entity to retrieve|_xdm.context.profile|
-|__`relatedSchema.name`__|If `schema.name` is "ExperienceEvent", this value names the schema of the entity related to the ExperienceEvents.|_xdm.context.profile|
-|__`identities`__|List of profiles for which to retrieve associated ExperienceEvents. Each entry of this can be set one of two ways; using a fully qualified identifier consisting of ID value and namespace, or providing an XID.|```[ { "relatedEntityId": "GkouAW-yD9aoRCPhRYROJ-TetAFW" } ]```|
-|__`fields`__|This value allows you to isolate the data returned to what you need. Use this field to specify which schema field values to include in data retrieved.|personalEmail,person.name,person.gender|
-|__`mergePolicyId`__|Identifies the Merge Policy by which to govern the data returned. If one is not specified in the service call, your organization's default for that schema will be used. If not default Merge Policy has been configured, the default is no profile merge and no identity stitching.|5aa6885fcf70a301dabdfa4a|
-|__`timeFilter.startTime`__|Specify the start time to filter time-series objects, at millisecond granularity.|1539838505|
-|__`timeFilter.endTime`__|Specify the end time to filter time-series objects, at millisecond granularity.|1539838510|
-|__`limit`__|Numeric value specifying the maximum number of objects to return. <br>__Default: 1000__|100|
+|`schema.name`|The XDM schema of the entity to retrieve|_xdm.context.profile|
+|`relatedSchema.name`|If `schema.name` is "ExperienceEvent", this value names the schema of the entity related to the ExperienceEvents.|_xdm.context.profile|
+|`identities`|List of profiles for which to retrieve associated ExperienceEvents. Each entry of this can be set one of two ways; using a fully qualified identity consisting of ID value and namespace, or providing an XID.|`[ { "relatedEntityId": "GkouAW-yD9aoRCPhRYROJ-TetAFW" } ]`|
+|`fields`|This value allows you to isolate the data returned to what you need. Use this field to specify which schema field values to include in data retrieved.|personalEmail,person.name,person.gender|
+|`mergePolicyId`|Identifies the Merge Policy by which to govern the data returned. If one is not specified in the service call, your organization's default for that schema will be used. If not default Merge Policy has been configured, the default is no profile merge and no identity stitching.|5aa6885fcf70a301dabdfa4a|
+|`orderBy`|Specify the field by which to order results as in `orderBy=timestamp` or `orderBy=+timestamp` to sort by name in ascending order (the default), or `orderBy=-timestamp`, to sort in descending order. To omit this value would result in the default sorting of `timestamp` in ascending order.|
+|`timeFilter.startTime`|Specify the start time to filter time-series objects, at millisecond granularity.|1539838505|
+|`timeFilter.endTime`|Specify the end time to filter time-series objects, at millisecond granularity.|1539838510|
+|`limit`|Numeric value specifying the maximum number of objects to return. <br>__Default: 1000__|100|
 
-__Example request - Get email and name for several consumers by IDs__
+#### Example request
+
+The following example would get an email and name for several consumers by a list of identities:
 
 ```
 curl -X POST \
@@ -605,7 +852,7 @@ curl -X POST \
 }'
 ```
 
-__Example response__
+#### Example response
 
 ```
 {
@@ -815,11 +1062,13 @@ __Example response__
 }`
 ```
 
-### Accessing a Subsequent Page of Touch Point Events
+### Accessing a subsequent page of time series events
 
 In the example above, notice the first profile ("GkouAW-yD9aoRCPhRYROJ-TetAFW") in the result set provides a value for `_links.next.payload`. Using this payload in a call to the same endpoint will retrieve the subsequent page of ExperienceEvent data for that profile.
 
-__Example request - Get next page of ExperienceEvents by Profile IDs__
+> **Note:** If a related graph links more than 50 identities, this service will return an HTTP status code of 422 and a message "UPS-ACCSDK-1000005:Too many related identities. Got: 446, max: 50".
+
+#### Example request
 
 ```
 curl -X POST \
@@ -855,11 +1104,11 @@ curl -X POST \
 
 ---
 
-## Accessing an Exported Segment
+## Accessing an exported segment
 
 Accessing data using criteria, or rules, is facilitated by Segmentation Service. A segment definition is created using the Segmentation API, tested using the Preview API, and applied against your profile store using the Segment Jobs API. [Visit this tutorial](../creating_a_segment_tutorial/creating_a_segment_tutorial.md) for more details on this.
 
-The final step in segmentation is to export your segment using the Export API. An example of a response from the Export call is as follows:
+The final step in segmentation is to export your segment using the Export API. An example of a response from the Profile Export API call is as follows:
 
 ```
 {
@@ -884,6 +1133,6 @@ The final step in segmentation is to export your segment using the Export API. A
 }
 ```
 
-Once export is complete, use the Data Access API to access the data using the `batchId` returned from the Export service call, "5b565efc0a488f01e2c19972" in the example above. Note that a segment may be chunked, and a batch could consist of several files. You must first list the files belonging to the batch, and download each Parquet file by file ID. 
+Once export is complete, use the Data Access API to access the data using the `batchId` returned from the export service call, "5b565efc0a488f01e2c19972" in the example above. Note that a segment may be chunked, and a batch could consist of several files. You must first list the files belonging to the batch, and download each Parquet file by file ID. 
 
 For more information on using the Data Access API, [see the tutorial](../data_access_tutorial/data_access_tutorial.md).
