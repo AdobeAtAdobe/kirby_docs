@@ -2,6 +2,31 @@
 
 This document contains information about new GDPR features, as well as significant bug fixes and enhancements.
 
+## 18 April, 2019
+
+### API/UI Modifications
+* Default range for status table modified to 7 day lookback
+* Better internal exception handling
+* Improved performance by introducing caching for common internal calls with low data change rates
+
+### Bug fixes
+* Added missing logging information for filtered queries in the GET (all) API
+
+
+## 11 April, 2019
+
+### API/UI Modifications
+* Updated UI to support new functionality for beta customers
+* New metrics API to support UI 2.0 features in beta
+
+
+### 09 April, 2019
+
+### API/UI Modifications
+* Updated all GET API calls to default to 30 day lookback
+* Restricting API usage to have a maximum age lookback of 45 days
+
+
 ## 14 February, 2019
 
 ### Enhancements
