@@ -469,7 +469,7 @@ definitions:
         description: "Default: PQL The only value that is available to use for this is PQL for now."
       predicateModel:
         type: "string"
-        description: "Default: _xdm.context.profile\
+        description: "Default: xdm.model.profile\
             \ The model against which this predicate is to be evaulated. Please note\
             \ that 'touchpoint' is not treated as model as it can be associated with\
             \ any of the models like profile."
