@@ -1,6 +1,6 @@
 # Working with data usage policies in Adobe Experience Platform
 
-Data Usage Labeling and Enforcement (DULE) is at the core of the data governance infrastructure included in Adobe Experience Platform. If you have not yet done so, please begin by reviewing the [DULE User Guide](dule_overview.md) to familiarize yourself with the DULE framework.
+Data Usage Labeling and Enforcement (DULE) is at the core of the data governance infrastructure included in Adobe Experience Platform. If you have not yet done so, you may wish to begin by reviewing the [DULE User Guide](dule_overview.md) to familiarize yourself with the DULE framework.
 
 Through a RESTful API, DULE enables the creation and management of data usage policies to determine what marketing actions can be taken against data that has been labelled with certain data usage labels.
 
@@ -413,7 +413,7 @@ curl -X PUT \
 
 #### Response
 
-A successful update request returns an HTTP Status 200 (OK) and the response body will show the updated policy. The `id` should match the `id` sent in the request.
+If the update is successful, you will receive an HTTP Status 200 (OK) and the response body will show the updated policy. The `id` should match the `id` sent in the request.
 
 ```JSON
 {
@@ -513,7 +513,7 @@ curl -X PATCH \
 
 #### Response
 
-A successful update request will return an HTTP Status 200 (OK) and the response body will show the updated policy ("status" is now "ENABLED" and "description" has been changed). The policy `id` should match the `id` sent in the request.
+If successfully updated, you will receive an HTTP Status 200 (OK) and the response body will show the updated policy ("status" is now "ENABLED" and "description" has been changed). The policy `id` should match the `id` sent in the request.
 
 
 ```JSON
@@ -793,18 +793,21 @@ You can confirm the deletion by attempting to lookup (GET) the marketing action.
 
 ## Policy evaluation
 
-Once marketing actions have been created and policies have been defined, you can use the Policy Service API to evaluate if any policies are violated by certain actions. The returned constraints take the form of a set of policies that would be violated by attempting the marketing action on the specified data containing DULE labels.
+Once marketing actions have been created and policies have been defined, you can use the Policy Service API to evaluate if any policies are violated by certain actions. The returned constraints take the form of a set of policies that would be violated by attempting the marketing action.
 
 By default, **only policies whose status is set to "ENABLED" participate in evaluation**, however you can use the query parameter `?includeDraft=true` to include "DRAFT" policies in evaluation.
 
-Evaluation requests can be made in one of three ways:
+Evaluation requests can be made in one of two ways:
 1. Given a set of DULE labels and a marketing action, does the action violate any policies?
-1. Given one or more datasets and a marketing action, does the action violate any policies?
-1. Given one or more datasets and a subset of one or more fields within each of those datasets, does the action violate any policies?
+1. Given a dataset (and an optional subset of fields in the dataset) and a marketing action, does the action violate any policies?
 
-### DULE labels and a marketing action
+### DULE labels and marketing action
 
 Evaluating policy violations based on the presence of DULE labels requires you to specify the set of labels that would be present on the data during the request. This is done through the use of query parameters, where DULE labels are provided as a comma-separated list of values, as shown in the following example.
+
+_**Important Notes for Policy Evaluation using DULE labels:**_
+* **DULE labels are case sensitive.** The request shown below returns a violated policy, whereas making the same request using lowercase DULE labels (e.g. `"c1,c3"`, `"C1,c3"`, `"c1,C3"`) does not.
+* **Be aware of the `AND` and `OR` operators in your policy expressions.** In this example, if either DULE label (`C1` or `C3`) had appeared alone in the request, the marketing action would not have violated this policy. It takes both labels (`C1 AND C3`) being included in the request to return the violated policy. Ensure you are evaluating policies carefully and defining policy expressions with equal care.
 
 #### API format
 
@@ -823,10 +826,6 @@ curl -X GET \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
 ```
 
-_**Important information for policy evaluation using DULE labels:**_
-* **DULE labels are case sensitive.** The request shown above returns a violated policy, whereas making the same request using lowercase DULE labels (e.g. `"c1,c3"`, `"C1,c3"`, `"c1,C3"`) does not.
-* **Be aware of the `AND` and `OR` operators in your policy expressions.** In this example, if either DULE label (`C1` or `C3`) had appeared alone in the request, the marketing action would not have violated this policy. It takes both labels (`C1 AND C3`) to return the violated policy. Ensure you are evaluating policies carefully and defining policy expressions with equal care.
-
 #### Response
 
 The response object includes a `duleLabels` array that should match the labels sent in the request. If performing the specified marketing action against the DULE labels violates a policy, the `violatedPolicies` array will contain the details of the policy (or policies) affected. If no policies are violated, the `violatedPolicies` array will appear empty (`[]`).
@@ -834,8 +833,8 @@ The response object includes a `duleLabels` array that should match the labels s
 ```JSON
 {
     "timestamp": 1551134846737,
-    "clientId": "{CLIENT_ID}",
-    "userId": "{USER_ID}",
+    "clientId": "string",
+    "userId": "string",
     "imsOrg": "{IMS_ORG}",
     "marketingActionRef": "https://platform.adobe.io/marketingActions/custom/sampleMarketingAction",
     "duleLabels": [
@@ -871,11 +870,11 @@ The response object includes a `duleLabels` array that should match the labels s
             },
             "imsOrg": "{IMS_ORG}",
             "created": 1550703519823,
-            "createdClient": "{CREATED_CLIENT}",
-            "createdUser": "{CREATED_USER}",
+            "createdClient": "{API_KEY}",
+            "createdUser": "string",
             "updated": 1550714340335,
-            "updatedClient": "{UPDATED_CLIENT}",
-            "updatedUser": "{UPDATED_USER}",
+            "updatedClient": "{API_KEY}",
+            "updatedUser": "string",
             "_links": {
                 "self": {
                     "href": "https://platform.adobe.io/data/foundation/dulepolicy/policies/custom/5c6ddb9f5c404513dc2dc454"
@@ -887,190 +886,55 @@ The response object includes a `duleLabels` array that should match the labels s
 }
 ```
 
-### Datasets and a marketing action
+### Dataset ID and marketing action
 
-You can also evaluate policy violations by specifying the ID of one or more datasets from which DULE labels can be collected. This is done by performing a POST request to either the core or custom `/constraints` endpoint for a marketing action and specifying dataset IDs within the request body, as shown below.
+You can also evaluate policy violations by specifying the ID of a dataset from which DULE labels can be collected.
+
+In order to see the DULE labels associated with a given dataset, the Catalog Service API provides a `/dataSets/{id}/dule` operation. For more information, see the [Catalog Service API](../../../../acpdr/swagger-specs/catalog.yaml) reference documentation.
 
 #### API format
 
 ```SHELL
-POST /marketingActions/core/{marketingActionName}/constraints
-POST /marketingActions/custom/{marketingActionName}/constraints
+GET /marketingActions/core/{marketingActionName}/constraints?datasetId={datasetId}
+GET /marketingActions/custom/{marketingActionName}/constraints?datasetId={datasetId}
 ```
 
 #### Request
 
-The request body contains an array with an object for each dataset ID. Since you are sending a request body, the "Content-Type: application/json" request header is required, as shown in the following example.
-
 ```SHELL
-curl -X POST \
-  https://platform.adobe.io/data/foundation/dulepolicy/marketingActions/custom/crossSiteTargeting/constraints \
+curl -X GET \
+  'https://platform.adobe.io/data/foundation/dulepolicy/marketingActions/custom/crossSiteTargeting/constraints?dataSetId=5c423dc25f2f2e00005e2319' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -d '[
-        {
-            "entityType": "dataSet",
-            "entityId": "5c423dc25f2f2e00005e2319"
-        },
-        {
-            "entityType": "dataSet",
-            "entityId": "5cc323e15410ef14b749481e"
-        },
-        {
-            "entityType": "dataSet",
-            "entityId": "5cc1fb685410ef14b748c55f"
-        }
-      ]'
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
 #### Response
 
-The response object includes a `duleLabels` array that contains a consolidated list of all labels found within the specified datasets. This list includes connection-, dataset-, and field-level labels on all fields within the dataset.
+The response object includes a `dataSetId` which should match the ID of the dataset that you provided in the request. Also included is a `duleLabels` array that contains the full list of labels found on the dataset. This list includes connection-, dataset-, and field-level labels on all fields within the dataset.
 
-The response also includes a `discoveredLabels` array containing objects for each dataset, showing `datasetLabels` broken down into connection-, dataset-, and field-level labels. Each field-level label shows the path to the specific field with that label.
-
-If the specified marketing action violates a policy involving the `duleLabels` within the datasets, the `violatedPolicies` array will contain the details of the policy (or policies) affected. If no policies are violated, the `violatedPolicies` array will appear empty (`[]`).
+If the specified marketing action violates a policy involving the `duleLabels` within the dataset, the `violatedPolicies` array will contain the details of the policy (or policies) affected. If no policies are violated, the `violatedPolicies` array will appear empty (`[]`).
 
 ```JSON
 {
-    "timestamp": 1556324277895,
-    "clientId": "{CLIENT_ID}",
-    "userId": "{USER_ID}",
+    "timestamp": 1551147116048,
+    "clientId": "string",
+    "userId": "string",
     "imsOrg": "{IMS_ORG}",
-    "marketingActionRef": "https://platform.adobe.io:443/data/foundation/dulepolicy/marketingActions/custom/crossSiteTargeting",
+    "marketingActionRef": "https://platform.adobe.io/marketingActions/custom/crossSiteTargeting",
     "duleLabels": [
-        "C1",
         "C2",
-        "C4",
         "C5",
+        "C4",
         "C6"
     ],
-    "discoveredLabels": [
-        {
-            "entityType": "dataSet",
-            "entityId": "5c423dc25f2f2e00005e2319",
-            "dataSetLabels": {
-                "connection": {
-                    "labels": []
-                },
-                "dataSet": {
-                    "labels": [
-                        "C6"
-                    ]
-                },
-                "fields": [
-                    {
-                        "labels": [
-                            "C2",
-                            "C5"
-                        ],
-                        "path": "/properties/_customer"
-                    },
-                    {
-                        "labels": [
-                            "C4",
-                            "C5"
-                        ],
-                        "path": "/properties/geoUnit"
-                    },
-                    {
-                        "labels": [
-                            "C4"
-                        ],
-                        "path": "/properties/identityMap"
-                    },
-                    {
-                        "labels": [
-                            "C4"
-                        ],
-                        "path": "/properties/journeyAI"
-                    },
-                    {
-                        "labels": [
-                            "C5"
-                        ],
-                        "path": "/properties/createdByBatchID"
-                    },
-                    {
-                        "labels": [
-                            "C5"
-                        ],
-                        "path": "/properties/faxPhone"
-                    }
-                ]
-            }
-        },
-        {
-            "entityType": "dataSet",
-            "entityId": "5cc323e15410ef14b749481e",
-            "dataSetLabels": {
-                "connection": {
-                    "labels": []
-                },
-                "dataSet": {
-                    "labels": [
-                        "C5"
-                    ]
-                },
-                "fields": [
-                    {
-                        "labels": [
-                            "C2",
-                        ],
-                        "path": "/properties/_customer"
-                    },
-                    {
-                        "labels": [
-                            "C5"
-                        ],
-                        "path": "/properties/geoUnit"
-                    },
-                    {
-                        "labels": [
-                            "C1"
-                        ],
-                        "path": "/properties/identityMap"
-                    }
-                ]
-            }
-        },
-        {
-            "entityType": "dataSet",
-            "entityId": "5cc1fb685410ef14b748c55f",
-            "dataSetLabels": {
-                "connection": {
-                    "labels": []
-                },
-                "dataSet": {
-                    "labels": [
-                        "C5"
-                    ]
-                },
-                "fields": [
-                    {
-                        "labels": [
-                            "C5"
-                        ],
-                        "path": "/properties/createdByBatchID"
-                    },
-                    {
-                        "labels": [
-                            "C5"
-                        ],
-                        "path": "/properties/faxPhone"
-                    }
-                ]
-            }
-        }
-    ],
+    "dataSetId": "5c423dc25f2f2e00005e2319",
     "violatedPolicies": [
         {
             "name": "Targeting Ads or Content",
             "status": "ENABLED",
             "marketingActionRefs": [
-                "https://platform.adobe.io:443/data/foundation/dulepolicy/marketingActions/custom/crossSiteTargeting"
+                "https://platform.adobe.io/data/foundation/dulepolicy/marketingActions/custom/crossSiteTargeting"
             ],
             "description": "Data cannot be used for targeting any ads or content, either on-site or cross-site.",
             "deny": {
@@ -1086,14 +950,14 @@ If the specified marketing action violates a policy involving the `duleLabels` w
             },
             "imsOrg": "{IMS_ORG}",
             "created": 1551141210463,
-            "createdClient": "{CREATED_CLIENT}",
-            "createdUser": "{CREATED_USER}",
+            "createdClient": "string",
+            "createdUser": "string",
             "updated": 1551146178603,
-            "updatedClient": "{UPDATED_CLIENT}",
-            "updatedUser": "{UPDATED_USER}",
+            "updatedClient": "string",
+            "updatedUser": "string",
             "_links": {
                 "self": {
-                    "href": "https://platform.adobe.io:443/data/foundation/dulepolicy/policies/custom/5c74895a74744d13dc2d87cc"
+                    "href": "https://platform.adobe.io/data/foundation/dulepolicy/policies/custom/5c74895a74744d13dc2d87cc"
                 }
             },
             "id": "5c74895a74744d13dc2d87cc"
@@ -1102,177 +966,95 @@ If the specified marketing action violates a policy involving the `duleLabels` w
 }
 ```
 
-### Datasets, fields, and a marketing action
+### Dataset ID, fields, and marketing action
 
-In addition to supplying one or more dataset IDs, a subset of fields from within each dataset may also be specified, indicating that only the DULE labels on those fields should be evaluated. Similar to the POST request involving only datasets, this request adds specific fields for each dataset to the request body.
+In addition to supplying a dataset ID, a sub-set of fields from within the dataset may also be specified, indicating that only the DULE labels on those fields should be evaluated. 
 
-_**Important information for policy evaluation using dataset fields:**_
-* **Field names are case sensitive.** When providing fields, they must be written exactly as they appear in the dataset. (e.g. `firstName` vs `firstname`)
-* **Connection and dataset label inheritance.** DULE labels can be applied at multiple levels and are inherited downward. If your policy evaluations are not returning they way you thought they might, be sure to check the inherited labels from connections down to datasets and from datasets down to fields in addition to those applied at the field level.
+The Catalog Service API provides a `/dataSets/{id}/dule` operation to see the DULE labels associated with a dataset. For more information, see the [Catalog Service API](../../../../acpdr/swagger-specs/catalog.yaml) reference documentation.
+
+_**Important Notes for Policy Evaluation using Datasets:**_
+* **Field names are case sensitive.** If providing fields, they must be written exactly as they appear in the dataset. (e.g. `firstName` vs `firstname`)
+* **Connection-, dataset-, and field-level labels.** DULE labels can be applied at multiple levels and are inherited downward. If your policy evaluations are not returning they way you thought they might, be sure to check the inherited labels in addition to those at the field-level.
 
 #### API format
 
+In order to include dataset fields in the query parameter, the fields must be URL encoded, meaning `/properties/firstName` becomes `%2Fproperties%2FfirstName`. 
+
+You may include multiple fields using a comma-separated list, being sure to include `%2Fproperties%2F` before each field, as shown in the example.
+
 ```SHELL
-POST /marketingActions/core/{marketingActionName}/constraints
-POST /marketingActions/custom/{marketingActionName}/constraints
+GET /marketingActions/core/{marketingActionName}/constraints?datasetId={datasetId}&fields=%2Fproperties%2F{field1},%2Fproperties%2F{field2}
+GET /marketingActions/custom/{marketingActionName}/constraints?datasetId={datasetId}&fields=%2Fproperties%2F{field1},%2Fproperties%2F{field2}
 ```
 
 #### Request
 
-The request body contains an array with an object for each dataset ID and the subset of fields within that dataset that should be used for evaluation. Since you are sending a request body, the "Content-Type: application/json" request header is required, as shown in the following example. 
-
 ```SHELL
-curl -X POST \
-  https://platform.adobe.io/data/foundation/dulepolicy/marketingActions/custom/crossSiteTargeting/constraints \
+curl -X GET \
+  'https://platform.adobe.io/data/foundation/dulepolicy/marketingActions/custom/crossSiteTargeting/constraints?dataSetId=5c423dc25f2f2e00005e2319&fields=%2Fproperties%2FemailAddress,%2Fproperties%2FfirstName' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -d '[
-        {
-            "entityType": "dataSet",
-            "entityId": "5c423dc25f2f2e00005e2319",
-            "entityMeta": {
-                "fields": [
-                    "/properties/_customer",
-                    "/properties/faxPhone"
-                ]
-            }
-        },
-        {
-            "entityType": "dataSet",
-            "entityId": "5cc323e15410ef14b749481e",
-            "entityMeta": {
-                "fields": [
-                    "/properties/_customer",
-                    "/properties/geoUnit"
-                ]
-            }
-        },
-        {
-            "entityType": "dataSet",
-            "entityId": "5cc1fb685410ef14b748c55f",
-            "entityMeta": {
-                "fields": [
-                    "/properties/faxPhone"
-                ]
-            }
-        }
-      ]'
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
 #### Response
 
-The response object includes a `duleLabels` array that contains the consolidated list of labels found on the specified fields. Remember that this includes connection and dataset labels as well, as they are inherited down to fields. 
+The response object includes `dataSetId` and `fields` attributes, the values of which should match the ID of the dataset and the optional sub-set of field(s) that were provided in the request. Also included is a `duleLabels` array that contains the list of labels found on the specified fields. Remember that this includes connection-, dataset-, and field-level labels as they are inherited down. 
 
 If a policy is violated by performing the specified marketing action on the data in the provided fields, the `violatedPolicies` array will contain the details of the policy (or policies) affected. If no policies are violated, the `violatedPolicies` array will appear empty (`[]`).
 
-In the response below, you can see that the list of `duleLabels` is now shorter, as is the `discoveredLabels` for each dataset as it only includes the fields specified in the request body. You will also notice that the previously violated policy, "Targeting Ads or Content", required both `C4 AND C6` labels, so it is therefore no longer violated and the `violatedPolicies` array appears empty.
-
 ```JSON
 {
-    "timestamp": 1556325503038,
-    "clientId": "{CLIENT_ID}",
-    "userId": "{USER_ID}",
+    "timestamp": 1551146287018,
+    "clientId": "string",
+    "userId": "string",
     "imsOrg": "{IMS_ORG}",
-    "marketingActionRef": "https://platform.adobe.io:443/data/foundation/dulepolicy/marketingActions/custom/crossSiteTargeting",
+    "marketingActionRef": "https://platform.adobe.io/marketingActions/custom/crossSiteTargeting",
     "duleLabels": [
-        "C2",
-        "C5",
+        "C4",
         "C6"
     ],
-    "discoveredLabels": [
-        {
-            "entityType": "dataSet",
-            "entityId": "5c423dc25f2f2e00005e2319",
-            "dataSetLabels": {
-                "connection": {
-                    "labels": []
-                },
-                "dataSet": {
-                    "labels": [
-                        "C6"
-                    ]
-                },
-                "fields": [
-                    {
-                        "labels": [
-                            "C2",
-                            "C5"
-                        ],
-                        "path": "/properties/_customer"
-                    },
-                    {
-                        "labels": [
-                            "C5"
-                        ],
-                        "path": "/properties/faxPhone"
-                    }
-                ]
-            }
-        },
-        {
-            "entityType": "dataSet",
-            "entityId": "5cc323e15410ef14b749481e",
-            "dataSetLabels": {
-                "connection": {
-                    "labels": []
-                },
-                "dataSet": {
-                    "labels": [
-                        "C5"
-                    ]
-                },
-                "fields": [
-                    {
-                        "labels": [
-                            "C2",
-                            "C5"
-                        ],
-                        "path": "/properties/_customer"
-                    },
-                    {
-                        "labels": [
-                            "C5"
-                        ],
-                        "path": "/properties/geoUnit"
-                    }
-                ]
-            }
-        },
-        {
-            "entityType": "dataSet",
-            "entityId": "5cc1fb685410ef14b748c55f",
-            "dataSetLabels": {
-                "connection": {
-                    "labels": []
-                },
-                "dataSet": {
-                    "labels": [
-                        "C5"
-                    ]
-                },
-                "fields": [
-                    {
-                        "labels": [
-                            "C5"
-                        ],
-                        "path": "/properties/faxPhone"
-                    }
-                ]
-            }
-        }
+    "dataSetId": "5c423dc25f2f2e00005e2319",
+    "fields": [
+        "/properties/emailAddress",
+        "/properties/firstName"
     ],
-    "violatedPolicies": []
+    "violatedPolicies": [
+        {
+            "name": "Targeting Ads or Content",
+            "status": "ENABLED",
+            "marketingActionRefs": [
+                "https://platform.adobe.io/data/foundation/dulepolicy/marketingActions/custom/crossSiteTargeting"
+            ],
+            "description": "Data cannot be used for targeting any ads or content, either on-site or cross-site.",
+            "deny": {
+                "operator": "AND",
+                "operands": [
+                    {
+                        "label": "C4"
+                    },
+                    {
+                        "label": "C6"
+                    }
+                ]
+            },
+            "imsOrg": "{IMS_ORG}",
+            "created": 1551141210463,
+            "createdClient": "string",
+            "createdUser": "string",
+            "updated": 1551146178603,
+            "updatedClient": "string",
+            "updatedUser": "string",
+            "_links": {
+                "self": {
+                    "href": "https://platform.adobe.io/data/foundation/dulepolicy/policies/custom/5c74895a74744d13dc2d87cc"
+                }
+            },
+            "id": "5c74895a74744d13dc2d87cc"
+        }
+    ]
 }
 ```
-
-
-<!-- ## Policy evaluation for Unified Profile Service
-
-The Policy Service API can also be used to check for policy violations involving the use of Unified Profile Service (UPS) segments. 
-
-Detailed instructions for Unified Profile Service, including working with merge policies and obtaining datasets from UPS segments, can be found in the [Unified Profile and data usage compliance](../../markdown/dule_and_unified_profile/dule_and_unified_profile.md) documentation. -->
 
 ## Next steps
 
