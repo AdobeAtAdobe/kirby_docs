@@ -128,9 +128,9 @@ paths:
           schema:
             $ref: '#/definitions/ResponseErrorContext'
         '422':
-          description: Syntax is correct but profile access is not able to process your request.
+          description: Can not retrieve merged data as there are more than 50 identities associated with an individual in the related identity graph.
           schema:
-            $ref: '#/definitions/ResponseErrorContext'
+            $ref: '#/definitions/TooManyIdentitiesErrorContext'
         '404':
           description: XDM Model objects not found.
           schema:
@@ -193,6 +193,10 @@ paths:
           description: XDM Model objects not found
           schema:
             $ref: '#/definitions/NotFoundError'
+        '422':
+          description: Can not retrieve merged data as there are more than 50 identities associated with an individual in the related identity graph.
+          schema:
+            $ref: '#/definitions/TooManyIdentitiesErrorContext'
         '429':
           description: Too many requests. Please try again later.
           schema:
@@ -304,6 +308,17 @@ definitions:
         description: Original status code from error
         type: string
         example: '429'
+  TooManyIdentitiesErrorContext:
+    type: object
+    properties:
+      message:
+        description: Error message indicating more than the maximum permitted number of identities were found associated with an individual being retrieved.
+        type: string
+        example: 'UPS-ACCSDK-1000005:Too many related identities. Got: 446, max: 50'
+      statusCode:
+        description: Original status code from error
+        type: string
+        example: '422'
   ResponseErrorContext:
     type: object
     properties:
@@ -398,6 +413,11 @@ definitions:
           $ref: '#/definitions/PostIdentityEntityItem'
       timeFilter:
         $ref: '#/definitions/PostTimeFilterEntity'
+      orderBy:
+        description: Provide the field by which to order results. Prefix the field name with "-" to indicate reverse, or descending order. e.g. "-timestamp"
+        required: false
+        type: string
+        x-example: timestamp
       limit:
         type: number
         description: 'Number of records to return from the result. Only for experience events. Default: 1000'
