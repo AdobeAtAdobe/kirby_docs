@@ -125,6 +125,4 @@ The following is a sample API GET request:
     ],
     "totalRecords": 1
 }
-```alRecords": 1
-}
 ```
