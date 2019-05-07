@@ -7,10 +7,24 @@ info:
     Sensei provides a mechanism for Data Scientists to organize and manage ML
     services from algorithm onboarding through experimentation and to service
     deployment.
-
+    
+    
     **Notes:** 
       * PLATFORM Gateway URL: https://platform.adobe.io/ 
       * Base path for this API: /data/sensei
+
+    Some common terminology used in this API document:
+      Term | Definition
+      --- | ---
+      **ML Algorithm** |  An algorithm that can learn from data and improve from experience, without human intervention. For example, linear regressions, logistic regression, Naive Bayes, Random Forest, and KNN
+      **ML library** |  A machine learning library or framework, typically language-specific, that provides fast, extensible implementations of cutting-edge machine learning algorithms. For example, TensorFlow, Caffe, Mlib (Spark), and H2O.
+      **Sensei Engine** | A project in a ML framework of the developer's choice. This constitutes templatized code and bindings in the language of choice for preprocessing, training, evaluation, and prediction.
+      **Sensei ML instance** |  The conceptual entity that is an instance of a Sensei Engine for a particular tenant made up of specific data, parameters, and Sensei code.
+      **Trained models** |  One of many models created via the process of experimenting and feature engineering before arriving at a validated, evaluated, and finalized model.
+      **Experiment**  | The process by which a model's reliability and generalization is validated by scoring on a small fraction of real live traffic. This process can include changing datasets, changing features, changing learning parameters and hardware.
+      **Published model** |  A finalized and versioned model arrived at after training, validation, and evaluation.
+      **Sensei ML service** | An ML Instance or Training Experiment Run deployed as a service to support on demand requests for training/scoring via an endpoint.
+      **Sensei runtime**  | The shell in which a Sensei ML instance executes.
 
     For more information about Sensei, try the [architectural overview](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html).
 
@@ -106,9 +120,10 @@ paths:
         - $ref: '#/parameters/gwImsOrgIdHeaderParam'
         - in: formData
           name: engine
-          type: string
           description: Engine entity description
           x-content-type: application/vnd.adobe.platform.sensei+json;profile=engine.v1.json
+          schema:
+            $ref: '#/definitions/Engine'
         - in: formData
           name: defaultArtifact
           type: file
@@ -1036,6 +1051,8 @@ paths:
           type: string
           description: Model object that needs to be created
           x-content-type: application/vnd.adobe.platform.sensei+json;profile=model.v1.json
+          schema:
+            $ref: '#/definitions/Model'
       responses:
         '201':
           description: Creation successful
@@ -1513,7 +1530,7 @@ paths:
       description: MLServices may be searched by name or tags.
       operationId: retrieveMLServices
       produces:
-        - application/vnd.adobe.platform.sensei+json;profile=mlServiceListing.v1.json
+          application/vnd.adobe.platform.sensei+json;profile=mlServiceListing.v1.json
       parameters:
         - $ref: '#/parameters/startQueryParam'
         - $ref: '#/parameters/limitQueryParam'
@@ -2991,7 +3008,7 @@ definitions:
       children:
         type: array
         items:
-          $ref: '#/definitions/DefaultMetrics'
+            $ref: '#/definitions/DefaultMetrics'
   LinkObject:
     type: object
     required:
