@@ -500,7 +500,7 @@ Where:
 
 ### Response
 
-```shell
+```http
 200 OK
 ```
 
@@ -634,7 +634,7 @@ Where:
 
 #### Response
 
-```
+```http
 200 OK
 ```
 
@@ -677,4 +677,4 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID
 
 [5]: https://www.iso.org/iso-8601-date-and-time-format.html
 
-[6]: ../../../../../../acpdr/swagger-specs/bulk-ingest-api.yaml
+[6]: ../../../../../../acpdr/swagger-specs/ingest-api.yaml
