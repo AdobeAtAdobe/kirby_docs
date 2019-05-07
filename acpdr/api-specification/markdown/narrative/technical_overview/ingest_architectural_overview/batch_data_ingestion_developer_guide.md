@@ -29,7 +29,7 @@ For example, neither JSON nor CSV has a date or date-time type. As a result, the
 The table below shows the conversions supported when ingesting data.
 
 | Inbound (row) vs Target (col) | String  | Byte  | Short  | Integer  | Long  | Double  | Date  | Date-Time  | Boolean  | Object  | Array  | Map |
-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:----:|
 | String    | X | X | X | X | X | X | X | X |   |   |   |   |
 | Byte      | X | X | X | X | X | X |   |   |   |   |   |   |
 | Short     | X | X | X | X | X | X |   |   |   |   |   |   |
