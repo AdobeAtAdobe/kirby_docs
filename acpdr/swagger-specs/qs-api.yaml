@@ -27,7 +27,7 @@ tags:
   - name: "Connections"
   - name: "Schedules"
   - name: "Query-Templates"
-host: platform-int.adobe.io
+
 schemes:
   - https
 securityDefinitions:
