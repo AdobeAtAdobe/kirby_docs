@@ -14,7 +14,7 @@
         "pages": [ 
             {
                 "pages": [ ],
-                "path": "api-specifcation/markdown/technical_overview/ingest_architectural_overview/batch_data_ingestion_troubleshooting_guide.md",
+                "path": "api-specifcation/markdown/narrative/technical_overview/ingest_architectural_overview/batch_data_ingestion_troubleshooting_guide.md",
                 "title": "Batch ingestion troubleshooting guide"
             },
             {
