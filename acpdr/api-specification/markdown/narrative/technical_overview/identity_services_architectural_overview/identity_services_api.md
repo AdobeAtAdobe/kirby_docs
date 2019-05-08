@@ -735,8 +735,6 @@ __Example response__
   {
         "updateTime": 1441122419000,
         "code": "CORE",
-        "shared": true,
-        "type": "GENERAL",
         "status": "ACTIVE",
         "description": "CORE Namespace",
         "id": 0,
@@ -748,8 +746,6 @@ __Example response__
     {
         "updateTime": 1495153678000,
         "code": "ECID",
-        "shared": false,
-        "type": "GENERAL",
         "status": "ACTIVE",
         "description": "ECID Namespace",
         "id": 4,
@@ -761,8 +757,6 @@ __Example response__
     {
         "updateTime": 1522783145000,
         "code": "AdCloud",
-        "shared": true,
-        "type": "GENERAL",
         "status": "ACTIVE",
         "description": "Adobe AdCloud - ID Syncing Partner",
         "id": 411,
@@ -798,7 +792,6 @@ curl -X POST \
   -H 'x-gw-ims-org-id: B3349894589501FE0A494034@AdobeOrg' \
   -H 'x-uis-cst-ctx: stub' \
   -d '{
-  "shared": false,
   "description": "Test Namespace Details",
   "idType": "COOKIE",
   "code": "TEST",
@@ -814,8 +807,6 @@ __Example response__
 {
     "updateTime": 1525129290000,
     "code": "TEST",
-    "shared": false,
-    "type": "GENERAL",
     "status": "ACTIVE",
     "description": "Test Namespace Details",
     "id": 56011,

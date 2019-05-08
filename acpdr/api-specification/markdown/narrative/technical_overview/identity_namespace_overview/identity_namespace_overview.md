@@ -19,7 +19,7 @@ A fully qualified identity includes the ID value, and a namespace. This is descr
 
 ### Identity data
 
-A consumer could be identified by the identity types listed below. The identity type is specified at the time of identity namespace creation and controls whether and how the data is handled when persisted in the identity graph.
+A consumer could be identified by the identity types listed below. The identity type is specified at the time of identity namespace creation and controls whether and how the data is handled when persisted in the identity graph. An identity type can have the following values: "Cookie", "Email", "Phone", "Device", "Cross_device".
 
 * **Cookie** - These identities are critical for expansion and constitute majority of the graph. However, by nature they decay fast and loose their value over time. Deletion of cookie will be handled specially in the identity graph.
 * **Email** - Emails are personally identifiable information (PII) and as such is, by default, encrypted before being stored in the identity graph. Emails are first lower-case transformed prior to encryption.
