@@ -9,239 +9,208 @@ Adobe Analytics report suites are published to Adobe Experience Platform as two 
 
 ![ADC Process](/end-user/markdown/query-service/graphics/Analytics%20Data%20Connector%20Process.png?token=AAAaGnEEYGCU6OxcnHfA8BUdznYMzDqcks5cJUGLwA%3D%3D)
 
-Direct Mapping
-
-These are fields that are mapped directly as is to XDM from Analytics.
-
-**Count:** 930
-
-| Analytics Field | XDM Field  | XDM Type | DataSet | Properties | Description |
-| --------------- | ---------- | -------- | ------- | ---------- |------------ |
-| m_evar1 - m_evar250 | _experience.analytics.customDimensions.eVars.eVar1 - _experience.analytics.customDimensions.eVars.eVar250 | string | mid | {} | - |
-| m_prop1 - m_prop75 | _experience.analytics.customDimensions.props.prop1 - _experience.analytics.customDimensions.props.prop75 | string | mid | {} | - |
-| m_browser | _experience.analytics.environment.browserID | integer | mid | {} | - |
-| m_browser_height | environment.browserDetails.viewportHeight | integer | mid | {} | - |
-| m_browser_width | environment.browserDetails.viewportWidth | integer | mid | {} | - |
-| m_campaign | marketing.trackingCode | string | mid | {} | - |
-| m_channel | web.webPageDetails.siteSection | string | mid | {} | - |
-| m_domain | environment.domain | string | mid | {} | - |
-| m_geo_city | placeContext.geo.city | string | mid | {} | - |
-| m_geo_dma | placeContext.geo.dmaID | integer | mid | {} | - |
-| m_geo_region | placeContext.geo.stateProvince | string | mid | {} | - |
-| m_geo_zip | placeContext.geo.postalCode | string | mid | {} | - |
-| m_keywords | search.keywords | string | mid | {} | - |
-| m_mobile_id | device.typeID | string | mid | {} | - |
-| m_os | _experience.analytics.environment.operatingSystemID | integer | mid | {} | - |
-| m_page_url | web.webPageDetails.URL | string | mid | {} | - |
-| m_pagename_no_url | web.webPageDetails.name | string | mid | {} | - |
-| m_referrer | web.webReferrer.URL | string | mid | {} | - |
-| m_search_page_num | search.pageDepth | integer | mid | {} | - |
-| m_state | _experience.analytics.customDimensions.stateProvince | string | mid | {} | - |
-| m_user_server | web.webPageDetails.server | string | mid | {} | - |
-| m_zip | _experience.analytics.customDimensions.postalCode | string | mid | {} | - |
-| post_evar1 - post_evar250 | _experience.analytics.customDimensions.eVars.eVar1 - _experience.analytics.customDimensions.eVars.eVar250 | string | post | {} | - |
-| post_prop1 - post_prop75 | _experience.analytics.customDimensions.props.prop1 - _experience.analytics.customDimensions.props.prop75 | string | post | {} | - |
-| post_browser_height | environment.browserDetails.viewportHeight | integer | post | {} | - |
-| post_browser_width | environment.browserDetails.viewportWidth | integer | post | {} | - |
-| post_campaign | marketing.trackingCode | string | post | {} | - |
-| post_channel | web.webPageDetails.siteSection | string | post | {} | - |
-| post_cust_visid | endUserIDs._experience.aacustomid.id | string | mid,post | {} | - |
-| post_first_hit_page_url | _experience.analytics.endUser.firstWeb.webPageDetails.URL | string | post | {} | - |
-| post_first_hit_pagename | _experience.analytics.endUser.firstWeb.webPageDetails.name | string | post | {} | - |
-| post_keywords | search.keywords | string | post | {} | - |
-| post_page_url | web.webPageDetails.URL | string | post | {} | - |
-| post_pagename_no_url | web.webPageDetails.name | string | post | {} | - |
-| post_purchaseid | commerce.order.purchaseID | string | mid,post | {} | - |
-| post_referrer | web.webReferrer.URL | string | post | {} | - |
-| post_state | _experience.analytics.customDimensions.stateProvince | string | post | {} | - |
-| post_user_server | web.webPageDetails.server | string | post | {} | - |
-| post_zip | _experience.analytics.customDimensions.postalCode | string | post | {} | - |
-| accept_language | environment.browserDetails.acceptLanguage | string | mid,post | {} | - |
-| browser | _experience.analytics.environment.browserID | integer | post | {} | - |
-| domain | environment.domain | string | post | {} | - |
-| first_hit_referrer | _experience.analytics.endUser.firstWeb.webReferrer.URL | string | post | {} | - |
-| geo_city | placeContext.geo.city | string | post | {} | - |
-| geo_dma | placeContext.geo.dmaID | integer | post | {} | - |
-| geo_region | placeContext.geo.stateProvince | string | post | {} | - |
-| geo_zip | placeContext.geo.postalCode | string | post | {} | - |
-| ipv6 | environment.ipV6 | string | mid,post | {} | - |
-| j_jscript | environment.browserDetails.javaScriptVersion | string | mid,post | {} | - |
-| mobile_id | device.typeID | string | post | {} | - |
-| os | _experience.analytics.environment.operatingSystemID | integer | post | {} | - |
-| search_page_num | search.pageDepth | integer | post | {} | - |
-| user_agent | environment.browserDetails.userAgent | string | mid,post | {} | - |
-| visit_keywords | _experience.analytics.session.search.keywords | string | post | {} | - |
-| visit_num | _experience.analytics.session.num | integer | post | {} | - |
-| visit_page_num | _experience.analytics.session.depth | integer | post | {} | - |
-| visit_referrer | _experience.analytics.session.web.webReferrer.URL | string | post | {} | - |
-| visit_search_page_num | _experience.analytics.session.search.pageDepth | integer | post | {} | - |
-| mobileappid | application.name | string | mid,post | {} | - |
-| mobiledevice | device.typeID | string | mid,post | {} | - |
-| pointofinterest | placeContext.POIinteraction.POIDetail.name | string | mid,post | {} | - |
-| pointofinterestdistance | placeContext.POIinteraction.POIDetail.geoInteractionDetails.distanceToCenter | number | mid,post | {} | - |
-| mobileplaceaccuracy | placeContext.POIinteraction.POIDetail.geoInteractionDetails.deviceGeoAccuracy | number | mid,post | {} | - |
-| mobileplacecategory | placeContext.POIinteraction.POIDetail.category | string | mid,post | {} | - |
-| mobileplaceid | placeContext.POIinteraction.POIDetail.POIID | string | mid,post | {} | - |
-| video | media.mediaTimed.primaryAssetReference._id | string | mid,post | {} | - |
-| videoad | advertising.adAssetReference._id | string | mid,post | {} | - |
-| videocontenttype | media.mediaTimed.primaryAssetViewDetails.broadcastContentType | string | mid,post | {} | - |
-| videoadpod | advertising.adAssetViewDetails.adBreak._id | string | mid,post | {} | - |
-| videoadinpod | advertising.adAssetViewDetails.index | integer | mid,post | {} | - |
-| videoplayername | media.mediaTimed.primaryAssetViewDetails.playerName | string | mid,post | {} | - |
-| videochannel | media.mediaTimed.primaryAssetViewDetails.broadcastChannel | string | mid,post | {} | - |
-| videoadplayername | advertising.adAssetViewDetails.playerName | string | mid,post | {} | - |
-| videochapter | media.mediaTimed.mediaChapter.chapterAssetReference._id | string | mid,post | {} | - |
-| videoname | media.mediaTimed.primaryAssetReference._dc.title | string | mid,post | {} | - |
-| videoadname | advertising.adAssetReference._dc.title | string | mid,post | {} | - |
-| videoshow | media.mediaTimed.primaryAssetReference._iptc4xmpExt.Series._iptc4xmpExt.Name | string | mid,post | {} | - |
-| videoseason | media.mediaTimed.primaryAssetReference._iptc4xmpExt.Season._iptc4xmpExt.Name | string | mid,post | {} | - |
-| videoepisode | media.mediaTimed.primaryAssetReference._iptc4xmpExt.Episode._iptc4xmpExt.Name | string | mid,post | {} | - |
-| videonetwork | media.mediaTimed.primaryAssetViewDetails.broadcastNetwork | string | mid,post | {} | - |
-| videoshowtype | media.mediaTimed.primaryAssetReference.showType | string | mid,post | {} | - |
-| videoadload | media.mediaTimed.primaryAssetViewDetails.adLoadType | string | mid,post | {} | - |
-| videofeedtype | media.mediaTimed.primaryAssetViewDetails.sourceFeed | string | mid,post | {} | - |
-| mobilebeaconmajor | placeContext.POIinteraction.POIDetail.beaconInteractionDetails.beaconMajor | number | mid,post | {} | - |
-| mobilebeaconminor | placeContext.POIinteraction.POIDetail.beaconInteractionDetails.beaconMinor | number | mid,post | {} | - |
-| mobilebeaconuuid | placeContext.POIinteraction.POIDetail.beaconInteractionDetails.proximityUUID | string | mid,post | {} | - |
-| videosessionid | media.mediaTimed.primaryAssetViewDetails._id | string | mid,post | {} | - |
-| videogenre | media.mediaTimed.primaryAssetReference._iptc4xmpExt.Genre | array | mid,post | {title (Object), description (Object), type (Object), meta:xdmType (Object), items (string), meta:xdmField (Object)} | - |
-| mobileinstalls | application.firstLaunches | Object | mid,post | {id (string), value (number)} | - |
-| mobileupgrades | application.upgrades | Object | mid,post | {id (string), value (number)} | - |
-| mobilelaunches | application.launches | Object | mid,post | {id (string), value (number)} | - |
-| mobilecrashes | application.crashes | Object | mid,post | {id (string), value (number)} | - |
-| mobilemessageclicks | directMarketing.clicks | Object | mid,post | {id (string), value (number)} | - |
-| mobileplaceentry | placeContext.POIinteraction.poiEntries | Object | mid,post | {id (string), value (number)} | - |
-| mobileplaceexit | placeContext.POIinteraction.poiExits | Object | mid,post | {id (string), value (number)} | - |
-| videotime | media.mediaTimed.timePlayed | Object | mid,post | {id (string), value (number)} | - |
-| videostart | media.mediaTimed.impressions | Object | mid,post | {id (string), value (number)} | - |
-| videocomplete | media.mediaTimed.completes | Object | mid,post | {id (string), value (number)} | - |
-| videosegmentviews | media.mediaTimed.mediaSegmentViews | Object | mid,post | {id (string), value (number)} | - |
-| videoadstart | advertising.impressions | Object | mid,post | {id (string), value (number)} | - |
-| videoadcomplete | advertising.completes | Object | mid,post | {id (string), value (number)} | - |
-| videoadtime | advertising.timePlayed | Object | mid,post | {id (string), value (number)} | - |
-| videochapterstart | media.mediaTimed.mediaChapter.impressions | Object | mid,post | {id (string), value (number)} | - |
-| videochaptercomplete | media.mediaTimed.mediaChapter.completes | Object | mid,post | {id (string), value (number)} | - |
-| videochaptertime | media.mediaTimed.mediaChapter.timePlayed | Object | mid,post | {id (string), value (number)} | - |
-| videoplay | media.mediaTimed.starts | Object | mid,post | {id (string), value (number)} | - |
-| videototaltime | media.mediaTimed.totalTimePlayed | Object | mid,post | {id (string), value (number)} | - |
-| videoqoetimetostart | media.mediaTimed.primaryAssetViewDetails.qoe.timeToStart | Object | mid,post | {id (string), value (number)} | - |
-| videoqoedropbeforestart | media.mediaTimed.dropBeforeStarts | Object | mid,post | {id (string), value (number)} | - |
-| videoqoebuffercount | media.mediaTimed.primaryAssetViewDetails.qoe.buffers | Object | mid,post | {id (string), value (number)} | - |
-| videoqoebuffertime | media.mediaTimed.primaryAssetViewDetails.qoe.bufferTime | Object | mid,post | {id (string), value (number)} | - |
-| videoqoebitratechangecount | media.mediaTimed.primaryAssetViewDetails.qoe.bitrateChanges | Object | mid,post | {id (string), value (number)} | - |
-| videoqoebitrateaverage | media.mediaTimed.primaryAssetViewDetails.qoe.bitrateAverage | Object | mid,post | {id (string), value (number)} | - |
-| videoqoeerrorcount | media.mediaTimed.primaryAssetViewDetails.qoe.errors | Object | mid,post | {id (string), value (number)} | - |
-| videoqoedroppedframecount | media.mediaTimed.primaryAssetViewDetails.qoe.droppedFrames | Object | mid,post | {id (string), value (number)} | - |
-| videoprogress10 | media.mediaTimed.progress10 | Object | mid,post | {id (string), value (number)} | - |
-| videoprogress25 | media.mediaTimed.progress25 | Object | mid,post | {id (string), value (number)} | - |
-| videoprogress50 | media.mediaTimed.progress50 | Object | mid,post | {id (string), value (number)} | - |
-| videoprogress75 | media.mediaTimed.progress75 | Object | mid,post | {id (string), value (number)} | - |
-| videoprogress95 | media.mediaTimed.progress95 | Object | mid,post | {id (string), value (number)} | - |
-| videoresume | media.mediaTimed.resumes | Object | mid,post | {id (string), value (number)} | - |
-| videopausecount | media.mediaTimed.pauses | Object | mid,post | {id (string), value (number)} | - |
-| videopausetime | media.mediaTimed.pauseTime | Object | mid,post | {id (string), value (number)} | - |
-| videosecondssincelastcall | media.mediaTimed.primaryAssetViewDetails.sessionTimeout | integer | mid,post | {} | - |
-
-Split Mapping
-
-These fields have a single source and map to multiple XDM locations.
-
-**Count:** 5
-
-| Analytics Field | XDM Field  | XDM Type | DataSet | Properties | Description |
-| --------------- | ---------- | -------- | ------- | ---------- |------------ |
-| s_resolution | device.screenWidth | integer | mid,post | [] | - |
-| s_resolution | device.screenHeight | integer | mid,post | [] | - |
-| mobileosversion | environment.operatingSystem | string | mid,post | [] | - |
-| mobileosversion | environment.operatingSystemVersion | string | mid,post | [] | - |
-| videoadlength | advertising.adAssetReference._xmpDM.duration | integer | mid,post | [] | - |
-
-Transformed or Generated Mapping
-
-These XDM paths require logic beyond a direct copy from Analytics.
-
-**Count:** 81
-
-| Analytics Field | XDM Field  | XDM Type | DataSet | Properties | Description |
-| --------------- | ---------- | -------- | ------- | ---------- |------------ |
-| m_prop1 - m_prop75 | _experience.analytics.customDimensions.listprops.prop1 - _experience.analytics.customDimensions.listprops.prop75 | Object | mid | {} | - |
-| m_hier1 - m_hier5 | _experience.analytics.customDimensions.hierarchies.hier1 - _experience.analytics.customDimensions.hierarchies.hier5 | Object | mid | {values (array), delimiter (string)} | - |
-| m_mvvar1 - m_mvvar3 | _experience.analytics.customDimensions.lists.list1.list[] - _experience.analytics.customDimensions.lists.list3.list[] | array | mid | {value (string), key (string)} | - |
-| m_color | device.colorDepth | integer | mid | {} | - |
-| m_cookies | environment.browserDetails.cookiesEnabled | boolean | mid | {} | - |
-| m_event_list | commerce.purchases, commerce.productViews, commerce.productListOpens, commerce.checkouts, commerce.productListAdds, commerce.productListRemovals, commerce.productListViews | Object | mid | {id (string), value (number)} | - |
-| m_event_list | _experience.analytics.event1to100.event1 - _experience.analytics.event1to100.event100, _experience.analytics.event101to200.event101 - _experience.analytics.event101to200.event200, _experience.analytics.event201to300.event201 - _experience.analytics.event201to300.event300, _experience.analytics.event301to400.event301 - _experience.analytics.event301to400.event400, _experience.analytics.event401to500.event401 - _experience.analytics.event401to500.event500, _experience.analytics.event501to600.event501 - _experience.analytics.event501to600.event600, _experience.analytics.event601to700.event601 - _experience.analytics.event601to700.event700, _experience.analytics.event701to800.event701 - _experience.analytics.event701to800.event800, _experience.analytics.event801to900.event801 - _experience.analytics.event801to900.event900, _experience.analytics.event901to1000.event901 - _experience.analytics.event901to1000.event1000 | Object | mid | {id (Object), value (Object)} | - |
-| m_geo_country | placeContext.geo.countryCode | string | mid | {} | - |
-| m_geo_latitude | placeContext.geo._schema.latitude | number | mid | {} | - |
-| m_geo_longitude | placeContext.geo._schema.longitude | number | mid | {} | - |
-| m_java_enabled | environment.browserDetails.javaEnabled | boolean | mid | {} | - |
-| m_latitude | placeContext.geo._schema.latitude | number | mid | {} | - |
-| m_longitude | placeContext.geo._schema.longitude | number | mid | {} | - |
-| m_mobile_id | device.typeIDService | string | mid | {} | - |
-| m_page_event_var1 | web.webInteraction.URL | string | mid | {} | - |
-| m_page_event_var2 | web.webInteraction.name | string | mid | {} | - |
-| m_page_type | web.webPageDetails.isErrorPage | boolean | mid | {} | - |
-| m_pagename_no_url | web.webPageDetails.pageViews.value | number | mid | {} | - |
-| m_paid_search | search.isPaid | boolean | mid | {} | - |
-| m_product_list | productListItems[].items | array | mid | {SKU (string), quantity (integer), priceTotal (number)} | - |
-| m_ref_type | web.webReferrer.type | string | mid | {} | - |
-| m_search_engine | search.searchEngine | string | mid | {} | - |
-| post_prop1 - post_prop75 | _experience.analytics.customDimensions.listprops.prop1 - _experience.analytics.customDimensions.listprops.prop75 | Object | post | {} | - |
-| post_hier1 - post_hier5 | _experience.analytics.customDimensions.hierarchies.hier1 - _experience.analytics.customDimensions.hierarchies.hier5 | Object | post | {values (array), delimiter (string)} | - |
-| post_mvvar1 - post_mvvar3 | _experience.analytics.customDimensions.lists.list1.list[] - _experience.analytics.customDimensions.lists.list3.list[] | array | post | {value (string), key (string)} | - |
-| post_cookies | environment.browserDetails.cookiesEnabled | boolean | post | {} | - |
-| post_currency | commerce.order.currencyCode | string | mid,post | {} | - |
-| post_cust_hit_time_gmt | timestamp | string | mid,post | {} | - |
-| post_cust_visid | identityMap | object | mid,post | {} | - |
-| post_cust_visid | endUserIDs._experience.aacustomid.primary | boolean | mid,post | {} | - |
-| post_cust_visid | endUserIDs._experience.aacustomid.namespace.code | string | mid,post | {} | - |
-| post_event_list | commerce.purchases, commerce.productViews, commerce.productListOpens, commerce.checkouts, commerce.productListAdds, commerce.productListRemovals, commerce.productListViews | Object | post | {id (string), value (number)} | - |
-| post_event_list | _experience.analytics.event1to100.event1 - _experience.analytics.event1to100.event100, _experience.analytics.event101to200.event101 - _experience.analytics.event101to200.event200, _experience.analytics.event201to300.event201 - _experience.analytics.event201to300.event300, _experience.analytics.event301to400.event301 - _experience.analytics.event301to400.event400, _experience.analytics.event401to500.event401 - _experience.analytics.event401to500.event500, _experience.analytics.event501to600.event501 - _experience.analytics.event501to600.event600, _experience.analytics.event601to700.event601 - _experience.analytics.event601to700.event700, _experience.analytics.event701to800.event701 - _experience.analytics.event701to800.event800, _experience.analytics.event801to900.event801 - _experience.analytics.event801to900.event900, _experience.analytics.event901to1000.event901 - _experience.analytics.event901to1000.event1000 | Object | post | {id (Object), value (Object)} | - |
-| post_java_enabled | environment.browserDetails.javaEnabled | boolean | post | {} | - |
-| post_latitude | placeContext.geo._schema.latitude | number | post | {} | - |
-| post_longitude | placeContext.geo._schema.longitude | number | post | {} | - |
-| post_page_event | web.webInteraction.type | string | mid,post | {} | - |
-| post_page_event | web.webInteraction.linkClicks.value | number | mid,post | {} | - |
-| post_page_event_var1 | web.webInteraction.URL | string | post | {} | - |
-| post_page_event_var2 | web.webInteraction.name | string | post | {} | - |
-| post_page_type | web.webPageDetails.isErrorPage | boolean | post | {} | - |
-| post_pagename_no_url | web.webPageDetails.pageViews.value | number | post | {} | - |
-| post_product_list | productListItems[].items | array | post | {SKU (string), quantity (integer), priceTotal (number)} | - |
-| post_search_engine | search.searchEngine | string | post | {} | - |
-| post_visid_high + visid_low | identityMap | object | mid,post | {} | - |
-| post_visid_high + visid_low | endUserIDs._experience.aaid.id | string | mid,post | {} | - |
-| post_visid_high | endUserIDs._experience.aaid.primary | boolean | mid,post | {} | - |
-| post_visid_high | endUserIDs._experience.aaid.namespace.code | string | mid,post | {} | - |
-| post_visid_low | identityMap | object | mid,post | {} | - |
-| mvvar1_instances | .list.items[] | Object | post | {} | - |
-| mvvar2_instances | .list.items[] | Object | post | {} | - |
-| mvvar3_instances | .list.items[] | Object | post | {} | - |
-| color | device.colorDepth | integer | post | {} | - |
-| first_hit_ref_type | _experience.analytics.endUser.firstWeb.webReferrer.type | string | post | {} | - |
-| first_hit_time_gmt | _experience.analytics.endUser.firstTimestamp | integer | post | {} | - |
-| geo_country | placeContext.geo.countryCode | string | post | {} | - |
-| geo_latitude | placeContext.geo._schema.latitude | number | post | {} | - |
-| geo_longitude | placeContext.geo._schema.longitude | number | post | {} | - |
-| hit_time_gmt | receivedTimestamp | string | mid,post | {} | - |
-| hitid_high + hitid_low | _id | string | mid,post | {} | - |
-| hitid_low | _id | string | mid,post | {} | - |
-| homepage | web.webPageDetails.isHomePage | boolean | mid,post | {} | - |
-| ip | environment.ipV4 | string | mid,post | {} | - |
-| j_jscript | environment.browserDetails.javaScriptEnabled | boolean | mid,post | {} | - |
-| mcvisid_high + mcvisid_low | identityMap | object | mid,post | {} | - |
-| mcvisid_high + mcvisid_low | endUserIDs._experience.mcid.id | string | mid,post | {} | - |
-| mcvisid_high | endUserIDs._experience.mcid.primary | boolean | mid,post | {} | - |
-| mcvisid_high | endUserIDs._experience.mcid.namespace.code | string | mid,post | {} | - |
-| mcvisid_low | identityMap | object | mid,post | {} | - |
-| mobile_id | device.typeIDService | string | post | {} | - |
-| paid_search | search.isPaid | boolean | post | {} | - |
-| ref_type | web.webReferrer.type | string | post | {} | - |
-| sdid_high + sdid_low | _experience.target.supplementalDataID | string | mid,post | {} | - |
-| sdid_low | _experience.target.supplementalDataID | string | mid,post | {} | - |
-| visit_paid_search | _experience.analytics.session.search.isPaid | boolean | post | {} | - |
-| visit_ref_type | _experience.analytics.session.web.webReferrer.type | string | post | {} | - |
-| visit_search_engine | _experience.analytics.session.search.searchEngine | string | post | {} | - |
-| visit_start_time_gmt | _experience.analytics.session.timestamp | integer | post | {} | - |
-| mobilebeaconproximity | placeContext.POIinteraction.POIDetail.beaconInteractionDetails.proximity | string | mid,post | {} | - |
-| videochapter | media.mediaTimed.mediaChapter.chapterAssetReference._xmpDM.duration | integer | mid,post | {} | - |
-| videolength | media.mediaTimed.primaryAssetReference._xmpDM.duration | integer | mid,post | {} | - |
+| Category | Analytics Field | XDM Field | Properties |
+| -------- | --------------- | --------- | ---------- |
+| Custom | m\_evar1 - m\_evar250 | \_experience.analytics.customDimensions.eVars.eVar1 - \_experience.analytics.customDimensions.eVars.eVar250 |
+| Custom | m\_prop1 - m\_prop75 | \_experience.analytics.customDimensions.props.prop1 - \_experience.analytics.customDimensions.props.prop75 |
+| Custom | m\_prop1 - m\_prop75 | \_experience.analytics.customDimensions.listprops.prop1 - \_experience.analytics.customDimensions.listprops.prop75 | value[].items <br> delimiter |
+| Custom | m\_hier1 | \_experience.analytics.customDimensions.hierarchies.hier1 | value[].items <br> delimiter |
+| Custom | m\_hier2 | \_experience.analytics.customDimensions.hierarchies.hier2 | value[].items <br> delimiter |
+| Custom | m\_hier3 | \_experience.analytics.customDimensions.hierarchies.hier3 | value[].items <br> delimiter |
+| Custom | m\_hier4 | \_experience.analytics.customDimensions.hierarchies.hier4 | value[].items <br> delimiter |
+| Custom | m\_hier5 | \_experience.analytics.customDimensions.hierarchies.hier5 | value[].items <br> delimiter |
+| Custom | m\_mvvar1 | \_experience.analytics.customDimensions.lists.list1 | list[].items.key <br> list[].items.value |
+| Custom | m\_mvvar2 | \_experience.analytics.customDimensions.lists.list2 | list[].items.key <br> list[].items.value |
+| Custom | m\_mvvar3 | \_experience.analytics.customDimensions.lists.list3 | list[].items.key <br> list[].items.value |
+| Tech | m\_browser | \_experience.analytics.environment.browserID |
+| Tech | m\_browser\_height | environment.browserDetails.viewportHeight |
+| Tech | m\_browser\_width | environment.browserDetails.viewportWidth |
+| Experience | m\_campaign | marketing.trackingCode |
+| Web | m\_channel | web.webPageDetails.siteSection |
+| Tech | m\_color | device.colorDepth |
+| Tech | m\_cookies | environment.browserDetails.cookiesEnabled |
+| Custom | m\_event\_list | commerce.checkouts <br><br> commerce.productListAdds <br><br> commerce.productListOpens <br><br> commerce.productListRemovals <br><br> commerce.productListReopens <br><br> commerce.productListViews <br><br> commerce.productViews <br><br> commerce.purchases <br><br> \_experience.analytics.event1to100.event1 - \_experience.analytics.event1to100.event100 <br><br> \_experience.analytics.event101to200.event1 - \_experience.analytics.event101to200.event100 <br><br> \_experience.analytics.event201to300.event1 - \_experience.analytics.event201to300.event100 <br><br> \_experience.analytics.event301to400.event1 - \_experience.analytics.event301to400.event100 <br><br> \_experience.analytics.event401to500.event1 - \_experience.analytics.event401to500.event100 <br><br> \_experience.analytics.event501to600.event1 - \_experience.analytics.event501to600.event100 <br><br> \_experience.analytics.event601to700.event1 - \_experience.analytics.event601to700.event100 <br><br> \_experience.analytics.event701to800.event1 - \_experience.analytics.event701to800.event100 <br><br> \_experience.analytics.event801to900.event1 - \_experience.analytics.event801to900.event100 <br><br> \_experience.analytics.event901to1000.event1 - \_experience.analytics.event901to1000.event100 | \_type <br> id <br> value <br> unit |
+| Profile | m\_geo\_city | placeContext.geo.city |
+| Profile | m\_geo\_country | placeContext.geo.countryCode |
+| Profile | m\_geo\_dma | placeContext.geo.dmaID |
+| Profile | m\_geo\_latitude | placeContext.geo.\_schema.latitude |
+| Profile | m\_geo\_longitude | placeContext.geo.\_schema.longitude |
+| Profile | m\_geo\_region | placeContext.geo.stateProvince |
+| Profile | m\_geo\_zip | placeContext.geo.postalCode |
+| Tech | m\_java\_enabled | environment.browserDetails.javaEnabled |
+| Search | m\_keywords | search.keywords |
+| Profile | m\_latitude | placeContext.geo.\_schema.latitude |
+| Profile | m\_longitude | placeContext.geo.\_schema.longitude |
+| Tech | m\_mobile\_id | device.typeID |
+| Tech | m\_mobile\_id | device.typeIDService |
+| Tech | m\_os | \_experience.analytics.environment.operatingSystemID |
+| Web | m\_page\_event\_var1 | web.webInteraction.URL |
+| Web | m\_page\_event\_var2 | web.webInteraction.name |
+| Web | m\_page\_type | web.webPageDetails.isErrorPage |
+| Web | m\_page\_url | web.webPageDetails.URL |
+| Web | m\_pagename\_no\_url | web.webPageDetails.name |
+| Web | m\_pagename\_no\_url | web.webPageDetails.pageViews.value |
+| Search | m\_paid\_search | search.isPaid |
+| Commerce | m\_product\_list | productListItems[] |
+| Web | m\_ref\_type | web.webReferrer.type |
+| Web | m\_referrer | web.webReferrer.URL |
+| Search | m\_search\_engine | search.searchEngine |
+| Search | m\_search\_page\_num | search.pageDepth |
+| Profile | m\_state | \_experience.analytics.customDimensions.stateProvince |
+| Web | m\_user\_server | web.webPageDetails.server |
+| Profile | m\_zip | \_experience.analytics.customDimensions.postalCode |
+| Custom | post\_evar1 - post\_evar250 | \_experience.analytics.customDimensions.eVars.eVar1 - \_experience.analytics.customDimensions.eVars.eVar250 |
+| Custom | post\_prop1 - post\_prop75 | \_experience.analytics.customDimensions.props.prop1 - \_experience.analytics.customDimensions.props.prop75 |
+| Custom | post\_prop1 - post\_prop75 | \_experience.analytics.customDimensions.listprops.prop1 - \_experience.analytics.customDimensions.listprops.prop75 | value[].items <br> delimiter |
+| Custom | post\_hier1 | \_experience.analytics.customDimensions.hierarchies.hier1 | value[].items <br> delimiter |
+| Custom | post\_hier2 | \_experience.analytics.customDimensions.hierarchies.hier2 | value[].items <br> delimiter |
+| Custom | post\_hier3 | \_experience.analytics.customDimensions.hierarchies.hier3 | value[].items <br> delimiter |
+| Custom | post\_hier4 | \_experience.analytics.customDimensions.hierarchies.hier4 | value[].items <br> delimiter |
+| Custom | post\_hier5 | \_experience.analytics.customDimensions.hierarchies.hier5 | value[].items <br> delimiter |
+| Custom | post\_mvvar1 | \_experience.analytics.customDimensions.lists.list1 | list[].items.key <br> list[].items.value |
+| Custom | post\_mvvar2 | \_experience.analytics.customDimensions.lists.list2 | list[].items.key <br> list[].items.value |
+| Custom | post\_mvvar3 | \_experience.analytics.customDimensions.lists.list3 | list[].items.key <br> list[].items.value |
+| Tech | post\_browser\_height | environment.browserDetails.viewportHeight |
+| Tech | post\_browser\_width | environment.browserDetails.viewportWidth |
+| Experience | post\_campaign | marketing.trackingCode |
+| Web | post\_channel | web.webPageDetails.siteSection |
+| Tech | post\_cookies | environment.browserDetails.cookiesEnabled |
+| Commerce | post\_currency | commerce.order.currencyCode |
+| Core | post\_cust\_hit\_time\_gmt | timestamp |
+| Profile | post\_cust\_visid | endUserIDs.\_experience.aacustomid.id |
+| Custom | post\_event\_list | commerce.checkouts <br><br> commerce.productListAdds <br><br> commerce.productListOpens <br><br> commerce.productListRemovals <br><br> commerce.productListReopens <br><br> commerce.productListViews <br><br> commerce.productViews <br><br> commerce.purchases <br><br> \_experience.analytics.event1to100.event1 - \_experience.analytics.event1to100.event100 <br><br> \_experience.analytics.event101to200.event1 - \_experience.analytics.event101to200.event100 <br><br> \_experience.analytics.event201to300.event1 - \_experience.analytics.event201to300.event100 <br><br> \_experience.analytics.event301to400.event1 - \_experience.analytics.event301to400.event100 <br><br> \_experience.analytics.event401to500.event1 - \_experience.analytics.event401to500.event100 <br><br> \_experience.analytics.event501to600.event1 - \_experience.analytics.event501to600.event100 <br><br> \_experience.analytics.event601to700.event1 - \_experience.analytics.event601to700.event100 <br><br> \_experience.analytics.event701to800.event1 - \_experience.analytics.event701to800.event100 <br><br> \_experience.analytics.event801to900.event1 - \_experience.analytics.event801to900.event100 <br><br> \_experience.analytics.event901to1000.event1 - \_experience.analytics.event901to1000.event100 | \_type <br> id <br> value <br> unit |
+| Web | post\_first\_hit\_page\_url | \_experience.analytics.endUser.firstWeb.webPageDetails.URL |
+| Web | post\_first\_hit\_pagename | \_experience.analytics.endUser.firstWeb.webPageDetails.name |
+| Tech | post\_java\_enabled | environment.browserDetails.javaEnabled |
+| Search | post\_keywords | search.keywords |
+| Profile | post\_latitude | placeContext.geo.\_schema.latitude |
+| Profile | post\_longitude | placeContext.geo.\_schema.longitude |
+| Web | post\_page\_event | web.webInteraction.type |
+| Web | post\_page\_event\_var1 | web.webInteraction.URL |
+| Web | post\_page\_event\_var2 | web.webInteraction.name |
+| Web | post\_page\_type | web.webPageDetails.isErrorPage |
+| Web | post\_page\_url | web.webPageDetails.URL |
+| Web | post\_pagename\_no\_url | web.webPageDetails.name |
+| Web | post\_pagename\_no\_url | web.webPageDetails.pageViews.value |
+| Commerce | post\_product\_list | productListItems[] |
+| Commerce | post\_purchaseid | commerce.order.purchaseID |
+| Web | post\_referrer | web.webReferrer.URL |
+| Search | post\_search\_engine | search.searchEngine |
+| Profile | post\_state | \_experience.analytics.customDimensions.stateProvince |
+| Web | post\_user\_server | web.webPageDetails.server |
+| Profile | post\_visid\_high | endUserIDs.\_experience.aaid.id |
+| Profile | post\_visid\_high | endUserIDs.\_experience.aaid.primary |
+| Profile | post\_visid\_high | endUserIDs.\_experience.aaid.namespace.code |
+| Profile | post\_visid\_low | endUserIDs.\_experience.aaid.id |
+| Profile | post\_zip | \_experience.analytics.customDimensions.postalCode |
+| Tech | accept\_language | environment.browserDetails.acceptLanguage |
+| Tech | browser | \_experience.analytics.environment.browserID |
+| Tech | color | device.colorDepth |
+| Commerce | currency | commerce.order.currencyCode |
+| Web | first\_hit\_ref\_type | \_experience.analytics.endUser.firstWeb.webReferrer.type |
+| Web | first\_hit\_referrer | \_experience.analytics.endUser.firstWeb.webReferrer.URL |
+| Core | first\_hit\_time\_gmt | \_experience.analytics.endUser.firstTimestamp |
+| Profile | geo\_city | placeContext.geo.city |
+| Profile | geo\_country | placeContext.geo.countryCode |
+| Profile | geo\_dma | placeContext.geo.dmaID |
+| Profile | geo\_latitude | placeContext.geo.\_schema.latitude |
+| Profile | geo\_longitude | placeContext.geo.\_schema.longitude |
+| Profile | geo\_region | placeContext.geo.stateProvince |
+| Profile | geo\_zip | placeContext.geo.postalCode |
+| Core | hit\_time\_gmt | receivedTimestamp |
+| Core | hitid\_high | id |
+| Core | hitid\_low | id |
+| Web | homepage | web.webPageDetails.isHomePage |
+| Core | ip | environment.ipV4 |
+| Core | ipv6 | environment.ipV6 |
+| Tech | j\_jscript | environment.browserDetails.javaScriptVersion |
+| Tech | j\_jscript | environment.browserDetails.javaScriptEnabled |
+| Tech | java\_enabled | environment.browserDetails.javaEnabled |
+| Profile | mcvisid\_high | endUserIDs.\_experience.mcid.id |
+| Profile | mcvisid\_high | endUserIDs.\_experience.mcid.primary |
+| Profile | mcvisid\_high | endUserIDs.\_experience.mcid.namespace.code |
+| Profile | mcvisid\_low | endUserIDs.\_experience.mcId.id |
+| Tech | mobile\_id | device.typeID |
+| Tech | mobile\_id | device.typeIDService |
+| Tech | os | \_experience.analytics.environment.operatingSystemID |
+| Web | page\_event | web.webInteraction.type |
+| Search | paid\_search | search.isPaid |
+| Web | ref\_type | web.webReferrer.type |
+| Web | referrer | web.webReferrer.URL |
+| Tech | s\_resolution | device.screenWidth |
+| Tech | s\_resolution | device.screenHeight |
+| Search | search\_engine | search.searchEngine |
+| Search | search\_page\_num | search.pageDepth |
+| Tech | user\_agent | environment.browserDetails.userAgent |
+| Web | user\_server | web.webPageDetails.server |
+| Core | visit\_num | \_experience.analytics.session.num |
+| Content Aware - Mobile App | mobileappid | application.name |
+| Content Aware - Mobile App | mobiledevice | device.typeID |
+| Content Aware - Mobile App | mobileosversion | environment.operatingSystem |
+| Content Aware - Mobile App | mobileosversion | environment.operatingSystemVersion |
+| Content Aware - Mobile App | pointofinterest | placeContext.POIinteraction.POIDetail.name |
+| Content Aware - Mobile App | pointofinterestdistance | placeContext.POIinteraction.POIDetail.geoInteractionDetails.distanceToCenter |
+| Content Aware - Mobile App | mobilebeaconproximity | placeContext.POIinteraction.POIDetail.beaconInteractionDetails.proximity |
+| Content Aware - Mobile App | mobileplaceaccuracy | placeContext.POIinteraction.POIDetail.geoInteractionDetails.deviceGeoAccuracy |
+| Content Aware - Mobile App | mobileplacecategory | placeContext.POIinteraction.POIDetail.category |
+| Content Aware - Mobile App | mobileplaceid | placeContext.POIinteraction.POIDetail.POIID |
+| Content Aware - Video | videoad | advertising.adAssetReference.\_id |
+| Content Aware - Video | videocontenttype | media.mediaTimed.primaryAssetViewDetails.broadcastContentType |
+| Content Aware - Video | videoadinpod | advertising.adAssetViewDetails.index |
+| Content Aware - Video | videoplayername | media.mediaTimed.primaryAssetViewDetails.playerName |
+| Content Aware - Video | videochannel | media.mediaTimed.primaryAssetViewDetails.broadcastChannel |
+| Content Aware - Video | videoadplayername | advertising.adAssetViewDetails.playerName |
+| Content Aware - Video | videochapter | media.mediaTimed.mediaChapter.chapterAssetReference.\_id |
+| Content Aware - Video | videochapter | media.mediaTimed.mediaChapter.chapterAssetReference.\_xmpDM.duration |
+| Content Aware - Video | videoname | media.mediaTimed.primaryAssetReference.\_dc.title |
+| Content Aware - Video | videolength | media.mediaTimed.primaryAssetReference.\_xmpDM.duration |
+| Content Aware - Video | videoadname | advertising.adAssetReference.\_dc.title |
+| Content Aware - Video | videoadlength | advertising.adAssetReference.\_xmpDM.duration |
+| Content Aware - Video | videoshow | media.mediaTimed.primaryAssetReference.\_iptc4xmpExt.Series.\_iptc4xmpExt.Name |
+| Content Aware - Video | videoseason | media.mediaTimed.primaryAssetReference.\_iptc4xmpExt.Season.\_iptc4xmpExt.Name |
+| Content Aware - Video | videoepisode | media.mediaTimed.primaryAssetReference.\_iptc4xmpExt.Episode.\_iptc4xmpExt.Name |
+| Content Aware - Video | videonetwork | media.mediaTimed.primaryAssetViewDetails.broadcastNetwork |
+| Content Aware - Video | videoshowtype | media.mediaTimed.primaryAssetReference.showType |
+| Content Aware - Video | videoadload | media.mediaTimed.primaryAssetViewDetails.adLoadType |
+| Content Aware - Video | videofeedtype | media.mediaTimed.primaryAssetViewDetails.sourceFeed |
+| Content Aware - Mobile App | mobilebeaconmajor | placeContext.POIinteraction.POIDetail.beaconInteractionDetails.beaconMajor |
+| Content Aware - Mobile App | mobilebeaconminor | placeContext.POIinteraction.POIDetail.beaconInteractionDetails.beaconMinor |
+| Content Aware - Mobile App | mobilebeaconuuid | placeContext.POIinteraction.POIDetail.beaconInteractionDetails.proximityUUID |
+| Content Aware - Video | videosessionid | media.mediaTimed.primaryAssetViewDetails.\_id |
+| Content Aware - Video | videogenre | media.mediaTimed.primaryAssetReference.\_iptc4xmpExt.Genre |
+| Content Aware - Mobile App | mobileinstalls | application.firstLaunches |
+| Content Aware - Mobile App | mobileupgrades | application.upgrades |
+| Content Aware - Mobile App | mobilelaunches | application.launches |
+| Content Aware - Mobile App | mobilecrashes | application.crashes |
+| Content Aware - Mobile App | mobilemessageclicks | directMarketing.clicks |
+| Content Aware - Mobile App | mobileplaceentry | placeContext.POIinteraction.poiEntries |
+| Content Aware - Mobile App | mobileplaceexit | placeContext.POIinteraction.poiExits |
+| Content Aware - Video | videotime | media.mediaTimed.timePlayed |
+| Content Aware - Video | videostart | media.mediaTimed.impressions |
+| Content Aware - Video | videocomplete | media.mediaTimed.completes |
+| Content Aware - Video | videosegmentviews | media.mediaTimed.mediaSegmentViews |
+| Content Aware - Video | videoadstart | advertising.impressions |
+| Content Aware - Video | videoadcomplete | advertising.completes |
+| Content Aware - Video | videoadtime | advertising.timePlayed |
+| Content Aware - Video | videochapterstart | media.mediaTimed.mediaChapter.impressions |
+| Content Aware - Video | videochaptercomplete | media.mediaTimed.mediaChapter.completes |
+| Content Aware - Video | videochaptertime | media.mediaTimed.mediaChapter.timePlayed |
+| Content Aware - Video | videoplay | media.mediaTimed.starts |
+| Content Aware - Video | videototaltime | media.mediaTimed.totalTimePlayed |
+| Content Aware - Video | videoqoetimetostart | media.mediaTimed.primaryAssetViewDetails.qoe.timeToStart |
+| Content Aware - Video | videoqoedropbeforestart | media.mediaTimed.dropBeforeStarts |
+| Content Aware - Video | videoqoebuffercount | media.mediaTimed.primaryAssetViewDetails.qoe.buffers |
+| Content Aware - Video | videoqoebuffertime | media.mediaTimed.primaryAssetViewDetails.qoe.bufferTime |
+| Content Aware - Video | videoqoebitratechangecount | media.mediaTimed.primaryAssetViewDetails.qoe.bitrateChanges |
+| Content Aware - Video | videoqoebitrateaverage | media.mediaTimed.primaryAssetViewDetails.qoe.bitrateAverage |
+| Content Aware - Video | videoqoeerrorcount | media.mediaTimed.primaryAssetViewDetails.qoe.errors |
+| Content Aware - Video | videoqoedroppedframecount | media.mediaTimed.primaryAssetViewDetails.qoe.droppedFrames |
+| Content Aware - Video | videoprogress10 | media.mediaTimed.progress10 |
+| Content Aware - Video | videoprogress25 | media.mediaTimed.progress25 |
+| Content Aware - Video | videoprogress50 | media.mediaTimed.progress50 |
+| Content Aware - Video | videoprogress75 | media.mediaTimed.progress75 |
+| Content Aware - Video | videoprogress95 | media.mediaTimed.progress95 |
+| Content Aware - Video | videoresume | media.mediaTimed.resumes |
+| Content Aware - Video | videopausecount | media.mediaTimed.pauses |
+| Content Aware - Video | videopausetime | media.mediaTimed.pauseTime |
+| Content Aware - Video | videosecondssincelastcall | media.mediaTimed.primaryAssetViewDetails.sessionTimeout |
