@@ -42,9 +42,6 @@
 			"description": "This tutorial shows you how to create a scoring run for an existing experiment run in the Data Science Workspace."
 		}
 	],
-	"app2app_map": {
-		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/":"/apis/experienceplatform/home/services/allservices.html", 
-		"api-specification/markdown/narrative/tutorials/dsw/":"/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html", 
-		"api-specification/markdown/narrative/tutorials/":"/apis/experienceplatform/home/tutorials/alltutorials.html" 
-	}
+	"app2app_map": {"api-specification/markdown/narrative/tutorials/dsw/":"/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html", 
+					"api-specification/markdown/narrative/tutorials/":"/apis/experienceplatform/home/tutorials/alltutorials.html" }
 }
