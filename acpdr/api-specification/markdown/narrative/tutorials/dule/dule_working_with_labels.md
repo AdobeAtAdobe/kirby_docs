@@ -6,7 +6,7 @@ Labels can be applied at any time, providing flexibility in how you choose to go
 
 Data usage labels are inherited down from connections to datasets, and from datasets to fields. This means that data usage labels applied at the connection level are propagated to all datasets and fields created from that connection, while labels applied at the dataset level are propagated to all fields within the dataset. Labels can also be applied directly to individual fields (column headers) in a dataset, without propagation.
 
-Before beginning this tutorial, read the [DULE User Guide](dule_overview.md) for a more robust introduction to the DULE framework.
+Before beginning this tutorial, read the [DULE User Guide](../../../../../end-user/markdown/dule_overview/dule_overview.md) for a more robust introduction to the DULE framework.
 
 ## Tutorial
 
@@ -42,7 +42,7 @@ You have now successfully created a Microsoft Dynamics connection and applied DU
 
 ## Adding and editing data usage labels at the dataset level
 
-In order to add data usage labels at the dataset level, you must select an existing dataset or create a new one. In this example, you will create a dataset using a pre-configured schema. For more information on dataset schemas and how to compose schemas for use with Experience Platform, read the [Basics of Schema Composition](../../../api-specification/markdown/narrative/technical_overview/schema_registry/schema_composition/schema_composition.md).
+In order to add data usage labels at the dataset level, you must select an existing dataset or create a new one. In this example, you will create a dataset using a pre-configured schema. For more information on dataset schemas and how to compose schemas for use with Experience Platform, read the [Basics of Schema Composition](../../technical_overview/schema_registry/schema_composition/schema_composition.md).
 
 1. After logging into Adobe Experience Platform, select **Datasets** on the left-navigation. If datasets have been created, they will be listed here by Name, along with useful details related to each dataset. 
 ![Dataset Tab within Data Workspace](images/datasets_list_all.png)
@@ -94,4 +94,4 @@ It is important to remember that inheritance moves from the top-level down only 
 
 ## Next Steps
 
-Now that you have added data usage labels at the connection, dataset, and field level, you can begin to ingest data into Experience Platform. To learn more, start by reading the [data ingestion documentation](../../../api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md).
+Now that you have added data usage labels at the connection, dataset, and field level, you can begin to ingest data into Experience Platform. To learn more, start by reading the [data ingestion documentation](../../technical_overview/ingest_architectural_overview/ingest_architectural_overview.md).

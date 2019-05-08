@@ -1,6 +1,6 @@
 # Working with data usage policies in Adobe Experience Platform
 
-Data Usage Labeling and Enforcement (DULE) is at the core of the data governance infrastructure included in Adobe Experience Platform. If you have not yet done so, please begin by reviewing the [DULE User Guide](dule_overview.md) to familiarize yourself with the DULE framework.
+Data Usage Labeling and Enforcement (DULE) is at the core of the data governance infrastructure included in Adobe Experience Platform. If you have not yet done so, please begin by reviewing the [DULE User Guide](../../../../../end-user/markdown/dule_overview/dule_overview.md) to familiarize yourself with the DULE framework.
 
 Through a RESTful API, DULE enables the creation and management of data usage policies to determine what marketing actions can be taken against data that has been labelled with certain data usage labels.
 
@@ -18,7 +18,7 @@ The examples in this document will walk you through key operations you can perfo
 * [Deleting a marketing action](#delete-a-marketing-action)
 * [Evaluating if any policies are violated by performing certain marketing actions](#policy-evaluation) 
 
-Using the API requires you to have an Adobe ID and access to Adobe Experience Platform. Follow the steps for [getting started](getting-started-with-dule-policy-service) to ensure you have all of the information that you need and an understanding of core concepts before attempting to make calls to the Policy Service API.
+Using the API requires you to have an Adobe ID and access to Adobe Experience Platform. The information in the 'getting started' section that follows will provide an understanding of core concepts you need to know before attempting to make calls to the Policy Service API.
 
 ## Getting started with DULE Policy Service
 
@@ -26,7 +26,7 @@ Before beginning to work with the Policy Service, data on Experience Platform mu
 
 ### Authentication
 
-Accessing the Policy Service API requires you to have access to Adobe Experience Platform. If you have not done so already, follow the tutorial for [Authenticating and accessing Experience Platform APIs](../../../api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+Accessing the Policy Service API requires you to have access to Adobe Experience Platform. If you have not done so already, follow the tutorial for [Authenticating and accessing Experience Platform APIs](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
 
 Once complete, you should have the following values:
 
