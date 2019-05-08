@@ -1,16 +1,23 @@
-# Build a Recipe using Notebooks <!-- omit in toc -->
+# Tutorial: How to create a Recipe in Data Science Workspace in notebook template <!-- omit in toc -->
 
 - [Purpose](#purpose)
-- [Get started with the JupyterLab notebook environment](#get-started-with-the-jupyterlab-notebook-environment)
-- [Make edits to recipe files](#make-edits-to-recipe-files)
-- [Get started with the Recipe Builder notebook](#get-started-with-the-recipe-builder-notebook)
+- [Getting started with the JupyterLab notebook environment](#getting-started-with-the-jupyterlab-notebook-environment)
+- [Making edits to Recipe files](#making-edits-to-recipe-files)
+- [Getting Started with the Recipe Builder notebook](#getting-started-with-the-recipe-builder-notebook)
   - [Requirements file](#requirements-file)
-  - [Configuration files](#configuration-files)
+  - [Configuration file](#configuration-file)
+  - [Evaluator file](#evaluator-file)
+    - [Evaluate the trained model](#evaluate-the-trained-model)
+    - [Prepare and split the dataset](#prepare-and-split-the-dataset)
+      - [Loading data](#loading-data)
+        - [From Data Access SDK](#from-data-access-sdk)
+        - [From external source](#from-external-source)
+      - [Data preparation and feature engineering](#data-preparation-and-feature-engineering)
   - [Training data loader](#training-data-loader)
   - [Scoring data loader](#scoring-data-loader)
   - [Pipeline file](#pipeline-file)
-  - [Evaluator file](#evaluator-file)
-  - [Data Saver file](#data-saver-file)
+    - [Training](#training)
+    - [Scoring](#scoring)
 - [Training and scoring](#training-and-scoring)
 - [Create recipe](#create-recipe)
 - [Conclusion](#conclusion)
@@ -18,11 +25,11 @@
 
 ## Purpose
 
-This tutorial will go over two main sections. First, you will create a machine learning model using a template within JupyterLab Notebook. Next, you will exercise the notebook to recipe workflow within JupyterLab to create a recipe within Data Science Workspace. 
+This tutorial will go over two main sections. First, you will create a machine learning Model using a template within JupyterLab Notebook. Next, you will exercise the notebook to recipe workflow within JupyterLab to create a recipe within Data Science Workspace. 
 
-## Get started with the JupyterLab notebook environment
+## Getting started with the JupyterLab notebook environment
 
-Creating a recipe from scratch can be done within Data Science Workspace. To start, navigate to [Adobe Experience Platform](https://platform.adobe.com) and click on the **ML Models** tab on the left to get to the Data Science Workspace. From here, click on the **Notebooks** sub-tab and on the Jupyterlab launcher screen, create a new notebook by select the Recipe Builder template.
+Creating a recipe from scratch can be done within Data Science Workspace. To start, navigate to [Adobe Experience Platform](https://platform.adobe.com) and click on the ML Models tab on the left to get to the Data Science Workspace. From here, click on the Notebooks sub-tab and on the Jupyterlab launcher screen, create a new notebook by select the Recipe Builder template.
 
 The Recipe Builder notebook allows you to run training and scoring runs inside the notebook. This gives you the flexibility to make changes to their `train()` and `score()` methods in between running experiments on the training and scoring data. Once you are happy with the outputs of the training and scoring, you can create a recipe to be used in Data Science Workspace using the notebook to recipe functionality built in to the Recipe Builder notebook.
 
@@ -30,15 +37,21 @@ The Recipe Builder notebook allows you to run training and scoring runs inside t
 
 ![](./images/notebook_launcher.png)
 
-When you click on the Recipe Builder notebook from the launcher, the notebook will be opened in the tab. The template used in the notebook is the Python Retail Sales Forecasting Recipe which can also be found in [this public repository](https://github.com/adobe/experience-platform-dsw-reference/tree/master/recipes/python/retail/)
+When you click on the Recipe Builder notebook from the launcher, the notebook is opened and you will be prompted to enter a Recipe name. Upon entering the name, the notebook will be renamed and a folder of the same name will be created with all the recipe files in it. The template used in the notebook is the Python Retail Sales Forecasting Recipe which can also be found in [this public repository](https://github.com/adobe/experience-platform-dsw-reference/tree/master/recipes/python/retail/)
 
-You will notice that in the toolbar there are three additional actions namely – **Train**, **Score** and **Create Recipe**. These icons will only appear in the Recipe Builder notebook. More information about these actions will be talked about [in the training and scoring section](#training-and-scoring) after building your Recipe in the notebook.
+![](./images/enter_recipe_name.png)
+
+You can view the files in the sidebar on the left in JupyterLab.
+
+![](./images/recipe_files.png)
+
+You will notice that in the toolbar there are three additional actions namely – "Train", "Score" and "Create Recipe". These icons will only appear in the Recipe Builder notebook. More information about these actions will be talked about [here](#training-and-scoring) after building your Recipe in the notebook.
 
 ![](./images/toolbar_actions.png)
 
-## Make edits to recipe files
+## Making edits to Recipe files
 
-To make edits to the recipe files, navigate to the cell in Jupyter corresponding to the file path. For example, if you want to make changes to `evaluator.py`, look for `%%writefile demo-recipe/evaluator.py`. 
+To make edits to the recipe files, navigate to the cell in Jupyter corresponding to the file path. For `evaluator.py`, look for `%%writefile demo-recipe/evaluator.py`. 
 
 Start making necessary changes to the cell and when finished, simply run the cell. The `%%writefile filename.py` command will write the contents of the cell to the `filename.py`. You will have to manually run the cell for each file with changes.
 
@@ -46,16 +59,15 @@ Start making necessary changes to the cell and when finished, simply run the cel
 
 ---
 
-## Get started with the Recipe Builder notebook
+## Getting Started with the Recipe Builder notebook
 
 Now that you know the basics for the JupyterLab notebook environment, you can begin looking at the files that make up a machine learning model recipe. The files we will talk about are shown here:
 - [Requirements file](#requirements-file)
-- [Configuration files](#configuration-files)
+- [Configuration file](#configuration-file)
+- [Evaluator file](#evaluator-file)
 - [Training data loader](#training-data-loader)
 - [Scoring data loader](#scoring-data-loader)
 - [Pipeline file](#pipeline-file)
-- [Evaluator file](#evaluator-file)
-- [Data Saver file](#data-saver-file)
 
 ---
 
@@ -71,26 +83,13 @@ numpy
 data_access_sdk_python
 ```
 
-> **Note:** Libraries or specific versions you add may be incompatible with the above libraries.
+> **Note:** Libraries or specific versions you add may be incompatible with the above libraries
 
 ---
 
-### Configuration files
+### Configuration file
 
-The configuration files, `training.conf` and `scoring.conf`, are used to specify the datasets you wish to use for training and scoring as well as adding hyperparameters. There are separate configurations for training and scoring. 
-
-Users must fill in the following variables before running training and scoring:
-* `trainingDataSetId`
-* `ACP_DSW_TRAINING_XDM_SCHEMA`
-* `scoringDataSetId`
-* `ACP_DSW_SCORING_RESULTS_XDM_SCHEMA`
-* `output_dataset_id`
-
-To find the dataset and schema IDs, go to the Data Tab within notebooks on the left navigation bar (under the folder icon).
-
-![](./images/data_tab.png)
-
-The same information can be found on [Adobe Experience Platform](https://platform.adobe.com/) under the **[Schema](https://platform.adobe.com/schema)** and **[Datasets](https://platform.adobe.com/dataset/overview)** tabs.
+The configuration file is used to specify the datasets you wish to use for training and scoring as well as adding hyperparameters. To find the dataset IDs, go to the Data Tab on the left navigation bar (under the folder icon) or in [Adobe Experience Platform](https://platform.adobe.com/).
 
 By default, the following configuration parameters are set for you when you access data:
  * `ML_FRAMEWORK_IMS_USER_CLIENT_ID` 
@@ -98,17 +97,93 @@ By default, the following configuration parameters are set for you when you acce
  * `ML_FRAMEWORK_IMS_ML_TOKEN` 
  * `ML_FRAMEWORK_IMS_TENANT_ID` 
 
+When scoring, `saveData` is set to `False` since saving data is not relevant when scoring from the notebook.
+
 ---
 
-### Training data loader
+### Evaluator file
 
-The purpose of the Training Data Loader is to instantiate data used for creating the machine learning model. Typically, there are two tasks that the training data loader will accomplish:
-* Load data from Platform
-* Data preparation and feature engineering
+The `evaluator.py` file contains logic for how you wish to evaluate your trained recipe as well as how your training data should be split. In the Retail Sales example, the logic for loading and preparing the training data will be included. We will go over the two sections below.
 
-The following two sections will go over loading data and data preparation. 
+#### Evaluate the trained model
 
-##### Loading data <!-- omit in toc -->
+The `evaluate()` function is performed after the Model is trained and will return a metric to indicate how successful the Model performs. The `evaluate()` function uses the testing dataset labels and the Trained Model to predict a set of features. These predicted values are then compared with actual features in the testing dataset. Common scoring algorithms include:
+* [Mean absolute percentage error (MAPE)](https://en.wikipedia.org/wiki/Mean_absolute_percentage_error)
+* [Mean absolute error (MAE)](https://en.wikipedia.org/wiki/Mean_absolute_error)
+* [Root-mean-square error (RMSE)](https://en.wikipedia.org/wiki/Root-mean-square_deviation)
+
+
+The `evaluate()` function in the Retail Sales sample is shown below:
+
+```PYTHON
+def evaluate(self, data=[], model={}, configProperties={}):
+    print ("Evaluation evaluate triggered")
+    test = data.drop('weeklySalesAhead', axis=1)
+    y_pred = model.predict(test)
+    y_actual = data['weeklySalesAhead'].values
+    mape = np.mean(np.abs((y_actual - y_pred) / y_actual))
+    mae = np.mean(np.abs(y_actual - y_pred))
+    rmse = np.sqrt(np.mean((y_actual - y_pred) ** 2))
+
+    metric = [{"name": "MAPE", "value": mape, "valueType": "double"},
+                {"name": "MAE", "value": mae, "valueType": "double"},
+                {"name": "RMSE", "value": rmse, "valueType": "double"}]
+
+    return metric
+```
+
+Notice that the function returns a `metric` object containing an array of evaluation metrics. These metrics will be used to evaluate how well the trained model performs.
+
+#### Prepare and split the dataset
+
+The data preparation phase for training requires splitting the dataset to be used for training and testing. This test data will be used implicitly to evaluate the Model after it is trained. This process is separate from scoring. 
+
+This section will show the `split()` function which will first load data into the notebook, then clean up the data by removing unrelated columns in the dataset. From there, you will be able to perform feature engineering which is the process to create additional relevant features from existing raw features in the data. An example of this process can be seen below along with an explanation.
+
+```PYTHON
+def split(self, configProperties={}):
+    #########################################
+    # Load Data
+    #########################################
+    prodreader = DataSetReader(client_id=configProperties['ML_FRAMEWORK_IMS_USER_CLIENT_ID'],
+                                user_token=configProperties['ML_FRAMEWORK_IMS_TOKEN'],
+                                service_token=configProperties['ML_FRAMEWORK_IMS_ML_TOKEN'])
+
+    df = prodreader.load(data_set_id=configProperties['trainingDataSetId'],
+                          ims_org=configProperties['ML_FRAMEWORK_IMS_TENANT_ID'])
+
+    #########################################
+    # Data Preparation/Feature Engineering
+    #########################################
+    df.date = pd.to_datetime(df.date)
+    df['week'] = df.date.dt.week
+    df['year'] = df.date.dt.year
+
+    df = pd.concat([df, pd.get_dummies(df['storeType'])], axis=1)
+    df.drop('storeType', axis=1, inplace=True)
+    df['isHoliday'] = df['isHoliday'].astype(int)
+
+    df['weeklySalesAhead'] = df.shift(-45)['weeklySales']
+    df['weeklySalesLag'] = df.shift(45)['weeklySales']
+    df['weeklySalesDiff'] = (df['weeklySales'] - df['weeklySalesLag']) / df['weeklySalesLag']
+    df.dropna(0, inplace=True)
+
+    df = df.set_index(df.date)
+    df.drop('date', axis=1, inplace=True)
+
+    # Split
+    train_start = '2010-02-12'
+    train_end = '2012-01-27'
+    test_start = '2012-02-03'
+    train = df[train_start:train_end]
+    test = df[test_start:]
+
+    return train, test
+```
+
+There are two main things happening in the `split()` function: loading data and data preparation. 
+
+##### Loading data
 
 In this step, you will load the data into a [pandas dataframe](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html). Data can be loaded from files in Adobe Experience Platform via the Data Access SDK or externally, from pandas' `read_csv()` or `read_json()` functions.
 * [From Data Access SDK](#from-data-access-sdk)
@@ -116,7 +191,7 @@ In this step, you will load the data into a [pandas dataframe](https://pandas.py
 
 > **Note:** In the Recipe Builder notebook, data is loaded via the Data Access SDK.
 
-###### From Data Access SDK <!-- omit in toc -->
+###### From Data Access SDK
 
 Users can load data using the Data Access SDK. The library can be imported at the top of the page by including the line:
 
@@ -143,7 +218,7 @@ Now that you have your data, you can begin with data preparation and feature eng
 
 ---
 
-###### From external source <!-- omit in toc -->
+###### From external source
 
 This section will show you how to import a JSON or CSV file to a pandas object. Official documentation from the pandas library can be found here:
 * [read_csv](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html)
@@ -165,37 +240,14 @@ Now your data is in the dataframe object and can be analyzed and manipulated in 
 
 ---
 
-##### Data preparation and feature engineering <!-- omit in toc -->
+##### Data preparation and feature engineering
 
-After the data is loaded, the data undergoes preparation and is then split to the `train` and `val` datasets. Sample code is seen below:
-
-```PYTHON
-#########################################
-# Data Preparation/Feature Engineering
-#########################################
-dataframe.date = pd.to_datetime(dataframe.date)
-dataframe['week'] = dataframe.date.dt.week
-dataframe['year'] = dataframe.date.dt.year
-
-dataframe = pd.concat([dataframe, pd.get_dummies(dataframe['storeType'])], axis=1)
-dataframe.drop('storeType', axis=1, inplace=True)
-dataframe['isHoliday'] = dataframe['isHoliday'].astype(int)
-
-dataframe['weeklySalesAhead'] = dataframe.shift(-45)['weeklySales']
-dataframe['weeklySalesLag'] = dataframe.shift(45)['weeklySales']
-dataframe['weeklySalesDiff'] = (dataframe['weeklySales'] - dataframe['weeklySalesLag']) / dataframe['weeklySalesLag']
-dataframe.dropna(0, inplace=True)
-
-dataframe = dataframe.set_index(dataframe.date)
-dataframe.drop('date', axis=1, inplace=True) 
-```
-
-In this example, there are five things being done to the original dataset:
+After the data is loaded, the data undergoes preparation and is then split to training and testing datasets. In the Retail Sales example, there are five things being done to the original dataset:
 * add `week` and `year` columns
 * convert `storeType` to an indicator variable
 * convert `isHoliday` to a numeric variable
 * offset `weeklySales` to get future and past sales value
-* split data, by date, to `train` and `val` dataset
+* split data, by date, to `train` and `test` dataset
 
 First, `week` and `year` columns are created and the original `date` column converted to Python [datetime](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.to_datetime.html). Week and year values are extracted from the datetime object.
 
@@ -203,9 +255,37 @@ Next, `storeType` is converted to three columns representing the three different
 
 Similarly, `weeklySales` changes the `isHoliday` boolean to a numerical representation, one or zero.
 
-This data is split between `train` and `val` dataset.
+This data is split between `train` and `test` dataset.
 
-The `load()` function should complete with the `train` and `val` dataset as the output.
+The `load()` function should complete with the `train` and `test` dataset as the output.
+
+---
+
+### Training data loader
+
+The purpose of the Training Data Loader is to instantiate a training and testing dataset used for creating the machine learning Model. Typically, there are two tasks that the training data loader will accomplish:
+* Load data from external source
+* Data preparation and feature engineering
+
+However, as you recall, this was done in the [`split()` function]((#prepare-and-split-the-dataset)) in the `evaluator.py` file. This step is usually known as train/test split. The sample Retail Sales sample code is shown below:
+
+```PYTHON
+import numpy as np
+import pandas as pd
+from data_access_sdk_python.reader import DataSetReader
+
+from recipe.evaluator import Evaluator
+
+def load(configProperties):
+    print("Training Data Load Start")
+    evaluator = Evaluator()
+    (train_data, _) = evaluator.split(configProperties)
+
+    print("Training Data Load Finish")
+    return train_data
+```
+
+Notice that the `load()` function basically calls the `split()` function from `evaluator.py` and returns only the training dataset. This is because in the notebook, we are only training and scoring our model.
 
 ---
 
@@ -232,31 +312,31 @@ def load(configProperties):
 After loading the data, data preparation and feature engineering is done. 
 
 ```PYTHON
-#########################################
-# Data Preparation/Feature Engineering
-#########################################
-df.date = pd.to_datetime(df.date)
-df['week'] = df.date.dt.week
-df['year'] = df.date.dt.year
+    #########################################
+    # Data Preparation/Feature Engineering
+    #########################################
+    df.date = pd.to_datetime(df.date)
+    df['week'] = df.date.dt.week
+    df['year'] = df.date.dt.year
 
-df = pd.concat([df, pd.get_dummies(df['storeType'])], axis=1)
-df.drop('storeType', axis=1, inplace=True)
-df['isHoliday'] = df['isHoliday'].astype(int)
+    df = pd.concat([df, pd.get_dummies(df['storeType'])], axis=1)
+    df.drop('storeType', axis=1, inplace=True)
+    df['isHoliday'] = df['isHoliday'].astype(int)
 
-df['weeklySalesAhead'] = df.shift(-45)['weeklySales']
-df['weeklySalesLag'] = df.shift(45)['weeklySales']
-df['weeklySalesDiff'] = (df['weeklySales'] - df['weeklySalesLag']) / df['weeklySalesLag']
-df.dropna(0, inplace=True)
+    df['weeklySalesAhead'] = df.shift(-45)['weeklySales']
+    df['weeklySalesLag'] = df.shift(45)['weeklySales']
+    df['weeklySalesDiff'] = (df['weeklySales'] - df['weeklySalesLag']) / df['weeklySalesLag']
+    df.dropna(0, inplace=True)
 
-df = df.set_index(df.date)
-df.drop('date', axis=1, inplace=True)
+    df = df.set_index(df.date)
+    df.drop('date', axis=1, inplace=True)
 
-print("Scoring Data Load Finish")
+    print("Scoring Data Load Finish")
 
-return df
+    return df
 ```
 
-Since the purpose of our model is to predict future weekly sales, you will need to create a scoring dataset used to evaluate how well the model's prediction performs.
+Since the purpose of our Model is to predict future weekly sales, you will need to create a scoring dataset used to evaluate how well the Model's prediction performs.
 
 This Recipe Builder notebook does this by offsetting our weeklySales 7 days forwards. Notice that there are measurements for 45 stores every week so you can shift the `weeklySales` values 45 datasets forwards into a new column called `weeklySalesAhead`.
 
@@ -285,15 +365,15 @@ The `load()` function in your scoring data loader should complete with the scori
 
 The `pipeline.py` file includes logic for training and scoring. We will go over both in the next two sections.
 
-#### Training <!-- omit in toc -->
+#### Training
 
-The purpose of training is to create a model using features and labels in your training dataset. 
+The purpose of training is to create a Model using features and labels in your training dataset. 
 
 > **Note:**  _Features_ refer to the input variable used by the machine learning model to predict the _labels_.
 
-The `train()` function should include the training model and return the trained model. Some examples of different models can be found in the [scikit-learn user guide documentation](https://scikit-learn.org/stable/user_guide.html). 
+The `train()` function should include the Training Model and return the Trained Model. Some examples of different Models can be found in the [scikit-learn user guide documentation](https://scikit-learn.org/stable/user_guide.html). 
 
-After choosing your training model, you will fit your x and y training dataset to the model and the function will return the trained model. An example that shows this is as follows:
+After choosing your Training Model, you will fit your x and y training dataset to the Model and the function will return the Trained Model. An example that shows this is as follows:
 
 ```PYTHON
 def train(configProperties, data):
@@ -331,9 +411,9 @@ Notice that depending on your application, you will have arguments in your `Grad
 
 ---
 
-#### Scoring <!-- omit in toc -->
+#### Scoring
 
-The `score()` function should contain the scoring algorithm and return a measurement to indicate how successful the model performs. The `score()` function uses the scoring dataset labels and the trained model to generate a set of predicted features. These predicted values are then compared with the actual features in the scoring dataset. In this example, the `score()` function uses the trained model to predict features using the labels from the scoring dataset. The predicted features are returned.
+The `score()` function should contain the scoring algorithm and return a measurement to indicate how successful the Model performs. The `score()` function uses the scoring dataset labels and the Trained Model to generate a set of predicted features. These predicted values are then compared with the actual features in the scoring dataset. In this example, the `score()` function uses the Trained Model to predict features using the labels from the scoring dataset. The predicted features are returned.
 
 ```PYTHON
 def score(configProperties, data, model):
@@ -355,114 +435,16 @@ def score(configProperties, data, model):
 
 ---
 
-### Evaluator file
-
-The `evaluator.py` file contains logic for how you wish to evaluate your trained recipe as well as how your training data should be split. In the retail sales example, the logic for loading and preparing the training data will be included. We will go over the two sections below.
-
-#### Split the dataset <!-- omit in toc -->
-
-The data preparation phase for training requires splitting the dataset to be used for training and testing. This `val` data will be used implicitly to evaluate the model after it is trained. This process is separate from scoring. 
-
-This section will show the `split()` function which will first load data into the notebook, then clean up the data by removing unrelated columns in the dataset. From there, you will be able to perform feature engineering which is the process to create additional relevant features from existing raw features in the data. An example of this process can be seen below along with an explanation.
-
-The `split()` function is shown below. The dataframe provided in the argument will be split to the `train` and `val` variables to be returned.
-
-```PYTHON
-def split(self, configProperties={}, dataframe=None):
-    train_start = '2010-02-12'
-    train_end = '2012-01-27'
-    val_start = '2012-02-03'
-    train = dataframe[train_start:train_end]
-    val = dataframe[val_start:]
-
-    return train, val
-```
-
-#### Evaluate the trained model <!-- omit in toc -->
-
-The `evaluate()` function is performed after the model is trained and will return a metric to indicate how successful the model performs. The `evaluate()` function uses the testing dataset labels and the Trained model to predict a set of features. These predicted values are then compared with actual features in the testing dataset. Common scoring algorithms include:
-* [Mean absolute percentage error (MAPE)](https://en.wikipedia.org/wiki/Mean_absolute_percentage_error)
-* [Mean absolute error (MAE)](https://en.wikipedia.org/wiki/Mean_absolute_error)
-* [Root-mean-square error (RMSE)](https://en.wikipedia.org/wiki/Root-mean-square_deviation)
-
-
-The `evaluate()` function in the retail sales sample is shown below:
-
-```PYTHON
-def evaluate(self, data=[], model={}, configProperties={}):
-    print ("Evaluation evaluate triggered")
-    val = data.drop('weeklySalesAhead', axis=1)
-    y_pred = model.predict(val)
-    y_actual = data['weeklySalesAhead'].values
-    mape = np.mean(np.abs((y_actual - y_pred) / y_actual))
-    mae = np.mean(np.abs(y_actual - y_pred))
-    rmse = np.sqrt(np.mean((y_actual - y_pred) ** 2))
-
-    metric = [{"name": "MAPE", "value": mape, "valueType": "double"},
-                {"name": "MAE", "value": mae, "valueType": "double"},
-                {"name": "RMSE", "value": rmse, "valueType": "double"}]
-
-    return metric
-```
-
-Notice that the function returns a `metric` object containing an array of evaluation metrics. These metrics will be used to evaluate how well the trained model performs.
-
----
-
-### Data Saver file
-
-The `datasaver.py` file contains the `save()` function to save your prediction while testing scoring. The `save()` function will take your prediction and using Experience Platform Catalog APIs, write the data to the `output_dataset_id` you specified in your `scoring.conf` file.
-
-The example used in the retail sales sample recipe is seen here. Note the use of `DataSetWriter` library to write data to Platform:
-
-```PYTHON
-from data_access_sdk_python.writer import DataSetWriter
-
-def save(configProperties, prediction):
-    print("Datasaver Start")
-    print("Setting up Writer")
-
-    catalog_url = "https://platform.adobe.io/data/foundation/catalog"
-    ingestion_url = "https://platform.adobe.io/data/foundation/import"
-
-    writer = DataSetWriter(catalog_url=catalog_url,
-                           ingestion_url=ingestion_url,
-                           client_id=configProperties['ML_FRAMEWORK_IMS_USER_CLIENT_ID'],
-                           user_token=configProperties['ML_FRAMEWORK_IMS_TOKEN'],
-                           service_token=configProperties['ML_FRAMEWORK_IMS_ML_TOKEN'])
-
-    print("Writer Configured")
-
-    writer.write(data_set_id=configProperties['output_dataset_id'],
-                 dataframe=prediction,
-                 ims_org=configProperties['ML_FRAMEWORK_IMS_TENANT_ID'])
-
-    print("Write Done")
-    print("Datasaver Finish")
-    print(prediction)
-```
-
----
-
 ## Training and scoring
 
-When you are done making changes to your notebook and want to train your recipe, you can click on the associated buttons at the top of the bar to creating a training run in the cell. Upon clicking the button, a log of commands and outputs from the training script will appear in the notebook (under the `evaluator.py` cell). Conda first installs all the dependencies, then the training is initiated.
+When you are done making changes to your notebook and want to train your recipe, you can click on the associated buttons at the top of the bar to creating a training run in the cell. Upon clicking the button, a log of commands and outputs from the training script will appear in the notebook (under the `evaluator.py` cell). Conda first installs all the dependencies in the background, then the training is initiated.
 
-Note that you must run training at least once before you can run scoring. Clicking on the **Run Scoring** button will score on the trained model that was generated during training. The scoring script will appear under `datasaver.py`.
+Note that you must run training at least once before you can run scoring. Clicking on the "Run Scoring" button will score on the trained model that was generated during training. The scoring script will appear under `datasaver.py`.
 
-For debugging purposes, if you wish to see the hidden output, add `debug` to the end of the output cell and re-run it.
 
 ## Create recipe
 
-When you are done editing the recipe and satisfied with the training/scoring output, you can create a recipe from the notebook by pressing **Create Recipe**. After pressing the button, you will be prompted to enter a recipe name. This name will represent the actual recipe created on Platform.
-
-![](./images/enter_recipe_name.png)
-
-Once you press **Ok** you will be able to navigate to the new recipe on [Adobe Experience Platform](https://platform.adobe.com/). You can click on the **View Recipes** button to take you to the **Recipes** tab under **ML Models**
-
-![](./images/recipe_creation_started.png)
-
-Once the process is complete, the recipe will look something like this:
+When you are done editing the recipe and satisfied with the training/scoring output, you can create a recipe from the notebook by pressing Create Recipe. After pressing it, you will see a progress bar showing how much time is left for the build to finish. If the recipe creation is successful the progress bar will be replaced by an external link that you can click to navigate to the created recipe.
 
 ![](./images/recipe_details.png)
 
@@ -475,4 +457,4 @@ Once the process is complete, the recipe will look something like this:
 
 ## Conclusion
 
-This tutorial went over creating a machine learning model in the Recipe Builder notebook. From there, we exercised the notebook to recipe workflow within the notebook to create a recipe within Data Science Workspace.
+This tutorial went over creating a machine learning Model in the Recipe Builder notebook. From there, we exercised the notebook to recipe workflow within the notebook to create a recipe within Data Science Workspace.
