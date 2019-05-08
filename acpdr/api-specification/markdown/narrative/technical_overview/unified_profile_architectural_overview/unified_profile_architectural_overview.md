@@ -6,10 +6,12 @@ This overview describes the role and use of Unified Profile. In specific:
 
 [Understanding Unified Profile](#understanding-unified-profile) - See the big picture about Unified Profile and its role on Experience Platform.  
 [The union view](#the-unified-profile) - Understand the components involved in unifying profile data to build the union view, how to control the parameters involved, and the composition of the union view schema.   
-[The real time profile](#the-real-time-profile) - See how Unified Profile's real time segmentation can work for you.  
+[The real-time customer profile](#the-real-time-profile) - Streaming Ingestion and Edge Service allows you to access customer data to instantaneously perform computations and make decisions to deliver enhanced individualized experiences to customers, in real-time, as they interact with your brand.  
 [Data governance](#data-governance) - Learn how you can use DULE and certain Unified Profile access parameters to ensure reliable compliance with any data usage restrictions and policies that govern your consumers' data.  
 [Getting data to Unified Profile](#getting-data-to-unified-profile) - The power of Unified Profile and Identity Service to build the union view depends on the data you supply.  
 [Creating audience segments](#creating-audience-segments) - Learn how to build audience segments which are used across Platform solutions, and can be used by your integrations as well.
+
+---
 
 ## Understanding Unified Profile
 
@@ -19,7 +21,7 @@ Unified Profile helps to inform and empower actions across channels, Platform, a
 
 ![Unified Profile In Action](unified-profile.png)
 
-Unified Profile's relationship with these and other solutions is highlighted in this overview. 
+The relationship between Unified Profile and other solutions is highlighted in this overview. 
 
 ---
 
@@ -63,27 +65,31 @@ An individual as it exists in a single dataset is considered a "profile fragment
 
 One of the key features of Unified Profile is the ability to unify multi-channel data. Unified Profile can supply you with a merged view of the individuals in your consumer base, across datasets and for linked identities, referred to as the union view. 
 
-Profile merging occurs on data access in Unified Profile, more specifically when accessing a profile by identity or segment export. There are several considerations to factor when merging profile data: 
+Profile merging occurs on data access in Unified Profile, more specifically when accessing a profile by identity or segment export. To learn more about accessing profiles and union views, visit [Accessing Unified Profile data via API](../../tutorials/consuming_up_tutorial/consuming_up_tutorial.md).
+
+There are several considerations to factor when merging profile data: 
 
 * Which datasets to include in the union view
-* Which data wins in the event of a data conflict - where merged datasets report different values for the same attribute
+* Which data wins in the event of a data conflict - where merged datasets report different values for the same property
 * Regulations, contractual obligations, and corporate policies that apply to your consumer data
 * Whether to include data under linked identities, and which identity map to use
 
-Much of the options around these aspects are controlled by merge policies.
+Many aspects of the options around these considerations are controlled by merge policies.
 
 ### Merge policies
 
 A merge policy is a set of configurations controlling aspects of identity stitching and data fragment merging. Merge policies are specific to a single schema, and can only be used to access entities adhering to that schema. Merge policies are private to an organization and, though there may be several for a single schema, there can only be one default for each schema.
 
-Using Unified Profile to access data, you are presented with the option of specifying the merge policy by which to govern the data to retrieve. Platform provides a default merge policy for any XDM schema, or you can create a merge policy and mark it as your organization's default for a schema. If no merge policy is defined, and the schema or related schema to retrieve is "_xdm.context.profile", Unified Profile fetches and merges all data fragments for all related identities.
+Using Unified Profile to access data, you are presented with the option of specifying the merge policy by which to govern the data to retrieve. Platform provides a default merge policy for any XDM schema, or you can create a merge policy and mark it as your organization's default for a schema. 
+
+> **Note:** If no merge policy is defined, and the schema or related schema to retrieve is "_xdm.context.profile", Unified Profile fetches and merges all data fragments for all related identities.
 
 Merge policies are used to control variables of:
 
 * Identity stitching - Merge policies include configurations for choosing which identity graph, if any, to fetch linked identities for which to merge data.
 * Attribute merging - Data conflicts require an access-time rule to follow for resolution. This is provided as an attribute merge type in merge policies.
 
-For information on working with merge policies, see the tutorial [Configuring Unified Profile via API](../../tutorials/configuring_up_tutorial/configuring_up_tutorial.md).
+For information on working with merge policies, see the tutorial [Working with merge policies via API](../../tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md).
 
 ### Identity stitching
 
@@ -97,7 +103,7 @@ When multiple profile fragments are being merged that contain the same data elem
 
 ### Union schema
 
-A union schema is one that has been enabled for Unified Profile. The union view schema is an aggregate of the union schemas merged to form the union view. A union schema can be viewed on Adobe Experience Platform by selecting it from those listed on the  "Union Schemas" page.
+A union schema is one that has been enabled for Unified Profile. The union view schema is an aggregate of the union schemas merged to form the union view. A union schema can be viewed on Adobe Experience Platform by selecting it from those listed on the "Union Schemas" page.
 
 ![](unified-profile-schema.png)
 
@@ -108,9 +114,54 @@ For direction on how to enable a schema via API, see [Schema Registry API develo
 
 ## The real-time profile
 
-Unified Profile ingests data delivered using real time data inlets, updating the profile store with data conforming to an XDM schema enabled for Unified Profile. Additionally, Unified Profile checks post-ingest profiles and time series data as having included or excluded them from segments. A profile qualifying for the "Abandoned cart" segment would be immediately disqualified from the segment, discontinuing display of targeted content, the instant he clicks the "Confirm checkout" button.
+Another very key feature of Unified Profile is the ability to evolve a customer's experience as that customer's experience with your brand evolves, responding to changes as those changes are occurring in real-time. 
+
+### Streaming ingestion
+
+Unified Profile ingests data delivered using real-time data inlets, updating the profile store with data conforming to a union schema. 
 
 For more, start with the [Streaming Ingestion overview](..\streaming_ingest\streaming_ingest_overview.md).
+
+### Streaming segmentation
+
+Unified Profile checks post-ingest profiles and time series data as having included or excluded them from segments. A profile qualifying for the "Abandoned cart" segment would be immediately disqualified from the segment, discontinuing display of targeted content, the instant he clicks the "Confirm checkout" button.
+
+### Edge Service
+
+Edge Service is a component of Unified Profile that serves as a framework for low-latency data collection, pluggable computing and rapid data activation across all addressable channels. Platform components like Adobe Target and Adobe Campaign use Edge Service for real-time personalization.
+
+Edge Service provides a single consolidated SDK, for every channel (JavaScript, mobile, server-side), which will send data to a common Adobe domain (adobedc.net) and receive a single payload in response for data and experience delivery. On the server-side, a unified edge gateway and a common platform services framework make it easy to plug-in and deploy new capabilities into this real-time computing environment. This revolutionary architecture decreases customer time to value, stops the need for "point" integrations, decreases costs, increases the speed of innovation, and creates sustained competitive advantages for Adobe customers. 
+
+A single consolidated edge system allows you to manage your advertising, marketing or personalization campaigns across all channels as an integrated experience. It also helps increase the speed of product innovation by making the real-time edge pluggable and allowing Adobe and its customers to more rapidly, _and_ more cost-effectively, add new capabilities and customer-defined logic to that real-time system.
+
+#### Projection Service
+
+A projection is a lightweight view of an entity, pared down to the fields necessary for a specific use case. 
+
+Unified Profile sends out information about changes to profile data (creations, updates, deletes) as they happen, and Projection Service reflects these changes in entities on the edges in real-time. When entity change notifications are received, the service processes the notifications, creates projections and sends them to the edges.
+
+Records are initially pushed to the edges where you have a presence. The edges are then continuously updated. Some notes:
+
+* Updates that happen on the hub flow from the hub to the edges – this includes entity creates, updates, deletes.
+* Profiles that are active on an edge are pushed/refreshed on that edge
+* Profiles that are idle on an edge are removed from that edge
+
+The projections are informed by:
+
+* Attributes needed on the edge
+  * Attributes that are directly used by calling components
+  * Attributes used by server-side decisioning rules
+  * Attributes used by client-side apps
+* Entity activity on the edge
+* Customer-specific settings
+* Global settings
+
+As an organization, you control the edges in two ways:
+
+__Projection configurations__ - Projection configurations are information about what data should be available on each edge.  
+__Projection destinations__ - Projection Service supports routing to one or more edge, or projections can routed to a local pipeline topic from which they can be consumed by solutions or partners.
+
+To learn about configuring edge destinations and projections for your real-time customer profiles, visit [Configuring Edge destinations and projections via API](../../tutorials/configuring_up_tutorial/configuring_edge_tutorial.md).
 
 ---
 
@@ -146,12 +197,13 @@ Platform provides tools that you can use to send your record and time series dat
 
 > **Note:** All data collected through Adobe solutions, including Analytics Cloud, Marketing Cloud, and Advertising Cloud, flows into Experience Platform and is ingested into Unified Profile. <!-- ? --> 
 
+Platform provides tools that you can use to send your record and time series data to Unified Profile, supporting real-time streaming ingestion and batch ingestion. 
+
 ![](up-in-adobe-experience-platform.png)
 
 See the tutorial [Adding data to Unified Profile](../ingest_architectural_overview/ingest_architectural_overview.md) for more details.
 
 ---
-
 
 ## Creating audience segments
 

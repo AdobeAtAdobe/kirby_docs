@@ -94,7 +94,7 @@ Where the following describes the request body object:
     * **"pql/json"** - A segment definition in json format. For more on JSON formatted PQL, start with [JSON formatted queries](../../technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md#json-formatted-queries).
   * `value` - Expression of above type to select records from xdmSchema
   * `meta` - This can contain more info about the expression and related meta data
-* `mergePolicyId` - Specify the merge policy to use for the exported data. For information on working with merge policies, see the tutorial [Configuring Unified Profile via API](../../tutorials/configuring_up_tutorial/configuring_up_tutorial.md)
+* `mergePolicyId` - Specify the merge policy to use for the exported data. For information on working with merge policies, see the tutorial [Working with merge policies via API](../../tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md)
 * `description` - Human readable description of the definition
 
 #### Example request

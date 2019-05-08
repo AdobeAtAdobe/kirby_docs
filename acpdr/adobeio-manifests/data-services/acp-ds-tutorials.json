@@ -75,9 +75,22 @@
 		},
 		{
 			"importedFileName": "configuring_up_tutorial",
-			"pages": [],
 			"path": "api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_up_tutorial.md",
-			"title": "Configuring Unified Profile via API"
+			"title": "Configuring Unified Profile via API",
+			"pages": [
+				{
+					"importedFileName": "configuring_merge_policies_tutorial",
+					"pages": [],
+					"path": "api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md",
+					"title": "Configuring merge policies"
+				},
+				{
+					"importedFileName": "configuring_edge_tutorial",
+					"pages": [],
+					"path": "api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_edge_tutorial.md",
+					"title": "Configuring edge projections"
+				}
+			]
 		},
 		{
 			"importedFileName": "adding_data_to_unified_profile",

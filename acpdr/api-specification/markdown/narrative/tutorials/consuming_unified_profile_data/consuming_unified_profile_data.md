@@ -136,7 +136,7 @@ curl -X POST \
         "predicateModel": "_xdm.context.profile",
         "graphType": "simple",
         "mergeStrategy": "simple"
-    } 
+    }'
 ```
 
 ## Summarizing data
