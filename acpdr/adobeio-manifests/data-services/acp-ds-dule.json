@@ -38,6 +38,8 @@
 	],
 	"app2app_map": {
 		"api-specification/markdown/narrative/tutorials/":"/apis/cloudplatform/dataservices/tutorials/alltutorials.html", 
-		"acpdr/swagger-specs/":"/apis/cloudplatform/dataservices/api-reference.html"
+		"acpdr/swagger-specs/":"/apis/cloudplatform/dataservices/api-reference.html",
+		"api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html",
+		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
 	}
 }
