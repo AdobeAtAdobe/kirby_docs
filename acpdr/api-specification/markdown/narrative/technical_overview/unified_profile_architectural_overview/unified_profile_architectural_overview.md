@@ -112,13 +112,11 @@ For direction on how to enable a schema via API, see [Schema Registry API develo
 
 ---
 
-## The real-time profile
+## The real-time customer profile
 
-Another very key feature of Unified Profile is the ability to evolve a customer's experience as that customer's experience with your brand evolves, responding to changes as those changes are occurring in real-time. 
+Unified Profile ingests data delivered in real time via data inlets, merges it with existing data in the profile store, and creates or modifies the unified view at near real time. This data, evolving in time with your customers' experience, can be used to make personalized recommendations.
 
-### Streaming ingestion
-
-Unified Profile ingests data delivered using real-time data inlets, updating the profile store with data conforming to a union schema. 
+Additionally, Unified Profile checks modified profiles and time series data as having an impact on the profile's qualifying segments. A profile qualifying for the "Abandoned cart" segment would be immediately disqualified from the segment, discontinuing display of targeted content, the instant he clicks the "Confirm checkout" button.
 
 For more, start with the [Streaming Ingestion overview](..\streaming_ingest\streaming_ingest_overview.md).
 
@@ -202,6 +200,16 @@ Platform provides tools that you can use to send your record and time series dat
 ![](up-in-adobe-experience-platform.png)
 
 See the tutorial [Adding data to Unified Profile](../ingest_architectural_overview/ingest_architectural_overview.md) for more details.
+
+### Understanding Data Lake, profile store, and identity graph
+
+Each Catalog Service, Unified Profile Service, and Identity Service, maintains its own store and the relevant data supporting the objectives of the service. All data ingested (batch or streaming) into platform lands into Data lake and from there, individual services like Unified Profile can get that data and store it in their store as per their usage patterns.
+
+In order to see if a batch has successfully been ingested into Profile store, please refer to the below screenshot. Since each of the services (Catalog, Unified Profile and Identity) can have their own respective failures, we show the status of the batch across each of those stores.
+
+Please note that for a batch to be ingested into Profile or Identity, the dataset has to be enabled for Profile.
+
+![](solutions-ingest-success.png)
 
 ---
 
