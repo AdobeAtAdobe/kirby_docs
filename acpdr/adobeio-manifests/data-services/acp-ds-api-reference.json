@@ -68,6 +68,11 @@
 					"pages": [],
 					"path": "acpdr/swagger-specs/profile-preview-api.yaml",
 					"title": "Unified Profile Preview API"
+				},
+				{
+					"pages": [],
+					"path": "acpdr/swagger-specs/edge-profile-projection-config.yaml",
+					"title": "Edge Profile Projection Configuration API"
 				}
 			]
 		},
