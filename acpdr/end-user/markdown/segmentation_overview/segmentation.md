@@ -79,32 +79,19 @@ When creating a new segment project, you are asked for a segment name and descri
 
 ### Rules
 
-A rule refers to the smallest portion of a segment that resolves to a true or false and is joined to other rules by and or or. For example, there are two rules in the “Men over 50” segment, those with a gender of “male” and those with a birth-date of over 50 years prior to today.
+A rule refers to the smallest portion of a segment that resolves to a true or false and is joined to other rules by `AND` or `OR`. For example, there are two rules in the “Men over 50” segment, those with a gender of “male” and those with a birth-date of over 50 years prior to today.
 
-To build a rule, find each component from the left rail that reflects the the rule will be based. Drag the field onto the rule area, enabling controls for further configuring that rule. Extended schema fields may take up to 24 hours to be available to the Segment Builder UI for use in building rules, beginning when data including that field begins hydrating Platform.
+To build a rule, first choose an attribute or event from the left rail on which the rule will be based. Drag the field onto the rule area, enabling controls for further configuring that rule. Extended schema fields may take up to 24 hours to be available to the Segment Builder UI for use in building rules, beginning when data including that field begins hydrating Platform.
 
-When adding a rule to a container, it will be appended to any existing rules in the container with the AND operator. Click the `AND` to access the option to change it to `OR`.
-
-### Rule Types
-
-A segment can be built from rules based on profile data, related experience events, or both.
-
-#### Principal schema: Profile
-
-Profile data refers to record information attached to a profile, such as email address or country of residence.
-
-#### Principal schema: Experience event
-
-An ExperienceEvent describes a touchpoint activity, and names an event and timestamp. This data identifies consumers who have had some interaction such as “anyone who has ordered twice in two weeks”.
+A segment can be built from rules based on profile data, related time series data, or both.
 
 ### Containers
 
-By default rules are evaluated in the order they are listed. 
-Containers allow control of the order of execution by allowing nested queries.
+By default rules are evaluated in the order they are listed. Containers allow control of the order of execution by allowing nested queries.
 
 Consider a campaign 'Order Product A Fast!' targeted to a segment of anyone who has purchased Product A more than three times in the last year, but who has never ordered it through your Quick Order feature. This rule could be defined using containers, where a container could represent 'All who have ordered Product A using Quick Order' and be referenced as an exclude from 'All who have ordered Product A more than 3 times in the last year'.
 
-When using containers with rules involving experience events or other time-series data, placing multiple rules within a container constrains the rules to be satisfied on the same event. For example, if two rules 'purchase exists' AND 'product contains "shoes"' were expressed within the same container, the resulting query would return only those profiles with a single experience event containing both a purchase and product containing "shoes."
+When adding rules to a container in the attributes section, they can be joined with AND logic (include all of) or using OR logic (include any of). When adding a rule to an event container, placing multiple rules within a container constrains the rules to be satisfied on the same event. For example, if two rules 'purchase exists' AND 'product contains "shoes"' were expressed within the same container, the resulting query would return only those profiles with a single experience event containing both a purchase and product containing "shoes."
 
 #### Create a container
 
@@ -119,6 +106,20 @@ A child container can have its contents extracted and added inline to its parent
 Each time your segment definition changes, your estimates are rebuilt. Use these figures and preview your profiles to ensure your changes are affecting your segment in the ways you expect.
 
 See [Right rail - Segment properties](#right-rail---segment-properties) above, for specifics.
+
+These estimates are generated based on data samples to evaluate segments and estimate the number of qualifying profiles. By using data samples stored in memory rather than an entire profile store, several performance gains can be realized without compromising the accuracy of your estimates.
+
+Sample data is loaded into memory each morning (between 12AM-2AM PT, which is 7-9AM UTC), and all segmentation queries are estimated using that day's sample data. Consequently, any new fields added or additional data collected will be reflected in estimates the following day. 
+
+You can determine when the last sample was updated by hovering over the information icon in the right rail, following "Estimated qualifying profiles".
+
+The sample size depends on the overall number of entities in your profile store and breaks down into the following categories:
+
+* __Up to 1 million profiles__: use full data set
+* __1 to 20 million profiles__: use a sample set of 1 million profiles
+* __Over 20 million profiles__: use a 5% sample size
+
+Estimates can generally run over 10-15 seconds, beginning with a rough estimate and refining as more records are read.
 
 ---
 
