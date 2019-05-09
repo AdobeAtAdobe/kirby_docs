@@ -1,168 +1,72 @@
-# Identity Namespace Overview
+# Identity namespace overview
 
-## Overview
+Identity namespaces are a component of [Identity Service](../identity_services_architectural_overview/identity_services_architectural_overview.md) and serve as indicators of the context to which the identity relates, such as to contextualize a value of "someone<i></i>@somewhere.com" as an email address, or "443522" as a numeric ID used by a particular CRM. 
 
-User Profile data aggregated in Adobe Experience Platform could come from many disparate systems, each of which may have data relevant to a particular user, and each system may represent and identify that user differently.  In this scenario, a "User ID" is only reliable in the context of a specific system of record.
+This document discusses identity namespaces in depth, and is a good starting point to help orient you if you have questions like:
 
-An end user could be identified by a multitude of values, such as:
-
-* A cookie ID that was set during a session on your site
-* The device identifier for the tablet used to view your site
-* An email address collected during an offline interaction
-* The CRM ID provided during a product purchase
-* Countless others
-
-An Identity Namespace is an indicator of the context from which data originates, such as a help desk system using an email address to identify a user, or a CRM which may use a numeric ID. Adobe provides several pre-defined standard Identity Namespaces including a Namespace for each Adobe solution, as well as for many industry standard solutions IDs such as the Windows AID (WAID) and Google Ad ID (GAID). Generic Namespaces, such as for "Email" and "Phone" are among the standard Identity Namespaces. You may also create new Namespaces to represent additional systems and ID types.
-
-When multiple identifiers are provided in a single profile fragment, those identities are linked in the identity graph maintained by Identity Service. In this way, Identity Namespaces make it possible for Unified Profile to aggregate profile data for a particular person which may originate from several different systems within your organization into one robust unified view. For more information on Unified Profile, visit [Unified Profile Overview](../unified_profile_architectural_overview/unified_profile_architectural_overview.md).
-
-Identity Namespaces are also used to comply with General Data Protection Regulation (GDPR) concerns. Visit [GDPR on Adobe Experience Platform Overview](../../../../../api-specification/markdown/narrative/gdpr/gdpr-on-platform-overview.md) for a step by step breakdown. Or, go straight to the [Adobe Experience Platform GDPR Service Overview](../../../../../api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) to understand the GDPR Service API.
-
-### Using the API
-
-This document describes interacting with Identity Namespace Service using Adobe's Experience Platform APIs. All services, unless otherwise indicated, require the following headers:
-
-* `X-Gw-Ims-Org-Id` - Your organization ID
-* `Authorization` -  Your bearer token value, prefixed with "Bearer "
-* `X-Api-Key` - Your API key
-
-See the [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for details on obtaining your Adobe Identity Management System (IMS) credentials.
+* What is an identity namespace?
+* How can I see what namespaces are available for use in my data?
+* How can I create custom namespaces?
+* How do I include namespace in my identity data?
 
 ---
 
-## Working with Identity Namespaces
+## Understanding identity namespaces
 
-In this section, we will discuss the aspects of working with Identity Namespaces within Experience Platform, including:
+A fully qualified identity includes the ID value, and a namespace. This is described in the Identity Service overview, [here](../identity_services_architectural_overview/identity_services_architectural_overview.md#identities). When matching record data across profile fragments, as when Unified Profile is merging profile data, both the identity value and the namespace must match. For example, two profile fragments with different primary IDs, but sharing the same value for the "Phone" namespace, are seen as being the same individual.
 
-[Listing available namespaces](#listing-namespaces-available-for-your-organization): View a list of all Identity Namespaces available for use by your organization. Before creating a new Identity Namespace, you should check to see if one already exists which meets the requirements of your data
-[Creating custom Namespaces](#creating-a-custom-namespace):  Create a Namespace for use by your organization
-[Labeling your data](#labeling-your-data): Include identity entities in your XDM formatted data. All identities ingested into Platform must include a Namespace
+![](identity-service-stitching.png)
 
-### Listing Available Namespaces
+### Identity data
 
-List details for all Namespaces available for use by your organization to determine which to use to group each Profile ID included in your data. The following are standard Namespaces, and are provided for use by all organizations.
+A consumer could be identified by the identity types listed below. The identity type is specified at the time of identity namespace creation and controls whether and how the data is handled when persisted in the identity graph. An identity type can have the following values: "Cookie", "Email", "Phone", "Device", "Cross_device".
+
+* **Cookie** - These identities are critical for expansion and constitute majority of the graph. However, by nature they decay fast and loose their value over time. Deletion of cookie will be handled specially in the identity graph.
+* **Email** - Emails are personally identifiable information (PII) and as such is, by default, encrypted before being stored in the identity graph. Emails are first lower-case transformed prior to encryption.
+* **Phone** - For identities of this type, considered PII, the identity value is always encrypted.
+* **Device** - Includes IDFA, GAID & other IOT IDs. These can be shared by people in households.
+* **Cross_device** -  Includes Login ID, CRM, Loyalty ID etc. This is ideally not shared. This indicates Identity Service to consider as strong people identifier and hence preserve forever.
+
+### Standard namespaces
+
+The following namespaces are provided for use by all organizations. These are referred to as the standard namespaces. Depending on your implementation, you may require additional namespaces. Creating custom namespaces is discussed later.
 
 |Display Name|ID|Code|Description|
 |------------|---|---|-----------|
 |CORE|0|CORE|legacy name: "Adobe AudienceManager"|
 |ECID|4|ECID|alias: "Adobe Marketing Cloud ID", "Adobe Experience Cloud ID", "Adobe Experience Platform ID"|
-|Email|6|Email||
-|Phone|7|Phone||
+|Email|6|Email|Data in this namespace is considered PII and is automatically transformed to lower case and SHA-256 encrypted prior to being persisted.|
+|Phone|7|Phone|Data in this namespace is considered PII and is automatically SHA-256 encrpyted prior to being persisted.|
 |Windows AID|8|WAID||
 |AdCloud|411|AdCloud|alias: Ad Cloud|
 |Adobe Target|9|TNTID|Target ID|
 |Google Ad ID|20914|GAID|GAID|
 |Apple IDFA|20915|IDFA|ID for Advertisers|
 
-__Example request to list Namespaces__
+> **Note:** The purpose of ‘code’ is to allow short hand (easy to memorize) representation of identity namespaces.
 
-```
-GET https://platform.adobe.io/data/core/idnamespace/identities
-```
+### Identity namespaces and GDPR
 
-__Example response__
+Identity namespaces are also used to comply with General Data Protection Regulation (GDPR) concerns, where GDPR requests can be made relative to a namespace. Visit [GDPR on Adobe Experience Platform Overview](../../../../../api-specification/markdown/narrative/gdpr/gdpr-on-platform-overview.md) for a step by step breakdown. Or, go straight to the [Adobe Experience Platform GDPR Service Overview](../../../../../api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) to understand the GDPR Service API.
 
-```
-[
-  {
-        "updateTime": 1441122419000,
-        "code": "CORE",
-        "shared": true,
-        "type": "GENERAL",
-        "status": "ACTIVE",
-        "description": "CORE Namespace",
-        "id": 0,
-        "createTime": 1441122419000,
-        "idType": "COOKIE",
-        "name": "CORE",
-        "custom": false
-    },
-    {
-        "updateTime": 1495153678000,
-        "code": "ECID",
-        "shared": false,
-        "type": "GENERAL",
-        "status": "ACTIVE",
-        "description": "ECID Namespace",
-        "id": 4,
-        "createTime": 1495153678000,
-        "idType": "COOKIE",
-        "name": "ECID",
-        "custom": false
-    },
-    {
-        "updateTime": 1522783145000,
-        "code": "AdCloud",
-        "shared": true,
-        "type": "GENERAL",
-        "status": "ACTIVE",
-        "description": "Adobe AdCloud - ID Syncing Partner",
-        "id": 411,
-        "createTime": 1522783145000,
-        "idType": "COOKIE",
-        "name": "AdCloud",
-        "custom": false
-    },
-    ...
-]
-```
+---
 
-### Creating a Custom Namespace
+## Managing namespaces for your organization
 
-When your goals require a Namespace besides what is available, you can create a custom Namespace which will be available only to your organization.
+Adobe provides several pre-defined standard identity namespaces including a namespace for each Adobe solution, as well as for many industry standard solutions IDs such as the Windows AID (WAID) and Google Ad ID (GAID). The standard namespaces "Email" and "Phone" have automatic handling, as described [above](#standard-namespaces). You may also create new namespaces to represent additional systems and identity types. The namespaces you create are private to your organization.
 
-For recommendations around creating custom Namespaces, see [the FAQ](../identity_services_architectural_overview/identity_services_faq.md).
+On the Platform UI, available namespaces are listed on the Identity Namespace page, accessed by selecting "Identities" from the left rail. 
 
-__Example request to create a Namespace__
+![](identities-ui.png)
 
-```
-POST https://platform.adobe.io/data/core/idnamespace/identities
-```
+For information on listing namespaces using the API, see [Listing available namespaces](../identity_services_architectural_overview/identity_services_api.md#listing-available-namespaces).
 
-__Example body__
+From here you can view the details of a namespace by clicking on one listed, or select "Create Identity Namespace" to create a custom namespace. Instruction on performing these tasks via API can be found in the [Identity Service API overview](../identity_services_architectural_overview/identity_services_api.md).
 
-```
-{
-  "shared": false,
-  "description": "Test Namespace Details",
-  "idType": "COOKIE",
-  "code": "TEST",
-  "name": "Test Namespace"
-}
-```
+---
 
-__Example response__
+## Namespaces in identity data
 
-```
-{
-    "updateTime": 1525129290000,
-    "code": "TEST",
-    "shared": false,
-    "type": "GENERAL",
-    "status": "ACTIVE",
-    "description": "Test Namespace Details",
-    "id": 56011,
-    "createTime": 1525129290000,
-    "idType": "COOKIE",
-    "name": "Test Namespace",
-    "custom": false
-}
+Supplying the namespace for an identity depends on the method you use for providing identity data. There are two ways to provide identity data to Identity Service; identity map, or mark a field as identity. 
 
-```
-
-### Labeling Your Data
-
-In incoming XDM Profile data, indicating the Namespace for each profile ID is a function of specifying the `code` for the Namespace property of each identity under the `identities` array. The following JSON snippet is an example of an XDM `Identity` entity referencing the custom Namespace created above:
-
-```
-identities: [
- {
-    "id": "example@email.com",
-    "authenticatedState": "",
-    "primary": "",
-    "namespace" : {
-      "code": "TEST"
-    }
- }
-]
-```
+For details on this, see [Include identity data in XDM](../identity_services_architectural_overview/identity_services_architectural_overview.md#include-identity-data-in-xdm).
