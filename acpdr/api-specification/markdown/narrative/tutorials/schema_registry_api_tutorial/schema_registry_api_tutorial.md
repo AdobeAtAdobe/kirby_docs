@@ -20,11 +20,15 @@ If you would prefer to use the user interface in Experience Platform, the [Schem
 
 Before beginning this tutorial, first review the [Basics of schema composition](../../technical_overview/schema_registry/schema_composition/schema_composition.md) to learn more about schemas, including key principles and best practices in schema composition.
 
-You will then want to review the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md) as it includes important information that you will need to know in order to successfully perform calls to the Schema Registry API. This includes your `{TENANT_ID}`, the concept of "containers", and the required headers for making requests (with special attention to the Accept header and its possible values). Ensure that you have reviewed this information in full before beginning this tutorial.
+You will then need to review the [Schema Registry Developer Guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md) as it includes important information that you will need to know in order to successfully perform calls to the Schema Registry API. This includes your `{TENANT_ID}`, the concept of "containers", and the required headers for making requests (with special attention to the Accept header and its possible values). Ensure that you have reviewed this information in full before beginning this tutorial.
 
 ## Tutorial
 
-This tutorial demonstrates API calls using cURL commands. To follow along, you may wish to use [Postman](https://www.getpostman.com/), a free, third-party software that is helpful for visualizing API calls. You can download a [Postman collection](https://raw.githubusercontent.com/adobe/experience-platform-postman-samples/master/postman/schema_editor_tutorial/Schema%20Registry%20API%20Tutorial.postman_collection.json) and corresponding [Postman environment](https://raw.githubusercontent.com/adobe/experience-platform-postman-samples/master/postman/schema_editor_tutorial/Schema%20Registry%20API%20Tutorial.postman_environment.json) to begin using the Schema Registry API right now. Steps for importing environments and collections are available through the [Postman Learning Center](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/).
+This tutorial requires you to have first read the [Schema Registry Developer Guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md) and completed the [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) before you can begin.
+
+Throughout the tutorial, you will see API calls demonstrated using cURL commands. To follow along, you may wish to use [Postman](https://www.getpostman.com/), a free, third-party software that is helpful for visualizing API calls. You can download a [Postman collection](https://raw.githubusercontent.com/adobe/experience-platform-postman-samples/master/postman/schema_editor_tutorial/Schema%20Registry%20API%20Tutorial.postman_collection.json) and corresponding [Postman environment](https://raw.githubusercontent.com/adobe/experience-platform-postman-samples/master/postman/schema_editor_tutorial/Schema%20Registry%20API%20Tutorial.postman_environment.json) to begin using the Schema Registry API. Steps for importing environments and collections are available through the [Postman Learning Center](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/). 
+
+> **Note:** In order to successfully use the collection and environment you must first complete the [Authentication tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
 
 Throughout this tutorial, you will be composing a Loyalty Members schema that describes data related to the members of a retail loyalty program. Before beginning, you may wish to preview the [complete Loyalty Members schema](#complete-loyalty-members-schema) in the [Appendix](#appendix).
 
@@ -198,9 +202,8 @@ curl -X PATCH \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -d '[
-    { "op": "add", "path": "/meta:extends/-", "value":  "https://ns.adobe.com/xdm/context/profile-person-details"},
-    { "op": "add", "path": "/allOf/-", "value":  {"$ref": "https://ns.adobe.com/xdm/context/profile-person-details"}}
-]'
+        { "op": "add", "path": "/allOf/-", "value":  {"$ref": "https://ns.adobe.com/xdm/context/profile-person-details"}}
+      ]'
 ```
 
 #### Response
@@ -276,9 +279,8 @@ curl -X PATCH \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -d '[
-    { "op": "add", "path": "/meta:extends/-", "value":  "https://ns.adobe.com/xdm/context/profile-personal-details"},
-    { "op": "add", "path": "/allOf/-", "value":  {"$ref": "https://ns.adobe.com/xdm/context/profile-personal-details"}}
-]'
+        { "op": "add", "path": "/allOf/-", "value":  {"$ref": "https://ns.adobe.com/xdm/context/profile-personal-details"}}
+      ]'  
 ```
 
 #### Response
@@ -508,9 +510,8 @@ curl -X PATCH \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -d '[
-    { "op": "add", "path": "/meta:extends/-", "value":  "https://ns.adobe.com/{TENANT_ID}/mixins/bb118e507bb848fd85df68fedea70c62"},
-    { "op": "add", "path": "/allOf/-", "value":  {"$ref": "https://ns.adobe.com/{TENANT_ID}/mixins/bb118e507bb848fd85df68fedea70c62"}}
-]'
+        { "op": "add", "path": "/allOf/-", "value":  {"$ref": "https://ns.adobe.com/{TENANT_ID}/mixins/bb118e507bb848fd85df68fedea70c62"}}
+      ]'
 ```
 
 #### Response
@@ -943,11 +944,15 @@ Performing a GET request to lookup the schema now will show the reference to the
 
 ### Define Identity descriptor
 
-Schemas are used for ingesting data into Experience Platform. This data will ultimately be used across multiple services to create a single, unified view of an individual. To help with this process, key fields can be marked as "Identity" and, upon data ingestion, the data in those fields will be inserted into the "Identity Graph" for that individual. The graph data can then be accessed by [Unified Profile Service](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md) (UPS) and other Experience Platform services to provide a stitched together view of each individual customer.
+Schemas are used for ingesting data into Experience Platform. This data will ultimately be used across multiple services to create a single, unified view of an individual. To help with this process, key fields can be marked as "Identity" and, upon data ingestion, the data in those fields will be inserted into the "Identity Graph" for that individual. The graph data can then be accessed by [Unified Profile Service](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md) (UPS) and other Experience Platform services to provide a stitched together view of each individual customer, called a Real-Time Customer Profile.
 
-Fields that are commonly marked as "Identity" include: email address, phone number, [Experience Cloud ID (ECID)](https://marketing.adobe.com/resources/help/en_US/mcvid/), CRM ID, or other unique ID fields. You will want to consider any unique identifiers specific to your organization, as they may be good "Identity" fields as well.
+Fields that are commonly marked as "Identity" include: email address, phone number, [Experience Cloud ID (ECID)](https://marketing.adobe.com/resources/help/en_US/mcvid/), CRM ID, or other unique ID fields. 
 
-Identity descriptors signal that the "sourceProperty" of the "sourceSchema" is a unique identifier that should be considered an "Identity". For more information on working with descriptors, see the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md).
+You will want to consider any unique identifiers specific to your organization, as they may be good Identity fields as well.
+
+Identity descriptors signal that the "sourceProperty" of the "sourceSchema" is a unique identifier that should be considered an "Identity". 
+
+For more information on working with descriptors, see the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md).
 
 #### API format
 
@@ -1082,62 +1087,68 @@ The response shows that the operation was performed successfully, and the schema
 }
 ```
 
-### Lookup a specific union
+### List schemas in a union
 
-You can now view the union for the Profile class to see the new Loyalty Members schema included.
+You have now successfully added your schema to the XDM Profile union. In order to see a list of all schemas that are a part of the same union, you can perform a GET request using query parameters to filter the response. 
 
-#### API format
+Using the `property` query parameter, you can specify that only schemas containing a `meta:immutableTags` field that have a `meta:class` equal to the `$id` of the XDM Profile class are returned.
+
+#### API Format
 
 ```SHELL
-GET /tenant/unions/{meta:altId or the url encoded $id URI}
+GET /tenant/schemas?property=meta:immutableTags==union&property=meta:class=={CLASS_ID}
 ```
 
 #### Request
 
+In the example below, the request will return all schemas that are part of the XDM Profile union.
+
 ```SHELL
 curl -X GET \
-  https://platform.adobe.io/data/foundation/schemaregistry/tenant/unions/https%3A%2F%2Fns.adobe.com%2Fxdm%2Fcontext%2Fprofile__union \
+  'https://platform.adobe.io/data/foundation/schemaregistry/tenant/schemas?property=meta:immutableTags==union&property=meta:class==https://ns.adobe.com/xdm/context/profile' \
+  -H 'Accept: application/vnd.adobe.xed-id+json' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'Accept: application/vnd.adobe.xed+json; version=1' \
 ```
 
 #### Response
 
-The response object provides a union view of all schemas that implement the Profile class. You can see that the Loyalty Members schema (`https://ns.adobe.com/{TENANT_ID}/schemas/533ca5da28087c44344810891b0f03d9`) is now included in the `allOf` array.
+The response is a filtered list of schemas, containing only those that satisfy both requirements. Remember that when using multiple query parameters, an AND relationship is assumed. The format of the list response depends on the Accept header sent in the request.
 
 ```JSON
 {
-    "type": "object",
-    "description": "Union view of all schemas that extend https://ns.adobe.com/xdm/context/profile",
-    "allOf": [
+    "results": [
         {
-            "$ref": "https://ns.adobe.com/{TENANT_ID}/schemas/b9605d1dfb2d2218fa2f815dc63cc4bf"
+            "title": "Loyalty Members",
+            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/533ca5da28087c44344810891b0f03d9",
+            "meta:altId": "_{TENANT_ID}.schemas.533ca5da28087c44344810891b0f03d9",
+            "version": "1.4"
         },
         {
-            "$ref": "https://ns.adobe.com/{TENANT_ID}/schemas/533ca5da28087c44344810891b0f03d9"
+            "title": "Schema 2",
+            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/e7297a6ddfc7812ab3a7b504a1ab98da",
+            "meta:altId": "_{TENANT_ID}.schemas.e7297a6ddfc7812ab3a7b504a1ab98da",
+            "version": "1.5"
+        },
+        {
+            "title": "Schema 3",
+            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/50f960bb810e99a21737254866a477bf",
+            "meta:altId": "_{TENANT_ID}.schemas.50f960bb810e99a21737254866a477bf",
+            "version": "1.2"
+        },
+        {
+            "title": "Schema 4",
+            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/dfebb19b93827b70bbad006137812537",
+            "meta:altId": "_{TENANT_ID}.schemas.dfebb19b93827b70bbad006137812537",
+            "version": "1.7"
         }
     ],
-    "meta:extends": [
-        "https://ns.adobe.com/xdm/context/profile",
-        "https://ns.adobe.com/xdm/data/record",
-        "https://ns.adobe.com/xdm/context/identitymap",
-        "https://ns.adobe.com/xdm/common/extensible",
-        "https://ns.adobe.com/xdm/common/auditable",
-        "https://ns.adobe.com/xdm/context/profile-person-details",
-        "https://ns.adobe.com/{TENANT_ID}/mixins/477bb01d7125b015b4feba7bccc2e599",
-        "https://ns.adobe.com/xdm/context/profile-personal-details",
-        "https://ns.adobe.com/{TENANT_ID}/mixins/bb118e507bb848fd85df68fedea70c62"
-    ],
-    "title": "Union object for https://ns.adobe.com/xdm/context/profile",
-    "$id": "https://ns.adobe.com/xdm/context/profile__union",
-    "meta:containerId": "tenant",
-    "meta:class": "https://ns.adobe.com/xdm/context/profile",
-    "meta:altId": "_xdm.context.profile__union",
-    "version": "1.0",
-    "meta:resourceType": "unions",
-    "meta:registryMetadata": {}
+    "_links": {
+        "global_schemas": {
+            "href": "https://platform.adobe.io/data/foundation/schemaregistry/global/schemas?property=meta:immutableTags==union&property=meta:class==https://ns.adobe.com/xdm/context/profile"
+        }
+    }
 }
 ```
 
