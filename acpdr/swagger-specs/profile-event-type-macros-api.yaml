@@ -1,15 +1,14 @@
 swagger: '2.0'
 info:
   description: >-
-    Use this API to control the manner by which Unified Profile merges XDM schema objects on Adobe Experience Platform. 
-
+    Work with event type macros on Adobe Experience Platform using Unified Profile Event Type Macros API.
+ 
 
     Related documentation:
 
       * [Unified Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
-      * [Configuring Unified Profile](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/activating_up_tutorial/activating_up_tutorial.md)
 
-
+    
     Notes:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core/ups/config
@@ -17,23 +16,23 @@ info:
       * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
       to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
 
-  version: 18.10.1
-  title: Unified Profile Configuration API
-  termsOfService: 'https://www.adobe.com/legal/terms.html'
+  version: 19.3.1
+  title: Profile Event Type Macros API
+  termsOfService: ''
 host: platform.adobe.io
 basePath: /data/core/ups/config
 tags:
-  - name: Merge policies
+  - name: Profile macros
 paths:
-  /mergePolicies:
+  /macros:
     parameters:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - Merge policies
-      summary: Get a list of merge policies
+        - Profile macros
+      summary: Get a list of macros
       description: ''
       operationId: getMany
       produces:
@@ -59,35 +58,41 @@ paths:
           x-example: 10
         - name: orderBy
           in: query
-          description: Model attribute which will be using for ordering
+          description: model attribute which will be using for ordering
           required: false
           type: string
           x-example: value
-        - name: schema.name
+        - name: dataSetId
           in: query
-          description: Schema class ID
+          description: dataSet Id
+          required: false
+          type: string
+          x-example: 5c48b93a53214114cf85e378
+        - name: schemaClassId
+          in: query
+          description: schema class id
           required: false
           type: string
           x-example: _xdm.context.profile
-        - name: default
+        - name: value
           in: query
-          description: default flag
+          description: event type value
           required: false
-          type: boolean
-          x-example: true
+          type: string
+          x-example: click
       responses:
         '200':
-          description: List of merge policies returned
+          description: a list of macros returned
           schema:
-            $ref: '#/definitions/MergePoliciesResponse'
+            $ref: '#/definitions/MacrosResponse'
         '500':
           description: Internal Server Error
         '503':
           description: Service Unavailable
     post:
       tags:
-        - Merge policies
-      summary: Post a MergePolicy
+        - Profile macros
+      summary: Create a macro
       description: ''
       operationId: post
       produces:
@@ -107,15 +112,15 @@ paths:
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
         - in: body
           name: body
-          description: merge policy object
+          description: macro object
           required: true
           schema:
-            $ref: '#/definitions/MergePolicy'
+            $ref: '#/definitions/Macro'
       responses:
         '200':
-          description: Merge Policy successfully created
+          description: Macro successfully created
           schema:
-            $ref: '#/definitions/MergePolicy'
+            $ref: '#/definitions/Macro'
         '400':
           description: Please double check your post body
         '403':
@@ -126,11 +131,11 @@ paths:
           description: Internal Server Error
         '503':
           description: Service Unavailable
-  '/mergePolicies/{mergePolicyId}':
+  '/macros/{macroId}':
     parameters:
-      - name: mergePolicyId
+      - name: macroId
         in: path
-        description: MergePolicy Id
+        description: Macro Id
         required: true
         type: string
         x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
@@ -139,8 +144,8 @@ paths:
       - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - Merge policies
-      summary: Return the Merge Policy by id
+        - Profile macros
+      summary: Return the Macro by id
       description: ''
       operationId: getById
       produces:
@@ -152,22 +157,21 @@ paths:
           required: false
           type: string
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
-
       responses:
         '200':
-          description: MergePolicy successfully returned
+          description: Macro successfully returned
           schema:
-            $ref: '#/definitions/MergePolicy'
+            $ref: '#/definitions/Macro'
         '403':
           description: Forbidden
         '404':
-          description: MergePolicy not found
+          description: Macro not found
         '503':
           description: Service Unavailable
     put:
       tags:
-      - Merge policies
-      summary: Overwrite a merge policy
+      - Profile macros
+      summary: Overwrite a macro
       description: ''
       operationId: put
       produces:
@@ -187,15 +191,15 @@ paths:
         x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
       - in: body
         name: body
-        description: merge policy object
+        description: macro object
         required: true
         schema:
-          $ref: '#/definitions/MergePolicy'
+          $ref: '#/definitions/Macro'
       responses:
         '200':
-          description: Merge Policy successfully updated
+          description: Macro successfully updated
           schema:
-            $ref: '#/definitions/MergePolicy'
+            $ref: '#/definitions/Macro'
         '400':
           description: Please double check your post body
         '403':
@@ -208,8 +212,8 @@ paths:
           description: Service Unavailable
     patch:
       tags:
-      - Merge policies
-      summary: Update a merge policy
+      - Profile macros
+      summary: Update a macro
       description: ''
       operationId: patch
       produces:
@@ -237,7 +241,7 @@ paths:
             $ref: '#/definitions/PatchOperation'
       responses:
         '200':
-          description: Merge Policy successfully updated
+          description: Macro successfully updated
         '400':
           description: Please double check your post body
         '403':
@@ -250,8 +254,8 @@ paths:
           description: Service Unavailable
     delete:
       tags:
-        - Merge policies
-      summary: Delete a merge policy by id
+        - Profile macros
+      summary: Delete a macro by id
       description: ''
       operationId: delete
       produces:
@@ -265,142 +269,13 @@ paths:
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
       responses:
         '200':
-          description: Merge Policy deleted successfully
+          description: Macro deleted successfully
         '403':
           description: Forbidden
         '404':
-          description: MergePolicy not found
+          description: Macro not found
         '503':
           description: Service Unavailable
-definitions:
-  MergePoliciesResponse:
-    type: object
-    required:
-      - _page
-      - children
-    properties:
-      _page:
-        $ref: '#/definitions/Page'
-      children:
-        type: array
-        items:
-          $ref: '#/definitions/MergePolicy'
-  Page:
-    type: object
-    required:
-      - count
-    properties:
-      count:
-        type: number
-        example: 100
-        description: number of merge policies per page
-      next:
-        type: string
-        example: K1JJRDpFaWc5QUwyZFgtMEpBQUFBQUFBQUFBPT0jUlQ6MSNUUkM6MiNGUEM6QWdFQUFBQVFBQWZBQUg0Ly9yL25PcmpmZndEZUR3QT0=
-        description: page offset
-  MergePolicy:
-    type: object
-    required:
-      - schema
-      - identityGraph
-      - attributeMerge
-    properties:
-      id:
-        type: string
-        example: ups-default
-        description: macro id
-      name:
-        type: string
-        example: 5c48b93a53214114cf85e378
-        description: merge policy name
-      imsOrgId:
-        type: string
-        example: 1BD6382559DF0C130A49422D@AdobeOrg
-        description: ims org id
-      schema:
-        $ref: '#/definitions/SchemaClass'
-      version:
-        type: integer
-        example: 1
-        description: merge policy version
-      default:
-        type: boolean
-        example: false
-        description: default flag
-      identityGraph:
-        $ref: '#/definitions/IdentityGraph'
-      attributeMerge:
-        $ref: '#/definitions/AttributeMerge'
-      updateEpoch:
-        type: integer
-        example: 1234567890
-        description: update timestamp
-    description: 'merge policy'
-  SchemaClass:
-    type: object
-    required:
-      - name
-    properties:
-      name:
-        type: string
-        example: _xdm.context.profile
-        description: schema class id
-    description: schema class
-  IdentityGraph:
-    type: object
-    required:
-    - type
-    properties:
-      type:
-        type: string
-        example: coop
-        description: identity graph type
-        enum:
-        - none
-        - pdg
-        - coop
-        - auto
-        - psr
-    description: identity graph
-  AttributeMerge:
-    type: object
-    required:
-    - type
-    properties:
-      type:
-        type: string
-        example: timestampOrdered
-        description: attribute merge type
-        enum:
-        - timestampOrdered
-        - dataSetPrecedence
-      order:
-        type: array
-        items:
-          type: string
-    description: attribute merge
-  PatchOperation:
-    type: object
-    required:
-    - op
-    - path
-    - value
-    properties:
-      op:
-        type: string
-        example: add
-        description: op
-        enum:
-        - add
-      path:
-        type: string
-        example: /identityGraph.type
-        description: path of the attribute need to be updated
-      value:
-        type: string
-        example: coop
-        description: the new value used to update the specified attribute
-    description: Patch operation
 parameters:
   authorization:
     name: Authorization
@@ -432,4 +307,132 @@ parameters:
     description: 'application/json'
     required: true
     type: string
-    in: header    
+    in: header
+definitions:
+  MacrosResponse:
+    type: object
+    required:
+      - _page
+      - children
+    properties:
+      _page:
+        $ref: '#/definitions/Page'
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/Macro'
+  Page:
+    type: object
+    required:
+      - count
+    properties:
+      count:
+        type: number
+        example: 100
+        description: number of marcos per page
+      next:
+        type: string
+        example: K1JJRDpFaWc5QUwyZFgtMEpBQUFBQUFBQUFBPT0jUlQ6MSNUUkM6MiNGUEM6QWdFQUFBQVFBQWZBQUg0Ly9yL25PcmpmZndEZUR3QT0=
+        description: page offset
+  Macro:
+    type: object
+    required:
+      - DataSetId
+      - field
+      - expression
+    properties:
+      id:
+        type: string
+        example: ups-default
+        description: macro id
+      name:
+        type: string
+        example: ups-default
+        description: macro name
+      dataSetId:
+        type: string
+        example: 5c48b93a53214114cf85e378
+        description: dataSet Id
+      schema:
+        $ref: '#/definitions/SchemaClass'
+      imsOrgId:
+        type: string
+        example: 1BD6382559DF0C130A49422D@AdobeOrg
+        description: ims org id
+      field:
+        type: string
+        example: eventType
+        description: field name
+      value:
+        type: string
+        example: click
+        description: field value when the expression is true
+      default:
+        type: boolean
+        example: false
+        description: default flag
+      expression:
+        $ref: '#/definitions/Expression'
+      updateEpoch:
+        type: integer
+        example: 1234567890
+        description: update timestamp
+    description: 'macro'
+  SchemaClass:
+    type: object
+    required:
+    - name
+    properties:
+      name:
+        type: string
+        example: _xdm.context.profile
+        description: schema class id
+    description: schema class
+  Expression:
+    type: object
+    required:
+      - type
+      - format
+      - value
+    properties:
+      type:
+        type: string
+        example: PQL
+        description: expression type
+        enum:
+        - PQL
+        - ARL
+      format:
+        type: string
+        example: pql/text
+        description: expression format
+        enum:
+        - pql/text
+        - pql/json
+      value:
+        type: string
+        example: workAddress.country = "US"
+        description: PQL query string
+    description: PQL expression
+  PatchOperation:
+    type: object
+    required:
+    - op
+    - path
+    - value
+    properties:
+      op:
+        type: string
+        example: add
+        description: op
+        enum:
+        - add
+      path:
+        type: string
+        example: /value
+        description: path of the attribute need to be updated
+      value:
+        type: string
+        example: click
+        description: the new value used to update the specified attribute
+    description: Patch operation

@@ -73,6 +73,16 @@
 					"pages": [],
 					"path": "acpdr/swagger-specs/edge-profile-projection-config.yaml",
 					"title": "Edge Profile Projection Configuration API"
+				},
+				{
+					"pages": [],
+					"path": "acpdr/swagger-specs/profile-event-types-api.yaml",
+					"title": "Profile Event Types API"
+				},
+				{
+					"pages": [],
+					"path": "acpdr/swagger-specs/profile-event-type-macros-api.yaml",
+					"title": "Profile Event Type Macros API"
 				}
 			]
 		},

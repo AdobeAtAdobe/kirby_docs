@@ -14,6 +14,8 @@ info:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core/ups/access
       * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
+      to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
 
   version: 18.8.1
   title: Unified Profile Access API
@@ -22,45 +24,29 @@ host: "platform.adobe.io"
 basePath: /data/core/ups/access
 
 tags:
-  - name: lookup
-  - name: delete
-  - name: health
+  - name: Entities
 paths:
   '/entities':
+    parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - lookup
-      summary: Lookup a merged Key-value XDM Model Object or related Time-series XDM Model Objects by XID or ID:NS.
+        - Entities
+      summary: Lookup a merged Key-value XDM Model Object or related time-series XDM Model objects by XID or ID:NS.
       produces:
         - application/json
       parameters:
-        - name: x-gw-ims-org-id
-          in: header
-          description: IMS Organization ID
-          required: true
-          type: string
-          x-example: "<replace with your ims org>"
-        - name: x-api-key
-          in: header
-          description: API Key
-          required: true
-          type: string
-          x-example: "<replace with your api key>"
-        - name: Authorization
-          in: header
-          description: Authorization token
-          required: true
-          type: string
-          x-example: "Bearer <replace with your token>"
         - name: schema.name
           in: query
-          description: XED Schema name.
+          description: XED schema class name.
           type: string
           required: true
           x-example: "_xdm.context.profile"
         - name: relatedSchema.name
           in: query
-          description: XED Schema name that the experience event is associated with. Used when looking up experience events.
+          description: XDM schema class name that the experience event is associated with. Used when looking up experience events.
           type: string
           required: false
           x-example: "_xdm.context.profile"
@@ -78,13 +64,13 @@ paths:
           x-example: "UPS1"
         - name: relatedEntityId
           in: query
-          description: 'ID of the entity that the experience event is associated with. Used when looking up experience events. For Native XID lookup, use `relatedEntityId=<XID>` and leave `relatedEntityIdNS` absent; For Id:NS lookup, use both `relatedEntityId` and `relatedEntityIdNS` fields.'
+          description: 'ID of the entity that the experience events are associated with. Used when looking up experience events. For Native XID lookup, use `relatedEntityId=<XID>` and leave `relatedEntityIdNS` absent; For Id:NS lookup, use both `relatedEntityId` and `relatedEntityIdNS` fields.'
           type: string
           required: false
           x-example: "GtghAUFkdGVzdDE"
         - name: relatedEntityIdNS
           in: query
-          description: 'Identity Namespace code of the related entity id of experience event. Used when looking up experience events.If this field is used, `entityId` cannot be empty.'
+          description: 'Identity Namespace code of the related entity id of experience event. Used when looking up experience events. If this field is used, `entityId` cannot be empty.'
           type: string
           required: false
           x-example: "UPS1"
@@ -102,13 +88,13 @@ paths:
           x-example: 'example-mergePolicy'
         - name: startTime
           in: query
-          description: 'Start time of Time range filter for time-series objects. Should be at millisecond granularity. Included. Default: From beginning.'
+          description: 'Start time of Time range filter for experience events. Should be at millisecond granularity. Included. Default: From beginning.'
           x-example: '1539838505'
           required: false
           type: number
         - name: endTime
           in: query
-          description: 'End time of Time range filter for time-series objects. Should be at millisecond granularity. Excluded. Default: To the end.'
+          description: 'End time of Time range filter for experience events. Should be at millisecond granularity. Excluded. Default: To the end.'
           x-example: '1539838510'
           required: false
           type: number
@@ -118,6 +104,12 @@ paths:
           x-example: 10
           required: false
           type: number
+        - name: orderby
+          in: query
+          description: 'The sort order of retrieved experience events by timestamp. Syntax: (+/-)timestsamp. Default: +timestamp'
+          x-example: '-timestamp'
+          required: false
+          type: string
       responses:
         '200':
           description: XDM Model object(s) successfully returned.
@@ -128,9 +120,13 @@ paths:
           schema:
             $ref: '#/definitions/ResponseErrorContext'
         '422':
-          description: Can not retrieve merged data as there are more than 50 identities associated with an individual in the related identity graph.
+          description: Syntax is correct but profile access is not able to process your request.
           schema:
-            $ref: '#/definitions/TooManyIdentitiesErrorContext'
+            $ref: '#/definitions/ResponseErrorContext'
+        '403':
+          description: Forbidden.
+          schema:
+            $ref: '#/definitions/ForbiddenError'
         '404':
           description: XDM Model objects not found.
           schema:
@@ -141,10 +137,14 @@ paths:
             type: array
             items:
               $ref: '#/definitions/TooManyRequestError'
+        '500':
+          description: Internal Server Error.
+          schema:
+            $ref: '#/definitions/ResponseInternalErrorContext'
     post:
       tags:
-        - lookup
-      summary: Lookup merged Key-value XDM Model Objects or Experience Events by multiple entityIds.
+        - Entities
+      summary: Lookup merged Key-value XDM Model Objects or Experience Events by multiple entityIds(XID/id:ns).
       consumes:
         - application/json
       produces:
@@ -176,7 +176,7 @@ paths:
             $ref: '#/definitions/PostRequestBodyEntity'
       responses:
         '200':
-          description: Key-value XDM Model object successfully returned.
+          description: XDM Model objects successfully returned.
           schema:
             $ref: '#/definitions/GetXDMObjectResponseEntity'
         '207':
@@ -189,24 +189,28 @@ paths:
           description: Bad Request.
           schema:
             $ref: '#/definitions/ResponseErrorContext'
+        '403':
+          description: Forbidden.
+          schema:
+            $ref: '#/definitions/ForbiddenError'
         '404':
           description: XDM Model objects not found
           schema:
             $ref: '#/definitions/NotFoundError'
-        '422':
-          description: Can not retrieve merged data as there are more than 50 identities associated with an individual in the related identity graph.
-          schema:
-            $ref: '#/definitions/TooManyIdentitiesErrorContext'
         '429':
           description: Too many requests. Please try again later.
           schema:
             type: array
             items:
               $ref: '#/definitions/TooManyRequestError'
+        '500':
+          description: Internal Server Error.
+          schema:
+            $ref: '#/definitions/ResponseInternalErrorContext'
     delete:
       tags:
-        - delete
-      summary: Delete Key-value XDM Objects and related Time-series XDM Model Objects by Ids.
+        - Entities
+      summary: Delete Key-value XDM Objects and related Experience Events by Ids(XID/id:ns).
       produces:
         - application/json
       parameters:
@@ -230,7 +234,7 @@ paths:
           x-example: "Bearer <replace with your token>"
         - name: schema.name
           in: query
-          description: XED name of the schema
+          description: XED Schema Class name of the schema
           required: true
           type: string
           x-example: '_xdm.context.profile'
@@ -245,18 +249,18 @@ paths:
           description: 'Identity Namespace code. Used for id:ns. If this field is used, `entityId` cannot be empty.'
           type: string
           required: false
-          x-example: 'UPS1'
+          x-example: 'ECID'
         - name: mergePolicyId
           in: query
           description: 'Id of the mergePolicy. MergePolicy includes information of Identity stitching and key-value xdm object merging. If not present, default merge policy will be used.'
           required: false
           type: string
-          x-example: 'example-mergePolicy'
+          x-example: '963d71a1-9875-4aea-a52b-c5c7a2504cae'
       responses:
         '202':
           description: Accepted
         '207':
-          description: Failed to delete records with some recordIds.
+          description: Failed to delete records with some ids.
           schema:
             type: array
             items:
@@ -265,6 +269,10 @@ paths:
           description: BadRequest
           schema:
             $ref: '#/definitions/ResponseErrorContext'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ForbiddenError'
         '404':
           description: Not Found
           schema:
@@ -275,12 +283,17 @@ paths:
             type: array
             items:
               $ref: '#/definitions/TooManyRequestError'
+        '500':
+          description: Internal Server Error.
+          schema:
+            $ref: '#/definitions/ResponseInternalErrorContext'
+
 definitions:
   SchemaEntity:
     type: object
     properties:
       name:
-        description: XED name of the schema.
+        description: XED name of the schema class.
         type: string
         example: '_xdm.context.profile'
   NotFoundError:
@@ -289,6 +302,15 @@ definitions:
       statusCode:
         type: string
         example: '404'
+  ForbiddenError:
+    type: object
+    properties:
+      message:
+        type: string
+        example: 'UPS-ACC-1000004: IMS Org is not provisioned.'
+      statusCode:
+        type: string
+        example: '403'
   TooManyRequestError:
     type: object
     properties:
@@ -308,17 +330,6 @@ definitions:
         description: Original status code from error
         type: string
         example: '429'
-  TooManyIdentitiesErrorContext:
-    type: object
-    properties:
-      message:
-        description: Error message indicating more than the maximum permitted number of identities were found associated with an individual being retrieved.
-        type: string
-        example: 'UPS-ACCSDK-1000005:Too many related identities. Got: 446, max: 50'
-      statusCode:
-        description: Original status code from error
-        type: string
-        example: '422'
   ResponseErrorContext:
     type: object
     properties:
@@ -329,11 +340,26 @@ definitions:
       cause:
         description: Cause message
         type: string
-        example: 'Status Code - 400 : message {"reason":"Validation error Request id: 9b4d449c-213c-4f76-8442-3d151a205fb9.","message":"Failed to convert mcid=6993527987241034661918658814749273655 to aamuuid using imsOrg=660932FC5AFCB4C50A494209@AdobeOrg"}'
+        example: 'Status Code - 400 : message {"reason":"Validation error Request id: 9b4d449c-213c-4f76-8442-3d151a205fb9.","message":"Failed to convert mcid=6993527987241034661918658814749273655 to aamuuid using imsOrg=****@AdobeOrg"}'
       statusCode:
         description: Original status code from error
         type: string
         example: '422'
+  ResponseInternalErrorContext:
+    type: object
+    properties:
+      message:
+        description: Error message
+        type: string
+        example: 'Unable to connect to server'
+      cause:
+        description: Cause message
+        type: string
+        example: 'Status Code - 500 : Connection Timeout'
+      statusCode:
+        description: Original status code from error
+        type: string
+        example: '500'
   ErrorResponseById:
     type: object
     properties:
@@ -413,15 +439,14 @@ definitions:
           $ref: '#/definitions/PostIdentityEntityItem'
       timeFilter:
         $ref: '#/definitions/PostTimeFilterEntity'
-      orderBy:
-        description: Provide the field by which to order results. Prefix the field name with "-" to indicate reverse, or descending order. e.g. "-timestamp"
-        required: false
-        type: string
-        x-example: timestamp
       limit:
         type: number
         description: 'Number of records to return from the result. Only for experience events. Default: 1000'
         example: 10
+      orderby:
+        type: string
+        description: 'The sort order of retrieved experience events by timestamp. Syntax: (+/-)timestsamp. Default: +timestamp'
+        example: "-timestamp"
   PostTimeFilterEntity:
     type: object
     properties:
@@ -430,6 +455,39 @@ definitions:
         type: number
         example: 1539838505
       endTime:
-        description: 'End time of Time range filter for time-series objects. Should be at millisecond granularity. Excluded. Default: To the end.'
+        description: 'End time of Time range filter for experience events. Should be at millisecond granularity. Excluded. Default: To the end.'
         type: number
         example: 1539838510
+
+parameters:
+  authorization:
+    name: Authorization
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
+    For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  x-gw-ims-org-id:
+    name: x-gw-ims-org-id
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  x-api-key:
+    name: x-api-key
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  json-header:
+    name: Content-Type
+    description: 'application/json'
+    required: true
+    type: string
+    in: header    

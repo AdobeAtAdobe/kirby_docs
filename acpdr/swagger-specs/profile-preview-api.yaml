@@ -17,6 +17,8 @@ info:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core/ups
       * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
+      to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
 
   version: 18.8.1
   title: Unified Profile Preview API
@@ -24,45 +26,33 @@ info:
 host: "platform.adobe.io"
 basePath: "/data/core/ups"
 tags:
-- name: "estimate"
-- name: "preview"
-- name: "health-detailed"
-- name: "health"
-- name: "ping"
-- name: "version"
+- name: "Estimate"
+- name: "Preview"
 paths:
   /preview:
+    parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     post:
       tags:
-      - "preview"
+      - "Preview"
       summary: "SESSIONLESS: Submits a Preview Job for a Profile Query"
-      description: "Supply a PQL expression to retrieve a preview of the resulting segment.\
-        \ \nThe response from this call includes a previewId which will be used to GET estimate or preview results."
+      description: ""
       operationId: "postSessionlessPreviewRoute"
       produces:
       - "application/json"
       parameters:
-        - name: x-api-key
-          in: header
-          description: API Key
-          required: true
-          type: string
-          x-example: "<replace with your api key>"
-        - name: Authorization
-          in: header
-          description: Authorization token
-          required: true
-          type: string
-          x-example: "Bearer <replace with your token>"
-        - name: "x-gw-ims-org-id"
-          in: "header"
-          description: "IMS Organization ID"
-          required: true
-          type: "string"
-          x-example: "1BD@Adobe.com"
         - in: "body"
           name: "body"
-          description: ""
+          description: "\npredicateExpression - Expression of the predicate that is\
+            \ to be evaluated \npredicateType - Default: PQL The only value that is\
+            \ available to use for this is PQL for now.\npredicateModel - Default: xdm.model.profile\
+            \ The model against which this predicate is to be evaulated. Please note\
+            \ that 'touchpoint' is not treated as model as it can be associated with\
+            \ any of the models like profile.\ngraphType - Graph Type you want to get\
+            \ the cluster from. Possible values are (coop - graph built by using coop\
+            \ data, pdg - private device graph, psr - propriatery stiched rules)"
           required: true
           schema:
             $ref: "#/definitions/PreviewQuerySessionlessRequest"
@@ -84,45 +74,26 @@ paths:
         503:
           description: "Service Unavailable"
   /preview/{previewId}:
+    parameters:
+      - name: "previewId"
+        in: "path"
+        description: "Preview  Id."
+        required: true
+        type: "string"
+        x-example: "MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA=="
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-      - "preview"
-      summary: "SESSIONLESS: Gets result of the Preview Job in a paginated fashion, ordered by objectId."
+      - "Preview"
+      summary: "SESSIONLESS: Gets result of the Preview Job in a paginated fashion. Ordering will\
+        \ be by objectId."
       description: ""
       operationId: "getSessionlessPreviewStatusRoute"
       produces:
       - "application/json"
       parameters:
-        - name: x-api-key
-          in: header
-          description: API Key
-          required: true
-          type: string
-          x-example: "<replace with your api key>"
-        - name: Authorization
-          in: header
-          description: Authorization token
-          required: true
-          type: string
-          x-example: "Bearer <replace with your token>"
-        - name: "x-gw-ims-org-id"
-          in: "header"
-          description: "IMS Organization ID"
-          required: true
-          type: "string"
-          x-example: "1BD@Adobe.com"
-        - name: "previewId"
-          in: "path"
-          description: "Preview Id."
-          required: true
-          type: "string"
-          x-example: "MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA=="
-        - name: "previewId"
-          in: "query"
-          description: "Preview Job ID"
-          required: true
-          type: "string"
-          x-example: "ce775645-e8ca-41e2-a74f-5729fe478ef0"
         - name: "offset"
           in: "query"
           description: "Page offset"
@@ -148,37 +119,12 @@ paths:
           description: "Service unavailable"
     delete:
       tags:
-      - "preview"
+      - "Preview"
       summary: "SESSIONLESS: Cancels the execution of the Preview Job"
       description: ""
       operationId: "deleteSessionLessPreviewStatusRoute"
       produces:
       - "application/json"
-      parameters:
-        - name: "previewId"
-          in: "path"
-          description: "Preview Id."
-          required: true
-          type: "string"
-          x-example: "MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA=="
-        - name: x-api-key
-          in: header
-          description: API Key
-          required: true
-          type: string
-          x-example: "<replace with your api key>"
-        - name: Authorization
-          in: header
-          description: Authorization token
-          required: true
-          type: string
-          x-example: "Bearer <replace with your token>"
-        - name: "x-gw-ims-org-id"
-          in: "header"
-          description: "IMS Organization ID"
-          required: true
-          type: "string"
-          x-example: "1BD@Adobe.com"
       responses:
         200:
           description: "Job Successfully cancelled "
@@ -193,34 +139,27 @@ paths:
   /estimate/{previewId}:
     get:
       tags:
-      - "estimate"
+      - "Estimate"
       summary: "SESSIONLESS: Gets result of the Estimate Job."
       description: ""
       operationId: "getEstimateStatusRoute"
       produces:
       - "application/json"
       parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/DatabaseService"
       - name: "previewId"
         in: "path"
         description: "Preview Id."
         required: true
         type: "string"
         x-example: "123421"
-      - name: x-api-key
-        in: header
-        description: API Key
-        required: true
-        type: string
-        x-example: "<replace with your api key>"
-      - name: Authorization
-        in: header
-        description: Authorization token
-        required: true
-        type: string
-        x-example: "Bearer <replace with your token>"
       - name: "x-gw-ims-org-id"
         in: "header"
-        description: "IMS Organization ID"
+        description: "IMS Client Id"
         required: true
         type: "string"
         x-example: "1BD@Adobe.com"
@@ -235,143 +174,9 @@ paths:
           description: "Preview id {previewId} does not exist."
         503:
           description: "Service unavailable"
-  /preview/health-detailed:
-    get:
-      tags:
-      - "health-detailed"
-      summary: "Return a detailed health check message"
-      description: ""
-      operationId: "detailedHealthRoute"
-      produces:
-      - "application/json"
-      parameters: []
-      responses:
-        200:
-          description: "Detailed health check succeeded"
-          schema:
-            $ref: "#/definitions/HealthDetailedResponse"
-        503:
-          description: "Service is unavailable"
-  /preview/health:
-    get:
-      tags:
-      - "health"
-      summary: "Return a health check message"
-      description: ""
-      operationId: "healthRoute"
-      produces:
-      - "application/json"
-      parameters: []
-      responses:
-        200:
-          description: "Health check succeeded"
-          schema:
-            $ref: "#/definitions/HealthResponse"
-        503:
-          description: "Service is unavailable"
-  /preview/ping:
-    get:
-      tags:
-      - "ping"
-      summary: "Return a ping message"
-      description: ""
-      operationId: "pingRoute"
-      produces:
-      - "application/json"
-      parameters: []
-      responses:
-        200:
-          description: "Ping succeeded"
-          schema:
-            $ref: "#/definitions/PingResponse"
-        503:
-          description: "Service unavailable"
-  /preview/version:
-    get:
-      tags:
-      - "version"
-      summary: "Return version information"
-      description: ""
-      operationId: "versionRoute"
-      produces:
-      - "application/json"
-      parameters: []
-      responses:
-        200:
-          description: "Version info response succeeded"
-          schema:
-            $ref: "#/definitions/VersionResponse"
-        503:
-          description: "Service unavailable"
+
 
 definitions:
-  HealthDetailedResponse:
-    type: "object"
-    required:
-    - "dependencies"
-    - "status"
-    properties:
-      status:
-        type: "boolean"
-      dependencies:
-        type: "array"
-        items:
-          $ref: "#/definitions/ServiceHealth"
-  ServiceHealth:
-    type: "object"
-    required:
-    - "service"
-    - "status"
-    properties:
-      service:
-        type: "string"
-      status:
-        type: "boolean"
-  HealthResponse:
-    type: "object"
-    required:
-    - "status"
-    properties:
-      status:
-        type: "boolean"
-  PingResponse:
-    type: "object"
-    required:
-    - "code"
-    - "message"
-    properties:
-      code:
-        type: "string"
-      message:
-        type: "string"
-  VersionResponse:
-    type: "object"
-    required:
-    - "branchName"
-    - "buildDate"
-    - "buildInfo"
-    - "cycleNumber"
-    - "gitCommit"
-    - "projectName"
-    - "projectVersion"
-    - "versionNumber"
-    properties:
-      projectName:
-        type: "string"
-      projectVersion:
-        type: "string"
-      buildInfo:
-        type: "string"
-      versionNumber:
-        type: "string"
-      branchName:
-        type: "string"
-      cycleNumber:
-        type: "string"
-      gitCommit:
-        type: "string"
-      buildDate:
-        type: "string"
   EstimateResponse:
     type: "object"
     required:
@@ -460,26 +265,6 @@ definitions:
         type: "string"
   PreviewQuerySessionlessRequest:
     type: "object"
-    properties:
-      predicateExpression:
-        type: "string"
-        description: "Expression of the predicate that is to be evaluated."
-      predicateType:
-        type: "string"
-        description: "Default: PQL The only value that is available to use for this is PQL for now."
-      predicateModel:
-        type: "string"
-        description: "Default: _xdm.context.profile\
-            \ The model against which this predicate is to be evaulated. Please note\
-            \ that 'touchpoint' is not treated as model as it can be associated with\
-            \ any of the models like profile."
-      graphType:
-        type: "string"
-        description: "Graph Type you want to get the cluster from. Possible values are ['coop' -\
-          \ graph built by using coop data, 'pdg' - private device graph, 'psr' - propriatery stiched rules]"
-      mergeStrategy:
-        type: "string"
-        description: "The ID of the preexisting Merge Policy."
   Link:
     type: "object"
     properties:
@@ -523,3 +308,37 @@ definitions:
         description: "List of related objectIds"
         items:
           $ref: "#/definitions/PreviewSegmentsIndividualResponse"
+
+
+parameters:
+  authorization:
+    name: Authorization
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
+    For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  x-gw-ims-org-id:
+    name: x-gw-ims-org-id
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  x-api-key:
+    name: x-api-key
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  json-header:
+    name: Content-Type
+    description: 'application/json'
+    required: true
+    type: string
+    in: header    
