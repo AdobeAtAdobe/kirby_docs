@@ -190,7 +190,7 @@ And either of the following:
 Accept | Description
 -------|------------
 application/vnd.adobe.xed-id+json |Returns a list of ID's only (This is most commonly used for listing resources)
-application/vnd.adobe.xed+json |Returns a list of full JSON schema with original $ref and allOf included (Used when listing to return the full resource)
+application/vnd.adobe.xed-full+json |Returns a list of full JSON schema with original $ref and allOf included (Used when listing to return the full resource)
 application/vnd.adobe.xed+json; version={major version}	|Raw with $ref and allOf, has titles and descriptions
 application/vnd.adobe.xed-full+json; version={major version} |$refs and allOf resolved, has titles and descriptions
 application/vnd.adobe.xed-notext+json; version={major version}	|Raw with $ref and allOf, no titles or descriptions
@@ -241,7 +241,7 @@ You are able to view a list of all resources (schemas, classes, mixins, or data 
 The most common query parameters include:
 * `limit` - Limit the number of resources returned. Example:`limit=5` will return a list of five resources.
 * `orderby` - Sort results by a specific property. Example: `orderby=title` will sort results by title ascending (A-Z). Adding a `-` before title (`orderby=-title`) will sort items by title descending (Z-A). 
-* `property` - Filter results on any top-level attributes. Example: `property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile` returns only mixins that are compatible with the XDM Profile class.
+* `properties` - Filter results on any top-level attributes. Example: `properties=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile` returns only mixins that are compatible with the XDM Profile class.
 * You may use an ampersand (`&`) to combine query parameters.
 
 #### API format
@@ -250,7 +250,7 @@ The most common query parameters include:
 GET /{CONTAINER_ID}/{schemas|classes|datatypes|mixins}
 
 GET /global/datatypes
-GET /tenant/mixins?property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/experienceevent
+GET /tenant/mixins?properties=meta:intendedToExtend==https://ns.adobe.com/xdm/context/experienceevent
 GET /tenant/schemas?limit=3
 GET /global/classes?orderby=title&limit=4
 ```
@@ -270,7 +270,7 @@ The response format depends on the Accept header sent in the request. The follow
 Accept | Description
 -------|------------
 application/vnd.adobe.xed-id+json | Returns a short summary of each resource, generally the preferred header for listing
-application/vnd.adobe.xed+json | Returns full JSON schema for each resource, with original $ref and allOf included
+application/vnd.adobe.xed-full+json | Returns full JSON schema for each resource, with original $ref and allOf included
 
 #### Response
 
@@ -1276,7 +1276,7 @@ Accept | Description
 -------|------------
 application/vnd.adobe.xdm-id+json | Returns an array of descriptor IDs
 application/vnd.adobe.xdm-link+json | Returns an array of descriptor API paths
-application/vnd.adobe.xdm+json | Returns an array of expanded descriptor objects
+application/vnd.adobe.xdm-full+json | Returns an array of expanded descriptor objects
 
 #### Response
 
@@ -1654,16 +1654,7 @@ The response format depends on the Accept header sent in the request. Experiment
     "description": "Union view of all schemas that extend https://ns.adobe.com/xdm/context/profile",
     "allOf": [
         {
-            "$ref": "https://ns.adobe.com/xdm/context/profile"
-        },
-        {
-            "$ref": "https://ns.adobe.com/xdm/context/profile-person-details"
-        },
-        {
-            "$ref": "https://ns.adobe.com/{TENANT_ID}/mixins/477bb01d7125b015b4feba7bccc2e599"
-        },
-        {
-            "$ref": "https://ns.adobe.com/xdm/context/profile-personal-details"
+            "$ref": "https://ns.adobe.com/{TENANT_ID}/schemas/b9605d1dfb2d2218fa2f815dc63cc4bf"
         }
     ],
     "meta:extends": [
@@ -1684,83 +1675,6 @@ The response format depends on the Accept header sent in the request. Experiment
     "version": "1.0",
     "meta:resourceType": "unions",
     "meta:registryMetadata": {}
-}
-```
-
-### List schemas in a union
-
-In order to see which schemas are part of a specific union, you can perform a GET request using query parameters to filter the schemas within the tenant container. 
-
-Using the `property` query parameter, you can specify that only schemas containing a `meta:immutableTags` field and with a `meta:class` equal to the class whose union you are interested in are returned.
-
-#### API Format
-
-```SHELL
-GET /tenant/schemas?property=meta:immutableTags==union&property=meta:class=={CLASS_ID}
-```
-
-#### Request
-
-In the example below, the request will return all schemas that are part of the XDM Profile class union.
-
-```SHELL
-curl -X GET \
-  'https://platform.adobe.io/data/foundation/schemaregistry/tenant/schemas?property=meta:immutableTags==union&property=meta:class==https://ns.adobe.com/xdm/context/profile' \
-  -H 'Accept: application/vnd.adobe.xed-id+json' \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-```
-
-#### Response
-
-The response is a filtered list of schemas, containing only those that satisfy both requirements. Remember that when using multiple query parameters, an AND relationship is assumed. The format of the response depends on the Accept header sent in the request.
-
-```JSON
-{
-    "results": [
-        {
-            "title": "Schema 1",
-            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/142afb78d8b368a5ba97a6cc8fc7e033",
-            "meta:altId": "_{TENANT_ID}.schemas.142afb78d8b368a5ba97a6cc8fc7e033",
-            "version": "1.2"
-        },
-        {
-            "title": "Schema 2",
-            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/e7297a6ddfc7812ab3a7b504a1ab98da",
-            "meta:altId": "_{TENANT_ID}.schemas.e7297a6ddfc7812ab3a7b504a1ab98da",
-            "version": "1.5"
-        },
-        {
-            "title": "Schema 3",
-            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/50f960bb810e99a21737254866a477bf",
-            "meta:altId": "_{TENANT_ID}.schemas.50f960bb810e99a21737254866a477bf",
-            "version": "1.2"
-        },
-        {
-            "title": "Schema 4",
-            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/a39655ca8ea3d5c1f36a463b45fccca8",
-            "meta:altId": "_{TENANT_ID}.schemas.a39655ca8ea3d5c1f36a463b45fccca8",
-            "version": "1.1"
-        },
-        {
-            "title": "Schema 5",
-            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/c063fac45c6d6285ef33b0e2af09f633",
-            "meta:altId": "_{TENANT_ID}.schemas.c063fac45c6d6285ef33b0e2af09f633",
-            "version": "1.2"
-        },
-        {
-            "title": "Schema 6",
-            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/dfebb19b93827b70bbad006137812537",
-            "meta:altId": "_{TENANT_ID}.schemas.dfebb19b93827b70bbad006137812537",
-            "version": "1.7"
-        }
-    ],
-    "_links": {
-        "global_schemas": {
-            "href": "https://platform.adobe.io/data/foundation/schemaregistry/global/schemas?property=meta:immutableTags==union&property=meta:class==https://ns.adobe.com/xdm/context/profile"
-        }
-    }
 }
 ```
 
@@ -2206,7 +2120,7 @@ Signals that the "sourceProperty" of the "sourceSchema" is an Identity field as 
 <li><strong>"xdm:sourceSchema"</strong>: The $id URI of the schema where the descriptor is being defined.</li>
 <li><strong>"xdm:sourceVersion"</strong>: The major version of the source schema.
 <li><strong>"xdm:sourceProperty"</strong>: The path to the specific property that will be the identity. Path should begin with a "/" and not end with one. Do not include "properties" in the path (e.g. use "/personalEmail/address" instead of "/properties/personalEmail/properties/address")</li>
-<li><strong>"xdm:namespace"</strong>: The "id" or "code" value of the identity namespace. A list of namespaces can be found using the <a href="../../../../../../acpdr/swagger-specs/id-service-api.yaml">Identity Namespace Service API</a>.</li>
+<li><strong>"xdm:namespace"</strong>: The "id" or "code" value of the identity namespace. A list of namespaces can be found using the <a href="../../../../../../acpdr/swagger-specs/id-namespace-api.yaml">Identity Namespace Service API</a>.</li>
 <li><strong>"xdm:property"</strong>: Either "xdm:id" or "xdm:code", depending on the "xdm:namespace" used.</li>
 <li><strong>"xdm:isPrimary"</strong>: An optional boolean value. When "true", indicates the field as the primary identity. Schemas may contain only one primary identity.</li>
 </ul></p>
