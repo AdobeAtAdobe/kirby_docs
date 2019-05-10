@@ -308,22 +308,25 @@ _Add product summary_
 
 ### Data Usage Labeling and Enforcement (DULE)
 
-_Add product summary_
+Adobe Experience Platform allows companies to bring data from multiple enterprise systems together to better allow marketers to identify, understand, and engage customers. Experience Platform includes end-to-end data governance infrastructure, including DULE, to ensure the proper use of data within Platform and when being shared between systems.
+
+Data governance is a series of strategies and technologies used to manage customer data and ensure compliance with regulations, restrictions, and policies applicable to data use. It plays a key role within Experience Platform at various levels, including cataloging, data lineage, data usage labeling, data access policies, and access control on data for marketing actions.
+
+Getting started with data governance requires a strong understanding of the regulations, contractual obligations, and corporate policies that apply to your customer data. From there, data can be classified by applying the appropriate data usage labels, and its use can be controlled through the definition of data usage policies.
+
+The DULE framework simplifies and streamlines the process of categorizing data and creating data usage policies through the Experience Platform user interface and DULE Policy Service API. 
 
 | Feature    | Description  |
 | -----------| ---------- |
-| Feature A  | Text |
-| Feature B  | Text |
-| Feature C  | Text |
+| Label Experience Platform entities  | Apply and manage data usage labels at the connection, dataset, and dataset field level based on pre-defined categorized labels. |
+| Create data usage policies  | Define and manage data usage policies based on the presence of labels and attempted marketing actions. |
+| Check policy violations  | Evaluate whether or not defined usage policies are violated when performing marketing actions on Platform data. |
 
 **Known issues**
 
-* Issue
-* Issue
-* Issue
-* Issue
+* None.
 
-For product documentation, see [Data Usage Labeling and Enforcement (DULE) User Guide](https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!end-user/markdown/dule_overview/dule_overview.md).
+For more information, please see the [Data Usage Labeling and Enforcement (DULE) User Guide](https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!end-user/markdown/dule_overview/dule_overview.md).
 
 ## Privacy
 
