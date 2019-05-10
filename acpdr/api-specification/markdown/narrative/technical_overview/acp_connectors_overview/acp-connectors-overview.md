@@ -17,10 +17,6 @@ Tutorials:
 
 * [Salesforce connector](../../tutorials/creating_a_connector_tutorial/ACP_salesforce_connector_tutorial.md) lets you set up Salesforce CRM data to ingest into the Platform on a defined schedule.
 
-* [Using Connector UI](api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/using_data_connector_ui_tutorial.md) to set up Salesforce and Microsoft Dynamics connectors. 
-
-api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md
-
 ### Important conditions
 * For incremental ingestion, you will have to clean up data after every ingestion run.
 * Currently, a pipeline run is configured for a delay of 30 minutes between consecutive runs. 
