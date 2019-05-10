@@ -3,21 +3,21 @@ info:
   title: Data Ingestion API
   description: >-
     Data Ingestion allows you to ingest data into Adobe Experience Platform as batch files.
-    Data being ingested can be the profile data from a flat file in a CRM system (such as a parquet file), 
+    Data being ingested can be the profile data from a flat file in a CRM system (such as a parquet file),
     or data that conforms to a known schema in the Experience Data Model (XDM) registry.
 
     Notes:
       * Base path for Batch Ingestion APIs: https://platform.adobe.io/data/foundation/import
-      * Base path for Streaming Ingestion APIs: 
+      * Base path for Streaming Ingestion APIs:
         * Data Inlet Management: https://platform.adobe.io/data/core/edge
         * Data Collection: https://dcs.data.adobe.net/
       * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
 
     Related documentation:
-      * [Batch Ingestion Overview](../api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md)
-      * [Streaming Ingestion Overview](../api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_ingest_overview.md)
-      * Tutorial - [Creating and Populating a Dataset and Ingesting Data From a File](../api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
-      * Tutorial - [Getting Started with Streaming Ingestion](../api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md)
+      * [Batch Ingestion Overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md)
+      * [Streaming Ingestion Overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_ingest_overview.md)
+      * Tutorial - [Creating and Populating a Dataset and Ingesting Data From a File](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
+      * Tutorial - [Getting Started with Streaming Ingestion](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md)
 
   version: v2
   termsOfService: 'https://www.adobe.com/legal/terms.html'
@@ -51,13 +51,13 @@ paths:
           name: "Cache-Control"
           required: true
           type: string
-          enum: 
+          enum:
             - "no-cache"
         - in: "header"
           name: "Content-Type"
           required: false
           type: string
-          enum: 
+          enum:
             - "application/json"
         - name: dataType
           in: query
@@ -134,13 +134,13 @@ paths:
           name: "Cache-Control"
           required: true
           type: string
-          enum: 
+          enum:
             - "no-cache"
         - in: "header"
           name: "Content-Type"
           required: true
           type: string
-          enum: 
+          enum:
             - "application/json"
         - in: body
           name: body
@@ -192,13 +192,13 @@ paths:
           name: "Cache-Control"
           required: true
           type: string
-          enum: 
+          enum:
             - "no-cache"
         - in: "header"
           name: "Content-Type"
           required: false
           type: string
-          enum: 
+          enum:
             - "application/json"
         - name: id
           in: path
@@ -248,13 +248,13 @@ paths:
           name: "Cache-Control"
           required: true
           type: string
-          enum: 
+          enum:
             - "no-cache"
         - in: "header"
           name: "Content-Type"
           required: true
           type: string
-          enum: 
+          enum:
             - "application/json"
         - name: id
           in: path
@@ -308,13 +308,13 @@ paths:
           name: "Cache-Control"
           required: true
           type: string
-          enum: 
+          enum:
             - "no-cache"
         - in: "header"
           name: "Content-Type"
           required: false
           type: string
-          enum: 
+          enum:
             - "application/json"
         - name: id
           in: path
@@ -354,7 +354,7 @@ paths:
       summary: "Publishes messages to Adobe Experience Platform using the Inlet ID"
       description: "This API is used by any mobile application, web application or a service to stream data into ACP. Data Collection service uses embedded inlet-id to retrieve associated metadata to process data and land it on a designated Pipeline topic for the downstream systems to consume"
       operationId: "publishDCSMessageWithInletId"
-      consumes: 
+      consumes:
       - "application/json"
       produces:
       - "application/json"
@@ -368,26 +368,26 @@ paths:
           name: "debug"
           required: false
           type: boolean
-          enum: 
+          enum:
             - "true"
             - "false"
         - in: "body"
           name: "body"
           description: "The message which is to be published."
           required: true
-          schema: 
+          schema:
             $ref: "#/definitions/streamingMessage"
         - in: "header"
           name: "Cache-Control"
           required: true
           type: string
-          enum: 
+          enum:
             - "no-cache"
         - in: "header"
           name: "Content-Type"
           required: true
           type: string
-          enum: 
+          enum:
             - "application/json"
         - in: "path"
           name: "inletId"
@@ -417,11 +417,11 @@ paths:
           description: >-
             Service is not currently available. Clients should retry at least 3
             times using an exponential back-off strategy
-          headers: 
+          headers:
             Retry-After:
               type: integer
               description: Specifies number of seconds to retry after.
-  '/collection/batch/{inletId}':            
+  '/collection/batch/{inletId}':
     post:
       security:
         - Bearer: []
@@ -430,7 +430,7 @@ paths:
       summary: "Publishes messages to Adobe Experience Platform using the Inlet ID"
       description: "This API is used by any mobile application, web application or a service to stream data into ACP. Data Collection service uses embedded inlet-id to retrieve associated metadata to process data and land it on a designated Pipeline topic for the downstream systems to consume"
       operationId: "publishDCSBatchMessageWithInletId"
-      consumes: 
+      consumes:
       - "application/json"
       produces:
       - "application/json"
@@ -444,20 +444,20 @@ paths:
           name: "debug"
           required: false
           type: boolean
-          enum: 
+          enum:
             - "true"
             - "false"
         - in: "body"
           name: "body"
           description: "The message to be published in DCS."
           required: true
-          schema: 
+          schema:
             $ref: "#/definitions/BatchMessage"
         - in: "header"
           name: "Content-Type"
           required: true
           type: string
-          enum: 
+          enum:
             - "application/json"
         - in: "path"
           name: "inletId"
@@ -487,7 +487,7 @@ paths:
           description: >-
             Service is not currently available. Clients should retry at least 3
             times using an exponential back-off strategy
-          headers: 
+          headers:
             Retry-After:
               type: integer
               description: Specifies number of seconds to retry after.
@@ -982,7 +982,7 @@ definitions:
   streamingMessage:
     type: "object"
     properties:
-      TENANT_ID: 
+      TENANT_ID:
         type: string
         description: "This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Org."
       SCHEMA_ID:
@@ -991,10 +991,10 @@ definitions:
       SCHEMA_VERSION:
         type: string
         description: "The version of the schema that is created."
-      IMS_ORG_ID: 
+      IMS_ORG_ID:
         type: string
         description: "Your IMS organization ID can be found under the integration details in theAdobe I/O Console."
-      DATASET_ID: 
+      DATASET_ID:
         type: string
         description: "The ID of the dataset that you want to publish to."
     description: "Message to publish."
@@ -1004,7 +1004,7 @@ definitions:
           id: "https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}"
           contentType: "application/vnd.adobe.xed-full+json;version={SCHEMA_VERSION}"
         imsOrgId: "{IMS_ORG_ID}"
-        source: 
+        source:
           name: "GettingStarted"
         datasetId: "{DATASET_ID}"
       body:
@@ -1020,9 +1020,9 @@ definitions:
             email: [{
               id: "janedoe@example.com",
               primary: "true"
-            }]            
+            }]
           person:
-            name: 
+            name:
               firstName: Jane
               middleName: F
               lastName: Doe
@@ -1324,7 +1324,7 @@ definitions:
       xactionId:
         type: string
         description: "The xactionID is a unique identifier generated server-side for the XDM record you just sent. This ID helps Adobe trace this record's lifecycle through various systems and with debugging"
-      receivedTimeMs: 
+      receivedTimeMs:
         type: integer
         format: int32
         description: "receivedTimeMs is a timestamp (epoch in milliseconds) that shows what time the request was received"
@@ -1342,7 +1342,7 @@ definitions:
       total:
         type: "integer"
         format: int32
-    example: 
+    example:
       items: [{
         inletId: "{INLET_ID}",
         imsOrg: "{IMS_ORG}",
@@ -1445,10 +1445,10 @@ definitions:
         type: string
     title: Inlet
     description: Details for inlet update
-  BatchMessage: 
+  BatchMessage:
     type: object
     description: "Batch Message to be published to DCS"
-    example: 
+    example:
       {
         messages: [
           {
@@ -1511,8 +1511,8 @@ definitions:
                     "value": 1
                 }
             }
-              
-              
+
+
              }
             }
           },
