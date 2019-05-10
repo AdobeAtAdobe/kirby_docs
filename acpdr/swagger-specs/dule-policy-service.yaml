@@ -929,6 +929,30 @@ definitions:
     allOf:
       - $ref: '#/definitions/MarketingActionRequest'
       - $ref: '#/definitions/ServiceProperties'
+  DuleLabelsList:
+    required:
+      - labels
+    properties:
+      labels:
+        description: >-
+          List of DULE labels either specified in request, or discovered from
+          the requested entities
+        type: array
+        items:
+          type: string
+        example:
+          - C1
+          - I2
+  FieldsLabels:
+    allOf:
+      - type: object
+        required:
+          - path
+        properties:
+          path:
+            description: The path describing this field
+            type: string
+      - $ref: '#/definitions/DuleLabelsList'
   MarketingActionsPage:
     allOf:
       - $ref: '#/definitions/PagingProperties'
@@ -940,6 +964,27 @@ definitions:
             type: array
             items:
               $ref: '#/definitions/MarketingActionResponse'
+  DataSetLabels:
+    required:
+      - connection
+      - dataSet
+      - fields
+    properties:
+      connection:
+        $ref: '#/definitions/DuleLabelsList'
+      dataSet:
+        $ref: '#/definitions/DuleLabelsList'
+      fields:
+        type: array
+        items:
+          $ref: '#/definitions/FieldsLabels'
+  DiscoveredLabels:
+    allOf:
+      - $ref: '#/definitions/EntityTypeAndId'
+      - type: object
+        properties:
+          dataSetLabels:
+            $ref: '#/definitions/DataSetLabels'
   MarketingActionConstraints:
     required:
       - timestamp
@@ -958,15 +1003,15 @@ definitions:
       clientId:
         description: ClientID of the client that requested these constraints
         type: string
-        example: acp_ui_service
+        example: "{CLIENT_ID}"
       userId:
         description: User Id of the user that requested these constraints
         type: string
-        example: data_steward@company.com
+        example: "{USER_ID}"
       imsOrg:
         description: The imsOrg on the request that generated these constraints
         type: string
-        example: FEDCBA9876543210FEDCBA01@AdobeOrg
+        example: "{IMS_ORG}"
       marketingActionRef:
         description: Marketing action reference to which these constraints apply
         type: string
@@ -983,17 +1028,18 @@ definitions:
         items:
           type: string
       dataSetId:
-        description: 'dataSetId from original constraints request, if supplied'
+        description: 'DEPRECATED'
         type: string
-        example: 5b2d5a6bdee2c101e329b477
       fields:
-        description: 'List of fields from original constraints request, if supplied'
+        description: 'DEPRECATED'
         type: array
-        example:
-          - firstName
-          - lastName
         items:
           type: string
+      discoveredLabels:
+        description: Found in constraints POST responses only. The list of DULE labels discovered for the entity. 
+        type: array
+        items:
+          $ref: '#/definitions/DiscoveredLabels'
       violatedPolicies:
         description: >-
           The list of policies that would be violated by attempting the given
