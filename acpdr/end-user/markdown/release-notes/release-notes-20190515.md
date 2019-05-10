@@ -18,21 +18,21 @@ New features and fixes in Adobe Experience Platform.
 
 May 2019
 
-* [Data Ingestion and Management](#data-ingestion-and-management)
-* [Experience Data Model (XDM) and Schema Composition](#experience-data-model-xdm-and-schema-composition)
-* [Profile, Identity, and Segmentation](#profile-identity-and-segmentation)
+* [Data Ingestion and Management](#ingestion)
+* [Experience Data Model (XDM) and Schema Composition](#xdm)
+* [Profile, Identity, and Segmentation](#profile-identity-segmentation)
 * [Data Governance](#data-governance)
 * [Privacy](#privacy)
-* [Experience Decisioning Service](#experience-decisioning-service)
+* [Experience Decisioning Service](#eds)
 
 ## Data Ingestion and Management {#ingestion}
 
 New features and fixes in Data Ingestion and Management:
 
-* [Data Ingestion](#data-ingestion)
+* [Data Ingestion (overall)](#data-ingestion)
 * [Batch](#batch)
 * [Connectors](#connectors)
-* [Microsoft Dynamics and Campaign](#microsoftidynamics-and-campaign)
+* [Microsoft Dynamics and Campaign](#ms-Dynamics)
 * [Adobe Solutions](#adobe-solutions)
 * [Streaming](#streaming)
 * [Monitoring](#monitoring)
@@ -42,7 +42,7 @@ New features and fixes in Data Ingestion and Management:
 
 For product documentation, see [Analytics Help Home](https://marketing.adobe.com/resources/help/en_US/reference/).
 
-### Data Ingestion
+### Data Ingestion (overall) {#data-ingestion}
 
 _Add product summary_
 
@@ -59,7 +59,7 @@ _Add product summary_
 * Issue
 * Issue
 
-### Batch
+### Batch {#batch}
 
 _Add product summary_
 
@@ -78,7 +78,7 @@ _Add product summary_
 
 For product documentation, see [Batch Ingestion Overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md).
 
-### Connectors
+### Connectors {#connectors}
 
 _Add product summary_
 
@@ -97,7 +97,7 @@ _Add product summary_
 
 For product documentation, see [Connectors for Adobe Experience Platform](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md).
 
-### Microsoft Dynamics and Campaign
+### Microsoft Dynamics and Campaign {#ms-dynamics}
 
 _Add product summary_
 
@@ -114,7 +114,7 @@ _Add product summary_
 * Issue
 * Issue
 
-### Adobe Solutions
+### Adobe Solutions {#adobe-solutions}
 
 _Add product summary_
 
@@ -131,7 +131,7 @@ _Add product summary_
 * Issue
 * Issue
 
-### Streaming
+### Streaming {#streaming}
 
 _Add product summary_
 
@@ -150,7 +150,7 @@ _Add product summary_
 
 For product documentation, see [Getting Started with Adobe Experience Platform Streaming Ingestion APIs](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md).
 
-### Monitoring
+### Monitoring {#monitoring}
 
 _Add product summary_
 
@@ -167,7 +167,7 @@ _Add product summary_
 * Issue
 * Issue
 
-### Dataset Management
+### Dataset Management {#dataset-management}
 
 _Add product summary_
 
@@ -184,7 +184,7 @@ _Add product summary_
 * Issue
 * Issue
 
-### Catalog
+### Catalog {#catalog}
 
 _Add product summary_
 
@@ -203,7 +203,7 @@ _Add product summary_
 
 For product documentation, see [Catalog Service Overview](https://www.adobe.io/apis/experienceplatform/home/services/allservices.html#!api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md).
 
-### ETL
+### ETL {#etl}
 
 _Add product summary_
 
@@ -222,7 +222,7 @@ _Add product summary_
 
 For product documentation, see [Developing ETL Integrations for Adobe Experience Platform](https://www.adobe.io/apis/experienceplatform/home/services/allservices.html#!api-specification/markdown/narrative/integration_guides/etl_integration_guide/etl_integration_guide.md).
 
-## Experience Data Model (XDM) and Schema Composition
+## Experience Data Model (XDM) and Schema Composition {#xdm}
 
 _Add product summary_
 
@@ -241,7 +241,7 @@ _Add product summary_
 
 For product documentation, see [XDM System in Adobe Experience Platform](https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md).
 
-## Profile, Identity, and Segmentation
+## Profile, Identity, and Segmentation {#profile-identity-segmentation}
 
 New features and fixes in Profile, Identity, and Segmentation:
 
@@ -249,7 +249,7 @@ New features and fixes in Profile, Identity, and Segmentation:
 * [Identity](#identity)
 * [Segmentation](#segmentation)
 
-### Profile
+### Profile {#profile}
 
 _Add product summary_
 
@@ -268,7 +268,7 @@ _Add product summary_
 
 For product documentation, see [Unified Profile Overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
 
-### Identity
+### Identity {#identity}
 
 _Add product summary_
 
@@ -287,7 +287,7 @@ _Add product summary_
 
 For product documentation, see [Identity Service Overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md).
 
-### Segmentation
+### Segmentation {#segmentation}
 
 _Add product summary_
 
@@ -304,38 +304,35 @@ _Add product summary_
 * Issue
 * Issue
 
-## Data Governance
+## Data Governance {#data-governance}
 
-### Data Usage Labeling and Enforcement (DULE)
+### Data Usage Labeling and Enforcement (DULE) {#dule}
 
-Adobe Experience Platform allows companies to bring data from multiple enterprise systems together to better allow marketers to identify, understand, and engage customers. Experience Platform includes end-to-end data governance infrastructure, including DULE, to ensure the proper use of data within Platform and when being shared between systems.
-
-Data governance is a series of strategies and technologies used to manage customer data and ensure compliance with regulations, restrictions, and policies applicable to data use. It plays a key role within Experience Platform at various levels, including cataloging, data lineage, data usage labeling, data access policies, and access control on data for marketing actions.
-
-Getting started with data governance requires a strong understanding of the regulations, contractual obligations, and corporate policies that apply to your customer data. From there, data can be classified by applying the appropriate data usage labels, and its use can be controlled through the definition of data usage policies.
-
-The DULE framework simplifies and streamlines the process of categorizing data and creating data usage policies through the Experience Platform user interface and DULE Policy Service API. 
+_Add product summary_
 
 | Feature    | Description  |
 | -----------| ---------- |
-| Label Experience Platform entities  | Apply and manage data usage labels at the connection, dataset, and dataset field level based on pre-defined categorized labels. |
-| Create data usage policies  | Define and manage data usage policies based on the presence of labels and attempted marketing actions. |
-| Check policy violations  | Evaluate whether or not defined usage policies are violated when performing marketing actions on Platform data. |
+| Feature A  | Text |
+| Feature B  | Text |
+| Feature C  | Text |
 
 **Known issues**
 
-* None.
+* Issue
+* Issue
+* Issue
+* Issue
 
-For more information, please see the [Data Usage Labeling and Enforcement (DULE) User Guide](https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!end-user/markdown/dule_overview/dule_overview.md).
+For product documentation, see [Data Usage Labeling and Enforcement (DULE) User Guide](https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!end-user/markdown/dule_overview/dule_overview.md).
 
-## Privacy
+## Privacy {#privacy}
 
 New features and fixes in Profile, Identity, and Segmentation:
 
 * [GDPR](#gdpr)
 * [Opt-In and ECID](#optin-ecid)
 
-### GDPR
+### GDPR {#gdpr}
 
 _Add product summary_
 
@@ -354,7 +351,7 @@ _Add product summary_
 
 For product documentation, see [Adobe Experience Platform GDPR Service overview](https://www.adobe.io/apis/experienceplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md).
 
-### Opt-In and ECID
+### Opt-In and ECID {#optin-ecid}
 
 _Add product summary_
 
@@ -371,7 +368,7 @@ _Add product summary_
 * Issue
 * Issue
 
-## Experience Decisioning Service
+## Experience Decisioning Service {#eds}
 
 _Add product summary_
 
