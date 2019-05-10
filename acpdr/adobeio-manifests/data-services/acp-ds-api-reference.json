@@ -22,8 +22,8 @@
 		},
 		{
 			"pages": [],
-			"path": "acpdr/swagger-specs/ingest-api.yaml",
-			"title": "Data Ingestion Service"
+			"path": "acpdr/swagger-specs/bulk-ingest-api.yaml",
+			"title": "Batch Ingestion Service"
 		},
 		{
 			"pages": [],
@@ -36,7 +36,7 @@
 			"title": "DULE Policy Service"
 		},
 		{
-			"path": "acpdr/swagger-specs/unified-profile-service-apis.yaml",
+			"path": "end-user/markdown/apis/unified-profile/unified-profile-service-apis.md",
 			"title": "Unified Profile Service",
 			"pages": [
 				{
@@ -68,21 +68,6 @@
 					"pages": [],
 					"path": "acpdr/swagger-specs/profile-preview-api.yaml",
 					"title": "Unified Profile Preview API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/edge-profile-projection-config.yaml",
-					"title": "Edge Profile Projection Configuration API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-event-types-api.yaml",
-					"title": "Profile Event Types API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-event-type-macros-api.yaml",
-					"title": "Profile Event Type Macros API"
 				}
 			]
 		},
