@@ -33,7 +33,7 @@ To learn how to enable schemas for union via API, visit [Enable XDM schemas for 
 
 Unified Profile can sync your profile store with data uploaded to datasets, adding new profiles or overwriting data of profiles already in the store. It is recommended that you send data from a particular system to a dataset specific to that system. For instance, you should send your eCommerce data to one dataset, and your affiliate management system data to another. You can use tools described in this tutorial to merge datasets as you require, and can maintain the modularity for future variations, tracking, etc.
 
-Before data uploaded to a dataset will be automatically sent to Unified Profile, the dataset has to be specifically configured. For complete instructions on configuring a dataset for Unified Profile, visit [Configuring a dataset for Unified Profile and Identity Service via API](../unified_profile_dataset_tutorial/unified_profile_dataset_tutorial.md).
+Before data uploaded to a dataset will be automatically sent to Unified Profile, the dataset has to be specifically configured. For complete instructions on configuring a dataset for Unified Profile, visit [Configuring a dataset for Unified Profile and Identity Service via API](../unified_profile_dataset_tutorial/unified_profile_dataset_api_tutorial.md).
 
 ---
 

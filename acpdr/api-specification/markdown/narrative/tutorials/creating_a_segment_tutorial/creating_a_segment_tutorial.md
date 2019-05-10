@@ -478,7 +478,62 @@ The following contains examples demonstrating use of the Profile Export API. Ple
 
 ### Export audience - Step 1: Create or select audience dataset
 
-An audience must be exported to a dataset created by the same configuration as other Unified Profile datasets. See [Configuring a dataset for Unified Profile and Identity Service via API](../unified_profile_dataset_tutorial/unified_profile_dataset_tutorial.md). Following this tutorial, you will be provided a dataset ID. Use this for the next steps.
+An audience must be exported to a dataset created to persist the union view schema, but one that is not enabled for Unified Profile itself. 
+
+#### Service endpoint
+
+```
+POST https://platform.adobe.io/data/foundation/catalog/dataSets
+```
+#### Request body
+
+```
+{
+	"name": "Segment Export",
+	"schemaRef": {
+		"id": "https://ns.adobe.com/xdm/context/profile__union",
+		"contentType": "application/vnd.adobe.xed+json;version=1"
+	},
+	"fileDescription": {
+		"persisted": true,
+		"containerFormat": "parquet",
+		"format": "parquet"
+	},
+	"aspect": "production"
+}
+```
+
+#### Example request
+
+```
+curl -X POST \
+  https://platform.adobe.io/data/foundation/catalog/dataSets \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
+  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
+  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg' \
+  -d '{
+	"name": "Segment Export",
+	"schemaRef": {
+		"id": "https://ns.adobe.com/xdm/context/profile__union",
+		"contentType": "application/vnd.adobe.xed+json;version=1"
+	},
+	"fileDescription": {
+		"persisted": true,
+		"containerFormat": "parquet",
+		"format": "parquet"
+	},
+	"aspect": "production"
+}'
+```
+
+#### Example response
+
+```
+[@/datasets/5b020a27e7040801dedba61b"] 
+```
+
+The response to the API request to create a dataset comes in the form of an array of string dataset IDs containing exactly one ID, "5b020a27e7040801dedba61b" in the example above.
 
 ### Export audience - Step 2: Generate XDM Profiles for audience members
 
@@ -514,7 +569,7 @@ POST https://platform.adobe.io/data/core/ups/export/jobs
 		}
 	},
 	"destination": {
-		"dataSetId": "5c81ac183f0bd914b741ae35"
+		"dataSetId": "5b020a27e7040801dedba61b"
 	},
 	"schema": {
 		"name": "_xdm.context.profile"
@@ -546,7 +601,7 @@ The result of successfully running an export job is a dataset populated with onl
   "id": 100,
   "jobType": "BATCH",
   "destination": {
-    "datasetId": "5b7c86968f7b6501e21ba9df",
+    "datasetId": "5b020a27e7040801dedba61b",
     "batchId": "da5cfb4de32c4b93a09f7e37fa53ad52"
   },
   "fields": "identities.id,personalEmail.address",

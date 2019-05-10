@@ -2206,7 +2206,7 @@ Signals that the "sourceProperty" of the "sourceSchema" is an Identity field as 
 <li><strong>"xdm:sourceSchema"</strong>: The $id URI of the schema where the descriptor is being defined.</li>
 <li><strong>"xdm:sourceVersion"</strong>: The major version of the source schema.
 <li><strong>"xdm:sourceProperty"</strong>: The path to the specific property that will be the identity. Path should begin with a "/" and not end with one. Do not include "properties" in the path (e.g. use "/personalEmail/address" instead of "/properties/personalEmail/properties/address")</li>
-<li><strong>"xdm:namespace"</strong>: The "id" or "code" value of the identity namespace. A list of namespaces can be found using the <a href="../../../../../../acpdr/swagger-specs/id-namespace-api.yaml">Identity Namespace Service API</a>.</li>
+<li><strong>"xdm:namespace"</strong>: The "id" or "code" value of the identity namespace. A list of namespaces can be found using the <a href="../../../../../../acpdr/swagger-specs/id-service-api.yaml">Identity Namespace Service API</a>.</li>
 <li><strong>"xdm:property"</strong>: Either "xdm:id" or "xdm:code", depending on the "xdm:namespace" used.</li>
 <li><strong>"xdm:isPrimary"</strong>: An optional boolean value. When "true", indicates the field as the primary identity. Schemas may contain only one primary identity.</li>
 </ul></p>

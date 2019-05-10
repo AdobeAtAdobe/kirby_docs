@@ -982,7 +982,7 @@ curl -X POST \
       }'
 ```
 
-> **Note:** You can list available "xdm:namespace" values, or create new ones, using the [Identity Namespace Service API](../../../../../../acpdr/swagger-specs/id-namespace-api.yaml). The value for "xdm:property" will be either "xdm:code" or "xdm:id", depending on the "xdm:namespace" used.
+> **Note:** You can list available "xdm:namespace" values, or create new ones, using the [Identity Namespace Service API](../../../../../../acpdr/swagger-specs/id-service-api.yaml). The value for "xdm:property" will be either "xdm:code" or "xdm:id", depending on the "xdm:namespace" used.
 
 #### Response
 

@@ -44,7 +44,7 @@ When an identity is persisted, Identity Service generates and assigns an ID to t
 
 To limit the payload in response, APIs adapt their responses to the type of identity construct used. That is, if you pass XID your responses will have XIDs, if you pass composite identities, the response will follow the structure used in the request.
 
-The below examples don't cover all Identity Service APIs fully. For the complete API, see the [Swagger API Reference](../../../../../../acpdr/swagger-specs/id-namespace-api.yaml).
+The below examples don't cover all Identity Service APIs fully. For the complete API, see the [Swagger API Reference](../../../../../../acpdr/swagger-specs/id-service-api.yaml).
 
 > **Note:**
 > 
