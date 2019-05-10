@@ -22,8 +22,8 @@ A fully qualified identity includes the ID value, and a namespace. This is descr
 A consumer could be identified by the identity types listed below. The identity type is specified at the time of identity namespace creation and controls whether and how the data is handled when persisted in the identity graph. An identity type can have the following values: "Cookie", "Email", "Phone", "Device", "Cross_device".
 
 * **Cookie** - These identities are critical for expansion and constitute majority of the graph. However, by nature they decay fast and loose their value over time. Deletion of cookie will be handled specially in the identity graph.
-* **Email** - Emails are personally identifiable information (PII) and as such is, by default, encrypted before being stored in the identity graph. Emails are first lower-case transformed prior to encryption.
-* **Phone** - For identities of this type, considered PII, the identity value is always encrypted.
+* **Email** - Identities of this type are personally identifiable information (PII). This is indication to Identity Service to handle the value sensitively. 
+* **Phone** - Identities of this type are PII. This is indication to Identity Service to handle the value sensitively.
 * **Device** - Includes IDFA, GAID & other IOT IDs. These can be shared by people in households.
 * **Cross_device** -  Includes Login ID, CRM, Loyalty ID etc. This is ideally not shared. This indicates Identity Service to consider as strong people identifier and hence preserve forever.
 
@@ -35,8 +35,9 @@ The following namespaces are provided for use by all organizations. These are re
 |------------|---|---|-----------|
 |CORE|0|CORE|legacy name: "Adobe AudienceManager"|
 |ECID|4|ECID|alias: "Adobe Marketing Cloud ID", "Adobe Experience Cloud ID", "Adobe Experience Platform ID"|
-|Email|6|Email|Data in this namespace is considered PII and is automatically transformed to lower case and SHA-256 encrypted prior to being persisted.|
-|Phone|7|Phone|Data in this namespace is considered PII and is automatically SHA-256 encrpyted prior to being persisted.|
+|Email|6|Email||
+|Email (SHA256, lowercased)|11|Emails|Standard namespace for pre-hashed email. Values provided in this namespace must be lower-cased before hashing with SHA-256.|
+|Phone|7|Phone||
 |Windows AID|8|WAID||
 |AdCloud|411|AdCloud|alias: Ad Cloud|
 |Adobe Target|9|TNTID|Target ID|
@@ -53,7 +54,7 @@ Identity namespaces are also used to comply with General Data Protection Regulat
 
 ## Managing namespaces for your organization
 
-Adobe provides several pre-defined standard identity namespaces including a namespace for each Adobe solution, as well as for many industry standard solutions IDs such as the Windows AID (WAID) and Google Ad ID (GAID). The standard namespaces "Email" and "Phone" have automatic handling, as described [above](#standard-namespaces). You may also create new namespaces to represent additional systems and identity types. The namespaces you create are private to your organization.
+Adobe provides several pre-defined standard identity namespaces including a namespace for each Adobe solution, as well as for many industry standard solutions IDs such as the Windows AID (WAID) and Google Ad ID (GAID). You may also create new namespaces to represent additional systems and identity types. The namespaces you create are private to your organization.
 
 On the Platform UI, available namespaces are listed on the Identity Namespace page, accessed by selecting "Identities" from the left rail. 
 

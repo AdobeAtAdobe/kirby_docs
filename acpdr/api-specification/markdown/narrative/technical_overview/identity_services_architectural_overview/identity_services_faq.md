@@ -105,7 +105,7 @@ There are basically two purposes for including identity data in your record and 
 
 ### How does Identity Service handle PII?
 
-Identity Service creates a strong one way cryptographic hash of PII prior to persisting values. In specific, identity data in the "Phone" and "Email" namespaces will automatically be SHA-256 encrypted. "Email" values are transformed to lower case prior to encryption.
+Identity Service creates a strong one way cryptographic hash of PII prior to persisting values. In specific, identity data in the "Phone" and "Email" namespaces will automatically be SHA-256 hashed. "Email" values are transformed to lower case prior to hashing.
 
 ### What are known and anonymous identities?
 
@@ -121,8 +121,9 @@ The following namespaces are provided for use by all organizations. These are re
 |------------|---|---|-----------|
 |CORE|0|CORE|legacy name: "Adobe AudienceManager"|
 |ECID|4|ECID|alias: "Adobe Marketing Cloud ID", "Adobe Experience Cloud ID", "Adobe Experience Platform ID"|
-|Email|6|Email|Data in this namespace is considered PII and is automatically transformed to lower case and SHA-256 encrypted prior to being persisted.|
-|Phone|7|Phone|Data in this namespace is considered PII and is automatically SHA-256 encrpyted prior to being persisted.|
+|Email|6|Email||
+|Email (SHA256, lowercased)|11|Emails|Standard namespace for pre-hashed email. Values provided in this namespace must be lower-cased before hashing with SHA-256.|
+|Phone|7|Phone||
 |Windows AID|8|WAID||
 |AdCloud|411|AdCloud|alias: Ad Cloud|
 |Adobe Target|9|TNTID|Target ID|
