@@ -1,4 +1,4 @@
-# Tutorial: Authenticating and accessing Adobe Experience Platform APIs <!-- omit in toc -->
+# How to access Adobe Experience Platform APIs <!-- omit in toc -->
 
 ## Objective <!-- omit in toc -->
 
@@ -25,7 +25,7 @@ This tutorial will cover the steps for gaining access to an Adobe Experience Pla
 To maintain the security of your applications and users, all requests to Adobe I/O APIs must be authenticated and authorized using standards such as OAuth and JSON Web Tokens (JWT). The JWT will then be used along with client specific information to generate your personal access token.
 
 We will be going through the steps of authentication through the creation of an access token outlined in this flowchart:
-![](how_to_authenticate_acp_for_api_flowchart.png)
+![](./images/how_to_authenticate_acp_for_api_flowchart.png)
 
 ## Prerequisites
 * A registered Adobe ID account
@@ -48,11 +48,11 @@ Detailed information about developer accounts on the Admin Console can be found 
 
 Before creating integrations on Adobe I/O, your account must have developer permissions for a product in an IMS Organization. Contact an Admin Console administrator in your Organization to add you as a developer for one of your Organization's products via the [Admin Console](https://adminconsole.adobe.com/).
 
- ![](add_developer.png)
+ ![](./images/add_developer.png)
 
 The administrator will have to assign you to at least one product profile to proceed.
 
- ![](add_developer2.png)
+ ![](./images/add_developer2.png)
 
 As a developer, you will be given access privileges to create integrations on [Adobe I/O](https://console.adobe.io/). These integrations are a pipeline from external apps and services to the Adobe API.
 
@@ -60,11 +60,11 @@ As a developer, you will be given access privileges to create integrations on [A
 
 You will also need to ask your Admin Console administrator to add you to the product as a user. 
 
-![](assign_user.png)
+![](./images/assign_user.png)
 
 Similar to the process for adding a developer, the administrator will need to assign you to at least one product profile in order to proceed.
 
-![](assign_user2.png)
+![](./images/assign_user2.png)
 
 
 ## One time setup
@@ -81,32 +81,42 @@ Once your have your integration, and access values, you will be able to reuse th
 
 Navigate to the [Adobe I/O Console](https://console.adobe.io/) and sign in with your Adobe ID.
 
-You will be taken to the Integrations page. An *Integration* is a service account that is created for the selected IMS Organization (If you are associated with multiple Organizations, you can select the appropriate Organization from the drop-down). You will only be allowed to make calls for the IMS Organization in which the Integration is created.
+You will be taken to the Integrations page. An **Integration** is a service account that is created for the selected IMS Organization (If you are associated with multiple Organizations, you can select the appropriate Organization from the drop-down). You will only be allowed to make calls for the IMS Organization in which the Integration is created.
 
 ### Create integration
 
-From the *Integrations* tab, we want to create a *New Integration*.
+From the **Integrations** tab, click on the **New Integration** button to start the process. The process contains three steps:
+* Choose type of integration
+* Choose what Adobe service to integrate with
+* Add integration details, public key, and product profile
 
-![](new_integration0.png)
+![](./images/new_integration0.png)
 
-You will then be prompted to *Access an API* or to *Receive near-real-time events*. We will be accessing APIs, so select *Access an API* and then *Continue*.
+#### Choose type of integration
 
-![](new_integration1.png)
+You will then be prompted to **Access an API** or to **Receive near-real-time events**. We will be accessing APIs, so select **Access an API** and then **Continue**.
 
+![](./images/new_integration1.png)
 
-If your account is associated with multiple organizations, the drop-down menu on the top right of the screen will allow you to easily switch between them. We are selecting *Workshop* and *Data Services* under *Experience Cloud* since we want to access the data services.
+#### Choose what Adobe service to integrate with
 
-![](new_integration2.png)
+If your account is associated with multiple IMS organizations, the drop-down menu on the top right of the screen will allow you to easily switch between them. Select **Workshop** and **Experience Platform API** under **Adobe Experience Platform** to access the APIs.
 
+![](./images/new_integration2.png)
 
-After your Organization is selected there will be a new prompt at the top. We want a *New Integration*, so make sure that option is selected before clicking *Continue*
+Press **Continue** to move to the next section.
 
+#### Add integration details, public key, and product profile
 
-![](new_integration3.png)
+You will see the following screen which prompts you to fill in your integration details, enter your public key certificate, and to select a product profile.
 
-Fill in your Integration Details. For the certificate section, you will need to generate a certificate:
+![](./images/new_integration3.png)
+
+First enter your integration details. Next, select a product profile. Product profiles grant granular access to a group of features of the service you've selected in previous steps.
 
 ---
+
+For the certificate section, you will need to generate a certificate:
 
 **For MacOS & Linux platforms:**
 
@@ -161,18 +171,17 @@ After entering the information two files will be generated: `certificate_pub.crt
 
 The `private.key` will be used to generate our JWT in the later section.
 
+The `certificate_pub.crt` is used to create an API key. Go back to your Adobe IO Console and click on **Select a File** to upload your `certificate_pub.crt` file. 
+
 ---
 
-The `certificate_pub.crt` is used to create an API key. Go back to your Adobe IO Console and click on *Select a File* to upload your `certificate_pub.crt` file. Click *Create Integration* to finish up the process
-
-![](new_integration4.png)
-
+Click **Create Integration** to finish up the process.
 
 ### Copy down access values
 
-After creating your integration, you will be able to view its details. Click on *Retrieve Client Secret* and your screen should look similar to this:
+After creating your integration, you will be able to view its details. Click on **Retrieve Client Secret** and your screen should look similar to this:
 
-![](access_values.png)
+![](./images/access_values.png)
 
 Copy down the values for `{API KEY}`, `{IMS ORG}` which is the Organization ID, and `{CLIENT SECRET}` as these will be used in the next step.
 
@@ -184,9 +193,9 @@ The end goal is to generate your `{ACCESS_TOKEN}` which will be used to authenti
 
 ### Create JWT
 
-While in your integration's detail page, navigate to the *JWT* tab. Your page should look similar to this:
+While in your integration's detail page, navigate to the **JWT** tab. Your page should look similar to this:
 
-![](jwt_empty.png)
+![](./images/jwt_empty.png)
 
 We will now use the `private.key` we created in the previous section. View the contents of your `private.key` file:
 
@@ -208,9 +217,9 @@ wPW5MQjmygodzCh7+eGLrg==
 -----END PRIVATE KEY-----
 ```
 
-Copy the entire output into the text field and *Generate JWT*. Copy down your generated JWT for the next step.
+Copy the entire output into the text field and **Generate JWT**. Copy down your generated JWT for the next step.
 
-![](generated_jwt.png)
+![](./images/generated_jwt.png)
 
 ### Generate access token
 

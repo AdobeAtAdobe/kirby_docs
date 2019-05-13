@@ -4,13 +4,16 @@ info:
   version: beta
   termsOfService: 'https://www.adobe.com/legal/terms.html'
   description: >-
-    Sensei provides a mechanism for Data Scientists to organize and manage ML
+    Sensei Machine Learning API provides a mechanism for data scientists to organize and manage ML
     services from algorithm onboarding through experimentation and to service
     deployment.
-
+    
+    
     **Notes:** 
       * PLATFORM Gateway URL: https://platform.adobe.io/ 
       * Base path for this API: /data/sensei
+      * Useful [terminology](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html#!api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_overview.md#terminology)
+      * Tutorial on API calls: [How to access Adobe Experience Platform APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md)
 
     For more information about Sensei, try the [architectural overview](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html).
 
@@ -20,15 +23,15 @@ externalDocs:
 host: platform.adobe.io
 basePath: /data/sensei
 tags:
-  - name: Engines
+  - name: Engine
     description: >-
-      The Sensei Engine is an umbrella entity holding all MLInstances. This is
-      tied to one or more docker images built to include the Sensei Code of a ML
-      developer.
+      This entity acts as an umbrella entity holding all machine learning instances. This is
+      tied to a docker image, Java archive, or EGG file which contains machine 
+      learning logic to train and score a model.
   - name: MLInstance
     description: >-
-      The entity representing the combination of a Sensei Engine with Sensei
-      Configuration, which is often use-case specific for a customer or client.
+      The entity representing the combination of a specific engine with particular set 
+      of configurations. An instance is often use-case specific for a customer or client.
   - name: MLService
     description: >-
       The entity representing an MLInstance which has been published as a service.
@@ -39,20 +42,19 @@ tags:
       features, learning parameters, and hardware.
   - name: Model
     description: >-
-      This API allows to register a ML model. (model artifact that is created by
-      the training process)
+      This endpoint allows machine learning model management and registration (model artifact that is created by the training process).
   - name: Insight
     description: >-
       The entity containing insights and metrics which are used to empower a 
       data scientist to evaluate and choose optimal ML models by displaying 
-      relevant evaluation metrics .
+      relevant evaluation metrics.
 paths:
   /engines:
     parameters:
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
     get:
       tags:
-        - Engines
+        - Engine
       summary: Get a list of all Engines
       description: >-
         Lists all engines providing mechanisms for pagination, filtering, and
@@ -92,7 +94,7 @@ paths:
           $ref: '#/responses/504'
     post:
       tags:
-        - Engines
+        - Engine
       summary: Add a new Engine
       description: Creates a new Engine
       operationId: createEngine
@@ -203,7 +205,7 @@ paths:
 
     get:
       tags:
-        - Engines
+        - Engine
       summary: Get Docker Registry information
       description: >-
         Get Docker Registry information for use in .
@@ -240,7 +242,7 @@ paths:
       - $ref: '#/parameters/engineIdPathParam'
     get:
       tags:
-        - Engines
+        - Engine
       summary: Returns Engine by id
       description: Retrieves a specific engine
       operationId: retrieveEngine
@@ -271,7 +273,7 @@ paths:
           $ref: '#/responses/504'
     put:
       tags:
-        - Engines
+        - Engine
       summary: Update an Engine by id
       description: Updates a specific engine
       operationId: updateEngine
@@ -315,7 +317,7 @@ paths:
           $ref: '#/responses/504'
     delete:
       tags:
-        - Engines
+        - Engine
       summary: Delete an existing Engine
       description: Deletes a specific engine
       operationId: deleteEngine
