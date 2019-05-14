@@ -1,0 +1,438 @@
+swagger: '2.0'
+info:
+  description: >-
+    Work with event type macros on Adobe Experience Platform using Unified Profile Event Type Macros API.
+ 
+
+    Related documentation:
+
+      * [Unified Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
+
+    
+    Notes:
+      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * Base path for this API: /data/core/ups/config
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
+      to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
+
+  version: 19.3.1
+  title: Profile Event Type Macros API
+  termsOfService: ''
+host: platform.adobe.io
+basePath: /data/core/ups/config
+tags:
+  - name: Profile macros
+paths:
+  /macros:
+    parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+    get:
+      tags:
+        - Profile macros
+      summary: Get a list of macros
+      description: ''
+      operationId: getMany
+      produces:
+        - application/json
+      parameters:
+        - name: x-request-id
+          in: header
+          description: Request Id
+          required: false
+          type: string
+          x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+        - name: start
+          in: query
+          description: Page offset - As per created time of resource
+          required: false
+          type: string
+          x-example: K1JJRDpFaWc5QUpZWHY1c2JBQUFBQUFBQUFBPT0jUlQ6MSNUUkM6MiNGUEM6QWdFQUFBQldBQkVBQVBnaFFQLzM4VUIvL2tKQi8rLysvMUpBLzMrMi8wRkFmLzR4UUwvL0VrRC85em4zRTBEcmNmYi92Kzh4UUwvL05rQVgzRi8rMStqNS80WHQwN2NhUUVzQUFBUUFleGpLQ1JnVXRVcEFCQUFFQVBBRA==
+        - name: limit
+          in: query
+          description: Page Size
+          required: false
+          type: integer
+          x-example: 10
+        - name: orderBy
+          in: query
+          description: model attribute which will be using for ordering
+          required: false
+          type: string
+          x-example: value
+        - name: dataSetId
+          in: query
+          description: dataSet Id
+          required: false
+          type: string
+          x-example: 5c48b93a53214114cf85e378
+        - name: schemaClassId
+          in: query
+          description: schema class id
+          required: false
+          type: string
+          x-example: _xdm.context.profile
+        - name: value
+          in: query
+          description: event type value
+          required: false
+          type: string
+          x-example: click
+      responses:
+        '200':
+          description: a list of macros returned
+          schema:
+            $ref: '#/definitions/MacrosResponse'
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+    post:
+      tags:
+        - Profile macros
+      summary: Create a macro
+      description: ''
+      operationId: post
+      produces:
+        - application/json
+      parameters:
+        - name: x-profile-instance-id
+          in: header
+          description: Profile Instance ID
+          required: true
+          type: string
+          x-example: ups
+        - name: x-request-id
+          in: header
+          description: Request Id
+          required: false
+          type: string
+          x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+        - in: body
+          name: body
+          description: macro object
+          required: true
+          schema:
+            $ref: '#/definitions/Macro'
+      responses:
+        '200':
+          description: Macro successfully created
+          schema:
+            $ref: '#/definitions/Macro'
+        '400':
+          description: Please double check your post body
+        '403':
+          description: Forbidden
+        '429':
+          description: Request rate too large!
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+  '/macros/{macroId}':
+    parameters:
+      - name: macroId
+        in: path
+        description: Macro Id
+        required: true
+        type: string
+        x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+    get:
+      tags:
+        - Profile macros
+      summary: Return the Macro by id
+      description: ''
+      operationId: getById
+      produces:
+        - application/json
+      parameters:
+        - name: x-request-id
+          in: header
+          description: Request Id
+          required: false
+          type: string
+          x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+      responses:
+        '200':
+          description: Macro successfully returned
+          schema:
+            $ref: '#/definitions/Macro'
+        '403':
+          description: Forbidden
+        '404':
+          description: Macro not found
+        '503':
+          description: Service Unavailable
+    put:
+      tags:
+      - Profile macros
+      summary: Overwrite a macro
+      description: ''
+      operationId: put
+      produces:
+      - application/json
+      parameters:
+      - name: x-profile-instance-id
+        in: header
+        description: Profile Instance ID
+        required: true
+        type: string
+        x-example: ups
+      - name: x-request-id
+        in: header
+        description: Request Id
+        required: false
+        type: string
+        x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+      - in: body
+        name: body
+        description: macro object
+        required: true
+        schema:
+          $ref: '#/definitions/Macro'
+      responses:
+        '200':
+          description: Macro successfully updated
+          schema:
+            $ref: '#/definitions/Macro'
+        '400':
+          description: Please double check your post body
+        '403':
+          description: Forbidden
+        '429':
+          description: Request rate too large!
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+    patch:
+      tags:
+      - Profile macros
+      summary: Update a macro
+      description: ''
+      operationId: patch
+      produces:
+      - application/json
+      parameters:
+      - name: x-profile-instance-id
+        in: header
+        description: Profile Instance ID
+        required: true
+        type: string
+        x-example: ups
+      - name: x-request-id
+        in: header
+        description: Request Id
+        required: false
+        type: string
+        x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+      - in: body
+        name: body
+        description: a list of patch operation
+        required: true
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/PatchOperation'
+      responses:
+        '200':
+          description: Macro successfully updated
+        '400':
+          description: Please double check your post body
+        '403':
+          description: Forbidden
+        '429':
+          description: Request rate too large!
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+    delete:
+      tags:
+        - Profile macros
+      summary: Delete a macro by id
+      description: ''
+      operationId: delete
+      produces:
+        - application/json
+      parameters:
+        - name: x-request-id
+          in: header
+          description: Request Id
+          required: false
+          type: string
+          x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+      responses:
+        '200':
+          description: Macro deleted successfully
+        '403':
+          description: Forbidden
+        '404':
+          description: Macro not found
+        '503':
+          description: Service Unavailable
+parameters:
+  authorization:
+    name: Authorization
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
+    For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  x-gw-ims-org-id:
+    name: x-gw-ims-org-id
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  x-api-key:
+    name: x-api-key
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  json-header:
+    name: Content-Type
+    description: 'application/json'
+    required: true
+    type: string
+    in: header
+definitions:
+  MacrosResponse:
+    type: object
+    required:
+      - _page
+      - children
+    properties:
+      _page:
+        $ref: '#/definitions/Page'
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/Macro'
+  Page:
+    type: object
+    required:
+      - count
+    properties:
+      count:
+        type: number
+        example: 100
+        description: number of marcos per page
+      next:
+        type: string
+        example: K1JJRDpFaWc5QUwyZFgtMEpBQUFBQUFBQUFBPT0jUlQ6MSNUUkM6MiNGUEM6QWdFQUFBQVFBQWZBQUg0Ly9yL25PcmpmZndEZUR3QT0=
+        description: page offset
+  Macro:
+    type: object
+    required:
+      - DataSetId
+      - field
+      - expression
+    properties:
+      id:
+        type: string
+        example: ups-default
+        description: macro id
+      name:
+        type: string
+        example: ups-default
+        description: macro name
+      dataSetId:
+        type: string
+        example: 5c48b93a53214114cf85e378
+        description: dataSet Id
+      schema:
+        $ref: '#/definitions/SchemaClass'
+      imsOrgId:
+        type: string
+        example: 1BD6382559DF0C130A49422D@AdobeOrg
+        description: ims org id
+      field:
+        type: string
+        example: eventType
+        description: field name
+      value:
+        type: string
+        example: click
+        description: field value when the expression is true
+      default:
+        type: boolean
+        example: false
+        description: default flag
+      expression:
+        $ref: '#/definitions/Expression'
+      updateEpoch:
+        type: integer
+        example: 1234567890
+        description: update timestamp
+    description: 'macro'
+  SchemaClass:
+    type: object
+    required:
+    - name
+    properties:
+      name:
+        type: string
+        example: _xdm.context.profile
+        description: schema class id
+    description: schema class
+  Expression:
+    type: object
+    required:
+      - type
+      - format
+      - value
+    properties:
+      type:
+        type: string
+        example: PQL
+        description: expression type
+        enum:
+        - PQL
+        - ARL
+      format:
+        type: string
+        example: pql/text
+        description: expression format
+        enum:
+        - pql/text
+        - pql/json
+      value:
+        type: string
+        example: workAddress.country = "US"
+        description: PQL query string
+    description: PQL expression
+  PatchOperation:
+    type: object
+    required:
+    - op
+    - path
+    - value
+    properties:
+      op:
+        type: string
+        example: add
+        description: op
+        enum:
+        - add
+      path:
+        type: string
+        example: /value
+        description: path of the attribute need to be updated
+      value:
+        type: string
+        example: click
+        description: the new value used to update the specified attribute
+    description: Patch operation
