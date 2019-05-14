@@ -41,11 +41,11 @@ For product documentation, see [Analytics Help Home](https://marketing.adobe.com
 
 ### Data Ingestion 
 
-Adobe Experience Platform provides rich set of features for customers to ingest any type and any latency of data. Customers can ingest using Batch or Streaming API, using Adobe built connectors, using data integration partners or UI.
+Adobe Experience Platform provides rich set of features to ingest any type and any latency of data. You can ingest using Batch or Streaming API, using Adobe built connectors, data integration partners or the Adobe Experience Platform UI.
 
 ### Batch
 
-Batch Ingestion API allows you to ingest any type of data into Adobe Experience Platform. Bulk Ingestion API provides a secure and scalable mechanism to ingest data that conform to XDM or non XDM schemas.
+Use Batch Ingestion API to ingest any type of data into Adobe Experience Platform. Bulk Ingestion API provides a secure and scalable mechanism to ingest data that conform to XDM or non XDM schemas.
 
 | Feature    | Description  |
 | -----------| ---------- |
@@ -79,12 +79,12 @@ For product documentation, see [Connectors for Adobe Experience Platform](https:
 
 ### Adobe Solutions
 
-Adobe provides managed data transfer from Adobe Solution to Adobe Experience Platform. Data transfer from the following solutions is available with this release.
+Adobe provides managed data transfer from Adobe Solution to Adobe Experience Platform. With this release, data transfer from the following solutions.
 
 | Feature    | Description  |
 | -----------| ---------- |
 | Adobe Analytics  | Report Suites |
-| Adobe Audience Manager  | Data collection Logs, Onboarded data, Traits & segment. |
+| Adobe Audience Manager  | Data collection logs, Onboarded data, Traits & segments. |
 | AdCloud | DSP Events |
 | Adobe Campaign Standard | Profile and Events |
 | Target (Preview) | Events
@@ -96,14 +96,14 @@ None.
 
 ### Streaming
 
-Streaming ingestion lets users send data to Experience Platform in real time from client and server-side devices. Allows updates to Real-Time Customer Profiles at sub-second latency with support for authenticated data collection and multi-record payloads.
+Streaming ingestion sends data to Experience Platform in real time from client and server-side devices. Updates can be made to Real-Time Customer Profiles at sub-second latency with support for authenticated data collection and multi-record payloads.
 
 | Feature    | Description  |
 | -----------| ---------- |
 | Synchronous Validation  | Allows immediate discovery of errors in the JSON payload improving developer velocity. |
-| End-to-End Monitoring | Monitor streaming data from ingestion to consumption in the Data Lake and Real-time Customer Profile. |
-| Authenticated Data Collection | Toggle on or off the option to require auth tokens from clients. Allows Adobe Experience Platform services to differentiate between records coming from trusted sources and un-trusted sources. |
-| Send data in real-time through Launch | Use the Adobe Experience Platform extension in Launch to easily send XDM formatted data from client devices in real-time. |
+| End-to-End Monitoring | Monitors streaming data from ingestion to consumption in the Data Lake and Real-time Customer Profile. |
+| Authenticated Data Collection | Toggles on or off the option to require authentication tokens from clients. Allows Adobe Experience Platform services to differentiate between records coming from trusted sources and un-trusted sources. |
+| Send data in real-time through Launch | Uses the Adobe Experience Platform extension in Launch to easily send XDM formatted data from client devices in real-time. |
 
 **Known issues**
 
@@ -125,13 +125,13 @@ None.
 
 ### Dataset Management
 
-Adobe Experience Platform provides customers the ability to discover all their data stored in platform and manage the data via UI and Restful API
+Adobe Experience Platform provides the ability to discover all their data stored in platform and manage the data via UI and RESTful API
 
 | Feature    | Description  |
 | -----------| ---------- |
-| Scalable | Scalable data. Ingest petabytes of data and make it available within SLA |
+| Scalable | Scalable data. Ingests petabytes of data and make it available within SLA |
 | Data Encryption at REST  | Protects and secures data by encrypting data at rest. |
-| GDPR Support  | Follow GDPR legal guidelines for the collection and processing of personal information of individuals within the European Union (EU) |
+| GDPR Support  | Follows GDPR legal guidelines for the collection and processing of personal information of individuals within the European Union (EU) |
 
 **Known issues**
 
@@ -139,7 +139,7 @@ None.
 
 ### Catalog
 
-Catalog is the system of record for data location and lineage within Adobe Experience Platform. Catalog holds the metadata and descriptions of files and directories within Experience Platform, acting as a metadata store where users can find information about all organizational data being stored in Platform.
+Catalog is the system of record for data location and lineage within Adobe Experience Platform. Catalog holds the metadata and descriptions of files and directories within Experience Platform, acting as a metadata store where you can find information about any data being stored in Platform.
 
 | Feature    | Description  |
 | -----------| ---------- |
@@ -153,7 +153,7 @@ To begin working with the Catalog Service API, please review the [Catalog Servic
 
 ### ETL
 
-Adobe Experience Platform supports integration with Data Processing Tools that have the ability to extract, transform, and load (ETL) data from numerous sources into Experience Platform, ensuring that data conforms to the correct specifications for use by Platform services. A number of partners offer pre-configured connectors for Experience Platform. Documentation is also available for developing ETL connectors.
+Adobe Experience Platform supports integration with Data Processing Tools that can extract, transform, and load (ETL) data from numerous sources into Experience Platform, ensuring that data conforms to the correct specifications for use by Platform services. A number of partners offer pre-configured connectors for Experience Platform. Documentation is also available for developing ETL connectors.
 
 | Feature    | Description  |
 | -----------| ---------- |
@@ -170,11 +170,11 @@ For product documentation, see [Developing ETL Integrations for Adobe Experience
 
 Standardization and interoperability are key concepts behind Experience Platform. Experience Data Model (XDM), driven by Adobe, is an effort to standardize customer experience data and define schemas for customer experience management.
 
-XDM is a publicly documented specification designed to improve the power of digital experiences. It provides common structures and definitions for any application to use to communicate with services on Adobe Experience Platform. By adhering to XDM standards, all customer experience data can be incorporated into a common representation delivering insights in a faster, more integrated way. You can gain valuable insights from customer actions, define customer audiences through segments, and express customer attributes for personalization purposes.
+XDM is a publicly documented specification designed to improve the power of digital experiences. It provides common structures and definitions for any application to communicate with services on Adobe Experience Platform. By adhering to XDM standards, all customer experience data can be incorporated into a common representation delivering insights in a faster, more integrated way. You can gain valuable insights from customer actions, define customer audiences through segments, and use customer attributes for personalization purposes.
 
-XDM is the fuel that allows Experience Cloud, powered by Adobe Experience Platform, to deliver the right message to the right person, on the right channel, at exactly the right moment.
+XDM is the mechanism that allows Experience Cloud, powered by Adobe Experience Platform, to deliver the right message to the right person, on the right channel, at exactly the right moment.
 
-The methodology on which Experience Platform is built, XDM System, operationalizes Experience Data Model schemas for use by Experience Platform components.
+The methodology on which Experience Platform is built, XDM System operationalizes Experience Data Model schemas for use by Experience Platform components.
 
 | Feature    | Description  |
 | -----------| ---------- |
@@ -201,9 +201,9 @@ Profile Service is a generic lookup entity store that merges data across various
 
 | Feature    | Description  |
 | -----------| ---------- |
-| Real-time customer profile  | Profile ingests data delivered in real time via data inlets, merges it with existing data in the profile store, and creates or modifies the unified view at near real time. This data, evolving in time with your customers' experience, can be used to make personalized recommendations. |
-| Union view | One of the key features of Profile is the ability to unify multi-channel data. Profile can supply you with a merged view of the individuals in your consumer base, across datasets and for linked identities, referred to as the union view. |
-| Edge | Edge Service serves as a framework for low-latency data collection, pluggable computing and rapid data activation across all addressable channels. Edge Service facilitates for real-time personalization. |
+| Real-time customer profile  | Profile ingests data via data inlets, merges it with existing data in the profile store, and creates or modifies the unified view at near real time. This data, evolving in time with your customers' experience, can be used to make personalized recommendations. |
+| Union view | One of the key features of Profile is the ability to unify multi-channel data. Profile can supply a merged view of the individuals in your consumer base, across datasets and for linked identities, referred to as the union view. |
+| Edge | Edge Service serves as a framework for low-latency data collection, pluggable computing and rapid data activation across all addressable channels. Edge Service facilitates real-time personalization. |
 
 **Known issues**
 
@@ -213,13 +213,13 @@ For product documentation, see [Unified Profile Overview](https://www.adobe.io/a
 
 ### Identity
 
-Identity Service solves the fundamental challenge posed by the disconnected identities of your customers caused by the fragmented nature of their data as it exists across each of the disparate systems at play in your organization's ecosystem. It does this by bridging identities across devices and across the various systems used by your consumers to engage with your brand. In this way, Identity Service facilitates a complete understanding of your customers and their behavior so you can deliver impactful digital experiences in real-time.
+Identity Service solves the fundamental challenge posed by the disconnected identities of your customers caused by the fragmented nature of their data across each of the disparate systems at play in your organization's ecosystem. It does this by bridging identities across devices and across the various systems used by your consumers to engage with your brand. In this way, Identity Service facilitates a complete understanding of your customers and their behavior so you can deliver impactful digital experiences in real-time.
 
 Identity 
 
 | Feature    | Description  |
 | -----------| ---------- |
-| Identity graph  | An identity graph is a map of relationships between identities that updates with customer activity in near real time. Identity Service manages an identity graph visible by only your organization and built based on your data, referred to as the private graph. Identity Service augments your private graph when a record of ingested data contains more than one identity, adding a relationship between the identities found. |
+| Identity graph  | An identity graph is a map of relationships between identities that updates with customer activity in near real time. Identity Service manages an identity graph visible by only your organization and built based on your data, referred to as the private graph. Identity Service augments your private graph when a record of ingested data contains more than one identity, adding relationships between these identities. |
 
 **Known issues**
 
@@ -229,9 +229,9 @@ For product documentation, see [Identity Service Overview](https://www.adobe.io/
 
 ### Segmentation
 
-Segmentation deals with defining a particular subset of profiles from your profile store, or more specifically to describe the criteria distinguishing a marketable group of people among your profile store. Segments can be based on record data (such as demographic information) or time series events representing customer touch points with your brand.
+Segmentation defines a particular subset of profiles from your profile store, describing the criteria that distinguishes a marketable group of people within your profile store. Segments can be based on record data (such as demographic information) or time series events representing customer touch points with your brand.
 
-For example, in an email campaign called 'Did you forget to buy your sneakers?', you may want an audience segment of all users who searched for running shoes within the last 30 days, but who did not complete a purchase. Or, you may want to target web content to display only for users with a certain rating in your rewards program.
+For example, in an email campaign called 'Did you forget to buy your sneakers?', you may want an audience segment of all users who searched for running shoes within the last 30 days, but who did not complete a purchase. Or, you may want to target web content to display only to users with a certain rating in your rewards program.
 
 | Feature    | Description  |
 | -----------| ---------- |
@@ -248,19 +248,19 @@ For product documentation, see [Segment Builder Overview](https://www.adobe.io/a
 
 ### Data Usage Labeling and Enforcement (DULE)
 
-Adobe Experience Platform allows companies to bring data from multiple enterprise systems together to better allow marketers to identify, understand, and engage customers. Experience Platform includes end-to-end data governance infrastructure, including DULE, to ensure the proper use of data within Platform and when being shared between systems.
+Adobe Experience Platform allows companies to bring data from multiple enterprise systems together to better allow marketers to identify, understand, and engage customers. Experience Platform includes an end-to-end data governance infrastructure, including DULE, to ensure the proper use of data within Platform and when being shared between systems.
 
-Data governance is a series of strategies and technologies used to manage customer data and ensure compliance with regulations, restrictions, and policies applicable to data use. It plays a key role within Experience Platform at various levels, including cataloging, data lineage, data usage labeling, data access policies, and access control on data for marketing actions.
+Data governance is a series of strategies and technologies used to manage customer data and ensure compliance with regulations, restrictions, and policies applicable to data usage. It plays a key role within Experience Platform at various levels, including cataloging, data lineage, data usage labeling, data access policies, and access control on data for marketing actions.
 
-Getting started with data governance requires a strong understanding of the regulations, contractual obligations, and corporate policies that apply to your customer data. From there, data can be classified by applying the appropriate data usage labels, and its use can be controlled through the definition of data usage policies.
+Getting started with data governance requires a thorough understanding of the regulations, contractual obligations, and corporate policies that apply to your customer data. From there, data can be classified by applying the appropriate data usage labels, and its use can be controlled through the definition of data usage policies.
 
 The DULE framework simplifies and streamlines the process of categorizing data and creating data usage policies through the Experience Platform user interface and DULE Policy Service API. 
 
 | Feature    | Description  |
 | -----------| ---------- |
 | Label Experience Platform entities  | Apply and manage data usage labels at the connection, dataset, and dataset field level based on pre-defined categorized labels. |
-| Create data usage policies  | Define and manage data usage policies based on the presence of labels and attempted marketing actions. |
-| Check policy violations  | Evaluate whether or not defined usage policies are violated when performing marketing actions on Platform data. |
+| Create data usage policies  | Define and manage data usage policies based on the presence of labels and requested marketing actions. |
+| Check policy violations  | Evaluate whether defined usage policies are violated when performing marketing actions on Platform data. |
 
 **Known issues**
 
