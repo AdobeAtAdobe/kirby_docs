@@ -1,139 +1,128 @@
-# Identity Service API overview
+# Identity Services API
 
-## Overview
+Adobe's Identity Services manages cross-device, cross-channel identification of your end consumers as an identity graph. Accessing and interacting with your data in the identity graph is accomplished using the APIs summarized in this document.
 
-Identity Service manages cross-device, cross-channel, near real-time identification of your end consumers as an identity graph in Adobe Experience Platform. This document discusses working with your identity graph using Experience Platform APIs. In specific, the following is covered:
+## Using the API
 
-[__Labeling a field as identity__](#label-a-field-as-identity) - Identity Service will interpret XDM field values as identities for all fields labeled as identity. Labeling a field as identity is a function of using the Schema Registry API to add a descriptor to a field.  
-[__Get cluster identities__](#get-all-identities-in-a-cluster) - A cluster is a collection of all identities which identify the same individual, across all namespaces.  
-[__Get the cluster history of an identity__](#get-the-cluster-history-of-an-identity) - Identities can move clusters over the course of various device graph runs. A cluster's history provides the cluster associations of a given identity over time.  
-[__Get identity mappings__](#get-identity-mappings) - A mapping is a collection of all identities in a cluster, for a specified namespace.  
-[__Listing available namespaces__](#listing-available-namespaces) - View all namespaces available for use by your organization. For more on namespaces, visit the [Identity namespace overview](../identity_namespace_overview/identity_namespace_overview.md).  
-[__Creating a custom namespace__](#creating-a-custom-namespace) - Create custom namespaces for classifying your identities.  
-[__Get the native ID for an identity__](#get-the-xid-for-an-identity) - A fully qualified identity consists of an ID value and a namespace. Upon persisting a new identity, Identity Service generates and associates a single ID, referred to as the XID or native ID, representing the composite identity properties. Identities can be referenced by XID in API calls, as well as identity maps in XDM data.  
+This document describes interacting with Identity Namespace Services using Adobe Experience Platform APIs. See the [Adobe I/O Authentication Overview](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html) for information on how to access these services.
 
-### Prerequisite Topics
+![](lightbulb.jpg) Before you start using the APIs, please read though these notes.
 
-[__Identity Service__](../../technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md) - Identity Service solves the fundamental challenge posed by the fragmentation of consumer profile data. It does this by bridging identities across devices and across the various systems whereby your consumers engage with your brand.  
-[__Authenticating and Accessing Adobe Experience Platform APIs__](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) - This tutorial shows the initial steps to set up an integration in Adobe I/O Console and use the created integration to access Platform APIs. The steps in this tutorial describe how to create an integration and gain access to the following values needed for required headers:
-* IMS Organization ID
-* API Key (Client ID)
-* Access Token 
+* All variations of Cluster and Mapping APIs support both XID and NID in their requests and response. One of the parameters is required - `xid` or combination of (`nsid`, `id`) to use these APIs
+* To limit the payload in response, APIs are adapt their responses to `xid` or `uid`. That is, if you pass XID your responses will have XIDs, if you pass NID responses will have NIDs
+* The below examples don't cover all usages of XIDs and NIDs. For the complete API, see the [Swagger API Reference](../../../../../../acpdr/swagger-specs/id-namespace-api.yaml)
 
-### Related Topics
+## Required Headers
 
-[__Experience Data Model (XDM)__](../../technical_overview/schema_registry/schema_composition/schema_composition.md) provides the framework to refer to and manage the schemas that your data must conform to for use as entities on Platform. Some services covered by this overview require an understanding of XDM schema fields and how to refer to an individual field by name.
+All APIs in this document require the following headers unless otherwise indicated:
 
-### Requirements
-
-All RESTful services in this document require the following headers. Some require additional headers which will be listed in context.
-
-|Header|Description|Example Value|
+|Header|Value|Description|
 |---|---|---|
-|__`Authorization`__|The Access Token as described in [Prerequisite Topics](#prerequisite-topics), prefixed with "Bearer "|Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ....|
-|__`x-gw-ims-org-id`__|The IMS Organization ID as described in [Prerequisite Topics](#prerequisite-topics)|17FA2AFD56CF35747F000101@AdobeOrg|
-|__`x-api-key`__|The API Key (Client ID) as described in [Prerequisite Topics](#prerequisite-topics)|25622d14d3894ea590628717f2cb7462|
+|content-type|application/json|The input content type (Only for POST)|
+|Authorization|Bearer {TOKEN}|The IMS service token used for authenticating the caller, prefixed with the string "Bearer "|
+|Accept|application/vnd.adobe.identity+json;version=1.2|The version of the resource's representation|
+|x-gw-ims-org-id|{imsOrgId}, Eg: 17FA2AFD56CF35747F000101@AdobeOrg|The IMS Org ID of client|
+|x-api-key|API key|The Client ID/API key of whitelisted client|
 
-### Using the Identity Service API
+# Working with Identity Services
 
-Identity parameters used in these services can be expressed in one of two ways; composite or XID. 
+As the single source of truth for identity resolution in Experience Platform, Identity Services provide the following capability:
 
-Composite identities are constructs including both the ID value and namespace. When using composite identities, the namespace can be supplied by either name (`namespace.code`) or ID (`namespace.id`).
+* __Generation of ID__ - establishment of links between namespaces
+* __Computation of identity clusters__ - internal device graph resolves device specific identities
+* __Access to identify clusters and mappings through APIs__ - this document covers the Identity Services API
 
-When an identity is persisted, Identity Service generates and assigns an ID to that identity, called the native ID, or XID. All variations of Cluster and Mapping APIs support both composite identities and XID in their requests and response. One of the parameters is required - `xid` or combination of [`ns` or `nsid`] and `id` to use these APIs.
+The following are examples meant to describe the way the UIS APIs behave.
 
-To limit the payload in response, APIs adapt their responses to the type of identity construct used. That is, if you pass XID your responses will have XIDs, if you pass composite identities, the response will follow the structure used in the request.
+## Get XID
 
-The below examples don't cover all Identity Service APIs fully. For the complete API, see the [Swagger API Reference](../../../../../../acpdr/swagger-specs/id-service-api.yaml).
-
-> **Note:**
-> 
-> * All member identities returned will be in native XID form when native XID is used in the request
-> * We recommend using ID/namespace form
-> * Getting the XID for an identity is covered [below](#get-the-xid-for-an-identity)
-
-## Label a field as identity
-
-Fields that contain personally identifiable information (PII) can be labeled as identity fields. A value provided in an identity field is interpreted as an identity by Identity Service. The namespace of the identity is specified as a part of labeling the field.
-
-The following criteria must be met for a field to be labeled as identity:
-
-* Only string type fields can be used for identity
-* Identities are only recognized in record and time series data
-* Only PII fields should be marked as identity. Choosing a field representing more generic data would result in less precise relationships and potentially errors accessing related identities from the identity graph
-
-For instructions on how to use the Schema Registry API to label a field as identity, visit [Create a descriptor](technical_overview/schema_registry/schema_registry_developer_guide.md#create-descriptor).
-
-## Get all identities in a cluster
-
-Identities that are related in an identity graph, regardless of namespace, are considered to be part of the same "cluster" in that identity graph. The options below provide the means to access all cluster members.
-
-### Get associated identities for a single identity
-
-Retrieve all cluster members for a single identity.
-
-> **Note:** Use optional `graph-type` parameter to indicate the identity graph to get the cluster from. Options are:
->
-> * __coop__ - Subscription-based graph built by using coop data
-> * __pdg__ - Private device graph, built from your organization's data. If no `graph-type` is provided, this is the default.
-
-__Service endpoint__
+Given the Identity Namespace (identified by namespace ID (e.g. "411") or namespace code (e.g. "AMO") as `nsId` or `ns` respectively) and `id` in that Namespace, returns XID string.
 
 ```
-GET https://platform.adobe.io/data/core/identity/cluster/members
+GET https://platform.adobe.io/data/core/identity?nsId=411&id=WTCpVgAAAFq14FMF HTTP/1.1
 ```
 
-__Example requests__
+or
 
-Option 1: Supply the identity as namespace (`nsId`, by ID) and ID value (`id`). 
 ```
+GET https://platform.adobe.io/data/core/identity?ns=AMO&id=WTCpVgAAAFq14FMF HTTP/1.1
+```
+
+__Example cURL requests__
+
+```
+# Request for stubbed data
 curl -X GET \
-  'https://platform.adobe.io/data/core/identity/cluster/members?nsId=411&id=WTCpVgAAAFq14FMF' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
-```
+  'https://platform.adobe.io/data/core/identity/identity?nsId=411&id=WTCpVgAAAFq14FMF' \
+  -H 'authorization: CALLERS_IMS_SERVICE_TOKEN' \
+  -H 'x-api-key: CALLERS_API_KEY/CLIENT_ID' \
+  -H 'x-uis-cst-ctx: stub' \
+  -H 'x-gw-ims-org-id: 111'
 
-Option 2: Supply the identity as namespace (`ns`, by name) and ID value (`id`).
-```
+# Real API
 curl -X GET \
-  'https://platform.adobe.io/data/core/identity/cluster/members?ns=AMO&id=WTCpVgAAAFq14FMF' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
+  'https://platform.adobe.io/data/core/identity/identity?nsId=411&id=WTCpVgAAAFq14FMF' \
+  -H 'authorization: CALLERS_IMS_SERVICE_TOKEN' \
+  -H 'x-api-key: CALLERS_API_KEY/CLIENT_ID' \
+  -H 'x-gw-ims-org-id: 111'
 ```
 
-Option 3: Supply the identity as XID (`xid`). For more on how to obtain an identity's XID, see the section of this document covering [getting the XID for an identity](#get-the-xid-for-an-identity).
-```
-curl -X GET \
-  'https://platform.adobe.io/data/core/identity/cluster/members?xid=CJsDEAMaEAHmCKwPCQYNvzxD9JGDHZ8' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
-```
+![](lightbulb.jpg) NOTE: Usage of `x-uis-cst-ctx: stub` header will return a stubbed response. This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed. We will keep our consumers advised to when this is no longer needed or supported.
 
-### Get associated identities for multiple identities
+__Example response__
 
-Use `POST` as a batch equivalent of the `GET` method described above to return the identities in the clusters of multiple identities.
-
-> **NOTE:** Request should indicate no more than a maximum of 1000 identities. Requests exceeding 1000 identities will result in 400 status code.
-
-__Service endpoint__
+Returns an HTTP 200 OK on success.
 
 ```
-POST https://platform.adobe.io/data/core/identity/clusters/members
+{
+    "xid": "CJsDEAMaEAHmCKwPCQYNvzxD9JGDHZ8"
+}
 ```
 
-__Request body__
+## Cluster Members API
 
-Option 1: Supply a list of XIDs for which to retrieve cluster members.
+Given an XID return all XIDs, in the same or other Namespaces, that are linked to it. The related XIDs are considered to be part of the same "cluster".
+
+![](lightbulb.jpg) NOTE: Use optional `graph-type` parameter to indicate the output type to get the cluster from. Options are:
+
+* __coop__ - graph built by using coop data
+* __pdg__ - private device graph  
+
+```
+GET https://platform.adobe.io/data/core/identity/cluster/members?xid=CJsDEAMaEAHmCKwPCQYNvzxD9JGDHZ8 HTTP/1.1
+```
+
+or
+
+```
+GET https://platform.adobe.io/data/core/identity/cluster/members?nsId=411&id=WTCpVgAAAFq14FMF HTTP/1.1
+```
+
+or
+
+```
+GET https://platform.adobe.io/data/core/identity/cluster/members?ns=AMO&id=WTCpVgAAAFq14FMF HTTP/1.1
+```
+
+
+OR, use `POST` as a batch equivalent of `GET` method. Returns the XIDs that belong to the same cluster, for multiple XIDs.
+
+![](lightbulb.jpg) NOTE: Caller should limit their requests to 1000 XIDs. Request exceeding 1000 XIDs will result in 400 status code.
+
+```
+POST https://platform.adobe.io/data/core/identity/clusters/members HTTP/1.1
+```
+
+__Example body__
+
 ```
 {
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"]
 }
 ```
 
-Option 2: Supply a list of XIDs and override the default `graph-type` value of "pdg".
+or
+
 ```
 {
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
@@ -141,22 +130,8 @@ Option 2: Supply a list of XIDs and override the default `graph-type` value of "
 }
 ```
 
-Option 3: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace code.
-```
-{
-    "compositeXids": [{
-            "ns": "AdCloud",
-            "id": "WRbM7AAAAJ_PBZHl"
-        },
-        {
-            "ns": "AdCloud",
-            "id": "WY-RNgAAArI4rGBo"
-        }
-    ]
-}
-```
+or
 
-Option 4: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace ID. This example demonstrates using this method while overwriting the default `graph-type` of "pdg".
 ```
 {
     "compositeXids": [{
@@ -172,7 +147,7 @@ Option 4: Supply a list of identities as composite IDs, where each names the ID 
 }
 ```
 
-__Example requests__
+__Example cURL requests__
 
 ```
 ## Stub
@@ -220,9 +195,7 @@ curl -X POST \
 }' | json_pp
 ```
 
-> **Note:** Usage of `x-uis-cst-ctx: stub` header will return a stubbed response. This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed. We will keep our consumers advised to when this is no longer needed or supported.
-
-### Responses for requests for cluster members
+![](lightbulb.jpg) Usage of `x-uis-cst-ctx: stub` header will return a stubbed response. This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed. We will keep our consumers advised to when this is no longer needed or supported.
 
 __Example stubbed response__
 
@@ -316,69 +289,44 @@ __Example real response__
 }
 ```
 
-> **Note:** The response will always have one entry for each XID provided in the request regardless of whether a request's XIDs belong to the same cluster or if one or more have any cluster associated at all.
+![](lightbulb.jpg) The response will always have one entry for each XID provided in the request regardless of whether a request's XIDs belong to the same cluster or if one or more have any cluster associated at all.
 
-## Get the cluster history of an identity
+## Cluster History API
 
-Identities can move clusters over the course of various device graph runs. Identity Service provides visibility into the cluster associations of a given identity over time.
+Given an XID, return all cluster associations with that XID. Cluster Associations - XIDs can move clusters over the course of various device graph runs, this API provides cluster id associations of a given XID over time.
 
-> **Note:** Use optional `graph-type` parameter to indicate the output type to get the cluster from. Options are:
+![](lightbulb.jpg) NOTE: Use optional `graph-type` parameter to indicate the output type to get the cluster from. Options are:
 
 * __coop__ - graph built by using coop data
 * __pdg__ - private device graph  
 
-### Get the cluster history of a single identity
-
-__Service endpoint__
-
 ```
-GET https://platform.adobe.io/data/core/identity/cluster/history
+GET https://platform.adobe.io/data/core/identity/cluster/history?xid=CJsDEAMaEAHmCKwPCQYNvzxD9JGDHZ8 HTTP/1.1
 ```
 
-__Example requests__
-
-Option 1: Supply the identity as namespace (`nsId`, by ID) and ID value (`id`). 
-```
-curl -X GET \
-  'https://platform.adobe.io/data/core/identity/cluster/history?nsId=411&id=WTCpVgAAAFq14FMF' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
-```
-
-Option 2: Supply the identity as namespace (`ns`, by name) and ID value (`id`).
-```
-curl -X GET \
-  'https://platform.adobe.io/data/core/identity/cluster/history?ns=AMO&id=WTCpVgAAAFq14FMF' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
-```
-
-Option 3: Supply the identity as XID (`xid`). For more on how to obtain an identity's XID, see the section of this document covering [getting the XID for an identity](#get-the-xid-for-an-identity).
-```
-curl -X GET \
-  'https://platform.adobe.io/data/core/identity/cluster/history?xid=CJsDEAMaEAHmCKwPCQYNvzxD9JGDHZ8' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
-```
-
-### Get the cluster history of a multiple identities
-
-Use the `POST` method as a batch equivalent of the `GET` method described above to return the cluster histories of multiple identities.
-
-> **NOTE:** Request should indicate no more than a maximum of 1000 identities. Requests exceeding 1000 identities will result in 400 status code.
-
-__Service endpoint__
+or
 
 ```
-POST https://platform.adobe.io/data/core/identity/clusters/history
+GET https://platform.adobe.io/data/core/identity/cluster/history?nsId=411&id=WTCpVgAAAFq14FMF HTTP/1.1
+```
+
+or
+
+```
+GET https://platform.adobe.io/data/core/identity/cluster/history?ns=AMO&id=WTCpVgAAAFq14FMF HTTP/1.1
+```
+
+OR, use POST as a batch equivalent of GET method. Returns the cluster history for each of the given XIDs.
+
+![](lightbulb.jpg) Caller should limit their requests to 1000 XIDs. Request exceeding 1000 XIDs will result in 400 status code.
+
+```
+POST https://platform.adobe.io/data/core/identity/clusters/history HTTP/1.1
 ```
 
 __Example body__
 
-Option 1: Supply a list of XIDs for which to retrieve cluster members.
+
 ```
 {
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
@@ -386,7 +334,8 @@ Option 1: Supply a list of XIDs for which to retrieve cluster members.
 }
 ```
 
-Option 2: Supply a list of XIDs and override the default `graph-type` value of "pdg".
+or
+
 ```
 {
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
@@ -394,22 +343,8 @@ Option 2: Supply a list of XIDs and override the default `graph-type` value of "
 }
 ```
 
-Option 3: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace code.
-```
-{
-    "compositeXids": [{
-            "ns": "AdCloud",
-            "id": "WRbM7AAAAJ_PBZHl"
-        },
-        {
-            "ns": "AddCloud",
-            "id": "WY-RNgAAArI4rGBo"
-        }
-    ]
-}
-```
+or
 
-Option 4: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace ID. This example demonstrates using this method while overwriting the default `graph-type` of "pdg".
 ```
 {
     "compositeXids": [{
@@ -425,7 +360,7 @@ Option 4: Supply a list of identities as composite IDs, where each names the ID 
 }
 ```
 
-__Example requests__
+__Example cURL requests__
 
 ```
 #Stub Response
@@ -474,7 +409,7 @@ curl -X POST \
 }' | json_pp
 ```
 
-> **Note:** Usage of `x-uis-cst-ctx: stub` header will return a stubbed response. This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed. We will keep our consumers advised to when this is no longer needed or supported.
+![](lightbulb.jpg) Usage of `x-uis-cst-ctx: stub` header will return a stubbed response. This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed. We will keep our consumers advised to when this is no longer needed or supported.
 
 __Example response__
 
@@ -522,97 +457,48 @@ __Example response__
 }
 ```
 
-> **Note:** The response will always have one entry for each XID provided in the request regardless of whether a request's XIDs belong to the same cluster or if one or more have any cluster associated at all.
+![](lightbulb.jpg) The response will always have one entry for each XID provided in the request regardless of whether a request's XIDs belong to the same cluster or if one or more have any cluster associated at all.
 
-## Get identity mappings
+## Mapping API
 
-A mapping is a collection of all identities in a cluster, for a specified namespace
-
-### Get an identity mapping for a single identity
-
-Given an identity, returns all related identities the same namespace as that represented by the identity in the request.
-
-__Service endpoint__
+Given an XID, returns all XID mappings in the requested Namespace (targetNs).
 
 ```
-GET https://platform.adobe.io/data/core/identity/mapping
+GET https://platform.adobe.io/data/core/identity/mapping?xid=CJsDEAMaEAHmCKwPCQYNvzxD9JGDHZ8 HTTP/1.1
 ```
 
-__Example requests__
-
-Option 1: Supply the identity as namespace (`nsId`, by ID) and ID value (`id`). 
-```
-curl -X GET \
-  'https://platform.adobe.io/data/core/identity/mapping?nsId=411&id=WTCpVgAAAFq14FMF' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
-```
-
-Option 2: Supply the identity as namespace (`ns`, by name) and ID value (`id`).
-```
-curl -X GET \
-  'https://platform.adobe.io/data/core/identity/mapping?ns=AMO&id=WTCpVgAAAFq14FMF' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
-```
-
-Option 3: Supply the identity as XID (`xid`). For more on how to obtain an identity's XID, see the section of this document covering [getting the XID for an identity](#get-the-xid-for-an-identity).
-```
-curl -X GET \
-  'https://platform.adobe.io/data/core/identity/mapping?xid=CJsDEAMaEAHmCKwPCQYNvzxD9JGDHZ8' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
-```
-
-### Get identity mappings for multiple identities
-
-Use the `POST` method as a batch equivalent of the `GET` method described above to retrieve mappings for multiple identities.
-
-> **NOTE:** Request should indicate no more than a maximum of 1000 identities. Requests exceeding 1000 identities will result in 400 status code.
-
-__Service endpoint__
+or
 
 ```
-POST https://platform.adobe.io/data/core/identity/mappings
+GET https://platform.adobe.io/data/core/identity/mapping?nsId=411&id=WTCpVgAAAFq14FMF HTTP/1.1
+```
+
+or
+
+```
+GET https://platform.adobe.io/data/core/identity/mapping?ns=AMO&id=WTCpVgAAAFq14FMF HTTP/1.1
+```
+
+Or, use POST as a batch equivalent of GET method. Returns mappings for multiple identities.
+
+![](lightbulb.jpg) Caller should limit their requests to 1000 XIDs. Request exceeding 1000 XIDs will result in 400 status code.
+
+```
+POST https://platform.adobe.io/data/core/identity/mappings HTTP/1.1
 ```
 
 __Example body__
 
-Option 1: Supply a list of XIDs for which to retrieve mappings.
 ```
 {
-    "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
+    "xids" : ["GesCQXX0CAESEE8wHpswUoLXXmrYy8KBTVgA"],
+    "targetNs": "0",
     "graph-type": "coop"
 }
 ```
 
-Option 2: Supply a list of XIDs and override the default `graph-type` value of "pdg".
-```
-{
-    "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
-    "graph-type": "coop"
-}
-```
+or
 
-Option 3: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace code.
-```
-{
-    "compositeXids": [{
-            "ns": "AdCloud",
-            "id": "WRbM7AAAAJ_PBZHl"
-        },
-        {
-            "ns": "AddCloud",
-            "id": "WY-RNgAAArI4rGBo"
-        }
-    ]
-}
-```
-
-Option 4: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace ID. This example demonstrates using this method while overwriting the default `graph-type` of "pdg".
 ```
 {
     "compositeXids": [{
@@ -624,7 +510,8 @@ Option 4: Supply a list of identities as composite IDs, where each names the ID 
             "id": "WY-RNgAAArI4rGBo"
         }
     ],
-    "graph-type": "coop"
+ "targetNs": "0",
+ "graph-type": "coop"
 }
 ```
 
@@ -668,7 +555,7 @@ curl -X POST \
 
 If no related identities were found with the provided input, an `HTTP 204` response code is returned with no content.
 
-> **Note:** Usage of `x-uis-cst-ctx: stub` header will return a stubbed response. This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed. We will keep our consumers advised to when this is no longer needed or supported.
+![](lightbulb.jpg) Usage of `x-uis-cst-ctx: stub` header will return a stubbed response. This is only a stop gap solution for our consumers to facilitate early integration development progress, while services are being completed. We will keep our consumers advised to when this is no longer needed or supported.
 
 __Example response__
 
@@ -707,148 +594,3 @@ __Example response__
 ```
 
 Where `lastAssociationTime` represents the timestamp when the input identity was last associated with this this identity and a `region` is a tuple of `regionId` and `lastAssociationTime` for where the identity was seen.
-
----
-
-## Listing available namespaces
-
-__Service endpoint__
-
-```
-GET https://platform.adobe.io/data/core/idnamespace/identities
-```
-
-__Example request__
-
-```
-curl -X GET \
-  'https://platform.adobe.io/data/core/idnamespace/identities' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
-```
-
-__Example response__
-
-```
-[
-  {
-        "updateTime": 1441122419000,
-        "code": "CORE",
-        "status": "ACTIVE",
-        "description": "CORE Namespace",
-        "id": 0,
-        "createTime": 1441122419000,
-        "idType": "COOKIE",
-        "name": "CORE",
-        "custom": false
-    },
-    {
-        "updateTime": 1495153678000,
-        "code": "ECID",
-        "status": "ACTIVE",
-        "description": "ECID Namespace",
-        "id": 4,
-        "createTime": 1495153678000,
-        "idType": "COOKIE",
-        "name": "ECID",
-        "custom": false
-    },
-    {
-        "updateTime": 1522783145000,
-        "code": "AdCloud",
-        "status": "ACTIVE",
-        "description": "Adobe AdCloud - ID Syncing Partner",
-        "id": 411,
-        "createTime": 1522783145000,
-        "idType": "COOKIE",
-        "name": "AdCloud",
-        "custom": false
-    },
-    ...
-]
-```
-
-## Creating a custom namespace
-
-When your goals require a Namespace besides what is available, you can create a custom Namespace which will be available only to your organization.
-
-For recommendations around creating custom Namespaces, see [the FAQ](../identity_services_architectural_overview/identity_services_faq.md).
-
-__Service endpoint__
-
-```
-POST https://platform.adobe.io/data/core/idnamespace/identities
-```
-
-__Example request to create a Namespace__
-
-```
-curl -X POST \
-  https://platform.adobe.io/data/core/idnamespace/identities \
-  -H 'authorization: CALLERS_IMS_SERVICE_TOKEN' \
-  -H 'content-type: application/json' \
-  -H 'x-api-key: CALLERS_API_KEY/CLIENT_ID' \
-  -H 'x-gw-ims-org-id: B3349894589501FE0A494034@AdobeOrg' \
-  -H 'x-uis-cst-ctx: stub' \
-  -d '{
-  "description": "Test Namespace Details",
-  "idType": "COOKIE",
-  "code": "TEST",
-  "name": "Test Namespace"
-}'
-```
-__Example body__
-
-
-__Example response__
-
-```
-{
-    "updateTime": 1525129290000,
-    "code": "TEST",
-    "status": "ACTIVE",
-    "description": "Test Namespace Details",
-    "id": 56011,
-    "createTime": 1525129290000,
-    "idType": "COOKIE",
-    "name": "Test Namespace",
-    "custom": false
-}
-```
-
----
-
-## Advanced Topics
-
-### Get the XID for an identity
-
-Identity data is typically provided as an ID string value and identity namespace in XDM data ingested, and when supplying an identity for use in an API call. When identities are persisted in Identity Service, an ID is generated and assigned to that identity, called the native XID. Platform APIs requiring identity data support using this more compact form for the aggregated ID and namespace. XID is a base64 encoded string.
-
-> **Note:** This format is mainly for internal Adobe use. Native XID as a singular value is more space efficient and is what is used internally within Platform solutions for storage and serialization. However it is not human readable, it is opaque, and requires a separate call to obtain it to use.
-
-Acquire the XID for a given ID value and namespace using the service described in this section.
-
-__Service endpoint__
-
-```
-GET https://platform.adobe.io/data/core/identity/identity?namespace={NAMESPACE}&id={ID_VALUE}
-```
-
-__Example request__
-
-```
-curl -X GET \
-  'https://platform.adobe.io/data/core/identity/identity?namespace=email&id=test@adobetest.com' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
-```
-
-__Example response__
-
-```
-{
-    "xid":"BVrqzwVuzbXrLfmnaG3rXrLf3KJg"
-}
-```
