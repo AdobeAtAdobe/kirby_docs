@@ -13,11 +13,12 @@ This developer guide provides steps to help you [start using the Schema Registry
 * [Use descriptors to describe schema metadata](#descriptors)
 * [Enable and view unions for Unified Profile Service](#unified-profile)
 
-The [Appendix](#appendix) to this document includes additional helpful resources for working with the Schema Registry, including:
+The [Appendix](#appendix) to this document includes additional helpful resources related to the Schema Registry, including:
 
 * A brief introduction to [XDM Compatibility Mode](#compatibility-mode)
 * How to [define XDM Field Types in the API](#defining-xdm-field-types-in-the-api) 
 * How to [map XDM Field Types to other Serialization Formats](#mapping-xdm-types-to-other-formats) (such as Parquet and Scala)
+* How to create an [ad-hoc schema](#ad-hoc-schema-workflow) for specific data ingestion workflows
 
 ## Getting started with the Schema Registry API
 
@@ -1770,12 +1771,13 @@ Now that you have learned how to make calls using the Schema Registry API, follo
 
 ## Appendix
 
-The following sections provide supplemental information that is helpful when working with the Schema Registry API:
+The following sections provide supplemental information related to the Schema Registry API:
 
 * [Understanding Compatibility Mode](#compatibility-mode)
 * [How to Define XDM Field Types in the API](#defining-xdm-field-types-in-the-api)
 * [Mapping XDM Types to other Serialization Formats, such as Parquet and Scala](#mapping-xdm-types-to-other-formats)
 * [Defining descriptors in the API](#defining-descriptors-in-the-api)
+* [Ad-hoc schema workflow](#ad-hoc-schema-workflow)
 
 ### Compatibility Mode
 
@@ -2291,3 +2293,255 @@ Signals that the "sourceProperty" of the "sourceSchema" is an Identity field as 
 </td>
 </tr>
 </table>
+
+### Ad-hoc schema workflow
+
+In specific circumstances, it may be necessary to create an XDM schema with fields that are namespaced for usage only by a single dataset. This is referred to as an 'ad-hoc' schema. The following steps outline how to create a new class using the `adhoc` behavior and then create an ad-hoc schema that implements that class.
+
+This type of schema is interpreted differently by the data ingestion process. Please refer to the [Batch Ingestion Developer Guide](../ingest_architectural_overview/batch_data_ingestion_developer_guide.md) section on [how to ingest CSV files](../ingest_architectural_overview/batch_data_ingestion_developer_guide.md#how-to-ingest-csv-files) for more information on how to create an input file that is intended for a dataset associated with an ad-hoc schema.
+
+### Create ad-hoc class
+
+Creating an ad-hoc schema requires first creating an ad-hoc class, based on the `adhoc` behavior.
+
+#### API format
+
+```
+POST /tenant/classes
+```
+
+#### Request
+
+The request body references (`$ref`) the behavior `https://ns.adobe.com/xdm/data/adhoc` and defines an object named `_adhoc` which acts as the parent for all custom fields as shown in the sample request:
+
+```
+curl -X POST \
+  https://platform.adobe.io/data/foundation/schemaregistry/tenant/classes \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '{
+        "title":"New Class",
+        "description": "New class description",
+        "type":"object",
+        "allOf": [
+          {"$ref":"https://ns.adobe.com/xdm/data/adhoc"},
+          {
+            "properties": {
+              "_adhoc": {
+                "type":"object",
+                "properties": {
+                  "field1": {
+                    "type":"string"
+                  },
+                  "field2": {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }'
+```
+
+#### Response
+
+The response replaces `_adhoc` with a GUID that is a system-generated, read-only unique identifier for the newly defined class. The `meta:datasetNamespace` attribute is also generated automatically and included in the response.
+
+```
+{
+    "$id": "https://ns.adobe.com/{TENANT_ID}/classes/6395cbd58812a6d64c4e5344f7b9120f",
+    "meta:altId": "_{TENANT_ID}.classes.6395cbd58812a6d64c4e5344f7b9120f",
+    "meta:resourceType": "classes",
+    "version": "1.0",
+    "title": "New Class",
+    "description": "New class description",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "https://ns.adobe.com/xdm/data/adhoc"
+        },
+        {
+            "properties": {
+                "_6395cbd58812a6d64c4e5344f7b9120f": {
+                    "type": "object",
+                    "properties": {
+                        "field1": {
+                            "type": "string",
+                            "meta:xdmType": "string"
+                        },
+                        "field2": {
+                            "type": "string",
+                            "meta:xdmType": "string"
+                        }
+                    },
+                    "meta:xdmType": "object"
+                }
+            },
+            "type": "object",
+            "meta:xdmType": "object"
+        }
+    ],
+    "meta:abstract": true,
+    "meta:extensible": true,
+    "meta:extends": [
+        "https://ns.adobe.com/xdm/data/adhoc"
+    ],
+    "meta:containerId": "tenant",
+    "meta:datasetNamespace": "_6395cbd58812a6d64c4e5344f7b9120f",
+    "imsOrg": "{IMS_ORG}",
+    "meta:xdmType": "object",
+    "meta:registryMetadata": {
+        "repo:createdDate": 1557527784822,
+        "repo:lastModifiedDate": 1557527784822,
+        "xdm:createdClientId": "{CREATED_CLIENT}",
+        "xdm:lastModifiedClientId": "{MODIFIED_CLIENT}",
+        "eTag": "Jggrlh4PQdZUvDUhQHXKx38iTQo="
+    }
+}
+```
+
+### Create ad-hoc schema
+
+Once you have created an ad-hoc class based on the `adhoc` behavior, you can create a schema that implements this class.
+
+#### API format
+
+```
+POST /tenant/schemas
+```
+
+#### Request
+
+The request body references (`$ref`) the `$id` of the newly created ad-hoc class.
+
+```
+curl -X POST \
+  https://platform.adobe.io/data/foundation/schemaregistry/tenant/schemas \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '{
+        "title":"New Schema",
+        "description": "New schema description.",
+        "type":"object",
+        "allOf": [
+          {"$ref":"https://ns.adobe.com/{TENANT_ID}/classes/6395cbd58812a6d64c4e5344f7b9120f"}
+        ]
+      }'
+```
+
+#### Response
+
+The response includes the system-generated, read-only `$id` of the newly created schema.
+
+```
+{
+    "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/26f6833e55db1dd8308aa07a64f2042d",
+    "meta:altId": "_{TENANT_ID}.schemas.26f6833e55db1dd8308aa07a64f2042d",
+    "meta:resourceType": "schemas",
+    "version": "1.0",
+    "title": "New Schema",
+    "description": "New schema description.",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "https://ns.adobe.com/{TENANT_ID}/classes/6395cbd58812a6d64c4e5344f7b9120f"
+        }
+    ],
+    "meta:datasetNamespace": "_6395cbd58812a6d64c4e5344f7b9120f",
+    "meta:class": "https://ns.adobe.com/{TENANT_ID}/classes/6395cbd58812a6d64c4e5344f7b9120f",
+    "meta:abstract": false,
+    "meta:extensible": false,
+    "meta:extends": [
+        "https://ns.adobe.com/{TENANT_ID}/classes/6395cbd58812a6d64c4e5344f7b9120f",
+        "https://ns.adobe.com/xdm/data/adhoc"
+    ],
+    "meta:containerId": "tenant",
+    "imsOrg": "{IMS_ORG}",
+    "meta:xdmType": "object",
+    "meta:registryMetadata": {
+        "repo:createdDate": 1557528570542,
+        "repo:lastModifiedDate": 1557528570542,
+        "xdm:createdClientId": "{CREATED_CLIENT}",
+        "xdm:lastModifiedClientId": "{MODIFIED_CLIENT}",
+        "eTag": "Jggrlh4PQdZUvDUhQHXKx38iTQo="
+    }
+}
+```
+
+### View ad-hoc schema
+
+Once the ad-hoc schema has been created, you can use a lookup (GET) request to view the schema in its expanded form. This is done by using the appropriate Accept header in the GET request.
+
+#### API format
+
+```
+GET /tenant/schemas/{meta:altId or url encoded $id of the schema}
+```
+
+#### Request
+
+Using the Accept header `application/vnd.adobe.xed-full+json; version=1` returns the expanded form of the schema. It is important to remember that all lookup requests require the major version be included.
+
+```
+curl -X GET \
+  https://platform.adobe.io/data/foundation/schemaregistry/tenant/schemas/_{TENANT_ID}.schemas.26f6833e55db1dd8308aa07a64f2042d \
+  -H 'Accept: application/vnd.adobe.xed-full+json; version=1' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+```
+
+#### Response
+
+The response object shows the details of the schema, including all fields nested under `properties`.
+
+```
+{
+    "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/26f6833e55db1dd8308aa07a64f2042d",
+    "meta:altId": "_{TENANT_ID}.schemas.26f6833e55db1dd8308aa07a64f2042d",
+    "meta:resourceType": "schemas",
+    "version": "1.0",
+    "title": "New Schema",
+    "description": "New schema description.",
+    "type": "object",
+    "meta:datasetNamespace": "_6395cbd58812a6d64c4e5344f7b9120f",
+    "meta:class": "https://ns.adobe.com/{TENANT_ID}/classes/6395cbd58812a6d64c4e5344f7b9120f",
+    "meta:abstract": false,
+    "meta:extensible": false,
+    "meta:extends": [
+        "https://ns.adobe.com/{TENANT_ID}/classes/6395cbd58812a6d64c4e5344f7b9120f",
+        "https://ns.adobe.com/xdm/data/adhoc"
+    ],
+    "meta:containerId": "tenant",
+    "imsOrg": "{IMS_ORG}",
+    "meta:xdmType": "object",
+    "properties": {
+        "_6395cbd58812a6d64c4e5344f7b9120f": {
+            "type": "object",
+            "meta:xdmType": "object",
+            "properties": {
+                "field1": {
+                    "type": "string",
+                    "meta:xdmType": "string"
+                },
+                "field2": {
+                    "type": "string",
+                    "meta:xdmType": "string"
+                }
+            }
+        }
+    },
+    "meta:registryMetadata": {
+        "repo:createdDate": 1557528570542,
+        "repo:lastModifiedDate": 1557528570542,
+        "xdm:createdClientId": "{CREATED_CLIENT}",
+        "xdm:lastModifiedClientId": "{MODIFIED_CLIENT}",
+        "eTag": "bTogM1ON2LO/F7rlcc1iOWmNVy0="
+    }
+}
+```
