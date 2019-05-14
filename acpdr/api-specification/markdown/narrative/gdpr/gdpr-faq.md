@@ -46,14 +46,14 @@ You can learn the status of your GDPR request or job by using the [GDPR API’s 
 
 > **Note:** As of September 14, 2018, we are turning off email notifications for completion or erroring of your GDPR requests. Other GDPR functionality is not affected by this change.
 
-The following is a sample API GET request:
+The following is a sample response from an API GET request:
 
 ```json
 {
     "jobs": [
         {
             "jobId": "XXXXXXX-XXXXXX-XXXXXXX-XXXX-XXXXXXXXXXX",
-            "requestId": XXXXXX,
+            "requestId": "XXXXXX",
             "lastUpdatedOn": "09/11/2018 2:02 AM",
             "customer": {
                 "user": {
