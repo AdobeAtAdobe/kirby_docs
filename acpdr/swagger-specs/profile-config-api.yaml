@@ -14,8 +14,6 @@ info:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core/ups/config
       * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
-      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
-      to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
 
   version: 18.10.1
   title: Unified Profile Configuration API
@@ -23,413 +21,424 @@ info:
 host: platform.adobe.io
 basePath: /data/core/ups/config
 tags:
-  - name: Merge policies
+  - name: mergePolicies
+  - name: health
 paths:
   /mergePolicies:
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - Merge policies
-      summary: Get a list of merge policies
+        - mergePolicies
+      summary: Returns a list of Profile Merge Policies.
       description: ''
-      operationId: getMany
+      operationId: getMergePoliciesRoute
       produces:
         - application/json
       parameters:
-        - name: x-request-id
+        - name: x-api-key
           in: header
-          description: Request Id
-          required: false
+          description: API Key
+          required: true
           type: string
-          x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+          x-example: "<replace with your api key>"
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
+        - name: "x-gw-ims-org-id"
+          in: "header"
+          description: "IMS Organization ID"
+          required: true
+          type: "string"
+          x-example: "1BD@Adobe.com"
         - name: start
           in: query
-          description: Page offset - As per created time of resource
+          description: Page Offset - As per created Time of resource
           required: false
-          type: string
-          x-example: K1JJRDpFaWc5QUpZWHY1c2JBQUFBQUFBQUFBPT0jUlQ6MSNUUkM6MiNGUEM6QWdFQUFBQldBQkVBQVBnaFFQLzM4VUIvL2tKQi8rLysvMUpBLzMrMi8wRkFmLzR4UUwvL0VrRC85em4zRTBEcmNmYi92Kzh4UUwvL05rQVgzRi8rMStqNS80WHQwN2NhUUVzQUFBUUFleGpLQ1JnVXRVcEFCQUFFQVBBRA==
+          type: integer
+          format: int64
+          x-example: 109103839
         - name: limit
           in: query
           description: Page Size
           required: false
           type: integer
           x-example: 10
-        - name: orderBy
+        - name: order
           in: query
-          description: Model attribute which will be using for ordering
+          description: Page Order - Asc/Desc
           required: false
           type: string
-          x-example: value
-        - name: schema.name
+          x-example: Asc
+        - name: id
           in: query
-          description: Schema class ID
+          description: Id of the merge policy
           required: false
           type: string
-          x-example: _xdm.context.profile
-        - name: default
-          in: query
-          description: default flag
-          required: false
-          type: boolean
-          x-example: true
+          x-example: 0e530929-0054-45b9-ac35-97140863db54
       responses:
         '200':
-          description: List of merge policies returned
+          description: List of Profile mergepolicy returned
           schema:
             $ref: '#/definitions/MergePoliciesResponse'
+        '403':
+          description: Forbidden
         '500':
-          description: Internal Server Error
+          description: ''
         '503':
           description: Service Unavailable
     post:
       tags:
-        - Merge policies
-      summary: Post a MergePolicy
+        - mergePolicies
+      summary: Creates a new Profile MergePolicy
       description: ''
-      operationId: post
+      operationId: postMergePolicyRoute
       produces:
         - application/json
       parameters:
-        - name: x-profile-instance-id
+        - name: x-api-key
           in: header
-          description: Profile Instance ID
+          description: API Key
           required: true
           type: string
-          x-example: ups
-        - name: x-request-id
+          x-example: "<replace with your api key>"
+        - name: Authorization
           in: header
-          description: Request Id
-          required: false
+          description: Authorization token
+          required: true
           type: string
-          x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+          x-example: "Bearer <replace with your token>"
+        - name: "x-gw-ims-org-id"
+          in: "header"
+          description: "IMS Organization ID"
+          required: true
+          type: "string"
+          x-example: "1BD@Adobe.com"
         - in: body
           name: body
-          description: merge policy object
+          description: ''
           required: true
           schema:
-            $ref: '#/definitions/MergePolicy'
+            $ref: '#/definitions/MergePolicyEntityRequest'
       responses:
         '200':
-          description: Merge Policy successfully created
+          description: Profile MergePolicy successfully Posted
           schema:
-            $ref: '#/definitions/MergePolicy'
+            $ref: '#/definitions/MergePolicyEntity'
+          headers:
+            X-Location:
+              type: string
+              description: HRef to the Profile MergePolicy
         '400':
-          description: Please double check your post body
+          description: ''
         '403':
           description: Forbidden
-        '429':
-          description: Request rate too large!
         '500':
-          description: Internal Server Error
-        '503':
-          description: Service Unavailable
-  '/mergePolicies/{mergePolicyId}':
-    parameters:
-      - name: mergePolicyId
-        in: path
-        description: MergePolicy Id
-        required: true
-        type: string
-        x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-    get:
-      tags:
-        - Merge policies
-      summary: Return the Merge Policy by id
-      description: ''
-      operationId: getById
-      produces:
-        - application/json
-      parameters:
-        - name: x-request-id
-          in: header
-          description: Request Id
-          required: false
-          type: string
-          x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
-
-      responses:
-        '200':
-          description: MergePolicy successfully returned
-          schema:
-            $ref: '#/definitions/MergePolicy'
-        '403':
-          description: Forbidden
-        '404':
-          description: MergePolicy not found
-        '503':
-          description: Service Unavailable
-    put:
-      tags:
-      - Merge policies
-      summary: Overwrite a merge policy
-      description: ''
-      operationId: put
-      produces:
-      - application/json
-      parameters:
-      - name: x-profile-instance-id
-        in: header
-        description: Profile Instance ID
-        required: true
-        type: string
-        x-example: ups
-      - name: x-request-id
-        in: header
-        description: Request Id
-        required: false
-        type: string
-        x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
-      - in: body
-        name: body
-        description: merge policy object
-        required: true
-        schema:
-          $ref: '#/definitions/MergePolicy'
-      responses:
-        '200':
-          description: Merge Policy successfully updated
-          schema:
-            $ref: '#/definitions/MergePolicy'
-        '400':
-          description: Please double check your post body
-        '403':
-          description: Forbidden
-        '429':
-          description: Request rate too large!
-        '500':
-          description: Internal Server Error
+          description: ''
         '503':
           description: Service Unavailable
     patch:
       tags:
-      - Merge policies
-      summary: Update a merge policy
+        - mergePolicies
+      summary: 'Patches a merge policy when provided with merge policy id as query param. Primary use is to make a merge policy default for a (schema,imsOrg) pair'
       description: ''
-      operationId: patch
+      operationId: patchMergePoliciesByIdRoute
       produces:
-      - application/json
+        - application/json
       parameters:
-      - name: x-profile-instance-id
-        in: header
-        description: Profile Instance ID
-        required: true
-        type: string
-        x-example: ups
-      - name: x-request-id
-        in: header
-        description: Request Id
-        required: false
-        type: string
-        x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
-      - in: body
-        name: body
-        description: a list of patch operation
-        required: true
-        schema:
-          type: array
-          items:
-            $ref: '#/definitions/PatchOperation'
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: "<replace with your api key>"
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
+        - name: "x-gw-ims-org-id"
+          in: "header"
+          description: "IMS Organization ID"
+          required: true
+          type: "string"
+          x-example: "1BD@Adobe.com"
+        - name: id
+          in: path
+          description: Id of the merge policy
+          required: true
+          type: string
+          x-example: 0e530929-0054-45b9-ac35-97140863db54
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/MergePolicyEntityUpdate'
       responses:
         '200':
-          description: Merge Policy successfully updated
-        '400':
-          description: Please double check your post body
+          description: Profile MergePolicy successfully Patched
+          schema:
+            $ref: '#/definitions/MergePolicyEntity'
         '403':
           description: Forbidden
-        '429':
-          description: Request rate too large!
+        '404':
+          description: Profile MergePolicy not found
         '500':
-          description: Internal Server Error
+          description: ''
+        '503':
+          description: Service Unavailable
+  '/mergePolicies/{internalId}':
+    get:
+      tags:
+        - mergePolicies
+      summary: Returns the Profile MergePolicy
+      description: ''
+      operationId: getMergePolicyRoute
+      produces:
+        - application/json
+      parameters:
+        - name: internalId
+          in: path
+          description: ID of the Merge Policy
+          required: true
+          type: string
+          x-example: "MDoyOjRhNDVlODUzLWFjOTEtNGJiNy1hNDI2LTE1MDkzN2I2YWY1Yzo0Mg=="
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: "<replace with your api key>"
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
+        - name: "x-gw-ims-org-id"
+          in: "header"
+          description: "IMS Organization ID"
+          required: true
+          type: "string"
+          x-example: "1BD@Adobe.com"
+      responses:
+        '200':
+          description: Profile MergePolicy successfully Returned
+          schema:
+            $ref: '#/definitions/MergePolicyEntity'
+        '403':
+          description: Forbidden
+        '404':
+          description: Profile MergePolicy not found
+        '500':
+          description: ''
         '503':
           description: Service Unavailable
     delete:
       tags:
-        - Merge policies
-      summary: Delete a merge policy by id
+        - mergePolicies
+      summary: Deletes the mergepolicy given it's internal id
       description: ''
-      operationId: delete
+      operationId: deleteMergePolicyRoute
       produces:
         - application/json
       parameters:
-        - name: x-request-id
-          in: header
-          description: Request Id
-          required: false
+        - name: internalId
+          in: path
+          description: ID of the Merge Policy
+          required: true
           type: string
-          x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+          x-example: "MDoyOjRhNDVlODUzLWFjOTEtNGJiNy1hNDI2LTE1MDkzN2I2YWY1Yzo0Mg=="
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: "<replace with your api key>"
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
+        - name: "x-gw-ims-org-id"
+          in: "header"
+          description: "IMS Organization ID"
+          required: true
+          type: "string"
+          x-example: "1BD@Adobe.com"
       responses:
         '200':
-          description: Merge Policy deleted successfully
+          description: Profile MergePolicy deleted successfully
+          schema:
+            $ref: '#/definitions/MessageResponse'
+        '403':
+          description: Forbidden
+        '500':
+          description: ''
+        '503':
+          description: Service Unavailable
+    patch:
+      tags:
+        - mergePolicies
+      summary: 'Patches a merge policy given it''s internal id. Primary use is to make a merge policy default for a (schema,imsOrg) pair.'
+      description: ''
+      operationId: patchMergePoliciesByInternalIdRoute
+      produces:
+        - application/json
+      parameters:
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: "<replace with your api key>"
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
+        - name: "x-gw-ims-org-id"
+          in: "header"
+          description: "IMS Organization ID"
+          required: true
+          type: "string"
+          x-example: "1BD@Adobe.com"
+        - name: internalId
+          in: path
+          description: MergePolicy Id
+          required: true
+          type: string
+          x-example: '12345678'
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/MergePolicyEntityUpdate'
+      responses:
+        '200':
+          description: Profile MergePolicy successfully Patched
+          schema:
+            $ref: '#/definitions/MergePolicyEntity'
         '403':
           description: Forbidden
         '404':
-          description: MergePolicy not found
+          description: Profile MergePolicy not found
+        '500':
+          description: ''
         '503':
           description: Service Unavailable
 definitions:
+  MergePolicyEntity:
+    type: object
+    required:
+      - attributeMerge
+      - creationTime
+      - current
+      - default
+      - id
+      - identityGraph
+      - imsOrgId
+      - schemaId
+      - schemaName
+      - updateTime
+      - version
+    properties:
+      internalId:
+        type: number
+      imsOrgId:
+        type: string
+      schemaId:
+        type: string
+      schemaName:
+        type: string
+      id:
+        type: string
+      identityGraph:
+        type: string
+      attributeMerge:
+        type: string
+      default:
+        type: boolean
+      version:
+        type: integer
+        format: int32
+      current:
+        type: boolean
+      creationTime:
+        type: integer
+        format: int64
+      updateTime:
+        type: integer
+        format: int64
+  MergePolicyEntityRequest:
+    type: object
+    required:
+      - concatenatedMssg$default$2
+      - default
+    properties:
+      imsOrgId:
+        type: string
+      schema:
+        type: object
+        additionalProperties:
+          type: number
+      id:
+        type: string
+      identityGraph:
+        type: object
+        additionalProperties:
+          type: number
+      attributeMerge:
+        type: object
+        additionalProperties:
+          type: number
+      default:
+        type: boolean
+      concatenatedMssg$default$2:
+        type: string
   MergePoliciesResponse:
     type: object
     required:
-      - _page
-      - children
+      - mergePolicies
     properties:
-      _page:
-        $ref: '#/definitions/Page'
-      children:
+      mergePolicies:
         type: array
         items:
-          $ref: '#/definitions/MergePolicy'
-  Page:
+          $ref: '#/definitions/MergePolicyEntity'
+  MergePolicyEntityUpdate:
     type: object
-    required:
-      - count
     properties:
-      count:
-        type: number
-        example: 100
-        description: number of merge policies per page
-      next:
-        type: string
-        example: K1JJRDpFaWc5QUwyZFgtMEpBQUFBQUFBQUFBPT0jUlQ6MSNUUkM6MiNGUEM6QWdFQUFBQVFBQWZBQUg0Ly9yL25PcmpmZndEZUR3QT0=
-        description: page offset
-  MergePolicy:
-    type: object
-    required:
-      - schema
-      - identityGraph
-      - attributeMerge
-    properties:
-      id:
-        type: string
-        example: ups-default
-        description: macro id
-      name:
-        type: string
-        example: 5c48b93a53214114cf85e378
-        description: merge policy name
-      imsOrgId:
-        type: string
-        example: 1BD6382559DF0C130A49422D@AdobeOrg
-        description: ims org id
-      schema:
-        $ref: '#/definitions/SchemaClass'
-      version:
-        type: integer
-        example: 1
-        description: merge policy version
-      default:
-        type: boolean
-        example: false
-        description: default flag
       identityGraph:
-        $ref: '#/definitions/IdentityGraph'
+        type: object
+        additionalProperties:
+          type: number
       attributeMerge:
-        $ref: '#/definitions/AttributeMerge'
-      updateEpoch:
-        type: integer
-        example: 1234567890
-        description: update timestamp
-    description: 'merge policy'
-  SchemaClass:
+        type: object
+        additionalProperties:
+          type: number
+      default:
+        type: number
+      version:
+        type: number
+      current:
+        type: number
+      creationTime:
+        type: number
+      updateTime:
+        type: number
+  MessageResponse:
     type: object
     required:
-      - name
+      - message
+      - status
     properties:
-      name:
+      status:
+        type: boolean
+      message:
         type: string
-        example: _xdm.context.profile
-        description: schema class id
-    description: schema class
-  IdentityGraph:
-    type: object
-    required:
-    - type
-    properties:
-      type:
-        type: string
-        example: coop
-        description: identity graph type
-        enum:
-        - none
-        - pdg
-        - coop
-        - auto
-        - psr
-    description: identity graph
-  AttributeMerge:
-    type: object
-    required:
-    - type
-    properties:
-      type:
-        type: string
-        example: timestampOrdered
-        description: attribute merge type
-        enum:
-        - timestampOrdered
-        - dataSetPrecedence
-      order:
-        type: array
-        items:
-          type: string
-    description: attribute merge
-  PatchOperation:
-    type: object
-    required:
-    - op
-    - path
-    - value
-    properties:
-      op:
-        type: string
-        example: add
-        description: op
-        enum:
-        - add
-      path:
-        type: string
-        example: /identityGraph.type
-        description: path of the attribute need to be updated
-      value:
-        type: string
-        example: coop
-        description: the new value used to update the specified attribute
-    description: Patch operation
-parameters:
-  authorization:
-    name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
-    For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
-    required: true
-    type: string
-    in: header
-  x-gw-ims-org-id:
-    name: x-gw-ims-org-id
-    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
-    required: true
-    type: string
-    in: header
-  x-api-key:
-    name: x-api-key
-    description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
-    required: true
-    type: string
-    in: header
-  json-header:
-    name: Content-Type
-    description: 'application/json'
-    required: true
-    type: string
-    in: header    
