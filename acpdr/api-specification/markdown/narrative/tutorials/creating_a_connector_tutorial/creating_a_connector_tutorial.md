@@ -9,9 +9,8 @@ Each Adobe Experience Platform connector has its own guide. For specific informa
 
 **CRM connectors**
 
-* [Microsoft Dynamics Connector](ACP_dynamic_connector_tutorial.md) - API tutorial
-* [Salesforce Connector](ACP_salesforce_connector_tutorial.md) - API tutorial
-* [Data Connector UI Tutorial](using_data_connector_ui_tutorial.md)
+* [Microsoft Dynamics Connector](ACP_dynamic_connector_tutorial.md) 
+* [Salesforce Connector](ACP_salesforce_connector_tutorial.md) 
 
 All connector types use the APIs in the connector tutorials, allowing you to ingest data, structure the data, and use the ingested data across the platform. See [Overview for Adobe Experience Platform Connectors](../../technical_overview/acp_connectors_overview/acp-connectors-overview.md) for additional information.
 
