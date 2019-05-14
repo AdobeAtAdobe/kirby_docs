@@ -8,7 +8,7 @@ author: crhoades
 
 ---
 
-# Adobe Experience Cloud release notes
+# Adobe Experience Platform release notes
 
 New features and fixes in Adobe Experience Platform.
 
@@ -42,7 +42,7 @@ For product documentation, see [Analytics Help Home](https://marketing.adobe.com
 
 ### Data Ingestion 
 
-Adobe Experience Platform provides rich set of features for customers to ingest any type and any latency of data. Customers can ingest using Batch or Streaming API, using Adobe built connector, using data integration partners or UI.
+Adobe Experience Platform provides rich set of features for customers to ingest any type and any latency of data. Customers can ingest using Batch or Streaming API, using Adobe built connectors, using data integration partners or UI.
 
 ### Batch
 
@@ -198,12 +198,12 @@ New features and fixes in Profile, Identity, and Segmentation:
 
 ### Profile
 
-Unified Profile is a generic lookup entity store that merges data across various enterprise data assets and provides access to that data in the form of unified real-time consumer profiles, and related time series events, called the union view. The unified view helps to inform and empower actions across channels, Platform, and Adobe solution integrations. Furthermore, Unified Profile is used to power machine learning & Sensei. Unified Profile APIs can also be used directly to enrich the functionality of third-party solutions, CRMs, and proprietary solutions.
+Profile Service is a generic lookup entity store that merges data across various enterprise data assets and provides access to that data in the form of unified real-time consumer profiles, and related time series events, called the union view. The unified view helps to inform and empower actions across channels, Platform, and Adobe solution integrations. Furthermore, Unified Profile is used to power machine learning & Sensei. Profile APIs can also be used directly to enrich the functionality of third-party solutions, CRMs, and proprietary solutions.
 
 | Feature    | Description  |
 | -----------| ---------- |
-| Real-time customer profile  | Unified Profile ingests data delivered in real time via data inlets, merges it with existing data in the profile store, and creates or modifies the unified view at near real time. This data, evolving in time with your customers' experience, can be used to make personalized recommendations. |
-| Union view | One of the key features of Unified Profile is the ability to unify multi-channel data. Unified Profile can supply you with a merged view of the individuals in your consumer base, across datasets and for linked identities, referred to as the union view. |
+| Real-time customer profile  | Profile ingests data delivered in real time via data inlets, merges it with existing data in the profile store, and creates or modifies the unified view at near real time. This data, evolving in time with your customers' experience, can be used to make personalized recommendations. |
+| Union view | One of the key features of Profile is the ability to unify multi-channel data. Profile can supply you with a merged view of the individuals in your consumer base, across datasets and for linked identities, referred to as the union view. |
 | Edge | Edge Service serves as a framework for low-latency data collection, pluggable computing and rapid data activation across all addressable channels. Edge Service facilitates for real-time personalization. |
 
 **Known issues**
