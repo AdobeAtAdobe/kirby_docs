@@ -1,18 +1,17 @@
 ---
 
 title: Adobe Experience Platform Release Notes
-description: Experience Platform v1 release notes May 15, 2019
+description: Experience Platform v1.0 release notes May 15, 2019
 doc-type: release notes
 last-update: May 15, 2019
 author: crhoades
 
 ---
 
-# Adobe Experience Platform release notes
+# Adobe Experience Platform release notes 
+## v1.0, May 15, 2019
 
 New features in Adobe Experience Platform.
-
-May 2019
 
 * [Data Ingestion and Management](#data-ingestion-and-management)
 * [Experience Data Model (XDM) and XDM System](#experience-data-model-xdm-and-xdm-system)

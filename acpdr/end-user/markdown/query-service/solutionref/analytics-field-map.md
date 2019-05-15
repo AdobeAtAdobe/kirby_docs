@@ -30,7 +30,6 @@ These are fields that are mapped directly as is to XDM from Analytics.
 | m_geo_region | placeContext.geo.stateProvince | string | mid | {} | - |
 | m_geo_zip | placeContext.geo.postalCode | string | mid | {} | - |
 | m_keywords | search.keywords | string | mid | {} | - |
-| m_mobile_id | device.typeID | string | mid | {} | - |
 | m_os | _experience.analytics.environment.operatingSystemID | integer | mid | {} | - |
 | m_page_url | web.webPageDetails.URL | string | mid | {} | - |
 | m_pagename_no_url | web.webPageDetails.name | string | mid | {} | - |
@@ -66,7 +65,6 @@ These are fields that are mapped directly as is to XDM from Analytics.
 | geo_zip | placeContext.geo.postalCode | string | post | {} | - |
 | ipv6 | environment.ipV6 | string | mid,post | {} | - |
 | j_jscript | environment.browserDetails.javaScriptVersion | string | mid,post | {} | - |
-| mobile_id | device.typeID | string | post | {} | - |
 | os | _experience.analytics.environment.operatingSystemID | integer | post | {} | - |
 | search_page_num | search.pageDepth | integer | post | {} | - |
 | user_agent | environment.browserDetails.userAgent | string | mid,post | {} | - |
@@ -76,7 +74,7 @@ These are fields that are mapped directly as is to XDM from Analytics.
 | visit_referrer | _experience.analytics.session.web.webReferrer.URL | string | post | {} | - |
 | visit_search_page_num | _experience.analytics.session.search.pageDepth | integer | post | {} | - |
 | mobileappid | application.name | string | mid,post | {} | - |
-| mobiledevice | device.typeID | string | mid,post | {} | - |
+| mobiledevice | device.model | string | mid,post | {} | - |
 | pointofinterest | placeContext.POIinteraction.POIDetail.name | string | mid,post | {} | - |
 | pointofinterestdistance | placeContext.POIinteraction.POIDetail.geoInteractionDetails.distanceToCenter | number | mid,post | {} | - |
 | mobileplaceaccuracy | placeContext.POIinteraction.POIDetail.geoInteractionDetails.deviceGeoAccuracy | number | mid,post | {} | - |
@@ -177,7 +175,6 @@ These XDM paths require logic beyond a direct copy from Analytics.
 | m_java_enabled | environment.browserDetails.javaEnabled | boolean | mid | {} | - |
 | m_latitude | placeContext.geo._schema.latitude | number | mid | {} | - |
 | m_longitude | placeContext.geo._schema.longitude | number | mid | {} | - |
-| m_mobile_id | device.typeIDService | string | mid | {} | - |
 | m_page_event_var1 | web.webInteraction.URL | string | mid | {} | - |
 | m_page_event_var2 | web.webInteraction.name | string | mid | {} | - |
 | m_page_type | web.webPageDetails.isErrorPage | boolean | mid | {} | - |
@@ -233,7 +230,6 @@ These XDM paths require logic beyond a direct copy from Analytics.
 | mcvisid_high | endUserIDs._experience.mcid.primary | boolean | mid,post | {} | - |
 | mcvisid_high | endUserIDs._experience.mcid.namespace.code | string | mid,post | {} | - |
 | mcvisid_low | identityMap | object | mid,post | {} | - |
-| mobile_id | device.typeIDService | string | post | {} | - |
 | paid_search | search.isPaid | boolean | post | {} | - |
 | ref_type | web.webReferrer.type | string | post | {} | - |
 | sdid_high + sdid_low | _experience.target.supplementalDataID | string | mid,post | {} | - |
