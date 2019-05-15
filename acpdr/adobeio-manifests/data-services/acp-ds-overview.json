@@ -45,7 +45,7 @@
 		}
 	],
 	"app2app_map": {
-		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html", 
+		"api-specification/markdown/narrative/tutorials/":"/apis/cloudplatform/dataservices/tutorials/alltutorials.html", 
 		"acpdr/swagger-specs/":"/apis/cloudplatform/dataservices/api-reference.html",
 		"api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html",
 		"api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
