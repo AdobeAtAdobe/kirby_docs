@@ -1,18 +1,18 @@
 # Microsoft Dynamics Connector for Adobe Experience Platform
 
-The Microsoft Dynamics Connector for Adobe Experience Platform provides an API and wizard to ingest your Microsoft Dynamics CRM data onto Adobe Experience Platform, allowing you to:   
+The Microsoft Dynamics Connector for Adobe Experience Platform provides an API and wizard to ingest your Microsoft Dynamics CRM data onto Adobe Experience Platform, allowing you to:
 
-* Authenticate to your Microsoft Dynamics account. 
+* Authenticate to your Microsoft Dynamics account.
 * Select one or more datasets from a list of available datasets.
 * Preview a sample of your data for accuracy.
 * Identify each dataset as a lookup file, event, or record.
 * Set a schedule and frequency for ingesting data.
 * Save the connector and modify it as needed.
 
-This article provides steps to set up and configure the Microsoft Dynamics connector through API calls.  
+This article provides steps to set up and configure the Microsoft Dynamics connector through API calls. For further details you can refer to - [Swagger Documentation](../../../../../swagger-specs/partner-connectors-api.yaml))
 
 ## Setting up the Microsoft Dynamics Connector
-Set up an account to access APIs and provide credentials to create a connector: 
+Set up an account to access APIs and provide credentials to create a connector:
 
 <!---### Prerequisites
 * Register the schema of the incoming file.
@@ -32,147 +32,113 @@ After you set up authorization for APIs, the following values are returned:
 
 You will need the following credentials:
 
-* `{MS Dynamic_USER_NAME}`: Your MS Dynamic CRM user name
-* `{MS Dynamic_PASSWORD}`: Your MS Dynamic CRM password
-* `{MS Dynamic_SECURITY_TOKEN}`: Your MS Dynamic security token. The token can be accessed following these steps:  
-  1. Go to *https://developer.MS Dynamic.com*.
-  2. Log in using your MS Dynamic CRM credentials.
-  3. Click on top-right user avatar and select *Settings*.
-  4. In the *Personal Information*, select *Reset My Security Token*.
-     You will receive a new security token via email.
-
-After you are authorized to make API calls from the Adobe I/O Gateway and your Microsoft Dynamics credentials, generate a dataset from the Microsoft Dynamics objects. 
+* `{MS-Dynamics_USER_NAME}`: Your MS Dynamics CRM user name
+* `{MS-Dynamics_PASSWORD}`: Your MS Dynamics CRM password
+* `{MS-Dynamics_ORGANIZATION_URI}`: Your MS Dynamics Organization URI
+* `{MS-Dynamics_ORGANIZATION_NAME}`: Your MS Dynamics Organization Name
+* `{MS-Dynamics_HOST_NAME}`: Your MS Dynamics Host Name for dynamics-on premise
+After you are authorized to make API calls from the Adobe I/O Gateway and your Microsoft Dynamics credentials, generate a dataset from the Microsoft Dynamics objects.
 
 ## Setting up the Microsoft Dynamics Connector
-Follow these steps to create a dataset from Microsoft Dynamics and trigger a daily ingestion. 
+Follow these steps to create a dataset from Microsoft Dynamics and set up a connector to trigger a one-time or scheduled ingestion.
 
-#### 1. Create a Catalog account entity
+#### Create Account and Connection
 
-First, create a Catalog account entity corresponding to your Microsoft Dynamics CRM credentials. This request requires your Microsoft Dynamics user name, password, and security token. The response to this request includes the *Account ID*.
+First, request a Microsoft Dynamics CRM account entity. You need your Microsoft Dynamics CRM User Name, Microsoft Dynamics CRM  Password, Microsoft Dynamics CRM Organization URI and Microsoft Dynamics CRM Organization Name to request an account and connection entity. The response to this request includes the *Account ID* and *Connection ID* in Catalog.
 
 ##### Request
 
+For dynamics-online:
 ```shell
-curl -X POST https://platform.adobe.io/data/foundation/catalog/accounts/ \
+curl -X POST \
+  https://platform.adobe.io/data/foundation/connectors/account \
+  -H 'Accept: application/vnd.adobe.validCredentials+json;version=2' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'Content-Type: application/json' \
+  -H 'x-request-id: {REQUEST_ID}' \
   -d '{
-    "params": {
-        "organizationName":"<>"
-        "username": "<>",
-        "password": {
-            "value": "<>",
-            "isSecret": true
-        },
-        "organizationUri": "<>"  
-    },
-    "connector": "dynamics-online"
+  "type": "dynamics-online",
+  "params": {
+    "username": {MS-Dynamics_USER_NAME},
+    "password": {MS-Dynamics_PASSWORD},
+    "organizationUri": {MS-Dynamics_ORGANIZATION_URI},
+    "organizationName": {MS-Dynamics_ORGANIZATION_NAME}
+  }
 }'
 ```
 For on premise:
 
 ```shell
-{
-    "connector": "dynamics-onprem",
-    "params": {
-        "username": "{{DYNAMICS_ONPREM_USERNAME}}",
-        "hostName": "{{DYNAMICS_ONPREM_HOSTNAME}}",
-        "organizationName": "{{DYNAMICS_ONPREM_ORGANIZATION_NAME}}",
-        "password": {
-            "value": "{{DYNAMICS_ONPREM_PASSWORD}}",
-            "isSecret": true
-        }
-    }
-}
-
-```
-
-`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
-`{MS Dynamic_USER_NAME}`: Your username for MS Dynamic CRM.  
-`{MS Dynamic_PASSWORD}`: Your password for MS Dynamic CRM.  
-`{MS Dynamic_SECURITY_TOKEN}`: Your security token for MS Dynamic CRM.  
-
-##### Response
-```JSON
-[
-  "@/accounts/{ACCOUNT_ID}"
-]
-```
-
-Use your account ID in future steps and refer to it as `{ACCOUNT_ID}`.
-
-#### 2. Create a Catalog Connection entity
-
-With the `{ACCOUNT_ID}`, you can create an MS Dynamic Catalog Connection entity. In this request, you identify when you want the ingestion to start (`"ingestStart"`) and what frequency for ingestion to occur (`"frequency"`). The following request defaults to daily ingestion.
-
-##### Request
-
-```shell
-curl -X POST https://platform.adobe.io/data/foundation/catalog/connections/ \
+curl -X POST \
+  https://platform.adobe.io/data/foundation/connectors/account \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'Content-Type: application/json' \
   -d '{
-        "name": "{CONNECTION_NAME}",
-        "description": "",
-        "ingestStart": "{INGEST_START}",
-        "frequency": {
-            "timezone": "UTC",
-            "month": "*",
-            "day": "*",
-            "hour": "00",
-            "minute": "00",
-            "dayOfWeek": "*"
-        },
-        "connector": "MS Dynamic",
-        "accountId": "{ACCOUNT_ID}"
-    }'
+  "type": "dynamics-onprem",
+  "params": {
+    "username": {MS-Dynamics_USER_NAME},
+    "password": {MS-Dynamics_PASSWORD},
+    "organizationName": {MS-Dynamics_ORGANIZATION_NAME},
+    "hostName": {MS-Dynamics_HOST_NAME}
+  }
+}'
 ```
-
-`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
-`{ACCOUNT_ID}`: Account ID generated from your MS Dynamic credentials  
-`{CONNECTION_NAME}`: Name of the connection you are creating.  
-`{INGEST_START}`: Date and time when ingestion is scheduled to start. If time is set to the past (relative to current time) ingestion will begin immediately. Format is `"yyyy-mm-ddThh:mm:ss.000Z"` (E.g. `"2018-03-22T23:59:59.000Z"`)  
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{MS-Dynamics_USER_NAME}`: Your username for MS Dynamic CRM.
+* `{MS-Dynamics_PASSWORD}`: Your MS Dynamics CRM password
+* `{MS-Dynamics_ORGANIZATION_URI}`: Your MS Dynamics Organization URI
+* `{MS-Dynamics_ORGANIZATION_NAME}`: Your MS Dynamics Organization Name
+* `{MS-Dynamics_HOST_NAME}`: Your MS Dynamics Host Name
 
 ##### Response
-```JSON
-[
-    "@/connections/{CONNECTION_ID}"
-]
+```javascript
+{
+    "accountId": {ACCOUNT_ID},
+    "connectionId": {CONNECTION_ID}
+}
 ```
 
-`{CONNECTION_ID}`: ID of the connector you just created. 
+* `{ACCOUNT_ID}`: Account ID in catalog.
+* `{CONNECTION_ID}`: Connection ID in catalog.
 
-#### 3. Select an Microsoft Dynamics object
+Please note `{ACCOUNT_ID}` and `{CONNECTION_ID}` for further use.
 
-Next, select the Microsoft Dynamics CRM object to ingest. You can get the entire list of available objects from the MS Dynamic CRM connection using the following request:
+#### Create Custom Schema
+
+For Ingesting data into the platform, data needs to be complaint with a schema. Data Connectors provide POST /schemas API to create custom schema of the data you wish to ingest. This custom schema is called Adhoc schema since it has the capability to not comply with any of the standard XDM models. Please refer to [XDM Schema Registry Guide](https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md) for details on XDM models.
+
+Creating custom schema is a two step process -
+
+1. Selecting desired table to ingest. You can use GET /objects call to list tables.
+2. Creating custom schema from table or fields of that table.
+
+##### Creating Custom Schema with table name
+Select a Microsoft Dynamics table to ingest. Use the below request to get a list of tables from the MS Dynamics connection:
 
 ##### Request
 
-```shell
-curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/objects \
+```SHELL
+curl -X GET \
+  https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/objects \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
-`{ACCOUNT_ID}`: Account ID generated from your MS Dynamic credentials  
-`{CONNECTION_ID}`: ID of the connector you created in the previous steps.
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
 
 ##### Response
-
-```json
+```javascript
 [
     {
         "logicalName": "AcceptedEventRelation",
@@ -198,251 +164,293 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 ]
 ```
 
-The previous object is a partial response of the actual list of available MS Dynamic CRM objects. Note that the `logicalName` of the objects is used as the `{OBJECT_ID}`
+> **Note: ** The return response is a partial list of all available Microsoft Dynamics CRM objects. Use the `{OBJECT_ID}` as the `logicalName` of the objects.
 
-
-The next step is to ingest fields from the `Account` object. Determine the fields you want to obtain from the object and add them to the API call. 
-
-#### To view all fields in an object
-Make the following request to see all fields for a specific MS Dynamic object.
-
+Use the `logicalName` of the selected object as `{OBJECT_ID}` to create custom schema in the next step.
+Create custom schema from table name:
 ##### Request
-POST /connectors/connections/{CONNECTION_ID}/object/{OBJECT_ID}/fields
 
 ```SHELL
-curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/objects/{{OBJECT_ID}}/fields \
+curl -X POST \
+  'https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/schemas' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'Content-Type: application/json'
-```
-
-`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
-`{ACCOUNT_ID}`: Account ID generated from your MS Dynamic credentials.  
-`{CONNECTION_ID}`: ID of the connector you created from the previous steps.  
-`{OBJECT_ID}`: Logical Name of the MS Dynamic Object you want to ingest.  
-
-##### Response  
-
-```JSON
-[
-    {
-        "logicalName": "Name",
-        "displayName": "Account Name",
-        "isPrimaryKey": false,
-        "type": "string",
-        "meta": {
-            "inboundSupported": true,
-            "outboundSupported": true,
-            "originalType": "string",
-            "maxLength": 255,
-            "options": null
-        }
-    },
-    {
-        "logicalName": "Site",
-        "displayName": "Account Site",
-        "isPrimaryKey": false,
-        "type": "string",
-        "meta": {
-            "inboundSupported": true,
-            "outboundSupported": true,
-            "originalType": "string",
-            "maxLength": 80,
-            "options": null
-        }
-    },
-    {
-        "logicalName": "SystemModstamp",
-        "displayName": "System Modstamp",
-        "isPrimaryKey": false,
-        "type": "date",
-        "meta": {
-            "inboundSupported": true,
-            "outboundSupported": true,
-            "originalType": "datetime",
-            "options": null
-        }
-    },
-      "..."
-    {
-        "logicalName": "UpsellOpportunity__c",
-        "displayName": "Upsell Opportunity",
-        "isPrimaryKey": false,
-        "type": "string",
-        "meta": {
-            "inboundSupported": true,
-            "outboundSupported": true,
-            "originalType": "picklist",
-            "maxLength": 255,
-            "options": [
-                {
-                    "value": "Maybe",
-                    "label": "Maybe"
-                },
-                {
-                    "value": "No",
-                    "label": "No"
-                },
-                {
-                    "value": "Yes",
-                    "label": "Yes"
-                }
-            ]
-        }
-    }
-]
-```
-
-Note that the above request is only a segment of the actual response. You can choose to have all the fields of an object ingested or selected fields. 
-
-#### 4. Create Catalog dataset entity
-
-The last step is to create the MS Dynamic Catalog entity. The dataset defines the structure of the data that the connector ingests.
-
-##### Request
-```SHELL
-curl -X POST https://platform.adobe.io/data/foundation/catalog/datasets/ \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -H 'Content-Type: application/json' \
-  -d '{JSON_PAYLOAD}'
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '{
+   "objectName" : {OBJECT_ID}
+}'
 ```
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
+* `{OBJECT_ID}`: Logical Name of the Microsoft Dynamics Object you want to ingest.
 
-`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
-`{ACCOUNT_ID}`: Account ID generated from your MS Dynamic credentials.  
-`{CONNECTION_ID}`: ID of the connector you created from the previous steps.  
-`{OBJECT_ID}`: Logical Name of the MS Dynamic Object you want to ingest.  
-
-`{JSON_PAYLOAD}`: The dataset to post is a JSON payload. For example:
-
-```JSON
+##### Response
+```javascript
 {
-      "objectId": "{OBJECT_ID}",
-      "name": "Accounts",
-      "saveStrategy": "append",
-      "connectionId": "{CONNECTION_ID}",
-      "tags": {
-        "connectors-objectName": [
-          "{OBJECT_ID}"
-        ],
-        "connectors-saveStrategy": [
-          "append"
-        ]
-      },
-      "fields": [
-        {
-            "logicalName": "Name",
-            "displayName": "Account Name",
-            "isPrimaryKey": false,
-            "type": "string",
-            "meta": {
-                "inboundSupported": true,
-                "outboundSupported": true,
-                "originalType": "string",
-                "maxLength": 255,
-                "options": null
-            }
-        },
-        {
-            "logicalName": "Site",
-            "displayName": "Account Site",
-            "isPrimaryKey": false,
-            "type": "string",
-            "meta": {
-                "inboundSupported": true,
-                "outboundSupported": true,
-                "originalType": "string",
-                "maxLength": 80,
-                "options": null
-            }
-        },
-        {
-            "logicalName": "SystemModstamp",
-            "displayName": "System Modstamp",
-            "isPrimaryKey": false,
-            "type": "date",
-            "meta": {
-                "inboundSupported": true,
-                "outboundSupported": true,
-                "originalType": "datetime",
-                "options": null,
-                "delta": {}
-            }
-        },
-        {
-            "logicalName": "UpsellOpportunity__c",
-            "displayName": "Upsell Opportunity",
-            "isPrimaryKey": false,
-            "type": "string",
-            "meta": {
-                "inboundSupported": true,
-                "outboundSupported": true,
-                "originalType": "picklist",
-                "maxLength": 255,
-                "options": [
-                    {
-                        "value": "Maybe",
-                        "label": "Maybe"
-                    },
-                    {
-                        "value": "No",
-                        "label": "No"
-                    },
-                    {
-                        "value": "Yes",
-                        "label": "Yes"
-                    }
-                ]
-            }
-        }
-      ],
-      "connectorId": "MS Dynamic",
-      "requestStartDate": "2018-02-14 16:06:44",
-      "status": "enabled",
-      "aspect": "production"
-    }
-```
-
-The `{JSON PAYLOAD}` is the subset of object fields selected from the previous response to get all fields for the `Account` object. This object defines the fields to populate by the connector on a recurring frequency, such as the account Name, account Site, system modstamp, etc.).
-
-
-The field `"requestStartDate"` dictates how far in the past (relative to now) the backfill should go. The `"requestStartDate"` parameter is always a date in the past. If you want a backfill of 30 days then you have to calculate `now() - 30 days` and enter a valid date time value for this field.
-
-The `"connectors-saveStrategy"` field refers to how the data is ingested. In the example, Append data is required instead of a Delta or Overwrite parameter. For Append and Delta to save strategies, since they are sorted by time, you will need to decide a value to use in the time-based-column if time-based-queries take place (such as System Modstamp, Created Date, and Last Modified Date). 
-
-Adding a `"delta": {}` in the `"meta"` field indicates the method for the time-based-column. In the example, a tag was added into the `"SystemModstamp"` object for the `"JSON_PAYLOAD"` request.
-
-```JSON
-{
-    "logicalName": "SystemModstamp",
-    "displayName": "System Modstamp",
-    "isPrimaryKey": false,
-    "type": "date",
-    "meta": {
-        "inboundSupported": true,
-        "outboundSupported": true,
-        "originalType": "datetime",
-        "options": null,
-        "delta": {}
-    }
+    "title": {SCHEMA_TITLE},
+    "schemaRef": {
+        "id": {SCHEMA_ID},
+        "contentType": {SCHEMA_CONTENT_TYPE}
+    },
+    "namespace": {NAMESPACE}
 }
 ```
+* `{SCHEMA_TITLE}`: Title of schema in XDM Schema Registry.
+* `{SCHEMA_ID}`: Unique id of schema in XDM Schema Registry.
+* `{SCHEMA_CONTENT_TYPE}`: Content-type and version of schema.
+* `{NAMESPACE}`: Unique ID generated by XDM Schema Registry as namespace corresponding to adhoc schema.
+
+This `schemaRef` can be used further to create dataset entity through dataset API. [Creating a Dataset](#create_dataset)
+
+##### Creating Custom Schema from fields
+To construct custom schema from a subset of fields of any object, use "fields" API to fetch fields and use the required subset of fields as payload in create schema.
+
+Get fields of object:
+
+##### Request
+```SHELL
+curl -X GET \
+  'https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/fields?object={OBJECT_ID}' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
+* `{OBJECT_ID}`: Logical Name of the Microsoft Dynamics Object whose fields are to be fetched.
+
+##### Response
+```javascript
+[
+  {
+    "logicalName": "Id",
+    "displayName": "Account ID",
+    "isPrimaryKey": true,
+    "type": "string",
+    "meta": {
+      "inboundSupported": true,
+      "outboundSupported": true,
+      "originalType": "id",
+      "maxLength": 18,
+      "options": []
+    }
+  },
+  {
+    "logicalName": "IsDeleted",
+    "displayName": "Deleted",
+    "isPrimaryKey": false,
+    "type": "boolean",
+    "meta": {
+      "inboundSupported": true,
+      "outboundSupported": true,
+      "originalType": "boolean",
+      "options": []
+    }
+  }
+]
+```
+The required fields are passed to create /schemas API call for construction of custom adhoc schema:
+
+##### Request
+
+```SHELL
+curl -X POST \
+  https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/schemas \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '{
+  "fields": [
+    {
+      "logicalName": "Id",
+      "displayName": "Account ID",
+      "isPrimaryKey": true,
+      "type": "string",
+      "meta": {
+        "inboundSupported": true,
+        "outboundSupported": true,
+        "originalType": "id",
+        "maxLength": 18,
+        "options": []
+      }
+    },
+    {
+      "logicalName": "IsDeleted",
+      "displayName": "Deleted",
+      "isPrimaryKey": false,
+      "type": "boolean",
+      "meta": {
+        "inboundSupported": true,
+        "outboundSupported": true,
+        "originalType": "boolean",
+        "options": []
+      }
+    }
+  ]
+}'
+```
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
+
+##### Response
+```javascript
+{
+    "title": {SCHEMA_TITLE},
+    "schemaRef": {
+        "id": {SCHEMA_ID},
+        "contentType": {SCHEMA_CONTENT_TYPE}
+    },
+    "namespace": {ADHOC_NAMESPACE}
+}
+```
+* `{SCHEMA_TITLE}`: Title of schema in XDM Schema Registry.
+* `{SCHEMA_ID}`: Unique id of schema in XDM Schema Registry.
+* `{SCHEMA_CONTENT_TYPE}`: Content-type and version of schema.
+* `{ADHOC_NAMESPACE}`: Unique ID generated by XDM Schema Registry as namespace of adhoc schema.
+
+This `schemaRef` is used in the next step to create dataset entity through dataset API. [Creating a Dataset](#create_dataset)
+
+#### Configure schedule for ingestion
+Scheduling ingestion is mandatory for relational connectors before posting dataset. `ingestStart` and `frequency` are provided through PUT /schedule API call. Empty payload `{}` can be provided for one time ingestion.
+
+##### Request
+
+```SHELL
+curl -X PUT \
+  'https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/schedule' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '{
+  "ingestStart": "2018-05-24T09:36:01.257Z",
+  "frequency": {
+    "month": "*",
+    "day": "*",
+    "dayOfWeek": "*",
+    "hour": "*",
+    "minute": "*/15",
+    "timezone": "UTC"
+  }
+}'
+```
+`ingestStart` can only be current or future date and denotes the start time of ingestion. If no value is provided, is it taken as current UTC time.
+`frequency` denotes the pace of ingestion. Preceeding example ingests data every 15 minutes. Hourly, daily, monthly and yearly frequencies can be provided alongside custom schedules.
+For example -
+```javascript
+Daily
+"frequency": {
+    "month": "*",
+    "day": "*",
+    "dayOfWeek": "*",
+    "hour": "0",
+    "minute": "0",
+    "timezone": "UTC"
+  }
+
+Monthly
+"frequency": {
+    "month": "*",
+    "day": "1",
+    "dayOfWeek": "*",
+    "hour": "0",
+    "minute": "0",
+    "timezone": "UTC"
+  }
+
+Yearly
+"frequency": {
+    "month": "1",
+    "day": "1",
+    "dayOfWeek": "*",
+    "hour": "0",
+    "minute": "0",
+    "timezone": "UTC"
+  }
+```
+
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
+
+#### <a name="create_dataset">Create a Dataset</a>
+The dataset defines the structure of the data the connector ingests. Once you create the account and connection, you can use the *Connection ID* to create a dataset. You can configure Platform datasets, pipeline, and triggers with a successful POST call.
+Provide a unique and identifiable name for the dataset to identify it clearly when monitoring your data ingestion.
+
+##### Request
+
+```SHELL
+curl -X POST \
+  'https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/datasets' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '{
+  "params": {
+    "datasets": [
+      {
+        "name": {DATASET_NAME},
+        "tags": {
+          "connectors-objectName": [
+            {OBJECT_ID}
+          ]
+        },
+        "schemaRef": {
+          "id": {SCHEMA_ID},
+          "contentType": {SCHEMA_CONTENT_TYPE}
+        },
+        "saveStrategy": {SAVE_STRATEGY},
+        "backfillDate": {BACKFILL_DATE},
+        "schemaMetadata": {
+          "delta": [
+            {
+              "path": {FIELD_SCHEMA_PATH},
+              "format": "YYYY-MM-DDThh:mm:ssZ",
+              "timezone": "UTC"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}'
+```
+* `schemaRef` tag is used as returned by the create schema /schemas API. It contains the id and content-type of the created adhoc schema in XDM Schema Registry for the `{OBJECT_ID}` specified.
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
+* `{DATASET_NAME}`: Name of the dataset you want to create.
+* `{SCHEMA_ID}`: Unique id of schema in XDM Schema Registry.
+* `{SCHEMA_CONTENT_TYPE}`: Content-type and version of schema.
+* `{SAVE_STRATEGY}`: Enum [overwrite/delta/append] to overwrite, change or add data. To specify how data will be ingested. Append and Delta options are sorted by time, requiring you to select a time-based property to order the data, such as `System Modstamp`, `Created Date`, or `Last Modified Date`.
+* `{BACKFILL_DATE}`: Past date to begin ingestion.
+* `{FIELD_SCHEMA_PATH}`: Path of date-time field in schema.
 
 ##### Response
 
-```JSON
-[
-    ["@/dataSets/{DATASET_ID}"]
-]
+```javascript
+{
+    "success": [
+        {
+            "name": {DATASET_NAME},
+            "id": {DATASET_ID}
+        }
+    ],
+    "error": []
+}
 ```
+* `{DATASET_NAME}`: Name of the dataset you specified.
+* `{DATASET_ID}`: The ID of the dataset you created. Use `{DATASET_ID}` to make a request to Catalog to identify the DatasetView ID associated with this dataset.
 
-`{DATASET_ID}`: The ID of the dataset that you created. You can use this in the future to make a request to Catalog to identify the DatasetView ID associated with this dataset.
-
-<!---## Viewing Data in the Connector Wizard
-(under construction)--->
