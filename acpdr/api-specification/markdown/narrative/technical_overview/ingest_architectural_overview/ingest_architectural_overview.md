@@ -5,7 +5,7 @@ The Batch Ingestion API allows you to ingest data into Adobe Experience Platform
 
 ![](batch_ingestion.png)
 
-See the [Batch Ingestion API](../../../../../../acpdr/swagger-specs/bulk-ingest-api.yaml) reference for additional information.
+See [Data Ingestion API](../../../../../../acpdr/swagger-specs/ingest-api.yaml) reference for additional information.
 
 ## Using the API
 
