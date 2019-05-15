@@ -40,7 +40,6 @@
 	],
 	"app2app_map": {
 		"api-specification/markdown/narrative/tutorials/dsw/":"/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html",
-		"api-specification/markdown/narrative/tutorials/dsw/notebook_to_recipe/":"/apis/experienceplatform/home/data-science-workspace/dsw-overview.html",
 		"acpdr/swagger-specs/":"/apis/experienceplatform/home/api-reference.html",
 		"api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html"
 	}
