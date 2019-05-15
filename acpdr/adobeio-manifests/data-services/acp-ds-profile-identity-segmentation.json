@@ -51,7 +51,7 @@
 
 			],
 			"path": "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md",
-			"title": "Unified Profile" 
+			"title": "Unified Profile"
 		},
 		{
 			"importedFileName": "segmentation_pql",
@@ -61,13 +61,13 @@
 		}
 	],
 	"app2app_map": {
-		"acpdr/swagger-specs/": "/apis/experienceplatform/home/api-reference.html",
+		"acpdr/swagger-specs/": "/apis/experienceplatform/dataservices/api-reference.html",
 		"end-user/markdown/dule_overview/": "/apis/experienceplatform/home/dule/duleservices.html",
 		"api-specification/markdown/narrative/gdpr/": "/apis/experienceplatform/gdpr/docs/alldocs.htm",
-		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/": "/apis/experienceplatform/home/services.html",
+    "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/": "/apis/experienceplatform/home/services.html",
 		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "/apis/cloudplatform/dataservices/data-ingestion/data-ingestion-services.html",
-		"api-specification/markdown/narrative/technical_overview/schema_registry/": "/apis/experienceplatform/home/xdm/xdmservices.html",
 		"api-specification/markdown/narrative/technical_overview/streaming_ingest/": "/apis/experienceplatform/home/data-ingestion.html",
-		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html"
+    "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/dataservices/tutorials/alltutorials.html"
 	}
 }
