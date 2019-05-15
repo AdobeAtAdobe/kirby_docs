@@ -17,8 +17,6 @@ Tutorials:
 
 * [Salesforce connector](../../tutorials/creating_a_connector_tutorial/ACP_salesforce_connector_tutorial.md) lets you set up Salesforce CRM data to ingest into the Platform on a defined schedule.
 
-* [Using Connector UI](api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/using_data_connector_ui_tutorial.md) to set up Salesforce and Microsoft Dynamics connectors. 
-
 ### Important conditions
 * For incremental ingestion, you will have to clean up data after every ingestion run.
 * Currently, a pipeline run is configured for a delay of 30 minutes between consecutive runs. 
@@ -29,7 +27,7 @@ To know if data is ingested, enable the Preview button in the top right corner o
 You can also use Catalog APIs to see if dataset files are being created for the current batch, or make a batch query with *datasetViewId* filter from Catalog services to see if batches are getting created properly.
 
 ## Other APIs used for Platform Connectors
-Beyond the Create Account and Create Dataset APIs, a few other helper APIs are listed below. Please see the [Partner Connectors RESTful API Resource](../../../../../swagger-specs/partner-connectors-api.yaml) for further information on Platform Connector APIs.
+Beyond the Create Account and Create Dataset APIs, here are few other helper APIs:
 
 ### Object Listing API 
 This API lists the content of an object:
