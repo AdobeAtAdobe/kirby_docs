@@ -6,12 +6,12 @@ info:
     Partner Connectors provide REST API to ingest data into Adobe Experience Platform.
 
     Related documentation:
-          * [Connectors Service Overview](../api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md)
-          * Tutorial -
-            ** [Azure-Blob] (../api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md)
-            ** [Amazon-s3] (../api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md)
-            ** [Microsoft Dynamics] (../api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md)
-            ** [Salesforce] (../api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_salesforce_connector_tutorial.md)
+      * [Connectors Service Overview](../api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md)
+      * Tutorial -
+        * [Azure-Blob](../api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md)
+        * [Amazon-s3](../api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md)
+        * [Microsoft Dynamics](../api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md)
+        * [Salesforce](../api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_salesforce_connector_tutorial.md)
            
 
     Notes:
@@ -26,13 +26,6 @@ tags:
 - name: "Health Check"
 host: platform-int.adobe.io
 basePath: /data/foundation/connectors
-schemes:
-  - "https"
-securityDefinitions:
-  Bearer:
-    type: apiKey
-    name: Authorization
-    in: header
 paths:
   /account:
     post:
