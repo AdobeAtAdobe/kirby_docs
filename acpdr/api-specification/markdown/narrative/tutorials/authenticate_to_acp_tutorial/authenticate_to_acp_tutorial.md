@@ -6,17 +6,17 @@ This tutorial will cover the steps for gaining access to an Adobe Experience Pla
 
 - [Authenticate to make API calls](#authenticate-to-make-api-calls)
 - [Prerequisites](#prerequisites)
-  - [Create an Adobe ID](#create-an-adobe-id)
-  - [Become a developer and user for Experience Platform for an organization](#become-a-developer-and-user-for-experience-platform-for-an-organization)
+    - [Create an Adobe ID](#create-an-adobe-id)
+    - [Become a developer and user for Experience Platform for an organization](#become-a-developer-and-user-for-experience-platform-for-an-organization)
 - [One time setup](#one-time-setup)
-  - [Login to Adobe IO Console](#login-to-adobe-io-console)
-  - [Create integration](#create-integration)
-  - [Copy down access values](#copy-down-access-values)
+    - [Login to Adobe IO Console](#login-to-adobe-io-console)
+    - [Create integration](#create-integration)
+    - [Copy down access values](#copy-down-access-values)
 - [Authentication for each session](#authentication-for-each-session)
-  - [Create JWT](#create-jwt)
-  - [Generate access token](#generate-access-token)
-  - [Testing access code](#testing-access-code)
-  - [Using Postman for JWT authentication and API calls](#using-postman-for-jwt-authentication-and-api-calls)
+    - [Create JWT](#create-jwt)
+    - [Generate access token](#generate-access-token)
+    - [Testing access code](#testing-access-code)
+    - [Using Postman for JWT authentication and API calls](#using-postman-for-jwt-authentication-and-api-calls)
 
 ---
 
