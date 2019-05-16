@@ -78,11 +78,11 @@ Adobe provides managed data transfer from Adobe Solutions to Adobe Experience Pl
 
 | Feature    | Description  |
 | -----------| ---------- |
-| Adobe Analytics  | Report Suites |
-| Adobe Audience Manager  | Data collection logs, Onboarded data, Traits & segments. |
-| Advertising Cloud | DSP Events |
-| Adobe Campaign Standard | Profile and Events |
-| Target (Preview) | Events
+| Adobe Analytics  | Report Suites data from Adobe Analytics is available in platform. |
+| Adobe Audience Manager  | Data collection logs, Onboarded data, Traits & Segment data from Adobe Audience Manager is available in platform. |
+| Advertising Cloud | DSP logs from Advertising Cloud are available in platform. |
+| Adobe Campaign Standard | Profile and Events data from Adobe Campaign Standard is available in platform. |
+| Target (Preview) | Event data from Adobe Target is available in platform. |
 
 
 **Known issues**
