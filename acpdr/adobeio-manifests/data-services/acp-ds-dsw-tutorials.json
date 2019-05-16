@@ -36,7 +36,13 @@
 		},
 		{
 			"importedFileName": "scoring_using_recipe",
-			"pages": [],
+			"pages": [
+				{
+					"page": [],
+					"path": "api-specification/markdown/narrative/tutorials/dsw/sensei_model_insights_framework_tutorial/sensei_model_insights_framework_tutorial.md",
+					"title": "How to use the Model Insights Framework"
+				}
+			],
 			"path": "api-specification/markdown/narrative/tutorials/dsw/how_to_score_with_recipe/how_to_score_with_recipe.md",
 			"title": "Scoring Using Recipe",
 			"description": "This tutorial shows you how to create a scoring run for an existing experiment run in the Data Science Workspace."
