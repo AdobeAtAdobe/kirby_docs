@@ -27,9 +27,9 @@ info:
 
   title: Identity Service
 
+  contact:
+    url: 'https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation.html'
   version: 0.0.1
-
-  termsOfService: 'https://www.adobe.com/legal/terms.html'
 host: platform.adobe.io
 basePath: /data/core
 tags:
@@ -50,10 +50,6 @@ tags:
 paths:
 
   /identity/identity:
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
         - Identity
@@ -81,12 +77,28 @@ paths:
           required: true
           type: string
           default: '2521328045094711779817'
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Org Id of requesting client
+          required: true
+          type: string
+          default: 2ASDRTGUIytrOURsdr1001
         - name: x-uis-cst-ctx
           in: header
           description: Customer context to be used for stub response
           required: false
           type: string
           default: stub
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: Should be a valid IMS token for authenticating with Identity Services
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+          description: Should be a valid client ID
         - name: Accept
           in: header
           description: The version of the resource's representation.
@@ -114,84 +126,21 @@ paths:
         '400':
           description: Bad Request from the client
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: InvalidInput
-              status:
-                type: integer
-                example: 400
-              description:
-                type: string
-                example: The provided namespace=CRMID and id=ssbtest124March262019crmi1 is invalid. Please provide a valid namespace and id in your request.
-          headers:
-            content-type:
-              description: Response is a JSON document with UTF-8 encoding
-              type: string
-              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
-            cache-control:
-              description: caching policy for response
-              type: string
-              default: no-cache
-
+            $ref: '#/definitions/ServiceErrorStatus'
         '401':
-          description: IMS token is missing required scope.
+          description: IMS token is missing or invalid
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: UnauthorizedAccessInvalidScope
-              status:
-                type: integer
-                example: 401
-              description:
-                type: string
-                example:  Token does not have valid scope. Either 'acp_core_identity' scope or 'acp_foundation' scope is required
-          headers:
-            content-type:
-              description: Response is a JSON document with UTF-8 encoding
-              type: string
-              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
-            cache-control:
-              description: caching policy for response
-              type: string
-              default: no-cache
+            $ref: '#/definitions/ServiceErrorStatus'
         '500':
           description: Unexpected Internal application error
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: InternalServerError
-              status:
-                type: integer
-                example: 500
-              description:
-                type: string
-                example:  An unexpected internal error occurred in the server. This might indicate a problem with the request, or might indicate a problem in the server side code.
-
-        '429':
-          description: Request rate is large
+            $ref: '#/definitions/ServiceErrorStatus'
+        '503':
+          description: The service is unavailable
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: RequestRateTooLarge
-              status:
-                type: integer
-                example: 429
-              description:
-                type: string
-                example:  Request rate is large. Please try again later.
+            $ref: '#/definitions/ServiceErrorStatus'
+
   /identity/cluster/members:
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
         - Cluster
@@ -217,7 +166,7 @@ paths:
           description: namespace code
           required: false
           type: string
-          default: adcloud
+          default: 'adcloud'
         - name: id
           in: query
           description: Id in given namespace
@@ -230,12 +179,28 @@ paths:
           required: false
           type: string
           default: coop
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Org Id of requesting client
+          required: true
+          type: string
+          default: 2ASDRTGUIytrOURsdr1001
         - name: x-uis-cst-ctx
           in: header
           description: Customer context to be used for stub response
           required: false
           type: string
           default: stub
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: Should be a valid IMS token for authenticating with Identity Services
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+          description: Should be a valid client ID
         - name: Accept
           in: header
           description: The version of the resource's representation.
@@ -268,84 +233,20 @@ paths:
         '400':
           description: Bad Request from the client
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: InvalidInput
-              status:
-                type: integer
-                example: 400
-              description:
-                type: string
-                example: The IMS Org ABC123@AdobeOrg is not provisioned for private device graph.
-          headers:
-            content-type:
-              description: Response is a JSON document with UTF-8 encoding
-              type: string
-              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
-            cache-control:
-              description: caching policy for response
-              type: string
-              default: no-cache
-
+            $ref: '#/definitions/ServiceErrorStatus'
         '401':
-          description: IMS token is missing required scope.
+          description: IMS token is missing or invalid
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: UnauthorizedAccessInvalidScope
-              status:
-                type: integer
-                example: 401
-              description:
-                type: string
-                example:  Token does not have valid scope. Either 'acp_core_identity' scope or 'acp_foundation' scope is required
-          headers:
-            content-type:
-              description: Response is a JSON document with UTF-8 encoding
-              type: string
-              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
-            cache-control:
-              description: caching policy for response
-              type: string
-              default: no-cache
+            $ref: '#/definitions/ServiceErrorStatus'
         '500':
           description: Unexpected Internal application error
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: InternalServerError
-              status:
-                type: integer
-                example: 500
-              description:
-                type: string
-                example:  An unexpected internal error occurred in the server. This might indicate a problem with the request, or might indicate a problem in the server side code.
-
-        '429':
-          description: Request rate is large
+            $ref: '#/definitions/ServiceErrorStatus'
+        '503':
+          description: The service is unavailable
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: RequestRateTooLarge
-              status:
-                type: integer
-                example: 429
-              description:
-                type: string
-                example:  Request rate is large. Please try again later.
-  /data/core/identity/clusters/members:
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
+            $ref: '#/definitions/ServiceErrorStatus'
+  /identity/clusters/members:
     post:
       tags:
         - Cluster
@@ -365,12 +266,28 @@ paths:
             type: array
             items:
               $ref: '#/definitions/ListOfIdentity'
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Org Id of requesting client
+          required: true
+          type: string
+          default: 2ASDRTGUIytrOURsdr1001
         - name: x-uis-cst-ctx
           in: header
           description: Customer context to be used for stub response
           required: false
           type: string
           default: stub
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: Should be a valid IMS token for authenticating with Identity Services
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+          description: Should be a valid client ID
         - name: Accept
           in: header
           description: The version of the resource's representation.
@@ -405,84 +322,20 @@ paths:
         '400':
           description: Bad Request from the client
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: InvalidInput
-              status:
-                type: integer
-                example: 400
-              description:
-                type: string
-                example: The IMS Org ABC123@AdobeOrg is not provisioned for private device graph.
-          headers:
-            content-type:
-              description: Response is a JSON document with UTF-8 encoding
-              type: string
-              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
-            cache-control:
-              description: caching policy for response
-              type: string
-              default: no-cache
-
+            $ref: '#/definitions/ServiceErrorStatus'
         '401':
-          description: IMS token is missing required scope.
+          description: IMS token is missing or invalid
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: UnauthorizedAccessInvalidScope
-              status:
-                type: integer
-                example: 401
-              description:
-                type: string
-                example:  Token does not have valid scope. Either 'acp_core_identity' scope or 'acp_foundation' scope is required
-          headers:
-            content-type:
-              description: Response is a JSON document with UTF-8 encoding
-              type: string
-              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
-            cache-control:
-              description: caching policy for response
-              type: string
-              default: no-cache
+            $ref: '#/definitions/ServiceErrorStatus'
         '500':
           description: Unexpected Internal application error
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: InternalServerError
-              status:
-                type: integer
-                example: 500
-              description:
-                type: string
-                example:  An unexpected internal error occurred in the server. This might indicate a problem with the request, or might indicate a problem in the server side code.
-
-        '429':
-          description: Request rate is large
+            $ref: '#/definitions/ServiceErrorStatus'
+        '503':
+          description: The service is unavailable
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: RequestRateTooLarge
-              status:
-                type: integer
-                example: 429
-              description:
-                type: string
-                example:  Request rate is large. Please try again later.
+            $ref: '#/definitions/ServiceErrorStatus'
   /identity/cluster/history:
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
         - Cluster
@@ -508,7 +361,7 @@ paths:
           description: namespace code
           required: false
           type: string
-          default: adcloud
+          default: 'adcloud'
         - name: id
           in: query
           description: Id in given namespace
@@ -521,12 +374,28 @@ paths:
           required: false
           type: string
           default: coop
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Org Id of requesting client
+          required: true
+          type: string
+          default: 2ASDRTGUIytrOURsdr1001
         - name: x-uis-cst-ctx
           in: header
           description: Customer context to be used for stub response
           required: false
           type: string
           default: stub
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: Should be a valid IMS token for authenticating with Identity Services
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+          description: Should be a valid client ID
         - name: Accept
           in: header
           description: The version of the resource's representation.
@@ -563,84 +432,20 @@ paths:
         '400':
           description: Bad Request from the client
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: InvalidInput
-              status:
-                type: integer
-                example: 400
-              description:
-                type: string
-                example: The IMS Org ABC123@AdobeOrg is not provisioned for private device graph or coop.
-          headers:
-            content-type:
-              description: Response is a JSON document with UTF-8 encoding
-              type: string
-              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
-            cache-control:
-              description: caching policy for response
-              type: string
-              default: no-cache
-
+            $ref: '#/definitions/ServiceErrorStatus'
         '401':
-          description: IMS token is missing required scope.
+          description: IMS token is missing or invalid
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: UnauthorizedAccessInvalidScope
-              status:
-                type: integer
-                example: 401
-              description:
-                type: string
-                example:  Token does not have valid scope. Either 'acp_core_identity' scope or 'acp_foundation' scope is required
-          headers:
-            content-type:
-              description: Response is a JSON document with UTF-8 encoding
-              type: string
-              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
-            cache-control:
-              description: caching policy for response
-              type: string
-              default: no-cache
+            $ref: '#/definitions/ServiceErrorStatus'
         '500':
           description: Unexpected Internal application error
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: InternalServerError
-              status:
-                type: integer
-                example: 500
-              description:
-                type: string
-                example:  An unexpected internal error occurred in the server. This might indicate a problem with the request, or might indicate a problem in the server side code.
-
-        '429':
-          description: Request rate is large
+            $ref: '#/definitions/ServiceErrorStatus'
+        '503':
+          description: The service is unavailable
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: RequestRateTooLarge
-              status:
-                type: integer
-                example: 429
-              description:
-                type: string
-                example:  Request rate is large. Please try again later.
+            $ref: '#/definitions/ServiceErrorStatus'
   /identity/clusters/history:
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
     post:
       tags:
         - Cluster
@@ -658,12 +463,28 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/ListOfIdentity'
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Org Id of requesting client
+          required: true
+          type: string
+          default: 2ASDRTGUIytrOURsdr1001
         - name: x-uis-cst-ctx
           in: header
           description: Customer context to be used for stub response
           required: false
           type: string
           default: stub
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: Should be a valid IMS token for authenticating with Identity Services
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+          description: Should be a valid client ID
         - name: Accept
           in: header
           description: The version of the resource's representation.
@@ -704,84 +525,20 @@ paths:
         '400':
           description: Bad Request from the client
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: InvalidInput
-              status:
-                type: integer
-                example: 400
-              description:
-                type: string
-                example: The IMS Org ABC123@AdobeOrg is not provisioned for private device graph or coop.
-          headers:
-            content-type:
-              description: Response is a JSON document with UTF-8 encoding
-              type: string
-              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
-            cache-control:
-              description: caching policy for response
-              type: string
-              default: no-cache
-
+            $ref: '#/definitions/ServiceErrorStatus'
         '401':
-          description: IMS token is missing required scope.
+          description: IMS token is missing or invalid
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: UnauthorizedAccessInvalidScope
-              status:
-                type: integer
-                example: 401
-              description:
-                type: string
-                example:  Token does not have valid scope. Either 'acp_core_identity' scope or 'acp_foundation' scope is required
-          headers:
-            content-type:
-              description: Response is a JSON document with UTF-8 encoding
-              type: string
-              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
-            cache-control:
-              description: caching policy for response
-              type: string
-              default: no-cache
+            $ref: '#/definitions/ServiceErrorStatus'
         '500':
           description: Unexpected Internal application error
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: InternalServerError
-              status:
-                type: integer
-                example: 500
-              description:
-                type: string
-                example:  An unexpected internal error occurred in the server. This might indicate a problem with the request, or might indicate a problem in the server side code.
-
-        '429':
-          description: Request rate is large
+            $ref: '#/definitions/ServiceErrorStatus'
+        '503':
+          description: The service is unavailable
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: RequestRateTooLarge
-              status:
-                type: integer
-                example: 429
-              description:
-                type: string
-                example:  Request rate is large. Please try again later.
+            $ref: '#/definitions/ServiceErrorStatus'
   /identity/mapping:
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
         - Mappings
@@ -801,7 +558,7 @@ paths:
           description: namespace id
           required: false
           type: integer
-          default: 411
+          default: '411'
         - name: namespace
           in: query
           description: namespace code
@@ -820,12 +577,28 @@ paths:
           description: The namespace you want to get the mappings from
           type: integer
           default: 411
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Org Id of requesting client
+          required: true
+          type: string
+          default: 2ASDRTGUIytrOURsdr1001
         - name: x-uis-cst-ctx
           in: header
           description: Customer context to be used for stub response
           required: false
           type: string
           default: stub
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: Should be a valid IMS token for authenticating with Identity Services
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+          description: Should be a valid client ID
         - name: Accept
           in: header
           description: The version of the resource's representation.
@@ -861,85 +634,20 @@ paths:
         '400':
           description: Bad Request from the client
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: InvalidInput
-              status:
-                type: integer
-                example: 400
-              description:
-                type: string
-                example: The provided xid=CAESEPl1uYyma1kMDWxx7dhbwGo is invalid. Please provide a valid xid in your request.
-          headers:
-            content-type:
-              description: Response is a JSON document with UTF-8 encoding
-              type: string
-              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
-            cache-control:
-              description: caching policy for response
-              type: string
-              default: no-cache
-
+            $ref: '#/definitions/ServiceErrorStatus'
         '401':
-          description: IMS token is missing required scope.
+          description: IMS token is missing or invalid
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: UnauthorizedAccessInvalidScope
-              status:
-                type: integer
-                example: 401
-              description:
-                type: string
-                example:  Token does not have valid scope. Either 'acp_core_identity' scope or 'acp_foundation' scope is required
-          headers:
-            content-type:
-              description: Response is a JSON document with UTF-8 encoding
-              type: string
-              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
-            cache-control:
-              description: caching policy for response
-              type: string
-              default: no-cache
-
+            $ref: '#/definitions/ServiceErrorStatus'
         '500':
           description: Unexpected Internal application error
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: InternalServerError
-              status:
-                type: integer
-                example: 500
-              description:
-                type: string
-                example:  An unexpected internal error occurred in the server. This might indicate a problem with the request, or might indicate a problem in the server side code.
-
-        '429':
-          description: Request rate is large
+            $ref: '#/definitions/ServiceErrorStatus'
+        '503':
+          description: The service is unavailable
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: RequestRateTooLarge
-              status:
-                type: integer
-                example: 429
-              description:
-                type: string
-                example:  Request rate is large. Please try again later.
+            $ref: '#/definitions/ServiceErrorStatus'
   /identity/mappings:
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
     post:
       tags:
         - Mappings
@@ -956,12 +664,28 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/ListOfMappings'
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Org Id of requesting client
+          required: true
+          type: string
+          default: 2ASDRTGUIytrOURsdr1001
         - name: x-uis-cst-ctx
           in: header
           description: Customer context to be used for stub response
           required: false
           type: string
           default: stub
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: Should be a valid IMS token for authenticating with Identity Services
+        - name: x-api-key
+          in: header
+          required: true
+          type: string
+          description: Should be a valid client ID
         - name: Accept
           in: header
           description: The version of the resource's representation.
@@ -1004,196 +728,47 @@ paths:
         '400':
           description: Bad Request from the client
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: InvalidInput
-              status:
-                type: integer
-                example: 400
-              description:
-                type: string
-                example: The provided xid=CAESEPl1uYyma1kMDWxx7dhbwGo is invalid. Please provide a valid xid in your request.
-          headers:
-            content-type:
-              description: Response is a JSON document with UTF-8 encoding
-              type: string
-              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
-            cache-control:
-              description: caching policy for response
-              type: string
-              default: no-cache
-
+            $ref: '#/definitions/ServiceErrorStatus'
         '401':
-          description: IMS token is missing required scope.
+          description: IMS token is missing or invalid
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: UnauthorizedAccessInvalidScope
-              status:
-                type: integer
-                example: 401
-              description:
-                type: string
-                example:  Token does not have valid scope. Either 'acp_core_identity' scope or 'acp_foundation' scope is required
-          headers:
-            content-type:
-              description: Response is a JSON document with UTF-8 encoding
-              type: string
-              default: application/vnd.adobe.identity+json;version=1.2;charset=utf-8
-            cache-control:
-              description: caching policy for response
-              type: string
-              default: no-cache
-
+            $ref: '#/definitions/ServiceErrorStatus'
         '500':
           description: Unexpected Internal application error
           schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: InternalServerError
-              status:
-                type: integer
-                example: 500
-              description:
-                type: string
-                example:  An unexpected internal error occurred in the server. This might indicate a problem with the request, or might indicate a problem in the server side code.
-
-        '429':
-          description: Request rate is large
-          schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: RequestRateTooLarge
-              status:
-                type: integer
-                example: 429
-              description:
-                type: string
-                example:  Request rate is large. Please try again later.
+            $ref: '#/definitions/ServiceErrorStatus'
         '503':
           description: The service is unavailable
           schema:
             $ref: '#/definitions/ServiceErrorStatus'
-
   /idnamespace/identities:
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
         - Identity Namespace
+      parameters:
+        - in: header
+          name: x-gw-ims-org-id
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+        - in: header
+          name: x-api-key
+          type: string
+          required: true
+          description: The API Key (IMS ClientID) that has already been whitelisted with the Identity Namespace API
+      consumes:
+        - application/json
       produces:
         - application/json
       summary: Lists all namespaces available to the client `x-gw-ims-org-id`
       operationId: ListAvailableDataSourcesByOrg
       responses:
-        '200':
+        200:
           description: OK
           schema:
             type: array
             items:
               $ref: '#/definitions/Namespace'
-        '401':
-          description: Authentication failure for invalid IMS token or the given IMS Org is missing required product context acp or dma.
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 401
-              title:
-                type: string
-                example: Call to backend failed with status-code 401
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Authorization failed - No acp or dma product context for IMSOrg A55EBC@AdobeOrg.
-                  code:
-                    type: string
-                    example: 401
-        '404':
-          description: Namespace does not exist or it is not available for the given imsorg
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 404
-              title:
-                type: string
-                example: Call to backend failed with status-code 404
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Namespace does not exist or it is not available for the given imsorg.
-                  code:
-                    type: string
-                    example: 404
-        '422':
-          description: Unexpected error from the backend
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 422
-              title:
-                type: string
-                example: Call to backend failed with status-code 422
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Unexpected error from the backend
-                  code:
-                    type: string
-                    example: 422
-        '500':
-          description: Internal server error
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 500
-              title:
-                type: string
-                example: Call to backend failed with status-code 500
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Internal server error occurred. Please try at a later time.
-                  code:
-                    type: string
-                    example: 500
         default:
           description: Error
           schema:
@@ -1202,6 +777,16 @@ paths:
       tags:
         - Identity Namespace
       parameters:
+        - in: header
+          name: x-gw-ims-org-id
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+        - in: header
+          name: x-api-key
+          type: string
+          required: true
+          description: The API Key (IMS ClientID) that has already been whitelisted with the Identity Namespace API
         - in: body
           required: true
           name: namespace_to_create
@@ -1215,248 +800,48 @@ paths:
       summary: Create namespace under `x-gw-ims-org-id` IMS Org .
       operationId: CreateNameSpace
       responses:
-        '201':
-          description: Created. Namespace created successfully.
+        201:
+          description: Created. Namespace created sucessfully.
           schema:
             $ref: '#/definitions/Namespace'
-
-        '401':
-          description: Authentication failure for invalid IMS token or the given IMS Org is missing required product context acp or dma.
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 401
-              title:
-                type: string
-                example: Call to backend failed with status-code 401
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Authorization failed - No acp or dma product context for IMSOrg A55EBC@AdobeOrg.
-                  code:
-                    type: string
-                    example: 401
-
-        '400':
-          description: Creation of namespace failed because of a data-issue
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 400
-              title:
-                type: string
-                example: Call to backend failed with status-code 400
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: 'Incorrect property or type in json passed to server. Incorrect type found for fields [idType]. Value not one of declared Enum instance names [MOBILE, COOKIE, CROSS_DEVICE].'
-                  code:
-                    type: string
-                    example: CANNOT_MAP_JSON
-        '422':
-           description: Unexpected error from the backend
-           schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 422
-              title:
-                type: string
-                example: Call to backend failed with status-code 422
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Unexpected error from the backend
-                  code:
-                    type: string
-                    example: 422
-        '409':
-          description: Creation of namespace failed because of a data-issue
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 409
-              title:
-                type: string
-                example: Call to backend failed with status-code 409
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: 'Data Source Test Namespace [DPID:56099] already exists with the same integration code under this company.'
-                  code:
-                    type: string
-                    example: INTEGRATION_CODE_EXISTS
-
-        '500':
-          description: Internal server error
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 500
-              title:
-                type: string
-                example: Call to backend failed with status-code 500
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Internal server error occured. Please try at a later time.
-                  code:
-                    type: string
-                    example: 500
         default:
           description: Error
           schema:
             $ref: '#/definitions/Error'
+
   /idnamespace/identities/{id}:
-    parameters:
-      - in: path
-        name: id
-        type: integer
-        required: true
-        description: The numeric value of the namespace-id (Example - 771)
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
         - Identity Namespace
+      parameters:
+        - in: header
+          name: x-gw-ims-org-id
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+        - in: header
+          name: x-api-key
+          type: string
+          required: true
+          description: The API Key (IMS ClientID) that has already been whitelisted with the Identity Namespace API
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: The numeric value of the namespace-id (Example - 771)
+      consumes:
+        - application/json
       produces:
         - application/json
-      summary: 'List details of a single namespace identified by `{id}` if it is accessible to `x-gw-ims-org-id`'
+      summary: List details of a single namespace identified by `{id}` if it is accessible to `x-gw-ims-org-id`
       operationId: ListNameSpaceByID
       responses:
-        '200':
+        200:
           description: OK
           schema:
             type: array
             items:
               $ref: '#/definitions/Namespace'
-        '401':
-          description: Authentication failure for invalid IMS token or the given IMS Org is missing required product context acp or dma.
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 401
-              title:
-                type: string
-                example: Call to backend failed with status-code 401
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Authorization failed - No acp or dma product context for IMSOrg A55EBC@AdobeOrg.
-                  code:
-                    type: string
-                    example: 401
-        '404':
-          description: Namespace does not exist or it is not available for the given imsorg
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 404
-              title:
-                type: string
-                example: Call to backend failed with status-code 404
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Namespace does not exist or it is not available for the given IMS Org.
-                  code:
-                    type: string
-                    example: 404
-        '422':
-          description: Unexpected error from the backend
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 422
-              title:
-                type: string
-                example: Call to backend failed with status-code 422
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Unexpected error from the backend
-                  code:
-                    type: string
-                    example: 422
-        '500':
-          description: Internal server error
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 500
-              title:
-                type: string
-                example: Call to backend failed with status-code 500
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Internal server error occured. Please try at a later time.
-                  code:
-                    type: string
-                    example: 500
         default:
           description: Error
           schema:
@@ -1465,10 +850,25 @@ paths:
       tags:
         - Identity Namespace
       parameters:
+        - in: header
+          name: x-gw-ims-org-id
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+        - in: header
+          name: x-api-key
+          type: string
+          required: true
+          description: The API Key (IMS ClientID) that has already been whitelisted with the Identity Namespace API
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: The Namespace ID (Example - 123)
         - in: body
           required: true
           name: namespace_to_create
-          description: Namespace details as a json input
+          description: Namespace details as a JSON input
           schema:
             $ref: '#/definitions/NamespaceForCreate'
       consumes:
@@ -1478,104 +878,12 @@ paths:
       summary: Update namespace owned by `x-gw-ims-org-id` and having the given `id`.
       operationId: UpdateDataSourcesByDPID
       responses:
-        '200':
+        200:
           description: OK
           schema:
             type: array
             items:
               $ref: '#/definitions/Namespace'
-        '401':
-          description: Authentication failure for invalid IMS token or the given IMS Org is missing required product context acp or dma.
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 401
-              title:
-                type: string
-                example: Call to backend failed with status-code 401
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Authorization failed - No acp or dma product context for IMSOrg A55EBC@AdobeOrg.
-                  code:
-                    type: string
-                    example: 401
-        '404':
-          description: Namespace does not exist or it is not available for the given imsorg
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 404
-              title:
-                type: string
-                example: Call to backend failed with status-code 404
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Namespace does not exist or it is not available for the given IMS Org.
-                  code:
-                    type: string
-                    example: 404
-        '422':
-          description: Unexpected error from the backend
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 422
-              title:
-                type: string
-                example: Call to backend failed with status-code 422
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Unexpected error from the backend
-                  code:
-                    type: string
-                    example: 422
-        '500':
-          description: Internal server error
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 500
-              title:
-                type: string
-                example: Call to backend failed with status-code 500
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Internal server error occured. Please try at a later time.
-                  code:
-                    type: string
-                    example: 500
         default:
           description: Error
           schema:
@@ -1583,389 +891,116 @@ paths:
     delete:
       tags:
         - Identity Namespace
+      parameters:
+        - in: header
+          name: x-gw-ims-org-id
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+        - in: header
+          name: x-api-key
+          type: string
+          required: true
+          description: The API Key (IMS ClientID) that has already been whitelisted with the Identity Namespace API
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: The Namespace ID (Example - 123 )
+      consumes:
+        - application/json
       produces:
         - application/json
       summary: Delete namespace owned by `x-gw-ims-org-id` and identified by the given `id`.
       operationId: DeleteDataSourcesByDPID
       responses:
-        '204':
+        204:
           description: No Content. Delete Successful
-
-        '401':
-          description: Authentication failure for invalid IMS token or the given IMS Org is missing required product context acp or dma.
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 401
-              title:
-                type: string
-                example: Call to backend failed with status-code 401
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Authorization failed - No acp or dma product context for IMSOrg A55EBC@AdobeOrg.
-                  code:
-                    type: string
-                    example: 401
-        '404':
-          description: Namespace does not exist or it is not available for the given imsorg
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 404
-              title:
-                type: string
-                example: Call to backend failed with status-code 404
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Namespace does not exist or it is not available for the given IMS Org.
-                  code:
-                    type: string
-                    example: 404
-        '422':
-          description: Unexpected error from the backend
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 422
-              title:
-                type: string
-                example: Call to backend failed with status-code 422
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Unexpected error from the backend
-                  code:
-                    type: string
-                    example: 422
-        '500':
-          description: Internal server error
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 500
-              title:
-                type: string
-                example: Call to backend failed with status-code 500
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Internal server error occured. Please try at a later time.
-                  code:
-                    type: string
-                    example: 500
         default:
           description: Error
           schema:
             $ref: '#/definitions/Error'
 
   /idnamespace/orgs/{imsorg}/identities:
-    parameters:
-      - in: path
-        name: imsorg
-        type: string
-        required: true
-        description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg")
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
         - Identity Namespace
+      parameters:
+        - in: header
+          name: x-gw-ims-org-id
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+        - in: header
+          name: x-api-key
+          type: string
+          required: true
+          description: The API Key (IMS ClientID) that has already been whitelisted with the Identity Namespace API
+        - in: path
+          name: imsorg
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+      consumes:
+        - application/json
       produces:
         - application/json
-      summary: 'Lists shared namespaces for the given `{imsorg}` or all owned if `{imsorg}` == `x-gw-ims-org-id`'
+      summary: Lists shared namespaces for the given `{imsorg}` or all owned if `{imsorg}` == `x-gw-ims-org-id`
       operationId: ListDataSourcesByOrg
       responses:
-        '200':
+        200:
           description: OK
           schema:
             type: array
             items:
               $ref: '#/definitions/Namespace'
-        '401':
-          description: Authentication failure for invalid IMS token or the given IMS Org is missing required product context acp or dma.
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 401
-              title:
-                type: string
-                example: Call to backend failed with status-code 401
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Authorization failed - No acp or dma product context for IMSOrg A55EBC@AdobeOrg.
-                  code:
-                    type: string
-                    example: 401
-        '404':
-          description: Namespace does not exist or it is not available for the given imsorg
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 404
-              title:
-                type: string
-                example: Call to backend failed with status-code 404
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Namespace does not exist or it is not available for the given IMS Org.
-                  code:
-                    type: string
-                    example: 404
-        '422':
-          description: Unexpected error from the backend
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 422
-              title:
-                type: string
-                example: Call to backend failed with status-code 422
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Unexpected error from the backend
-                  code:
-                    type: string
-                    example: 422
-        '500':
-          description: Internal server error
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 500
-              title:
-                type: string
-                example: Call to backend failed with status-code 500
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Internal server error occured. Please try at a later time.
-                  code:
-                    type: string
-                    example: 500
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/Error'
-  /idnamespace/orgs/{imsorg}/identities/{id}:
-    parameters:
-      - in: path
-        name: imsorg
-        type: string
-        required: true
-        description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
-      - in: path
-        name: id
-        type: integer
-        required: true
-        description: The Namespace ID (Example - 123)
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-    get:
-      tags:
-        - Identity Namespace
-      produces:
-        - application/json
-      summary: 'List details of a single namespace identified by `{id}` if it is accessible to `x-gw-ims-org-id`'
-      operationId: ListDataSourcesByDPID
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Namespace'
-        '401':
-          description: Authentication failure for invalid IMS token or the given IMS Org is missing required product context acp or dma.
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 401
-              title:
-                type: string
-                example: Call to backend failed with status-code 401
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Authorization failed - No acp or dma product context for IMSOrg A55EBC@AdobeOrg.
-                  code:
-                    type: string
-                    example: 401
-        '404':
-          description: Namespace does not exist or it is not available for the given imsorg
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 404
-              title:
-                type: string
-                example: Call to backend failed with status-code 404
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Namespace does not exist or it is not available for the given IMS Org.
-                  code:
-                    type: string
-                    example: 404
-        '422':
-          description: Unexpected error from the backend
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 422
-              title:
-                type: string
-                example: Call to backend failed with status-code 422
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Unexpected error from the backend
-                  code:
-                    type: string
-                    example: 422
-        '500':
-          description: Internal server error
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 500
-              title:
-                type: string
-                example: Call to backend failed with status-code 500
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Internal server error occured. Please try at a later time.
-                  code:
-                    type: string
-                    example: 500
         default:
           description: Error
           schema:
             $ref: '#/definitions/Error'
 
-parameters:
-  authorization:
-    name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
-    For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
-    required: true
-    type: string
-    in: header
-  x-gw-ims-org-id:
-    name: x-gw-ims-org-id
-    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
-    required: true
-    type: string
-    in: header
-  x-api-key:
-    name: x-api-key
-    description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
-    required: true
-    type: string
-    in: header
-  json-header:
-    name: Content-Type
-    description: 'application/json'
-    required: true
-    type: string
-    in: header
+  /idnamespace/orgs/{imsorg}/identities/{id}:
+    get:
+      tags:
+        - Identity Namespace
+      parameters:
+        - in: header
+          name: x-gw-ims-org-id
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+        - in: header
+          name: x-api-key
+          type: string
+          required: true
+          description: The API Key (IMS ClientID) that has already been whitelisted with the Identity Namespace API
+        - in: path
+          name: imsorg
+          type: string
+          required: true
+          description: The IMS Org ID (Example - "09A55EBC5639E6017F000101@AdobeOrg" )
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: The Namespace ID (Example - 123 )
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      summary: List details of a single namespace identified by `{id}` if it is accessible to `x-gw-ims-org-id`
+      operationId: ListDataSourcesByDPID
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Namespace'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
 
 definitions:
   Id:
