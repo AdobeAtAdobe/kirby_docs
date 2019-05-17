@@ -31,7 +31,7 @@ In the context of managing your data entities, several Experience Platform solut
 [Unified Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md) is a generic lookup entity store, and is used to manage any XDM Platform data. Unified Profile facilitates building customer personalization use cases by merging data across various enterprise data assets and providing access to that unified data. Unified Profile provides tools for looking up entities by ID, as well as robust segmentation tools.  
 [Identity Service](../../technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md) associates identifiers related to each data entity, building your identity graph. Unified Profile uses Identity Service to glean all possible identities for a managed entity at access or segmentation time, merging all related entities into a unified view.  
 [Catalog Service](../../technical_overview/catalog_architectural_overview/catalog_architectural_overview.md) provides the means to upload data files to Experience Platform and maintains metadata about batch transfers. Catalog Service can be configured to notify Unified Profile and Identity Service of data uploaded to datasets.  
-[Experience Data Model (XDM)](../../technical_overview/schema_registry/schema_composition/schema_composition.md) provides the framework to refer to and manage the schemas that your data must conform to for use as entities on Platform.
+[Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md) provides the framework to refer to and manage the schemas that your data must conform to for use as entities on Platform.
 
 ### Requirements
 
@@ -241,7 +241,7 @@ Both Unified Profile and Identity Service consume XDM data as it is being ingest
 When planning what data to send to Platform, consider the following:
 
 * Include any data you may wish to use to base audience segment criteria. When you require proprietary data not included in a standard schema, you can extend an XDM schema to accommodate your additional data. For more on working with XDM schemas, see the [Schema Registry API Developer Guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md).
-* The schema defining the structure of your record and time series data must have been enabled for Unified Profile and Identity Service, which is to say it has been enabled as a union schema. To learn how to enable schemas for union via API, visit [Enable XDM schemas for Unified Profile and Identity Service](../../technical_overview/schema_registry/schema_registry_api_tutorial/schema_registry_api_tutorial.md#enable-schema-for-use-in-unified-profile-service).
+* The schema defining the structure of your record and time series data must have been enabled for Unified Profile and Identity Service, which is to say it has been enabled as a union schema. To learn how to enable schemas for union via API, visit [Enable XDM schemas for Unified Profile and Identity Service](../schema_registry_api_tutorial/schema_registry_api_tutorial.md#enable-schema-for-use-in-unified-profile-service).
 * Include as many identifiers as you can ascertain from your profile data to maximize your identity graph, and hence the ability of Identity Service to effectively stitch identities across datasets.
 
 ### Understanding the Data Lake, Profile Store, and Identity Graph
