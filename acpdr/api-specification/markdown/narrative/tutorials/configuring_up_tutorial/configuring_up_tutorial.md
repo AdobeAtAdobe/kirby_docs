@@ -11,7 +11,7 @@ This tutorial guides you through the various aspects of configuring [Unified Pro
 The following are required for Unified Profile workflows.
 
 [Configure datasets for Unified Profile and Identity Service](../unified_profile_dataset_tutorial/unified_profile_dataset_api_tutorial.md) - A separate tutorial, covers the requirements for enabling a dataset to serve as a data source for Unified Profile and Identity Service.  
-[Enable XDM schemas for Unified Profile and Identity Service](../../technical_overview/schema_registry/schema_registry_api_tutorial/schema_registry_api_tutorial.md#enable-schema-for-use-in-unified-profile-service) - For an XDM schema to contribute to the unified view, it must be enabled for Unified Profile and Identity Service.  
+[Enable XDM schemas for Unified Profile and Identity Service](../schema_registry_api_tutorial/schema_registry_api_tutorial.md#enable-schema-for-use-in-unified-profile-service) - For an XDM schema to contribute to the unified view, it must be enabled for Unified Profile and Identity Service.  
 [Configure merge policies for use in data access](configuring_merge_policies_tutorial.md) - A component of Unified Profile, merge policies provides rules for many aspects of data merging and building the union view.  
 [Configure Edge destinations and projections](configuring_edge_tutorial.md) - Edge Service is a component of Unified Profile that serves as a framework for low-latency data collection and rapid data activation.  
 

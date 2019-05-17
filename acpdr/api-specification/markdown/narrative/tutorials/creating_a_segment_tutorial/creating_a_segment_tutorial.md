@@ -31,7 +31,7 @@ In summary, the following tasks are involved in segmentation and are detailed in
 ### Related topics
 
 [Using Adobe Unified Profile Segment Builder](../../../../../end-user/markdown/segmentation_overview/segmentation.md) - This overview gives a walk-through of the Segment Builder, and should help familiarize you with the tools you'll use to build segments in the Experience Platform UI  
-[Experience Data Model (XDM)](../../technical_overview/schema_registry/standard_schemas/acp_standard_schemas.md) provides the framework to refer to and manage the schemas that your data must conform to for use as entities on Platform.
+[Experience Data Model (XDM)](../../technical_overview/schema_registry/schema_composition/schema_composition.md) provides the framework to refer to and manage the schemas that your data must conform to for use as entities on Platform.
 
 ### Requirements
 

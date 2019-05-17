@@ -25,7 +25,7 @@ In the Platform UI, you can enable a schema for Unified Profile and Identity Ser
 
 > **Note:** Only schemas of class XDM Profile or XDM Experience Event can be enabled for Unified Profile and Identity Service
 
-To learn how to enable schemas for union via API, visit [Enable XDM schemas for Unified Profile and Identity Service](../../technical_overview/schema_registry/schema_registry_api_tutorial/schema_registry_api_tutorial.md#enable-schema-for-use-in-unified-profile-service).
+To learn how to enable schemas for union via API, visit [Enable XDM schemas for Unified Profile and Identity Service](../schema_registry_api_tutorial/schema_registry_api_tutorial.md#enable-schema-for-use-in-unified-profile-service).
 
 ---
 

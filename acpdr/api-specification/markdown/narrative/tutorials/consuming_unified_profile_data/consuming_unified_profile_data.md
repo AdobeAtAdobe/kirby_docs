@@ -7,7 +7,7 @@ This tutorial covers methods of accessing your Unified Profile data on Experienc
 [Understanding your Unified Profile data](#understanding-your-unified-profile-data) - In this section, we demonstrate how to gain visibility into the data fields that are populated across the profiles in your profile store.  
 [Summarizing your data](#summarizing-data) - This section walks you through using the API to inspect the distribution of values populated in your profile store for a particular field.  
 [Accessing profile data by identity](#accessing-profile-data-by-identity) - Access a single entity by a given identity.  
-[Accessing profile data by list of identities](#accessing-data-by-list-of-identities) - Access multiple entities by an array of identities.  
+[Accessing profile data by list of identities](#accessing-profile-data-by-list-of-identities) - Access multiple entities by an array of identities.  
 [Accessing time series events for a profile by identity](#accessing-time-series-events-for-a-profile-by-identity) - ExperienceEvents represent customer time series events, or touch points, and are only accessible relative to the entity to which they are related. Access time series events for a given profile.  
 [Accessing time series events for multiple profiles by identities](#accessing-time-series-events-for-multiple-profiles-by-identities) - Access time series events for a collection of profile identities.  
 [Accessing an exported segment](#accessing-an-exported-segment) - The final step in segmentation is to export the segment to a dataset. Access segment data using the Data Access API.  
@@ -22,7 +22,7 @@ This tutorial covers methods of accessing your Unified Profile data on Experienc
 
 ### Related topics
 
-[Experience Data Model (XDM)](../../technical_overview/schema_registry/standard_schemas/acp_standard_schemas.md) provides the framework to refer to and manage the schemas that your data must conform to for use as entities on Platform.
+[Experience Data Model (XDM)](../../technical_overview/schema_registry/schema_composition/schema_composition.md) provides the framework to refer to and manage the schemas that your data must conform to for use as entities on Platform.
 
 ### Requirements
 
