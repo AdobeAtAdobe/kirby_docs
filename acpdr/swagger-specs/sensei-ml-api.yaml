@@ -4,7 +4,7 @@ info:
   version: beta
   termsOfService: 'https://www.adobe.com/legal/terms.html'
   description: >-
-    Sensei Machine Learning API provides a mechanism for data scientists to organize and manage ML
+    Sensei provides a mechanism for Data Scientists to organize and manage ML
     services from algorithm onboarding through experimentation and to service
     deployment.
     
@@ -12,8 +12,19 @@ info:
     **Notes:** 
       * PLATFORM Gateway URL: https://platform.adobe.io/ 
       * Base path for this API: /data/sensei
-      * Useful [terminology](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html#!api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_overview.md#terminology)
-      * Tutorial on API calls: [How to access Adobe Experience Platform APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md)
+
+    Some common terminology used in this API document:
+      Term | Definition
+      --- | ---
+      **ML Algorithm** |  An algorithm that can learn from data and improve from experience, without human intervention. For example, linear regressions, logistic regression, Naive Bayes, Random Forest, and KNN
+      **ML library** |  A machine learning library or framework, typically language-specific, that provides fast, extensible implementations of cutting-edge machine learning algorithms. For example, TensorFlow, Caffe, Mlib (Spark), and H2O.
+      **Sensei Engine** | A project in a ML framework of the developer's choice. This constitutes templatized code and bindings in the language of choice for preprocessing, training, evaluation, and prediction.
+      **Sensei ML instance** |  The conceptual entity that is an instance of a Sensei Engine for a particular tenant made up of specific data, parameters, and Sensei code.
+      **Trained models** |  One of many models created via the process of experimenting and feature engineering before arriving at a validated, evaluated, and finalized model.
+      **Experiment**  | The process by which a model's reliability and generalization is validated by scoring on a small fraction of real live traffic. This process can include changing datasets, changing features, changing learning parameters and hardware.
+      **Published model** |  A finalized and versioned model arrived at after training, validation, and evaluation.
+      **Sensei ML service** | An ML Instance or Training Experiment Run deployed as a service to support on demand requests for training/scoring via an endpoint.
+      **Sensei runtime**  | The shell in which a Sensei ML instance executes.
 
     For more information about Sensei, try the [architectural overview](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html).
 
@@ -23,15 +34,15 @@ externalDocs:
 host: platform.adobe.io
 basePath: /data/sensei
 tags:
-  - name: Engine
+  - name: Engines
     description: >-
-      This entity acts as an umbrella entity holding all machine learning instances. This is
-      tied to a docker image, Java archive, or EGG file which contains machine 
-      learning logic to train and score a model.
+      The Sensei Engine is an umbrella entity holding all MLInstances. This is
+      tied to one or more docker images built to include the Sensei Code of a ML
+      developer.
   - name: MLInstance
     description: >-
-      The entity representing the combination of a specific engine with particular set 
-      of configurations. An instance is often use-case specific for a customer or client.
+      The entity representing the combination of a Sensei Engine with Sensei
+      Configuration, which is often use-case specific for a customer or client.
   - name: MLService
     description: >-
       The entity representing an MLInstance which has been published as a service.
@@ -42,19 +53,20 @@ tags:
       features, learning parameters, and hardware.
   - name: Model
     description: >-
-      This endpoint allows machine learning model management and registration (model artifact that is created by the training process).
+      This API allows to register a ML model. (model artifact that is created by
+      the training process)
   - name: Insight
     description: >-
       The entity containing insights and metrics which are used to empower a 
       data scientist to evaluate and choose optimal ML models by displaying 
-      relevant evaluation metrics.
+      relevant evaluation metrics .
 paths:
   /engines:
     parameters:
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
     get:
       tags:
-        - Engine
+        - Engines
       summary: Get a list of all Engines
       description: >-
         Lists all engines providing mechanisms for pagination, filtering, and
@@ -94,7 +106,7 @@ paths:
           $ref: '#/responses/504'
     post:
       tags:
-        - Engine
+        - Engines
       summary: Add a new Engine
       description: Creates a new Engine
       operationId: createEngine
@@ -108,9 +120,10 @@ paths:
         - $ref: '#/parameters/gwImsOrgIdHeaderParam'
         - in: formData
           name: engine
-          type: string
           description: Engine entity description
           x-content-type: application/vnd.adobe.platform.sensei+json;profile=engine.v1.json
+          schema:
+            $ref: '#/definitions/Engine'
         - in: formData
           name: defaultArtifact
           type: file
@@ -205,7 +218,7 @@ paths:
 
     get:
       tags:
-        - Engine
+        - Engines
       summary: Get Docker Registry information
       description: >-
         Get Docker Registry information for use in .
@@ -242,7 +255,7 @@ paths:
       - $ref: '#/parameters/engineIdPathParam'
     get:
       tags:
-        - Engine
+        - Engines
       summary: Returns Engine by id
       description: Retrieves a specific engine
       operationId: retrieveEngine
@@ -273,7 +286,7 @@ paths:
           $ref: '#/responses/504'
     put:
       tags:
-        - Engine
+        - Engines
       summary: Update an Engine by id
       description: Updates a specific engine
       operationId: updateEngine
@@ -317,7 +330,7 @@ paths:
           $ref: '#/responses/504'
     delete:
       tags:
-        - Engine
+        - Engines
       summary: Delete an existing Engine
       description: Deletes a specific engine
       operationId: deleteEngine
@@ -1038,6 +1051,8 @@ paths:
           type: string
           description: Model object that needs to be created
           x-content-type: application/vnd.adobe.platform.sensei+json;profile=model.v1.json
+          schema:
+            $ref: '#/definitions/Model'
       responses:
         '201':
           description: Creation successful
@@ -1515,7 +1530,7 @@ paths:
       description: MLServices may be searched by name or tags.
       operationId: retrieveMLServices
       produces:
-        - application/vnd.adobe.platform.sensei+json;profile=mlServiceListing.v1.json
+          application/vnd.adobe.platform.sensei+json;profile=mlServiceListing.v1.json
       parameters:
         - $ref: '#/parameters/startQueryParam'
         - $ref: '#/parameters/limitQueryParam'
@@ -2993,7 +3008,7 @@ definitions:
       children:
         type: array
         items:
-          $ref: '#/definitions/DefaultMetrics'
+            $ref: '#/definitions/DefaultMetrics'
   LinkObject:
     type: object
     required:
