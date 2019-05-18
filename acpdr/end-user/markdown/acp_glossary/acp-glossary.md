@@ -10,7 +10,7 @@ __Access key ID:__ Access key ID is a unique identifier that's associated with a
 __Action:__ In Experience Platform Launch, an action is a specific type of rule component that defines what should happen after an event occurs and conditions are evaluated and passed.
 
 <a name="Adobe Experience Platform"></a>
-__Adobe Experience Platform:__ Adobe Experience Platform standardizes data and content across the enterprise, powering real-time consumer profiles, enabling data science, and accelerating content velocity to drive experience personalization across the customer journey.
+__Adobe Experience Platform:__  Adobe Experience Platform standardizes data and content across the enterprise, powering real-time consumer profiles, enabling data science, and accelerating content velocity to drive experience personalization across the customer journey.
 
 <a name="Adobe Connectors"></a>
 __Adobe Connectors:__ Adobe Connectors are pre-configured connections created by Adobe to enable data to flow in and out of Experience Platform. Connectors include Microsoft Dynamics, Salesforce, Amazon S3, and Azure Blob.
@@ -29,9 +29,6 @@ __Append Save Strategy:__ `Append` save strategy is an option used when specifyi
 
 <a name="Array"></a>
 __Array:__ Arrays are used for ordered elements with the same data type.
-
-<a name="Artificial Intelligence"></a>
-__Artificial Intelligence:__ Artificial intelligence is a theory and development of computer systems that are able to perform tasks that normally require human intelligence, such as visual perception, speech recognition, decision-making, and translation between languages.
 
 <a name="Attributes"></a>
 __Attributes:__ Attributes are specified characteristics that represent a profile.
@@ -56,8 +53,10 @@ __Batch ID:__ Batch ID is an Adobe-generated identifier for a batch of data.
 <a name="Build"></a>
 __Build:__ In Experience Platform Launch, a build is a deployed library. The build is a file or set of files that contain all the configurations and code needed to execute the business logic contained inside of that library.
 
+__Business intelligence tools:__ Business intelligence, also known as "BI" tools are primarily integrated with the Experience Platform Query Service. BI tools are types of application software that collect and process large amounts of unstructured data from internal and external systems.
+
 <a name="Business Intelligence Tools"></a>
-__Business Intelligence Tools:__ Business intelligence, also known as "BI" tools are primarily integrated with the Experience Platform Query Service. BI tools are types of application software that collect and process large amounts of unstructured data from internal and external systems.
+__Business Intelligence Tools:__ Business intelligence tools, also known as "BI" tools are used to connect to Query Service to build reports and visualizations using the data found in the Data Lake.
 
 ## C
 
@@ -124,6 +123,8 @@ __Cross-site Data:__ Cross-site data is the combination of data from several sit
 <a name="Custom Identity Namespace"></a>
 __Custom Identity Namespace:__ Custom identity namespaces are customer created identifiers used to represent identities for a specific organization or business case.
  
+
+
 ## D
 <a name="Data Dictionary"></a>
 __Data Dictionary:__ In Experience Platform Launch, a data dictionary is a set of data elements defined within a property.
@@ -159,7 +160,7 @@ __Data Integration Partners:__ Data integration partners simplify and automate t
 __Dataset Labels:__ Dataset labels can inherit labels added via a connection. Edit connection to add, edit, or remove dataset labels. Labels can be added to a dataset. Fields will inherit all dataset labels.
 
 <a name="Data Science Workspace"></a>
-__Data Science Workspace:__ Data Science Workspace within Experience Platform enables customers to create machine learning models utilizing data across Experience Platform and Adobe Solutions to generate intelligent insights and predictions to weave delightful end-user digital experiences.
+__Data Science Workspace:__ Data Science Workspace is a value-add feature of Adobe Experience Platform that enables customers to create machine learning models utilizing data across Adobe Solutions, all to gain insights and predictions for end-user digital experiences.
 
 <a name="Data Source"></a>
 __Data Source:__ A data source is a user designated origin of data. Examples of a data source are a mobile app, profile and/or experience events, website profile events or a CRM.
@@ -167,14 +168,14 @@ __Data Source:__ A data source is a user designated origin of data. Examples of 
 <a name="Data Steward"></a>
 __Data Steward:__ A data steward is a person or entity that provides safeguards for ensuring data governance labels are maintained to be compliance with regulations and corporate policies.
 
-<a name="Data Type"></a>
-__Data Type:__ Data type is a reusable object with properties in a hierarchical representation.
+<a name="Data type"></a>
+__Data type:__ Data type is a reusable object with properties in a hierarchical representation.
  
 <a name="Delta Save Strategy"></a>
 __Delta Save Strategy:__ Delta save strategy is an option for ingesting third-party data via a connection. The option allows the user to specify that new or changed rows of source data are ingested into Experience Platform. New rows are added to the end of the dataset and changed rows are updated in the dataset on Experience Platform.
 
-<a name="Display Name"></a>
 __Display Name:__ Display name is a user-friendly name of a field that is shown in the UI.
+
 
 <a name="DULE"></a>
 __DULE:__ DULE is an acronym for *Data Usage Labeling and Enforcement*. DULE is a key part of data governance and a collection of key features that allows for data usage labeling and applying data access policies for governance needs within an organization.
@@ -185,7 +186,7 @@ __DULE:__ DULE is an acronym for *Data Usage Labeling and Enforcement*. DULE is 
 __Embed Code:__ In Experience Platform Launch, the embed code is a script tag placed within the HTML on a site or environment. The embed code instructs the browser where to retrieve the build.
 
 <a name="Enumeration"></a>
-__Enumeration:__ An enum is a list of values that represent the valid data for a field.
+__Enumeration:__  An enum is a list of values that represent the valid data for a field.
 
 <a name="Environment"></a>
 __Environment:__ In Experience Platform Launch, an environment is a set of deployment instructions that specifies the host delivery and file format of a build. A library must be paired with an environment before it can be built.
@@ -202,6 +203,7 @@ __Experience Data Model (XDM):__ Experience Data Model (XDM) is the concept of u
 <a name="Experience Platform Launch"></a>
 __Experience Platform Launch:__ Launch is a tag and SDK management ecosystem, integrated with Experience Platform and Experience Cloud Solutions. Launch provides tools to deploy, unify, and manage analytics, marketing, and advertising integrations that are necessary to power relevant customer experiences on all client devices. 
 
+
 <a name="Experiment"></a>
 __Experiment:__ An experiment is a process of creating a trained model by training the instance with a sample portion of the live production data.
 
@@ -209,7 +211,7 @@ __Experiment:__ An experiment is a process of creating a trained model by traini
 __Experiments:__ Experiments is the process of applying a trained model to a small portion of the live production data to validate its performance. This is different from a trained model that is tested against a holdout test dataset. This is also different from the concept of an Experiment in some ML frameworks where it actually means a sample modeling project.
 
 <a name="ExperienceEvent"></a>
-__ExperienceEvent:__ ExperienceEvent is an Experience Platform standard schema that captures observations, including the point in time and identity of the subject involved. Experience Events are fact records of what occurred, representing what happened without aggregation or interpretation.
+__ExperienceEvent:__ ExperienceEvent is an Experience Platform standard schema used to define behavioral event data.
 
 <a name="Extension"></a>
 __Extension:__ In Experience Platform Launch, an extension is a package of functionality added to a Launch property.  An extension is usually focused around a particular marketing or analytics solution and provides the tools needed to deploy that technology into a client environment.
@@ -240,13 +242,11 @@ __GDPR:__ The General Data Protection Regulation (GDPR) is a legal framework tha
 __GDPR Data Label:__ GDPR governance label is used to define the fields that may contain personal identifiers for use in GDPR access and/or delete requests.
 
 ## H
-
 <a name="Host"></a>
 __Host:__ In Experience Platform Launch, a host specifies the location, domain, and user credentials necessary for Launch to deliver a build.
 
 ## I
 
-<a name="Identity"></a>
 __Identity:__ Identity is an identifier such as a cookie ID, device ID, or email ID that uniquely represents an end customer.
 
 <a name="Identity I Data Labels"></a>
@@ -261,8 +261,8 @@ __Identity Namespace:__ An identity namespace is an identifier such as cookie ID
 <a name="Identity Service"></a>
 __Identity Service:__ Experience Platform Identity Service UI enables the creation and management of identity types to enable linking of identities across devices and channels for a complete user-view from Unified Profile.
 
-<a name="Identity Symbol"></a>
-__Identity Symbol:__ Identity symbol is an abbreviation of an identity namespace that can be used as a reference in APIs.
+<a name="Identity Namespace"></a>
+__Identity Namespace:__ An identity namespace is an identifier such as a cookie ID, device ID, or email ID to indicate the context from which data originates and is used to recognize and link identities across Experience Cloud.
 
 <a name="I1 Data Label"></a>
 __I1 Data Label:__ The `I1` data label is used to classify directly identifiable data that can identify or contact a specific person rather than a device.
@@ -276,36 +276,37 @@ __Ingest:__ Ingestion is the process of adding data from a source to Experience 
 <a name="Ingestion Schedule"></a>
 __Ingestion Schedule:__ Ingestion schedule provides time-based options when ingesting from a source to Experience Platform.
 
-<a name="Interest-Based Targeting or Personalization"></a>
-__Interest-Based Targeting or Personalization:__ Interest-based targeting, also known as personalization, occurs if the following three conditions are met: data collected on-site is used to make inferences about a user's interest, data is used in another context such as on another site or app (off-site), and if data is used to select which content or ads are served based on those inferences.
+<a name="Instance"></a>
+__Instance:__ An instance is an occurrence of the recipe configured with the right data definition to help solve specific business problems. It acts as the holder of configuration information to tailor the general model specification to a more narrow goal. A model instance will maintain a reference to the list of trained models that are created from it. Modifications to an instance can be tracked as a new version.
+
+<a name="Interest-Based targeting or personalization"></a>
+__Interest-Based targeting or personalization:__ Interest-based targeting, also known as personalization, occurs if the following three conditions are met: data collected on-site is used to make inferences about a user's interest, data is used in another context such as on another site or app (off-site), and if data is used to select which content or ads are served based on those inferences.
 
 
 ## J
-
 <a name="JupyterLab"></a>
-__JupyterLab:__ *JupyterLab* is an open-source web-based interface for Project Jupyter and is tightly integrated into Experience Platform.
+__JupyterLab:__ *JupyterLab* is an open-source web application used in Data Science Workspace primarily designed to provide a user interface based on Jupyter Notebook and offers complete support for data science languages.
 
 <a name="Jupyter Notebook"></a>
-__Jupyter Notebook:__ *Jupyter Notebook* is an open-source web application that enables users to create and share documents that contain live code, equations, visualizations, and narrative text.
+__Jupyter Notebook:__ *Jupyter Notebook* is an open-source web application utilized in Data Science Workspace that allows users to create and share documents that contain live code, equations, visualizations, and narrative text. Uses include data cleansing and transformation, numerical simulation, statistical modeling, data visualization, and machine learning.
 
 
 ## K
 
 ## L
-
 <a name="Library"></a>
 __Library:__ In Experience Platform Launch, a library is a set of business logic that contains instructions for how the Launch library should behave on the client device. 
 
 ## M
 
-<a name="Machine Learning (ML)"></a>
-__Machine Learning (ML):__ Machine learning is the field of study that enables computers the ability to learn without being explicitly programmed.
+<a name="Machine Learning"></a>
+__Machine Learning (ML):__ Machine learning is a type of artificial intelligence that builds services in a mode of self-learning without being explicitly programmed and provides the ability to learn and improve from experiences to make predictions on data.
 
 <a name="Machine Learning Model"></a>
-__Machine Learning Model:__ A machine learning model is an instance of a machine learning recipe that is trained using historical data and configurations to solve for a business use case. In Adobe Data Science Workspace, machine learning models are call recipes.
+__Machine Learning Model:__ A machine learning model is an intelligent recipe for solving a problem and is a container for the processing logic required to build and execute a trained model.  In Adobe Data Science Workspace, machine learning models are call recipes.
 
 <a name="Mixin"></a>
-__Mixin:__ A mixin allows users to extend reusable fields that contain variables defining one or more attribute intended to be included in a schema or added to a class.
+__Mixin:__ Mixin is a reusable component that defines one or more attributes that are intended to be included in a dataset schema that can be reused or added to a class.
 
 <a name="Modified Data Column"></a>
 __Modified Date Column:__ Selecting a `Modified Date` column is an option when specifying third-party data via a connection. When the `Delta` save strategy is selected and the dataset contains multiple date related schema, the user must choose from the available date/time type schema to specify modified date key column. `Modified Date` option is not available when the `Overwrite` save strategy is selected.
@@ -337,6 +338,8 @@ __Profile ID:__ A profile ID is an auto-generated identifier associated with an 
 <a name="Property"></a>
 __Property:__ In Experience Platform Launch, a property is a container for everything needed to deploy a set of tags. 
 
+
+
 ## Q
 
 <a name="Queries"></a>
@@ -349,9 +352,11 @@ __Query Editor:__ Query Editor is a tool for writing, validating, and submitting
 __Query Service for Adobe Experience Platform:__ *Experience Platform Query Service* enables data analysts to query ExperienceEvents and XDMs for use in analytics and machine learning.
 
 ## R
-
 <a name="Recipe"></a>
-__Recipe:__ A recipe is Adobe's term for a model specification and is a top-level container representing a specific machine learning, AI algorithm or ensemble of algorithms, processing logic, and configuration required to build and execute a trained model and hence help solve specific business problems.
+__Recipe:__ Recipe is Adobe's term for a model specification and is a top-level container representing a specific machine learning algorithm, processing logic, and configuration required to build and execute a trained model. 
+
+<a name="Recipe Instance"></a>
+__Recipe instance:__ Recipe instance represents the instantiation of a model for a specific use case. It acts as the holder of configuration information to tailor the more general model specification to a more narrow goal. A model instance will maintain a reference to the list of trained models that are created from it. Modifications to a recipe instance can be tracked as a new version.
 
 <a name="Record"></a>
 __Record:__ A record is data that persists as rows in a dataset.
@@ -366,7 +371,7 @@ __Resource:__ In Experience Platform Launch, resource is a generic term that ref
 __Rule:__ In Experience Platform Launch, a rule is a collection of rule components defining a specific set of events, conditions, and actions that should be grouped logically.
 
 <a name="Rule Component"></a>
-__Rule Component:__ In Experience Platform Launch, rule components are the events, conditions, and actions that make up a rule.
+__Rule Component:__  In Experience Platform Launch, rule components are the events, conditions, and actions that make up a rule.
 
 
 ## S
@@ -378,10 +383,10 @@ __Sample Data:__ Sample data is a preview of a data file, typically the first 10
 __Schedule:__ Schedule is a user-defined specification on frequency or cadence of data ingestion from a third-party data source to Adobe Experience Platform.
 
 <a name="Scoring"></a>
-__Scoring:__ Scoring is the process of generating insights from data using a trained model. 
+__Scoring:__ Scoring is the process where the learned model, insight, or pattern is used for a different unlabeled or unprocessed dataset. A trained model can be used to score newly arriving data or withheld data for the purposes of performing model validation or ad hoc analysis.
 
 <a name="Schema"></a>
-__Schema:__ Schema is comprised of a class and optional mixin and is used to create datasets and/or data streams. A schema includes behavioral attributes, timestamp, identity, attribute definitions, and relationships.
+__Schema:__  Schema is comprised of a class and optional mixin and is used to create datasets and/or data streams. A schema includes behavioral attributes, timestamp, identity, attribute definitions, and relationships.
 
 <a name="Schema Descriptor"></a>
 __Schema Descriptor:__ Schema descriptor is an additional schema related metadata that describes behavior that can be used by Experience Platform to understand intended schema behavior such as the relationship between two schemas.
@@ -392,8 +397,8 @@ __Secret Access Key:__ A secret access key is an Amazon S3 key that is used in c
 <a name="Segment"></a>
 __Segment:__ A segment is a set of rules that include attributes and event data that qualify a number of profiles to become an audience.
 
-<a name="Segment Builder"></a>
 __Segment Builder:__ Segment Builder is the visual development environment used to build segment definitions and serves as a common component of all solutions using Unified Segmentation on Platform.
+
 
 <a name="Segment ID"></a>
 __Segment ID:__ Segment ID is an auto-generated identifier associated with a segment.
@@ -405,19 +410,14 @@ __Segment Membership:__ Segment membership displays which segment a profile is c
 __Segment Rules:__ Segment rules are where and how the user defines what the profiles qualify for the segment.
 
 <a name="Segment Type"></a>
-__Segment Type:__ There are two types of segments: One is a segment that updates dynamically with Platform data changes, and the other is an audience snapshot that captures all profiles meeting segment rules, and these don't change.
+__Segment Type:__ There are two types of segments: One is a segment that updates dynamically with Platform data changes, and the other is an audience snapshot that captures all profiles meeting segment rules and these don't change.
 
 <a name="Segmentation"></a>
 __Segmentation:__ Segmentation is the process of dividing a large group of customers, prospects, or consumers into smaller groups that share similar attributes and will respond similarly to marketing strategies.
 
-<a name="Sensei ML Framework"></a>
-__Sensei ML Framework:__ Sensei ML Framework is a unified machine learning framework across Adobe that leverages data on Experience Platform to empower data scientists in the development of machine learning driven intelligence services in a faster, scalable and reusable manner.
-
 <a name="Sensitive Data Labels"></a>
 __Sensitive Data Labels:__ Sensitive “S” labels are used to categorize data deemed sensitive, such as different types of behavioral or geographic data that you want marked as sensitive.
 
-<a name="Service"></a>
-__Service:__ In the machine learning context, a deployed service exposes functionality of an artificial intelligence, machine learning model or advanced algorithm through an API so that it can be consumed by other services or applications to create intelligent apps.
 
 <a name="S1 Data Label"></a>
 __S1 Data Label:__ `S1` data label is used to classify data specifying latitude and longitude that can be used to determine the precise location of a device.
@@ -431,27 +431,24 @@ __Standard Identity Namespace:__ Standard identity namespaces are Adobe pre-defi
 <a name="Standard Schema"></a>
 __Standard Schema:__ Standard schemas consist of classes and mixins and are intended for reuse.
 
-<a name="Streaming Ingestion"></a>
-__Streaming Ingestion:__ Streaming ingestion provides users a method to send data from client and server-side devices to Experience Platform in real-time.
-
 <a name="Streaming Endpoint"></a>
 __Streaming Endpoint:__ A streaming endpoint URL is a unique endpoint provided by Adobe and tied to a customer's IMS org to stream data into Experience Platform.
 
 <a name="Symbol"></a>
-__Symbol:__ Symbol is an abbreviation of an identity namespace that can be used as a reference in APIs.
+__Symbol:__ Symbol is an abbreviation of an identity type that can be used as a reference in APIs.
 
 ## T
 
-<a name="Trained Model"></a>
-__Trained Model:__ A trained model represents the executable output of a model training process, in which a set of training data was applied to the model instance. A trained model will maintain a reference to any Intelligent Web Service that is created from it. The trained model is suitable for scoring and creating an intelligent web service. Modifications to a trained model can be tracked as a new version.
+<a name="Training"></a>
+__Training:__ For supervised machine learning, training is the process of learning patterns and insights from labeled data. 
 
 <a name="Token"></a>
 __Token:__ A token is a type of two-factor authentication security that can be used to authorize the use of computer services with Query Service. 
 
 ## U
 
-<a name="Unified Profile"></a>
-__Unified Profile:__ Unified Profile, also known as real-time customer profiles, is a centrally accessible data store that offers a comprehensive view of customers using online, offline, Adobe and non-Adobe data. The event and profile data are compiled to create an aggregate of profiles that can be used for segmentation.
+<a name="Unified Profile Service"></a>
+__Unified Profile Service:__ Unified Profile Service is a centrally accessible data store that offers a comprehensive view of customers using online, offline, Adobe and non-Adobe data. The event and profile data are compiled to create an aggregate of profiles that can be used for segmentation.
 
 ## V
 
@@ -461,15 +458,6 @@ __Unified Profile:__ Unified Profile, also known as real-time customer profiles,
 
 <a name="XDM"></a>
  __XDM (Experience Data Model):__ XDM (Experience Data Model) is the concept of using standard schemas to unify data for use with Experience Platform and Adobe Experience Cloud solutions. XDM standardizes how data is structured and speeds up and simplifies the process of gaining insights from massive amounts of data.
- 
- <a name="XDM DecisionEvent"></a>
- __XDM DecisionEvent:__ A decision event is used to capture observations about the outcome and context of a decision activity. The decision event captures information about how the decision made, when it was occurring, what options were proposed (chosen) and what contextual state existed that either influenced the decision or could be observed during the decision process. The decision event also captures the proposition ID, a globally unique identifier that can be used to correlate the decision to other events. 
-
-<a name="XDM ExperienceEvent"></a>
-__XDM ExperienceEvent:__ An ExperienceEvent captures observations, including the point in time and identity of the subject involved. Experience Events are fact records of what occurred, representing what happened without aggregation or interpretation. They are critical for time-domain analytics as they allow for observation and analysis of changes that occur in a given window of time and the comparison between multiple windows of time to track trends. Experience Events can be either explicit (directly observable human actions) or implicit (raised without a direct human action).
-
-<a name="XDM Profile"></a>
-__XDM Profile:__ An XDM Profile forms a singular representation of the attributes and interests of both identified and partially-identified subjects. Less-identified profiles may contain only anonymous behavioral signals, such as browser cookies, while highly-identified profiles may contain detailed personal information such as name, date of birth, location, and email address. As a profile continues to grow, it becomes a robust repository of personal information, identification information, contact details, and communication preferences for an individual subject.
  
 <a name="XDM System"></a>
 __XDM System:__ XDM System is the infrastructure, data semantics, and workflow in Experience Platform that is powered by standard schemas.

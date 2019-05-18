@@ -77,9 +77,9 @@ Request payload:
 {
   "companyContexts": [{
     "namespace": "imsOrgID",
-    "value": "orgId"
+    "value": orgId
   }],
-  "users": [{
+  "users":
     "key": "David Smith", // user id on controller side submitting GDPR request
     "action": ["access"], // type of GDPR request - access or delete
     "userIDs": [  // list of namespaces to lookup in platform or other solutions
