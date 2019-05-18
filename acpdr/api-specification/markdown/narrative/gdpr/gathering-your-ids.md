@@ -99,11 +99,3 @@ URL: https://platform.adobe.io/data/core/idnamespace/identities/
 ]
 Returns an HTTP 200 OK on success.
 ```
-createTime": 1522783145000,
-        "idType": "COOKIE",
-        "name": "AdCloud",
-        "custom": false
-    }
-]
-Returns an HTTP 200 OK on success.
-```
