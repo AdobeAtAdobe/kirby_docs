@@ -1,0 +1,23 @@
+{
+	"name": "adobe_experience_platform_glossary",
+	"version": "1.0.0",
+	"description": "Glossary of Platform Terms",
+	"author": "Michael Hiatt",
+	"view_type": "mdbook",
+	"meta_keywords": "Adobe Experience Platform, platform terms, terms, terminology, Experience Platform, glossary, platform glossary",
+	"meta_description": "Glossary includes terms for the Adobe Experience Platform",
+	"publish_date": "02/01/2019",
+	"show_edit_github_banner": false,
+	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
+	"pages": [
+					
+						{
+							"pages": [],
+							"path": "end-user/markdown/acp_glossary/acp-glossary.md",
+							"title": "Glossary of Platform Terms",
+							"description": "Terms specific to Adobe Experience Platform and its components"
+						}
+					
+	],
+	"app2app_map": {"api-specification/markdown/narrative/tutorials/":"/apis/experienceplatform/home/tutorials/alltutorials.html", "acpdr/swagger-specs/":"/apis/cloudplatform/dataservices/api-reference.html"}
+}

@@ -1,3 +1,4 @@
+
 # Salesforce Connector for Adobe Experience Platform
 
 The Salesforce Connector for Adobe Experience Platform provides an API and wizard to ingest your Salesforce CRM data onto Adobe Experience Platform. The Salesforce connector allows you to:
@@ -9,7 +10,7 @@ The Salesforce Connector for Adobe Experience Platform provides an API and wizar
 * Set a schedule and frequency for uploading data.
 * Save the Salesforce connector and modify it as needed.
 
-This article provides steps to set up and configure the Salesforce connector through API calls.
+This article provides steps to set up and configure the Salesforce connector through API calls. For further details you can refer to - [Swagger Documentation](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/partner-connectors-api.yaml)
 
 ## Setting up the Salesforce Connector
 Set up an account to access APIs and provide credentials to create a connector:
@@ -31,7 +32,7 @@ After you set up authorization for APIs, these values are returned:
 
 ### Set up Platform connection to Salesforce
 
-You must have the following credentials:
+You will need the following credentials:
 
 * `{SALESFORCE_USER_NAME}`: Your Salesforce CRM user name
 * `{SALESFORCE_PASSWORD}`: Your Salesforce CRM password
@@ -45,127 +46,83 @@ After you set up authorization to make API calls from the Adobe I/O Gateway and 
 
 ## Setting up the Salesforce Connector
 
-Follow these steps to create a dataset from Salesforce and set up a connector to trigger a daily ingestion. The example uses the Salesforce `Account` object.
+Follow these steps to create a dataset from Salesforce and set up a connector to trigger a one-time or scheduled ingestion. The example uses the Salesforce `Account` object.
 
 ### Create a dataset from a Salesforce object
 
-#### 1. Create a Catalog Account entity
+#### Create Account and Connection
 
-First, request a Salesforce CRM catalog account entity. You need your Salesforce User Name, Salesforce Password, and Salesforce Security Token to request a Salesforce CRM catalog acount entity. The response to this request includes the Salesforce *Account ID*.
+First, request a Salesforce CRM account entity. You need your Salesforce User Name, Salesforce Password, and Salesforce Security Token to request a Salesforce CRM account and connection entity. The response to this request includes the Salesforce *Account ID* and *Connection ID* in Catalog.
 
 ##### Request
-POST /connections
 
 ```SHELL
-curl -X POST https://platform.adobe.io/data/foundation/catalog/accounts/ \
+curl -X POST \
+  https://platform.adobe.io/data/foundation/connectors/account/ \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'Content-Type: application/json' \
+  -H 'Accept: application/vnd.adobe.validCredentials+json;version=2' \
   -d '{
+  "type": "salesforce",
   "params": {
-    "username": "{SALESFORCE_USER_NAME}",
-    "password": {
-      "value": "{SALESFORCE_PASSWORD}",
-      "isSecret": true
-    },
-    "securityToken": {
-      "value": "{SALESFORCE_SECURITY_TOKEN}",
-      "isSecret": true
-    },
-    "serviceUrl": "login.salesforce.com"
-  },
-  "connector": "salesforce"
+    "username": {SALESFORCE_USER_NAME},
+    "password": {SALESFORCE_PASSWORD},
+    "securityToken": {SALESFORCE_SECURITY_TOKEN}
+  }
 }'
 ```
-
-`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-`{SALESFORCE_USER_NAME}`: Your username for Salesforce CRM.
-`{SALESFORCE_PASSWORD}`: Your password for Salesforce CRM.
-`{SALESFORCE_SECURITY_TOKEN}`: Your security token for Salesforce CRM.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{SALESFORCE_USER_NAME}`: Your username for Salesforce CRM.
+* `{SALESFORCE_PASSWORD}`: Your password for Salesforce CRM.
+* `{SALESFORCE_SECURITY_TOKEN}`: Your security token for Salesforce CRM.
 
 ##### Response
-```JSON
-[
-  "@/accounts/{ACCOUNT_ID}"
-]
+```javascript
+{
+    "accountId": {ACCOUNT_ID},
+    "connectionId": {CONNECTION_ID}
+}
 ```
 
-`{ACCOUNT_ID}`: Copy this account ID. Use this value in future steps.
+* `{ACCOUNT_ID}`: Account ID in catalog.
+* `{CONNECTION_ID}`: Connection ID in catalog.
 
-#### 2. Create a Catalog Connection entity
+Please note `{ACCOUNT_ID}` and `{CONNECTION_ID}` for further use.
 
-With an account ID, you can create a Salesforce Catalog connection entity. In this request, identify when the ingestion starts (`ingestStart`), and the frequency you want ingestion to occur (`frequency`).
+#### Create Custom Schema
 
-In the example request, enter the default value for daily ingestion and its frequency.
+For Ingesting data into the platform, data needs to be compliant with a schema. Data Connectors provide POST /schemas API to create custom schema of the data you wish to ingest. This custom schema is called Adhoc schema since it has the capability to not comply with any of the standard XDM models. Please refer to [XDM Schema Registry Guide](https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md) for details on XDM models.
+
+Creating custom schema is a two step process -
+
+1. Selecting desired table to ingest. You can use GET /objects call to list tables.
+2. Creating custom schema from table or fields of that table.
+
+##### Creating Custom Schema with table name
+Select a Salesforce table to ingest. Use the below request to get a list of tables from the Salesforce connection:
 
 ##### Request
-POST /connections
 
 ```SHELL
-curl -X POST https://platform.adobe.io/data/foundation/catalog/connections/ \
+curl -X GET \
+  https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/objects \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -H 'Content-Type: application/json' \
-  -d '{
-      "name": "{CONNECTION_NAME}",
-      "description": "",
-      "ingestStart": "{INGEST_START}",
-      "frequency": {
-        "timezone": "UTC",
-        "month": "*",
-        "day": "*",
-        "hour": "00",
-        "minute": "00",
-        "dayOfWeek": "*"
-        },
-      "connector": "salesforce",
-      "accountId": "{ACCOUNT_ID}"
-    }'
-```
-
-`{API_KEY}`: Specific API key value found in your unique Adobe Experience Platform integration.
-`{IMG_ORG}`: IMS org credentials found in your unique Adobe Experience Platform integration.
-`{ACCESS_TOKEN}`: Specific bearer token value provided after authentication.
-`{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials
-`{CONNECTION_NAME}`: Name of the connection you are creating.
-`{INGEST_START}`: Date and time when ingestion is scheduled to start. If time is set to the past (relative to current time) ingestion begins immediately. Format is `"yyyy-mm-ddThh:mm:ss.000Z"` (E.g. `"2018-03-22T23:59:59.000Z"`)
-
-##### Response
-```JSON
-[
-    "@/connections/{CONNECTION_ID}"
-]
-```
-
-`{CONNECTION_ID}`: ID of the connector you created.
-
-#### 3. Select a Salesforce object
-
-Select a Salesforce object to ingest. Use the following request to get a list of all available objects from the Salesforce connector:
-
-##### Request
-GET /connectors/connections/{CONNECTION_ID}/objects
-
-```SHELL
-curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/objects \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'Content-Type: application/json'
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-`{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials.
-`{CONNECTION_ID}`: ID of the connector you created from the previous steps.
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
 
 ##### Response
-```JSON
+```javascript
 [
     {
         "logicalName": "AcceptedEventRelation",
@@ -191,258 +148,300 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 ]
 ```
 
-> **Note:** The return response is a partial list of all available Salesforce CRM objects. Use the `{OBJECT_ID}` as the `logicalName` of the objects.
+> **Note: ** The return response is a partial list of all available Salesforce CRM objects. Use the `{OBJECT_ID}` as the `logicalName` of the objects.
 
-#### Ingesting selected fields from the Salesforce object
-
-To ingest select fields form the `Account` object:
-
-1. Determine which fields you want from the object. For example, you can request all fields for a specific Salesforce CRM object.
-
-1. Ingest select fields
-
+Use the `logicalName` of the selected object as `{OBJECT_ID}` to create custom schema in the next step.
+Create custom schema from table name:
 ##### Request
-POST /connectors/connections/{CONNECTION_ID}/object/{OBJECT_ID}/fields
 
 ```SHELL
-curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/objects/{{OBJECT_ID}}/fields \
+curl -X POST \
+  'https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/schemas' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'Content-Type: application/json'
+  -d '{
+   "objectName" : {OBJECT_ID}
+}'
 ```
-
-`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-`{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials.
-`{CONNECTION_ID}`: ID of the connector you created from the previous steps.
-`{OBJECT_ID}`: Logical name of the Salesforce Object you want to ingest.
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
+* `{OBJECT_ID}`: Logical Name of the Salesforce Object you want to ingest.
 
 ##### Response
-
-The following code sample displays part of the response you will receive. You can choose to ingest all the fields of an object or only select the fields you are interested in.
-
-```JSON
-[
-    {
-        "logicalName": "Name",
-        "displayName": "Account Name",
-        "isPrimaryKey": false,
-        "type": "string",
-        "meta": {
-            "inboundSupported": true,
-            "outboundSupported": true,
-            "originalType": "string",
-            "maxLength": 255,
-            "options": null
-        }
-    },
-    {
-        "logicalName": "Site",
-        "displayName": "Account Site",
-        "isPrimaryKey": false,
-        "type": "string",
-        "meta": {
-            "inboundSupported": true,
-            "outboundSupported": true,
-            "originalType": "string",
-            "maxLength": 80,
-            "options": null
-        }
-    },
-    {
-        "logicalName": "SystemModstamp",
-        "displayName": "System Modstamp",
-        "isPrimaryKey": false,
-        "type": "date",
-        "meta": {
-            "inboundSupported": true,
-            "outboundSupported": true,
-            "originalType": "datetime",
-            "options": null
-        }
-    },
-      "..."
-    {
-        "logicalName": "UpsellOpportunity__c",
-        "displayName": "Upsell Opportunity",
-        "isPrimaryKey": false,
-        "type": "string",
-        "meta": {
-            "inboundSupported": true,
-            "outboundSupported": true,
-            "originalType": "picklist",
-            "maxLength": 255,
-            "options": [
-                {
-                    "value": "Maybe",
-                    "label": "Maybe"
-                },
-                {
-                    "value": "No",
-                    "label": "No"
-                },
-                {
-                    "value": "Yes",
-                    "label": "Yes"
-                }
-            ]
-        }
-    }
-]
-```
-
- Here is an example of identifying fields in a request:
-
- <!-- Where is the example?-->
-
-#### 4. Create a Dataset Catalog entity
-The dataset defines the structure of the data the connector ingests.
-
-##### Request
-POST /datasets
-
-```SHELL
-curl -X POST https://platform.adobe.io/data/foundation/catalog/datasets/ \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'Content-Type: application/json' \
-  -d '{JSON_PAYLOAD}'
-```
-
-`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
-`{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-`{ACCOUNT_ID}`: Account ID generated from your Salesforce credentials.
-`{CONNECTION_ID}`: ID of the connector you created from the previous steps.
-`{OBJECT_ID}`: Logical Name of the Salesforce Object you want to ingest.
-
-`{JSON_PAYLOAD}`: The dataset you will post.
-
-```JSON
+```javascript
 {
-    "objectId": "{OBJECT_ID}",
-    "name": "Accounts",
-    "saveStrategy": "append",
-    "connectionId": "{CONNECTION_ID}",
-    "tags": {
-        "connectors-objectName": [
-            "{OBJECT_ID}"
-        ],
-        "connectors-saveStrategy": [
-            "append"
-        ]
+    "title": {SCHEMA_TITLE},
+    "schemaRef": {
+        "id": {SCHEMA_ID},
+        "contentType": {SCHEMA_CONTENT_TYPE}
     },
-    "fields": [
-        {
-            "logicalName": "Name",
-            "displayName": "Account Name",
-            "isPrimaryKey": false,
-            "type": "string",
-            "meta": {
-                "inboundSupported": true,
-                "outboundSupported": true,
-                "originalType": "string",
-                "maxLength": 255,
-                "options": null
-            }
-        },
-        {
-            "logicalName": "Site",
-            "displayName": "Account Site",
-            "isPrimaryKey": false,
-            "type": "string",
-            "meta": {
-                "inboundSupported": true,
-                "outboundSupported": true,
-                "originalType": "string",
-                "maxLength": 80,
-                "options": null
-            }
-        },
-        {
-            "logicalName": "SystemModstamp",
-            "displayName": "System Modstamp",
-            "isPrimaryKey": false,
-            "type": "date",
-            "meta": {
-                "inboundSupported": true,
-                "outboundSupported": true,
-                "originalType": "datetime",
-                "options": null,
-                "delta": {}
-            }
-        },
-        {
-            "logicalName": "UpsellOpportunity__c",
-            "displayName": "Upsell Opportunity",
-            "isPrimaryKey": false,
-            "type": "string",
-            "meta": {
-                "inboundSupported": true,
-                "outboundSupported": true,
-                "originalType": "picklist",
-                "maxLength": 255,
-                "options": [
-                    {
-                        "value": "Maybe",
-                        "label": "Maybe"
-                    },
-                    {
-                        "value": "No",
-                        "label": "No"
-                    },
-                    {
-                        "value": "Yes",
-                        "label": "Yes"
-                    }
-                ]
-            }
-        }
-    ],
-    "connectorId": "salesforce",
-    "requestStartDate": "2018-02-14 16:06:44",
-    "status": "enabled",
-    "aspect": "production"
+    "namespace": {NAMESPACE}
 }
 ```
+* `{SCHEMA_TITLE}`: Title of schema in XDM Schema Registry.
+* `{SCHEMA_ID}`: Unique id of schema in XDM Schema Registry.
+* `{SCHEMA_CONTENT_TYPE}`: Content-type and version of schema.
+* `{NAMESPACE}`: Unique ID generated by XDM Schema Registry as namespace corresponding to adhoc schema.
 
+This `schemaRef` can be used further to create dataset entity through dataset API. [Creating a Dataset](#create_dataset)
 
-| Field | Format | Description |
-|--- |--- |--- |
-|`{JSON PAYLOAD}`|  |Subset of the object fields you selected from the previous response to get all fields for the `Account` Salesforce CRM object. This defines the fields populated by the connector on a recurring frequency (such as Account Name, Account Site, System Modstamp, etc.).|
-|`"requestStartDate"`| Date and time |How far in the past (relative to now) the back-fill goes. To back-fill 30 days, enter `now() - 30 days` and the current date and time.|
-|`"connectors-saveStrategy"`| | how the data will be ingested. In the example, the Append option was used instead of the Delta or Overwrite options. Append and Delta options are sorted by time, requiring you to select a time-based property to order the data, such as `System Modstamp`, `Created Date`, or `Last Modified Date`. |
+##### Creating Custom Schema from fields
+To construct custom schema from a subset of fields of any object, use "fields" API to fetch fields and use the required subset of fields as payload in create schema.
 
-Adding a `"delta": {}` in the `"meta"` field indicates the method selected is to be in the time-based column. In the example, the tag into the `"SystemModstamp"` object for the `"JSON_PAYLOAD"` was passed back to the request.
+Get fields of object:
 
-```JSON
-{
-    "logicalName": "SystemModstamp",
-    "displayName": "System Modstamp",
-    "isPrimaryKey": false,
-    "type": "date",
+##### Request
+```SHELL
+curl -X GET \
+  'https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/fields?object={OBJECT_ID}' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
+* `{OBJECT_ID}`: Logical Name of the Salesforce Object whose fields are to be fetched.
+
+##### Response
+```javascript
+[
+  {
+    "logicalName": "Id",
+    "displayName": "Account ID",
+    "isPrimaryKey": true,
+    "type": "string",
     "meta": {
+      "inboundSupported": true,
+      "outboundSupported": true,
+      "originalType": "id",
+      "maxLength": 18,
+      "options": []
+    }
+  },
+  {
+    "logicalName": "IsDeleted",
+    "displayName": "Deleted",
+    "isPrimaryKey": false,
+    "type": "boolean",
+    "meta": {
+      "inboundSupported": true,
+      "outboundSupported": true,
+      "originalType": "boolean",
+      "options": []
+    }
+  }
+]
+```
+The required fields are passed to POST /schemas call for construction of custom adhoc schema:
+
+##### Request
+
+```SHELL
+curl -X POST \
+  https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/schemas \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '{
+  "fields": [
+    {
+      "logicalName": "Id",
+      "displayName": "Account ID",
+      "isPrimaryKey": true,
+      "type": "string",
+      "meta": {
         "inboundSupported": true,
         "outboundSupported": true,
-        "originalType": "datetime",
-        "options": null,
-        "delta": {}
+        "originalType": "id",
+        "maxLength": 18,
+        "options": []
+      }
+    },
+    {
+      "logicalName": "IsDeleted",
+      "displayName": "Deleted",
+      "isPrimaryKey": false,
+      "type": "boolean",
+      "meta": {
+        "inboundSupported": true,
+        "outboundSupported": true,
+        "originalType": "boolean",
+        "options": []
+      }
     }
-}
+  ]
+}'
 ```
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
 
 ##### Response
+```javascript
+{
+    "title": {SCHEMA_TITLE},
+    "schemaRef": {
+        "id": {SCHEMA_ID},
+        "contentType": {SCHEMA_CONTENT_TYPE}
+    },
+    "namespace": {ADHOC_NAMESPACE}
+}
+```
+* `{SCHEMA_TITLE}`: Title of schema in XDM Schema Registry.
+* `{SCHEMA_ID}`: Unique id of schema in XDM Schema Registry.
+* `{SCHEMA_CONTENT_TYPE}`: Content-type and version of schema.
+* `{ADHOC_NAMESPACE}`: Unique ID generated by XDM Schema Registry as namespace of adhoc schema.
 
-```JSON
+This `schemaRef` is used in the next step to create dataset entity through dataset API. [Creating a Dataset](#create_dataset)
+
+#### Configure schedule for ingestion
+Scheduling ingestion is mandatory for relational connectors before posting dataset. `ingestStart` and `frequency` are provided through PUT /schedule API call. Empty payload `{}` can be provided for one time ingestion.
+
+##### Request
+
+```SHELL
+curl -X PUT \
+  'https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/schedule' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '{
+  "ingestStart": "2018-05-24T09:36:01.257Z",
+  "frequency": {
+    "month": "*",
+    "day": "*",
+    "dayOfWeek": "*",
+    "hour": "*",
+    "minute": "*/15",
+    "timezone": "UTC"
+  }
+}'
+```
+`ingestStart` can only be current or future date and denotes the start time of ingestion. If no value is provided, is it taken as current UTC time.
+`frequency` denotes the pace of ingestion. Preceeding example ingests data every 15 minutes. Hourly, daily, monthly and yearly frequencies can be provided alongside custom schedules.
+For example -
+```javascript
+Daily
+"frequency": {
+    "month": "*",
+    "day": "*",
+    "dayOfWeek": "*",
+    "hour": "0",
+    "minute": "0",
+    "timezone": "UTC"
+  }
+
+Monthly
+"frequency": {
+    "month": "*",
+    "day": "1",
+    "dayOfWeek": "*",
+    "hour": "0",
+    "minute": "0",
+    "timezone": "UTC"
+  }
+
+Yearly
+"frequency": {
+    "month": "1",
+    "day": "1",
+    "dayOfWeek": "*",
+    "hour": "0",
+    "minute": "0",
+    "timezone": "UTC"
+  }
+```
+
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
+
+##### Response
+```javascript
 [
-    ["@/dataSets/{DATASET_ID}"]
+    "@/connections/{CONNECTION_ID}"
 ]
 ```
 
-`{DATASET_ID}`: The ID of the dataset you created. Use `{DATASET_ID}` to make a request to Catalog to identify the DatasetView ID associated with this dataset.
+#### <a name="create_dataset">Create a Dataset</a>
+The dataset defines the structure of the data the connector ingests. Once you create the account and connection, you can use the *Connection ID* to create a dataset. You can configure Platform datasets, pipeline, and triggers with a successful POST call.
+Provide a unique and identifiable name for the dataset to identify it clearly when monitoring your data ingestion.
 
-<!---## Viewing Data in the Connector Wizard
-(under construction)--->
+##### Request
+
+```SHELL
+curl -X POST \
+  'https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/datasets' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '{
+  "params": {
+    "datasets": [
+      {
+        "name": {DATASET_NAME},
+        "tags": {
+          "connectors-objectName": [
+            {OBJECT_ID}
+          ]
+        },
+        "schemaRef": {
+          "id": {SCHEMA_ID},
+          "contentType": {SCHEMA_CONTENT_TYPE}
+        },
+        "saveStrategy": {SAVE_STRATEGY},
+        "backfillDate": {BACKFILL_DATE},
+        "schemaMetadata": {
+          "delta": [
+            {
+              "path": {FIELD_SCHEMA_PATH},
+              "format": "YYYY-MM-DDThh:mm:ssZ",
+              "timezone": "UTC"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}'
+```
+* `schemaRef` tag is used as returned by the create schema /schemas API. It contains the id and content-type of the created adhoc schema in XDM Schema Registry for the `{OBJECT_ID}` specified.
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
+* `{DATASET_NAME}`: Name of the dataset you want to create.
+* `{SCHEMA_ID}`: Unique id of schema in XDM Schema Registry.
+* `{SCHEMA_CONTENT_TYPE}`: Content-type and version of schema.
+* `{SAVE_STRATEGY}`: Enum [overwrite/delta/append] to overwrite, change or add data. To specify how data will be ingested. Append and Delta options are sorted by time, requiring you to select a time-based property to order the data, such as `System Modstamp`, `Created Date`, or `Last Modified Date`.
+* `{BACKFILL_DATE}`: Past date to begin ingestion.
+* `{FIELD_SCHEMA_PATH}`: Path of date-time field in schema.
+
+##### Response
+
+```javascript
+{
+    "success": [
+        {
+            "name": {DATASET_NAME},
+            "id": {DATASET_ID}
+        }
+    ],
+    "error": []
+}
+```
+* `{DATASET_NAME}`: Name of the dataset you specified.
+* `{DATASET_ID}`: The ID of the dataset you created. Use `{DATASET_ID}` to make a request to Catalog to identify the DatasetView ID associated with this dataset.
+
