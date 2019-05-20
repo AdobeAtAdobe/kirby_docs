@@ -11,7 +11,7 @@ This tutorial covers all methods of adding to and updating your Unified Profile 
 ### Prerequisite topics
 
 [Unified Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md) is a generic lookup entity store, and is used to manage XDM Platform data as actionable entities. Unified Profile facilitates building customer personalization use cases by merging data across various enterprise data assets and providing access to that unified data.  
-[XDM System in Adobe Experience Platform](../../technical_overview/schema_registry/standard_schemas/xdm_system/xdm_system_in_experience_platform.md) provides the framework to refer to and manage the schemas that your data must conform to for use as entities on Platform.
+[XDM System in Adobe Experience Platform](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md) provides the framework to refer to and manage the schemas that your data must conform to for use as entities on Platform.
 
 ---
 
