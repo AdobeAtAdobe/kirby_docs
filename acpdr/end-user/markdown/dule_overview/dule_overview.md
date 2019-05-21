@@ -72,7 +72,7 @@ Data usage labels can be applied at three levels. Those data labels are inherite
 
 Labels can be applied at any time, providing flexibility in how you choose to govern data. Best practice encourages labeling data as soon as it is ingested into Experience Platform, or as soon as data becomes available in Platform.
 
-Step-by-step instructions for how to apply data usage labels to Connections, Datasets, and Fields using the UI are available in the [Working with Data Usage Labels](../../../api-specification/markdown/narrative/tutorials/dule/dule_working_with_labels.md) tutorial.
+Step-by-step instructions for how to apply data usage labels to Connections, Datasets, and Fields using the UI are available in the [Working with Data Usage Labels](dule_working_with_labels.md) tutorial.
 
 ![Data Usage Label Hierarchy](dule_images/Data_usage_label_hierarchy.png "Data Usage Labels can be applied at three levels and are inherited from the top down.")
 
@@ -90,7 +90,7 @@ The Policy Service is a RESTful API that allows data stewards to manage and eval
 
 Within the Policy Service API, all policies and marketing actions are referred to as either `core` or `custom` resources. `Core` resources are defined and maintained by Adobe, whereas `custom` resources are created and maintained by individual customers. The `custom` resources are therefore unique and visible solely to the organization that created them.
 
-The [Working with Data Usage Policies](../../../api-specification/markdown/narrative/tutorials/dule/dule_working_with_policies.md) tutorial walks you through key operations you can perform using the Policy Service API. These include creating and updating policies, determining the status of a policy, and working with marketing actions to evaluate if a specific action violates a data usage policy.
+The [Working with Data Usage Policies](dule_working_with_policies.md) tutorial walks you through key operations you can perform using the Policy Service API. These include creating and updating policies, determining the status of a policy, and working with marketing actions to evaluate if a specific action violates a data usage policy.
 
 ## Future releases
 
