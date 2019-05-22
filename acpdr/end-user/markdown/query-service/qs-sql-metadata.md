@@ -17,10 +17,6 @@ For metadata on your dataset, the following PSQL commands are currently supporte
 |`\errverbose`|Repeats the most recent server error message at maximum verbosity.|
 |`\set`|Displays the names and values of all current psql variables.|
 |`\timing`|Toggles the display between on and off. The display is in milliseconds. Intervals longer than one second are shown in minutes:seconds format, with hours and days fields added when needed.|
-|`\dT`|Displays a list of data types.|
-|`\l or \list`|Displays a list of databases in the server.|
-|`\dE`|Displays a list of foreign tables.|
-|`\df or \df+`|Displays a list of functions.|
 
 `\d` commands can be combined. For example, you can issue a `\dtsn` command to display a list of all tables, sequences, and schemas. `\d` by itself shows all visible tables, views, materialized views, and sequences.
 
