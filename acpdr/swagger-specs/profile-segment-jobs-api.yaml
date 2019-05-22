@@ -1,9 +1,9 @@
 swagger: '2.0'
 info:
   description: >-
-    Unified Profile Segment Jobs process a previously built and persisted segment definition against your
-    profile store to generate a segment audience. The artifact of a complete and successful run of a Profile
-    Segment Job cannot be used directly and is instead exported to a dataset as a separate step.
+    Unified Profile segment jobs process a previously built and persisted segment definition against your
+    profile store to generate a segment audience. The artifact of a complete and successful run of a profile
+    segment job cannot be used directly and is instead exported to a dataset as a separate step.
     
 
     Related documentation:
@@ -16,6 +16,8 @@ info:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core/ups/segment/jobs
       * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
+      to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
 
   version: 18.11.1
   title: Unified Profile Segment Jobs API
@@ -23,36 +25,22 @@ info:
 host: "platform.adobe.io"
 basePath: /data/core/ups/segment/jobs
 tags:
-- name: segmentjobs
+- name: Segment jobs
 paths:
   '/':
+    parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - segmentjobs
+        - Segment jobs
       summary: Get a list of Segment Job Request
       description: ''
-      operationId: getSJRsRoute
+      operationId: get
       produces:
         - application/json
       parameters:
-        - name: x-gw-ims-org-id
-          in: header
-          description: IMS Organization ID
-          required: true
-          type: string
-          x-example: southwest@adobe.com
-        - name: x-api-key
-          in: header
-          description: Service API Key
-          required: true
-          type: string
-          x-example: aep_api_key
-        - name: Authorization
-          in: header
-          description: Authorization token
-          required: true
-          type: string
-          x-example: "Bearer <replace with your token>"
         - name: x-request-id
           in: header
           description: Request Id
@@ -83,12 +71,12 @@ paths:
           description: The job status
           required: false
           type: string
-          x-example: PROCESSING/FAILED/SUCCEEDED
+          x-example: PROCESSING
       responses:
         '200':
           description: List of Segment Job Request returned
           schema:
-            $ref: '#/definitions/RichSJR'
+            $ref: '#/definitions/SegmentJob'
         '403':
           description: Forbidden
         '500':
@@ -97,31 +85,13 @@ paths:
           description: Service Unavailable
     post:
       tags:
-        - segmentjobs
+        - Segment jobs
       summary: Post a Segment Job Request
       description: ''
-      operationId: postSJRRoute
+      operationId: create
       produces:
         - application/json
       parameters:
-        - name: x-gw-ims-org-id
-          in: header
-          description: IMS Organization ID
-          required: true
-          type: string
-          x-example: southwest@adobe.com
-        - name: x-api-key
-          in: header
-          description: Service API Key
-          required: true
-          type: string
-          x-example: aep_api_key
-        - name: Authorization
-          in: header
-          description: Authorization token
-          required: true
-          type: string
-          x-example: "Bearer <replace with your token>"
         - name: x-profile-instance-id
           in: header
           description: Profile Instance ID
@@ -141,12 +111,12 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/SJEntityRequest'
+              $ref: '#/definitions/SegmentJobRequest'
       responses:
         '200':
           description: Segment Job Request successfully posted
           schema:
-            $ref: '#/definitions/RichSJR'
+            $ref: '#/definitions/SegmentJob'
         '400':
           description: Please double check your post body
         '403':
@@ -157,51 +127,37 @@ paths:
           description: There was issue reading the segment job from DB
         '503':
           description: Service Unavailable
-  '/{segmentJobsRequestId}':
+  '/{segmentJobId}':
+    parameters:
+      - name: segmentJobId
+        in: path
+        description: Segment Jobs Request Id
+        required: true
+        type: string
+        x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - segmentjobs
-      summary: Return the Segment Job Request by id
+        - Segment jobs
+      summary: Return the segment job request by id
       description: ''
-      operationId: getSJRRoute
+      operationId: getById
       produces:
         - application/json
       parameters:
-        - name: x-gw-ims-org-id
-          in: header
-          description: IMS Organization ID
-          required: true
-          type: string
-          x-example: southwest@adobe.com
-        - name: x-api-key
-          in: header
-          description: Service API Key
-          required: true
-          type: string
-          x-example: aep_api_key
-        - name: Authorization
-          in: header
-          description: Authorization token
-          required: true
-          type: string
-          x-example: "Bearer <replace with your token>"
         - name: x-request-id
           in: header
           description: Request Id
           required: false
           type: string
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
-        - name: segmentJobsRequestId
-          in: path
-          description: Segment Jobs Request Id
-          required: true
-          type: string
-          x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
       responses:
         '200':
           description: Segment Job Request successfully returned
           schema:
-            $ref: '#/definitions/RichSJR'
+            $ref: '#/definitions/SegmentJob'
         '403':
           description: Forbidden
         '404':
@@ -210,43 +166,20 @@ paths:
           description: Service Unavailable
     delete:
       tags:
-        - segmentjobs
+        - Segment jobs
       summary: Cancel a Segment Job Request by id
       description: ''
-      operationId: cancelSJRRoute
+      operationId: cancel
       produces:
         - application/json
       parameters:
-        - name: x-gw-ims-org-id
-          in: header
-          description: IMS Organization ID
-          required: true
-          type: string
-          x-example: southwest@adobe.com
-        - name: x-api-key
-          in: header
-          description: Service API Key
-          required: true
-          type: string
-          x-example: aep_api_key
-        - name: Authorization
-          in: header
-          description: Authorization token
-          required: true
-          type: string
-          x-example: "Bearer <replace with your token>"
         - name: x-request-id
           in: header
           description: Request Id
           required: false
           type: string
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
-        - name: segmentJobsRequestId
-          in: path
-          description: Segment Jobs Request Id
-          required: true
-          type: string
-          x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
+
       responses:
         '200':
           description: Segment Job Request has been marked for cancelling
@@ -290,7 +223,7 @@ definitions:
         example: 10000
         description: Total time in ms (End time - Start time)
     description: Feedback Metrics
-  RichSJR:
+  SegmentJob:
     type: object
     required:
       - errors
@@ -314,7 +247,10 @@ definitions:
         example: PROCESSING
         description: Job status
         enum:
+          - NEW
           - PROCESSING
+          - CANCELLING
+          - CANCELLED
           - FAILED
           - SUCCEEDED
       computeJobId:
@@ -339,13 +275,22 @@ definitions:
       segments:
         type: array
         items:
-          $ref: '#/definitions/SJResponse'
+          $ref: '#/definitions/SegmentInfo'
       errors:
         type: array
         items:
           $ref: '#/definitions/ErrorResponse'
       metrics:
-        $ref: '#/definitions/SJRMetricResponse'
+        type: object
+        required:
+        - profileSegmentationTime
+        - totalTime
+        properties:
+          totalTime:
+            $ref: '#/definitions/FeedbackMetrics'
+          profileSegmentationTime:
+            $ref: '#/definitions/FeedbackMetrics'
+        description: Segment job request metrics
       requestId:
         type: string
         example: cc3d3381-8682-41d4-93bd-566e378624d3
@@ -359,7 +304,7 @@ definitions:
         description: Useful links to get the job status or cancel a submitted job.
         additionalProperties:
           type: number
-  SJExpression:
+  Expression:
     type: object
     properties:
       type:
@@ -381,31 +326,7 @@ definitions:
         example: workAddress.country = "US"
         description: PQL query string
     description: 'segment expression, part of a segment meta data response'
-  SJMergePolicy:
-    type: object
-    properties:
-      id:
-        type: string
-        example: ups-default
-        description: merge policy id
-      version:
-        type: integer
-        format: int32
-        example: 1
-        description: merge policy version
-    description: 'merge policy, part of a segment meta data response'
-  SJRMetricResponse:
-    type: object
-    required:
-      - profileSegmentationTime
-      - totalTime
-    properties:
-      totalTime:
-        $ref: '#/definitions/FeedbackMetrics'
-      profileSegmentationTime:
-        $ref: '#/definitions/FeedbackMetrics'
-    description: Segment job request metrics
-  SJResponse:
+  SegmentInfo:
     type: object
     required:
       - segment
@@ -416,31 +337,40 @@ definitions:
         example: 7863c010-e092-41c8-ae5e-9e533186752e
         description: segment id
       segment:
-        $ref: '#/definitions/SJSegment'
+        type: object
+        required:
+        - expression
+        - mergePolicy
+        properties:
+          id:
+            type: string
+            example: 7863c010-e092-41c8-ae5e-9e533186752e
+            description: segment id
+          version:
+            type: integer
+            format: int32
+            example: 1
+            description: segment version
+          expression:
+            $ref: '#/definitions/Expression'
+          mergePolicy:
+            type: object
+            properties:
+              id:
+                type: string
+                example: ups-default
+                description: merge policy id
+              version:
+                type: integer
+                format: int32
+                example: 1
+                description: merge policy version
+            description: 'merge policy, part of a segment meta data response'
+        description: Segment meta data in a segment job response
       snapshot:
-        $ref: '#/definitions/SJSnapshot'
+        $ref: '#/definitions/SegmentSnapshot'
     description: Segment Job Response
-  SJSegment:
-    type: object
-    required:
-      - expression
-      - mergePolicy
-    properties:
-      id:
-        type: string
-        example: 7863c010-e092-41c8-ae5e-9e533186752e
-        description: segment id
-      version:
-        type: integer
-        format: int32
-        example: 1
-        description: segment version
-      expression:
-        $ref: '#/definitions/SJExpression'
-      mergePolicy:
-        $ref: '#/definitions/SJMergePolicy'
-    description: Segment meta data in a segment job response
-  SJSnapshot:
+  SegmentSnapshot:
     type: object
     required:
       - name
@@ -467,7 +397,7 @@ definitions:
         example: Segment job with id '468eeefd-95a2-45a1-8bfc-b806dafce7ee' has been deleted
         description: response message
     description: Standard Response
-  SJEntityRequest:
+  SegmentJobRequest:
     type: object
     required:
       - segmentId
@@ -478,4 +408,36 @@ definitions:
         description: segment id
       snapshot:
         description: snapshot info
-        $ref: '#/definitions/SJSnapshot'
+        $ref: '#/definitions/SegmentSnapshot'
+parameters:
+  authorization:
+    name: Authorization
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
+    For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  x-gw-ims-org-id:
+    name: x-gw-ims-org-id
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  x-api-key:
+    name: x-api-key
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  json-header:
+    name: Content-Type
+    description: 'application/json'
+    required: true
+    type: string
+    in: header    
