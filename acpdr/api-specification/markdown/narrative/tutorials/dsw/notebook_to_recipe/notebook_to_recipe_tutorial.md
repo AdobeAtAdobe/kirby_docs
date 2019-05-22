@@ -4,13 +4,13 @@
 - [Get started with the JupyterLab notebook environment](#get-started-with-the-jupyterlab-notebook-environment)
 - [Make edits to recipe files](#make-edits-to-recipe-files)
 - [Get started with the Recipe Builder notebook](#get-started-with-the-recipe-builder-notebook)
-    - [Requirements file](#requirements-file)
-    - [Configuration files](#configuration-files)
-    - [Training data loader](#training-data-loader)
-    - [Scoring data loader](#scoring-data-loader)
-    - [Pipeline file](#pipeline-file)
-    - [Evaluator file](#evaluator-file)
-    - [Data Saver file](#data-saver-file)
+	- [Requirements file](#requirements-file)
+	- [Configuration files](#configuration-files)
+	- [Training data loader](#training-data-loader)
+	- [Scoring data loader](#scoring-data-loader)
+	- [Pipeline file](#pipeline-file)
+	- [Evaluator file](#evaluator-file)
+	- [Data Saver file](#data-saver-file)
 - [Training and scoring](#training-and-scoring)
 - [Create recipe](#create-recipe)
 - [Conclusion](#conclusion)
@@ -49,6 +49,7 @@ Start making necessary changes to the cell and when finished, simply run the cel
 ## Get started with the Recipe Builder notebook
 
 Now that you know the basics for the JupyterLab notebook environment, you can begin looking at the files that make up a machine learning model recipe. The files we will talk about are shown here:
+
 - [Requirements file](#requirements-file)
 - [Configuration files](#configuration-files)
 - [Training data loader](#training-data-loader)
@@ -84,7 +85,7 @@ Users must fill in the following variables before running training and scoring:
 * `ACP_DSW_TRAINING_XDM_SCHEMA`
 * `scoringDataSetId`
 * `ACP_DSW_SCORING_RESULTS_XDM_SCHEMA`
-* `output_dataset_id`
+* `scoringResultsDataSetId`
 
 To find the dataset and schema IDs, go to the Data Tab within notebooks on the left navigation bar (under the folder icon).
 
@@ -411,7 +412,7 @@ Notice that the function returns a `metric` object containing an array of evalua
 
 ### Data Saver file
 
-The `datasaver.py` file contains the `save()` function to save your prediction while testing scoring. The `save()` function will take your prediction and using Experience Platform Catalog APIs, write the data to the `output_dataset_id` you specified in your `scoring.conf` file.
+The `datasaver.py` file contains the `save()` function to save your prediction while testing scoring. The `save()` function will take your prediction and using Experience Platform Catalog APIs, write the data to the `scoringResultsDataSetId` you specified in your `scoring.conf` file.
 
 The example used in the retail sales sample recipe is seen here. Note the use of `DataSetWriter` library to write data to Platform:
 
@@ -433,7 +434,7 @@ def save(configProperties, prediction):
 
     print("Writer Configured")
 
-    writer.write(data_set_id=configProperties['output_dataset_id'],
+    writer.write(data_set_id=configProperties['scoringResultsDataSetId'],
                  dataframe=prediction,
                  ims_org=configProperties['ML_FRAMEWORK_IMS_TENANT_ID'])
 
