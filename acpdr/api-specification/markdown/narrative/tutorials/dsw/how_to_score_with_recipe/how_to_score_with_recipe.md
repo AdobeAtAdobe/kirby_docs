@@ -3,8 +3,8 @@
 - [Objective](#objective)
 - [Prerequisites](#prerequisites)
 - [UI workflow](#ui-workflow)
-  - [Create a new Scoring Run](#create-a-new-scoring-run)
-  - [View scoring results](#view-scoring-results)
+    - [Create a new Scoring Run](#create-a-new-scoring-run)
+    - [View scoring results](#view-scoring-results)
 - [Next steps](#next-steps)
 
 ---
