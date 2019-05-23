@@ -13,11 +13,12 @@ This developer guide provides steps to help you [start using the Schema Registry
 * [Use descriptors to describe schema metadata](#descriptors)
 * [Enable and view unions for Unified Profile Service](#unified-profile)
 
-The [Appendix](#appendix) to this document includes additional helpful resources for working with the Schema Registry, including:
+The [Appendix](#appendix) to this document includes additional helpful resources related to the Schema Registry, including:
 
 * A brief introduction to [XDM Compatibility Mode](#compatibility-mode)
 * How to [define XDM Field Types in the API](#defining-xdm-field-types-in-the-api) 
 * How to [map XDM Field Types to other Serialization Formats](#mapping-xdm-types-to-other-formats) (such as Parquet and Scala)
+* How to create an [ad-hoc schema](#ad-hoc-schema-workflow) for specific data ingestion workflows
 
 ## Getting started with the Schema Registry API
 
@@ -190,7 +191,7 @@ And either of the following:
 Accept | Description
 -------|------------
 application/vnd.adobe.xed-id+json |Returns a list of ID's only (This is most commonly used for listing resources)
-application/vnd.adobe.xed-full+json |Returns a list of full JSON schema with original $ref and allOf included (Used when listing to return the full resource)
+application/vnd.adobe.xed+json |Returns a list of full JSON schema with original $ref and allOf included (Used when listing to return the full resource)
 application/vnd.adobe.xed+json; version={major version}	|Raw with $ref and allOf, has titles and descriptions
 application/vnd.adobe.xed-full+json; version={major version} |$refs and allOf resolved, has titles and descriptions
 application/vnd.adobe.xed-notext+json; version={major version}	|Raw with $ref and allOf, no titles or descriptions
@@ -241,7 +242,7 @@ You are able to view a list of all resources (schemas, classes, mixins, or data 
 The most common query parameters include:
 * `limit` - Limit the number of resources returned. Example:`limit=5` will return a list of five resources.
 * `orderby` - Sort results by a specific property. Example: `orderby=title` will sort results by title ascending (A-Z). Adding a `-` before title (`orderby=-title`) will sort items by title descending (Z-A). 
-* `properties` - Filter results on any top-level attributes. Example: `properties=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile` returns only mixins that are compatible with the XDM Profile class.
+* `property` - Filter results on any top-level attributes. Example: `property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile` returns only mixins that are compatible with the XDM Profile class.
 * You may use an ampersand (`&`) to combine query parameters.
 
 #### API format
@@ -250,7 +251,7 @@ The most common query parameters include:
 GET /{CONTAINER_ID}/{schemas|classes|datatypes|mixins}
 
 GET /global/datatypes
-GET /tenant/mixins?properties=meta:intendedToExtend==https://ns.adobe.com/xdm/context/experienceevent
+GET /tenant/mixins?property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/experienceevent
 GET /tenant/schemas?limit=3
 GET /global/classes?orderby=title&limit=4
 ```
@@ -270,7 +271,7 @@ The response format depends on the Accept header sent in the request. The follow
 Accept | Description
 -------|------------
 application/vnd.adobe.xed-id+json | Returns a short summary of each resource, generally the preferred header for listing
-application/vnd.adobe.xed-full+json | Returns full JSON schema for each resource, with original $ref and allOf included
+application/vnd.adobe.xed+json | Returns full JSON schema for each resource, with original $ref and allOf included
 
 #### Response
 
@@ -1276,7 +1277,7 @@ Accept | Description
 -------|------------
 application/vnd.adobe.xdm-id+json | Returns an array of descriptor IDs
 application/vnd.adobe.xdm-link+json | Returns an array of descriptor API paths
-application/vnd.adobe.xdm-full+json | Returns an array of expanded descriptor objects
+application/vnd.adobe.xdm+json | Returns an array of expanded descriptor objects
 
 #### Response
 
@@ -1654,7 +1655,16 @@ The response format depends on the Accept header sent in the request. Experiment
     "description": "Union view of all schemas that extend https://ns.adobe.com/xdm/context/profile",
     "allOf": [
         {
-            "$ref": "https://ns.adobe.com/{TENANT_ID}/schemas/b9605d1dfb2d2218fa2f815dc63cc4bf"
+            "$ref": "https://ns.adobe.com/xdm/context/profile"
+        },
+        {
+            "$ref": "https://ns.adobe.com/xdm/context/profile-person-details"
+        },
+        {
+            "$ref": "https://ns.adobe.com/{TENANT_ID}/mixins/477bb01d7125b015b4feba7bccc2e599"
+        },
+        {
+            "$ref": "https://ns.adobe.com/xdm/context/profile-personal-details"
         }
     ],
     "meta:extends": [
@@ -1678,18 +1688,96 @@ The response format depends on the Accept header sent in the request. Experiment
 }
 ```
 
+### List schemas in a union
+
+In order to see which schemas are part of a specific union, you can perform a GET request using query parameters to filter the schemas within the tenant container. 
+
+Using the `property` query parameter, you can specify that only schemas containing a `meta:immutableTags` field and with a `meta:class` equal to the class whose union you are interested in are returned.
+
+#### API Format
+
+```SHELL
+GET /tenant/schemas?property=meta:immutableTags==union&property=meta:class=={CLASS_ID}
+```
+
+#### Request
+
+In the example below, the request will return all schemas that are part of the XDM Profile class union.
+
+```SHELL
+curl -X GET \
+  'https://platform.adobe.io/data/foundation/schemaregistry/tenant/schemas?property=meta:immutableTags==union&property=meta:class==https://ns.adobe.com/xdm/context/profile' \
+  -H 'Accept: application/vnd.adobe.xed-id+json' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+```
+
+#### Response
+
+The response is a filtered list of schemas, containing only those that satisfy both requirements. Remember that when using multiple query parameters, an AND relationship is assumed. The format of the response depends on the Accept header sent in the request.
+
+```JSON
+{
+    "results": [
+        {
+            "title": "Schema 1",
+            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/142afb78d8b368a5ba97a6cc8fc7e033",
+            "meta:altId": "_{TENANT_ID}.schemas.142afb78d8b368a5ba97a6cc8fc7e033",
+            "version": "1.2"
+        },
+        {
+            "title": "Schema 2",
+            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/e7297a6ddfc7812ab3a7b504a1ab98da",
+            "meta:altId": "_{TENANT_ID}.schemas.e7297a6ddfc7812ab3a7b504a1ab98da",
+            "version": "1.5"
+        },
+        {
+            "title": "Schema 3",
+            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/50f960bb810e99a21737254866a477bf",
+            "meta:altId": "_{TENANT_ID}.schemas.50f960bb810e99a21737254866a477bf",
+            "version": "1.2"
+        },
+        {
+            "title": "Schema 4",
+            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/a39655ca8ea3d5c1f36a463b45fccca8",
+            "meta:altId": "_{TENANT_ID}.schemas.a39655ca8ea3d5c1f36a463b45fccca8",
+            "version": "1.1"
+        },
+        {
+            "title": "Schema 5",
+            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/c063fac45c6d6285ef33b0e2af09f633",
+            "meta:altId": "_{TENANT_ID}.schemas.c063fac45c6d6285ef33b0e2af09f633",
+            "version": "1.2"
+        },
+        {
+            "title": "Schema 6",
+            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/dfebb19b93827b70bbad006137812537",
+            "meta:altId": "_{TENANT_ID}.schemas.dfebb19b93827b70bbad006137812537",
+            "version": "1.7"
+        }
+    ],
+    "_links": {
+        "global_schemas": {
+            "href": "https://platform.adobe.io/data/foundation/schemaregistry/global/schemas?property=meta:immutableTags==union&property=meta:class==https://ns.adobe.com/xdm/context/profile"
+        }
+    }
+}
+```
+
 ## Next steps
 
 Now that you have learned how to make calls using the Schema Registry API, follow the [Schema Registry API tutorial](../../tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md) to begin composing a schema of your own.
 
 ## Appendix
 
-The following sections provide supplemental information that is helpful when working with the Schema Registry API:
+The following sections provide supplemental information related to the Schema Registry API:
 
 * [Understanding Compatibility Mode](#compatibility-mode)
 * [How to Define XDM Field Types in the API](#defining-xdm-field-types-in-the-api)
 * [Mapping XDM Types to other Serialization Formats, such as Parquet and Scala](#mapping-xdm-types-to-other-formats)
 * [Defining descriptors in the API](#defining-descriptors-in-the-api)
+* [Ad-hoc schema workflow](#ad-hoc-schema-workflow)
 
 ### Compatibility Mode
 
@@ -2120,7 +2208,7 @@ Signals that the "sourceProperty" of the "sourceSchema" is an Identity field as 
 <li><strong>"xdm:sourceSchema"</strong>: The $id URI of the schema where the descriptor is being defined.</li>
 <li><strong>"xdm:sourceVersion"</strong>: The major version of the source schema.
 <li><strong>"xdm:sourceProperty"</strong>: The path to the specific property that will be the identity. Path should begin with a "/" and not end with one. Do not include "properties" in the path (e.g. use "/personalEmail/address" instead of "/properties/personalEmail/properties/address")</li>
-<li><strong>"xdm:namespace"</strong>: The "id" or "code" value of the identity namespace. A list of namespaces can be found using the <a href="../../../../../../acpdr/swagger-specs/id-namespace-api.yaml">Identity Namespace Service API</a>.</li>
+<li><strong>"xdm:namespace"</strong>: The "id" or "code" value of the identity namespace. A list of namespaces can be found using the <a href="../../../../../../acpdr/swagger-specs/id-service-api.yaml">Identity Namespace Service API</a>.</li>
 <li><strong>"xdm:property"</strong>: Either "xdm:id" or "xdm:code", depending on the "xdm:namespace" used.</li>
 <li><strong>"xdm:isPrimary"</strong>: An optional boolean value. When "true", indicates the field as the primary identity. Schemas may contain only one primary identity.</li>
 </ul></p>
@@ -2205,3 +2293,255 @@ Signals that the "sourceProperty" of the "sourceSchema" is an Identity field as 
 </td>
 </tr>
 </table>
+
+### Ad-hoc schema workflow
+
+In specific circumstances, it may be necessary to create an XDM schema with fields that are namespaced for usage only by a single dataset. This is referred to as an 'ad-hoc' schema. The following steps outline how to create a new class using the `adhoc` behavior and then create an ad-hoc schema that implements that class.
+
+This type of schema is interpreted differently by the data ingestion process. Please refer to the [Batch Ingestion Developer Guide](../ingest_architectural_overview/batch_data_ingestion_developer_guide.md) section on [how to ingest CSV files](../ingest_architectural_overview/batch_data_ingestion_developer_guide.md#how-to-ingest-csv-files) for more information on how to create an input file that is intended for a dataset associated with an ad-hoc schema.
+
+### Create ad-hoc class
+
+Creating an ad-hoc schema requires first creating an ad-hoc class, based on the `adhoc` behavior.
+
+#### API format
+
+```
+POST /tenant/classes
+```
+
+#### Request
+
+The request body references (`$ref`) the behavior `https://ns.adobe.com/xdm/data/adhoc` and defines an object named `_adhoc` which acts as the parent for all custom fields as shown in the sample request:
+
+```
+curl -X POST \
+  https://platform.adobe.io/data/foundation/schemaregistry/tenant/classes \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '{
+        "title":"New Class",
+        "description": "New class description",
+        "type":"object",
+        "allOf": [
+          {"$ref":"https://ns.adobe.com/xdm/data/adhoc"},
+          {
+            "properties": {
+              "_adhoc": {
+                "type":"object",
+                "properties": {
+                  "field1": {
+                    "type":"string"
+                  },
+                  "field2": {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }'
+```
+
+#### Response
+
+The response replaces `_adhoc` with a GUID that is a system-generated, read-only unique identifier for the newly defined class. The `meta:datasetNamespace` attribute is also generated automatically and included in the response.
+
+```
+{
+    "$id": "https://ns.adobe.com/{TENANT_ID}/classes/6395cbd58812a6d64c4e5344f7b9120f",
+    "meta:altId": "_{TENANT_ID}.classes.6395cbd58812a6d64c4e5344f7b9120f",
+    "meta:resourceType": "classes",
+    "version": "1.0",
+    "title": "New Class",
+    "description": "New class description",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "https://ns.adobe.com/xdm/data/adhoc"
+        },
+        {
+            "properties": {
+                "_6395cbd58812a6d64c4e5344f7b9120f": {
+                    "type": "object",
+                    "properties": {
+                        "field1": {
+                            "type": "string",
+                            "meta:xdmType": "string"
+                        },
+                        "field2": {
+                            "type": "string",
+                            "meta:xdmType": "string"
+                        }
+                    },
+                    "meta:xdmType": "object"
+                }
+            },
+            "type": "object",
+            "meta:xdmType": "object"
+        }
+    ],
+    "meta:abstract": true,
+    "meta:extensible": true,
+    "meta:extends": [
+        "https://ns.adobe.com/xdm/data/adhoc"
+    ],
+    "meta:containerId": "tenant",
+    "meta:datasetNamespace": "_6395cbd58812a6d64c4e5344f7b9120f",
+    "imsOrg": "{IMS_ORG}",
+    "meta:xdmType": "object",
+    "meta:registryMetadata": {
+        "repo:createdDate": 1557527784822,
+        "repo:lastModifiedDate": 1557527784822,
+        "xdm:createdClientId": "{CREATED_CLIENT}",
+        "xdm:lastModifiedClientId": "{MODIFIED_CLIENT}",
+        "eTag": "Jggrlh4PQdZUvDUhQHXKx38iTQo="
+    }
+}
+```
+
+### Create ad-hoc schema
+
+Once you have created an ad-hoc class based on the `adhoc` behavior, you can create a schema that implements this class.
+
+#### API format
+
+```
+POST /tenant/schemas
+```
+
+#### Request
+
+The request body references (`$ref`) the `$id` of the newly created ad-hoc class.
+
+```
+curl -X POST \
+  https://platform.adobe.io/data/foundation/schemaregistry/tenant/schemas \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '{
+        "title":"New Schema",
+        "description": "New schema description.",
+        "type":"object",
+        "allOf": [
+          {"$ref":"https://ns.adobe.com/{TENANT_ID}/classes/6395cbd58812a6d64c4e5344f7b9120f"}
+        ]
+      }'
+```
+
+#### Response
+
+The response includes the system-generated, read-only `$id` of the newly created schema.
+
+```
+{
+    "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/26f6833e55db1dd8308aa07a64f2042d",
+    "meta:altId": "_{TENANT_ID}.schemas.26f6833e55db1dd8308aa07a64f2042d",
+    "meta:resourceType": "schemas",
+    "version": "1.0",
+    "title": "New Schema",
+    "description": "New schema description.",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "https://ns.adobe.com/{TENANT_ID}/classes/6395cbd58812a6d64c4e5344f7b9120f"
+        }
+    ],
+    "meta:datasetNamespace": "_6395cbd58812a6d64c4e5344f7b9120f",
+    "meta:class": "https://ns.adobe.com/{TENANT_ID}/classes/6395cbd58812a6d64c4e5344f7b9120f",
+    "meta:abstract": false,
+    "meta:extensible": false,
+    "meta:extends": [
+        "https://ns.adobe.com/{TENANT_ID}/classes/6395cbd58812a6d64c4e5344f7b9120f",
+        "https://ns.adobe.com/xdm/data/adhoc"
+    ],
+    "meta:containerId": "tenant",
+    "imsOrg": "{IMS_ORG}",
+    "meta:xdmType": "object",
+    "meta:registryMetadata": {
+        "repo:createdDate": 1557528570542,
+        "repo:lastModifiedDate": 1557528570542,
+        "xdm:createdClientId": "{CREATED_CLIENT}",
+        "xdm:lastModifiedClientId": "{MODIFIED_CLIENT}",
+        "eTag": "Jggrlh4PQdZUvDUhQHXKx38iTQo="
+    }
+}
+```
+
+### View ad-hoc schema
+
+Once the ad-hoc schema has been created, you can use a lookup (GET) request to view the schema in its expanded form. This is done by using the appropriate Accept header in the GET request.
+
+#### API format
+
+```
+GET /tenant/schemas/{meta:altId or url encoded $id of the schema}
+```
+
+#### Request
+
+Using the Accept header `application/vnd.adobe.xed-full+json; version=1` returns the expanded form of the schema. It is important to remember that all lookup requests require the major version be included.
+
+```
+curl -X GET \
+  https://platform.adobe.io/data/foundation/schemaregistry/tenant/schemas/_{TENANT_ID}.schemas.26f6833e55db1dd8308aa07a64f2042d \
+  -H 'Accept: application/vnd.adobe.xed-full+json; version=1' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+```
+
+#### Response
+
+The response object shows the details of the schema, including all fields nested under `properties`.
+
+```
+{
+    "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/26f6833e55db1dd8308aa07a64f2042d",
+    "meta:altId": "_{TENANT_ID}.schemas.26f6833e55db1dd8308aa07a64f2042d",
+    "meta:resourceType": "schemas",
+    "version": "1.0",
+    "title": "New Schema",
+    "description": "New schema description.",
+    "type": "object",
+    "meta:datasetNamespace": "_6395cbd58812a6d64c4e5344f7b9120f",
+    "meta:class": "https://ns.adobe.com/{TENANT_ID}/classes/6395cbd58812a6d64c4e5344f7b9120f",
+    "meta:abstract": false,
+    "meta:extensible": false,
+    "meta:extends": [
+        "https://ns.adobe.com/{TENANT_ID}/classes/6395cbd58812a6d64c4e5344f7b9120f",
+        "https://ns.adobe.com/xdm/data/adhoc"
+    ],
+    "meta:containerId": "tenant",
+    "imsOrg": "{IMS_ORG}",
+    "meta:xdmType": "object",
+    "properties": {
+        "_6395cbd58812a6d64c4e5344f7b9120f": {
+            "type": "object",
+            "meta:xdmType": "object",
+            "properties": {
+                "field1": {
+                    "type": "string",
+                    "meta:xdmType": "string"
+                },
+                "field2": {
+                    "type": "string",
+                    "meta:xdmType": "string"
+                }
+            }
+        }
+    },
+    "meta:registryMetadata": {
+        "repo:createdDate": 1557528570542,
+        "repo:lastModifiedDate": 1557528570542,
+        "xdm:createdClientId": "{CREATED_CLIENT}",
+        "xdm:lastModifiedClientId": "{MODIFIED_CLIENT}",
+        "eTag": "bTogM1ON2LO/F7rlcc1iOWmNVy0="
+    }
+}
+```
