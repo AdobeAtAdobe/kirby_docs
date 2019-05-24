@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   version: 1.0.0
   title: DULE Policy Service
-  description: <p>The Data Usage Labeling and Enforcement (DULE) framework simplifies and streamlines the process of categorizing data and creating data usage policies. Once data labels have been applied and data usage policies are in place, marketing actions can be evaluated to ensure the correct use of data.</p><p>The Policy Service API is used to manage and evaluate policies on marketing actions in the presence of data usage labels.</p><p><strong>Related Documentation:</strong><br/><ul><li><a href="https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html">DULE User Guide</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!end-user/markdown/dule_overview/dule_supported_labels.md">Supported Data Usage Labels</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!end-user/markdown/dule_overview/dule_working_with_labels.md">Working with Data Usage Labels</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!end-user/markdown/dule_overview/dule_working_with_policies.md">Working with Data Usage Policies</a></li></ul></p><p><strong>Notes:</strong><br/><ul><li>PLATFORM Gateway URL:<span> https://platform.adobe.io</li><li>Base path for this API:<span> /data/foundation/dulepolicy</li><li>Example of a complete path for making a call to "/policies/core":<span> https://platform.adobe.io/data/foundation/dulepolicy/policies/core</ul></p>
+  description: <p>The Data Usage Labeling and Enforcement (DULE) framework simplifies and streamlines the process of categorizing data and creating data usage policies. Once data labels have been applied and data usage policies are in place, marketing actions can be evaluated to ensure the correct use of data.</p><p>The Policy Service API is used to manage and evaluate policies on marketing actions in the presence of data usage labels.</p><p><strong>Related Documentation:</strong><br/><ul><li><a href="https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html">DULE User Guide</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!end-user/markdown/dule_overview/dule_supported_labels.md">Supported Data Usage Labels</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/dule/dule_working_with_labels.md">Working with Data Usage Labels</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/dule/dule_working_with_policies.md">Working with Data Usage Policies</a></li></ul></p><p><strong>Notes:</strong><br/><ul><li>PLATFORM Gateway URL:<span> https://platform.adobe.io</li><li>Base path for this API:<span> /data/foundation/dulepolicy</li><li>Example of a complete path for making a call to "/policies/core":<span> https://platform.adobe.io/data/foundation/dulepolicy/policies/core</ul></p>
 
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 basePath: /data/foundation/catalog
@@ -296,7 +296,7 @@ paths:
         description: The name of the marketing action
         type: string
     get:
-      summary: View policies violated be the presence of DULE labels.
+      summary: View policies violated by the presence of DULE labels.
       description: >-
         Returns a set of constraints that would govern an attempt to perform the
         given marketing action on a DULE-labeled source of data.  The source
@@ -320,8 +320,48 @@ paths:
           description: The name of the marketing action
           type: string
         - $ref: '#/parameters/duleLabelsConstraintsQuery'
-        - $ref: '#/parameters/dataSetIdConstraintsQuery'
-        - $ref: '#/parameters/fieldsConstraintsQuery'
+        - $ref: '#/parameters/includeDraftConstraintsQuery'
+      responses:
+        '200':
+          description: >-
+            Constraints on attempting to perform this marketing action on data
+            bearing the given set of DULE labels, including the set of policies
+            that would be violated.
+          schema:
+            $ref: '#/definitions/MarketingActionConstraints'
+        '400':
+          description: A bad request; see response body for details
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: No marketing action was found for the given name
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: View policies violated if marketing action attempted on certain entities.
+      description: >-
+        Returns a set of constraints that would govern an attempt to perform the given marketing action on a DULE-labeled source of data. The source data is specified by the "entityType" and "entityId" of the elements in the request body. In the case of a dataset entity, a set of fields may also be specified in the "entityMeta" to indicate that only those fields from that dataset would be used. The returned constraints take the form of a set of policies that would be violated by attempting the marketing action.
+      operationId: postCoreMarketingActionConstraints
+      tags:
+        - Marketing Actions
+      parameters:
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/authorization'
+        - name: marketingActionName
+          in: path
+          required: true
+          description: The name of the marketing action
+          type: string
+        - $ref: '#/parameters/contentType'
+        - name: entityList
+          description: The list of entities (such as multiple dataset IDs) for which to retrieve labels.
+          required: true
+          in: body
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/EntityLabelRequest'
         - $ref: '#/parameters/includeDraftConstraintsQuery'
       responses:
         '200':
@@ -463,8 +503,48 @@ paths:
           description: The name of the marketing action
           type: string
         - $ref: '#/parameters/duleLabelsConstraintsQuery'
-        - $ref: '#/parameters/dataSetIdConstraintsQuery'
-        - $ref: '#/parameters/fieldsConstraintsQuery'
+        - $ref: '#/parameters/includeDraftConstraintsQuery'
+      responses:
+        '200':
+          description: >-
+            Constraints on attempting to perform this marketing action on data
+            bearing the given set of DULE labels, including the set of policies
+            that would be violated.
+          schema:
+            $ref: '#/definitions/MarketingActionConstraints'
+        '400':
+          description: A bad request; see response body for details
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: No marketing action was found for the given name
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: View policies violated if marketing action attempted on certain entities.
+      description: >-
+        Returns a set of constraints that would govern an attempt to perform the given marketing action on a DULE-labeled source of data. The source data is specified by the "entityType" and "entityId" of the elements in the request body. In the case of a dataset entity, a set of fields may also be specified in the "entityMeta" to indicate that only those fields from that dataset would be used. The returned constraints take the form of a set of policies that would be violated by attempting the marketing action.
+      operationId: postCustomMarketingActionConstraints
+      tags:
+        - Marketing Actions
+      parameters:
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/authorization'
+        - name: marketingActionName
+          in: path
+          required: true
+          description: The name of the marketing action
+          type: string
+        - $ref: '#/parameters/contentType'
+        - name: entityList
+          description: The list of entities (such as multiple dataset IDs) for which to retrieve labels.
+          required: true
+          in: body
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/EntityLabelRequest'
         - $ref: '#/parameters/includeDraftConstraintsQuery'
       responses:
         '200':
@@ -567,8 +647,7 @@ parameters:
     name: duleLabels
     description: >-
       A comma-separated list of DULE labels whose presence on data should be
-      tested for violation of policies.  Use of this query parameter is mutually
-      exclusive with using the `dataSetId` parameter.
+      tested for violation of policies.
     required: false
     type: array
     collectionFormat: csv
@@ -701,7 +780,7 @@ definitions:
           If a custom resource, the imsOrg which maintains this resource.  If
           built-in, then the string `core`.
         type: string
-        example: FEDCBA9876543210FEDCBA01@AdobeOrg
+        example: {IMS_ORG}
       created:
         description: Timestamp in milliseconds when this resource was originally created
         type: integer
@@ -850,6 +929,30 @@ definitions:
     allOf:
       - $ref: '#/definitions/MarketingActionRequest'
       - $ref: '#/definitions/ServiceProperties'
+  DuleLabelsList:
+    required:
+      - labels
+    properties:
+      labels:
+        description: >-
+          List of DULE labels either specified in request, or discovered from
+          the requested entities
+        type: array
+        items:
+          type: string
+        example:
+          - C1
+          - I2
+  FieldsLabels:
+    allOf:
+      - type: object
+        required:
+          - path
+        properties:
+          path:
+            description: The path describing this field
+            type: string
+      - $ref: '#/definitions/DuleLabelsList'
   MarketingActionsPage:
     allOf:
       - $ref: '#/definitions/PagingProperties'
@@ -861,6 +964,27 @@ definitions:
             type: array
             items:
               $ref: '#/definitions/MarketingActionResponse'
+  DataSetLabels:
+    required:
+      - connection
+      - dataSet
+      - fields
+    properties:
+      connection:
+        $ref: '#/definitions/DuleLabelsList'
+      dataSet:
+        $ref: '#/definitions/DuleLabelsList'
+      fields:
+        type: array
+        items:
+          $ref: '#/definitions/FieldsLabels'
+  DiscoveredLabels:
+    allOf:
+      - $ref: '#/definitions/EntityTypeAndId'
+      - type: object
+        properties:
+          dataSetLabels:
+            $ref: '#/definitions/DataSetLabels'
   MarketingActionConstraints:
     required:
       - timestamp
@@ -879,15 +1003,15 @@ definitions:
       clientId:
         description: ClientID of the client that requested these constraints
         type: string
-        example: acp_ui_service
+        example: "{CLIENT_ID}"
       userId:
         description: User Id of the user that requested these constraints
         type: string
-        example: data_steward@company.com
+        example: "{USER_ID}"
       imsOrg:
         description: The imsOrg on the request that generated these constraints
         type: string
-        example: FEDCBA9876543210FEDCBA01@AdobeOrg
+        example: "{IMS_ORG}"
       marketingActionRef:
         description: Marketing action reference to which these constraints apply
         type: string
@@ -904,17 +1028,18 @@ definitions:
         items:
           type: string
       dataSetId:
-        description: 'dataSetId from original constraints request, if supplied'
+        description: 'DEPRECATED'
         type: string
-        example: 5b2d5a6bdee2c101e329b477
       fields:
-        description: 'List of fields from original constraints request, if supplied'
+        description: 'DEPRECATED'
         type: array
-        example:
-          - firstName
-          - lastName
         items:
           type: string
+      discoveredLabels:
+        description: Found in constraints POST responses only. The list of DULE labels discovered for the entity. 
+        type: array
+        items:
+          $ref: '#/definitions/DiscoveredLabels'
       violatedPolicies:
         description: >-
           The list of policies that would be violated by attempting the given
@@ -922,6 +1047,48 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/PolicyResponse'
+      marketingActionRefs:
+        description: List of marketing action URI references to which this policy applies
+        type: array
+        example:
+          - ../marketingActions/core/emailMarketing
+        items:
+          type: string
+          format: uri
+      description:
+        description: >-
+          A verbal description of what this policy enforces; the reasoning
+          behind the denial of these marketing actions in the presence of the
+          DULE labels
+        type: string
+        example: Conditions under which we won't send marketing-based email
+  EntityTypeAndId:
+    required:
+      - entityType
+      - entityId
+    properties:
+      entityType:
+        description: >-
+          The type of entity on which to discover labels. Currently only "dataSet"
+          is supported
+        type: string
+        enum:
+          - dataSet
+      entityId:
+        description: The id of the entity on which to discover labels.
+        type: string
+  EntityLabelRequest:
+    allOf:
+      - $ref: '#/definitions/EntityTypeAndId'
+      - type: object
+        properties:
+          entityMeta:
+            type: object
+            properties:
+              fields:
+                type: array
+                items:
+                  type: string
   PatchDocument:
     description: A JSONPatch document as defined by RFC 6902
     required:
