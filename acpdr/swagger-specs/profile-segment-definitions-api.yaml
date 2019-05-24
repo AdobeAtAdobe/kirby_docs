@@ -16,31 +16,47 @@ info:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core/ups/segment
       * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
-      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
-      to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
 
   version: 18.11.1
-  title: Profile Segment Definition API
+  title: Unified Profile Segment Definition API
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 host: "platform.adobe.io"
-basePath: /data/core/ups
+basePath: /data/core/ups/segment
 tags:
-- name: "Segment"
+- name: "definitions"
+- name: "health-detailed"
+- name: "health"
+- name: "ping"
+- name: "version"
 paths:
-  "/segment/definitions":
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
+  "/definitions":
     get:
       tags:
-      - Segment
+      - segment
       summary: Get a list of Profile Segment Definitions
       description: ''
       operationId: getSegmentsRoute
       produces:
       - application/json
       parameters:
+      - name: x-gw-ims-org-id
+        in: header
+        description: IMS Organization ID
+        required: true
+        type: string
+        x-example: southwest@adobe.com
+      - name: x-api-key
+        in: header
+        description: API Key
+        required: true
+        type: string
+        x-example: your_org_api_key
+      - name: Authorization
+        in: header
+        description: Authorization token
+        required: true
+        type: string
+        x-example: "Bearer <replace with your token>"
       - name: x-request-id
         in: header
         description: Unique id per request
@@ -83,13 +99,31 @@ paths:
           description: Service Unavailable
     post:
       tags:
-      - Segment
+      - segment
       summary: Post a Profile Segment Definition
       description: ''
       operationId: postSegmentRoute
       produces:
       - application/json
       parameters:
+      - name: x-gw-ims-org-id
+        in: header
+        description: IMS Organization ID
+        required: true
+        type: string
+        x-example: southwest@adobe.com
+      - name: x-api-key
+        in: header
+        description: API Key
+        required: true
+        type: string
+        x-example: your_org_api_key
+      - name: Authorization
+        in: header
+        description: Authorization token
+        required: true
+        type: string
+        x-example: "Bearer <replace with your token>"
       - name: x-request-id
         in: header
         description: Unique id per request
@@ -129,33 +163,46 @@ paths:
             to update.
         '503':
           description: Service Unavailable
-  "/segment/definitions/{segmentId}":
-    parameters:
-      - name: segmentId
-        in: path
-        description: Segment Definition Id
-        required: true
-        type: string
-        x-example: b9f6c339-f7f4-4141-b6c7-b562079da47c
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
+  "/definitions/{segmentId}":
     get:
       tags:
-      - Segment
+      - segment
       summary: Returns the Profile Segment Definition
       description: ''
       operationId: getSegmentRoute
       produces:
       - application/json
       parameters:
+      - name: x-gw-ims-org-id
+        in: header
+        description: IMS Organization ID
+        required: true
+        type: string
+        x-example: southwest@adobe.com
+      - name: x-api-key
+        in: header
+        description: API Key
+        required: true
+        type: string
+        x-example: your_org_api_key
+      - name: Authorization
+        in: header
+        description: Authorization token
+        required: true
+        type: string
+        x-example: "Bearer <replace with your token>"
       - name: x-request-id
         in: header
         description: Unique id per request
         required: true
         type: string
         x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
-
+      - name: segmentId
+        in: path
+        description: Segment Definition Id
+        required: true
+        type: string
+        x-example: b9f6c339-f7f4-4141-b6c7-b562079da47c
       responses:
         '200':
           description: Profile Segment Definition successfully returned
@@ -169,19 +216,43 @@ paths:
           description: Service Unavailable
     delete:
       tags:
-      - Segment
+      - segment
       summary: Delete the segment given an id
       description: ''
       operationId: deleteSegmentRoute
       produces:
       - application/json
       parameters:
+      - name: x-gw-ims-org-id
+        in: header
+        description: IMS Organization ID
+        required: true
+        type: string
+        x-example: southwest@adobe.com
+      - name: x-api-key
+        in: header
+        description: API Key
+        required: true
+        type: string
+        x-example: your_org_api_key
+      - name: Authorization
+        in: header
+        description: Authorization token
+        required: true
+        type: string
+        x-example: "Bearer <replace with your token>"
       - name: x-request-id
         in: header
         description: Unique id per request
         required: true
         type: string
         x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
+      - name: segmentId
+        in: path
+        description: Segment Definition Id
+        required: true
+        type: string
+        x-example: b9f6c339-f7f4-4141-b6c7-b562079da47c
       responses:
         '200':
           description: Profile Segment Definition deleted successfully
@@ -193,19 +264,43 @@ paths:
           description: Service Unavailable
     patch:
       tags:
-      - Segment
+      - segment
       summary: Overwrites a Profile Segment Definition
       description: ''
       operationId: patchSegmentRoute
       produces:
       - application/json
       parameters:
+      - name: x-gw-ims-org-id
+        in: header
+        description: IMS Organization ID
+        required: true
+        type: string
+        x-example: southwest@adobe.com
+      - name: x-api-key
+        in: header
+        description: API Key
+        required: true
+        type: string
+        x-example: your_org_api_key
+      - name: Authorization
+        in: header
+        description: Authorization token
+        required: true
+        type: string
+        x-example: "Bearer <replace with your token>"
       - name: x-request-id
         in: header
         description: Unique id per request
         required: true
         type: string
         x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
+      - name: segmentId
+        in: path
+        description: Segment Definition Id
+        required: true
+        type: string
+        x-example: b9f6c339-f7f4-4141-b6c7-b562079da47c
       - in: body
         name: body
         description: |-
@@ -234,20 +329,34 @@ paths:
           description: Forbidden
         '503':
           description: Service Unavailable
-  "/segment/conversion":
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
+  "/conversion":
     post:
       tags:
-      - Segment
+      - segment
       summary: Converts a Profile Segment Definition from pql/text to pql/json or vice versa
       description: ''
       operationId: postSegmentConversionRoute
       produces:
       - application/json
       parameters:
+      - name: x-gw-ims-org-id
+        in: header
+        description: IMS Organization ID
+        required: true
+        type: string
+        x-example: southwest@adobe.com
+      - name: x-api-key
+        in: header
+        description: API Key
+        required: true
+        type: string
+        x-example: your_org_api_key
+      - name: Authorization
+        in: header
+        description: Authorization token
+        required: true
+        type: string
+        x-example: "Bearer <replace with your token>"
       - name: x-request-id
         in: header
         description: Unique id per request
@@ -282,8 +391,6 @@ paths:
           description: Invalid profile segment
         '503':
           description: Service Unavailable
-
-
 definitions:
   SegmentStoreEntity:
     type: object
@@ -578,36 +685,3 @@ definitions:
         type: boolean
       message:
         type: string
-
-parameters:
-  authorization:
-    name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
-    For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
-    required: true
-    type: string
-    in: header
-  x-gw-ims-org-id:
-    name: x-gw-ims-org-id
-    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
-    required: true
-    type: string
-    in: header
-  x-api-key:
-    name: x-api-key
-    description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
-    required: true
-    type: string
-    in: header
-  json-header:
-    name: Content-Type
-    description: 'application/json'
-    required: true
-    type: string
-    in: header    
