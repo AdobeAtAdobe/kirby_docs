@@ -19,13 +19,13 @@ The Retail Sales Forecasting recipe uses machine learning to predict sale trends
 
 ## How do I get started?
 
-You can get started by following this [tutorial](../../package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md).
+You can get started by following this [tutorial](../../../../tutorials/dsw/notebook_to_recipe/notebook_to_recipe_tutorial.md).
 
-This tutorial will help you get started by going through how to package the Retail Sales Recipe with Docker and import it into the Data Science Workspace in Adobe Experience Platform.
+This tutorial will go over creating the Retail Sales recipe in a Jupyter notebook and using the notebook to recipe workflow to create the recipe in Adobe Experience Platform.
 
 ## Data schema
 
-This recipe uses an [XDM schema](../../../../technical_overview/schema_registry/standard_schemas/acp_standard_schemas.md) as the dataset. The schema used is the DSWRetailSales dataset shown below.
+This recipe uses [XDM schemas](../../../schema_registry/xdm_system/xdm_system_in_experience_platform.md) to model the data. The schema used for this recipe is shown below:
 
 Field Name | Type
 --- | ---
