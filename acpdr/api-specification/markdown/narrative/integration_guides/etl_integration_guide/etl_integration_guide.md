@@ -6,7 +6,7 @@ Experience Platform provides data storage, administration, access, usage control
 
 * [Catalog](../../../../../../acpdr/swagger-specs/catalog.yaml)
 * [Data Access](../../../../../../acpdr/swagger-specs/data-access-api.yaml)
-* [Data Ingestion](../../../../../../acpdr/swagger-specs/ingest-api.yaml)
+* [Batch Ingestion](../../../../../../acpdr/swagger-specs/bulk-ingest-api.yaml)
 * [Authentication and Authorization APIs](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md)
 * [Schema Registry](../../../../../../acpdr/swagger-specs/schema-registry.yaml)
 
@@ -435,7 +435,7 @@ curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets/59c93f3d
 }
 ```
 
-Data will be written to Experience Platform using [Data Ingestion API](../../../../../../acpdr/swagger-specs/ingest-api.yaml).  Writing of data is an asynchronous process. When data is written to Adobe Experience Platform, a batch is created and marked as a success only after data is fully written.
+Data will be written to Experience Platform using the [Batch Ingestion API](../../../../../../acpdr/swagger-specs/bulk-ingest-api.yaml).  Writing of data is an asynchronous process. When data is written to Adobe Experience Platform, a batch is created and marked as a success only after data is fully written.
 
 Data in Experience Platform should be written in the form of parquet files.
 
