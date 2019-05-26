@@ -15,8 +15,6 @@ info:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core/ups/export
       * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
-      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
-      to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
 
   version: 0.0.1
   title: Unified Profile Export API
@@ -24,22 +22,40 @@ info:
 host: "platform.adobe.io"
 basePath: /data/core/ups/export
 tags:
-  - name: Jobs
+  - name: jobs
+  - name: health-detailed
+  - name: health
+  - name: ping
+  - name: version
 paths:
   /jobs:
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - Jobs
-      summary: Get list of all profile export jobs
+        - jobs
+      summary: Get list of all Profile export jobs
       description: ''
       operationId: getScanJobsRoute
       produces:
         - application/json
       parameters:
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: unified-profile
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          x-example: 1BD6382559DF0C130A49422D@AdobeOrg
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
         - name: limit
           in: query
           description: Page Size
@@ -63,13 +79,31 @@ paths:
           description: Service Unavailable
     post:
       tags:
-        - Jobs
+        - jobs
       summary: Posts a Profile Export Job
       description: ''
       operationId: postScanJobRoute
       produces:
         - application/json
       parameters:
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          x-example: 1BD6382559DF0C130A49422D@AdobeOrg
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: unified-profile
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
         - name: x-profile-instance-id
           in: header
           description: Profile Instance Id
@@ -84,8 +118,6 @@ paths:
             mergePolicy - Takes id and version as nested parameters, if not provided, will take the same value as in segmentId or snapshotName
 
             filter - Array of segments with either segmentId or snapshotName
-
-            additionalFields: Additional fields that need to be exported
 
             destination - DatasetId where the exported data will be stored
 
@@ -107,24 +139,39 @@ paths:
         '503':
           description: Service Unavailable
   '/jobs/{exportJobId}':
-    parameters:
-      - name: exportJobId
-        in: path
-        description: Export Job Id
-        required: true
-        type: string
-        x-example: '12345678'
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - Jobs
+        - jobs
       summary: Returns the Profile Export Job
       description: ''
       operationId: getScanJobRoute
       produces:
         - application/json
+      parameters:
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: unified-profile
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          x-example: 1BD6382559DF0C130A49422D@AdobeOrg
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
+        - name: exportJobId
+          in: path
+          description: Export Job Id
+          required: true
+          type: string
+          x-example: '12345678'
       responses:
         '200':
           description: Profile Export Job successfully Returned
@@ -138,12 +185,37 @@ paths:
           description: Service Unavailable
     delete:
       tags:
-        - Jobs
+        - jobs
       summary: Cancel Profile Export Job
       description: ''
       operationId: cancelScanJobRoute
       produces:
         - application/json
+      parameters:
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: unified-profile
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          x-example: 1BD6382559DF0C130A49422D@AdobeOrg
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
+        - name: exportJobId
+          in: path
+          description: Export Job Id
+          required: true
+          type: string
+          x-example: '12345678'
       responses:
         '200':
           description: Profile Export Job cancelled successfully
@@ -155,28 +227,42 @@ paths:
           description: Profile Export Job not found
         '503':
           description: Service Unavailable
-
 definitions:
-  AdditionalFields:
+  ComputeGatewayJobId:
     type: object
     properties:
-      eventList:
-        example: eventList
-        description: Name of additional field to be exported
-        type: object
-        properties:
-          fields:
-            type: string
-            description: Fields filter for Event List
-          filter:
-            description: Filter values for exporting Event List.
-            type: object
-            properties:
-              fromIngestTimestamp:
-                type: string
-                example: '2018-01-01T00:00:00Z'
-                description: Filters experience events ingested after the given timestamp; RFC_3339 format
-    description: Additional fields that need to be exported
+      exportJob:
+        type: string
+        example: f3058161-7349-4ca9-807d-212cee2c2e94
+        description: Compute Gateway job Id for Export Job
+      pushJob:
+        type: string
+        example: feaeca05-d137-4605-aa4e-21d19d801fc6
+        description: Compute Gateway job Id for Push Job
+  DestinationResponse:
+    type: object
+    properties:
+      datasetId:
+        type: string
+        example: 5b7c86968f7b6501e21ba9df
+        description: Dataset Id of the destination.
+      batchId:
+        type: string
+        example: da5cfb4de32c4b93a09f7e37fa53ad52
+        description: Batch Id of the destination.
+    description: The destination information for Exported data
+  ErrorResponse:
+    type: object
+    properties:
+      code:
+        type: string
+        example: '0100000003'
+      msg:
+        type: string
+        example: Error in Export Job
+      callStack:
+        type: string
+        example: com.adobe.aep.unifiedprofile.common.logging.Logger
   FeedbackMetrics:
     type: object
     properties:
@@ -200,26 +286,12 @@ definitions:
         type: array
         description: Array of filter values for Export Job.
         items:
-          type: object
-          properties:
-            segmentId:
-              type: string
-              example: 52c26d0d-45f2-47a2-ab30-ed06abc981ff
-              description: Segment Id.
-            snapshotName:
-              type: string
-              example: peopleInCA
-              description: Snapshot name from a successful segmentation job.
-          description: Segment values for filter.
-      fromIngestTimestamp:
-        type: string
-        example: '2018-01-01T00:00:00Z'
-        description: Filters profiles and experience events updated after the given timestamp; RFC_3339 format
+          $ref: '#/definitions/SegmentValues'
       fromTimestamp:
         type: string
         example: '2018-01-01T00:00:00Z'
-        description: '[Deprecated] Filters profiles and experience events updated after the given timestamp; RFC_3339 format'
-    description: Array of filter values for Export Job to export Profiles.
+        description: Filters profiles and experience events updated after the given timestamp; RFC_3339 format
+    description: Array of filter values for Export Job.
   MergePolicyObject:
     type: object
     properties:
@@ -232,6 +304,19 @@ definitions:
         example: 1
         description: 'Version for the given merge policy Id; Default value: Latest.'
     description: Merge Policy id and version.
+  ScanJobMetrics:
+    type: object
+    properties:
+      totalTime:
+        description: 'Total time '
+        $ref: '#/definitions/FeedbackMetrics'
+      profileExportTime:
+        description: 'Profile Export time '
+        $ref: '#/definitions/FeedbackMetrics'
+      aCPDatasetWriteTime:
+        description: 'ACP Dataset Write time '
+        $ref: '#/definitions/FeedbackMetrics'
+    description: Metrics parameter for Export Job
   ScanJobResponse:
     type: object
     properties:
@@ -245,28 +330,14 @@ definitions:
         description: 'Job type: batch or streaming.'
       destination:
         description: Destination for Export Job results.
-        type: object
-        properties:
-          datasetId:
-            type: string
-            example: 5b7c86968f7b6501e21ba9df
-            description: Dataset Id of the destination.
-          batchId:
-            type: string
-            example: da5cfb4de32c4b93a09f7e37fa53ad52
-            description: Batch Id of the destination.
+        $ref: '#/definitions/DestinationResponse'
       fields:
         type: string
         example: 'identities.id,personalEmail.address'
         description: Column filters.
       schema:
         description: Schema name.
-        type: object
-        properties:
-          name:
-            type: string
-            example: _xdm.context.profile
-            description: Schema name.
+        $ref: '#/definitions/Schema'
       imsOrgId:
         type: string
         example: 1BD6382559DF0C130A49422D@AdobeOrg
@@ -276,10 +347,10 @@ definitions:
         example: FAILED
         description: NEW/PROCESSING/SUCCEEDED/FAILED.
       filter:
+        description: Filter.
         $ref: '#/definitions/Filter'
-      additonalFields:
-        $ref: '#/definitions/AdditionalFields'
       mergePolicy:
+        description: Merge Policy Id.
         $ref: '#/definitions/MergePolicyObject'
       profileInstanceId:
         type: string
@@ -289,39 +360,13 @@ definitions:
         type: array
         description: Errors in case of failure
         items:
-          type: object
-          properties:
-            code:
-              type: string
-              example: '0100000003'
-            msg:
-              type: string
-              example: Error in Export Job
-            callStack:
-              type: string
-              example: com.adobe.aep.unifiedprofile.common.logging.Logger
+          $ref: '#/definitions/ErrorResponse'
       metrics:
         description: Metrics for the job
-        type: object
-        properties:
-          totalTime:
-            $ref: '#/definitions/FeedbackMetrics'
-          profileExportTime:
-            $ref: '#/definitions/FeedbackMetrics'
-          aCPDatasetWriteTime:
-            $ref: '#/definitions/FeedbackMetrics'
+        $ref: '#/definitions/ScanJobMetrics'
       computeGatewayJobId:
         description: Compute Gateway job Id for Export and Push Job
-        type: object
-        properties:
-          exportJob:
-            type: string
-            example: f3058161-7349-4ca9-807d-212cee2c2e94
-            description: Compute Gateway job Id for Export Job
-          pushJob:
-            type: string
-            example: feaeca05-d137-4605-aa4e-21d19d801fc6
-            description: Compute Gateway job Id for Push Job
+        $ref: '#/definitions/ComputeGatewayJobId'
       creationTime:
         type: integer
         format: int64
@@ -337,6 +382,34 @@ definitions:
         example: d995479c-8a08-4240-903b-af469c67be1f
         description: Tracing Id for the job.
     description: The information after submitting a export job eg. job id.
+  Schema:
+    type: object
+    properties:
+      name:
+        type: string
+        example: _xdm.context.profile
+        description: Schema name.
+    description: Schema value.
+  SegmentValues:
+    type: object
+    properties:
+      segmentId:
+        type: string
+        example: 52c26d0d-45f2-47a2-ab30-ed06abc981ff
+        description: Segment Id.
+      snapshotName:
+        type: string
+        example: peopleInCA
+        description: Snapshot name from a successful segmentation job.
+    description: Segment values for filter.
+  Destination:
+    type: object
+    properties:
+      datasetId:
+        type: string
+        example: 5b7c86968f7b6501e21ba9df
+        description: Dataset Id of the destination.
+    description: Destination values for exported data.
   ScanJobEntityRequest:
     type: object
     properties:
@@ -350,26 +423,41 @@ definitions:
       filter:
         description: Array of segments with either segmentId or snapshotName
         $ref: '#/definitions/Filter'
-      additionalFields:
-        description: Additional fields that needs to be exported
-        $ref: '#/definitions/AdditionalFields'
       destination:
         description: DatasetId where the exported data will be stored
-        type: object
-        properties:
-          datasetId:
-            type: string
-            example: 5b7c86968f7b6501e21ba9df
-            description: Dataset Id of the destination.
+        $ref: '#/definitions/Destination'
       schema:
         description: Schema name for the data
-        type: object
-        properties:
-          name:
-            type: string
-            example: _xdm.context.profile
-            description: Schema name.
+        $ref: '#/definitions/Schema'
     description: Request for POST export job.
+  Link:
+    type: object
+    properties:
+      next:
+        type: string
+        description: The href link to the next page of the records. Empty if no more records.
+    description: The link information.
+  ScanJobPage:
+    type: object
+    properties:
+      sortField:
+        type: string
+        example: createdTime
+        description: The order records are sorted. By default is creation time.
+      sort:
+        type: string
+        example: desc
+        description: The sorting order. By default is descending order.
+      pageOffset:
+        type: string
+        example: '1540974701302_96'
+        description: The offset of the page. By default is the creation time and job id for the last record on this page.
+      pageSize:
+        type: integer
+        format: int32
+        example: 10
+        description: The total number of records of this page.
+    description: The page information of the response entity.
   ScanJobsPageResponse:
     type: object
     properties:
@@ -380,32 +468,10 @@ definitions:
           $ref: '#/definitions/ScanJobResponse'
       page:
         description: The page information of the current response entity.
-        type: object
-        properties:
-          sortField:
-            type: string
-            example: createdTime
-            description: The order records are sorted. By default is creation time.
-          sort:
-            type: string
-            example: desc
-            description: The sorting order. By default is descending order.
-          pageOffset:
-            type: string
-            example: '1540974701302_96'
-            description: The offset of the page. By default is the creation time and job id for the last record on this page.
-          pageSize:
-            type: integer
-            format: int32
-            example: 10
-            description: The total number of records of this page.
+        $ref: '#/definitions/ScanJobPage'
       link:
         description: The href links.
-        type: object
-        properties:
-          next:
-            type: string
-            description: The href link to the next page of the records. Empty if no more records.
+        $ref: '#/definitions/Link'
   MessageResponse:
     type: object
     properties:
@@ -418,36 +484,3 @@ definitions:
         example: Export Job has been marked for cancelling
         description: Message.
     description: Response for Cancel Export Job call
-
-parameters:
-  authorization:
-    name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
-    For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
-    required: true
-    type: string
-    in: header
-  x-gw-ims-org-id:
-    name: x-gw-ims-org-id
-    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
-    required: true
-    type: string
-    in: header
-  x-api-key:
-    name: x-api-key
-    description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
-    required: true
-    type: string
-    in: header
-  json-header:
-    name: Content-Type
-    description: 'application/json'
-    required: true
-    type: string
-    in: header    
