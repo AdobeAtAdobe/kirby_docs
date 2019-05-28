@@ -1,4 +1,4 @@
-# Working with data usage policies in Adobe Experience Platform
+# Work with data usage policies
 
 Data Usage Labeling and Enforcement (DULE) is at the core of the data governance infrastructure included in Adobe Experience Platform. If you have not yet done so, please begin by reviewing the [DULE User Guide](../../../../../end-user/markdown/dule_overview/dule_overview.md) to familiarize yourself with the DULE framework.
 
@@ -18,7 +18,7 @@ The examples in this document will walk you through key operations you can perfo
 * [Deleting a marketing action](#delete-a-marketing-action)
 * [Evaluating if any policies are violated by performing certain marketing actions](#policy-evaluation) 
 
-Using the API requires you to have an Adobe ID and access to Adobe Experience Platform. The information in the 'getting started' section that follows will provide an understanding of core concepts you need to know before attempting to make calls to the Policy Service API.
+Using the API requires you to have an Adobe ID and access to Adobe Experience Platform. The information in the "getting started" section that follows will provide an understanding of core concepts you need to know before attempting to make calls to the Policy Service API.
 
 ## Getting started with DULE Policy Service
 
@@ -38,9 +38,9 @@ Once complete, you should have the following values:
 
 Each of the API calls in this document requires you to send headers in your request. In general, each call requires three or four headers, depending on the type of request. All requests require the follow three headers, containing the values established during [authentication](#authentication):
 
-* Authorization: Bearer {ACCESS_TOKEN}
-* x-api-key: {API_KEY}
-* x-gw-ims-org-id: {IMS_ORG}
+* Authorization: Bearer `{ACCESS_TOKEN}`
+* x-api-key: `{API_KEY}`
+* x-gw-ims-org-id: `{IMS_ORG}`
 
 Calls in which a payload (body) are sent will require a fourth header:
 
@@ -802,7 +802,7 @@ Evaluation requests can be made in one of three ways:
 1. Given one or more datasets and a marketing action, does the action violate any policies?
 1. Given one or more datasets and a subset of one or more fields within each of those datasets, does the action violate any policies?
 
-### DULE labels and a marketing action
+### Evaluate policies using DULE labels and a marketing action
 
 Evaluating policy violations based on the presence of DULE labels requires you to specify the set of labels that would be present on the data during the request. This is done through the use of query parameters, where DULE labels are provided as a comma-separated list of values, as shown in the following example.
 
@@ -887,7 +887,7 @@ The response object includes a `duleLabels` array that should match the labels s
 }
 ```
 
-### Datasets and a marketing action
+### Evaluate policies using datasets and a marketing action
 
 You can also evaluate policy violations by specifying the ID of one or more datasets from which DULE labels can be collected. This is done by performing a POST request to either the core or custom `/constraints` endpoint for a marketing action and specifying dataset IDs within the request body, as shown below.
 
@@ -1102,7 +1102,7 @@ If the specified marketing action violates a policy involving the `duleLabels` w
 }
 ```
 
-### Datasets, fields, and a marketing action
+### Evaluate policies using datasets, fields, and a marketing action
 
 In addition to supplying one or more dataset IDs, a subset of fields from within each dataset may also be specified, indicating that only the DULE labels on those fields should be evaluated. Similar to the POST request involving only datasets, this request adds specific fields for each dataset to the request body.
 
