@@ -1294,12 +1294,14 @@ When using the `link` Accept header, each descriptor is shown as an array item i
   ],
   "xdm:descriptorIdentity": [
     "/tenant/descriptors/f7a4bc25429496c4740f8f9a7a49ba96862c5379"
-  ],
-  "xdm:descriptorOneToOne": [
-      "/tenant/descriptors/cb509fd6f8ab6304e346905441a34b58a0cd481a"
   ]
 }
 ```
+
+<!-- Relationship descriptor to be added later:
+ "xdm:descriptorOneToOne": [
+    "/tenant/descriptors/cb509fd6f8ab6304e346905441a34b58a0cd481a"
+  ] -->
 
 ### Lookup descriptor
 
@@ -2249,7 +2251,7 @@ Signals that the "sourceProperty" of the "sourceSchema" is an Identity field as 
 </ul></p>
 </td>
 </tr>
-
+<!-- (To be revised and added later)
 <tr>
 <td colspan=2><strong>Relationship Descriptor</strong></td>
 </tr>
@@ -2291,7 +2293,7 @@ Signals that the "sourceProperty" of the "sourceSchema" is an Identity field as 
 </ul>
 </p>
 </td>
-</tr>
+</tr> -->
 </table>
 
 ### Ad-hoc schema workflow
