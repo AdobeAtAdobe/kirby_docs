@@ -1,4 +1,4 @@
-# Working with Data Usage Labels in Adobe Experience Platform
+# Work with data usage labels
 
 Data Usage Labeling and Enforcement (DULE) is at the core of the data governance infrastructure in Adobe Experience Platform. DULE features enable you to apply data usage labels to connections, datasets, and fields, categorizing each according to related data usage policies.
 
@@ -14,9 +14,9 @@ The examples in this tutorial walk through the steps to add and edit data usage 
 
 This tutorial requires you to have an Adobe ID and access to Experience Platform.
 
-## Adding data usage labels at the connection level
+## Add data usage labels at the connection level
 
-Adding labels at the connection level requires first creating a connection. In order to create a connection you will need to have login credentials for the connector of your choice. In this example, a connection will be made to Microsoft Dynamics.
+Adding labels at the connection level requires first creating a connection. In order to create a connection, you need to have login credentials for the connector of your choice. In this tutorial, a connection is made to Microsoft Dynamics.
 
 1. In Adobe Experience Platform, select **Connections** from the left-navigation. If connections have been made, they will be listed here with Name, Source, and Status. The Connections workspace also includes information regarding the number of connections in your organization, recently updated connections, and composition of connections across sources.  
 ![List of Connections](images/connections_list_all.png)
@@ -40,9 +40,9 @@ Adding labels at the connection level requires first creating a connection. In o
 
 You have now successfully created a Microsoft Dynamics connection and applied DULE labels at the connection-level. In the future, all datasets created using this connection will inherit the connection-level labels to that dataset and to all individual fields within.
 
-## Adding and editing data usage labels at the dataset level
+## Add and edit data usage labels at the dataset level
 
-In order to add data usage labels at the dataset level, you must select an existing dataset or create a new one. In this example, you will create a dataset using a pre-configured schema. For more information on dataset schemas and how to compose schemas for use with Experience Platform, read the [Basics of Schema Composition](../../technical_overview/schema_registry/schema_composition/schema_composition.md).
+In order to add data usage labels at the dataset level, you must select an existing dataset or create a new one. In this example, a dataset is created using a pre-configured schema. For more information on dataset schemas and how to compose schemas for use with Experience Platform, read the [Basics of Schema Composition](../../technical_overview/schema_registry/schema_composition/schema_composition.md).
 
 1. After logging into Adobe Experience Platform, select **Datasets** on the left-navigation. If datasets have been created, they will be listed here by Name, along with useful details related to each dataset. 
 ![Dataset Tab within Data Workspace](images/datasets_list_all.png)
@@ -56,10 +56,9 @@ In order to add data usage labels at the dataset level, you must select an exist
 ![Select Dataset Schema](images/dataset_schema.png)
 1. On the **Configure Dataset** screen, provide a Name (required) and Description (optional, but recommended) for your new dataset and click **Finish**.    
 ![Configure Dataset with Name and Description](images/dataset_configure.png)  
-1. You will now see the **Dataset Activity** page for your dataset. In this example the dataset is named "Loyalty Members" therefore the top-navigation shows **Datasets > Loyalty Members**. 
+1. The **Dataset Activity** page appears displaying information about the newly created dataset. In this example the dataset is named "Loyalty Members" therefore the top-navigation shows **Datasets > Loyalty Members**. 
 
-    Clicking on the **Data Governance** tab (just below the top-navigation) will allow you to manage DULE labels for this dataset, including adding new labels at the dataset and field level or editing labels in the future should you need to make changes. 
-      
+    You can use the **Data Governance** tab (just below the top-navigation) to manage DULE labels for this dataset, including adding new labels at the dataset and field level or editing labels in the future should you need to make changes.  
 ![Dataset Data Governance Tab](images/dataset_data_governance.png)
 1. To begin adding data usage labels at the dataset level, click on the pencil icon and the **Edit Governance Labels** dialog will open.
 1. Within the **Edit Governance Labels** dialog, check the boxes next to the labels you wish to apply to the dataset. Remember that these labels will be inherited by all fields within the dataset. As you check each box the **Applied Labels** header will update showing the labels you have chosen. Once you have selected all of the desired labels, click **Save Changes**.  
@@ -71,7 +70,7 @@ In order to add data usage labels at the dataset level, you must select an exist
 
 The Show Inherited Labels toggle is on by default. This allows you to see any labels inherited down from the dataset to its fields. Notice that an "x" appears next to the labels at the dataset level, allowing you to remove the labels. The inherited labels beside each field do not have an "x" next to them and appear "greyed out" with no ability to remove or edit. This is because **inherited fields are read only**, meaning they cannot be removed at the field level. 
 
-## Adding data usage labels at the field level via dataset details 
+## Add data usage labels at the field level using dataset details 
 
 Continuing the workflow for [adding and editing data usage labels at the dataset level](#adding-and-editing-data-usage-labels-at-the-dataset-level), you can also add and edit field-level labels from the **Data Governance** tab of the dataset. Each column in the dataset is represented by a row listed under Field Name.
 
@@ -92,6 +91,6 @@ Continuing the workflow for [adding and editing data usage labels at the dataset
 
 It is important to remember that inheritance moves from the top-level down only (Connection → Dataset → Fields), meaning that labels applied at the field level will not be propagated to other fields or upwards to the dataset or connection.
 
-## Next Steps
+## Next steps
 
 Now that you have added data usage labels at the connection, dataset, and field level, you can begin to ingest data into Experience Platform. To learn more, start by reading the [data ingestion documentation](../../technical_overview/ingest_architectural_overview/ingest_architectural_overview.md).

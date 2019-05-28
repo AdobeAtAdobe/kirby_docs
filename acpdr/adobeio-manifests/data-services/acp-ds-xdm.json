@@ -45,6 +45,12 @@
 					"path": "api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md",
 					"title": "Schema Registry API tutorial",
 					"description": "Follow step-by-step instructions to compose a schema using the Schema Registry API, including assigning a class and defining mixins."
+				},
+				{
+					"pages": [],
+					"path": "api-specification/markdown/narrative/technical_overview/schema_registry/xdm_troubleshooting/xdm_system_faq_and_troubleshooting.md",
+					"title": "XDM System troubleshooting guide",
+					"description": "Find answers to frequently asked questions about XDM System and Experience Data Model (XDM), including troubleshooting for common errors."
 				}
 	],
 	"app2app_map": {
