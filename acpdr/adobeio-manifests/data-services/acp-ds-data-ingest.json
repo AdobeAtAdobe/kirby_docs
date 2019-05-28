@@ -11,12 +11,39 @@
     "base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
     "pages": [
       {
-        "pages": [ ],
+        "pages": [ 
+            {
+                "pages": [ ],
+                "path": "api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/batch_data_ingestion_troubleshooting_guide.md",
+                "title": "Batch ingestion troubleshooting guide"
+            },
+            {
+                "pages": [ ],
+                "path": "api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/batch_data_ingestion_developer_guide.md",
+                "title": "Batch ingestion developer guide"
+            }
+        ],
         "path": "api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md",
         "title": "Batch ingestion"
       },
       {
-        "pages": [ ],
+        "pages": [ 
+            {
+                "pages": [],
+                "path": "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/analytics_data_connector.md",
+                "title": "Analytics data connector"
+            },
+            {
+                "pages": [],
+                "path": "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/direct_mapping_fields.md",
+                "title": "Direct mapping fields"
+            },
+            {
+                "pages": [],
+                "path": "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/generated_mapping_fields.md",
+                "title": "Transformed mapping fields"
+            }
+        ],
         "path": "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md",
         "title": "Data connectors"
       },
@@ -46,6 +73,11 @@
               "pages": [ ],
               "path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_validation.md",
               "title": "Streaming validation"
+          },
+          {
+            "pages": [ ],
+            "path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/e2e-monitor-streaming-data-flows.md",
+            "title": "Monitoring Streaming Data Flows"
           }
         ],
         "path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_ingest_overview.md",
@@ -53,8 +85,9 @@
       }
     ],
 	"app2app_map": {
-		"api-specification/markdown/narrative/tutorials/": "/apis/cloudplatform/dataservices/tutorials/alltutorials.html",
-		"acpdr/swagger-specs/": "/apis/cloudplatform/dataservices/api-reference.html",
+		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
+    "acpdr/swagger-specs/": "/apis/experienceplatform/home/api-reference.html",
+    "api-specification/markdown/narrative/technical_overview/schema_registry": "/apis/experienceplatform/home/xdm/xdmservices.html",
 		"api-specification/markdown/narrative/technical_overview/schema_registry/schema_composition/": "/apis/experienceplatform/home/xdm/xdmservices.html",
 		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
