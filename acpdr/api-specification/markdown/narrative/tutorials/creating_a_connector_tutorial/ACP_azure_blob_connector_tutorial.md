@@ -222,6 +222,16 @@ For example - https://{BLOB_URL_PREFIX}.blob.core.windows.net/{BLOB_CONTAINER}/{
 * `{DATASET_NAME}`: Name of the dataset you specified.
 * `{DATASET_ID}`: The ID of the dataset you created. Use `{DATASET_ID}` to make a request to Catalog to identify the DatasetView ID associated with this dataset.
 
+##### Recursive ingestion
+To recursively copy files from nested folders, add the `connectors-recursiveIngestion` tag inside the tags.
+
+```SHELL
+"connectors-recursiveIngestion": [
+   "<true or false>"
+]
+```
+Default value of `connectors-recursiveIngestion` tag is `false`. If this tag is set to `true`, it will pick up files from folders inside the folder specified in `{BLOB_PATH}` recursively starting from root level.
+
 #### Incremental ingestion
 
 Incremental ingestion allows users to incrementally ingest data based on a preferred frequency and picked regularly from the specified location. A "backfill" date can be specified to start data ingestion from the specified date.
@@ -265,9 +275,9 @@ Below are a few examples using the regex tag and file format at the source.
 
 | Blob Path | isFolderRegex | Description |
 | ------- | ------------- | ----------- |
-| https://{BLOB_URL}/{CONTAINER_NAME}/{BLOB}/  | false | All files inside FolderA having names with {objectDateTimeRegex} values will be picked. |
-| https://{BLOB_URL}/{CONTAINER_NAME}/{BLOB}/ | true | Regex will be applied on folder names. All folders inside FolderA having names with {objectDateTimeRegex} values will be picked. All files within the matching folders will be picked. |
-| https://{BLOB_URL}/{CONTAINER_NAME}/{BLOB}/folderPath | true | Regex will be applied on folder names. All folders inside FolderA having names starting with FolderB and containing regex {objectDateTimeRegex} values will be picked. Since path does not end with '/', it will be treated as folder regex prefix.  |
+| https://{BLOB_URL}/FolderA  | false | All files inside FolderA having names with {objectDateTimeRegex} values will be picked. |
+| https://{BLOB_URL}/FolderA/ | true | Regex will be applied on folder names. All folders inside FolderA having names with {objectDateTimeRegex} values will be picked. All files within the matching folders will be picked. |
+| https://{BLOB_URL}/FolderA/FolderB | true | Regex will be applied on folder names. All folders inside FolderA having names starting with FolderB and containing regex {objectDateTimeRegex} values will be picked. Since path does not end with '/', it will be treated as folder regex prefix.  |
 
 Sample payload example for regex-based incremental ingestion on files
 
@@ -292,7 +302,7 @@ curl -X POST \
             {SUPPORTED_REGEX}
           ],
           "connectors-isFolderRegex": [
-            "<True or False>"
+            "<true or false>"
           ]
         },
         "schemaRef": {

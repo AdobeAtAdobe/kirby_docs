@@ -224,6 +224,16 @@ For example - *s3://test-acpconnector-new/testConfigs/IncrementalTest/YearlyData
 * `{DATASET_NAME}`: Name of the dataset you specified.
 * `{DATASET_ID}`: The ID of the dataset you created. Use `{DATASET_ID}` to make a request to Catalog to identify the DatasetView ID associated with this dataset.
 
+##### Recursive ingestion
+To recursively copy files from nested folders, add the `connectors-recursiveIngestion` tag inside the tags.
+
+```SHELL
+"connectors-recursiveIngestion": [
+   "<true or false>"
+]
+```
+Default value of `connectors-recursiveIngestion` tag is `false`. If this tag is set to `true`, it will pick up files from folders inside the folder specified in `{BLOB_PATH}` recursively starting from root level.
+
 #### Incremental ingestion
 
 Incremental ingestion allows users to incrementally ingest data based on a preferred frequency and picked regularly from the specified location. A "backfill" date can be specified to start data ingestion from the specified date.
@@ -294,7 +304,7 @@ curl -X POST \
             {SUPPORTED_REGEX}
           ],
           "connectors-isFolderRegex": [
-            "<True or False>"
+            "<true or false>"
           ]
         },
         "schemaRef": {
@@ -371,4 +381,3 @@ curl -X GET \
 ```
 
 > Note: `parquet`, `json` and `delimited` are supported values for `fileType` query parameter.
-
