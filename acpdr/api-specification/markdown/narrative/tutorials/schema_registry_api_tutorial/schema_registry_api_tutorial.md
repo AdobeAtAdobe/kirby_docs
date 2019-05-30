@@ -12,7 +12,7 @@ This tutorial uses the Schema Registry API to walk you through the steps to [com
 * [Define a data type](#create-a-data-type) for use in multiple schemas
 * [Use the data type](#use-data-type-in-schema) in your schema
 * [Define an Identity Descriptor](#define-identity-descriptor)
-* [Enable schema for use with Unified Profile Service](#enable-schema-for-use-in-unified-profile-service) and view a union schema
+* [Enable schema for use in Real-time Customer Profile](#enable-schema-for-use-in-real-time-customer-profile) and view a union schema
 
 If you would prefer to use the user interface in Experience Platform, the [Schema Editor Tutorial](../schema_editor_tutorial/schema_editor_tutorial.md) provides step-by-step instructions for performing similar actions in the schema editor.
 
