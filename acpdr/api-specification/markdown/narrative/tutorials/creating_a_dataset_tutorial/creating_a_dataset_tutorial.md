@@ -291,7 +291,7 @@ You will receive an HTTP Status 201 (Created) and a response object containing d
 
 After successfully creating a new batch for uploading, you can now upload files to the specific dataset. It is important to remember that when you defined the dataset, you specified the file format as parquet. Therefore, the files you upload must be in that format.
 
-> **Note:** If the file being uploaded is greater than 512 MB, you must break it into 512 MB chunks and upload each file one at a time. You can upload each 512 MB chunk to a dataset in the same batch by repeating this step for each file, using the same batch ID.
+> **Note:** The largest data upload file supported is 512 MB. If your data file is larger than this, it will need to be broken into chunks no larger than 512 MB and upload each file one at a time. You can upload each file in the same batch by repeating this step for each file, using the same batch ID. There is no limit to the number if files you can upload as part of a batch.
 
 #### API format
 
@@ -336,6 +336,105 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/5d01230fc
 #### Response
 
 A successfully completed batch returns a blank response body and HTTP Status 200 (OK).
+
+
+## Monitor ingestion
+
+Depending on the size of the data, batches take varying lengths of time to ingest. Using the Bulk Ingestion API, the first step to uploading a batch of data is to create the batch. You are provided with a `batchId` in the response. In the example below the batch ID is "29285e08378f4a41827e7e70fb7cb8f0", provided as the value to the `batch` request parameter, indicating to retrieve all batches related to that batch. Using that ID, you are able to poll the dataset for the status of the batch from ingestion until the `status` in the response indicates completion ("success" or "failure").
+
+__Service endpoint__
+
+```
+GET /batches?batch={BATCH_ID}
+```
+
+> **Note:** Adding the filter criteria of `createdClient=acp_core_unifiedProfile_feeds` to view the status of Unified Profile's ingestion of the data.
+
+__Example request for related Unified Profile batches__
+
+```
+curl -X GET \
+  'https://platform.adobe.io/data/foundation/catalog/batches?batch=5d01230fc78a4e4f8c0c6b387b4b8d1c' \
+  -H 'x-api-key : {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMG_ORG}' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}'
+```
+
+__Example positive response__
+
+```
+{
+    "5b7129a879323401ef2a6486": {
+        "imsOrg": "F47E32E75AB004490A49403E@AdobeOrg",
+        "created": 1534142888068,
+        "createdClient": "acp_core_unifiedProfile_feeds",
+        "createdUser": "acp_core_unifiedProfile_feeds@AdobeID",
+        "updatedUser": "acp_core_unifiedProfile_feeds@AdobeID",
+        "updated": 1534142955152,
+        "replay": {},
+        "status": "success",
+        "errors": [],
+        "version": "1.0.3",
+        "availableDates": {},
+        "relatedObjects": [
+            {
+                "type": "batch",
+                "id": "29285e08378f4a41827e7e70fb7cb8f0"
+            }
+        ],
+        "metrics": {
+            "startTime": 1534142943819,
+            "endTime": 1534142951760,
+            "recordsRead": 108,
+            "recordsWritten": 108
+        }
+    }
+}
+```
+
+__Example negative response__
+
+```
+{
+    "5b96ce65badcf701e51f075d": {
+        "imsOrg": "4A21D36B544916100A4C98A7@AdobeOrg",
+        "status": "failed",
+        "relatedObjects": [
+            {
+                "type": "batch",
+                "id": "29285e08378f4a41827e7e70fb7cb8f0"
+            }
+        ],
+        "replay": {},
+        "availableDates": {},
+        "metrics": {
+            "startTime": 1536610322329,
+            "endTime": 1536610438083,
+            "recordsRead": 4004,
+            "recordsWritten": 4004,
+            "failureReason": "Job aborted due to stage failure: Task 0 in stage 1.0 failed 4 times,:"
+        },
+        "errors": [
+            {
+                "code": "0070000017",
+                "description": "Unknown error occurred."
+            },
+            {
+                "code": "unknown",
+                "description": "Job aborted."
+            }
+        ],
+        "created": 1536609893629,
+        "createdClient": "acp_core_unifiedProfile_feeds",
+        "createdUser": "acp_core_unifiedProfile_feeds@AdobeID",
+        "updatedUser": "acp_core_unifiedProfile_feeds@AdobeID",
+        "updated": 1536610442814,
+        "version": "1.0.5"
+    }
+}
+```
+
+A recommended polling interval is two minutes. For more information on working with Catalog datasets and batches, see the [Catalog Service overview](../../technical_overview/catalog_architectural_overview/catalog_architectural_overview.md).
 
 ## Read data from the dataset
 
