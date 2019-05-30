@@ -1,13 +1,12 @@
-consumes:
-  - application/json
-produces:
-  - application/json
 swagger: '2.0'
 info:
   description: >-
-    Identity Service (IS) provides API based access to consumer identity graphs which resolves a known or anonymous identity to all other known
-    and anonymous identities of a person. IS solves the fundamental challenge posed by the fragmentation of identities and thus profiles, across multiple
-    devices owned by a consumer, and is needed for improving the accuracy and reach of digital marketing campaigns.
+    Identity Service provides API based access to customer identity graphs which resolves a known or anonymous identity to all 
+    other known and anonymous identities of an individual. Identity Service solves the fundamental challenge posed by the
+    disconnected identities of your customers caused by the fragmented nature of their data as it exists across each
+    of the disparate systems at play in your organization's ecosystem. This seamless unified view of your customers allows 
+    for a vast improvement in the accuracy and reach of your digital marketing campaigns.
+
 
     Some common terminology used in this API document:
       Term | Definition
@@ -23,7 +22,8 @@ info:
     __Notes__:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core
-      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
+      to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
 
   title: Identity Service
 
@@ -341,7 +341,7 @@ paths:
               description:
                 type: string
                 example:  Request rate is large. Please try again later.
-  /data/core/identity/clusters/members:
+  /identity/clusters/members:
     parameters:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
@@ -377,6 +377,7 @@ paths:
           required: false
           type: string
           default: application/vnd.adobe.identity+json;version=1.2
+        - $ref: '#/parameters/json-header'
       responses:
         '200':
           examples:
@@ -670,6 +671,7 @@ paths:
           required: false
           type: string
           default: application/vnd.adobe.identity+json;version=1.2
+        - $ref: '#/parameters/json-header'
       responses:
         '200':
           examples:
@@ -968,6 +970,7 @@ paths:
           required: false
           type: string
           default: application/vnd.adobe.identity+json;version=1.2
+        - $ref: '#/parameters/json-header'
       responses:
         '200':
           examples:
@@ -1208,6 +1211,7 @@ paths:
           description: Namespace details as a JSON input
           schema:
             $ref: '#/definitions/NamespaceForCreate'
+        - $ref: '#/parameters/json-header'
       consumes:
         - application/json
       produces:
@@ -1471,6 +1475,7 @@ paths:
           description: Namespace details as a json input
           schema:
             $ref: '#/definitions/NamespaceForCreate'
+        - $ref: '#/parameters/json-header'
       consumes:
         - application/json
       produces:
@@ -1933,7 +1938,6 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/Error'
-
 parameters:
   authorization:
     name: Authorization
@@ -1966,7 +1970,6 @@ parameters:
     required: true
     type: string
     in: header
-
 definitions:
   Id:
     type: object
