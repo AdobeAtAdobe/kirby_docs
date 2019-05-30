@@ -38,9 +38,6 @@
 			"description":"The Retail Sales recipe enables you to predict sales forecast for all stores seeded for a certain time period. Learn more about this recipe to see if it is a right fit for your use case."
 		}
 	],
-	"app2app_map": {
-		"api-specification/markdown/narrative/tutorials/dsw/":"/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html",
-		"acpdr/swagger-specs/":"/apis/experienceplatform/home/api-reference.html",
-		"api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html"
-	}
+	"app2app_map": {"api-specification/markdown/narrative/tutorials/dsw/":"/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html", 
+									"acpdr/swagger-specs/":"/apis/experienceplatform/home/api-reference.html"}
 }
