@@ -1,14 +1,17 @@
-# Tutorial: Configure a dataset using a file
+# Create a dataset using APIs
 
-This tutorial will walk you through the steps to create and populate a dataset using a file. 
+This tutorial walks through the steps to create a dataset using Adobe Experience Platform APIs, and populate the dataset using a file.
 
 The steps involved include:
 
-1. Create a dataset based on a schema
-1. Create a batch for uploading data into the dataset
-1. Upload the files to the batch
-1. Signal to the server that the batch has been completed
-1. Verify that the operation was successful by reading back the data in the dataset
+1. [Lookup a dataset schema](#lookup-dataset-schema)
+1. [Create a dataset](#create-a-dataset) based on the schema
+1. [Create a batch](#create-a-batch) for uploading data into the dataset
+1. [Upload files](#upload-files-to-a-batch) to the batch
+1. [Signal to the server that the batch has been completed](#signal-batch-completion)
+1. [Monitor data ingestion](#monitor-ingestion) for a batch
+1. Verify that the operation was successful by [reading back the data in the dataset](#read-data-from-the-dataset)
+1. (Optional) [Update the dataset schema](#update-the-dataset-schema) to ingest additional data into an existing dataset
 
 ## Getting started
 
@@ -17,33 +20,31 @@ You can ingest data into a dataset in two different ways:
 * Batch ingestion using file upload
 * Set up a connector to ingest files
 
-Batch ingestion using a file will be covered by this tutorial. For information about how to create and populate a dataset using a connector, see the [Setting up Connectors](../creating_a_connector_tutorial/creating_a_connector_tutorial.md) documentation.
+This tutorial covers batch ingestion using a file. For information about how to create and populate a dataset using a connector, see the documentation on [creating a connector](../creating_a_connector_tutorial/creating_a_connector_tutorial.md).
 
 ### Reading the API calls
 
 Before making calls to the API, it is important to understand how to read the calls in this document. 
 
-Each API call is shown in two different ways. First, the command is presented in its "API format", a template representation showing only the operation (GET, POST, PUT, PATCH, DELETE) and the endpoint being used (e.g. `/datasets`). Some templates also include examples or show the location of variables to help illustrate how a call should be formulated, such as `GET /datasets/{variable}`.
+Each API call is shown in two different ways. First, the command is presented in its "API format", a template representation showing only the operation (GET, POST, PUT, PATCH, DELETE) and the endpoint being used (for example, `/datasets`). Some templates also show the location of variables to help illustrate how a call should be formulated, such as `GET /datasets/{variable}`.
 
-The calls are then shown as [curl](https://curl.haxx.se/docs/faq.html#What_is_cURL) commands in a "Request", which includes the necessary headers and full "base path" needed to successfully interact with the API.
+The calls are then shown as [cURL](https://curl.haxx.se/docs/faq.html#What_is_cURL) commands in a "Request", which includes the necessary headers and full "base path" needed to successfully interact with the API.
 
 For example, the base path for the Catalog Service API is: `https://platform.adobe.io/data/foundation/catalog`. 
 
 The base path should be pre-pended to all endpoints. For example, the `/datasets` endpoint becomes: `https://platform.adobe.io/data/foundation/catalog/datasets` in order to make a call to the API.
 
-You will see the API format / Request pattern throughout the tutorial, and should be sure to use the complete path shown in the sample Request, as the calls in this tutorial use multiple services with different base paths.
+The API format / Request pattern is used throughout the tutorial. Please ensure that you are using the complete path shown in the Request section, as the calls in this tutorial use multiple services with different base paths.
 
 ### Authentication and request headers
 
-The calls in this tutorial require specific request headers be sent with each call in order to successfully use the APIs. 
-
-The headers, and the values required, are:
+The calls in this tutorial require the following three request headers to be sent with each call in order to successfully use the APIs:
 
 * Authorization: Bearer `{ACCESS_TOKEN}` - The token provided after [authentication](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). 
 * x-api-key: `{API_KEY}` - Your specific API key for your unique Platform integration.
 * x-gw-ims-org-id: `{IMS_ORG}` - The IMS Organization credentials for your unique Platform integration.
 
-You will also occasionally need the following headers:
+The following headers are also occasionally required:
 
 * Content-Type: Used to specify acceptable media types in the request body
 * Accept: Used to specify acceptable media types in the response body
@@ -62,7 +63,7 @@ This tutorial begins where the [Schema Registry API tutorial](../schema_registry
 
 If you have not completed the Schema Registry tutorial, please start there and continue with this dataset tutorial only once you have composed the necessary schema.
 
-The following call can be used to view the Loyalty Members schema you created during the [Schema Registry API tutorial](../../tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md).
+The following call can be used to view the Loyalty Members schema you created during the [Schema Registry API tutorial](../../tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md):
 
 #### API format
 
@@ -214,7 +215,7 @@ For the file format, this tutorial uses [parquet](https://parquet.apache.org/doc
 
 #### Response
 
-You will receive an HTTP Status 201 (Created) and a response body that consists of an array containing the ID of the newly created dataset in the format `"@/datasets/{DATASET_ID}"`. The dataset ID is a read-only, system-generated string that will be used to reference the dataset throughout this tutorial.
+A successful response returns HTTP Status 201 (Created) and a response object that consists of an array containing the ID of the newly created dataset in the format `"@/datasets/{DATASET_ID}"`. The dataset ID is a read-only, system-generated string that is used to reference the dataset in API calls.
 
 ```JSON
 [
@@ -250,7 +251,7 @@ curl -X POST 'https://platform.adobe.io/data/foundation/import/batches' \
 
 #### Response
 
-You will receive an HTTP Status 201 (Created) and a response object containing details of the newly created batch, including its `id`, a read-only, system generated string.
+A successful response returns HTTP Status 201 (Created) and a response object containing details of the newly created batch, including its `id`, a read-only, system generated string.
 
 ```JSON
 {
@@ -287,11 +288,11 @@ You will receive an HTTP Status 201 (Created) and a response object containing d
 }
 ```
 
-## File upload
+## Upload files to a batch
 
 After successfully creating a new batch for uploading, you can now upload files to the specific dataset. It is important to remember that when you defined the dataset, you specified the file format as parquet. Therefore, the files you upload must be in that format.
 
-> **Note:** The largest data upload file supported is 512 MB. If your data file is larger than this, it will need to be broken into chunks no larger than 512 MB and upload each file one at a time. You can upload each file in the same batch by repeating this step for each file, using the same batch ID. There is no limit to the number if files you can upload as part of a batch.
+> **Note:** The largest data upload file supported is 512 MB. If your data file is larger than this, it needs to be broken into chunks no larger than 512 MB, to be uploaded one at a time. You can upload each file in the same batch by repeating this step for each file, using the same batch ID. There is no limit to the number if files you can upload as part of a batch.
 
 #### API format
 
@@ -340,19 +341,17 @@ A successfully completed batch returns a blank response body and HTTP Status 200
 
 ## Monitor ingestion
 
-Depending on the size of the data, batches take varying lengths of time to ingest. Using the Bulk Ingestion API, the first step to uploading a batch of data is to create the batch. You are provided with a `batchId` in the response. In the example below the batch ID is "29285e08378f4a41827e7e70fb7cb8f0", provided as the value to the `batch` request parameter, indicating to retrieve all batches related to that batch. Using that ID, you are able to poll the dataset for the status of the batch from ingestion until the `status` in the response indicates completion ("success" or "failure").
+Depending on the size of the data, batches take varying lengths of time to ingest. You can monitor the status of a batch by appending a `batch` request parameter containing the batch's ID to a `GET /batches` request. The API polls the dataset for the status of the batch from ingestion until the `status` in the response indicates completion ("success" or "failure").
 
-__Service endpoint__
+#### API format
 
-```
+```HTTP
 GET /batches?batch={BATCH_ID}
 ```
 
-> **Note:** Adding the filter criteria of `createdClient=acp_core_unifiedProfile_feeds` to view the status of Unified Profile's ingestion of the data.
+#### Request
 
-__Example request for related Unified Profile batches__
-
-```
+```SHELL
 curl -X GET \
   'https://platform.adobe.io/data/foundation/catalog/batches?batch=5d01230fc78a4e4f8c0c6b387b4b8d1c' \
   -H 'x-api-key : {API_KEY}' \
@@ -360,16 +359,18 @@ curl -X GET \
   -H 'Authorization: Bearer {ACCESS_TOKEN}'
 ```
 
-__Example positive response__
+#### Response
 
-```
+A positive response returns an object with its `"status"` attribute containing the value of `"success"`:
+
+```JSON
 {
     "5b7129a879323401ef2a6486": {
-        "imsOrg": "F47E32E75AB004490A49403E@AdobeOrg",
+        "imsOrg": "{IMS_ORG}",
         "created": 1534142888068,
-        "createdClient": "acp_core_unifiedProfile_feeds",
-        "createdUser": "acp_core_unifiedProfile_feeds@AdobeID",
-        "updatedUser": "acp_core_unifiedProfile_feeds@AdobeID",
+        "createdClient": "{CREATED_CLIENT}",
+        "createdUser": "{CREATED_BY}",
+        "updatedUser": "{CREATED_BY}",
         "updated": 1534142955152,
         "replay": {},
         "status": "success",
@@ -392,12 +393,12 @@ __Example positive response__
 }
 ```
 
-__Example negative response__
+A negative response returns an object with the value of `"failed"` in its `"status"` attribute, and includes any relevant error messages:
 
-```
+```JSON
 {
     "5b96ce65badcf701e51f075d": {
-        "imsOrg": "4A21D36B544916100A4C98A7@AdobeOrg",
+        "imsOrg": "{IMS_ORG}",
         "status": "failed",
         "relatedObjects": [
             {
@@ -425,9 +426,9 @@ __Example negative response__
             }
         ],
         "created": 1536609893629,
-        "createdClient": "acp_core_unifiedProfile_feeds",
-        "createdUser": "acp_core_unifiedProfile_feeds@AdobeID",
-        "updatedUser": "acp_core_unifiedProfile_feeds@AdobeID",
+        "createdClient": "{CREATED_CLIENT}",
+        "createdUser": "{CREATED_BY}",
+        "updatedUser": "{CREATED_BY}",
         "updated": 1536610442814,
         "version": "1.0.5"
     }
@@ -438,15 +439,15 @@ A recommended polling interval is two minutes. For more information on working w
 
 ## Read data from the dataset
 
-With the batch ID, you can use the Data Access API to read-back and verify all of the files uploaded to the batch. The response will return an array containing a list of file IDs, each referencing a file in the batch. 
+With the batch ID, you can use the Data Access API to read-back and verify all of the files uploaded to the batch. The response returns an array containing a list of file IDs, each referencing a file in the batch. 
 
 You can also use the Data Access API to return the name, size in bytes, and a link to download the file or folder.
 
 Detailed steps for working with the Data Access API can be found in the [Data Access Tutorial](../data_access_tutorial/data_access_tutorial.md).
 
-## Updating the dataset schema
+## Update the dataset schema
 
-In the future, you may find yourself needing to add fields and ingest additional data into a dataset that you have created. To do this, you first need to update the schema to add additional properties to define the new data. This can be done using PATCH and/or PUT operations to update the existing schema.
+You can add fields and ingest additional data into datasets that you have created. To do this, you first need to update the schema by adding additional properties that define the new data. This can be done using PATCH and/or PUT operations to update the existing schema.
 
 For more information about updating schemas, see the [Schema Registry API Developer Guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md).
 
