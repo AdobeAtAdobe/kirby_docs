@@ -49,6 +49,8 @@ Currently, the Model Insights Framework supports the following runtimes:
 * [Python/Tensorflow](#python/tensorflow)
 * [R](#r)
 
+Sample code for recipes can be found in the [experience-platform-dsw-reference](https://github.com/adobe/experience-platform-dsw-reference) repository under `recipes`. Specific files from this repository will be referenced throughout this tutorial.
+
 ### Scala
 
 There are two ways to bring in metrics to the recipes. One is to use the default evaluation metrics provided by the SDK and the other is to write custom evaluation metrics. 
@@ -63,7 +65,7 @@ DefaultBinaryClassificationEvaluator | `com.adobe.platform.ml.impl.DefaultBinary
 DefaultMultiClassificationEvaluator | `com.adobe.platform.ml.impl.DefaultMultiClassificationEvaluator`
 RecommendationsEvaluator | `com.adobe.platform.ml.impl.RecommendationsEvaluator`
 
-The evaluator can be defined in the recipe in the `application.properties` file in the recipe folder. Sample code enabling the `DefaultBinaryClassificationEvaluator` is shown below:
+The evaluator can be defined in the recipe in the [application.properties](https://github.com/adobe/experience-platform-dsw-reference/blob/master/recipes/scala/src/main/resources/application.properties) file in the `recipe` folder. Sample code enabling the `DefaultBinaryClassificationEvaluator` is shown below:
 
 ```scala
 evaluation.class=com.adobe.platform.ml.impl.DefaultBinaryClassificationEvaluator
@@ -72,7 +74,7 @@ evaluation.predictionColumn=prediction
 training.evaluate=true
 ```
 
-After an evaluator class is enabled, a number of metrics will be calculated during training by default. Default metrics can be declared explicitly by adding the following line to your [application.properties].
+After an evaluator class is enabled, a number of metrics will be calculated during training by default. Default metrics can be declared explicitly by adding the following line to your `application.properties`.
 
 ```scala
 evaluation.metrics.com=com.adobe.platform.ml.impl.Constants.DEFAULT
@@ -97,7 +99,7 @@ The following table state the default metrics for each class. A user can also us
 
 #### Custom evaluation metrics for Scala
 
-The custom evaluator can be provided by extending the interface of `MLEvaluator.scala` in your [Evaluator.scala] file. In the example [Evaluator.scala] file, we define custom `split()` and `evaluate()` functions. Our `split()` function splits our data randomly with a ratio of 8:2 and our `evaluate()` function defines and returns 3 metrics: MAPE, MAE, and RMSE.
+The custom evaluator can be provided by extending the interface of `MLEvaluator.scala` in your `Evaluator.scala` file. In the example [Evaluator.scala](https://github.com/adobe/experience-platform-dsw-reference/blob/master/recipes/scala/src/main/scala/com/adobe/platform/ml/Evaluator.scala) file, we define custom `split()` and `evaluate()` functions. Our `split()` function splits our data randomly with a ratio of 8:2 and our `evaluate()` function defines and returns 3 metrics: MAPE, MAE, and RMSE.
 
 >**Important:** For the `MLMetric` class, do not use `"measures"` for `valueType` when creating a new `MLMetric` else the metric will not populate in the custom evaluation metrics table.  
 > Example:  
@@ -105,7 +107,7 @@ The custom evaluator can be provided by extending the interface of `MLEvaluator.
 > Not this: `metrics.add(new MLMetric("MAPE", mape, "measures"))`
 
 
-Once defined in the recipe, the next step is to enable it in the recipes. This can be done in the [application.properties] file in the project's [resources] folder. Here the `evaluation.class` is set to the `Evaluator` class defined in `Evaluator.scala`
+Once defined in the recipe, the next step is to enable it in the recipes. This is done in the [application.properties](https://github.com/adobe/experience-platform-dsw-reference/blob/master/recipes/scala/src/main/resources/application.properties) file in the project's `resources` folder. Here the `evaluation.class` is set to the `Evaluator` class defined in `Evaluator.scala`
 
 ```properties
 evaluation.class=com.adobe.platform.ml.Evaluator
@@ -123,7 +125,7 @@ As of now, there are no default evaluation metrics for Python or Tensorflow. Thu
 
 For custom evaluation metrics, there are two main methods that need to be implemented for the evaluator: `split()` and `evaluate()`. 
 
-For Python, these methods would be defined in [evaluator.py] for the `Evaluator` class. Follow the [evaluator.py] link for an example of the `Evaluator`.
+For Python, these methods would be defined in [evaluator.py](https://github.com/adobe/experience-platform-dsw-reference/blob/master/recipes/python/retail/retail/evaluator.py) for the `Evaluator` class. Follow the [evaluator.py](https://github.com/adobe/experience-platform-dsw-reference/blob/master/recipes/python/retail/retail/evaluator.py) link for an example of the `Evaluator`.
 
 Creating evaluation metrics in Python requires the user to implement the `evaluate()` and `split()` methods. 
 
@@ -160,16 +162,18 @@ class Evaluator(AbstractEvaluator):
 
 As of now, there are no default evaluation metrics for R. Thus, to get the evaluation metrics for R, you will need to define the `applicationEvaluator` class as part of the recipe.
 
+
+
 #### Custom evaluation metrics for R
 
 The main purpose of the `applicationEvaluator` is to return a JSON object containing key-value pairs of metrics.
 
-This [applicationEvaluator.R] can be used as an example. In this example, the `applicationEvaluator` is split into three familiar sections:
+This [applicationEvaluator.R](https://github.com/adobe/experience-platform-dsw-reference/blob/master/recipes/R/Retail%20-%20GradientBoosting/R/applicationEvaluator.R) can be used as an example. In this example, the `applicationEvaluator` is split into three familiar sections:
 * Load data
 * Data preparation/feature engineering
 * Retrieve saved model and evaluate
 
-Data is first loaded to a dataset from a source as defined in the [retail.config.json]. From there, the data is cleaned and engineered to fit the machine learning model. Lastly, the model is used to make a prediction using our dataset and from the predicted values and actual values, metrics are calculated. In this case, MAPE, MAE, and RMSE are defined and returned in the `metrics` object.
+Data is first loaded to a dataset from a source as defined in [retail.config.json](https://github.com/adobe/experience-platform-dsw-reference/blob/master/recipes/R/Retail%20-%20GradientBoosting/retail.config.json). From there, the data is cleaned and engineered to fit the machine learning model. Lastly, the model is used to make a prediction using our dataset and from the predicted values and actual values, metrics are calculated. In this case, MAPE, MAE, and RMSE are defined and returned in the `metrics` object.
 
 ---
 
