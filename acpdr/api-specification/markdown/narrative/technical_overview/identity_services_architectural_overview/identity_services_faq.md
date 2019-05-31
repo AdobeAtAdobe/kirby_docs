@@ -24,7 +24,6 @@ This document is intended to centralize both frequently asked questions, trouble
 [Are there any considerations when hashing PII based Identities?](#are-there-any-considerations-when-hashing-pii-based-identities)  
 [What is the benefit of supplying identity data?](#what-is-the-benefit-of-supplying-identity-data)  
 [How does Identity Service handle PII?](#how-does-identity-service-handle-pii)  
-[What is DCCS?](#what-is-dccs)  
 [What are known and anonymous identities?](#what-are-known-and-anonymous-identities)  
 [Are there any identity namespaces I can use out of the box?](#are-there-any-identity-namespaces-i-can-use-out-of-the-box)  
 [When should I create a custom identity namespace?](#when-should-i-create-a-custom-identity-namespace)  
@@ -61,13 +60,13 @@ For more information, see how to construct an identity map in the [Identity Serv
 
 ### How do I associate an identity to an identity namespace?
 
-__Identity field__
+#### Identity field
 
 Identities created from values of identity fields take on the namespace of the descriptor labeling that field as an identity field. 
 
 For more information, see how to label a field as identity in the [Identity Service overview](identity_namespace_overview#marking-xdm-fields-as-identity).
 
-__Identity map in XDM data__
+#### Identity map in XDM data
 
 Any identity supplied in the identity map of a Profile or ExperienceEvent consists of an ID value and namespace. For example, an individual could be represented as "someone<i></i>@somewhere.com" in your CRM, and as ID "123456" in your rewards system. Those would be associated to their system of origination by the namespace. 
 
@@ -89,13 +88,13 @@ The private identity graph helps large enterprises by reconciling the many ident
 
 ### Should I encrypt all Personally Identifiable Information (PII) before sending?
 
-DULE based labeling is required and Adobe will take care of the rest. Any PII data needs to be appropriately DULE labeled as belonging to I1. Internally, before storing it in the identity graph, Adobe converts any I1 labeled data via salting and encrypting to a hashed ID value that is safe and secure at all times.
+To ensure your customers' PII is always encrypted, use DULE based labeling and Adobe will take care of the rest. Any PII data needs to have the `I1` DULE labeled applied at the schema field level. Internally, before storing it in the identity graph, Adobe converts any `I1` labeled data via salting and encrypting to a hashed ID value that is safe and secure at all times.
 
 For more information on DULE, visit the [Data Usage Labeling and Enforcement (DULE) User Guide](../../../../../end-user/markdown/dule_overview/dule_overview.md).
 
-### Are there any considerations when hashing PII based Identities?
+### Are there any considerations when hashing PII based identities?
 
-If you are sending in hashed IDs (email, IDs, etc.), the same encryption technique used for that ID needs to be used across various datasets. This ensures that the same hashed values, used as a common key, are used across Adobe Analytics and Adobe Campaign or other datasets. If for whatever reason they are different, Adobe will not be able to find a link and fail to deliver unified segmentation across datasets.
+If you are sending in hashed PII values, like email or phone, you must use the same encryption technique across various datasets. This ensures that the same value across datasets generates the same hashed values and are able to be matched and linked in the identity graph. If for whatever reason they are different, Adobe does not detect a link and fails to deliver unified segmentation across datasets.
 
 ### What is the benefit of supplying identity data?
 
@@ -106,11 +105,7 @@ There are basically two purposes for including identity data in your record and 
 
 ### How does Identity Service handle PII?
 
-Identity Service supports creating a strong one way cryptographic hash of PII. For example, identity data in the ‘Email’ namespace will be transformed to lower case and supports “Sha-256” hashing/encryption.
-
-### What is DCCS?
-
-DCCS stands for Adobe’s Data Collection Core Service that is deployed on Adobe’s edge data centers. For more on this, see 
+Identity Service creates a strong one way cryptographic hash of PII prior to persisting values. In specific, identity data in the "Phone" and "Email" namespaces will automatically be SHA-256 hashed. "Email" values are transformed to lower case prior to hashing.
 
 ### What are known and anonymous identities?
 
@@ -127,6 +122,7 @@ The following namespaces are provided for use by all organizations. These are re
 |CORE|0|CORE|legacy name: "Adobe AudienceManager"|
 |ECID|4|ECID|alias: "Adobe Marketing Cloud ID", "Adobe Experience Cloud ID", "Adobe Experience Platform ID"|
 |Email|6|Email||
+|Email (SHA256, lowercased)|11|Emails|Standard namespace for pre-hashed email. Values provided in this namespace must be lower-cased before hashing with SHA-256.|
 |Phone|7|Phone||
 |Windows AID|8|WAID||
 |AdCloud|411|AdCloud|alias: Ad Cloud|
