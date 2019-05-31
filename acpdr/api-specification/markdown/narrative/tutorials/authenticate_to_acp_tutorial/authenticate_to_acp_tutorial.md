@@ -1,128 +1,145 @@
-# Tutorial: Authenticating and accessing Adobe Experience Platform APIs
+# Authenticate and access Adobe Experience Platform APIs
 
-## Objective
+This document provides a step-by-step tutorial for gaining access to an Adobe Experience Platform developer account in order to make calls to Experience Platform APIs. The tutorial covers the following topics:
 
-This tutorial will cover the steps for gaining access to an Adobe Experience Platform developer account in order to make calls to Experience Platform APIs. The steps that will be explained in this tutorial are:
+- [Authenticate to make API calls](#authenticate-to-make-api-calls)
+- [Prerequisites](#prerequisites)
+    - [Create an Adobe ID](#create-an-adobe-id)
+    - [Become a developer and user for Experience Platform for an organization](#become-a-developer-and-user-for-experience-platform-for-an-organization)
+- [One time setup](#one-time-setup)
+    - [Log in to Adobe I/O Console](#log-in-to-adobe-io-console)
+    - [Create integration](#create-integration)
+    - [Copy down access values](#copy-down-access-values)
+- [Authentication for each session](#authentication-for-each-session)
+    - [Create JWT](#create-jwt)
+    - [Generate access token](#generate-access-token)
+    - [Test access code](#test-access-code)
+- [Use Postman for JWT authentication and API calls](#use-postman-for-jwt-authentication-and-api-calls)
 
-* [Create an Adobe ID](#a-registered-adobe-id-account)
-* [Become a Developer and a User for an IMS Organization](#become-a-developer-and-a-user-for-an-ims-organization)
-* [Login to Adobe IO Console](#login-to-adobe-io-console)
-* [Creating a new Integration](#create-integration)
-* [Authenticating](#authentication-for-each-session)
-* [Calling a platform API](#testing-access-code)
+## Authenticate to make API calls
 
----
+To maintain the security of your applications and users, all requests to Adobe I/O APIs must be authenticated and authorized using standards such as OAuth and JSON Web Tokens (JWT). The JWT is then used along with client specific information to generate your personal access token.
 
-## Authenticate to Make API Calls
-
-To maintain the security of your applications and users, all requests to Adobe I/O APIs must be authenticated and authorized using standards such as OAuth and JSON Web Tokens (JWT). The JWT will then be used along with client specific information to generate your personal access token.
-
-We will be going through the steps of authentication through the creation of an access token outlined in this flowchart:
-![](how_to_authenticate_acp_for_api_flowchart.png)
+This tutorial covers the steps of authentication through the creation of an access token outlined in the following flowchart:
+![](./images/how_to_authenticate_acp_for_api_flowchart.png)
 
 ## Prerequisites
+
+In order to successfully make calls to Experience Platform APIs, you require the following:
+
+* An IMS Organization with access to Adobe Experience Platform
 * A registered Adobe ID account
-* IMS Organization has access to Adobe Experience Platform
-* Ask administrator to add you to be a **developer** and a **user** for a product.
+* An Admin Console administrator to add you as a **developer** and a **user** for a product.
+
+The following sections walk through the steps to create an Adobe ID and become a developer and user for an organization.
+
+### Create an Adobe ID
+
+If you do not have an Adobe ID, you can create one using the following steps:
+
+1. Go to [Adobe I/O Console](https://console.adobe.io)
+2. Click **create a new account**
+3. Complete the sign up process
 
 
-### A registered Adobe ID account
+### Become a developer and user for Experience Platform for an organization
 
-If you don't have an Adobe ID yet, you can create one with the following steps:
+Before creating integrations on Adobe I/O, your account must have developer permissions for a product in an IMS Organization. Detailed information about developer accounts on the Admin Console can be found in the [support document](https://helpx.adobe.com/enterprise/using/manage-developers.html) for managing developers.
 
-1. Navigate to [Adobe Console](https://console.adobe.io)
-2. Click on the *Get an Adobe ID* link
-3. Complete the Sign up process
+**Gain developer access**
 
+Contact an Admin Console administrator in your Organization to add you as a developer for one of your Organization's products using the [Admin Console](https://adminconsole.adobe.com/).
 
-### Become a Developer and User for Experience Platform for an Organization
+ ![](./images/add_developer.png)
 
-Detailed information about developer accounts on the Admin Console can be found in the [support document](https://helpx.adobe.com/enterprise/using/manage-developers.html) for managing developers.
+The administrator must assign you as a developer to at least one product profile to proceed.
 
-Before creating integrations on Adobe I/O, your account must have developer permissions for a product in an IMS Organization. Contact an Admin Console administrator in your Organization to add you as a developer for one of your Organization's products via the [Admin Console](https://adminconsole.adobe.com/).
+ ![](./images/add_developer2.png)
 
- ![](add_developer.png)
+Once you are assigned as a developer, you will have access privileges to create integrations on [Adobe I/O](https://console.adobe.io/). These integrations are a pipeline from external apps and services to the Adobe API.
 
-The administrator will have to assign you to at least one product profile to proceed.
+**Gain user access**
 
- ![](add_developer2.png)
+Your Admin Console administrator must also add you to the product as a user. 
 
-As a developer, you will be given access privileges to create integrations on [Adobe I/O](https://console.adobe.io/). These integrations are a pipeline from external apps and services to the Adobe API.
+![](./images/assign_user.png)
 
----
+Similar to the process for adding a developer, the administrator must assign you to at least one product profile in order to proceed.
 
-You will also need to ask your Admin Console administrator to add you to the product as a user. 
-
-![](assign_user.png)
-
-Similar to the process for adding a developer, the administrator will need to assign you to at least one product profile in order to proceed.
-
-![](assign_user2.png)
+![](./images/assign_user2.png)
 
 
-## One Time Setup
+## One time setup
 
 The following steps will only need to be done once:
 
-* Login to Adobe IO Console
+* Login to Adobe I/O Console
 * Create Integration
 * Copy Down Access Values
 
-Once your have your integration, and access values, you will be able to reuse them for authentication in the future. We will go over each step in detail below.
+Once you have your integration and access values, you will be able to reuse them for authentication in the future. Each step is covered in detail below.
 
-### Login to Adobe IO Console
+### Log in to Adobe I/O Console
 
-Navigate to the [Adobe I/O Console](https://console.adobe.io/) and sign in with your Adobe ID.
+Go to [Adobe I/O Console](https://console.adobe.io/) and sign in with your Adobe ID.
 
-You will be taken to the Integrations page. An *Integration* is a service account that is created for the selected IMS Organization (If you are associated with multiple Organizations, you can select the appropriate Organization from the drop-down). You will only be allowed to make calls for the IMS Organization in which the Integration is created.
+Once you are logged in, click the **Integrations** tab at the top of the screen. An Integration is a service account that is created for the selected IMS Organization. You are only allowed to make calls for the IMS Organization in which the Integration is created.
 
-### Create Integration
+> **Note:** If your account is associated with multiple Organizations, the drop-down menu on the top right of the screen allows you to easily switch between them.
 
-From the *Integrations* tab, we want to create a *New Integration*.
+### Create integration
 
-![](new_integration0.png)
+From the **Integrations** page, click **New Integration** to start the process. The process contains three steps:
+* Choose type of integration
+* Choose what Adobe service to integrate with
+* Add integration details, public key, and product profile
 
-You will then be prompted to *Access an API* or to *Receive near-real-time events*. We will be accessing APIs, so select *Access an API* and then *Continue*.
+![](./images/new_integration0.png)
 
-![](new_integration1.png)
+#### Choose type of integration
 
+The next screen asks if you want to access an API or receive near-real time events. Select **Access an API** and then **Continue**.
 
-If your account is associated with multiple organizations, the drop-down menu on the top right of the screen will allow you to easily switch between them. We are selecting *Workshop* and *Data Services* under *Experience Cloud* since we want to access the data services.
+![](./images/new_integration1.png)
 
-![](new_integration2.png)
+#### Choose what Adobe service to integrate with
 
+If your account is associated with multiple IMS organizations, you can switch between them by using the drop-down menu on the top right. Select **Workshop** and **Experience Platform API** under **Adobe Experience Platform** to access the APIs.
 
-After your Organization is selected there will be a new prompt at the top. We want a *New Integration*, so make sure that option is selected before clicking *Continue*
+![](./images/new_integration2.png)
 
+Click **Continue** to move to the next section.
 
-![](new_integration3.png)
+#### Add integration details, public key, and product profile
 
-Fill in your Integration Details. For the certificate section, you will need to generate a certificate:
+The next screen prompts you to fill in your integration details, enter your public key certificate, and select a product profile.
 
----
+![](./images/new_integration3.png)
+
+First, enter your integration details. Next, select a product profile. Product profiles grant granular access to a group of features belonging to the service that you selected in previous steps.
+
+For the certificate section, you must generate a certificate:
 
 **For MacOS & Linux platforms:**
 
-Open terminal and execute below command:  
+Open the command line and execute the following command:  
 
 `openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout private.key -out certificate_pub.crt`
 
 
 **For Windows platforms:**
 
-i) Download an openssl client to generate public certificates. For e.g. [Openssl windows client](https://bintray.com/vszakats/generic/download_file?file_path=openssl-1.1.1-win64-mingw.zip)
+1. Download an openssl client to generate public certificates (for example, [Openssl windows client](https://bintray.com/vszakats/generic/download_file?file_path=openssl-1.1.1-win64-mingw.zip))
 
-ii) Extract the folder and copy it to C:/libs/ location.
+1. Extract the folder and copy it to C:/libs/ location.
 
-iii) Open Command Line Prompt and execute below commands.
+1. Open Command Line Prompt and execute the following commands:
 
-`set OPENSSL_CONF=C:/libs/openssl-1.1.1-win64-mingw/openssl.cnf`
+    `set OPENSSL_CONF=C:/libs/openssl-1.1.1-win64-mingw/openssl.cnf`
 
-`cd C:/libs/openssl-1.1.1-win64-mingw/`
+    `cd C:/libs/openssl-1.1.1-win64-mingw/`
 
-`openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout private.key -out certificate_pub.crt`
-
----
+    `openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout private.key -out certificate_pub.crt`
 
 You will get a response similar to the following which prompts you to enter some information about yourself:
 
@@ -148,40 +165,35 @@ Common Name (eg, fully qualified host name) []:
 Email Address []:
 ```
 
-After entering the information two files will be generated: `certificate_pub.crt` and `private.key`.
+After entering the information, two files are generated: `certificate_pub.crt` and `private.key`.
 
-> **Note:** `certificate_pub.crt` will expire in 365 days. You can make the period longer by changing the value of `days` in the `openssl` command above but rotating credentials periodically is a good security practice.
+> **Note:** `certificate_pub.crt` will expire in 365 days. You can make the period longer by changing the value of `days` in the `openssl` command above, but rotating credentials periodically is a good security practice.
 
 The `private.key` will be used to generate our JWT in the later section.
 
----
+The `certificate_pub.crt` is used to create an API key. Go back to Adobe I/O Console and click **Select a File** to upload your `certificate_pub.crt` file. 
 
-The `certificate_pub.crt` is used to create an API key. Go back to your Adobe IO Console and click on *Select a File* to upload your `certificate_pub.crt` file. Click *Create Integration* to finish up the process
+Click **Create Integration** to complete the process.
 
-![](new_integration4.png)
+### Copy down access values
 
+After creating your integration, you can view its details. Click **Retrieve Client Secret** and your screen will look similar to this:
 
-### Copy Down Access Values
-
-After creating your integration, you will be able to view its details. Click on *Retrieve Client Secret* and your screen should look similar to this:
-
-![](access_values.png)
+![](./images/access_values.png)
 
 Copy down the values for `{API KEY}`, `{IMS ORG}` which is the Organization ID, and `{CLIENT SECRET}` as these will be used in the next step.
 
----
+## Authentication for each session
 
-## Authentication For Each Session
-
-The end goal is to generate your `{ACCESS_TOKEN}` which will be used to authenticate your API calls. The access token is added into the Authorization header in every API call you make to Adobe Experience Platform.  This action will need to be done every-time the access token expires which is every 24 hours.
+The final step is to generate your `{ACCESS_TOKEN}` which will be used to authenticate your API calls. The access token must be included in the Authorization header of every API call you make to Adobe Experience Platform. Access tokens expire after 24 hours, after which new tokens must be generated to continue using the APIs.
 
 ### Create JWT
 
-While in your integration's detail page, navigate to the *JWT* tab. Your page should look similar to this:
+While in your integration's detail page in Adobe I/O Console, navigate to the **JWT** tab:
 
-![](jwt_empty.png)
+![](./images/jwt_empty.png)
 
-We will now use the `private.key` we created in the previous section. View the contents of your `private.key` file:
+The page prompts you to enter the `private.key` you created in the previous section. Open the command line to view the contents of your `private.key` file:
 
 ```shell
 cat private.key
@@ -190,7 +202,6 @@ cat private.key
 Your output will look something like this:
 
 ```shell
-cat private.key
 -----BEGIN PRIVATE KEY-----
 MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCYjPj18NrVlmrc
 H+YUTuwWrlHTiPfkBGM0P1HbIOdwrlSTCmPhmaNNG5+mEiULJLWlrhQpx/7uQVNW
@@ -201,17 +212,15 @@ wPW5MQjmygodzCh7+eGLrg==
 -----END PRIVATE KEY-----
 ```
 
-Copy the entire output into the text field and *Generate JWT*. Copy down your generated JWT for the next step.
+Copy the entire output and paste it into the text field, then click **Generate JWT**. Copy down your generated JWT for the next step.
 
-![](generated_jwt.png)
+![](./images/generated_jwt.png)
 
-### Generate Access Token
+### Generate access token
 
-Finally, the last piece of information you will need to start making API calls is an access token. Your access token is the key used to authorize your API calls.
+You can generate an access token through a cURL command. If you do not have cURL installed, you can install it using `npm install curl`. You can read more about cURL [here](https://curl.haxx.se/)
 
-We can use `curl` to generate your access token. If you do not have `curl` installed, you can install it using `npm install curl`. You can read more about curl [here](https://curl.haxx.se/)
-
-Once `curl` is installed, you will need to swap the fields in the following command with your own `{API_KEY}`, `{CLIENT_SECRET}`, and `{JWT_TOKEN}`.
+Once cURL is installed, you will need to swap the fields in the following command with your own `{API_KEY}`, `{CLIENT_SECRET}`, and `{JWT_TOKEN}`:
 
 ```SHELL
 curl -X POST "https://ims-na1.adobelogin.com/ims/exchange/jwt/" \
@@ -220,7 +229,7 @@ curl -X POST "https://ims-na1.adobelogin.com/ims/exchange/jwt/" \
   -F "jwt_token={JWT_TOKEN}"
 ```
 
-It should return something like this.
+If successful, the output will look something like this:
 
 ```JSON
 {
@@ -230,11 +239,11 @@ It should return something like this.
 }
 ```
 
-Your access token is the value under the `access_token` key. Note this access token will expire in 86399947 milliseconds or 24 hours. You will have to generate a new access token by following the same steps above.
+Your access token is the value under the `access_token` key. This access token `expires_in` 86399947 milliseconds (24 hours). Afterwards, you will have to generate a new access token by following the same steps above.
 
 You are now ready to make API requests in Adobe Experience Platform!
 
-### Testing Access Code
+### Test access code
 
 To test if your access token is valid, you can try to make the following API call. This call will list all resources (schemas, classes, mixins, or data types) within a container:
 
@@ -251,7 +260,7 @@ curl -X GET https://platform.adobe.io/data/foundation/schemaregistry/global/clas
 ```
 
 
-If your response is similar to the one shown below, then your `access_token` is valid and working!
+If your response is similar to the one shown below, then your `access_token` is valid and working.
 
 **Response**
 
@@ -274,6 +283,6 @@ If your response is similar to the one shown below, then your `access_token` is 
 }
 ```
 
-### Using Postman for JWT Authentication and API calls
+## Use Postman for JWT authentication and API calls
 
-[Postman](https://www.getpostman.com/) is a popular tool to work with REST based APIs. This [Medium post](https://medium.com/adobetech/using-postman-for-jwt-authentication-on-adobe-i-o-7573428ffe7f) describes how you can setup postman to automatically perform JWT authentication and use it to consume Adobe Experience Platform APIs.
+[Postman](https://www.getpostman.com/) is a popular tool to work with RESTful APIs. This [Medium post](https://medium.com/adobetech/using-postman-for-jwt-authentication-on-adobe-i-o-7573428ffe7f) describes how you can set up postman to automatically perform JWT authentication and use it to consume Adobe Experience Platform APIs.
