@@ -20,7 +20,7 @@ The Product Purchase Prediction recipe utilizes machine learning to predict cust
 
 ## Data schema
 
-This recipe uses [XDM schema](../../../../technical_overview/schema_registry/standard_schemas/acp_standard_schemas.md) as the dataset. The schema used is the **ProductPrediction** dataset shown below.
+This recipe uses [XDM schemas](../../../schema_registry/xdm_system/xdm_system_in_experience_platform.md) to model the data. The schema used for this recipe is shown below:
 
 Field Name | Type
 --- | ---
