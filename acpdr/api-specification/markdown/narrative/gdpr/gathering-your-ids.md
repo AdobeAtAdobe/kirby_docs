@@ -66,6 +66,8 @@ URL: https://platform.adobe.io/data/core/idnamespace/identities/
   {
         "updateTime": 1441122419000,
         "code": "CORE",
+        "shared": true,
+        "type": "GENERAL",
         "status": "ACTIVE",
         "description": "CORE Namespace",
         "id": 0,
@@ -77,6 +79,8 @@ URL: https://platform.adobe.io/data/core/idnamespace/identities/
     {
         "updateTime": 1495153678000,
         "code": "ECID",
+        "shared": false,
+        "type": "GENERAL",
         "status": "ACTIVE",
         "description": "ECID Namespace",
         "id": 4,
@@ -88,18 +92,12 @@ URL: https://platform.adobe.io/data/core/idnamespace/identities/
     {
         "updateTime": 1522783145000,
         "code": "AdCloud",
+        "shared": true,
+        "type": "GENERAL",
         "status": "ACTIVE",
         "description": "Adobe AdCloud - ID Syncing Partner",
         "id": 411,
         "createTime": 1522783145000,
-        "idType": "COOKIE",
-        "name": "AdCloud",
-        "custom": false
-    }
-]
-Returns an HTTP 200 OK on success.
-```
-createTime": 1522783145000,
         "idType": "COOKIE",
         "name": "AdCloud",
         "custom": false
