@@ -1,0 +1,594 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Query Service API
+  description: >- 
+    Experience Query Service gives you the ability to use standard SQL to query data on Adobe Experience Platform
+    to support many different use cases. It is a serverless tool which allows you to join any datasets
+    in Experience Data Lake and capture the query results as a new dataset for use in reporting, Data 
+    Science Workspace, or for ingestion into Unified Profile Service.
+
+
+    For more information on Experience Query Service, start with [the introduction](https://www.adobe.io/apis/experienceplatform/home/services/query-service/query-service.html#!acpdr/end-user/markdown/query-service/qs-intro.md).
+
+
+    Notes:
+      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * Base path for this API: /data/foundation/query
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'
+
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
+host: platform.adobe.io
+basePath: /data/foundation/query
+
+tags:
+- name: "Queries"
+- name: "Connections"
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+
+  /connection_parameters:
+    get:
+      operationId: "get_connection_parameters"
+      tags:
+        - "Connections"
+      security:
+        - Bearer: []
+      summary: Requests connection parameters for the interactive interface
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-request-id'
+
+      responses:
+        200:
+          description: "Connection Parameters Response for interactive interface"
+          schema:
+            $ref: '#/definitions/connection_parameters'
+
+        401:
+          description: "Unauthorized"
+        500:
+          description: "Internal Server Error"
+
+
+  /queries:
+    get:
+      operationId: "get_queries"
+      tags:
+        - "Queries"
+      security:
+        - Bearer: []
+      summary: Fetches a list of queries for this IMS organization.
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-request-id'
+
+        - $ref: '#/parameters/orderby'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/start'
+        - $ref: '#/parameters/property'
+        - $ref: '#/parameters/excludeSoftDeleted'
+        - $ref: '#/parameters/excludeHidden'
+
+      responses:
+        200:
+          description: "Query List Response"
+          schema:
+            $ref: '#/definitions/query_list'
+
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Not Found"
+        500:
+          description: "Internal Server Error"
+
+    post:
+      operationId: "create_query"
+      tags:
+        - "Queries"
+      security:
+        - Bearer: []
+      summary: Creates new query.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-request-id'
+
+        - name: query
+          in: body
+          description: Query to be created.
+          required: true
+          schema:
+               $ref: '#/definitions/query_def'
+
+      responses:
+        202:
+          description: Query status
+          schema:
+            $ref: '#/definitions/query'
+        401:
+          description: "Unauthorized"
+        500:
+          description: "Internal Server Error"
+
+  '/queries/{queryid}':
+    get:
+      operationId: "get_query"
+      tags:
+        - "Queries"
+      security:
+        - Bearer: []
+      summary: Requests query status.
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-request-id'
+
+        - name: queryid
+          description: Query ID
+          required: true
+          in: path
+          type: string
+
+      responses:
+        200:
+          description: Query status
+          schema:
+            $ref: '#/definitions/query'
+
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Query not found"
+        500:
+          description: "Internal Server Error"
+
+    patch:
+      operationId: "update_query"
+      tags:
+        - "Queries"
+      security:
+        - Bearer: []
+      summary: Requests cancellation or query soft delete
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-request-id'
+
+        - name: queryid
+          description: Query ID
+          required: true
+          in: path
+          type: string
+
+        - name: operation
+          in: body
+          description: Requested operation
+          required: true
+          schema:
+            type: object
+            properties:
+              op:
+                type: string
+                enum:
+                  - cancel
+                  - soft_delete
+
+      responses:
+        202:
+          description: "Query termination request submitted successfully"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Not found"
+        409:
+          description: "Query termination request failed because the job might already have terminated"
+        500:
+          description: "Internal Server Error"
+
+parameters:
+  orderby:
+    name: orderby
+    description: "Field to order results by. Supported fields: created, updated.\
+          \ Prepend property name with + for ASC,- for DESC order. Default is -created.\
+          \ Note that the plus sign (+) has to be escaped with %2B. Example: %2Bcreated for ASC created."
+    in: query
+    type: string
+    required: false
+  limit:
+    name: limit
+    description: Hint on number of records to fetch per page.
+    in: query
+    type: integer
+    required: false
+  start:
+    name: start
+    description: Start value of property specified using orderby.
+    in: query
+    type: string
+    required: false
+  property:
+    name: property
+    description: "Comma-separated filters.\n\n\
+      \ List of properties that allow filtering:\n\
+      \ created\n\
+      \ updated\n\
+      \ state\n\
+      \ id\n\n\
+
+      \ List of supported operators:\n\
+      \ '>'  (greater than)\n\
+      \ '<'  (less than)\n\
+      \ '>=' (greater or equal than)\n\
+      \ '<=' (less or equal than)\n\
+      \ '==' (equal than)\n\
+      \ '!=' (not equal than)\n\
+      \ '~' (contains)\n\n\
+
+      \ Example: created>=2017-04-05T13:30:00Z,state==TASK_RUNNING\n\n\
+
+      \ Filtering is also supported for\n\
+      \ 1. the referenced_datasets and userId property. This filter only allows the '==' equal than operator, and up to 10 dataset ids can be included by using the '||' logical OR operator \n\
+      \ 2. the sql property. This filter only allows the '~' contains operator, and only one sql string WITHOUT COMMA (,) can be included.\n\
+      \ 3. the client property. This filter only allows the '==' equal than operator, and only one sql string WITHOUT COMMA (,) can be included.\n\n\
+
+      \ Example: referenced_datasets==aabbcc||ddeeff,userId=1234@AdobeId||d4g2@PQS,sql~SELECT c1'"
+    in: query
+    type: string
+    required: false
+  excludeSoftDeleted:
+    name: excludeSoftDeleted
+    description: Whether to include any queries that have been soft deleted. Defaults to true.
+    in: query
+    type: boolean
+    required: false
+  excludeHidden:
+    name: excludeHidden
+    description: "Whether to include any queries that have been found to be not interesting,\
+      \ as they were not user driven. Examples include CURSOR definitions, FETCH, and Metadata queries. Defaults to true."
+    in: query
+    type: boolean
+    required: false
+
+  x-gw-ims-org-id:
+    name: x-gw-ims-org-id
+    description: The owning IMS organization identifier.
+    required: true
+    type: string
+    in: header
+
+  x-api-key:
+    name: "x-api-key"
+    type: "string"
+    in: "header"
+    required: true
+    description: "API key"
+
+  x-request-id:
+    name: "x-request-id"
+    type: "string"
+    in: "header"
+    required: false
+    description: "A unique id generated by Adobe.io"
+
+definitions:
+  query_def:
+    type: object
+    description: Definition of a query to be submitted
+    properties:
+      dbName:
+        type: string
+        description: Name of database you intend to query against. Required.
+      sql:
+        type: string
+        example: "SELECT * from t1;"
+      name:
+        type: string
+        description: A friendly name for the query. Optional.
+      description:
+        type: string
+        description: A comment on the query intent. Optional.
+      ctasParameters:
+        type: object
+        description: If this property is defined, this query will be converted into a CTAS query. Optional.
+        properties:
+          datasetName:
+            type: string
+            description: Name of the dataset to create as part of the CTAS.
+          description:
+            type: string
+            description: A description for the new dataset. Optional.
+#      parameters:
+#        type: array
+#        description: Array of query parameters
+#        items:
+#          type: object
+#          properties:
+#            name:
+#              type: string
+#              description: Name of the parameter
+#            type:
+#              type: string
+#              enum:
+#                - int
+#                - string
+#              description: Data type of the parameter
+#            value:
+#              type: string
+#              description: Value of the parameter
+#
+#            format:
+#              type: string
+#              description: conversion format
+#
+#      config:
+#          type: object
+#          properties:
+#            timeout:
+#             type: integer
+#              default: 60000
+#            debugLevel:
+#              type: string
+#
+#      export:
+#          type: object
+#          additionalProperties:
+#            type: string
+#
+#      email_notifications:
+#          $ref: '#/definitions/email_notifications'
+
+  query:
+    type: object
+    properties:
+      id:
+        type: string
+      request:
+        $ref: '#/definitions/query_def'
+      effectiveSQL:
+        type: string
+        description: If the query was somehow modified from the original, as in the case of a conversion to a CTAS,
+          this property will be defined and will include the effective SQL.
+      isCTAS:
+        type: boolean
+        description: Whether the original sql matches the pattern of a CTAS query, or the query included a ctasDataset name that effectively turned the query into a CTAS.
+      state:
+        type: string
+        description: The current state of this query.
+        enum:
+          - SUBMITTED
+          - IN_PROGRESS
+          - SUCCESS
+          - FAILED
+          - KILLED
+          - TIMEOUT
+      created:
+        type: string
+        description: >-
+          UTC time when query was SUBMITTED.
+      updated:
+        type: string
+        description: >-
+          UTC time when query was last updated.
+      elapsedTime:
+        type: integer
+        description: "Elapsed time in milliseconds since the query state changed to IN_PROGRESS,
+          or total time between IN_PROGRESS and a terminal state."
+      rowCount:
+        type: integer
+        description: The total number of data rows returned in result set, or persisted in created dataset.
+          Meaningful only when query is in SUCCESS state.
+      userId:
+        type: string
+        description: The ID of the user who created this object.
+      client:
+        type: string
+        description: A string that identifies the client application that generated this query.
+      errors:
+        type: array
+        description: ''
+        items:
+          $ref: '#/definitions/error'
+      _links:
+        $ref: '#/definitions/query_links'
+      version:
+        type: integer
+        description: REST API version of this resource
+
+    required:
+      - query_status
+
+  query_list:
+    type: object
+    description: List of queries
+    properties:
+      queries:
+        type: array
+        items:
+          $ref: '#/definitions/query'
+      _page:
+        $ref: '#/definitions/_page'
+      _links:
+        $ref: '#/definitions/query_list_links'
+      version:
+        type: integer
+        description: REST API version of this resource
+
+  query_list_links:
+    type: object
+    properties:
+      next:
+        $ref: '#/definitions/next'
+
+  error:
+    type: object
+    properties:
+      code:
+        type: string
+        description: A code that identifies the type of error encountered.
+      message:
+        type: string
+        description: Short description of the error.
+      errorType:
+        type: string
+        description: The broad type for this error.
+        enum:
+          - USER_ERROR
+          - SYSTEM_ERROR
+
+  query_links:
+    type: object
+    properties:
+      soft_delete:
+        type: object
+        properties:
+          href:
+            type: string
+            description: "URI to call to soft-delete this query. Soft-deleting stops returning this query on
+            GET /queries, but it does not delete it from the system."
+          method:
+            type: string
+            description: the HTTP method to use
+          body:
+            type: string
+            description: the JSON body to send.
+      cancel:
+        type: object
+        properties:
+          href:
+            type: string
+            description: "URI to call to try to cancel this query. Cancelling a query only works if the
+              query is in state SUBMITTED or IN_PROGRESSS."
+          method:
+            type: string
+            description: the HTTP method to use
+          body:
+            type: string
+            description: the JSON body to send.
+      referenced_datasets:
+        description: "Datasets utilized by this query, if any. Note that these datasets are resolved when
+          the query is in state IN_PROGRESS."
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: ID of the referenced dataset.
+            href:
+              type: string
+              description: Catalog-owned URI related to this dataset.
+      created_dataset:
+        description: If this query is a CTAS query, the created dataset is exposed under this object.
+        type: object
+        properties:
+          id:
+            type: string
+            description: Id of the created dataset.
+          href:
+            type: string
+            description: Catalog-owned URI related to this dataset.
+      schedule:
+        description: If this query was triggered by a schedule, then this object will be defined.
+        type: object
+        properties:
+          id:
+            type: string
+            description: Id of the schedule that created this query.
+          href:
+            type: string
+            description: URI to call to get details for the schedule that triggered this query.
+          method:
+            type: string
+            description: the HTTP method to use
+
+  email_notifications:
+    type: object
+    description: query, parameters, and configuration.
+
+    properties:
+      on_start:
+        type: array
+        items:
+          type: string
+      on_success:
+        type: array
+        items:
+          type: string
+      on_failure:
+        type: array
+        items:
+          type: string
+
+  _page:
+    type: object
+    properties:
+      orderby:
+        type: string
+        description: The property by which this page is ordered
+      start:
+        type: string
+        description: The first value, in sorted order, of the orderby property on this page
+      next:
+        type: string
+        description: The start value for the next page
+      property:
+        type: string
+        description: The list of properties by which the result is filtered, if any
+      count:
+        type: integer
+        description: The number of items on this page
+
+  next:
+    type: object
+    description: Pre-constructed URI for next page of results, if any.
+    properties:
+      href:
+        type: string
+
+  connection_parameters:
+    type: object
+    description: Object containing the connection parameters
+    properties:
+      host:
+        type: string
+        description: The URI of the host to connect to.
+      port:
+        type: integer
+        description: The host port to connect to.
+      username:
+        type: string
+        description: The IMS Org as received.
+      token:
+        type: string
+        description: The IMS token as received.
+      compressedToken:
+        type: string
+        description: The IMS token compressed in a special format. Required by some interactive clients such as Tableau.
+      version:
+        type: integer
+        description: REST API version of this resource
+
+
