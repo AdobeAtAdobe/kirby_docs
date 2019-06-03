@@ -3,23 +3,23 @@
 - [Objective](#objective)
 - [Prerequisites](#prerequisites)
 - [API workflow](#api-workflow)
-  - [Create a Recipe](#create-a-recipe)
-  - [Create an Instance](#create-an-instance)
-  - [Create an Experiment](#create-an-experiment)
-    - [Create a scheduled Experiment for training](#create-a-scheduled-experiment-for-training)
-    - [Create a scheduled Experiment for scoring](#create-a-scheduled-experiment-for-scoring)
-    - [Create an Experiment Run for training](#create-an-experiment-run-for-training)
-      - [Retrieve an Experiment Run status](#retrieve-an-experiment-run-status)
-      - [Retrieve the trained Model](#retrieve-the-trained-model)
-  - [Create an Experiment Run for scoring](#create-an-experiment-run-for-scoring)
-    - [Retrieve an Experiment Run status for scheduled Experiment Run](#retrieve-an-experiment-run-status-for-scheduled-experiment-run)
-  - [Stop and delete a scheduled Experiment](#stop-and-delete-a-scheduled-experiment)
+    - [Create an Engine](#create-an-engine)
+    - [Create an MLInstance](#create-an-mlinstance)
+    - [Create an Experiment](#create-an-experiment)
+        - [Create a scheduled Experiment for training](#create-a-scheduled-experiment-for-training)
+        - [Create a scheduled Experiment for scoring](#create-a-scheduled-experiment-for-scoring)
+        - [Create an Experiment Run for training](#create-an-experiment-run-for-training)
+            - [Retrieve an Experiment Run status](#retrieve-an-experiment-run-status)
+            - [Retrieve the trained Model](#retrieve-the-trained-model)
+    - [Create an Experiment Run for scoring](#create-an-experiment-run-for-scoring)
+        - [Retrieve an Experiment Run status for scheduled Experiment Run](#retrieve-an-experiment-run-status-for-scheduled-experiment-run)
+    - [Stop and delete a scheduled Experiment](#stop-and-delete-a-scheduled-experiment)
 - [Next steps](#next-steps)
 
 ---
 
 ## Objective
-In this step by step tutorial, we will consume the APIs which allow us to create a Recipe, an Experiment, scheduled Experiment Runs, and trained Models. For a detailed list of API documentation please refer to [this document](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html).
+In this step by step tutorial, we will consume the APIs which allow us to create an Engine, an Experiment, scheduled Experiment Runs, and Models. For a detailed list of API documentation please refer to [this document](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html).
 
 ---
 
@@ -39,16 +39,22 @@ From the tutorial you should now have the following values:
 
 ## API workflow
 
-We will be consuming the APIs to create an Experiment Run for training and scoring. For this tutorial, we will be focused on Recipes, Instances, and Experiments. The following chart outlines the relationship between the three and also introduces the idea of a trained model. 
+We will be consuming the APIs to create an Experiment Run for training and scoring. For this tutorial, we will be focused on Engines, MLInstances, and Experiments. The following chart outlines the relationship between the three and also introduces the idea of a Run and a Model. 
 
-![](./recipe_hierarchy.png)
+![](./images/engine_hierarchy_api.png)
 
+> **Note:** The terms "Engine", "MLInstance", "MLService", "Experiment", and "Model" are referred to as different terms in the UI. If you're coming from the UI, the following table will map the differences.
+> 
+> UI Term | API Term
+> --- | ---
+> Recipe | Engine
+> Model | MLInstance/ Experiment
+> Service | MLService
 
-### Create a Recipe
+### Create an Engine
 
-With the Docker image for the Recipe created in the [Package Recipe to Data Science Workspace tutorial](../package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md), we can create a Recipe. The Recipe is an umbrella entity holding all Instances. A Recipe is usually tied to one or more Docker images which is specified in the body of the request.
+With the Docker image for the Engine created in the [Package Recipe to Data Science Workspace tutorial](../package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md), we can create a Engine. The Engine is an umbrella entity holding all MLInstances. An Engine is usually tied to one or more Docker images which is specified in the body of the request.
 
-> **Note:** The term "Recipe" and "Engine" (as seen in the API documentation) are interchangeably used and refer to the same thing.
 
 #### Request <!-- omit in toc -->
 
@@ -82,17 +88,17 @@ curl -X POST \
 `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 `{DOCKER_IMAGE}`: Link to the Docker image.  
-`{ARTIFACT_BINARIES}`: The binary Recipe artifact (eg. JAR, EGG) used for all operations by default.  
+`{ARTIFACT_BINARIES}`: The binary Engine artifact (eg. JAR, EGG) used for all operations by default.  
 
 > **Note:** If an image that is not `Spark` is used, the `type` and `executionType` fields should be set to the correct type (eg. `Python`, `Pyspark`).
 
 #### Response <!-- omit in toc -->
 
-The response from the Recipe creation call is captured below.
+The response from the Engine creation call is captured below.
 
 ```JSON
 {
-    "id": "{RECIPE_ID}",
+    "id": "{ENGINE_ID}",
     "name": "Sensei - Retail",
     "type": "Spark",
     "created": "2018-11-11T11:11:11.111Z",
@@ -130,12 +136,12 @@ The response from the Recipe creation call is captured below.
 }
 ```
 
-`{RECIPE_ID}`: This ID returned can be used to create a number of Instances.
+`{ENGINE_ID}`: This ID returned can be used to create a number of MLInstances.
 
 
-### Create an Instance
+### Create an MLInstance
 
-Creating an Instance can be done using the following request. We will be using the `{RECIPE_ID}` that was returned when creating an Recipe.
+Creating a MLInstance can be done using the following request. We will be using the `{ENGINE_ID}` that was returned when creating an Engine.
 
 #### Request <!-- omit in toc -->
 
@@ -152,13 +158,13 @@ curl -X POST \
 `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
 `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
 `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
-`{JSON_PAYLOAD}`: The configuration of our Instance. The example we use in our tutorial is shown here:
+`{JSON_PAYLOAD}`: The configuration of our MLInstance. The example we use in our tutorial is shown here:
 
 ```JSON
 {
     "name": "Retail - Instance",
     "description": "Instance for ML Instance",
-    "engineId": "{RECIPE_ID}",
+    "engineId": "{ENGINE_ID}",
     "createdBy": {
         "displayName": "John Doe",
         "userId": "johnd"
@@ -206,9 +212,9 @@ curl -X POST \
 
 ```
 
-> **Note:** In the `{JSON_PAYLOAD}`, we define parameters used for training and scoring in the `tasks` array. The `{RECIPE_ID}` is the ID of the Recipe you want to use and the `tag` field is an optional parameter used to identify the Instance.
+> **Note:** In the `{JSON_PAYLOAD}`, we define parameters used for training and scoring in the `tasks` array. The `{ENGINE_ID}` is the ID of the Engine you want to use and the `tag` field is an optional parameter used to identify the Instance.
 
-The response will contain the `{INSTANCE_ID}` which represents the Instance that is created. Multiple model Instances with different configurations can be created.
+The response will contain the `{INSTANCE_ID}` which represents the MLInstance that is created. Multiple model MLInstances with different configurations can be created.
 
 #### Response <!-- omit in toc -->
 
@@ -217,7 +223,7 @@ The response will contain the `{INSTANCE_ID}` which represents the Instance that
     "id": "{INSTANCE_ID}",
     "name": "Retail - Instance",
     "description": "Instance for ML Instance",
-    "engineId": "{RECIPE_ID}",
+    "engineId": "{ENGINE_ID}",
     "created": "2018-21-21T11:11:11.111Z",
     "createdBy": {
         "displayName": "John Doe",
@@ -242,8 +248,8 @@ The response will contain the `{INSTANCE_ID}` which represents the Instance that
 
 ```
 
-`{RECIPE_ID}`: This ID representing the Recipe the Instance is created under.  
-`{INSTANCE_ID}`: The ID that represents the Instance.
+`{ENGINE_ID}`: This ID representing the Engine the MLInstance is created under.  
+`{INSTANCE_ID}`: The ID that represents the MLInstance.
 
 ### Create an Experiment
 
@@ -276,7 +282,7 @@ curl -X POST \
 }
 ```
 
-`{INSTANCE_ID}`: The ID that represents the Instance.
+`{INSTANCE_ID}`: The ID that represents the MLInstance.
 
 The response from the Experiment creation looks like this.
 
@@ -297,7 +303,7 @@ The response from the Experiment creation looks like this.
 ```
 
 `{EXPERIMENT_ID}`: The ID that represents the Experiment you have just created.
-`{INSTANCE_ID}`: The ID that represents the Instance.
+`{INSTANCE_ID}`: The ID that represents the MLInstance.
 
 #### Create a scheduled Experiment for training
 
@@ -386,7 +392,7 @@ When we create an Experiment, the body, `{JSON_PAYLOAD}`, should contain either 
 ```
 
 `{EXPERIMENT_ID}`: The ID that represents the Experiment.  
-`{INSTANCE_ID}`: The ID that represents the Instance.  
+`{INSTANCE_ID}`: The ID that represents the MLInstance.  
 
 
 #### Create a scheduled Experiment for scoring
@@ -440,7 +446,7 @@ curl -X POST \
 }
 ```
 
-`{INSTANCE_ID}`: The ID that represents the Instance.  
+`{INSTANCE_ID}`: The ID that represents the MLInstance.  
 `{MODEL_ID}`: The ID that represents the trained Model.  
 
 The following is the response after creating the scheduled Experiment.
@@ -476,7 +482,7 @@ The following is the response after creating the scheduled Experiment.
 ```
 
 `{EXPERIMENT_ID}`: The ID that represents the Experiment.  
-`{INSTANCE_ID}`: The ID that represents the Instance.  
+`{INSTANCE_ID}`: The ID that represents the MLInstance.  
 
 #### Create an Experiment Run for training
 
@@ -804,4 +810,4 @@ The following is the Response notifying that the Experiment is successfully dele
 
 ## Next steps
 
-This tutorial went over how to consume the APIs to create a Recipe, an Experiment, scheduled Experiment Runs, and trained Models. In the [next exercise](../how_to_score_with_recipe/how_to_score_with_recipe.md), you will be making predictions by scoring a new dataset using the top performing trained model.
+This tutorial went over how to consume the APIs to create an Engine, an Experiment, scheduled Experiment Runs, and trained Models. In the [next exercise](../how_to_score_with_recipe/how_to_score_with_recipe.md), you will be making predictions by scoring a new dataset using the top performing trained model.
