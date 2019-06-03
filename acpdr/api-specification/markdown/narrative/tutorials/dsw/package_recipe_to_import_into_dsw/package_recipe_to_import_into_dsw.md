@@ -2,223 +2,182 @@
 
 - [Objective](#objective)
 - [Prerequisites](#prerequisites)
-- [Docker-based Model authoring](#docker-based-model-authoring)
-  - [Build the artifact for the intelligent service](#build-the-artifact-for-the-intelligent-service)
-- [- Building R Retail intelligent service](#building-r-retail-intelligent-service)
-    - [Build Python Retail Sales intelligent service](#build-python-retail-sales-intelligent-service)
-    - [Build Tensorflow Perceptron intelligent service](#build-tensorflow-perceptron-intelligent-service)
-    - [Building R Retail intelligent service](#building-r-retail-intelligent-service)
-  - [Create Dockerfile](#create-dockerfile)
-  - [Build Docker image](#build-docker-image)
-  - [Push Docker image](#push-docker-image)
+- [Recipe creation](#recipe-creation)
+    - [Package the source files](#package-the-source-files)
+        - [Build Python Docker image](#build-python-docker-image)
+        - [Build R Docker image](#build-r-docker-image)
+        - [Build PySpark binaries](#build-pyspark-binaries)
+        - [Build Scala binaries](#build-scala-binaries)
 - [Next steps](#next-steps)
 
 ---
 
 ## Objective
-The objective of this tutorial is to show users how to author a recipe using various options and to import them to the Data Science Workspace. The source options we will cover include Git, Docker, and JAR. The languages for the recipe will be Python, <!--Scala, PySpark, -->Tensorflow, and R.
+
+A recipe is Adobe's term for a model specification and is a top-level container representing a specific machine learning, AI algorithm or ensemble of algorithms, processing logic, and configuration required to build and execute a trained model and hence help solve specific business problems. The objective of this tutorial is to show you how to package provided sample source files into an archive file, which can be used to create a recipe in Adobe Experience Platform's Data Science Workspace by following the **Import from Source File workflow**.
 
 ---
 
 ## Prerequisites
-* Install Docker (https://docs.docker.com/install/#supported-platforms)
 
-Depending on which code base you clone, install the language of that intelligent service:
-* Python, <!---PySpark,--> Tensorflow
-    * for macOS (`brew install python`)
-    * for [Windows 10](https://www.python.org/downloads/windows/)
-<!---* Scala - `brew install sbt`-->
+* [Docker](https://docs.docker.com/install/#supported-platforms)
+* [Python 3 and pip](https://docs.conda.io/en/latest/miniconda.html)
+* [Scala](https://www.scala-sbt.org/download.html?_ga=2.42231906.690987621.1558478883-2004067584.1558478883)
+* [Maven](https://maven.apache.org/install.html)
 
 ---
 
-## Docker-based Model authoring
+## Recipe creation
 
-A Docker image is a recipe for which a Docker container is created during the `docker run` command. This container is built from the image and can be written to and modified by the user. A good analogy is that the Docker image is the blueprints and the Docker container is the building. You can make as many buildings as you like with the blueprints.
+Recipe creation starts with packaging source files to build an archive file. Source files define the machine learning logic and algorithms used to solve a specific problem at hand, and are written in either Python, R, PySpark, or Scala Spark. Depending on which language the source files are written, the built archive file will either be a Docker image or a binary. Once built, the Docker image or binary is imported into Adobe Experience Platform to create a recipe, either by the [UI workflow](../how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial.md) or [API workflow](../how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_api_tutorial.md).
 
-From there the Docker image we create will be stored in the Artifactory and can be accessed via a link by other users. The link will also be used in the Adobe Experience Platform UI when creating an instance. 
+### Package the source files
 
-Reference example for each intelligent service:
-* [Python](https://github.com/adobe/experience-platform-dsw-reference/tree/master/recipes/python)
-* [Tensorflow](https://github.com/adobe/experience-platform-dsw-reference/tree/master/recipes/tensorflow)
-* [R](https://github.com/adobe/experience-platform-dsw-reference/tree/master/recipes/R)
-<!---
-* [Scala](https://github.com/adobe/experience-platform-dsw-reference/tree/master/recipes/scala)
-* [PySpark](https://github.com/adobe/experience-platform-dsw-reference/tree/master/recipes/pyspark)
--->
+Start by obtaining the sample codebase found in the [Experience Platform DSW Reference](https://github.com/adobe/experience-platform-dsw-reference) repository. Depending on which programming language the sample source files are written in, building their respective archive files differ in procedure.
 
+**Docker-based model authoring**
 
-### Build the artifact for the intelligent service
+A Docker image allows a developer to package up an application with all the parts it needs, such as libraries and other dependencies and ship it out as one package.
 
-Depending on which sample you downloaded, there will be a different procedure for creating your intelligent service. The sample codebase can be found [here](https://github.com/adobe/experience-platform-dsw-reference).
+The Docker image you will create will be pushed to the Azure Container Registry via credentials supplied to you from the recipe creation workflow. Please note that only **Python** and **R** source files require Azure Container Registry credentials.
+
+To obtain your Azure Container Registry credentials, log into [Adobe Experience Platform](https://platform.adobe.com). On the left navigation column, navigate to **Workflows**. Select **Import Recipe from Source File**, and **Launch** a new import procedure. See the screen shot below for reference.
+
+![](./images/workflows_ss.png)
+
+Provide an appropriate **Recipe Name**, for example, "Retail Sales recipe", and optionally provide a description or documentation URL. Once complete, hit **Next**.
+
+![](./images/recipe_info.png)
+
+Select the appropriate **Execution Type**, then choose "Classification" for **Recipe Type**. Your Azure Container Registry credentials will be generated.
+
+![](./images/recipe_workflow_recipe_source.png)
+
+Note the values for **Docker Host**, **Username**, and **Password**. These will be used later to build and push your Docker image.
+
+Once pushed, the image can be accessed via a URL by yourself and other users. The **Source File** field will expect this URL as an input.
+
+**Binary-based model authoring**
+
+For Scala and PySpark, recipe creation via source files require binaries.
 
 This sample Retail Sales example leverages the wealth of historical data a retailer has access to, to predict future trends, and to optimize pricing decisions. The algorithm uses past sales data to train the model and to predict future sales trends. With this, the retailer will be able to have insights to help them when making pricing changes.
 
-We will go over how to build each one. You can skip ahead to the section you need.
-  - [Build Python Retail Sales intelligent service](#build-python-retail-sales-intelligent-service)
-  - [Build Tensorflow Perceptron intelligent service](#build-tensorflow-perceptron-intelligent-service)
-  - [Building R Retail intelligent service](#building-r-retail-intelligent-service)
 ---
-<!---
-* [Building Scala Sentiment Analysis Intelligent Service](#building-scala-sentiment-analysis-intelligent-service)
-* [Building PySpark Sentiment Analysis Intelligent Service](#building-pySpark-sentiment-analysis-intelligent-service)
--->
 
-#### Build Python Retail Sales intelligent service
-
-To get the Python application, we run the following command to clone the Github repository to your local system.
-
-```BASH
-git clone https://github.com/adobe/experience-platform-dsw-reference.git
-```
-
-You can also download the application as a zip file. 
-
-![](download_zip.png)
-
-The Python code can be found under `/recipes/python`
-
-```BASH
-cd recipes/python/
-```
-
-Now inside the repository, we can run the following commands to create the `.egg` file which consists of project-related metadata files, code and resources which is well-suited to distribution and importing.
-
-```BASH
-cd retail
-python3 setup.py install
-```
-
-The `.egg` file is generated in the `dist` folder.
-
-Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
+The next few sections will go over how to build each source file:
+  - [Build Python Docker image](#build-python-docker-image)
+  - [Build R Docker image](#build-r-docker-image)
+  - [Build PySpark binaries](#build-pyspark-binaries)
+  - [Build Scala binaries](#build-scala-binaries)
 
 ---
 
-<!--- Not supported
-#### Build Scala Sentiment Analysis intelligent service
+#### Build Python Docker image
 
-To get the Scala application, we run the following command to clone the Github repository to the local system.
-
-```BASH
-git clone https://github.com/adobe/experience-platform-dsw-reference.git
-```
-
-To create the assembly jar, follow the steps below.
-
-```BASH
-cd recipes/scala/sentiment_analysis/
-sbt assembly
-```
-
-To create a local jar, the following command can be used.
-
-```BASH
-sbt clean package publish-local
-```
-
-The generated `.jar` artifact is generated in the `/target/scala-2.11/` folder
-
-Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
--->
-
-<!-- Not supported
-#### Building PySpark Sentiment Analysis intelligent service
-
-To get the PySpark application, we run the following command to clone the Github repository to the local system.
+If you have not done so, clone the github repository onto your local system with the following command.
 
 ```BASH
 git clone https://github.com/adobe/experience-platform-dsw-reference.git
 ```
 
-Now with the repository, we can run the following commands to create the `.egg` file which consists of project-related metadata files, code and resources which is well-suited to distribution and importing.
+Navigate to the directory `experience-platform-dsw-reference/recipes/python/retail`. Here, you will find the scripts `login.sh` and `build.sh` which you will use to login to docker and to build the python docker image. If you have your [docker credentials](#package-the-source-files) ready, enter the following commands in order:
 
 ```BASH
-cd recipes/pyspark/sampleapp/
-python setup.py install
-```
-
-The `.egg` file is generated in the `dist` folder.
-
-Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
--->
-
-#### Build Tensorflow Perceptron intelligent service
-
-To get the Tensorflow application, we run the following command to clone the Github repository to the local system.
-
-```BASH
-git clone https://github.com/adobe/experience-platform-dsw-reference.git
-```
-
-Now in the repository, we can run the following commands to create the `.egg` file which consists of project-related metadata files, code and resources which is well-suited to distribution and importing.
-
-```BASH
-cd samples/tensorflow/samples/tensorflow/perceptron/
-python setup.py install
-```
-
-The `.egg` file is generated in the `dist` folder.
-
-Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
-
----
-
-#### Building R Retail intelligent service
-
-For R the files needed to create the Docker image are already built in the repository. All we need to do is to clone it. The files are found in `/recipes/R` folder
-
-```BASH
-git clone https://github.com/adobe/experience-platform-dsw-reference.git
-cd recipes/R/Retail\ -\ GradientBoosting/
-```
-Now you can move on to the next section [Create Dockerfile](#create-dockerfile)
-
----
-
-### Create Dockerfile
-
-We will need to create a Dockerfile that first takes the base image, installs dependencies, and copies over the packaged intelligent service we did in section [Create Dockerfile](#create-dockerfile). Since you are using the Sample Intelligent Service, the Dockerfile is provided [in the directory](https://github.com/adobe/experience-platform-dsw-reference/blob/master/recipes/python/retail/Dockerfile). The example for Python is shown below:
-
-```BASH
-FROM <docker-runtime-path>
-
-#INSTALL NLTK and other modules needed by application
-RUN /usr/bin/python3.5 -m pip install -U numpy
-RUN /usr/bin/python3.5 -m pip install -U pandas
-RUN /usr/bin/python3.5 -m pip install -U sklearn
-RUN /usr/bin/python3.5 -m pip install -U scipy
-
-COPY dist/retail*.egg /application.egg
-
-ENV PYTHONPATH=$PYTHONPATH:/application.egg
-```
-
-The base Python-based image is specified as the `FROM` argument. `RUN` installs NLTK and numpy which are dependencies. `ENV` updates the environment variable for the software the container installs. We are updating the environment variable with the application we build in the previous section.
-
-### Build Docker image
-With our Dockerfile, we can build the Docker image. When creating a new Recipe in the Data Science Workspace, we are provided with the Docker host, username, and password values which we will be able to use to build our Docker image. More details can be found in [this tutorial](../how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial.md).
-
-```BASH
-cd recipes/python/retail
+# for logging in to docker
+./login.sh
  
-#<artifactory-token> is from the New Recipe window
-docker login -u dsutil -p <artifactory-token> <docker-path>
-docker login -u dsutil -p <artifactory-token> <docker-path>
- 
-#  Build the Docker image: e.g., docker build -t <docker-path>/sample-python:1.0 .
-docker build -t <docker-path>/<intelligent-service>:<version_tag> 
+# for building docker image
+./build.sh
 ```
+Note that when executing the login script, you will need to provide the docker host, username, and password. When building, you are required to provide the docker host and a version tag for the build.
 
-### Push Docker image
+Once the build script is complete, you are given a docker source file URL in your console output. For this specific example, it will look something like:
 
 ```BASH
-docker push <docker-path>/<intelligent-service>:<version_tag>
+# URL format: 
+{DOCKER_HOST}/ml-retailsales-python:{VERSION_TAG}
 ```
 
+Keep this URL handy, you will need it for [the next step](#next-steps).
+
 ---
+
+#### Build R Docker image
+
+If you have not done so, clone the github repository onto your local system with the following command.
+
+```BASH
+git clone https://github.com/adobe/experience-platform-dsw-reference.git
+```
+
+Navigate to the directory `experience-platform-dsw-reference/recipes/R/Retail - GradientBoosting` inside your cloned repository. Here, you'll find the files `login.sh` and `build.sh` which you will use to login to docker and to build the R docker image. If you have your [docker credentials](#package-the-source-files) ready, enter the following commands in order:
+
+```BASH
+# for logging in to docker
+./login.sh
+ 
+# for build docker image
+./build.sh
+```
+Note that when executing the login script, you will need to provide the docker host, username, and password. When building, you are required to provide the docker host and a version tag for the build.
+
+Once the build script is complete, you are given a docker source file URL in your console output. For this specific example, it will look something like:
+
+```BASH
+# URL format: 
+{DOCKER_HOST}/ml-retail-r:{VERSION_TAG}
+```
+
+Keep this URL handy, you will need it for [the next step](#next-steps).
+
+---
+
+#### Build PySpark binaries
+
+If you have not done so, clone the github repository onto your local system with the following command.
+
+```BASH
+git clone https://github.com/adobe/experience-platform-dsw-reference.git
+```
+
+Navigate in to the cloned repository on your local system and run the following commands in order to build the required `.egg` file for importing a PySpark recipe:
+
+```BASH
+cd recipes/pyspark
+./build.sh
+```
+
+The `.egg` file is generated in the `dist` folder.
+
+You can now move on to the [next steps](#next-steps)
+
+---
+
+#### Build Scala binaries
+
+If you have not already done so, run the following command to clone the Github repository to your local system.
+
+```BASH
+git clone https://github.com/adobe/experience-platform-dsw-reference.git
+```
+
+To build the `.jar` artifact used to import a Scala recipe, navigate to your cloned repository and follow the steps below.
+
+```BASH
+cd recipes/scala/
+./build.sh
+```
+
+The generated `.jar` artifact with dependencies is found in the `/target` directory.
+
+You can now move on to the [next steps](#next-steps)
+
+---
+
 
 ## Next steps
 
-This tutorial went over how to build a recipe to be used in the Data Science Workspace. You should now have a link to the Docker image which can be used in the next section to import, train, and evaluate to generate insights.
-* [Import, train, and evaluate a Recipe via the UI](../how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial.md)
-* [Import, train, and evaluate a Recipe via the API](../how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial_api.md)
+This tutorial went over how to build a recipe to be used in the Data Science Workspace. You should have a source file – either in the Azure Container Registry, or a binary file locally. Next you will use the source files to exercise the **Import Recipe from Source File** workflow.
+* [Import, train, and evaluate a Recipe on the UI](../how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial.md)
+* [Import, train, and evaluate a Recipe with the API](../how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_api_tutorial.md)
