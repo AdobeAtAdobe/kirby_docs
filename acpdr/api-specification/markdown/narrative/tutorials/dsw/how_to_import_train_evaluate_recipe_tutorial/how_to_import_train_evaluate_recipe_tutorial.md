@@ -1,32 +1,26 @@
-# Import, train, and evaluate a Recipe via the UI <!-- omit in toc -->
+# Tutorial: Import, train, and evaluate a Recipe via the UI <!-- omit in toc -->
 
 - [Objective](#objective)
 - [Prerequisites](#prerequisites)
 - [UI workflow](#ui-workflow)
-    - [Create a Recipe](#create-a-recipe)
-        - [Build Docker image](#build-docker-image)
-        - [Push Docker image](#push-docker-image)
-    - [Create a Model](#create-a-model)
-    - [Create a Training Run](#create-a-training-run)
-    - [Evaluating Experiment results](#evaluating-experiment-results)
+  - [Create a Recipe](#create-a-recipe)
+    - [Build Docker image](#build-docker-image)
+    - [Push Docker image](#push-docker-image)
+  - [Create an Instance](#create-an-instance)
+  - [Create an Experiment](#create-an-experiment)
+  - [Create an Experiment using custom hyperparameter](#create-an-experiment-using-custom-hyperparameter)
+    - [Retail Sale forecasting hyperparameter](#retail-sale-forecasting-hyperparameter)
+  - [Evaluating Experiment results](#evaluating-experiment-results)
+    - [Measures chart](#measures-chart)
+    - [Receiver Operator Characteristics](#receiver-operator-characteristics)
+    - [Confusion Matrix](#confusion-matrix)
+  - [Review logs](#review-logs)
 - [Next steps](#next-steps)
 
 ---
 
 ## Objective
 In this step by step tutorial, we will go over how to import a Recipe into the Data Science Workspace. From there, we will go over an example where we train and evaluate the Recipe.
-
-For this tutorial, we will be focused on Recipes, Models, Training Runs, and Scoring Runs. The following chart outlines the relationship between the four.
-
-![](./images/recipe_hierarchy_ui.png)
-
-> **Note:** The terms "Recipe", "Model", "Service", "Training Run", and "Scoring Run" are referred to as different terms in the API. If you're coming from the API, the following table will map the differences.
-> 
-> UI Term | API Term
-> --- | ---
-> Recipe | Engine
-> Model | MLInstance/ Experiment
-> Service | MLService
 
 ---
 
@@ -39,26 +33,30 @@ For this tutorial, we will be focused on Recipes, Models, Training Runs, and Sco
 
 In this section, you will go over creating a Recipe where you can import your Docker image. We went through the steps to create a Docker image in the [Package Recipe to Data Science Workspace tutorial](../package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md).
 
-First, navigate to [Adobe Experience Platform](https://platform.adobe.com/) and go to the ML Models tab in the left navigation bar. You will be taken to the **Browse** tab where you will see three tabs:
-* Browse
+First, we launch the [Adobe Experience Platform UI](https://platform.adobe.com/) and go to the `Data Science` tab in the top navigation bar. You will be taken to the `Overview` tab where you will see three sections:
 * Recipes
-* Notebooks
+* My Instances
+* My Notebooks
 
-The **Browse** tab shows a list of Models you or others in your IMS Organization have created or updated recently. A Model is a snapshot of a Recipe that will be tailored towards solving a specific business problem. One Recipe can create many Models.
+For this tutorial, we will be focused on Recipes, Instances, and Experiments. The following chart outlines the relationship between the three and also introduces the idea of a trained model. 
 
-Similar to the **Browse** tab, the **Recipe** tab shows a list of recently updated Recipes. A Recipe refers to a proprietary algorithm, or an ensemble of algorithms, to help solve specific business problems.
+![](recipe_hierarchy.png)
 
-In the UI, a Training Run is run within the context of a Model. Multiple Training Runs can be created for each Model.
+The Recipe section is a carousel that lists the recipes that you or others in your IMS Organization have created. A Recipe refers to a proprietary algorithm, or an ensemble of algorithms, to help solve specific business problems.
+
+The Instances section is a list of recently updated Recipe Instances. An Instance is a snapshot of a Recipe that will be tailored towards solving a specific business problem. One Recipe can create many Instances.
+
+In the UI, an Experiment is run within the context of an Instance and the Experiment Run will correspond to a trained Model. Note that currently, a single Experiment will only associate with a single Experiment Run and thus a single trained Model as well.
 
 ### Create a Recipe
 
-You first want to create a new Recipe. From the **Recipes** tab, click on the **Create Recipe** button on the top right.
+You first want to create a new Recipe. From the Data Science Workspace overview page, click on the "New" button on the top right. From there, you will be given an option to create a Notebook or a Recipe. 
 
-![](./images/create_recipe.png)
+![](new_recipe_dropdown.png)
 
-From here, a "New Recipe" dialog will popup on the screen. The `*` indicate which fields require to be filled. 
+Choose Recipe and a "New Recipe" dialog will popup on the screen. The `*` indicate which fields require to be filled. 
 
-![](./images/new_recipe_modal.png)
+![](new_recipe_modal_full.png)
 
 * **Name** - This is the name of your Recipe
 * **Schema** - What XDM Schema you want to model your data with
@@ -67,78 +65,51 @@ From here, a "New Recipe" dialog will popup on the screen. The `*` indicate whic
 
 > **Note:** If Spark is selected for Recipe Type and Binary is set for Recipe Source, the asset that is expected will be a `.jar` file.
 
-![](./images/new_recipe_modal_binary.png)
+![](new_recipe_binary.png)
 
 * **Docker Host** - Link to the Docker host to upload your Docker image to
 * **Username/Password** - Credentials to the Docker host
-* **Configuration File** - This file expects a JSON object containing parameters for the training and scoring of the Instance. You can leave this blank when creating the Recipe as the workflow will prompt you to enter the configuration when creating a Model or a Training Run. Here is an example of a [configuration file for the Retail Sales sample](https://github.com/adobe/experience-platform-dsw-reference/blob/master/recipes/python/retail/retail.config.json) application:
+* **Configuration File** - This file expects a JSON object containing parameters for the training and scoring of the Instance. You can leave this blank when creating the Recipe as the workflow will prompt you to enter the configuration when creating an Instance or an Experiment. Here is an example of a [configuration file for the Retail Sales sample](https://github.com/adobe/experience-platform-dsw-reference/blob/master/recipes/python/retail/retail.config.json) application:
 
 ```JSON
 [
-  {
-    "name": "train",
-    "parameters": [
-      {
-        "key": "learning_rate",
-        "value": "0.1"
-      },
-      {
-        "key": "n_estimators",
-        "value": "100"
-      },
-      {
-        "key": "max_depth",
-        "value": "3"
-      },
-      {
-        "key": "ACP_DSW_INPUT_FEATURES",
-        "value": "date,store,storeType,storeSize,temperature,regionalFuelPrice,markdown,cpi,unemployment,isHoliday"
-      },
-      {
-        "key": "ACP_DSW_TARGET_FEATURES",
-        "value": "weeklySales"
-      },
-      {
-        "key": "ACP_DSW_FEATURE_UPDATE_SUPPORT",
-        "value": false
-      },
-      {
-        "key": "tenantId",
-        "value": "_{TENANT_ID}"
-     },
-     {
-       "key": "ACP_DSW_TRAINING_XDM_SCHEMA",
-       "value": "<leave as is if going through UI workflow. Replace with Schema ID if creating recipe via API>"
-     },
-     {
-       "key": "evaluation.labelColumn",
-       "value": "weeklySalesAhead"
-     },
-     {
-       "key": "evaluation.metrics",
-       "value": "MAPE,MAE,RMSE,MASE"
-     }
-    ]
-  },
-  {
-        "name": "score",
+    {
+        "name": "train",
         "parameters": [
             {
-                "key": "tenantId",
-                "value": "_{TENANT_ID}"
+                "key": "learning_rate",
+                "value": "0.1"
             },
             {
-              "key":"ACP_DSW_SCORING_RESULTS_XDM_SCHEMA",
-              "value":"<leave as is if going through UI workflow. Replace with Schema ID if creating recipe via API>"
+                "key": "n_estimators",
+                "value": "100"
+            },
+            {
+                "key": "max_depth",
+                "value": "3"
+            },
+            {
+                "key": "ACP_DSW_INPUT_FEATURES",
+                "value": "date,store,storeType,storeSize,temperature,regionalFuelPrice,markdown,cpi,unemployment,isHoliday"
+            },
+            {
+                "key": "ACP_DSW_TARGET_FEATURES",
+                "value": "weeklySales"
+            },
+            {
+                "key": "ACP_DSW_FEATURE_UPDATE_SUPPORT",
+                "value": false
+            },
+            {
+                "key": "ACP_DSW_TRAINING_XDM_SCHEMA",
+                "value": "/_customer/default/DSWRetailSales"
             }
         ]
-  }
+    }
 ]
 ```
 
-You will need to modify the configuration file yourself. Specifically, the value of the `{TENANT_ID}`: This ID ensures resources you create are namespaced properly and contained within your IMS Organization. To find your ID, you can [follow the steps here](../../../technical_overview/schema_registry/schema_registry_developer_guide.md#know-your-tenant_id)
-
-For this tutorial, you will be creating a Python Recipe using the Docker image that you created in the [Package Recipe tutorial](../package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md). We are provided with the Docker host, username, and password values which you will be able to use to build our Docker image in the next section.
+For this tutorial, you will be creating a Python Recipe using the Docker image that you created in the [Package Recipe tutorial](../package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md). We are provided with the Docker host, username, and password values which you will be able to use to build our Docker image.
 
 #### Build Docker image
 With the Dockerfile, you can build the Docker image. In the directory with your Dockerfile type the following commands:
@@ -148,92 +119,131 @@ With the Dockerfile, you can build the Docker image. In the directory with your 
 docker login -u <username> -p <password> <Docker host>
  
 #  Build the Docker image: e.g., docker build -t <docker-path>/sample-python:1.0 .
-docker build -t <Docker host>/<intelligent-service>:<version_tag> .
+docker build -t <Docker host>/<intelligent-service>:<version_tag> 
 ```
-
-> **Note:**  Don't forget the `.` after the `docker build` command!
 
 #### Push Docker image
 
 ```BASH
-#  The argument for the push command is the same as the build command without the period at the end
+#  This URL is the same as the one in your build command.
 docker push <Docker host>/<intelligent-service>:<version_tag>
 ```
 
 ---
 
-Now insert the URL you have just built and pushed to the Docker host into the Source File field. After pressing "Save", you are taken to the new Recipe's overview page. From here you are able to view information about the Recipe you just created and are able to create Models.
+Now insert the URL you have just built and pushed to the Docker host into the Source File field. After pressing "Save", you are taken to the new Recipe's overview page. From here you are able to view information about the Recipe you just created and are able to create Recipe Instances to run experiments.
 
 
-### Create a Model
+### Create an Instance
 
-Now that you created a new Python Recipe and are taken to the Recipe Overview, you can create a Model. Remember that a Model is a snapshot of the Recipe configured that will be tailored to help solve specific business problems. One Recipe can create many Models. Since the Recipe you created is new, it has no existing Models so the user interface will show that you have an empty list of Models and ask if you want to create your first Model.
+Now that you created a new Python Recipe and are taken to the Recipe Overview, you can create a Recipe Instance. Remember that an Instance is a snapshot of the Recipe configured that will be tailored to help solve specific business problems. One Recipe can create many Instances. Since the Recipe you created is new, it has no existing Instances so the user interface will show that you have an empty list of Instances and ask if you want to create your first Instance.
 
-![](./images/empty_recipe_overview.png)
+![](empty_instance_list.png)
 
-Click on either of the two **Create a Model** buttons (one at the top-right and one in the middle of the page) and a new Workflow should begin. As you can see at the top of the Workflow page, there are two steps: **Select Dataset** and **Name & Configure**.
+Click on either of the two "Create Instance" buttons and a New Instance dialog should appear. Fill in the name for your Instance and a description for your Instance. Adding a configuration file in this step is not required since the configuration you associated with the Recipe upon import is used. If you do add a configuration file, it will merge with your existing configuration and add new fields if applicable.
 
-In the **Select Dataset** step, you will have to choose the dataset you previously created and ingested data into. Once selected you will see the details about the dataset in the sidebar.
+![](new_instance_modal.png)
 
-![](./images/create_model_select_dataset.png)
+Click on Save once you have everything filled out. You will be taken to your Instance overview page.
 
-Next, the Workflow will prompt you to enter a model name as well as configuration for the Model. For the configuration, you can use the sample Retail Sales configuration file from the public repository [here](https://github.com/adobe/experience-platform-dsw-reference/blob/a74f65d2c6fcc3ae85414f74f003620a657e2d1c/recipes/python/retail/retail.config.json). Click on **Upload New Config** and drag the JSON file into the browser window. The training and scoring parameters should update with the configuration file you uploaded.
+### Create an Experiment
 
-![](./images/create_model_name_configure.png)
+After creating the new Instance, you should see an overview page as seen below.
 
-### Create a Training Run
+![](new_instance_overview.png)
 
-After creating the new model, you should see an overview page as seen below.
+To create a new Experiment, you can use either of the "Create Experiment" buttons in the overview page. Once clicking on the "Create Experiment" buttons, a "New Experiment" dialog will appear. 
 
-![](./images/model_overview.png)
+> **Note:** With the Instance creation, adding a configuration file in this step is not required. If you do add a configuration file, it will merge with your existing configuration and add new fields. Some Recipes have parameters hard-coded within its code. These Recipes will not require a configuration file until the Recipe is updated.
 
-By default, model creation leads to a training run to be created and ran. This training run uses the default configuration parameters you set when the Model is created. 
+![](newExperiment.png)
 
-To create a new training run, use the **Train** button on the top-right of the page. This will take you to a **Run Training** workflow. This workflow has two steps: **Training input**, and **Configuration**.
+In the Create New Experiment page, the Data Source field specifies which dataset to use in the Experiment. Select the training dataset you ingested in the [previous tutorial](../ml_access_and_explore_data_tutorial/ml_access_and_explore_data_tutorial.md).
 
-In the **Training input** step, you will need to select the source dataset for your training run. 
+Note that you can adjust the **FEATURES (INPUT)** and **TARGET FEATURES (OUTPUT)** at the Experiment level. We will leave the values as default for now.
 
-![](./images/training_input.png)
+In the Configuration tab, you are shown the default configurations for your Experiment. You can add or edit the parameters in this page. We will leave the parameters as default.
 
-After selecting your dataset, click **Next** and you will be asked to configure your training run.
+![](hyper-params.png)
 
-![](./images/training_configuration.png)
+After clicking on the "Run" button, your experiment is created and you will be taken back to the Instance Overview page. The Experiment will automatically run in the background until the status is either Completed or Failed.
 
-These configuration values are called hyperparameters. Hyperparameters cannot be learned - they must be assigned before training of the model. Adjusting the parameters may change the accuracy of the trained model.
+![](instance_overview_pending.png)
 
-The Retail Sales Forecasting Recipe uses the gradient boosting algorithm. Here are the associated hyperparameters:
+You can click on the Experiment to view the details about the Experiment. This can be done even before the Experiment Run has been completed. Once in the Experiment detail page, you can view all Experiment Runs. Clicking on the "Configuration" tab, you are able to see the Instance's default parameters.
 
-Hyperparameter | Description | Recommended Range
+![](experiment_configuration.png)
+
+### Create an Experiment using custom hyperparameter
+
+Create another experiment by selecting the **Create Experiment** on your Recipe Instance page. Select the same training dataset you used in the Default Experiment. Then select the **Configuration** tab. Here you will modify the hyperparameters in the section below.
+
+#### Retail Sale forecasting hyperparameter
+
+Hyperparameters cannot be learned - they must be assigned before training of the model. Adjusting the parameters may change the accuracy of the trained Model.
+
+The Retail Sales Forecasting Recipe uses the Gradient Boosting algorithm. Here are the associated hyperparameters:
+
+Hyperparameter | Description	Default | Recommended Range
 --- | --- | ---
 learning_rate | Learning rate shrinks the contribution of each tree by learning_rate. There is a trade-off between learning_rate and n_estimators. | 0.1 | [2 - 10] / number of estimators
 n_estimators | The number of boosting stages to perform. Gradient boosting is fairly robust to over-fitting so a large number usually results in better performance. | 100 | 100 - 1000
 max_depth | Maximum depth of the individual regression estimators. The maximum depth limits the number of nodes in the tree. Tune this parameter for best performance; the best value depends on the interaction of the input variables. | 3 | 4 - 10
 
-Double-click on a key or value to modify the training run configuration. If you have another configuration file, you can also use the **Upload New Config** button as well. If you change your mind and made a mistake, you can click on **Reset fields** to revert all the changes you just made.
-
-Click on **Finish** when you are happy with your configuration. You will be taken to the model's overview page.
-
-When you are happy with the configuration, click **Finish**. Your training run will be created and will start running.
-
 ### Evaluating Experiment results
 
-On the model overview page, you can see the status of each of the training runs. If at least one run is complete, you will be able to see metrics and visualizations for the completed runs.
+After the evaluation is finished running, results will be shown under the "Evaluation Metrics" tab in the experiment page. Metrics are automatically generated depending on your model's algorithm type. For binary classification, the following metrics are generated:
+* Measures
+* Receiver Operator Characteristics
+* Confusion Matrix
 
-![](./images/complete_training_run.png)
+For other model types (e.g. regression), only the following metric is generated
+* Measures
 
-> **NOTE:** The Mean Absolute Percent Error (MAPE) metric expresses accuracy as a percentage of the error. This is used to identify the top performing Experiment. The lower the MAPE, the better.
+#### Measures chart
 
-With completed multiple training runs, you can compare metrics across different training runs in the model evaluation chart.
+The Measures chart displays key values which describe your results.
 
-![](./images/multiple_training_runs.png)
+![](measures_chart.png)
 
-> **NOTE:** The "Precision" metric describes the percentage of relevant Instances compared with the total *retrieved* Instances. Precision can be seen as the probability that a randomly selected outcome is correct.
 
-You can click on a specific training run to view the details about the run. This can be done even before the run has been completed. Once in the run's detail page, you are able to see other evaluation metrics, configuration parameters, and visualizations specific to the training run.
+The "Precision" metric describes the percentage of relevant Instances compared with the total *retrieved* Instances while the "Recall" metric describes the percentage of relevant Instances that have been retrieved compared with the total amount of *relevant* retrieved Instances. Precision can be seen as the probability that a randomly selected outcome is correct, while recall is seen as the probability of a correctly selected outcome from a given dataset to be correctly selected.
 
-A user can also download activity logs to see the details of the run. Logs are particularly useful for failed runs to see what went wrong.
+Precision and recall are commonly used together for evaluation. In fact, the F1 score is the harmonic average of the precision and recall. The ideal F1 score would be 1 while the worse is at 0. 
 
-![](./images/activity_logs.png)
+The "Accuracy" metric compares the results with the expected outcome.
+
+The "Area Under Curve" metric (AUC) is used to measure the efficiency of a binary classification algorithm.
+
+Another common measure is the Mean Absolute Percent Error (MAPE). This expresses accuracy as a percentage of the error. This is used to identify the top performing Experiment. The lower the MAPE the better.
+
+#### Receiver Operator Characteristics
+
+The Receiver Operating Characteristic curve (ROC curve) is a plot of true positive rates against the false positive rates. This relationship shows the tradeoff between sensitivity and specificity. The perfect curve would be one with a 0% false positive rate and a 100% true positive rate. This means the curve would hug the left and top axis of the chart. Conversely, as the curve appears closer to the diagonal line, the less accurate the test. The diagonal line represents if the results were decided randomly.
+
+![](receiver_operator_characteristic_chart.png)
+
+
+#### Confusion Matrix
+
+The Confusion Matrix shows the distribution of predictions into the following four buckets:
+* True Positive - Predicted positive correctly
+* True Negative - Predicted negative correctly
+* False Positive - Predicted positive incorrectly
+* False Negative - Predicted negative incorrectly
+
+![](confusion_matrix.png)
+
+
+The total percentage of correctly predicted results is found by adding up the percentages for true positive and true negative results.
+
+### Review logs
+
+The ability to view the job logs is important if your job fails. To review the logs, click on the Experiment name, then select **View Activity Logs**. Select the log file you would like to examine.
+
+![](review_logs.png)
+
+---
 
 ## Next steps
 
