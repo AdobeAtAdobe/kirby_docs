@@ -53,7 +53,7 @@ The calls in this document require specific request headers be sent with each ca
 
 The headers, and the values required, are:
 
-* Authorization: Bearer `{ACCESS_TOKEN}` - The token provided after [authentication](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md)
+* Authorization: Bearer `{ACCESS_TOKEN}` - The token provided after [authentication](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md)
 * x-api-key: `{API_KEY}` - Your specific API key for your unique Platform integration (available via [Adobe Console](https://console.adobe.io))
 * x-gw-ims-org-id: `{IMS_ORG}` - The IMS Organization credentials for your unique Platform integration.
 
