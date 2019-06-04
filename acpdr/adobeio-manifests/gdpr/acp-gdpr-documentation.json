@@ -19,7 +19,8 @@
 			"pages": [],
 			"path": "api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md",
 			"title": "GDPR API Overview"
-		}{
+		},
+		{
 			"pages": [],
 			"path": "api-specification/markdown/narrative/gdpr/gdpr-whitepaper.md",
 			"title": "Adobe Experience Cloud and GDPR"
@@ -78,7 +79,11 @@
 			"pages": [],
 			"path": "api-specification/markdown/narrative/gdpr/gdpr-on-platform-overview.md",
 			"title": "GDPR on Adobe Experience Platform overview"
+		},
+		{
+			"pages": [],
+			"path": "api-specification/markdown/narrative/gdpr/gdpr-io-events.md",
+			"title": "GDPR IO Events"
 		}
-
   ]
 }
