@@ -1,16 +1,16 @@
 {
-	"name": "gdpr_services",
+	"name": "gdpr_documentation",
 	"version": "1.0.0",
-	"description": "GDPR API Services",
+	"description": "GDPR Documentation",
 	"author": "Emily Walpole",
 	"view_type": "mdbook",
-	"meta_keywords": "Adobe, GPDR API, GDPR, General, Data, Protection, Regulation, Services",
-	"meta_description": "General Data Protection Regulation API - Services",
-	"publish_date": "22/04/2018",
+	"meta_keywords": "Adobe, GDPR, General, Data, Protection, Regulation, Documentation",
+	"meta_description": "General Data Protection Regulation API Documentation",
+	"publish_date": "24/04/2018",
 	"show_edit_github_banner": false,
 	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
 	"pages": [
-		{
+    {
 			"pages": [],
 			"path": "api-specification/markdown/narrative/gdpr/use-cases/adobe-privacy-library.md",
 			"title": "The Adobe Privacy JavaScript Library and GDPR"
@@ -80,5 +80,5 @@
 			"title": "GDPR on Adobe Experience Platform overview"
 		}
 
-	]
+  ]
 }
