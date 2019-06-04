@@ -4,7 +4,7 @@
 
 The overview provides a high-level starting point for working with Query Service. This page provides an overview of usage and summarizes any calls-to action.
 
-    ![Image](graphics/overview.jpg)
+![](graphics/ovrview.jpg)
 
 ### Explore queries
 
@@ -36,7 +36,7 @@ You can search on the field. Searches are case sensitive.
 
 The Credentials tab displays your postgres credentials.
 
-    ![Image](graphics/credentials.jpg)
+![](graphics/credentials.jpg)
 
 ## Query editor
 
@@ -44,7 +44,7 @@ The query editor enables you to issue queries without using an external client.
 
 Click **Create Query** in the Overview or Log tab to open the query editor and create a new query.
 
-    ![Image](graphics/query-editor.jpg)
+![](graphics/queryeditor.jpg)
 
 Type your query in the editor. As you type, the editor autocompletes SQL reserved words, as well as tables and field names within tables.  Click the Play button to run the the query. Use the space below the editor to view the query results and the query console. The query console shows what Query Service is currently doing, including indicating when a query has been returned. Click over to the results tab to view the query results.
 
