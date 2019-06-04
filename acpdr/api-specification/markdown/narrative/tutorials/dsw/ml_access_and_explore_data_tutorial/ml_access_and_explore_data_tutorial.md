@@ -1,23 +1,21 @@
-# Tutorial: How to access and explore data in Data Science Workspace <!-- omit in toc -->
+# How to access and explore data in Data Science Workspace <!-- omit in toc -->
 
 - [Objective](#objective)
-- [Prerequisites](#prerequisites)
-- [Create a dataset based on a schema](#create-a-dataset-based-on-a-schema)
-  - [Create training dataset](#create-training-dataset)
-  - [Create scoring dataset](#create-scoring-dataset)
-  - [Ingest data](#ingest-data)
+- [Concepts Introduced:](#concepts-introduced)
+- [Create Retail Sales schema and dataset](#create-retail-sales-schema-and-dataset)
+- [Preview your schema and data](#preview-your-schema-and-data)
 - [Explore notebooks in Data Science Workspace](#explore-notebooks-in-data-science-workspace)
-  - [Choose your workspace](#choose-your-workspace)
-  - [Create a new notebook](#create-a-new-notebook)
-  - [Access data](#access-data)
-    - [External data](#external-data)
-    - [Adobe Experience Platform data](#adobe-experience-platform-data)
-      - [By Dataset ID](#by-dataset-id)
-  - [Explore our data](#explore-our-data)
-    - [Statistical summary](#statistical-summary)
-    - [Data visualization](#data-visualization)
-      - [Univariate graphs](#univariate-graphs)
-      - [Multivariate graphs](#multivariate-graphs)
+    - [Choose your workspace](#choose-your-workspace)
+    - [Create a new notebook](#create-a-new-notebook)
+    - [Access data](#access-data)
+        - [External data](#external-data)
+        - [Adobe Experience Platform data](#adobe-experience-platform-data)
+            - [By Dataset ID](#by-dataset-id)
+    - [Explore our data](#explore-our-data)
+        - [Statistical summary](#statistical-summary)
+        - [Data visualization](#data-visualization)
+            - [Univariate graphs](#univariate-graphs)
+            - [Multivariate graphs](#multivariate-graphs)
 - [Next steps](#next-steps)
 
 ---
@@ -26,13 +24,13 @@
 In this step by step tutorial, we will focus on how to create a new Jupyter notebook in the Data Science Workspace to access data from Adobe Experience Platform. You will also be able to upload data from external sources. We will then explore the dataset to get a better understanding of the data. The main points that will be covered in this tutorial are:
 
 * Create a dataset based on a schema
+* Explore dataset in Platform
 * Create a new Jupyter notebook
-* Access datasets and schemas
-* Explore datasets 
+* Explore dataset in notebook
 
-We will go through the UI flow in this tutorial. The API tutorial can be found [here](../ml_api_access_and_explore_data_tutorial.md). The example we will use in the tutorial is with Python. 
+We will go through the UI flow in this tutorial. The example we will use in the tutorial is the [Retail Sales Python recipe](https://github.com/adobe/experience-platform-dsw-reference/tree/master/recipes/python/retail).
 
-> **Note:** Data Science Workspace also supports the following languages, but they will not be used in this tutorial:
+> **Note:** Data Science Workspace also supports the following languages:
 > * Scala
 > * PySpark
 > * Tensorflow
@@ -40,58 +38,66 @@ We will go through the UI flow in this tutorial. The API tutorial can be found [
 
 ---
 
-## Prerequisites
-
-* Access to an IMS Organization with Data Science flags enabled
-* Existing data ingested into Platform via the API or the UI. Ingesting Data tutorials [via a file](../creating_a_dataset_tutorial.md) or [via a connector](../creating_a_connector_tutorial.md)
+## Concepts Introduced:
+* XDM: [Experience Data Model](https://www.adobe.io/open/standards/xdm.html) is the common language for the experience business.
+* Datasets: [Adobe Experience Platform](https://www.adobe.io/apis/experienceplatform/home/overview.html) is an open system. A Dataset is a collection of data that includes schema and fields. Datasets available in the platform can be read and exported.
+* Batches: Datasets are made up of batches. A Batch is a set of data collected over a period of time and processed together as a single unit. New batches are created when data is added to a Dataset.
+* JupyterLab: [JupyterLab](https://blog.jupyter.org/jupyterlab-is-ready-for-users-5a6f039b8906) is the next-generation web-based interface for Project Jupyter, and is tightly integrated into Adobe Experience Platform.
+* Data Access SDK: The Data Access SDK (integrated in Data Science Workspace) is used to read and write data to the platform at scale.
 
 ---
 
-## Create a dataset based on a schema
+## Create Retail Sales schema and dataset
 
-In this section, we will be creating a dataset based on a schema. You will be populating the dataset by uploading data in the parquet format. There are a number of methods to ingest data into the platform. Later, we will use this dataset in our notebook and also in our training and scoring runs.
+In this section, you will be creating an XDM schema and ingesting external data into a dataset. This data will be used later to create our machine learning model.
 
-### Create training dataset
+In this tutorial, we have provided a script that will output the Retail Sales Schema, and Retail Sales dataset. Specifically, the script will do the following steps for you:
+1. Get the tenantID of the org
+2. Create Retail Sales class
+3. Create Retail Sales mixin with the class
+4. Create Retail Sales Schema with the class and the mixin
+5. Create dataset with the schema
+6. Create batch with the dataset
+7. Ingest the datafile (with the right tenantID)
+8. Close the batch
 
-We want to create a dataset with our custom **DSWRetailSales** schema to store our data. We can create one with the following steps:
+Since the script leverages the [APIs](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/schema-registry.yaml), you will need to provide your IMS Organization ID, API key, and bearer access token as they are prerequisites to making API calls to Platform. Visit the [How to access Adobe Experience Platform APIs](../../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) tutorial to get started.
 
-1. Launch the [Adobe Experience Platform UI](https://platform.adobe.com) and log in. 
-2. Navigate to the **Data** tab
-3. Select the option **Create Dataset**
-4. Review the various methods supported to bring data into the platform
+To begin clone or download the [experience-platform-dsw-reference](https://github.com/adobe/experience-platform-dsw-reference) to your computer. The script will be in the `bootstrap` folder.
 
-![](select_data_source.png)
+Next, open the `config.yaml` in a text editor and make changes to the following variables:
+* `api_key`: Can be found in the [Copy down access values](../../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md#copy-down-access-values) section.
+* `org_id`: Can be found in the [Copy down access values](../../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md#copy-down-access-values) section.
+* `client_secret`: Can be found in the [Copy down access values](../../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md#copy-down-access-values) section.
+* `priv_key_filename`: This is the path to your local `private.key` file created in the [Create integration](../../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md#add-integration-details-public-key-and-product-profile) section.
 
-5. On the **Select Data Source** screen select **Create Dataset** on the **Schema** card
-6. On the **Choose Schema** step choose the **DSWRetailSales** custom schema
-7. On the **Configure: Dataset** step provide a unique name e.g., `Retail-Training-<your-alias>`. Note that you will need to locate this dataset later so use a unique name. This is your training data set.
-8. Click Save
+ Once completed, you can run the script by opening your terminal application and navigating to the location where you downloaded the script. From there, run the following command.
 
-### Create scoring dataset
+```Python
+python bootstrap.py
+```
 
-Repeat the same steps as above but use the name `Retail-Scoring-<your-alias>`. This will be the dataset that you will score with your trained model.
+> **Note:** Python has to be installed before you can run the script. You can download Python from the [official site](https://www.python.org/downloads/).
 
-### Ingest data
+## Preview your schema and data
 
-We will be ingesting data using the parquet format. The training and scoring parquet files can be found in this [public repository](https://github.com/adobe/experience-platform-dsw-reference/tree/master/datasets/retail). The parquet files are listed here:
-* Training Data: [DSWRetailSales-Training.parquet](https://github.com/adobe/experience-platform-dsw-reference/blob/master/datasets/retail/DSWRetailSales-Training.parquet)
-* Scoring Data: [DSWRetailSales-Scoring.parquet](https://github.com/adobe/experience-platform-dsw-reference/blob/master/datasets/retail/DSWRetailSales-Scoring.parquet)
+Once you have completed running the scripts, your newly created schema and dataset will be on Experience Platform. 
 
-The following steps show you how to ingest the data into the training and scoring dataset we created in the previous section.
+![](./images/dataset_overview.png)
 
-1. Download the parquet files listed above
-2. Navigate to the **Data** tab in the [Adobe Experience Platform UI](https://platform.adobe.com)
-3. Locate the select the `Retail-Training-<your-alias>` dataset you created previously
-4. Drag and drop or browse for the DSWRetailSales-Training.parquet file.
-5. Select **Ingest**
-6. Once ingestion is complete (indicated by a Status of Success), click the Preview option to examine sample records and familiarize yourself with the dataset
-7. Repeat this step for the scoring dataset and DSWRetailSales-Scoring.parquet file
+Navigate to the **Browse** tab in under **Schemas** to find the schema you just created. Clicking into it, you will be able to see the schema's composition: its class and mixins.
+
+![](./images/schema_overview.png)
+
+Likewise, to view your dataset, navigate to the **Datasets** page to find the one you just created. Clicking on **Preview Dataset**, you will see a subset of the dataset.
+
+![](./images/preview_dataset.png)
 
 ---
 
 ## Explore notebooks in Data Science Workspace
 
-In this section, we will be exploring data that we previously ingested into our **DSWRetailSales** schema.
+In this section, we will be exploring data that we previously ingested into our retail sales schema.
 
 The Data Science Workspace allows users to create Jupyter Notebooks through the JupyterLab platform where they can create and edit machine learning workflows. JupyterLab is a server-client collaboration tool that allows users to edit notebook documents via a web browser. These notebooks can contain both executable code and rich text elements. For our purposes, we will use Markdown for analysis description and executable Python code to perform data exploration and analysis.
 
@@ -108,13 +114,13 @@ Currently, GPU support is not available in the workspace. However, this feature 
 
 In the Adobe Experience Platform UI, click on the Data Science tab in the top menu to take you to the Data Science Workspace. From this page, click on the JupyterLab tab which will open the JupyterLab launcher. You should see a page similar to this.
 
-![](jupyterlab_launcher.png)
+![](./images/jupyterlab_launcher.png)
 
-In our tutorial, we will be using Python 3 in the Jupyter Notebook to show how to access and explore the data. In the Launcher page, there are sample notebooks provided. We will be using the Retail Sales sample for Python 3.
+In our tutorial, we will be using Python 3 in the Jupyter Notebook to show how to access and explore the data. In the Launcher page, there are sample notebooks provided. We will be using the Retail Sales recipe for Python 3.
 
-![](retail_sales.png)
+![](./images/retail_sales.png)
 
-The Retail Sales sample is a standalone example which uses the same Retail dataset to show how data can be explored and visualized in Jupyter Notebook. Additionally, the notebook goes further in depth with training and verification. More information about this specific notebook can be found in this [walkthrough](../../../technical_overview/data_science_workspace_overview/dsw_walkthrough/dsw_walkthrough.md).
+The Retail Sales recipe is a standalone example which uses the same Retail Sales dataset to show how data can be explored and visualized in Jupyter Notebook. Additionally, the notebook goes further in depth with training and verification. More information about this specific notebook can be found in this [walkthrough](../../../technical_overview/data_science_workspace_overview/dsw_walkthrough/dsw_walkthrough.md).
 
 ### Access data
 
@@ -124,27 +130,27 @@ We will go over accessing data internally from Adobe Experience Platform and dat
 
 With the Retail Sales notebook opened, find the "Load Data" header. The following Python code uses pandas' `DataFrame` data structure and the [read_csv()](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html#pandas.read_csv) function to read the CSV hosted on Github into the DataFrame:
 
-![](read_csv.png)
+![](images/read_csv.png)
 
 Pandas' DataFrame data structure is a 2-dimensional labeled data structure. To quickly see the dimensions of our data, we can use the `df.shape`. This returns a tuple that represents the dimensionality of the DataFrame:
 
-![](df_shape.png)
+![](images/df_shape.png)
 
 Finally, we can take a peek at what our data looks like. We can use `df.head(n)` to view the first `n` rows of the DataFrame:
 
-![](df_head.png)
+![](images/df_head.png)
 
 #### Adobe Experience Platform data
 
-Now, we will go over accessing Adobe Experience Platform data. There are two methods data can be retrieved into the notebook:
-* By Dataset ID
-* By Batch ID
+Now, we will go over accessing Adobe Experience Platform data.
 
 ##### By Dataset ID
 
 For this section, we are using the Retail Sales dataset which is the same dataset used in the Retail Sales sample notebook.
 
 In our Jupyter Notebook, we can access our data from the **Data** tab on the left. Upon clicking the tab, you will be able to see a list of Datasets.
+
+![](images/dataset_tab.png)
 
 Now in the Datasets directory, we will be able to see all the ingested datasets. Note that it may take a minute to load all the entries if your directory is heavily populated with datasets.
 
@@ -164,11 +170,11 @@ If you are working on other kernels other than Python, please refer to [this pag
 
 Selecting the executable cell then pressing the play button in the toolbar will run the executable code. The output for `head()` will be be a table with your dataset's keys as columns and the first n rows in the dataset. `head()` accepts an integer argument to specify how many lines to output. By default this is 5.
 
-![](datasetreader_head.png)
+![](images/datasetreader_head.png)
 
 If you restart your kernel and run all the cells again, you should get the same outputs as before.
 
-![](restart_kernel_run.png)
+![](images/restart_kernel_run.png)
 
 ### Explore our data
 
@@ -191,7 +197,7 @@ We can leverage Python's pandas library to get the data type of each attribute. 
 df.info()
 ```
 
-![](df_info.png)
+![](images/df_info.png)
 
 This information is useful since knowing the data type for each column will enable us to know how to treat the data.
 
@@ -201,13 +207,13 @@ Now let's look at the statistical summary. Only the numeric data types will be s
 df.describe()
 ```
 
-![](df_describe.png)
+![](images/df_describe.png)
 
 With this, we can see there are 6435 instances for each characteristic. Also, statistical information such as mean, standard deviation (std), min, max, and interquartiles are given. This gives us information about the deviation for the data. In the next section, we will go over visualization which works together with this information to give us a good understanding of our data. 
 
 Looking at the minimum and maximum values for `store`, we can see that there are 45 unique stores the data represents. There are also `storeTypes` which differentiate what a store is. We can see the distribution of `storeTypes` by doing the following:
 
-![](df_groupby.png)
+![](images/df_groupby.png)
 
 This means 22 stores are of `storeType` `A`, 17 are `storeType` `B`, and 6 are `storeType` `C`.
 
@@ -236,7 +242,7 @@ Univariate graphs are plots of an individual variable. A common univariate graph
 
 Using our retail dataset from before, we can generate the box and whisker plot for each of the 45 stores and their weekly sales. The plot is generated using the `seaborn.boxplot` function.
 
-![](box_whisker.png)
+![](images/box_whisker.png)
 
 A box and whisker plot is used to show the distribution of data. The outer lines of the plot show the upper and lower quartiles, while the box spans the interquartile range. The line in the box marks the median. Any points of data more than 1.5 times the upper or lower quartile are marked as a circle. These points are considered outliers.
 
@@ -246,7 +252,7 @@ Multivariate plots are used to see the interaction between variables. With the v
 
 Using the same retail dataset, we can generate the correlation matrix.
 
-![](correlation_1.png)
+![](images/correlation_1.png)
 
 Notice the diagonal of 1's down the center. This shows that when comparing a variable to itself, it has complete positive correlation. Strong positive correlation will have a magnitude closer to 1 while weak correlations will be closer to 0. Negative correlation is shown with a negative coefficient showing an inverse trend.
 
