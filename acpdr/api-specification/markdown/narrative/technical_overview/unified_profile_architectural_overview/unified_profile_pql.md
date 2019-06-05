@@ -101,7 +101,7 @@ See the section on the [`occurs`](#occurs) function for more details
 
 #### XDM references
 
-PQL expressions access record and time series data using XDM references.  For example:
+PQL expressions access profile and experience event data using XDM references.  For example:
 
 * `person.birthYear`
 * `homeAddress.countryCode`
