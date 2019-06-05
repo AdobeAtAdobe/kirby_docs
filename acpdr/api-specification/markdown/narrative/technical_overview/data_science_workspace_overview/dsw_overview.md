@@ -4,22 +4,22 @@
 - [Introduction](#introduction)
 - [Terminology](#terminology)
 - [Why Data Science Workspace?](#why-data-science-workspace)
-    - [One-stop data access](#one-stop-data-access)
-    - [Prebuilt machine learning recipes](#prebuilt-machine-learning-recipes)
-    - [Workflow focused on the data scientist](#workflow-focused-on-the-data-scientist)
-    - [Data exploration](#data-exploration)
-    - [Authoring](#authoring)
-    - [Experimentation](#experimentation)
-    - [Operationalization](#operationalization)
-    - [Continuous improvement](#continuous-improvement)
-    - [Access to new features and datasets](#access-to-new-features-and-datasets)
-    - [Security and peace of mind](#security-and-peace-of-mind)
+  - [One-stop data access](#one-stop-data-access)
+  - [Prebuilt machine learning recipes](#prebuilt-machine-learning-recipes)
+  - [Workflow focused on the data scientist](#workflow-focused-on-the-data-scientist)
+  - [Data exploration](#data-exploration)
+  - [Authoring](#authoring)
+  - [Experimentation](#experimentation)
+  - [Operationalization](#operationalization)
+  - [Continuous improvement](#continuous-improvement)
+  - [Access to new features and datasets](#access-to-new-features-and-datasets)
+  - [Security and peace of mind](#security-and-peace-of-mind)
 - [Data Science Workspace in action](#data-science-workspace-in-action)
-    - [Define the problem](#define-the-problem)
-    - [Explore and prepare the data](#explore-and-prepare-the-data)
-    - [Author the recipe](#author-the-recipe)
-    - [Experiment with the recipe](#experiment-with-the-recipe)
-    - [Operationalize the model](#operationalize-the-model)
+  - [Define the problem](#define-the-problem)
+  - [Explore and prepare the data](#explore-and-prepare-the-data)
+  - [Author the recipe](#author-the-recipe)
+  - [Experiment with the recipe](#experiment-with-the-recipe)
+  - [Operationalize the model](#operationalize-the-model)
 - [Conclusion](#conclusion)
 - [Additional resources](#additional-resources)
 
@@ -57,22 +57,22 @@ Before diving into details of Data Science Workspace, here is a brief summary of
 
 | Term | Definition |
 |---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Data Science Workspace | Data Science Workspace within Experience Platform enables customers to create machine learning models utilizing data across Experience Platform and Adobe Solutions to generate intelligent insights and predictions to weave delightful end-user digital experiences. |
-| Artificial Intelligence | Artificial intelligence is a theory and development of computer systems that are able to perform tasks that normally require human intelligence, such as visual perception, speech recognition, decision-making, and translation between languages.|
-| Machine Learning | Machine learning is the field of study that enables computers the ability to learn without being explicitly programmed. |
-| Sensei ML Framework | Sensei ML Framework is a unified machine learning framework across Adobe that leverages data on Experience Platform to empower data scientists in the development of machine learning driven intelligence services in a faster, scalable and reusable manner. |
-| Experience Data Model | Experience Data Model (XDM) is the standardization effort lead by Adobe to define standard schemas such as Profile and ExperienceEvent, for Customer Experience Management. |
-| JupyterLab | JupyterLab is an open-source web-based interface for Project Jupyter and is tightly integrated into Experience Platform. |
-| Recipes | A recipe is Adobe's term for a model specification and is a top-level container representing a specific machine learning, AI algorithm or ensemble of algorithms, processing logic, and configuration required to build and execute a trained model and hence help solve specific business problems. |
-| Model | A model is an instance of a machine learning recipe that is trained using historical data and configurations to solve for a business use case. |
-| Training | Training is the process of learning patterns and insights from labeled data. |
-| Trained Model | A trained model represents the executable output of a model training process, in which a set of training data was applied to the model instance. A trained model will maintain a reference to any Intelligent Web Service that is created from it. The trained model is suitable for scoring and creating an intelligent web service. Modifications to a trained model can be tracked as a new version. |
-| Scoring | Scoring is the process of generating insights from data using a trained model. |
-| Service | A deployed service exposes functionality of an artificial intelligence, machine learning model or advanced algorithm through an API so that it can be consumed by other services or applications to create intelligent apps. |
+| Algorithm | A Standard Data Science technique such as classification, linear regression, k-means clustering etc. |
+| XDM | Standardized, extensible schemas for representing all experience data to enable immediate semantic understanding of cross-channel data and foster an ecosystem of pre-built insights & services. [(More information)](https://adobe.io/apis/cloudplatform/dataservices/xdm.html) |
+| Feature | An individual measurable property or characteristic of a phenomenon being observed |
+| Feature Engineering | The process of converting raw data into usable form for analysis - using domain knowledge of the data to create features that make machine learning algorithms work. |
+| Recipe | Proprietary algorithm, or an ensemble of algorithms, to help solve specific business problems |
+| Instance | An occurrence of the recipe configured with the right data definition to help solve specific business problems. One recipe can create many instances. |
+| Trained Model | An instance (of the recipe) that is trained using historical data to learn from. The historical data must contain the correct answer, also known as the target or target attribute. The trained model finds patterns in the training data to help predict the target and uses that knowledge to predict the target for new sets of data where the target is unknown. One instance can create multiple trained models - one per training task. |
+| Service | Created from a "Trained Model" to be used in building experiences. |
+| Jupyter Notebook | An open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text. [(More information)](http://jupyter.org/) |
+| Experiment | The process of creating a trained model by training the instance with a portion of the live production data. |
+| Hyperparameters | Different from standard model parameters, hyperparameters are high-level properties of a model that are usually fixed (hence not learned) during model training. Examples are: depth of decision tree, number of hidden layers, prior of NB, learning rate. |
+| Unified Edge | A cohesive collection of components and services which, when used together, power aggregation, sharing, and processing of data for real-time analysis and execution of customer experiences. |
 
-The following chart outlines the hierarchical relationship between Recipes, Models, Training Runs, and Scoring Runs. 
+The following chart outlines the hierarchical relationship between recipes, instances, and trained models. 
 
-![](./images/recipe_hiearchy_ui.png)
+![](./images/recipe_hiearchy.png)
 
 ## Why Data Science Workspace?
 
@@ -169,16 +169,16 @@ You can use Jupyter Notebook to simplify data pre-processing - possibly starting
 ![](./images/list_of_notebooks.png)
 
 For more information, check out this tutorial:
-* [How to Access and Explore Data in the Data Science Workspace](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html#!api-specification/markdown/narrative/tutorials/dsw/ml_access_and_explore_data_tutorial/ml_access_and_explore_data_tutorial.md)
+* [How to Access and Explore Data in the Data Science Workspace](../../tutorials/dsw/ml_access_and_explore_data_tutorial/ml_access_and_explore_data_tutorial.md)
 
 ### Author the recipe
 
 If you already found a recipe that meets all your needs, you can move on to experimentation. Or, you can modify the recipe a bit or create one from scratch - taking advantage of the Data Science Workspace authoring runtime in Jupyter Notebook. Using the authoring runtime ensures that you can both use the Data Science Workspace training and scoring workflow and convert the recipe later so it can be stored in the recipe gallery and reused by others in your organization.
 
-You can also use the [Data Science Workspace](http://platform.adobe.com/) to import a recipe, so that you can take advantage of the experimentation workflows as you create your intelligent service.
+You can also use the [Data Science Workspace](http://platform.adobe.com/studio) to import a recipe, so that you can take advantage of the experimentation workflows as you create your intelligent service.
 
 For more information, check out this tutorial:
-* [Package Recipe to Import into the Data Science Workspace](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html#!api-specification/markdown/narrative/tutorials/dsw/package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md)
+* [Package Recipe to Import into the Data Science Workspace](../../tutorials/dsw/package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md)
 
 ### Experiment with the recipe
 
@@ -191,8 +191,8 @@ As you test, Data Science Workspace keeps track of evaluation metrics for each u
 ![](./images/evaluation_metrics.png)
 
 For more information, check out these tutorials:
-* [Import, Train, and Evaluate Recipe Tutorial via UI](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html#!api-specification/markdown/narrative/tutorials/dsw/how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial.md)
-* [Import, Train, and Evaluate Recipe Tutorial via API](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html#!api-specification/markdown/narrative/tutorials/dsw/how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_api_tutorial.md)
+* [Import, Train, and Evaluate Recipe Tutorial via UI](../../tutorials/dsw/how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial.md)
+* [Import, Train, and Evaluate Recipe Tutorial via API](../../tutorials/dsw/how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_api_tutorial.md)
 
 
 ### Operationalize the model
