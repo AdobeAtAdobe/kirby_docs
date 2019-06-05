@@ -6,28 +6,28 @@
 The following syntax defines a `SELECT` query supported by XDW Query Service:
 
 ```
-\[ WITH with_query \[, ...\] \]
-SELECT \[ ALL | DISTINCT \[ ON ( expression \[, ...\] ) \] \]
-    \[ \* | expression \[ \[ AS \] output_name \] \[, ...\] \]
-    \[ FROM from_item \[, ...\] \]
-    \[ WHERE condition \]
-    \[ GROUP BY grouping_element \[, ...\] \]
-    \[ HAVING condition \[, ...\] \]
-    \[ WINDOW window\_name AS ( window\_definition ) \[, ...\] \]
-    \[ { UNION | INTERSECT | EXCEPT } \[ ALL | DISTINCT \] select \]
-    \[ ORDER BY expression \[ ASC | DESC | USING operator \] \[ NULLS { FIRST | LAST } \] \[, ...\] \]
-    \[ LIMIT { count | ALL } \]
-    \[ OFFSET start \[ ROW | ROWS \] \]
-    \[ FETCH { FIRST | NEXT } \[ count \] { ROW | ROWS } ONLY \]
+[ WITH with_query [, ...] ]
+SELECT [ ALL | DISTINCT [ ON ( expression [, ...] ) ] ]
+    [ * | expression [ [ AS ] output_name ] [, ...] ]
+    [ FROM from_item [, ...] ]
+    [ WHERE condition ]
+    [ GROUP BY grouping_element [, ...] ]
+    [ HAVING condition [, ...] ]
+    [ WINDOW window_name AS ( window_definition ) [, ...] ]
+    [ { UNION | INTERSECT | EXCEPT } [ ALL | DISTINCT ] select ]
+    [ ORDER BY expression [ ASC | DESC | USING operator ] [ NULLS { FIRST | LAST } ] [, ...] ]
+    [ LIMIT { count | ALL } ]
+    [ OFFSET start [ ROW | ROWS ] ]
+    [ FETCH { FIRST | NEXT } [ count ] { ROW | ROWS } ONLY ]
 ```	
 
 where `from_item` can be one of:
 
 ```
-\[ ONLY \] table\_name \[ * \] \[ \[ AS \] alias \[ ( column\_alias \[, ...\] ) \] \]
-    \[ LATERAL \] ( select ) \[ AS \] alias \[ ( column_alias \[, ...\] ) \]
-    with\_query\_name \[ \[ AS \] alias \[ ( column_alias \[, ...\] ) \] \]
-    from\_item \[ NATURAL \] join\_type from\_item \[ ON join\_condition | USING ( join_column \[, ...\] ) \]
+[ ONLY ] table_name [ * ] [ [ AS ] alias [ ( column_alias [, ...] ) ] ]
+    [ LATERAL ] ( select ) [ AS ] alias [ ( column_alias [, ...] ) ]
+    with_query_name [ [ AS ] alias [ ( column_alias [, ...] ) ] ]
+    from_item [ NATURAL ] join_type from_item [ ON join_condition | USING ( join_column [, ...] ) ]
 ```
 
 and `grouping_element` can be one of:
@@ -35,18 +35,18 @@ and `grouping_element` can be one of:
 ```
 ( )
     expression
-    ( expression \[, ...\] )
-    ROLLUP ( { expression | ( expression \[, ...\] ) } \[, ...\] )
-    CUBE ( { expression | ( expression \[, ...\] ) } \[, ...\] )
-    GROUPING SETS ( grouping_element \[, ...\] )
+    ( expression [, ...] )
+    ROLLUP ( { expression | ( expression [, ...] ) } [, ...] )
+    CUBE ( { expression | ( expression [, ...] ) } [, ...] )
+    GROUPING SETS ( grouping_element [, ...] )
 ```
 
 and `with_query` is:
 
 ```
- with\_query\_name \[ ( column_name \[, ...\] ) \] AS ( select | values )
+ with_query_name [ ( column_name [, ...] ) ] AS ( select | values )
  
-TABLE \[ ONLY \] table_name \[ * \]
+TABLE [ ONLY ] table_name [ * ]
 ```
 
 
@@ -57,7 +57,7 @@ TABLE \[ ONLY \] table_name \[ * \]
 ```
 SELECT statement
 FROM statement
-\[JOIN | INNER JOIN | LEFT JOIN | LEFT SEMI JOIN | LEFT OUTER JOIN | RIGHT JOIN | RIGHT OUTER JOIN | FULL JOIN | FULL OUTER JOIN\]
+[JOIN | INNER JOIN | LEFT JOIN | LEFT SEMI JOIN | LEFT OUTER JOIN | RIGHT JOIN | RIGHT OUTER JOIN | FULL JOIN | FULL OUTER JOIN]
 ON join condition
 ```
 
@@ -68,7 +68,7 @@ The `UNION`, `INTERSECT`, and `EXCEPT` clauses are supported to combine or exclu
 
 ```
 SELECT statement 1
-\[UNION | UNION ALL | UNION DISTINCT | INTERSECT | EXCEPT\]
+[UNION | UNION ALL | UNION DISTINCT | INTERSECT | EXCEPT]
 SELECT statement 2
 ```
 ## CREATE TABLE AS SELECT
@@ -125,7 +125,7 @@ Eg: EXECUTE  temp(10000, 10005);
  
 3. Deallocate Statement
 ```
-DEALLOCATE [PREAPRE ] <plan name> | ALL
+DEALLOCATE [PREPARE ] <plan name> | ALL
 Eg 1 : DEALLOCATE temp;
 Eg 2 : DEALLOCATE PREPARE ALL;
 ```
