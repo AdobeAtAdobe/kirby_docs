@@ -465,3 +465,17 @@ __XDM System:__ XDM System is the infrastructure, data semantics, and workflow i
 ## Y
 
 ## Z
+ and context of a decision activity. The decision event captures information about how the decision made, when it was occurring, what options were proposed (chosen) and what contextual state existed that either influenced the decision or could be observed during the decision process. The decision event also captures the proposition ID, a globally unique identifier that can be used to correlate the decision to other events. 
+
+<a name="XDM ExperienceEvent"></a>
+__XDM ExperienceEvent:__ An ExperienceEvent captures observations, including the point in time and identity of the subject involved. Experience Events are fact records of what occurred, representing what happened without aggregation or interpretation. They are critical for time-domain analytics as they allow for observation and analysis of changes that occur in a given window of time and the comparison between multiple windows of time to track trends. Experience Events can be either explicit (directly observable human actions) or implicit (raised without a direct human action).
+
+<a name="XDM Profile"></a>
+__XDM Profile:__ An XDM Profile forms a singular representation of the attributes and interests of both identified and partially-identified subjects. Less-identified profiles may contain only anonymous behavioral signals, such as browser cookies, while highly-identified profiles may contain detailed personal information such as name, date of birth, location, and email address. As a profile continues to grow, it becomes a robust repository of personal information, identification information, contact details, and communication preferences for an individual subject.
+ 
+<a name="XDM System"></a>
+__XDM System:__ XDM System is the infrastructure, data semantics, and workflow in Experience Platform that is powered by standard schemas.
+
+## Y
+
+## Z
