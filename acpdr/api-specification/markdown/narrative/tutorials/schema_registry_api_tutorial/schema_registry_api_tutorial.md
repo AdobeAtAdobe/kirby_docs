@@ -12,7 +12,7 @@ This tutorial uses the Schema Registry API to walk you through the steps to [com
 * [Define a data type](#create-a-data-type) for use in multiple schemas
 * [Use the data type](#use-data-type-in-schema) in your schema
 * [Define an Identity Descriptor](#define-identity-descriptor)
-* [Enable schema for use in Real-time Customer Profile](#enable-schema-for-use-in-real-time-customer-profile) and view a union schema
+* [Enable schema for use with Unified Profile Service](#enable-schema-for-use-in-unified-profile-service) and view a union schema
 
 If you would prefer to use the user interface in Experience Platform, the [Schema Editor Tutorial](../schema_editor_tutorial/schema_editor_tutorial.md) provides step-by-step instructions for performing similar actions in the schema editor.
 
@@ -20,33 +20,29 @@ If you would prefer to use the user interface in Experience Platform, the [Schem
 
 Before beginning this tutorial, first review the [Basics of schema composition](../../technical_overview/schema_registry/schema_composition/schema_composition.md) to learn more about schemas, including key principles and best practices in schema composition.
 
-Next, review the [Schema Registry Developer Guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md) as it includes important information that you need to know in order to successfully perform calls to the Schema Registry API. This includes your `{TENANT_ID}`, the concept of "containers", and the required headers for making requests (with special attention to the Accept header and its possible values). Ensure that you have reviewed this information in full before beginning this tutorial.
+You will then want to review the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md) as it includes important information that you will need to know in order to successfully perform calls to the Schema Registry API. This includes your `{TENANT_ID}`, the concept of "containers", and the required headers for making requests (with special attention to the Accept header and its possible values). Ensure that you have reviewed this information in full before beginning this tutorial.
 
 ## Tutorial
 
-This tutorial requires you to have first read the [Schema Registry Developer Guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md) and completed the [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) before you can begin.
+This tutorial demonstrates API calls using cURL commands. To follow along, you may wish to use [Postman](https://www.getpostman.com/), a free, third-party software that is helpful for visualizing API calls. You can download a [Postman collection](https://raw.githubusercontent.com/adobe/experience-platform-postman-samples/master/postman/schema_editor_tutorial/Schema%20Registry%20API%20Tutorial.postman_collection.json) and corresponding [Postman environment](https://raw.githubusercontent.com/adobe/experience-platform-postman-samples/master/postman/schema_editor_tutorial/Schema%20Registry%20API%20Tutorial.postman_environment.json) to begin using the Schema Registry API right now. Steps for importing environments and collections are available through the [Postman Learning Center](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/).
 
-The API calls shown in this tutorial are demonstrated using cURL commands. To follow along, you may wish to use [Postman](https://www.getpostman.com/), a free, third-party software that is helpful for visualizing API calls. You can download a [Postman collection](https://raw.githubusercontent.com/adobe/experience-platform-postman-samples/master/postman/schema_editor_tutorial/Schema%20Registry%20API%20Tutorial.postman_collection.json) and corresponding [Postman environment](https://raw.githubusercontent.com/adobe/experience-platform-postman-samples/master/postman/schema_editor_tutorial/Schema%20Registry%20API%20Tutorial.postman_environment.json) to begin using the Schema Registry API. Steps for importing environments and collections are available through the [Postman Learning Center](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/). 
-
-> **Note:** In order to successfully use the collection and environment you must first complete the [Authentication tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
-
-This tutorial walks through the steps of composing a Loyalty Members schema that describes data related to the members of a retail loyalty program. Before beginning, you may wish to preview the [complete Loyalty Members schema](#complete-loyalty-members-schema) in the [Appendix](#appendix).
+Throughout this tutorial, you will be composing a Loyalty Members schema that describes data related to the members of a retail loyalty program. Before beginning, you may wish to preview the [complete Loyalty Members schema](#complete-loyalty-members-schema) in the [Appendix](#appendix).
 
 ## Compose a schema with a standard class
 
-A schema can be thought of as the blueprint for the data you wish to ingest into Experience Platform. Each schema is composed of a class and zero or more mixins. In other words, you do not have to add a mixin in order to define a schema, but in most cases at least one mixin is used. 
+A schema can be thought of as the blueprint for the data you wish to ingest into Experience Platform. Each schema is composed of a class and zero or more mixins. In other words, you do not have to add a mixin in order to define a schema, but in most cases at least one mixin will be used. 
 
 ### Assign a class
 
 The schema composition process begins with the selection of a class. The class defines key behavioral aspects of the data (record vs time series), as well as the minimum fields that are required to describe the data that will be ingested.
 
-The schema you are making in this tutorial uses the XDM Profile class. XDM Profile is an standard class provided by Adobe for defining record behavior. More information on behavior can be found in [Basics of schema composition](../../technical_overview/schema_registry/schema_composition/schema_composition.md).
+For this tutorial, you will be using the XDM Profile class. XDM Profile is an standard class provided by Adobe for defining record behavior. More information on behavior can be found in [Basics of schema composition](../../technical_overview/schema_registry/schema_composition/schema_composition.md).
 
 To assign a class, an API call is made to create (POST) a new schema in the tenant container. This call includes the class the schema will implement. Each schema may only implement one class.
 
 #### API format
 
-```http
+```SHELL
 POST /tenant/schemas
 ```
 
@@ -75,7 +71,7 @@ curl -X POST \
 
 #### Response
 
-A successful request returns HTTP Response Status 201 (Created) with a response body that contains the details of the newly created schema, including the `$id`, `meta:altIt`, and `version`. These values are read-only and are assigned by the Schema Registry.
+You will receive an HTTP Response Status 201 (Created) and the response body will contain the details of the newly created schema, including the `$id`, `meta:altIt`, and `version`. These values are read-only and are assigned by the Schema Registry.
 
 ```JSON
 {
@@ -119,7 +115,7 @@ To view your newly created schema, perform a lookup (GET) request using the `met
 
 #### API format
 
-```http
+```SHELL
 GET /tenant/schemas/{schema meta:altId or URL encoded $id URI}
 ```
 
@@ -136,7 +132,7 @@ curl -X GET \
 
 #### Response 
 
-The response format depends on the Accept header sent with the request. Try experimenting with different Accept headers to see which one best meets your needs.
+The response format depends on the Accept header sent with the request. You may wish to try experimenting with different Accept headers to see which one best meets your needs.
 
 ```JSON
 {
@@ -184,15 +180,15 @@ Mixins define concepts, such as "name" or "address", that can be reused in any s
 
 #### API format
 
-```http
+```SHELL
 PATCH /tenant/schemas/{schema meta:altId or url encoded $id URI}
 ```
 
 #### Request
 
-This request updates (PATCH) the Loyalty Members schema to include the fields within the "profile-person-details" mixin. 
+This request will update (PATCH) the Loyalty Members schema to include the fields within the "profile-person-details" mixin. 
 
-By adding the "profile-person-details" mixin, the Loyalty Members schema now captures information about loyalty program members such as their first name, last name, and birthday.
+By adding the "profile-person-details" mixin, the Loyalty Members schema will now capture information about loyalty program members such as their first name, last name, and birthday.
 
 ```SHELL
 curl -X PATCH \
@@ -202,13 +198,14 @@ curl -X PATCH \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -d '[
-        { "op": "add", "path": "/allOf/-", "value":  {"$ref": "https://ns.adobe.com/xdm/context/profile-person-details"}}
-      ]'
+    { "op": "add", "path": "/meta:extends/-", "value":  "https://ns.adobe.com/xdm/context/profile-person-details"},
+    { "op": "add", "path": "/allOf/-", "value":  {"$ref": "https://ns.adobe.com/xdm/context/profile-person-details"}}
+]'
 ```
 
 #### Response
 
-The response shows the newly added mixin in the `meta:extends` array and contains a `$ref` to the mixin in the `allOf` attribute.
+The response will show the newly added mixin in the `meta:extends` array and contain a `$ref` to the mixin in the `allOf` attribute.
 
 ```JSON
 {
@@ -254,22 +251,22 @@ The response shows the newly added mixin in the `meta:extends` array and contain
 
 You can now add another standard mixin by repeating the steps using another mixin. 
 
-> **Note:** It is worthwhile to review all available mixins to familiarize yourself with the fields included in each. You can list (GET) all mixins available for use with a particular class by performing a request against each of the "global" and "tenant" containers, returning only those mixins where the "meta:intendedToExtend" field matches the class you're using. In this case, it is the XDM Profile class, so the XDM Profile `$id` is used: 
+> **Note:** You may find it helpful to review all available mixins to familiarize yourself with the fields included in each. You can list (GET) all mixins available for use with a particular class by performing a request against each of the "global" and "tenant" containers, returning only those mixins where the "meta:intendedToExtend" field matches the class you're using. In this case, it is the XDM Profile class, so the XDM Profile `$id` is used: 
 
-```http
+```SHELL
 GET /global/mixins?property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile
 GET /tenant/mixins?property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile
 ```
 
 #### API format
 
-```http
+```SHELL
 PATCH /tenant/schemas/{schema meta:altId or url encoded $id URI}
 ```
 
 #### Request
 
-This request updates (PATCH) the Loyalty Members schema to include the fields within the "profile-personal-details" mixin, adding "home address", "email address", and "home phone" fields to the schema.
+This request will update (PATCH) the Loyalty Members schema to include the fields within the "profile-personal-details" mixin in order to include "home address", "email address", and "home phone" information within the Loyalty Members schema.
 
 ```SHELL
 curl -X PATCH \
@@ -279,13 +276,14 @@ curl -X PATCH \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -d '[
-        { "op": "add", "path": "/allOf/-", "value":  {"$ref": "https://ns.adobe.com/xdm/context/profile-personal-details"}}
-      ]'  
+    { "op": "add", "path": "/meta:extends/-", "value":  "https://ns.adobe.com/xdm/context/profile-personal-details"},
+    { "op": "add", "path": "/allOf/-", "value":  {"$ref": "https://ns.adobe.com/xdm/context/profile-personal-details"}}
+]'
 ```
 
 #### Response
 
-The response shows the newly added mixin in the `meta:extends` array and contains a `$ref` to the mixin in the `allOf` attribute.
+The response will show the newly added mixin in the `meta:extends` array and contain a `$ref` to the mixin in the `allOf` attribute.
 
 The Loyalty Members schema should now contain three `$ref` values in the `allOf` array: "profile", "profile-person-details", and "profile-personal-details", as shown below.
 
@@ -345,13 +343,13 @@ Any custom properties must be nested under your `TENANT_ID` to avoid collisions 
 
 #### API format
 
-```http
+```SHELL
 POST /tenant/mixins
 ```
 
 #### Request
 
-This request creates a new mixin that has a "loyalty" object containing four loyalty program-specific fields: "loyaltyId", "loyaltyLevel", "loyaltyPoints", and "memberSince".
+This request will create a new mixin that has a "loyalty" object containing four loyalty program-specific fields: "loyaltyId", "loyaltyLevel", "loyaltyPoints", and "memberSince".
 
 ```SHELL
 curl -X POST\
@@ -411,7 +409,7 @@ curl -X POST\
 
 #### Response
 
-A successful request returns HTTP Response Status 201 (Created) with a response body containing the details of the newly created mixin, including the `$id`, `meta:altIt`, and `version`. These values are read-only and are assigned by the Schema Registry.
+You will receive an HTTP Response Status 201 (Created) and the response body will contain the details of the newly created mixin, including the `$id`, `meta:altIt`, and `version`. These values are read-only and are assigned by the Schema Registry.
 
 ```JSON
 {
@@ -494,13 +492,13 @@ You can now follow the same steps for [adding a standard mixin](#add-a-mixin) to
 
 #### API format
 
-```http
+```SHELL
 PATCH /tenant/schemas/{schema meta:altId or url encoded $id URI}
 ```
 
 #### Request
 
-This request updates (PATCH) the Loyalty Members schema to include the fields within the new "Loyalty Member Details" mixin. 
+This request will update (PATCH) the Loyalty Members schema to include the fields within the new "Loyalty Member Details" mixin. 
 
 ```SHELL
 curl -X PATCH \
@@ -510,8 +508,9 @@ curl -X PATCH \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -d '[
-        { "op": "add", "path": "/allOf/-", "value":  {"$ref": "https://ns.adobe.com/{TENANT_ID}/mixins/bb118e507bb848fd85df68fedea70c62"}}
-      ]'
+    { "op": "add", "path": "/meta:extends/-", "value":  "https://ns.adobe.com/{TENANT_ID}/mixins/bb118e507bb848fd85df68fedea70c62"},
+    { "op": "add", "path": "/allOf/-", "value":  {"$ref": "https://ns.adobe.com/{TENANT_ID}/mixins/bb118e507bb848fd85df68fedea70c62"}}
+]'
 ```
 
 #### Response
@@ -572,7 +571,7 @@ You can now perform a GET request to view the current schema and see how the add
 
 #### API format
 
-```http
+```SHELL
 GET /tenant/schemas/{schema meta:altId or URL encoded $id URI}
 ```
 
@@ -591,7 +590,7 @@ curl -X GET \
 
 By using the `application/vnd.adobe.xed-full+json; version=1` Accept header, you can see the full schema showing all of the properties. These properties are the fields contributed by the class and mixins that have been used to compose the schema. In this example response, individual property attributes have been minimized for space. You can view the full schema, including all properties and their attributes, in the [Appendix](#appendix) at the end of this document.
 
-Under `"properties"`, you can see the `_{TENANT_ID}` namespace that was created when you added the custom mixin. Within that namespace is the "loyalty" object and the fields that were defined when the mixin was created.
+Under "properties", you can see the "_{TENANT_ID}" namespace that was created when you added the custom mixin. Within that namespace is the "loyalty" object and the fields that were defined when the mixin was created.
 
 ```JSON
 {
@@ -689,7 +688,7 @@ In other words, data types allow for the consistent use of multi-field structure
 
 #### API format
 
-```http
+```SHELL
 POST /tenant/datatypes
 ```
 
@@ -745,7 +744,7 @@ curl -X POST \
 
 #### Response
 
-A successful request returns HTTP Response Status 201 (Created) with a response body containing the details of the newly created data type, including the `$id`, `meta:altIt`, and `version`. These values are read-only and are assigned by the Schema Registry.
+You will receive an HTTP Response Status 201 (Created) and the response body will contain the details of the newly created data type, including the `$id`, `meta:altIt`, and `version`. These values are read-only and are assigned by the Schema Registry.
 
 ```JSON
 {
@@ -807,7 +806,7 @@ A successful request returns HTTP Response Status 201 (Created) with a response 
 }
 ```
 
-You can perform a lookup (GET) request using the URL encoded `$id` URI to view the new data type directly. Be sure to include the `version` in your Accept header for a lookup request.
+You may wish to perform a lookup (GET) request using the URL encoded `$id` URI to view the new data type directly. Be sure to include the `version` in your Accept header for a lookup request.
 
 ### Use data type in schema
 
@@ -815,7 +814,7 @@ Now that the Loyalty Details data type has been created, you can update (PATCH) 
 
 #### API format
 
-```http
+```SHELL
 PATCH /tenant/mixins/{mixin meta:altId or URL encoded $id URI}
 ```
 
@@ -898,7 +897,7 @@ The response now includes a reference (`$ref`) to the data type in the "loyalty"
 }
 ```
 
-Performing a GET request to lookup the schema now shows the reference to the data type under "properties/_{TENANT_ID}", as seen here:
+Performing a GET request to lookup the schema now will show the reference to the data type under "properties/_{TENANT_ID}", as seen here:
 
 ```JSON
 "_{TENANT_ID}": {
@@ -944,19 +943,15 @@ Performing a GET request to lookup the schema now shows the reference to the dat
 
 ### Define Identity descriptor
 
-Schemas are used for ingesting data into Experience Platform. This data is ultimately used across multiple services to create a single, unified view of an individual. To help with this process, key fields can be marked as "Identity" and, upon data ingestion, the data in those fields is inserted into the "Identity Graph" for that individual. The graph data can then be accessed by [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md) and other Experience Platform services to provide a stitched together view of each individual customer.
+Schemas are used for ingesting data into Experience Platform. This data will ultimately be used across multiple services to create a single, unified view of an individual. To help with this process, key fields can be marked as "Identity" and, upon data ingestion, the data in those fields will be inserted into the "Identity Graph" for that individual. The graph data can then be accessed by [Unified Profile Service](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md) (UPS) and other Experience Platform services to provide a stitched together view of each individual customer.
 
-Fields that are commonly marked as "Identity" include: email address, phone number, [Experience Cloud ID (ECID)](https://marketing.adobe.com/resources/help/en_US/mcvid/), CRM ID, or other unique ID fields. 
+Fields that are commonly marked as "Identity" include: email address, phone number, [Experience Cloud ID (ECID)](https://marketing.adobe.com/resources/help/en_US/mcvid/), CRM ID, or other unique ID fields. You will want to consider any unique identifiers specific to your organization, as they may be good "Identity" fields as well.
 
-Consider any unique identifiers specific to your organization, as they may be good Identity fields as well.
-
-Identity descriptors signal that the "sourceProperty" of the "sourceSchema" is a unique identifier that should be considered an "Identity". 
-
-For more information on working with descriptors, see the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md).
+Identity descriptors signal that the "sourceProperty" of the "sourceSchema" is a unique identifier that should be considered an "Identity". For more information on working with descriptors, see the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md).
 
 #### API format
 
-```http
+```SHELL
 POST /tenant/descriptors
 ```
 
@@ -982,11 +977,11 @@ curl -X POST \
       }'
 ```
 
-> **Note:** You can list available "xdm:namespace" values, or create new ones, using the [Identity Namespace Service API](../../../../../../acpdr/swagger-specs/id-service-api.yaml). The value for "xdm:property" can be either "xdm:code" or "xdm:id", depending on the "xdm:namespace" used.
+> **Note:** You can list available "xdm:namespace" values, or create new ones, using the [Identity Namespace Service API](../../../../../../acpdr/swagger-specs/id-namespace-api.yaml). The value for "xdm:property" will be either "xdm:code" or "xdm:id", depending on the "xdm:namespace" used.
 
 #### Response
 
-A successful response returns HTTP Status 201 (Created) with a response body containing the details of the newly created descriptor, including its `@id`. The `@id` is a read-only field assigned by the Schema Registry and is used for referencing the descriptor in the API.
+You will receive an HTTP Status 201 (Created) and a response object containing the details of the newly created descriptor, including its `@id`. The `@id` is a read-only field assigned by the Schema Registry and used for referencing the descriptor in the API.
 
 ```JSON
 {
@@ -1002,9 +997,9 @@ A successful response returns HTTP Status 201 (Created) with a response body con
 }
 ```
 
-## Enable schema for use in Real-time Customer Profile
+## Enable schema for use in Unified Profile Service
 
-By adding the "union" tag to the `meta:immutableTags` attribute, you can enable the Loyalty Members schema for use by Real-time Customer Profile. 
+By adding the "union" tag to the `meta:immutableTags` attribute, you can enable the Loyalty Members schema for use by the Unified Profile Service (UPS). 
 
 For more information on working with union views, see the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md). 
 
@@ -1014,7 +1009,7 @@ In order for a schema to be included in the merged union view, the "union" tag m
 
 #### API format
 
-```http
+```SHELL
 PATCH /tenant/schemas/{meta:altId or the url encoded $id URI}
 ```
 
@@ -1087,68 +1082,62 @@ The response shows that the operation was performed successfully, and the schema
 }
 ```
 
-### List schemas in a union
+### Lookup a specific union
 
-You have now successfully added your schema to the XDM Profile union. In order to see a list of all schemas that are a part of the same union, you can perform a GET request using query parameters to filter the response. 
+You can now view the union for the Profile class to see the new Loyalty Members schema included.
 
-Using the `property` query parameter, you can specify that only schemas containing a `meta:immutableTags` field that have a `meta:class` equal to the `$id` of the XDM Profile class are returned.
+#### API format
 
-#### API Format
-
-```http
-GET /tenant/schemas?property=meta:immutableTags==union&property=meta:class=={CLASS_ID}
+```SHELL
+GET /tenant/unions/{meta:altId or the url encoded $id URI}
 ```
 
 #### Request
 
-The example request below returns all schemas that are part of the XDM Profile union.
-
 ```SHELL
 curl -X GET \
-  'https://platform.adobe.io/data/foundation/schemaregistry/tenant/schemas?property=meta:immutableTags==union&property=meta:class==https://ns.adobe.com/xdm/context/profile' \
-  -H 'Accept: application/vnd.adobe.xed-id+json' \
+  https://platform.adobe.io/data/foundation/schemaregistry/tenant/unions/https%3A%2F%2Fns.adobe.com%2Fxdm%2Fcontext%2Fprofile__union \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'Accept: application/vnd.adobe.xed+json; version=1' \
 ```
 
 #### Response
 
-The response is a filtered list of schemas, containing only those that satisfy both requirements. Remember that when using multiple query parameters, an AND relationship is assumed. The format of the list response depends on the Accept header sent in the request.
+The response object provides a union view of all schemas that implement the Profile class. You can see that the Loyalty Members schema (`https://ns.adobe.com/{TENANT_ID}/schemas/533ca5da28087c44344810891b0f03d9`) is now included in the `allOf` array.
 
 ```JSON
 {
-    "results": [
+    "type": "object",
+    "description": "Union view of all schemas that extend https://ns.adobe.com/xdm/context/profile",
+    "allOf": [
         {
-            "title": "Loyalty Members",
-            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/533ca5da28087c44344810891b0f03d9",
-            "meta:altId": "_{TENANT_ID}.schemas.533ca5da28087c44344810891b0f03d9",
-            "version": "1.4"
+            "$ref": "https://ns.adobe.com/{TENANT_ID}/schemas/b9605d1dfb2d2218fa2f815dc63cc4bf"
         },
         {
-            "title": "Schema 2",
-            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/e7297a6ddfc7812ab3a7b504a1ab98da",
-            "meta:altId": "_{TENANT_ID}.schemas.e7297a6ddfc7812ab3a7b504a1ab98da",
-            "version": "1.5"
-        },
-        {
-            "title": "Schema 3",
-            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/50f960bb810e99a21737254866a477bf",
-            "meta:altId": "_{TENANT_ID}.schemas.50f960bb810e99a21737254866a477bf",
-            "version": "1.2"
-        },
-        {
-            "title": "Schema 4",
-            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/dfebb19b93827b70bbad006137812537",
-            "meta:altId": "_{TENANT_ID}.schemas.dfebb19b93827b70bbad006137812537",
-            "version": "1.7"
+            "$ref": "https://ns.adobe.com/{TENANT_ID}/schemas/533ca5da28087c44344810891b0f03d9"
         }
     ],
-    "_links": {
-        "global_schemas": {
-            "href": "https://platform.adobe.io/data/foundation/schemaregistry/global/schemas?property=meta:immutableTags==union&property=meta:class==https://ns.adobe.com/xdm/context/profile"
-        }
-    }
+    "meta:extends": [
+        "https://ns.adobe.com/xdm/context/profile",
+        "https://ns.adobe.com/xdm/data/record",
+        "https://ns.adobe.com/xdm/context/identitymap",
+        "https://ns.adobe.com/xdm/common/extensible",
+        "https://ns.adobe.com/xdm/common/auditable",
+        "https://ns.adobe.com/xdm/context/profile-person-details",
+        "https://ns.adobe.com/{TENANT_ID}/mixins/477bb01d7125b015b4feba7bccc2e599",
+        "https://ns.adobe.com/xdm/context/profile-personal-details",
+        "https://ns.adobe.com/{TENANT_ID}/mixins/bb118e507bb848fd85df68fedea70c62"
+    ],
+    "title": "Union object for https://ns.adobe.com/xdm/context/profile",
+    "$id": "https://ns.adobe.com/xdm/context/profile__union",
+    "meta:containerId": "tenant",
+    "meta:class": "https://ns.adobe.com/xdm/context/profile",
+    "meta:altId": "_xdm.context.profile__union",
+    "version": "1.0",
+    "meta:resourceType": "unions",
+    "meta:registryMetadata": {}
 }
 ```
 
@@ -1158,7 +1147,7 @@ You have now successfully composed a schema using both standard mixins and a mix
 
 The full Loyalty Members schema, as created throughout this tutorial, is available in the Appendix that follows. As you look at the schema, you can see how the mixins contribute to the overall structure and what fields are available for data ingestion.
 
-Remember that this tutorial only includes one possible workflow and does not cover all of the possible calls that can be made to the Schema Registry API. For detailed examples of how to perform all operations (GET, POST, PUT, PATCH, and DELETE) in the registry, please refer to the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md) while working with the API.
+Remember that this tutorial only includes one possible workflow and does not cover all of the possible calls that can be made to the Schema Registry API. For detailed examples of how to perform all operations (GET, POST, PUT, PATCH, and DELETE) in the registry, please be sure to keep the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md) on-hand while working with the API.
 
 # Appendix
 
