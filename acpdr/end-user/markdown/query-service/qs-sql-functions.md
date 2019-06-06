@@ -14,45 +14,17 @@ The majority of the Spark SQL helpers are window functions that are updated with
 
 ### Sessionization
 
-When you are working with ExperienceEvent data from a website, mobile application, interactive voice response system, or any other customer interaction channel it helps if events can be grouped around a related period of activity. Typcially, the customer has a specific intent driving their activity like researching a product, paying a bill, checking account balance, filling out an application, etc and this grouping helps associate the events to uncover more context about the customer experience.
-
-Specification:
-
-Syntax: `SESS_TIMEOUT(timestamp, expirationInSeconds) OVER ([partition] [order] [frame])`
-
-| Parameter | Description | 
-| --- | --- |
-| timestamp | Timestamp field found in the dataset |
-| expirationInSeconds | Number of seconds needed between events to qualify the end of the current session and start of a new session |
-
-| Returned Object Parameters |  Description  | 
-| ---------------------- | ------------- |
-| `timestamp_diff`       | Time in seconds between current record and last record |
-| `num`                  | A unqiue session number, starting at 1, for the key defined in the PARTITION BY of the window function.   |
-| `is_new`               | A boolean used to identify if a record is the first of a session    |
-| `depth`                | Depth of the current record within the session  |
-
 Example:
 
 ```
-SELECT
-  session.timestamp_diff,
-  session.num,
-  session.is_new,
-  session.depth
-FROM (
-  SELECT 
-    endUserIds._experience.ecid.id, 
-    timestamp,
-    SESS_TIMEOUT(timestamp, 60 * 30)
-      OVER (PARTITION BY endUserIds._experience.mcid.id
-          ORDER BY timestamp
-          ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
-      AS session
-FROM experience_events 
-)
-ORDER BY endUserIds._experience.ecid.id, timestamp ASC
-LIMIT 10
+SELECT endUserIds._experience.mcid.id, timestamp,
+       SESS_TIMEOUT(ts, 60 * 30)
+         OVER (PARTITION BY endUserIds._experience.mcid.id
+               ORDER BY timestamp
+               ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
+         AS sess
+FROM experience_events
+ORDER BY endUserIds._experience.mcid.id, timestamp ASC
 ```
 
 ### Attribution
