@@ -4,5 +4,3 @@
 3. Query Service provides a way to connect external tools to issue queries. Here are instructions on connecting a tool such as a Business Intelligence tool or a command line interface. [Connect a tool.](qs-connect.md)
 4. Once you have an external tool connected, you can [write and run queries.](qs-queries.md) 
 
-t external tools to issue queries. Here are instructions on connecting a tool such as a Business Intelligence tool or a command line interface. [Connect a tool](qs-clients.md). 
-
