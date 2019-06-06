@@ -2,15 +2,17 @@
 
 This document contains information about new GDPR features, as well as significant bug fixes and enhancements.
 
-## 18 April, 2019
+## 14 February, 2019
 
-### API/UI Modifications
-* Default range for status table modified to 7 day lookback
-* Better internal exception handling
-* Improved performance by introducing caching for common internal calls with low data change rates
+### Enhancements
+* Enforce the `include` field in every POST submission
+* Enforce the `include` field in the JSON when you upload
+
+See [GDPR API](https://www.adobe.io/apis/experienceplatform/gdpr/api-reference.html).
 
 ### Bug fixes
-* Added missing logging information for filtered queries in the GET (all) API
+* Fixed an issue where customers could not load the GDPR UI.
+the GET (all) API
 
 
 ## 11 April, 2019
