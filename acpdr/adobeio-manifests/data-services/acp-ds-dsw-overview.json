@@ -8,7 +8,7 @@
 	"meta_description": "Manifest file for DSW Overview",
 	"publish_date": "19/09/2018",
 	"show_edit_github_banner": false,
-	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/staging/acpdr",
+	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
 	"pages": [
 		{
 			"pages": [
@@ -36,11 +36,6 @@
 			"path":"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_prebuilt_recipes/retail_sales_recipe/retail_sales_recipe.md",
 			"title":"Retail Sales Recipe",
 			"description":"The Retail Sales recipe enables you to predict sales forecast for all stores seeded for a certain time period. Learn more about this recipe to see if it is a right fit for your use case."
-		},
-		{
-			"path":"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_prebuilt_recipes/product_recommendations_recipe/product_recommendations_recipe.md",
-			"title":"Product Recommendations Recipe",
-			"description":"The Product Recommendations recipe enables you the ability to provide product recommendations that are tailored to your customer's interests. Learn more about this recipe to see how you can increase sales and improve your customers overall purchasing experience."
 		}
 	],
 	"app2app_map": {
