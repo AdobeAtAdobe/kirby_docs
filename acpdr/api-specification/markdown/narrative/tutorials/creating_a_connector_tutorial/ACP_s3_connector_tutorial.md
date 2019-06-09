@@ -1,6 +1,6 @@
-# Amazon S3 Connector for Adobe Experience Platform
+# Amazon S3 connector for Adobe Experience Platform
 
-The Amazon S3 Connector for Adobe Experience Platform provides an API and user interface to ingest data from your S3 data store onto Adobe Experience Platform. The S3 connector for Platform allows you to:
+The Amazon S3 connector for Adobe Experience Platform provides an API and user interface to ingest data from your S3 data store onto Adobe Experience Platform. The S3 connector for Platform allows you to:
 
 * Authenticate to your S3 account.
 * Select one or more datasets from a list of available datasets.
@@ -9,35 +9,32 @@ The Amazon S3 Connector for Adobe Experience Platform provides an API and user i
 * Set a schedule and frequency for ingesting data.
 * Save the S3 connector and modify it as needed.
 
-This article provides steps to set up and configure the Amazon S3 connector using API calls. For further details you can refer to - [Swagger Documentation](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/partner-connectors-api.yaml)
+This article provides a step-by-step tutorial for setting up and configuring the Amazon S3 connector using API calls. For a comprehensive list of all possible calls for the S3 connector, see the [partner connectors API reference](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/partner-connectors-api.yaml).
 
-## Setting up the Amazon S3 Connector
+## Authenticate and configure the Amazon S3 connector
 
-Set up an account to access APIs and provide credentials to create a connector:
+The following steps cover how to authenticate the data connection and generate a dataset with the S3 connector.
 
-
-### Set up an Adobe I/O account
-See [authenticating and accessing APIs](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to create an access token used to authenticate API calls from Adobe I/O.
+### Gather Experience Platform credentials
+ You will need an Adobe I/O account and the following credentials to authenticate API calls:
 
 * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
 * `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
 * `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
-### Set up Platform connection to Amazon S3
+If you do not know your authentication credentials, see the [authenticating and accessing APIs tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for more information.
 
-You will need the following credentials:
+### Gather Amazon S3 credentials
+
+You will need the following Amazon S3 credentials:
 * `{S3_ACCESS_KEY}`: Your Amazon S3 Access Key
 * `{S3_SECRET_KEY}`: Your Amazon S3 Secret Key
 
-After you are authorized to make API calls from the Adobe I/O Gateway and your Amazon S3 credentials, generate a dataset from the Amazon S3 objects.
+### Create account and connection
 
-### Setting up the Amazon S3 Connector
-Follow these steps to create a dataset from Amazon S3 and set up a connector to trigger ingestion.
+Use your `{S3_ACCESS_KEY}` and `{S3_SECRET_KEY}` to make an API request for an S3 account and connection entity:
 
-#### Create Account and Connection
-
-First, request an Amazon S3 account entity. You need your Amazon S3 Access Key and Amazon S3 Secret Key to request an account and connection entity. The response to this request includes the *Account ID* and *Connection ID* in Catalog.
-
+#### Request
 ```SHELL
 curl -X POST \
   https://platform.adobe.io/data/foundation/connectors/account \
@@ -54,13 +51,8 @@ curl -X POST \
 }'
 ```
 
-* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
-* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
-* `{S3_ACCESS_KEY}`: Your Amazon S3 Access Key
-* `{S3_SECRET_KEY}`: Your Amazon S3 Secret Key
+#### Response
 
-##### Response
 ```javascript
 {
     "accountId": {ACCOUNT_ID},
@@ -68,17 +60,14 @@ curl -X POST \
 }
 ```
 
-* `{ACCOUNT_ID}`: Account ID in catalog.
-* `{CONNECTION_ID}`: Connection ID in catalog.
+The response to this request includes the `{ACCOUNT_ID}` and `{CONNECTION_ID}` in Catalog. Copy down the these IDs for further use before moving on to the next step.
 
-Please note `{ACCOUNT_ID}` and `{CONNECTION_ID}` for further use.
+## Configure schedule for ingestion
+>**Note:** This step is optional. Make this call only if you want to set up scheduled ingestion or send an empty JSON object as the payload for a one-time run.
 
-#### Configure schedule for ingestion
-> **Note: ** (OPTIONAL - Make this call only if you want to do scheduled ingestion or send a blank JSON {} as the payload for a one-time run).
+You can schedule the `ingestStart` and `frequency` for data ingestion by making a PUT request to the /schedule endpoint. The request can provide an empty payload `{}` for one-time batch ingestion.
 
-`ingestStart` and `frequency` are provided through PUT /schedule API call. Empty payload `{}` can be provided for one time batch ingestion.
-
-##### Request
+#### Request
 
 ```SHELL
 curl -X PUT \
@@ -99,9 +88,10 @@ curl -X PUT \
   }
 }'
 ```
-`ingestStart` can only be current or future date and denotes the start time of ingestion. If no value is provided, is it taken as current UTC time.
-`frequency` denotes the pace of ingestion. Preceeding example ingests data every 15 minutes. Hourly, daily, monthly and yearly frequencies can be provided alongside custom schedules.
-Sample frequencies -
+`ingestStart` denotes the start time of ingestion, and can only be current or a future date. If no value is provided, is it taken as current UTC time.
+
+`frequency` denotes the pace of ingestion. The preceding example ingests data every 15 minutes. Hourly, daily, monthly and yearly frequencies can be provided alongside custom schedules. Some sample frequencies are listed below:
+
 ```javascript
 Daily
 "frequency": {
@@ -139,7 +129,7 @@ Yearly
 * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
 * `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
 
-##### Response
+#### Response
 
 ```javascript
 [
@@ -147,11 +137,8 @@ Yearly
 ]
 ```
 
-* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
-
-#### Create a Dataset
-The dataset defines the structure of the data the connector ingests. Once you create the account and connection, you can use the *Connection ID* to create a dataset. You can configure datasets, pipeline, and triggers with a successful POST call.
-Provide a unique and identifiable name for the dataset to identify it clearly when monitoring your data ingestion.
+## Create a dataset
+The dataset defines the structure of the data that the connector ingests. Once you create the account and connection, you can use the `{CONNECTION_ID}` to create a dataset. You can configure datasets, pipeline, and triggers with a successful POST call.
 
 The following are various properties of JSON for creating a dataset:
 
@@ -161,9 +148,11 @@ params/datasets/name  | Mandatory. Name of the dataset.
 params/datasets/tags/* | Provide tags associated with data. The connectors-objectName tag is mandatory to specify the path in Amazon S3 for ingestion. Rest of the tags are optional.
 params/datasets/schemaRef  | Mandatory. This contains information about the schema of files to be ingested. This is pointer to the schema in XDM schema registry.
 
+> **Important:** Ensure that you provide a unique and identifiable name for the dataset to identify it clearly when monitoring your data ingestion.
 
+Below is an example of a simple request payload:
 
-#### Simple payload example
+#### Request
 ```SHELL
 curl -X POST \
   https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/datasets \
@@ -206,9 +195,9 @@ For example - *s3://test-acpconnector-new/testConfigs/IncrementalTest/YearlyData
 * `{SCHEMA_ID}`: Unique id of schema in XDM Schema Registry.
 * `{SCHEMA_CONTENT_TYPE}`: Content-type and version of schema.
 
-> Note: The allowed values for `connectors-sourceFormat` tag are `parquet`, `json` and `csv`. If not specified, default value of `parquet` is considered.
+> **Note:** The allowed values for `connectors-sourceFormat` tag are `parquet`, `json` and `csv`. If not specified, default value of `parquet` is considered.
 
-##### Response
+#### Response
 
 ```javascript
 {
@@ -224,7 +213,8 @@ For example - *s3://test-acpconnector-new/testConfigs/IncrementalTest/YearlyData
 * `{DATASET_NAME}`: Name of the dataset you specified.
 * `{DATASET_ID}`: The ID of the dataset you created. Use `{DATASET_ID}` to make a request to Catalog to identify the DatasetView ID associated with this dataset.
 
-##### Recursive ingestion
+
+## Recursive ingestion
 To recursively copy files from nested folders, add the `connectors-recursiveIngestion` tag inside the tags.
 
 ```SHELL
@@ -236,37 +226,38 @@ Default value of `connectors-recursiveIngestion` tag is `false`. If this tag is 
 
 #### Incremental ingestion
 
-Incremental ingestion allows users to incrementally ingest data based on a preferred frequency and picked regularly from the specified location. A "backfill" date can be specified to start data ingestion from the specified date.
+Incremental ingestion allows you to incrementally ingest data based on a preferred frequency and picked regularly from the specified location. You can specify a "backfill" date to start data ingestion from the specified date.
 
-Schedule API is mandatory in this case.
+[Configuring a schedule for ingestion](#configure-schedule-for-ingestion) is mandatory in this case.
 
 Incremental ingestion is supported in two ways:
 
 * Generic format on `lastModifiedDate` of files.
 * Regular expression (`DateTime` format) based on incremental ingestion using `connectors-objectDateTimeRegex` and `isFolderRegex` tags in payload for POST dataset. It provides capabilities to pick files and folders pertaining to a regular expression (regex).
 
-##### Incremental Ingestion using `lastModifiedDate`
-Those files in the specified folder path `{S3_PATH}` are picked whose last modified date falls in between the trigger interval.
-To support incremental ingestion using `lastModifiedDate`, you will need to provide `saveStrategy` and `backfillDate` in the create /dataset call and ingestion frequency should be specified through the optional /schedule API.
+### Incremental ingestion using `lastModifiedDate`
+Files in the specified folder path `{S3_PATH}` are picked based on whether the file's last modified date falls within the trigger interval.
 
-##### Incremental Ingestion via Regular Expression
+To support incremental ingestion using `lastModifiedDate`, you will need to provide `saveStrategy` and `backfillDate` in a create (POST) /dataset call, and ingestion `frequency` should be specified through a PUT request to the /schedule endpoint.
+
+### Incremental ingestion using regular expressions
 Currently, incremental ingestion through regex is supported in two ways:
 
-* Providing regex for files.
-* Providing regex for folders.
+* Providing regex for files
+* Providing regex for folders
 
 Additionally, to leverage scheduled ingestion in a higher performing way, data should be partitioned with a time-based format either in folders or in files for each application.
 
-##### Providing regex on folder name
+**Providing regex on folder name**
 
-You can provide a `DateTime` format in the `connectors-objectDateTimeRegex` tag while posting a dataset, along with the `isFolderRegex` tag.
+You can provide a `DateTime` format in the `connectors-objectDateTimeRegex` tag when creating a dataset, along with the `isFolderRegex` tag.
 
 | Property Name                  | Description   |
 | ------------------------------ |-------------  |
-| `connectors-objectDateTimeRegex` | Provide supported DateTime formats in this tag. Similar Frequency (Daily for ddMMyyyy) should be set prior to post datasets.                                                              |
+| `connectors-objectDateTimeRegex` | Provide supported DateTime formats in this tag. Similar frequency (daily for ddMMyyyy) should be set prior to post datasets.                                                              |
 | `connectors-isFolderRegex`       | Boolean value to determine if regex should be implemented on folders. The default value is *false*. This can be used only if `connectors-objectDateTimeRegex` is also provided. |
 
-Below are a few examples using the regex tag and file format at the source.
+Below are a few examples that use the regex tag and file format at the source:
 
 | `connectors-objectDateTimeRegex` tag | Example file names |
 | -------------------------------------|--------------------|
@@ -281,7 +272,9 @@ Below are a few examples using the regex tag and file format at the source.
 | s3://{Bucket-Name}/FolderA/ | true | Regex will be applied on folder names. All folders inside FolderA having names with {objectDateTimeRegex} values will be picked. All files within the matching folders will be picked. |
 | s3://{Bucket-Name}/FolderA/FolderB | true | Regex will be applied on folder names. All folders inside FolderA having names starting with FolderB and containing regex {objectDateTimeRegex} values will be picked. Since path does not end with '/', it will be treated as folder regex prefix.  |
 
-Sample payload example for regex-based incremental ingestion on files
+#### Request
+
+Payload example for regex-based incremental ingestion on files:
 
 ```SHELL
 curl -X POST \
@@ -331,7 +324,7 @@ For example - *s3://test-acpconnector-new/testConfigs/IncrementalTest/YearlyData
 * `{SAVE_STRATEGY}`: Enum [overwrite/delta/append] to overwrite, change or add data. To specify how data will be ingested. Append and Delta options are sorted by time, requiring you to select a time-based property to order the data, such as `System Modstamp`, `Created Date`, or `Last Modified Date`.
 * `{BACKFILL_DATE}`: Past date to begin ingestion.
 
-#### Default settings
+### Default settings
 * For an incremental ingestion, you must clean up the data after every ingestion run.
 * Currently, the pipeline run is configured for a delay of 30 minutes between consecutive runs. In the future, this will be configurable.
 
@@ -341,7 +334,7 @@ In addition to the Create Account and Create Dataset APIs, you can use the follo
 
 **Object Listing API**
 
-Lists the content of an Amazon S3.
+Lists the contents of an Amazon S3.
 
 ```SHELL
 curl -X GET \
@@ -353,7 +346,8 @@ curl -X GET \
 ```
 
 **Preview Object API**
-Lists the content of the file.
+
+Lists the contents of the file.
 
 ```SHELL
 curl -X GET \
@@ -364,12 +358,13 @@ curl -X GET \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-> Note: `parquet`, `json` and `delimited` are supported values for `fileType` query parameter.
-> Note: `format` query parameter can take values `json` or `tabular` corresponding to heirarchical and flat output respectively. Currently supported only for parquet files.
+- The `fileType` query parameter supports `parquet`, `json` and `delimited` as values.
+
+- The `format` query parameter can take values `json` or `tabular`, corresponding to hierarchical and flat output respectively. Currently supported only for parquet files.
 
 **Schema Discovery API**
 
-Lists fields of a file.
+Lists the fields of a file.
 
 ```SHELL
 curl -X GET \
@@ -380,4 +375,4 @@ curl -X GET \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-> Note: `parquet`, `json` and `delimited` are supported values for `fileType` query parameter.
+- The `fileType` query parameter supports `parquet`, `json` and `delimited` as values.
