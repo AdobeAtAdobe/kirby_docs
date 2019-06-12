@@ -7202,7 +7202,7 @@ definitions:
             description: Unix timestamp indicating the end date of the data set.
       lastBatchId:
         type: string
-        description: ID of the last batch that modified the data set.
+        description: ID of the last batch that modified the data set (only modified by Siphon batch ingest).
       lastBatchStatus:
         type: string
         enum:
@@ -7215,13 +7215,13 @@ definitions:
           - aborted
           - abandoned
           - deleted
-        description: status of the last batch that modified the data set.
+        description: status of the last batch that modified the data set (only modified by Siphon batch ingest).
       lastSuccessfulBatch:
         type: string
-        description: The ID of the last successful batch that has modified this data set.
+        description: The ID of the last successful batch that has modified this data set (only modified by Siphon batch ingest).
       lastFailedBatch:
         type: string
-        description: The ID of the last failed batch that has modified this data set.
+        description: The ID of the last failed batch that has modified this data set (only modified by Siphon batch ingest).
       aspect:
         type: string
         description: >-
@@ -7745,7 +7745,7 @@ definitions:
             description: Unix timestamp indicating the end date of the data set.
       lastBatchId:
         type: string
-        description: ID of the last batch that modified the data set.
+        description: ID of the last batch that modified the data set (only modified by Siphon batch ingest).
       lastBatchStatus:
         type: string
         enum:
@@ -7758,13 +7758,13 @@ definitions:
           - aborted
           - abandoned
           - deleted
-        description: status of the last batch that modified the data set.
+        description: status of the last batch that modified the data set (only modified by Siphon batch ingest).
       lastSuccessfulBatch:
         type: string
-        description: The ID of the last successful batch that has modified this data set.
+        description: The ID of the last successful batch that has modified this data set (only modified by Siphon batch ingest).
       lastFailedBatch:
         type: string
-        description: The ID of the last failed batch that has modified this data set.
+        description: The ID of the last failed batch that has modified this data set (only modified by Siphon batch ingest).
       dule:
         type: object
         description: DULE labels.
