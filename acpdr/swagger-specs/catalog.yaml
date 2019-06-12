@@ -41,12 +41,6 @@ produces:
   - application/json
 paths:
   /accounts:
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
-      - $ref: '#/parameters/accept-encoding'
     get:
       tags:
         - Accounts
@@ -55,11 +49,16 @@ paths:
       produces:
         - application/json
       parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-id'
         - name: connector
           description: The ID for the Connector this Account params was created from.
           required: false
           type: string
           in: query
+        - $ref: '#/parameters/accept-encoding'
         - $ref: '#/parameters/description'
         - $ref: '#/parameters/version'
         - $ref: '#/parameters/created'
@@ -124,6 +123,11 @@ paths:
       produces:
         - application/json
       parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-id'
+        - $ref: '#/parameters/accept-encoding'
         - name: account
           description: Account to be posted.
           required: true
