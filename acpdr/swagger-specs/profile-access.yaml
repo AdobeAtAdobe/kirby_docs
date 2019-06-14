@@ -13,15 +13,16 @@ info:
     Notes:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core/ups/access
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
       * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
-    to obtain these, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
+      to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
 
   version: 18.8.1
   title: Unified Profile Access API
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 host: "platform.adobe.io"
 basePath: /data/core/ups/access
+
 tags:
   - name: Entities
 paths:
@@ -149,13 +150,30 @@ paths:
       produces:
         - application/json
       parameters:
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          x-example: "<replace with your ims org>"
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: "<replace with your api key>"
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
         - in: body
           name: body
           description: XDM Model objects to be put. Each object should be in Json format.
           required: true
           schema:
             $ref: '#/definitions/PostRequestBodyEntity'
-        - $ref: '#/parameters/json-header'
       responses:
         '200':
           description: XDM Model objects successfully returned.
@@ -196,6 +214,24 @@ paths:
       produces:
         - application/json
       parameters:
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          x-example: "<replace with your ims org>"
+        - name: x-api-key
+          in: header
+          description: API Key
+          required: true
+          type: string
+          x-example: "<replace with your api key>"
+        - name: Authorization
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          x-example: "Bearer <replace with your token>"
         - name: schema.name
           in: query
           description: XED Schema Class name of the schema
@@ -251,6 +287,7 @@ paths:
           description: Internal Server Error.
           schema:
             $ref: '#/definitions/ResponseInternalErrorContext'
+
 definitions:
   SchemaEntity:
     type: object
@@ -421,6 +458,7 @@ definitions:
         description: 'End time of Time range filter for experience events. Should be at millisecond granularity. Excluded. Default: To the end.'
         type: number
         example: 1539838510
+
 parameters:
   authorization:
     name: Authorization
