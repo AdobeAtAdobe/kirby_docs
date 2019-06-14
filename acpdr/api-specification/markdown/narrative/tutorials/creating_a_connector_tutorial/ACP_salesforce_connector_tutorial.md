@@ -1,5 +1,5 @@
 
-# Salesforce Connector for Adobe Experience Platform
+# Salesforce connector for Adobe Experience Platform
 
 The Salesforce Connector for Adobe Experience Platform provides an API and wizard to ingest your Salesforce CRM data onto Adobe Experience Platform. The Salesforce connector allows you to:
 
@@ -10,51 +10,42 @@ The Salesforce Connector for Adobe Experience Platform provides an API and wizar
 * Set a schedule and frequency for uploading data.
 * Save the Salesforce connector and modify it as needed.
 
-This article provides steps to set up and configure the Salesforce connector through API calls. For further details you can refer to - [Swagger Documentation](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/partner-connectors-api.yaml)
+This article provides a step-by-step tutorial on how to set up and configure the Azure Blob connector through API calls. For a comprehensive list of all API calls that are compatible with the connector, please refer to the [API reference documentation](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/partner-connectors-api.yaml).
 
-## Setting up the Salesforce Connector
-Set up an account to access APIs and provide credentials to create a connector:
+## Authenticate and configure the Salesforce connector
+The following steps cover how to authenticate the data connection with the Salesforce connector.
 
 <!---### Prerequisites
 * Register the schema of the incoming file.
 * Register the metadata associated with the file, such as *DataSetName*, *UserID*, *IMSOrg*, and *ConnectionParameters*.
 * Get the details of the file ingested using an API call to the Catalog API.--->
 
-### Set up an Adobe I/O account
-See [authenticating and accessing APIs](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to create an access token you can use to authenticate API calls from Adobe I/O.
-
-After you set up authorization for APIs, these values are returned:
+### Gather Experience Platform credentials
+You will need an Adobe I/O account and the following credentials to authenticate API calls:
 
 * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
 * `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
 * `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
+If you do not know your authentication credentials, see the [authenticating and accessing APIs tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for more information.
 
-### Set up Platform connection to Salesforce
+### Gather Salesforce credentials
 
 You will need the following credentials:
 
 * `{SALESFORCE_USER_NAME}`: Your Salesforce CRM user name
 * `{SALESFORCE_PASSWORD}`: Your Salesforce CRM password
-* `{SALESFORCE_SECURITY_TOKEN}`: Find your Salesforce security token by following these steps:
-  1. Go to `https://developer.salesforce.com/`.
+* `{SALESFORCE_SECURITY_TOKEN}`: Your Salesforce security token, found by following these steps:
+  1. Go to https://developer.salesforce.com/.
   2. Log in using your Salesforce CRM credentials.
-  3. Select the user and the *Settings* link.
-  4. In the *Personal Information* view, select *Reset My Security Token*. You will receive a new security token via email.
+  3. Select the user icon and click **Settings**.
+  4. In the *Personal Information* view, select **Reset My Security Token**. You will receive a new security token via email.
 
-After you set up authorization to make API calls from the Adobe I/O Gateway and enter your Salesforce credentials, you create a dataset from Salesforce objects.
+### Create account and connection
 
-## Setting up the Salesforce Connector
+Use your Salesforce credentials to request a Salesforce CRM account and connection entity:
 
-Follow these steps to create a dataset from Salesforce and set up a connector to trigger a one-time or scheduled ingestion. The example uses the Salesforce `Account` object.
-
-### Create a dataset from a Salesforce object
-
-#### Create Account and Connection
-
-First, request a Salesforce CRM account entity. You need your Salesforce User Name, Salesforce Password, and Salesforce Security Token to request a Salesforce CRM account and connection entity. The response to this request includes the Salesforce *Account ID* and *Connection ID* in Catalog.
-
-##### Request
+#### Request
 
 ```SHELL
 curl -X POST \
@@ -73,14 +64,8 @@ curl -X POST \
   }
 }'
 ```
-* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
-* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
-* `{SALESFORCE_USER_NAME}`: Your username for Salesforce CRM.
-* `{SALESFORCE_PASSWORD}`: Your password for Salesforce CRM.
-* `{SALESFORCE_SECURITY_TOKEN}`: Your security token for Salesforce CRM.
 
-##### Response
+#### Response
 ```javascript
 {
     "accountId": {ACCOUNT_ID},
@@ -91,21 +76,21 @@ curl -X POST \
 * `{ACCOUNT_ID}`: Account ID in catalog.
 * `{CONNECTION_ID}`: Connection ID in catalog.
 
-Please note `{ACCOUNT_ID}` and `{CONNECTION_ID}` for further use.
+Copy down your `{ACCOUNT_ID}` and `{CONNECTION_ID}` for further use before moving on to the next step.
 
-#### Create Custom Schema
+## Create custom schema
 
-For Ingesting data into the platform, data needs to be compliant with a schema. Data Connectors provide POST /schemas API to create custom schema of the data you wish to ingest. This custom schema is called Adhoc schema since it has the capability to not comply with any of the standard XDM models. Please refer to [XDM Schema Registry Guide](https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md) for details on XDM models.
+Data that is ingested into the platform needs to be complaint with a schema. You can create a custom schema for the data you wish to ingest by making a POST request to the /schemas endpoint in the Data Connectors namespace. This custom schema is called adhoc schema since it has the capability to not comply with any of the standard XDM models. Please refer to [XDM System overview](https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md) for details on XDM models.
 
-Creating custom schema is a two step process -
+Creating custom schema is a two-step process:
 
-1. Selecting desired table to ingest. You can use GET /objects call to list tables.
-2. Creating custom schema from table or fields of that table.
+1. Select a desired table to ingest. You can use the GET /objects endpoint to list tables.
+2. Create a custom schema from the table or fields of that table.
 
-##### Creating Custom Schema with table name
+### Create custom schema with table name
 Select a Salesforce table to ingest. Use the below request to get a list of tables from the Salesforce connection:
 
-##### Request
+#### Request
 
 ```SHELL
 curl -X GET \
@@ -116,12 +101,9 @@ curl -X GET \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
-* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
-* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
 * `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
 
-##### Response
+#### Response
 ```javascript
 [
     {
@@ -148,11 +130,9 @@ curl -X GET \
 ]
 ```
 
-> **Note: ** The return response is a partial list of all available Salesforce CRM objects. Use the `{OBJECT_ID}` as the `logicalName` of the objects.
+A successful response returns a partial list of all available Salesforce CRM objects. Find the object you wish to ingest, and copy the `logicalName` of the selected object to use as `{OBJECT_ID}` in the following request:
 
-Use the `logicalName` of the selected object as `{OBJECT_ID}` to create custom schema in the next step.
-Create custom schema from table name:
-##### Request
+#### Request
 
 ```SHELL
 curl -X POST \
@@ -165,13 +145,10 @@ curl -X POST \
    "objectName" : {OBJECT_ID}
 }'
 ```
-* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
-* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
-* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
-* `{OBJECT_ID}`: Logical Name of the Salesforce Object you want to ingest.
 
-##### Response
+* `{OBJECT_ID}`: The `logicalName` of the Salesforce object you want to ingest.
+
+#### Response
 ```javascript
 {
     "title": {SCHEMA_TITLE},
@@ -187,14 +164,12 @@ curl -X POST \
 * `{SCHEMA_CONTENT_TYPE}`: Content-type and version of schema.
 * `{NAMESPACE}`: Unique ID generated by XDM Schema Registry as namespace corresponding to adhoc schema.
 
-This `schemaRef` can be used further to create dataset entity through dataset API. [Creating a Dataset](#create_dataset)
+This `schemaRef` will be used to create a dataset entity later in this tutorial.
 
-##### Creating Custom Schema from fields
-To construct custom schema from a subset of fields of any object, use "fields" API to fetch fields and use the required subset of fields as payload in create schema.
+### Create custom schema from fields
+To construct a custom schema from a subset of fields of any object, start by using the /fields endpoint to fetch the object's fields:
 
-Get fields of object:
-
-##### Request
+#### Request
 ```SHELL
 curl -X GET \
   'https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/fields?object={OBJECT_ID}' \
@@ -203,13 +178,9 @@ curl -X GET \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
-* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
-* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
-* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
-* `{OBJECT_ID}`: Logical Name of the Salesforce Object whose fields are to be fetched.
+* `{OBJECT_ID}`: The `logicalName` of the Salesforce object you want to ingest.
 
-##### Response
+#### Response
 ```javascript
 [
   {
@@ -239,9 +210,9 @@ curl -X GET \
   }
 ]
 ```
-The required fields are passed to POST /schemas call for construction of custom adhoc schema:
+ Determine the required subset of fields for the schema, and pass them to the POST /schemas endpoint to create a new adhoc schema:
 
-##### Request
+#### Request
 
 ```SHELL
 curl -X POST \
@@ -280,12 +251,8 @@ curl -X POST \
   ]
 }'
 ```
-* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
-* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
-* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
 
-##### Response
+#### Response
 ```javascript
 {
     "title": {SCHEMA_TITLE},
@@ -301,12 +268,12 @@ curl -X POST \
 * `{SCHEMA_CONTENT_TYPE}`: Content-type and version of schema.
 * `{ADHOC_NAMESPACE}`: Unique ID generated by XDM Schema Registry as namespace of adhoc schema.
 
-This `schemaRef` is used in the next step to create dataset entity through dataset API. [Creating a Dataset](#create_dataset)
+This `schemaRef` will be used to create a dataset entity later in this tutorial.
 
-#### Configure schedule for ingestion
-Scheduling ingestion is mandatory for relational connectors before posting dataset. `ingestStart` and `frequency` are provided through PUT /schedule API call. Empty payload `{}` can be provided for one time ingestion.
+### Configure schedule for ingestion
+Scheduling ingestion is mandatory for relational connectors before creating a dataset. You can schedule the `ingestStart` and `frequency` for data ingestion by making a call to the PUT /schedule endpoint:
 
-##### Request
+#### Request
 
 ```SHELL
 curl -X PUT \
@@ -327,9 +294,10 @@ curl -X PUT \
   }
 }'
 ```
-`ingestStart` can only be current or future date and denotes the start time of ingestion. If no value is provided, is it taken as current UTC time.
-`frequency` denotes the pace of ingestion. Preceeding example ingests data every 15 minutes. Hourly, daily, monthly and yearly frequencies can be provided alongside custom schedules.
-For example -
+`ingestStart` denotes the start time of ingestion, and can only be current or a future date. If no value is provided, is it taken as current UTC time.
+
+`frequency` denotes the pace of ingestion. The preceding example ingests data every 15 minutes. Hourly, daily, monthly and yearly frequencies can be provided alongside custom schedules. Some sample frequencies are listed below:
+
 ```javascript
 Daily
 "frequency": {
@@ -362,23 +330,17 @@ Yearly
   }
 ```
 
-* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
-* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
-* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
-
-##### Response
+#### Response
 ```javascript
 [
     "@/connections/{CONNECTION_ID}"
 ]
 ```
 
-#### <a name="create_dataset">Create a Dataset</a>
-The dataset defines the structure of the data the connector ingests. Once you create the account and connection, you can use the *Connection ID* to create a dataset. You can configure Platform datasets, pipeline, and triggers with a successful POST call.
-Provide a unique and identifiable name for the dataset to identify it clearly when monitoring your data ingestion.
+## Create a dataset
+The dataset defines the structure of the data that the connector ingests. Once you create the account and connection, you can use the `{CONNECTION_ID}` to create a dataset. You can configure datasets, pipeline, and triggers with a successful POST call.
 
-##### Request
+#### Request
 
 ```SHELL
 curl -X POST \
@@ -429,7 +391,9 @@ curl -X POST \
 * `{BACKFILL_DATE}`: Past date to begin ingestion.
 * `{FIELD_SCHEMA_PATH}`: Path of date-time field in schema.
 
-##### Response
+> **Important:** Ensure that you provide a unique and identifiable name for the dataset to identify it clearly when monitoring your data ingestion.
+
+#### Response
 
 ```javascript
 {
