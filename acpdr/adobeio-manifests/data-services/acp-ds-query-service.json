@@ -104,12 +104,7 @@
           "pages": [],
           "path": "acpdr/end-user/markdown/query-service/qs-sql-functions.md",
           "title": "ADF functions"
-			},
-		{
-		  "pages": [],
-		  "path": "acpdr/end-user/markdown/query-service/qs-sql-spark-functions.md",
-		  "title": "Built-in Spark Functions"
-			},
+		    },
         {
           "pages": [],
           "path": "acpdr/end-user/markdown/query-service/qs-sql-metadata.md",
