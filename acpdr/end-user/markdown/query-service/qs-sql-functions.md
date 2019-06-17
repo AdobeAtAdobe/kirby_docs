@@ -1,16 +1,22 @@
-# ADF functions
+# Adobe-Defined Functions
 
-The Spark SQL helpers provide Spark SQL user-defined functions to encapsulate the Analytics business logic like Sessionization and Attribution.
-
-
+Adobe-defined functions (ADFs) are pre-built functions in Query Service to help perform common business logic on ExperienceEvent data. These include functions for Sessionization and Attribution like those found in Adobe Analytics.
 
 ## Window functions
 
 The majority of the business logic requires gathering the touchpoints for a customer and ordering them by time. This support is provided by Spark SQL in the form of window functions. Window functions are part of standard SQL and are supported by many other SQL engines.
 
-A window function updates an aggregation and provides every row in your ordered subset or rows. The most basic aggregation function is `SUM()`. `SUM()` takes your rows and gives you one total. If you instead apply `SUM()` to a window, turning it into a window function, you receive a cumulative sum with each row.
+A window function updates an aggregation and returns a single item for each row in your ordered subset. The most basic aggregation function is `SUM()`. `SUM()` takes your rows and gives you one total. If you instead apply `SUM()` to a window, turning it into a window function, you receive a cumulative sum with each row.
 
 The majority of the Spark SQL helpers are window functions that are updated with each row in your window, with the state of that row added.
+
+Syntax: `OVER ([partition] [order] [frame])`
+
+| Parameter | Description | 
+| --- | --- |
+| [partition] | A subgroup of the rows based on a column or available field. Example, 'PARTITION BY endUserIds._experience.mcid.id' |
+| [order] | A column or available field used to order the subset or rows. Example, 'ORDER BY timestamp' |
+| [frame] | A subgroup of the rows in a partition. Example, 'ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW' |
 
 ### Sessionization
 
@@ -167,7 +173,7 @@ Understanding how customers navigate within an experience is important. It can b
 
 **Previous touch**
 
-Determines the previous value of a particular field within the window. Notice in the example that the WINDOW Function is configured with a frame of `ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW` setting the ADF to look at the current row and all before it.
+Determines the previous value of a particular field a defined number of steps away within the window. Notice in the example that the WINDOW Function is configured with a frame of `ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW` setting the ADF to look at the current row and all before it.
 
 Syntax: `PREVIOUS(key, [shift, [ignoreNulls]]) OVER ([partition] [order] [frame])`
 
@@ -211,7 +217,7 @@ ORDER BY endUserIds._experience.mcid.id, _experience.analytics.session.num, time
 
 **Next touch**
 
-Determines the next value of a particular field within the window. Notice in the example that the WINDOW Function is configured with a frame of `ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING` setting the ADF to look at the current row and all after it.
+Determines the next value of a particular field a defined number of steps away within the window. Notice in the example that the WINDOW Function is configured with a frame of `ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING` setting the ADF to look at the current row and all after it.
 
 Syntax: `NEXT(key, [shift, [ignoreNulls]]) OVER ([partition] [order] [frame])`
 
@@ -256,40 +262,108 @@ LIMIT 10
 
 ### Time-between
 
+Time-between allows you to explore latent customer behavior within a period before or after an event occurred. Look at the events within 7 days after a campaign or other type of event across all your customers.
+
 **Time-between previous match**
 
 Provides a new dimension, which measures the time that has elapsed since a particular incident.
 
-Syntax: `TIME_BETWEEN_PREVIOUS_MATCH(time, eventDefintion, [timeUnit]) OVER ([partition] [order] [frame])`
+Syntax: `TIME_BETWEEN_PREVIOUS_MATCH(timestamp, eventDefintion, [timeUnit]) OVER ([partition] [order] [frame])`
+
+| Parameter | Description | 
+| --- | --- |
+| `timestamp` | Timestamp field found in the dataset populated on all events |
+| `eventDefintion` | Expression to qualify the previous event |
+| `timeUnit` | Unit of output: days, hours, minutes, and seconds. Default is seconds.  |
+
+Output: Returns a number representing the unit of time since the previous matching event was seen or remains null if no matching event was found.
 
 Example:
 
 ```
-SELECT endUserIds._experience.mcid.id, _experience.analytics.session.num, timestamp, web.webPageDetails.name
-    TIME_BETWEEN_PREVIOUS_MATCH(ts, web.webPageDetails.name='registration complete', 'minutes')
-      OVER(PARTITION BY endUserIds._experience.mcid.id, _experience.analytics.session.num
-           ORDER BY timestamp
-           ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
-      AS time_between_previous_match
+SELECT 
+  page_name,
+  SUM (time_between_previous_match) / COUNT(page_name) as average_minutes_since_registration
+FROM
+(
+SELECT 
+  endUserIds._experience.mcid.id as id, 
+  timestamp, web.webPageDetails.name as page_name, 
+  TIME_BETWEEN_PREVIOUS_MATCH(timestamp, web.webPageDetails.name='Account Registration|Confirmation', 'minutes')
+    OVER(PARTITION BY endUserIds._experience.mcid.id
+       ORDER BY timestamp
+       ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
+    AS time_between_previous_match
 FROM experience_events
-ORDER BY endUserIds._experience.mcid.id, _experience.analytics.session.num, timestamp ASC
+)
+WHERE time_between_previous_match IS NOT NULL
+GROUP BY page_name
+ORDER BY average_minutes_since_registration
+LIMIT 10
+
+             page_name             | average_minutes_since_registration 
+-----------------------------------+------------------------------------
+                                   |                                   
+ Account Registration|Confirmation |                                0.0
+ Seasonal                          |                   5.47029702970297
+ Equipment                         |                  6.532110091743119
+ Women                             |                  7.287081339712919
+ Men                               |                  7.640918580375783
+ Product List                      |                  9.387459807073954
+ Unlimited Blog|February           |                  9.954545454545455
+ Product Details|Buffalo           |                 13.304347826086957
+ Unlimited Blog|June               |                  770.4285714285714
+(10 rows)
 ```
 
 **Time-between next match**
 
 Provides a new dimension, that measures the time before which a particular event occured.
 
-Syntax: `TIME_BETWEEN_NEXT_MATCH(time, eventDefintion, [timeUnit]) OVER ([partition] [order] [frame])`
+Syntax: `TIME_BETWEEN_NEXT_MATCH(timestamp, eventDefintion, [timeUnit]) OVER ([partition] [order] [frame])`
+
+| Parameter | Description | 
+| --- | --- |
+| `timestamp` | Timestamp field found in the dataset populated on all events |
+| `eventDefintion` | Expression to qualify the next event |
+| `timeUnit` | Unit of output: days, hours, minutes, and seconds. Default is seconds.  |
+
+Output: Returns a negative number representing the unit of time behind the next matching event or remains null if a matching event was not found.
 
 Example:
 
 ```
-SELECT endUserIds._experience.mcid.id, _experience.analytics.session.num, timestamp, web.webPageDetails.name
-    TIME_BETWEEN_NEXT_MATCH(ts, web.webPageDetails.name='registration complete', 'hours')
-      OVER(PARTITION BY endUserIds._experience.mcid.id, _experience.analytics.session.num
-           ORDER BY timestamp
-           ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING)
-      AS time_between_next_match
+SELECT 
+  page_name,
+  SUM (time_between_next_match) / COUNT(page_name) as average_minutes_until_order_confirmation
+FROM
+(
+SELECT 
+  endUserIds._experience.mcid.id as id, 
+  timestamp, web.webPageDetails.name as page_name, 
+  TIME_BETWEEN_NEXT_MATCH(timestamp, web.webPageDetails.name='Shopping Cart|Order Confirmation', 'minutes')
+    OVER(PARTITION BY endUserIds._experience.mcid.id
+       ORDER BY timestamp
+       ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING)
+    AS time_between_next_match
 FROM experience_events
-ORDER BY endUserIds._experience.mcid.id, _experience.analytics.session.num, timestamp ASC
+)
+WHERE time_between_next_match IS NOT NULL
+GROUP BY page_name
+ORDER BY average_minutes_until_order_confirmation DESC
+LIMIT 10
+
+             page_name             | average_minutes_until_order_confirmation 
+-----------------------------------+------------------------------------------
+ Shopping Cart|Order Confirmation  |                                      0.0
+ Men                               |                       -9.465295629820051
+ Equipment                         |                       -9.682098765432098
+ Product List                      |                       -9.690661478599221
+ Women                             |                       -9.759459459459459
+ Seasonal                          |                                  -10.295
+ Shopping Cart|Order Review        |                      -366.33567364956144
+ Unlimited Blog|February           |                       -615.0327868852459
+ Shopping Cart|Billing Information |                       -775.6200495367711
+ Product Details|Buffalo           |                      -1274.9571428571428
+(10 rows)
 ```
