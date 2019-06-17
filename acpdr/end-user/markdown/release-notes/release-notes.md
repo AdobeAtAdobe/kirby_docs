@@ -310,25 +310,37 @@ For product documentation, see [Developing ETL Integrations for Adobe Experience
 
 ## Experience Data Model (XDM) and XDM System
 
+Standardization and interoperability are key concepts behind Experience Platform. Experience Data Model (XDM), driven by Adobe, is an effort to standardize customer experience data and define schemas for customer experience management.
+
+XDM is a publicly documented specification designed to improve the power of digital experiences. It provides common structures and definitions for any application to communicate with services on Adobe Experience Platform. By adhering to XDM standards, all customer experience data can be incorporated into a common representation delivering insights in a faster, more integrated way. You can gain valuable insights from customer actions, define customer audiences through segments, and use customer attributes for personalization purposes.
+
+XDM is the mechanism that allows Experience Cloud, powered by Adobe Experience Platform, to deliver the right message to the right person, on the right channel, at exactly the right moment.
+
+The methodology on which Experience Platform is built, XDM System operationalizes Experience Data Model schemas for use by Experience Platform components.
+
 **New features**
 
 | Feature    | Description  |
-| -----------| ---------- |
-| Feature A  | Text |
-| Feature B  | Text |
-| Feature C  | Text |
+| ---------- | ------------ |
+| JSON Schema constraints  | The following datatypes now have additional options in the user interface to define constraints: <ul><li>`string` - min/max length, pattern, default value, formats (as defined in [JSON Schema draft-6](https://tools.ietf.org/html/draft-wright-json-schema-01))</li><li>`double` - min/max, default value</li></ul> |
+| Custom `$id`  | You can now provide your own `$id` value when creating resources in POST requests. |
+| Schema Registry performance improvements  | Optimized union schema generation, and enhanced schema caching to greatly improve API response times. |
 
 **Fixes**
 
-* Fix
-* Fix
-* Fix
-* Fix
+* Moved the identityMap field out of context/profile and into its own mixin to make defining identities more intuitive.
+* Patched all existing schemas based on context/profile with context/identitymap.
+* Fixed error message when no version is supplied.
+* Fixed bug where Schema Registry was giving random responses for profile union schema calls.
+* Fixed bug where union schemas were not displaying the correct fields in Schema Registry.
+* Fixed bug where identity descriptors were occasionally not able to be created with valid namespaces.
+* Fixed dereference issue if an object uses `properties` instead of `allOf`.
 
 **Known issues**
 
-* Issue
-* Issue
+* Cannot extend a Platform-supplied mixin by adding a field.
+* Descriptors are not deleted when a mixin is removed from the schema composition.
+* Unable to create an enum field with no labels.
 
 To learn more about working with XDM using the Schema Registry API and Schema Editor, please read the [XDM System documentation](https://www.adobe.io/apis/experienceplatform/home/xdm.html).
 
