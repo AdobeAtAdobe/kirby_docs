@@ -7,16 +7,16 @@ Streaming Ingestion APIs allow client and server-side devices to send data to Ad
 Didn't find what you are looking for? Check out the [Trouble Shooting Guide][Trouble Shooting Guide] for more help. --->
 
 This document covers the following questions: 
-- [Can I send data in an authenticated way?](#can-I-send-data-in-an-authenticated-way)
+- [Can I send data in an authenticated way?](#can-i-send-data-in-an-authenticated-way)
 - [What is the latency for Real-Time Customer Profile to see the messages I'm sending using Streaming Ingestion?](#what-is-the-latency-for-real-time-customer-profile-to-see-the-messages-im-sending-using-streaming-ingestion)
-- [How do I know that the payload I'm sending is formatted properly?](#how-do-I-know-that-the-payload-im-sending-is-formatted-properly)
-- [How do I know if the data I'm sending is being received?](#how-do-I-know-if-the-data-im-sending-is-being-received)
-- [Is there a way to know if the JSON payload is valid before sending it to Adobe?](#is-there-a-way-to-know-if-the-JSON-payload-is-valid-before-sending-it-to-Adobe)
+- [How do I know that the payload I'm sending is formatted properly?](#how-do-i-know-that-the-payload-im-sending-is-formatted-properly)
+- [How do I know if the data I'm sending is being received?](#how-do-i-know-if-the-data-im-sending-is-being-received)
+- [Is there a way to know if the JSON payload is valid before sending it to Adobe?](#is-there-a-way-to-know-if-the-json-payload-is-valid-before-sending-it-to-adobe)
 - [Why is my streaming data not available in Experience Data Lake?](#why-is-my-streaming-data-not-available-in-experience-data-lake)
-- [How do I parse the response returned for the HTTP request?](#how-do-I-parse-the-response-returned-for-the-HTTP-request)
+- [How do I parse the response returned for the HTTP request?](#how-do-i-parse-the-response-returned-for-the-http-request)
 - [Why are my sent messages not being received by Real-time Customer Profile? ](#why-are-my-sent-messages-not-being-received-by-real-time-customer-profile)
 - [What happens when synchronous validation is requested on an edge that does not support it?](#what-happens-when-synchronous-validation-is-requested-on-an-edge-that-does-not-support-it)
-<!-- - [Can I include multiple messages in the same HTTP request?](#can-I-include-multiple-messages-in-the-same-HTTP-request?) -->
+<!-- - [Can I include multiple messages in the same HTTP request?](#can-i-include-multiple-messages-in-the-same-http-request?) -->
 
 ## Can I send data in an authenticated way?
 Yes, Adobe Experience Platform supports secured data collection. For more information on how to send authenticated data to Platform, please see the [Authenticated Data Collection][Authenticated Data Collection] documentation.
