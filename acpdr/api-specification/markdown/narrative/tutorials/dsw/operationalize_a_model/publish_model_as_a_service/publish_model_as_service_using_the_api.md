@@ -3,12 +3,12 @@
 - [Prerequisite](#prerequisite)
 - [Key Terms](#key-terms)
 - [API Workflow](#api-workflow)
-  - [Creating a ML Service with an existing training Experiment Run and scheduled scoring](#Creating-a-ML-Service-with-an-existing-training-Experiment-Run-and-scheduled-scoring)
-  - [Creating a ML Service with an existing ML Instance](#Creating-a-ML-Service-from-an-existing-ML-Instance)
-    - [ML Service with scheduled Experiment for scoring](#ML-Service-with-scheduled-Experiment-for-scoring)
-    - [ML Service with scheduled Experiments for training and scoring](#ML-Service-with-scheduled-Experiments-for-training-and-scoring)
-  - [Retrieving ML Services](#Retrieving-ML-Services)
-  - [Schedule training or scoring](#Schedule-training-or-scoring)
+- [Creating a ML Service with an existing training Experiment Run and scheduled scoring](#creating-a-ml-service-with-an-existing-training-experiment-run-and-scheduled-scoring)
+- [Creating a ML Service from an existing ML Instance](#creating-a-ml-service-from-an-existing-ml-instance)
+    - [ML Service with scheduled Experiment for scoring](#ml-service-with-scheduled-experiment-for-scoring)
+    - [ML Service with scheduled Experiments for training and scoring](#ml-service-with-scheduled-experiments-for-training-and-scoring)
+- [Retrieving ML Services](#retrieving-ml-services)
+- [Schedule training or scoring](#schedule-training-or-scoring)
 
 ## Prerequisite
 - Follow this [Tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
@@ -39,12 +39,12 @@ Term | Definition
 
 This tutorial will go over creating, retrieving, and updating a ML Service.
 
-* [Creating a ML Service with an existing training Experiment Run and scheduled scoring](#Creating-a-ML-Service-with-an-existing-training-Experiment-Run-and-scheduled-scoring)
-* [Creating a ML Service from an existing ML Instance](#Creating-a-ML-Service-from-an-existing-ML-Instance)
-  * [ML Service with scheduled Experiment for scoring](#ML-Service-with-scheduled-Experiment-for-scoring)
-  * [ML Service with scheduled Experiments for training and scoring](#ML-Service-with-scheduled-Experiments-for-training-and-scoring)
-* [Retrieving ML Services](#Retrieving-ML-Services)
-* [Schedule training or scoring](#Schedule-training-or-scoring)
+- [Creating a ML Service with an existing training Experiment Run and scheduled scoring](#creating-a-ml-service-with-an-existing-training-experiment-run-and-scheduled-scoring)
+- [Creating a ML Service from an existing ML Instance](#creating-a-ml-service-from-an-existing-ml-instance)
+    - [ML Service with scheduled Experiment for scoring](#ml-service-with-scheduled-experiment-for-scoring)
+    - [ML Service with scheduled Experiments for training and scoring](#ml-service-with-scheduled-experiments-for-training-and-scoring)
+- [Retrieving ML Services](#retrieving-ml-services)
+- [Schedule training or scoring](#schedule-training-or-scoring)
 
 ## Creating a ML Service with an existing training Experiment Run and scheduled scoring
 
