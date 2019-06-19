@@ -272,22 +272,34 @@ For product documentation, see [Developing ETL Integrations for Adobe Experience
 
 ## Data Science Workspace
 
-(Description for initial release)
+Driven by machine learning and data science, Adobe Experience Platform Data Science Workspace enables you to better understand your business data and deliver customer experiences at scale.
+
+Data Science Workspace is designed with simplicity, reusability, and scalability in mind. It provides the right tools in common environments for data scientists to create, modify, and reuse machine learning models to analyze, understand, engineer, and predict data.
 
 **Key features**
 
 | Feature    | Description  |
 | -----------| ---------- |
-| Feature A  | Text |
-| Feature B  | Text |
-| Feature C  | Text |
-
-(Link to documentation)
+| JupyterLab | Open-source web-based interface to utilize Jupyter Notebooks, enabling users to create notebook documents containing live code, algorithms, visualizations, and narrative text |
+| Data Exploration | Notebook interface to read, explore, and write data from and to Experience Platform |
+| Launcher Notebooks for XDM data discovery | Quick start Jupyter Notebook templates with samples to access XDM Events, XDM Aggregators, and XDM Queries in JupyterLab |
+| Query Service Integration | Ability to execute SQL queries in Jupyter Notebooks |
+| Mountable File System | Support for accessing local files in JupyterLab, including support for Git version control |
+| User Configurable Memory | Ability to configure maximum allocable memory per JupyterLab user |
+| Feature Pipelines | Support and ability to extract and transform data features from raw data schemas into feature schemas at scale for Model development |
+| Model Authoring | Create and define machine learning models using Jupyter Notebooks, or import your own into Data Science Workspace |
+| Model Evaluation | Regression and classification model evaluation support in Python, PySpark, R, and Scala |
+| Model Scoring | Generate insights using Models in Data Science Workspace |
+| Scheduling Support | Provides the ability to automate Model training and scoring, as well as scheduling Feature Pipelines with user defined schedules. Scheduling supported only for API, UI support is expected in next release |
+| Service Gallery | API and UI support to publish a Model as an accessible service |
+| First Time User Experience | Sample workflows designed for a guided user experience, including a new Data Science Workspace overview providing a quick start and walk through for new users |
+| User Enablement | Extensive library of tutorials with 12+ topics available, structured into high level categories to mirror the Data Science Workspace life-cycle and journey |
 
 **Known issues**
 
-* Issue
-* Issue
+None
+
+For more information, visit the [Data Science Workspace Overview](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html) or refer to the [Data Science Workspace Tutorials](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials.html).
 
 ## Decisioning Service
 
