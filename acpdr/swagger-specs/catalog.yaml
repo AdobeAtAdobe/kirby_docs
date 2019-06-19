@@ -8197,6 +8197,12 @@ definitions:
               Filter by the fully qualified base path for all DataSetFiles associated with this view.
               For views cached in a database (HBase or Cassandra), supply a templatized DSN.
               Its value is same as the basePath field.
+          adlsType:
+            description: ADLS generation type 1 or 2.
+            readOnly: true
+            enum:
+              - GEN1
+              - GEN2
           credentials:
             type: string
             description: >-
