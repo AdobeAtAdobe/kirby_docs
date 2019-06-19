@@ -571,7 +571,7 @@ An example of a successful response can be seen below. As you can see, this is t
 
 ---
 
-- Try making more calls with different values for ** work email** to create additional XDM profile records, and see if you can read them back
+- Try making more calls with different values for work email to create additional XDM profile records, and see if you can read them back
 - Also try changing other attributes like birthYear, gender, or name for a given Profile, and retrieve their updated values.
 
 ---
@@ -638,7 +638,7 @@ Where:
 - `{SCHEMA_DESCRIPTION}`: A meaningful description for the schema you're creating.
 - `meta:immutableTags`: In this example, the `union` tag is used to persist your data into [Real-time Customer Profile][customerprofiles].  
 
-> **Note:** In this example we are using the ExperienceEvent - Profile Snapshot Work Details mixin to grab the users workEmail and use it as a Primary Identifier later on. Try using other mixins and Primary Identifiers once you've completed this tutorial. 
+> **Note:** In this example we are using the ExperienceEvent - Profile Snapshot Work Details mixin to grab the users work email address and use it as a Primary Identifier later on. Try using other mixins and Primary Identifiers once you've completed this tutorial. 
 
 #### Response
 
