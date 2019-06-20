@@ -18,6 +18,17 @@ For the directly mapped fields, check out [this document][direct].
 
 For the generated mapped fields, check out [this document][indirect].
 
+## What is the expected latency for Analytics Data on Platform?
+
+| Analytics Data | Latency | 
+| --- | --- | 
+| Streaming (mid) | <5 minutes.* | 
+| Batch (mid & post) | 60-120 minutes.* | 
+| Backfill data - 13 Months of Data or 10 Billion events (whichever is lower) | 4 weeks. |
+
+
+> __*Note:__ Latency will vary depending on customer configuration, data volumes, and consumer applications. For example, if the Analytics implementation is configured with `A4T` the latency to Pipeline will increase to 5-10 minutes.
+
 [xdm]: ../schema_registry/xdm_system/xdm_system_in_experience_platform.md
 
 [direct]: direct_mapping_fields.md
