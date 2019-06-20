@@ -1,46 +1,51 @@
-# Tutorial: How to Query Data via Data Access API
+# Query dataset data using Data Access API
 
-## Objective
-In this step by step tutorial, we will focus on how to locate, access, and download data stored within a dataset using Adobe Experience Platform Data Access API. This article will also go into some of the unique features of the Data Access API, such as Paging and Partial Downloads. The steps that will be explained in this tutorial are:
+This document provides a step-by-step tutorial that covers how to locate, access, and download data stored within a dataset using the Data Access API in Adobe Experience Platform. You will also be introduced to some of the unique features of the Data Access API, such as paging and partial downloads.
 
-* Locating the data
-* Retrieving the files belonging to a batch
-* Accessing the file and downloading the data
+The steps outlined in this tutorial are:
 
----
+1. [Locate the data](#locate-the-data)
+1. [Retrieve the batches belonging to your IMS Organization](#retrieve-a-list-of-batches-under-your-ims-organization)
+1. [Retrieve the files belonging to a batch](#retrieve-a-list-of-all-files-belonging-to-a-particular-batch)
+1. [Access the file and download the data](#access-a-file-using-a-file-id)
 
 ## Prerequisites
+In order to follow the steps of this tutorial, you will need the following:
 
-* A valid [Access Token](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) (ACCESS_TOKEN)
-* API key (API_KEY)
-* IMS Organization ID (IMS_ORG)
-* Knowledge of creating and populating a dataset. See [Create and populate a dataset](../creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
+* An Adobe I/O account and the following credentials for authenticating API calls (see the [authentication tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for details):
+    * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication
+    * `{IMS_ORG}`: Your IMS Organization credentials found in your unique Adobe Experience Platform integration
+    * `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration
 
----
 
-## Sequence Diagram
-This tutorial will follow the steps indicated in the sequence diagram below to go over the main functionalities of the Data Access API.
+* A working understanding of how to create and populate a dataset. See the [dataset creation tutorial](../creating_a_dataset_tutorial/creating_a_dataset_tutorial.md) for more information.
+
+## Sequence diagram
+This tutorial follows the steps outlined in the sequence diagram below, highlighting the core functionality of the Data Access API.</br>
 ![](sequence_diagram.png)
 
-We will begin by retrieving information regarding batches and files using the Catalog API. The Data Access API will then allow us to access and download these files over HTTP, either in full, or via partial downloads.
+The Catalog API allows you to retrieve information regarding batches and files. The Data Access API allows you to access and download these files over HTTP as either full or partial downloads, depending on the size of the file.
 
----
+## Locate the data
+Before you can begin to use the Data Access API, you need to identify the location of the data that you want to access. In the Catalog API, there are two endpoints that you can use to browse an organization's metadata and retrieve the ID of a batch or file that you want to access:
 
-## Locating The Data
-Before we can begin to use the Data Access API, you'll need to identify the location of the data that you want to work on. Using the Catalog API, we can browse an organization's metadata and retrieve the id of a batch or file that we wish want to access. To that end, two endpoints within the Catalog API are of interest:
+1. `GET /batches`: Returns a list of batches under your organization
+2. `GET /dataSetFiles`: Returns a list of files under your organization
 
-1. GET /batches: Returns a list of batches under your organization (batchID)
-2. GET /dataSetFiles: Returns a list of files under your organization(fileID)
-
-For more information regarding the Catalog API, please refer to the [API Reference](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html)
+For a comprehensive list of endpoints in the Catalog API, please refer to the [API Reference](../../../../../../acpdr/swagger-specs/catalog.yaml).
 
 
-### Retrieving a list of batches under your IMS Organization
+## Retrieve a list of batches under your IMS Organization
 
-Using the Catalog API, you can return a list of batches under your organization.
+Using the Catalog API, you can return a list of batches under your organization:
 
-##### Request
+#### API format
+
+```shell
 GET /batches
+```
+
+#### Request
 
 ```shell
 curl -X GET 'https://platform.adobe.io/data/foundation/catalog/batches/' \
@@ -49,21 +54,18 @@ curl -X GET 'https://platform.adobe.io/data/foundation/catalog/batches/' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-* `ACCESS_TOKEN`: Token provided after authentication.
-* `API_KEY`: Your specific API key value found in your unique Adobe Experience Platform integration.
-* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+#### Response
 
-
-##### Response
+The response includes an object that lists of all of the batches related to the IMS Organization, with each top-level value representing a batch. The individual batch objects contain the details for that specific batch. The response below has been minimized for space.
 
 ```json
 {
     "{BATCH_ID_1}": {
-        "imsOrg": "EDCE5A655A5E73FF0A494113@AdobeOrg",
+        "imsOrg": "{IMS_ORG}",
         "created": 1516640135526,
-        "createdClient": "acp_foundation_push",
-        "createdUser": "acp_foundation_push@AdobeID",
-        "updatedUser": "acp_foundation_push@AdobeID",
+        "createdClient": "{CREATED_CLIENT}",
+        "createdUser": "{CREATED_BY}",
+        "updatedUser": "{CREATED_BY}",
         "updated": 1516640135526,
         "status": "processing",
         "version": "1.0.0",
@@ -75,123 +77,122 @@ curl -X GET 'https://platform.adobe.io/data/foundation/catalog/batches/' \
 }
 ```
 
-The response will include a list of all the batches under the organization ID. The batch identifer is represented by the unique key of each result within the response. In the response above, this refers to `{BATCH_ID_1}` and `{BATCH_ID_2}`.
+### Filter the list of batches
 
-### Filtering the list of batches
+Filters are often required to find a particular batch in order to retrieve relevant data for a particular use case. Parameters can be added to a `GET /batches` request in order to filter the returned response. The request below will return all batches created after a specified time, within a particular data set, sorted by when they were created.
 
-Oftentimes, filters are required to zero in on a particular batch in order to retrieve relevant data for a particular use case. Parameters can be added to the `GET /batches` request in order to filter the returned response. The request below will return all batches created after a specified time, within a particular data set, sorted by when they were created.
-
-##### Request
-GET /batches?createdAfter={START_TIMESTAMP}&dataSet={DATASET_ID}&sort=desc:created"
-
+#### API format
 ```shell
-curl -X GET 'https://platform.adobe.io/data/foundation/catalog/batches?createdAfter={START_TIMESTAMP}&dataSet={DATASET_ID}&orderBy=desc:created' \
+GET /batches?createdAfter={START_TIMESTAMP}&dataSet={DATASET_ID}&sort={SORT_BY}
+```
+
+* `{START_TIMESTAMP}`: The start timestamp in milliseconds (for example, 1514836799000)
+* `{DATASET_ID}`: The dataset identifier
+* `{SORT_BY}`: Sorts the response by the value provided. For example, `desc:created` sorts the objects by creation date in descending order.
+
+#### Request
+```shell
+curl -X GET 'https://platform.adobe.io/data/foundation/catalog/batches?createdAfter=1521053542579&dataSet=5cd9146b21dae914b71f654f&orderBy=desc:created' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-* `START_TIMESTAMP` is the start timestamp in milliseconds (E.g. 1514836799000)
-* `DATASET_ID` is the data set identifier
-* `desc:created` will sort the response by the order they were created in descending order
-
-##### Response
+#### Response
 ```json
-{
-    "{BATCH_ID_3}": {
-        "imsOrg": "EDCE5XXXXXXXXXX494113@AdobeOrg",
-        "created": 1521053542579,
-        "createdClient": "acp_foundation_push",
-        "createdUser": "acp_foundation_push@AdobeID",
-        "updatedUser": "acp_foundation_dataTracker@AdobeID",
-        "updated": 1521053793736,
-        "status": "success",
-        "errors": [],
-        "version": "1.0.2",
-        "availableDates": {
-            "startDate": 0,
-            "endDate": 0
-        },
+{   "{BATCH_ID_3}": {
+        "imsOrg": "{IMS_ORG}",
         "relatedObjects": [
             {
-                "type": "dataSet",
-                "id": "5a9f264c2aa0cf01da4d82f9"
+                "id": "5c01a91863540f14cd3d0439",
+                "type": "dataSet"
+            },
+            {
+                "id": "00998255b4a148a2bfd4804c2f327324",
+                "type": "batch"
             }
         ],
-        "metrics": {},
-        "tags": {
-            "acp_producer": [
-                "acp_ui_platform"
-            ],
-            "acp_stagePath": [
-                "acp_foundation_push/stage/{BATCH_ID_3}"
-            ]
-        }
+        "status": "success",
+        "metrics": {
+            "recordsFailed": 0,
+            "recordsWritten": 2,
+            "startTime": 1550791835809,
+            "endTime": 1550791994636
+        },
+        "errors": [],
+        "created": 1550791457173,
+        "createdClient": "{CLIENT_CREATED}",
+        "createdUser": "{CREATED_BY}",
+        "updatedUser": "{CREATED_BY}",
+        "updated": 1550792060301,
+        "version": "1.0.116"
     },
     "{BATCH_ID_4}": {
-        "imsOrg": "EDCE5A655A5E73FF0A494113@AdobeOrg",
-        "created": 1521052595345,
-        "createdClient": "acp_foundation_push",
-        "createdUser": "acp_foundation_push@AdobeID",
-        "updatedUser": "acp_foundation_push@AdobeID",
-        "updated": 1521052595345,
-        "status": "loading",
-        "version": "1.0.0",
+        "imsOrg": "{IMS_ORG}",
+        "status": "success",
         "relatedObjects": [
             {
+                "type": "batch",
+                "id": "00aff31a9ae84a169d69b886cc63c063"
+            },
+            {
                 "type": "dataSet",
-                "id": "5a9f264c2aa0cf01da4d82f9"
+                "id": "5bfde8c5905c5a000082857d"
             }
         ],
-        "tags": {
-            "acp_producer": [
-                "3190067ecd9e4ad3be08a58330f0da45"
-            ],
-            "acp_stagePath": [
-                "acp_foundation_push/stage/{BATCH_ID_4}"
-            ]
-        }
+        "metrics": {
+            "startTime": 1544571333876,
+            "endTime": 1544571358291,
+            "recordsRead": 4,
+            "recordsWritten": 4
+        },
+        "errors": [],
+        "created": 1544571077325,
+        "createdClient": "{CLIENT_CREATED}",
+        "createdUser": "{CREATED_BY}",
+        "updatedUser": "{CREATED_BY}",
+        "updated": 1544571368776,
+        "version": "1.0.3"
     }
 }
 ```
 
-A full list of parameters and filters can be found in the [Catalog API Reference Documentation](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html).
-
----
+A full list of parameters and filters can be found in the [Catalog API reference](../../../../../../acpdr/swagger-specs/catalog.yaml).
 
 ## Retrieve a list of all files belonging to a particular batch
 
-Now that we have the ID of the batch that we're looking for, we can use the Data Access API to get a list of files belonging to a particular batch.
+Now that you have the ID of the batch that you want to access, you can use the Data Access API to get a list of files belonging to that batch.
 
-##### Request
+#### API format
+```shell
 GET /batches/{BATCH_ID}/files
+```
+* `{BATCH_ID}`: Batch identifier of the batch that you are trying to access.
+
+#### Request
 
 ```shell
-curl -X GET 'https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/files' \
+curl -X GET 'https://platform.adobe.io/data/foundation/export/batches/5c6f332168966814cd81d3d3/files' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
-* `BATCH_ID`: Batch identifier of the batch that we are trying to access.
-* `ACCESS_TOKEN`: Token provided after authentication.
-* `API_KEY`: Your specific API key value found in your unique Adobe Experience Platform integration.
-* `IMS_ORG`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
 
 
-##### Response
+#### Response
 ```json
 {
     "data": [
         {
-            "dataSetFileId": "{FILE_ID_1}",
-            "dataSetViewId": "5a9f264c2aa0cf01da4d82fa",
+            "dataSetFileId": "8dcedb36-1cb2-4496-9a38-7b2041114b56-1",
+            "dataSetViewId": "5cc6a9b60d4a5914b7940a7f",
             "version": "1.0.0",
-            "created": "1521053793635",
-            "updated": "1521053793635",
+            "created": "1558522305708",
+            "updated": "1558522305708",
             "isValid": false,
             "_links": {
                 "self": {
-                    "href": "https://platform.adobe.io/data/foundation/export/files/{FILE_ID_1}"
+                    "href": "https://platform.adobe.io:443/data/foundation/export/files/8dcedb36-1cb2-4496-9a38-7b2041114b56-1"
                 }
             }
         }
@@ -201,40 +202,45 @@ curl -X GET 'https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}
         "count": 1
     }
 }
+}
 ```
 
-The response contains a data array containing a list of all the files within the specified batch. Files are referenced by their identifier (fileID), which is contained within the value of "dataSetFileId".
+* `_links > self > href`: The URL to access this file
 
-In the response above:
-* `{FILE_ID_1}`: The file ID of the file in the specified batch. We will use this in the next section.
-* `_link > self > href`: The url to access this file
+The response contains a data array that lists all the files within the specified batch. Files are referenced by their file ID, which is found under the `dataSetFileId` field.
 
----
 
-### Access a file using File ID
+## Access a file using a file ID
 
-Using the unique file ID, the data access API can then be used to access the specific details of the file, including its name, size in bytes, and a link to download it.
+Once you have a unique file ID, you can use the Data Access API to access the specific details about the file, including its name, size in bytes, and a link to download it.
 
-##### Request
-GET /files/{dataSetFileId}
+#### API format
+```shell
+GET /files/{FILE_ID}
+```
+
+* `{FILE_ID}`: The identifier of the file you want to access
+
+#### Request
+
 
 ```shell
-curl -X GET 'https://platform.adobe.io/data/foundation/export/files/{FILE_ID}' \
+curl -X GET 'https://platform.adobe.io/data/foundation/export/files/8dcedb36-1cb2-4496-9a38-7b2041114b56-1' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-Depending on whether the file pointed to by the ID is an individual file or a directory the data array returned may contain a single entry or a list of files belonging to that directory. Each file element will have the details of the file like name of the file, size of the file in bytes, link to download the file.
+Depending on whether the file ID points to an individual file or a directory, the data array returned may contain a single entry or a list of files belonging to that directory. Each file element will contain details such as the file's name, size in bytes, and a link to download the file.
 
-##### Case 1: Response points to a single file
+**Case 1: File ID points to a single file**
 
-##### Response
+#### Response
 ```json
 {
     "data": [
         {
-            "name": "{FILE_NAME_1}.parquet",
+            "name": "{FILE_NAME}.parquet",
             "length": "249058",
             "_links": {
                 "self": {
@@ -250,12 +256,12 @@ Depending on whether the file pointed to by the ID is an individual file or a di
 }
 ```
 
-* `{FILE_NAME_1}.parquet` is the name of the file
-* `_links > self > href` is the url to download the file
+* `{FILE_NAME}.parquet`: The name of the file
+* `_links > self > href`: The URL to download the file
 
-##### Case 2: Response points to a directory
+**Case 2: File ID points to a directory**
 
-##### Response
+#### Response
 ```json
 {
     "data": [
@@ -281,7 +287,7 @@ Depending on whether the file pointed to by the ID is an individual file or a di
             "isValid": true,
             "_links": {
                 "self": {
-                    "href": "https://platform.adobe.io/data/foundation/export/files/{FILE_ID_2}"
+                    "href": "https://platform.adobe.io/data/foundation/export/files/{FILE_ID_3}"
                 }
             }
         }
@@ -293,80 +299,121 @@ Depending on whether the file pointed to by the ID is an individual file or a di
 }
 ```
 
-We can see that a directory containing two files have been returned. In this scenario, we will need to follow the url of each file in order to access the file. For the response above, `{FILE_ID_2}` and `{FILE_ID_3}` are the fileIDs of two separate files.
+* `_links > self > href`: The URL to download the associated file
 
-* `_links > self > href`: the url to download the associated file
+This response returns a directory containing two separate files, with IDs `{FILE_ID_2}` and `{FILE_ID_3}`. In this scenario, you will need to follow the URL of each file in order to access the file.
 
----
+## Retrieve the metadata of a file
+You can retrieve the metadata of a file by making a HEAD request. This returns the file's metadata headers, including its size in bytes and file format.
 
-### Retrieving metadata using File ID <a name="HEAD_METADATA"></a>
-The metadata of a file can be retrieved by making a HEAD request. This will return the file's metadata headers, including its size in bytes and file format.
-
-##### Request
-HEAD /files/{dataSetFileId}?path={fileName}
-
+#### API format
 ```shell
-curl -I 'https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?path={FILE_NAME}' \
+HEAD /files/{FILE_ID}?path={FILE_NAME}
+```
+
+* `{FILE_ID}`: The file's identifier
+* `{FILE_NAME}`: The file name (for example, profiles.parquet)
+
+#### Request
+```shell
+curl -I 'https://platform.adobe.io/data/foundation/export/files/8dcedb36-1cb2-4496-9a38-7b2041114b56-1?path=profiles.parquet' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-* `FILE_ID` is the file's identifier
-* `FILE_NAME` is the file name (E.g. profiles.parquet)
+#### Response
+The response headers contain the metadata of the queried file, including:
+* `Content-Length`: Indicates the size of the payload in bytes
+* `Content-Type`: Indicates the type of file.
 
-##### Response
-The response header contains the metadata of the queried file:
-* Content-Length which indicates the size of the payload (Bytes)
-* Content-type, which indicates the type of file.
+## Access the contents of a file
+You can also access the contents of a file using the Data Access API.
 
----
-
-### Access the contents of a file
-The Data Access API can also be used to access the contents of a file.
-
-##### Request
-GET /files/{dataSetFileId}?path={file_name}
-
+#### API format
 ```shell
-curl -X GET 'https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?path={FILE_NAME}' \
+GET /files/{FILE_ID}?path={FILE_NAME}
+```
+
+* `{FILE_ID}`: The file's identifier
+* `{FILE_NAME}`: The file name (for example, profiles.parquet)
+
+#### Request
+```shell
+curl -X GET 'https://platform.adobe.io/data/foundation/export/files/8dcedb36-1cb2-4496-9a38-7b2041114b56-1?path=profiles.parquet' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-* `FILE_ID` is the file's identifier
-* `FILE_NAME` is the file name (E.g. profiles.parquet)
+#### Response
+A successful response returns the file's contents.
 
-##### Response
+## Download partial contents of a file
+The Data Access API allows for downloading files in chunks. A range header can be specified during a `GET /files/{FILE_ID}` request to download a specific range of bytes from a file. If the range is not specified, the API will download the entire file by default.
+
+The HEAD example in the [previous section](#retrieve-the-metadata-of-a-file) gives the size of a specific file in bytes.
+
+#### API format
 ```shell
-[file contents]
+GET /files/{FILE_ID}?path={FILE_NAME}
 ```
 
----
+* `{FILE_ID}`: The file's identifier
+* `{FILE_NAME}`: The file name (for example, profiles.parquet)
 
-### Pagination
+#### Request
 
-Responses within the Data Access API are paginated. By default, the number of entries per page is 100. Paging parameters can be used to modify the default behavior.
+```shell
+curl -X GET 'https://platform.adobe.io/data/foundation/export/files/8dcedb36-1cb2-4496-9a38-7b2041114b56-1?path=profiles.parquet' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'Range: bytes=0-99'
+```
+* `bytes=0-99`: Specifies the range of bytes to download. If this is not specified, the API will download the entire file. In this example, the first 100 bytes will be downloaded.
+
+#### Response
+
+The response body includes the first 100 bytes of the file (as specified by the "Range" header in the request) along with HTTP Status 206 (Partial Contents). The response also includes the following headers:
+
+  * Content-Length: 100 (the number of bytes returned)
+  * Content-type: application/parquet (a parquet file was requested, therefore the response content type is parquet)
+  * Content-Range: bytes 0-99/249058 (the range requested (0-99) out of the total number of bytes (249058))
+
+## Configure API response pagination
+
+Responses within the Data Access API are paginated. By default, the maximum number of entries per page is 100. Paging parameters can be used to modify the default behavior.
 
 * `limit`: You can specify the number of entries per page according to your requirements using the "limit" parameter.
-* `start`: The offset can be set by the "start" query parameter. You can also control the range of results displayed using the start and limit parameter.
+* `start`: The offset can be set by the "start" query parameter. 
+* `&`: You can use an ampersand to combine multiple parameters in a single call.
 
-##### Request
-GET /batches/{BATCH_ID}/files
-
+#### API format
 ```shell
-curl -X GET 'https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/files?start={OFFSET}&limit={LIMIT}' \
+GET /batches/{BATCH_ID}/files?start={OFFSET}
+GET /batches/{BATCH_ID}/files?limit={LIMIT}
+GET /batches/{BATCH_ID}/files?start={OFFSET}&limit={LIMIT}
+```
+
+* `{BATCH_ID}`: Batch identifier of the batch that you are trying to access.
+* `{OFFSET}`: The specified index to start the result array (for example, start=0)
+* `{LIMIT}`: Controls how many results gets returned in the result array (for example, limit=1)
+
+#### Request
+```shell
+curl -X GET 'https://platform.adobe.io/data/foundation/export/batches/5c102cac7c7ebc14cd6b098e/files?start=0&limit=1' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-* `BATCH_ID`: Batch identifier of the batch that we are trying to access.
-* `OFFSET` is the specified index to start the result array (E.g. start=1)
-* `LIMIT` controls how many results gets returned in the result array (E.g. limit=0)
+#### Response:
 
-##### Response:
+The response contains a `"data"` array with a single element, as specified by the request parameter `limit=1`. This element is an object containing the details of the first available file, as specified by the `start=0` parameter in the request (remember that in zero-based numbering, the first element is "0").
+
+The `_links > next > href` value contains the link to the next page of responses, where you can see that the `start` parameter has advanced to `start=1`.
+
 ```json
 {
     "data": [
@@ -386,58 +433,16 @@ curl -X GET 'https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}
     ],
     "_page": {
         "limit": 1,
-        "count": 1
+        "count": 6
     },
     "_links": {
         "next": {
-            "href": "https://platform.adobe.io/data/foundation/export/batches/{BBATCH_ID_3}/files?start=1&limit=1"
+            "href": "https://platform.adobe.io/data/foundation/export/batches/5c102cac7c7ebc14cd6b098e/files?start=1&limit=1"
         },
         "page": {
-            "href": "https://platform.adobe.io/data/foundation/export/batches/{BBATCH_ID_3}/files?limit={limit}&start={start}",
+            "href": "https://platform.adobe.io/data/foundation/export/batches/5c102cac7c7ebc14cd6b098e/files?start=0&limit=1",
             "templated": true
         }
     }
 }
 ```
-
-The response will contain a single file element in the data array (limit = 1). Since the offset is set to 0, the very first file in the result array will get returned. The next link within the response will have the url to the next page of responses with the offset set to 1.
-
-* `{FILE_ID_1}`: the file id of the first file that gets returned
-* `data > _links > self > href`: url to access the first file
-* `_links > next > href` url to access the next page
-
-
----
-
-### Partial File Downloads
-The Data Access API allows for downloading files in chunks. A range header can be specified during a GET /files/{FILE_ID} request to download a specific range of bytes from a file. If the range is not specified, the API will download the entire file by default.
-
-The HEAD example in [Section 4](#HEAD_METADATA) gives the size of a specific file in bytes.
-
-##### Request
-GET /files/{dataSetFileId}?path={file_name}
-
-```shell
-curl -X GET 'https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?path={FILE_NAME}' \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'Range: bytes=0-99'
-```
-
-* `FILE_ID` is the file's identifier
-* `FILE_NAME` is the file name (E.g. profiles.parquet)
-* `bytes=0-99` specifies the range of bytes to download. If this is not specified, the API will download the entire file. In this example, the first 100 bytes will be downloaded.
-
-##### Response
-* Status Code: 206 PARTIAL CONTENTS
-* Response Headers:
-  * Content-Length: 100
-  * Content-type: application/parquet
-  * Content-Range: bytes 0-99/249058
-* Body:
-```
-[First 100 bytes of file]
-```
-
----
