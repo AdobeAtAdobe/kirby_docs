@@ -1,69 +1,65 @@
-# Accessing Unified Profile data via API
+# Access Real-time Customer Profile data using APIs
 
-## Overview
+This document provides a tutorial for accessing Real-time Customer Profile data using Adobe Experience Platform APIs. The tutorial covers steps for the following:
 
-This tutorial covers methods of accessing your Unified Profile data on Experience Platform. In specific, it covers the following:
+- [List Real-time Customer Profile data fields](#list-real-time-customer-profile-data-fields)
+- [Summarize a data field](#summarize-an-xdm-field)
+- Access profile data by:
+    - [Identity](#Access-profile-data-by-identity)
+    - [List of identities](#Access-profile-data-by-list-of-identities) 
+- Access time series events by:
+    - [Identity](#Access-time-series-events-for-a-profile-by-identity)
+    - [List of identities](#Access-time-series-events-for-multiple-profiles-by-identities)
+- [Access an exported segment](#Access-an-exported-segment) 
 
-[Understanding your Unified Profile data](#understanding-your-unified-profile-data) - In this section, we demonstrate how to gain visibility into the data fields that are populated across the profiles in your profile store.  
-[Summarizing your data](#summarizing-data) - This section walks you through using the API to inspect the distribution of values populated in your profile store for a particular field.  
-[Accessing profile data by identity](#accessing-profile-data-by-identity) - Access a single entity by a given identity.  
-[Accessing profile data by list of identities](#accessing-profile-data-by-list-of-identities) - Access multiple entities by an array of identities.  
-[Accessing time series events for a profile by identity](#accessing-time-series-events-for-a-profile-by-identity) - ExperienceEvents represent customer time series events, or touch points, and are only accessible relative to the entity to which they are related. Access time series events for a given profile.  
-[Accessing time series events for multiple profiles by identities](#accessing-time-series-events-for-multiple-profiles-by-identities) - Access time series events for a collection of profile identities.  
-[Accessing an exported segment](#accessing-an-exported-segment) - The final step in segmentation is to export the segment to a dataset. Access segment data using the Data Access API.  
+## Getting started
 
-### Prerequisite topics
+This tutorial requires a working understanding of the Experience Platform services involved in managing Real-time Customer Profile data. Before beginning this tutorial, please review the documentation for the following services:
 
-[Unified Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md) is a generic lookup entity store, and is used to manage any XDM Platform data. Unified Profile facilitates building customer personalization use cases by merging data across various enterprise data assets and providing access to that unified data. Unified Profile provides tools for looking up entities by identity, as well as robust segmentation tools.  
-[Authenticating and Accessing Adobe Experience Platform APIs](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) - This tutorial shows the initial steps to set up an integration in Adobe I/O Console and use an integration to access Platform APIs. The steps in this tutorial describe how to create an integration and gain access to the following values needed for required headers:
-* IMS Organization ID
-* API Key (Client ID)
-* Access Token 
+- [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, real-time consumer profile based on aggregated data from multiple sources.
+- [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
 
-### Related topics
+## Tutorial
 
-[Experience Data Model (XDM)](../../technical_overview/schema_registry/schema_composition/schema_composition.md) provides the framework to refer to and manage the schemas that your data must conform to for use as entities on Platform.
+You are required to have completed the
+[Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
-### Requirements
+* Authorization: Bearer `{ACCESS_TOKEN}`
+* x-api-key: `{API_KEY}`
+* x-gw-ims-org-id: `{IMS_ORG}`
 
-All APIs in this document require the following headers. Some require additional headers which will be listed in context.
+Additional headers may be required to complete specific requests. The correct headers are shown in each of the examples within this document. Please pay special attention to the sample requests in order to ensure that all required headers are included.
 
-|Header|Description|Example Value|
-|---|---|---|
-|`Authorization`|The Access Token as described in [Prerequisite Topics](#prerequisite-topics), prefixed with "Bearer "|Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ....|
-|`x-gw-ims-org-id`|The IMS Organization ID as described in [Prerequisite Topics](#prerequisite-topics)|17FA2AFD56CF35747F000101@AdobeOrg|
-|`x-api-key`|The API Key (Client ID) as described in [Prerequisite Topics](#prerequisite-topics)|25622d14d3894ea590628717f2cb7462|
+## List Real-time Customer Profile data fields
 
----
+All Real-time Customer Profile data is stored in data fields that conform to Profile-enabled XDM schemas. The names of these XDM data fields are often required when interacting with Profile APIs, such as when indicating specific data fields to retrieve, or when building segment rules.
 
-## Understanding your Unified Profile data
+Using the [Profile Preview API](../../../../../../acdpr/swagger-specs/profile-preview-api.yaml), you can list all fields for a given schema for which data has been supplied during any ingest.
 
-XDM tools allow you to build schemas that are very robust structures for very detailed and fine-tuned data. The data you choose to add to Unified Profile may vary, however, as you may not provide data for every data field in a schema.
+#### API format
 
-Some Unified Profile services require XDM data field names, such as `field` parameters indicating specific data fields to retrieve, or when building segment rules. For cases such as these, you are able to list all fields for a given schema for which data has been supplied during any ingest. In this way, you have a view of the schema fields used by your data, rather than all fields available.
-
-#### Service endpoint
-
-```
-GET https://platform.adobe.io/data/core/ups/observedschemanonnull
+```http
+GET /observedschemanonnull
 ```
 
-#### Example request
+#### Request
 
-```
+The following request lists all of the fields used by data ingestion for a specified schema. The schema is specified using the required header, `model-name`. In this case, the schema is `_xdm.context.profile`.
+
+```shell
 curl -X GET \
   https://platform.adobe.io/data/core/ups/observedschemanonnull \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
-  -H 'Content-Type: application/json' \
-  -H 'cache-control: no-cache' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
   -H 'model-name: _xdm.context.profile'
 ```
 
-#### Example response
+#### Response
 
-```
+A successful response returns a list of XDM fields. All fields prefixed with "pf" are profile fields (XDM Profile), where those prefixed with "tps" are time series fields (XDM ExperienceEvent).
+
+```json
 {
     "nonNullCols": [
         "pf.identities.id",
@@ -120,16 +116,17 @@ curl -X GET \
 }
 ```
 
-As in the response above, all fields prefixed with "pf" are Profile (_xdm.context.profile) fields, where those prefixed with "tps" are ExperienceEvent (_xdm.context.experienceevent) fields. Using them in service calls, you would exclude those prefixes, whereby just the field name remains. For instance, using one of these fields in a request to preview all audiences where a home address city (referred to as "pf.homeAddress.city") has been specified, the field `predicateExpression` would be set to "homeAddress.city":
+### Field names in API calls
 
-```
+ When using these field names in API calls, the prefixes must be excluded. For example, in a request to preview all audiences where a home address city has been specified, the XDM field "pf.homeAddress.city" is expressed as "homeAddress.city" when used in the `predicateExpression` field:
+
+```shell
 curl -X POST \
   https://platform.adobe.io/data/core/ups/preview \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
   -H 'Content-Type: application/json' \
-  -H 'cache-control: no-cache' \
   -d '{
         "predicateExpression": "homeAddress.city",
         "predicateType": "pql/text",
@@ -139,232 +136,260 @@ curl -X POST \
     }'
 ```
 
-## Summarizing data
+## Summarize an XDM field
 
-Unified Profile provides summarizations of data for fields containing continuous values such as age, or where values are restricted to a set of possible values such as state or eye color. Use the summary behavior to glean value distribution for values that occur within your profile store a minimum 5%.
+Real-time Customer Profile provides summaries for data fields that contain continuous values (such as age), or are restricted to a set of possible values (such as "Home State" or "Eye Color"). Using the summary endpoint in the Profile API, you can view distributions for values that occur within your profile store at a minimum of 5%.
 
-![Unified Profile Summary](up-summary.png)
+![Real-time Customer Profile Summary](up-summary.png)
 
-Numeric fields are automatically partitioned according to the clustering of values across your profile store for the field being summarized. The distributions are given for those automatically generated partitions.
+>**Note:** Numeric fields are automatically partitioned according to the clustering of values across your profile store for the field being summarized. The distributions are given for those automatically generated partitions.
 
-If the field to summarize has no values that occur more than 5%, such as fields with high cardinality like email or system ID, a failure response will be returned as these fields do not convey useful information.
+If the field being summarized has no values that occur more than 5%, a failure response will be returned as these fields do not convey useful information.
 
-The service endpoint to get a summary of the data for an XDM field is as follows:
-
-```
-GET https://platform.adobe.io/data/core/ups/preview/data/summary/{SCHEMA-FIELD}
-```
-
-Where `SCHEMA-FIELD` names the XDM schema field to summarize. For instance, "pf.homeAddress._schema.longitude".
+Below are some example use cases for the summary endpoint in the [Profile Preview API](../../../../../../acdpr/swagger-specs/profile-preview-api.yaml).
 
 ### Longitude example
 
-Get summary data to understand the demographics of your consumer base by longitude.
+The following API call retrieves summary data on the distribution of your consumer base by longitude:
 
-#### Example request for summary of longitude values
-
+#### API format
+```http
+GET /preview/data/summary/{SCHEMA_FIELD}
 ```
-GET https://platform.adobe.io/data/core/ups/preview/data/summary/pf.homeAddress._schema.longitude
+
+* `{SCHEMA_FIELD}`: The name of the XDM field you want to summarize. For example, "pf.homeAddress._schema.longitude".
+
+#### Request
+
+```shell
+curl -X GET \
+  https://platform.adobe.io/data/core/ups/preview/data/summary/pf.homeAddress._schema.longitude \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-#### Example response
+#### Response
+A successful response returns the summary data for the XDM field. The data is split into groups that are are automatically determined by the system, and are listed under the `quantiles` property. From this data, you can infer that your user base is within the boundaries of -157.86 (`"pct0"`) and -52.6912126 (`"pct100"`). The `summaries` array provides more information on each group, including the number of estimated consumers under `cardinality`.
 
-```
+```json
 {
-	"quantiles": {
-		"pct40": -98.76600142249998,
-		"pct50": -94.0084823,
-		"pct100": -52.6912126,
-		"pct10": -118.118266245,
-		"pct80": -78.37563784266666,
-		"pct0": -157.86,
-		"pct70": -82.47644212,
-		"pct60": -87.99093141600001,
-		"pct30": -99.581649195,
-		"pct20": -106.34355807714286,
-		"pct90": -73.75254579999998
-	},
-	"summaries": [{
-		"percentage": 0.09627375471568593,
-		"exclusiveUpperBound": -106.34355807714286,
-		"cardinality": 965.9216479850512,
-		"inclusiveLowerBound": -118.118266245,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-118.118266245:-106.34355807714286"
-	}, {
-		"percentage": 0.10656123243076433,
-		"exclusiveUpperBound": -99.581649195,
-		"cardinality": 1069.1366670471361,
-		"inclusiveLowerBound": -106.34355807714286,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-106.34355807714286:-99.581649195"
-	}, {
-		"percentage": 0.10114427374702012,
-		"exclusiveUpperBound": -78.37563784266666,
-		"cardinality": 1014.7879229442261,
-		"inclusiveLowerBound": -82.47644212,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-82.47644212:-78.37563784266666"
-	}, {
-		"percentage": 0.1034787975412938,
-		"exclusiveUpperBound": -73.75254579999998,
-		"cardinality": 1038.2103715366227,
-		"inclusiveLowerBound": -78.37563784266666,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-78.37563784266666:-73.75254579999998"
-	}, {
-		"percentage": 0.09902487161178347,
-		"exclusiveUpperBound": -98.76600142249998,
-		"cardinality": 993.5238057478365,
-		"inclusiveLowerBound": -99.581649195,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-99.581649195:-98.76600142249998"
-	}, {
-		"percentage": 0.08931089503860541,
-		"exclusiveUpperBound": -87.99093141600001,
-		"cardinality": 896.0627657399768,
-		"inclusiveLowerBound": -94.0084823,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-94.0084823:-87.99093141600001"
-	}, {
-		"percentage": 0.10901006611982293,
-		"exclusiveUpperBound": -94.0084823,
-		"cardinality": 1093.7059952047655,
-		"inclusiveLowerBound": -98.76600142249998,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-98.76600142249998:-94.0084823"
-	}, {
-		"percentage": 0.10358499159862096,
-		"exclusiveUpperBound": -118.118266245,
-		"cardinality": 1039.275824308903,
-		"inclusiveLowerBound": -157.86,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-157.86:-118.118266245"
-	}, {
-		"percentage": 0.10040217006872898,
-		"exclusiveUpperBound": -82.47644212,
-		"cardinality": 1007.3423422662145,
-		"inclusiveLowerBound": -87.99093141600001,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-87.99093141600001:-82.47644212"
-	}, {
-		"percentage": 0.08741707457716474,
-		"exclusiveUpperBound": -52.6912126,
-		"cardinality": 877.0619260354822,
-		"inclusiveLowerBound": -73.75254579999998,
-		"hll": "NOT-SUPPORTED-CURRENTLY",
-		"value": "-73.75254579999998:-52.6912126"
-	}],
-	"id": "1BD6382559DF0C130A49422D@AdobeOrg-pf.homeAddress._schema.longitude",
-	"summaryType": "NUMBER",
-	"fieldName": "pf.homeAddress._schema.longitude"
+    "quantiles": {
+        "pct40": -98.76600142249998,
+        "pct50": -94.0084823,
+        "pct100": -52.6912126,
+        "pct10": -118.118266245,
+        "pct80": -78.37563784266666,
+        "pct0": -157.86,
+        "pct70": -82.47644212,
+        "pct60": -87.99093141600001,
+        "pct30": -99.581649195,
+        "pct20": -106.34355807714286,
+        "pct90": -73.75254579999998
+    },
+    "summaries": [
+        {
+            "percentage": 0.09627375471568593,
+            "exclusiveUpperBound": -106.34355807714286,
+            "cardinality": 965.9216479850512,
+            "inclusiveLowerBound": -118.118266245,
+            "hll": "NOT-SUPPORTED-CURRENTLY",
+            "value": "-118.118266245:-106.34355807714286"
+        }, 
+        {
+            "percentage": 0.10656123243076433,
+            "exclusiveUpperBound": -99.581649195,
+            "cardinality": 1069.1366670471361,
+            "inclusiveLowerBound": -106.34355807714286,
+            "hll": "NOT-SUPPORTED-CURRENTLY",
+            "value": "-106.34355807714286:-99.581649195"
+        }, 
+        {
+            "percentage": 0.10114427374702012,
+            "exclusiveUpperBound": -78.37563784266666,
+            "cardinality": 1014.7879229442261,
+            "inclusiveLowerBound": -82.47644212,
+            "hll": "NOT-SUPPORTED-CURRENTLY",
+            "value": "-82.47644212:-78.37563784266666"
+        }, 
+        {
+            "percentage": 0.1034787975412938,
+            "exclusiveUpperBound": -73.75254579999998,
+            "cardinality": 1038.2103715366227,
+            "inclusiveLowerBound": -78.37563784266666,
+            "hll": "NOT-SUPPORTED-CURRENTLY",
+            "value": "-78.37563784266666:-73.75254579999998"
+        }, 
+        {
+            "percentage": 0.09902487161178347,
+            "exclusiveUpperBound": -98.76600142249998,
+            "cardinality": 993.5238057478365,
+            "inclusiveLowerBound": -99.581649195,
+            "hll": "NOT-SUPPORTED-CURRENTLY",
+            "value": "-99.581649195:-98.76600142249998"
+        }, 
+        {
+            "percentage": 0.08931089503860541,
+            "exclusiveUpperBound": -87.99093141600001,
+            "cardinality": 896.0627657399768,
+            "inclusiveLowerBound": -94.0084823,
+            "hll": "NOT-SUPPORTED-CURRENTLY",
+            "value": "-94.0084823:-87.99093141600001"
+        }, 
+        {
+            "percentage": 0.10901006611982293,
+            "exclusiveUpperBound": -94.0084823,
+            "cardinality": 1093.7059952047655,
+            "inclusiveLowerBound": -98.76600142249998,
+            "hll": "NOT-SUPPORTED-CURRENTLY",
+            "value": "-98.76600142249998:-94.0084823"
+        }, 
+        {
+            "percentage": 0.10358499159862096,
+            "exclusiveUpperBound": -118.118266245,
+            "cardinality": 1039.275824308903,
+            "inclusiveLowerBound": -157.86,
+            "hll": "NOT-SUPPORTED-CURRENTLY",
+            "value": "-157.86:-118.118266245"
+        }, 
+        {
+            "percentage": 0.10040217006872898,
+            "exclusiveUpperBound": -82.47644212,
+            "cardinality": 1007.3423422662145,
+            "inclusiveLowerBound": -87.99093141600001,
+            "hll": "NOT-SUPPORTED-CURRENTLY",
+            "value": "-87.99093141600001:-82.47644212"
+        }, 
+        {
+            "percentage": 0.08741707457716474,
+            "exclusiveUpperBound": -52.6912126,
+            "cardinality": 877.0619260354822,
+            "inclusiveLowerBound": -73.75254579999998,
+            "hll": "NOT-SUPPORTED-CURRENTLY",
+            "value": "-73.75254579999998:-52.6912126"
+        }
+    ],
+    "id": "{IMS_ORG}-pf.homeAddress._schema.longitude",
+    "summaryType": "NUMBER",
+    "fieldName": "pf.homeAddress._schema.longitude"
 }
 ```
-
-In the response above, you can glean that your user base is within the boundaries of -157.86 and -52.6912126, and the number of estimated consumers per logical grouping. The groups your values are split into is determined by the summary services and returned in the response JSON in the `quantiles` property.
 
 ### Country code example
 
-Get summary data to understand the demographics of your consumer base by country code.
+The following API call retrieves summary data on the distribution of your consumer base by country code:
 
-#### Example request for summary of country code values
-
+#### API format
+```http
+GET /preview/data/summary/{SCHEMA_FIELD}
 ```
-GET https://platform.adobe.io/data/core/ups/preview/data/summary/pf.homeAddress.countryCode
+
+#### Request
+
+```shell
+curl -X GET \
+  https://platform.adobe.io/data/core/ups/preview/data/summary/pf.homeAddress.countryCode \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-#### Example response
+#### Response
 
-```
+A successful response returns the summary data for the XDM field. Notice the lack of discernable values in `quantiles`. This is due to the values being non-numeric. 
+
+```json
 {
-  "quantiles": {
-    "pct40": 0.0,
-    "pct50": 0.0,
-    "pct100": 0.0,
-    "pct10": 0.0,
-    "pct80": 0.0,
-    "pct0": 0.0,
-    "pct70": 0.0,
-    "pct60": 0.0,
-    "pct30": 0.0,
-    "pct20": 0.0,
-    "pct90": 0.0
-  },
-  "summaries": [{
-    "percentage": 0.2637181166795846,
-    "exclusiveUpperBound": 0.0,
-    "cardinality": 2646.717948309003,
-    "inclusiveLowerBound": 0.0,
-    "hll": "NOT-SUPPORTED-CURRENTLY",
-    "value": "CA"
-  }, {
-    "percentage": 0.48713712210991167,
-    "exclusiveUpperBound": 0.0,
-    "cardinality": 4888.987456035888,
-    "inclusiveLowerBound": 0.0,
-    "hll": "NOT-SUPPORTED-CURRENTLY",
-    "value": "US"
-  }, {
-    "percentage": 0.24914476121050375,
-    "exclusiveUpperBound": 0.0,
-    "cardinality": 2500.4573804998995,
-    "inclusiveLowerBound": 0.0,
-    "hll": "NOT-SUPPORTED-CURRENTLY",
-    "value": "MX"
-  }],
-  "id": "1BD6382559DF0C130A49422D@AdobeOrg-pf.homeAddress.countryCode",
-  "summaryType": "STRING",
-  "fieldName": "pf.homeAddress.countryCode"
+    "quantiles": {
+        "pct40": 0.0,
+        "pct50": 0.0,
+        "pct100": 0.0,
+        "pct10": 0.0,
+        "pct80": 0.0,
+        "pct0": 0.0,
+        "pct70": 0.0,
+        "pct60": 0.0,
+        "pct30": 0.0,
+        "pct20": 0.0,
+        "pct90": 0.0
+    },
+    "summaries": [
+        {
+            "percentage": 0.2637181166795846,
+            "exclusiveUpperBound": 0.0,
+            "cardinality": 2646.717948309003,
+            "inclusiveLowerBound": 0.0,
+            "hll": "NOT-SUPPORTED-CURRENTLY",
+            "value": "CA"
+        }, 
+        {
+            "percentage": 0.48713712210991167,
+            "exclusiveUpperBound": 0.0,
+            "cardinality": 4888.987456035888,
+            "inclusiveLowerBound": 0.0,
+            "hll": "NOT-SUPPORTED-CURRENTLY",
+            "value": "US"
+        }, 
+        {
+            "percentage": 0.24914476121050375,
+            "exclusiveUpperBound": 0.0,
+            "cardinality": 2500.4573804998995,
+            "inclusiveLowerBound": 0.0,
+            "hll": "NOT-SUPPORTED-CURRENTLY",
+            "value": "MX"
+        }
+    ],
+    "id": "{IMS_ORG}-pf.homeAddress.countryCode",
+    "summaryType": "STRING",
+    "fieldName": "pf.homeAddress.countryCode"
 }
 ```
 
-In the response above, notice the lack of discernable values in `quantiles`. This is due to the values being non-numeric. 
+## Access Profile data by identity
 
----
+Using the [Profile Access API](../../../../../../acdpr/swagger-specs/profile-access.yaml), you can access an entity by an identity, which consists of an ID value (`entityId`) and the identity namespace (`entityIdNS`).
 
-## Accessing Profile data by identity
+#### API format
 
-Access an entity by an identity, which would consist of the ID value and the identity namespace.
-
-> **Note:** If a related graph links more than 50 identities, this service will return an HTTP status code of 422 and a message "UPS-ACCSDK-1000005:Too many related identities. Got: 446, max: 50".
-
-#### Service endpoint
-
-```
-GET https://platform.adobe.io/data/core/ups/access
+```http
+GET /access?{REQUEST_PARAMETERS}
 ```
 
-#### Request parameters
+* `{REQUEST_PARAMETERS}`: Parameters included in the request path to specify the data to access, separated by ampersands (`&`). A complete list of valid parameters is provided below.
+
+**Request parameters**
+
+The following parameters are used in the request path. They serve to identify the profile entity you want to access, and filter the data returned in the response. Required parameters are labeled, while the rest are optional.
 
 |Parameter|Description|Example|
 |---|---|---|
-|`schema.name`|The XDM schema of the entity to retrieve|_xdm.context.profile|
-|`relatedSchema.name`|If `schema.name` is "_xdm.context.experienceevent", this value names the schema of the entity related to the ExperienceEvents.|_xdm.context.profile|
-|`entityId`|The value of this can be set one of two ways; using a fully qualified identity consisting of ID value and namespace, or providing an XID.|5558525235|
-|`entityIdNS`|This field specifies the identity namespace when `entityId` is not provided as an XID.|phone|
-|`relatedEntityId`|If `schema.name` is "ExperienceEvent", this value specifies the namespace of the identity of the related entity. This value follows the same rules as `entityId`.|69935279872410346619186588147492736556|
-|`relatedEntityIdNS`|If `schema.name` is "ExperienceEvent", this value specifies the namespace of the value provided by `relatedEntityId` identity of the entity related to the ExperienceEvents.|CRMID|
-|`fields`|This value allows you to isolate the data returned to what you need. Use this field to specify which schema field values to include in data retrieved.|personalEmail,person.name,person.gender|
-|`mergePolicyId`|Identifies the Merge Policy by which to govern the data returned. If one is not specified in the service call, your organization's default for that schema will be used. If not default Merge Policy has been configured, the default is no profile merge and no identity stitching.|5aa6885fcf70a301dabdfa4a|
-|`startTime`|Specify the start time to filter time-series objects, at millisecond granularity.|1539838505|
-|`endTime`|Specify the end time to filter time-series objects, at millisecond granularity.|1539838510|
-|`limit`|Numeric value specifying the maximum number of objects to return. <br>__Default: 1000__|100|
+|`schema.name`</br>**(REQUIRED)**|The XDM schema of the entity to retrieve|_xdm.context.profile|
+|`relatedSchema.name`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the schema for the profile entity that the time series events are related to.|_xdm.context.profile|
+|`entityId`</br>**(REQUIRED)**|The ID of the entity. If the value of this parameter is not an XID, an identity namespace parameter must also be provided (see `entityIdNS` below).|5558525235|
+|`entityIdNS`|If `entityId` is not provided as an XID, this field must specify the identity namespace.|phone|
+|`relatedEntityId`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the related profile entity's identity namespace. This value follows the same rules as `entityId`.|69935279872410346619186588147492736556|
+|`relatedEntityIdNS`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the identity namespace for the entity specified in `relatedEntityId`. |CRMID|
+|`fields`|Filters the data returned in the API response. Use this field to specify which schema field values to include in data retrieved.|personalEmail,person.name,person.gender|
+|`mergePolicyId`|Identifies the Merge Policy by which to govern the data returned. If one is not specified in the service call, your organization's default for that schema will be used. If no default Merge Policy has been configured, the default is no profile merge and no identity stitching.|5aa6885fcf70a301dabdfa4a|
+|`startTime`|Specifies the start time to filter time series events (in milliseconds).|1539838505|
+|`endTime`|Specifies the end time to filter time series events (in milliseconds).|1539838510|
+|`limit`|Specifies the maximum number of objects to return. <br>(*Default: 1000*)|100|
 
-#### Example request
+#### Request
 
-This example will get a consumer's email and name using an identity:
+The following request retrieves a customer's email and name using an identity:
 
-```
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/core/ups/access/entities?schema.name=_xdm.context.profile&entityId=janedoe@example.com&entityIdNS=email&fields=identities,person.name,workEmail' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-#### Example response
+#### Response
 
-```
+```json
 {
     "BVrqzwVv7o2p3naHvnsWpqZXv3KJgA": {
         "entityId": "BVrqzwVv7o2p3naHvnsWpqZXv3KJgA",
@@ -431,32 +456,29 @@ curl -X GET \
 }
 ```
 
----
+> **Note:** If a related graph links more than 50 identities, this service will return an HTTP status code of 422 and the message "Too many related identities". If you receive this error, consider adding more request parameters to narrow down your search.
 
-## Accessing profile data by list of identities
+## Access profile data by list of identities
 
-Access a number of entities by their identities, where an identity consists of the ID value and the identity namespace.
+You can use the [Profile Access API](../../../../../../acdpr/swagger-specs/profile-access.yaml) to access multiple profile entities by their identities. These identities consist of an ID value (`entityId`) and an identity namespace (`entityIdNS`).
 
+#### API format
 
-> **Note:** If a related graph links more than 50 identities, this service will return an HTTP status code of 422 and a message "UPS-ACCSDK-1000005:Too many related identities. Got: 446, max: 50".
-
-#### Service endpoint
-
-```
-POST https://platform.adobe.io/data/core/ups/access/entities
+```http
+POST /entities
 ```
 
-#### Example request
+#### Request
 
-This example demonstrates getting an email and name for several consumers by list of identities:
+The following request retrieves the names and email addresses of several customers by a list of identities:
 
-```
+```shell
 curl -X POST \
   https://platform.adobe.io/data/core/ups/access/entities \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -d '{
     "schema":{
         "name":"_xdm.context.profile"
@@ -485,9 +507,16 @@ curl -X POST \
 }'
 ```
 
-#### Example response
+* `schema > name`: The name of the XDM schema the entity belongs to.
+* `fields`: The XDM data fields you want the response to return, as an array of strings.
+* `identities`: The list of identities for the entities you want to access, in the form of an array.
+* `identities > entityId`: The ID of a listed entity
+* `identities > entityIdNS > code`: The namespace of an entity's ID 
 
-```
+#### Response
+A successful response returns the requested fields of entities specified in the request body.
+
+```json
 {
     "A29cgveD5y64ezlhxjUXNzcm": {
         "entityId": "A29cgveD5y64ezlhxjUXNzcm",
@@ -624,52 +653,55 @@ curl -X POST \
 }
 ```
 
----
+## Access time series events for a profile by identity
 
-## Accessing time series events for a profile by identity
+You can use the [Profile Access API](../../../../../../acdpr/swagger-specs/profile-access.yaml) to access time series events by the identity of their associated profile entity. This identity consists of an ID value (`entityId`) and an identity namespace (`entityIdNS`).
 
-Look up ExperienceEvents by the identity of the associated profile.
 
-> **Note:** If a related graph links more than 50 identities, this service will return an HTTP status code of 422 and a message "UPS-ACCSDK-1000005:Too many related identities. Got: 446, max: 50".
 
-#### Service endpoint
+#### API format
 
+```http
+GET /entities?{REQUEST_PARAMETERS}
 ```
-GET https://platform.adobe.io/data/core/ups/access/entities
-```
+* `{REQUEST_PARAMETERS}`: Parameters included in the request path to specify the data to access. Examples are listed below.
 
-#### Request parameters
+**Request parameters**
+
+The following parameters are used in the request path. They serve to identify the profile entity whose time series events you wish to access, and filter the data returned in the response. Required parameters are labeled, while the rest are optional.
 
 |Parameter|Description|Example|
 |---|---|---|
-|`schema.name`|The XDM schema of the entity to retrieve|_xdm.context.profile|
-|`relatedSchema.name`|If `schema.name` is "ExperienceEvent", this value names the schema of the entity related to the ExperienceEvents.|_xdm.context.profile|
-|`entityId`|The value of this can be set one of two ways; using a fully qualified identifier consisting of ID value and namespace, or providing an XID.|5558525235|
-|`entityIdNS`|This field specifies the identity namespace when `entityId` is not provided as an XID.|phone|
-|`relatedEntityId`|If `schema.name` is "ExperienceEvent", this value specifies the namespace of the identity of the related entity. This value follows the same rules as `entityId`.|69935279872410346619186588147492736556|
-|`relatedEntityIdNS`|If `schema.name` is "ExperienceEvent", this value specifies the namespace of the value provided by `relatedEntityId` identity of the entity related to the ExperienceEvents.|CRMID|
-|`fields`|This value allows you to isolate the data returned to what you need. Use this field to specify which schema field values to include in data retrieved.|personalEmail,person.name,person.gender|
-|`mergePolicyId`|Identifies the merge policy by which to govern the data returned. If one is not specified in the service call, your organization's default for that schema will be used. If not default merge policy has been configured, the default is no profile merge and no identity stitching.|5aa6885fcf70a301dabdfa4a|
-|`orderBy`|Specify the field by which to order results as in `orderBy=timestamp` or `orderBy=+timestamp` to sort by name in ascending order (the default), or `orderBy=-timestamp`, to sort in descending order. To omit this value would result in the default sorting of `timestamp` in ascending order.|
-|`timeFilter.startTime`|Specify the start time to filter time-series objects, at millisecond granularity.|1539838505|
-|`timeFilter.endTime`|Specify the end time to filter time-series objects, at millisecond granularity.|1539838510|
-|`limit`|Numeric value specifying the maximum number of objects to return. <br>__Default: 1000__|100|
+|`schema.name`</br>**(REQUIRED)**|The XDM schema of the entity to retrieve|_xdm.context.experienceevent|
+|`relatedSchema.name`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the schema for the profile entity that the time series events are related to.|_xdm.context.profile|
+|`entityId`</br>**(REQUIRED)**|The ID of the entity. If the value of this parameter is not an XID, an identity namespace parameter must also be provided (see `entityIdNS` below).|5558525235|
+|`entityIdNS`|If `entityId` is not provided as an XID, this field must specify the identity namespace.|phone|
+|`relatedEntityId`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the related profile entity's identity namespace. This value follows the same rules as `entityId`.|69935279872410346619186588147492736556|
+|`relatedEntityIdNS`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the identity namespace for the entity specified in `relatedEntityId`. |CRMID|
+|`fields`|Filters the data returned in the API response. Use this field to specify which schema field values to include in data retrieved.|personalEmail,person.name,person.gender|
+|`mergePolicyId`|Identifies the Merge Policy by which to govern the data returned. If one is not specified in the service call, your organization's default for that schema will be used. If no default Merge Policy has been configured, the default is no profile merge and no identity stitching.|5aa6885fcf70a301dabdfa4a|
+|`orderBy`|Specifies the field by which to order results. For example, `orderBy=timestamp` or `orderBy=+timestamp` to sort by timestamp in ascending order, or `orderBy=-timestamp`, to sort in descending order. Omitting this value results in the default sorting of `timestamp` in ascending order.|
+|`timeFilter.startTime`|Specify the start time to filter time-series objects (in milliseconds).|1539838505|
+|`timeFilter.endTime`|Specify the end time to filter time-series objects (in milliseconds).|1539838510|
+|`limit`|Numeric value specifying the maximum number of objects to return. <br>**Default: 1000**|100|
 
-__Example request - Get ExperienceEvents by profile identity__
+#### Request
 
-The following example retrieves the end user identities, web and channel for all ExperienceEvents for a given profile by identity between a date/time range. Results are paginated. 
+The following request finds a profile entity by ID, and retrieves the values for the properties `endUserIDs`, `web`, and `channel` for all time series events associated with the entity. 
 
-```
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/core/ups/access/entities?schema.name=_xdm.context.experienceevent&relatedSchema.name=_xdm.context.profile&relatedEntityId=89149270342662559642753730269986316900&relatedEntityIdNS=ECID&fields=endUserIDs,web,channel&startTime=1531260476000&endTime=1531260480000&limit=1' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-#### Example Response
+#### Response
 
-```
+A successful response returns a paginated list of time series events and associated fields that were specified in the request parameters. 
+
+```json
 {
     "_page": {
         "orderby": "timestamp",
@@ -716,31 +748,34 @@ curl -X GET \
 }
 ```
 
-### Accessing a subsequent page of time series events
+### Access a subsequent page of results
 
-Results are paginated when retrieving ExperienceEvents, where the initial call would produce the first page. If there are subsequent pages of results, there will be a non-empty value in the result for `_page.next`. Additionally, the resulting JSON will produce a fully qualified request URL for retrieving the subsequent page, as `_links.next`. 
+Results are paginated when retrieving time series events. If there are subsequent pages of results, the response's `_page.next` parameter will contain an ID. Additionally, the response's `_links.next.href` parameter provides a request URI for retrieving the subsequent page. 
 
-> **Note:** In the example response above, notice the URL begins with "/entities", to which you must prefix "https://<span></span>platform.adobe.<span></span>io/data/core/ups/access" to make the service call.
-> 
-> **Note:** If a related graph links more than 50 identities, this service will return an HTTP status code of 422 and a message "UPS-ACCSDK-1000005:Too many related identities. Got: 446, max: 50".
+#### API Format
 
-#### Example request
-
-The following example retrieves a subsequent (any page after the first) page of a request using the request URI as provided in a result, as `_links.next.href`.
-
+```http
+GET /access/{NEXT_URI}
 ```
+* `{NEXT_URI}`: The URI value taken from the `_links.next.href` parameter in the previous response.
+
+#### Request
+
+The following request retrieves the next page of results by using the `_links.next.href` URI as the request path.
+
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/core/ups/access/entities?start=c8d11988-6b56-4571-a123-b6ce74236037&orderby=timestamp&schema.name=_xdm.context.experienceevent&relatedSchema.name=_xdm.context.profile&relatedEntityId=89149270342662559642753730269986316900&relatedEntityIdNS=ECID&fields=endUserIDs,web,channel&startTime=1531260476000&endTime=1531260480000&limit=1' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-#### Example response
+#### Response
 
-This example demonstrates a result where there are no subsequent pages of results.
+A successful response returns the next page of results. This example demonstrates a response where there are no subsequent pages of results, as indicated by the empty string values of `_page.next` and `_links.next.href`.
 
-```
+```json
 {
     "_page": {
         "orderby": "timestamp",
@@ -787,47 +822,45 @@ This example demonstrates a result where there are no subsequent pages of result
 }
 ```
 
-The above example shows an empty `_links.next.href` indicating there are no more pages of results.
+## Access time series events for multiple profiles by identities
 
----
+Using the [Profile Access API](../../../../../../acdpr/swagger-specs/profile-access.yaml), you can access time series events by a collection of identities from multiple associated profiles, where an identity consists of an ID value (`entityId`) and the identity namespace (`entityIdNS`).
 
-## Accessing time series events for multiple profiles by identities
+#### API format
 
-Look up ExperienceEvents by the identities of a collection associated profiles.
+Unlike previous examples, this API call does not use any request parameters. All parameters are supplied in the request payload instead.
 
-> **Note:** If a related graph links more than 50 identities, this service will return an HTTP status code of 422 and a message "UPS-ACCSDK-1000005:Too many related identities. Got: 446, max: 50".
-
-#### Service endpoint
-
-```
-POST https://platform.adobe.io/data/core/ups/access/entities
+```http
+GET /entities
 ```
 
-#### Request body
+**Payload parameters**
+
+The following is a list of accepted parameters for the request payload. Unlike previous examples, these parameters are used in the request body, not the path. They serve to identify the profile entities whose time series events you wish to access, and filter the data returned in the response. Required parameters are labeled, while the rest are optional.
 
 |Parameter|Description|Example|
 |---|---|---|
-|`schema.name`|The XDM schema of the entity to retrieve|_xdm.context.profile|
-|`relatedSchema.name`|If `schema.name` is "ExperienceEvent", this value names the schema of the entity related to the ExperienceEvents.|_xdm.context.profile|
-|`identities`|List of profiles for which to retrieve associated ExperienceEvents. Each entry of this can be set one of two ways; using a fully qualified identity consisting of ID value and namespace, or providing an XID.|`[ { "relatedEntityId": "GkouAW-yD9aoRCPhRYROJ-TetAFW" } ]`|
-|`fields`|This value allows you to isolate the data returned to what you need. Use this field to specify which schema field values to include in data retrieved.|personalEmail,person.name,person.gender|
+|`schema.name`</br>**(REQUIRED)**|The XDM schema of the entity to retrieve|_xdm.context.profile|
+|`relatedSchema.name`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the schema for the profile entity that the time series events are related to.|_xdm.context.profile|
+|`identities`</br>**(REQUIRED)**|List of profiles to retrieve associated time series events from. Each entry of this can be set one of two ways; using a fully qualified identity consisting of ID value and namespace, or providing an XID.|`[ { "relatedEntityId": "GkouAW-yD9aoRCPhRYROJ-TetAFW" } ]`|
+|`fields`|Isolates the data returned to a specified set of fields. Use this field to filter which schema field values are included in data retrieved.|personalEmail,person.name,person.gender|
 |`mergePolicyId`|Identifies the Merge Policy by which to govern the data returned. If one is not specified in the service call, your organization's default for that schema will be used. If not default Merge Policy has been configured, the default is no profile merge and no identity stitching.|5aa6885fcf70a301dabdfa4a|
-|`orderBy`|Specify the field by which to order results as in `orderBy=timestamp` or `orderBy=+timestamp` to sort by name in ascending order (the default), or `orderBy=-timestamp`, to sort in descending order. To omit this value would result in the default sorting of `timestamp` in ascending order.|
-|`timeFilter.startTime`|Specify the start time to filter time-series objects, at millisecond granularity.|1539838505|
-|`timeFilter.endTime`|Specify the end time to filter time-series objects, at millisecond granularity.|1539838510|
-|`limit`|Numeric value specifying the maximum number of objects to return. <br>__Default: 1000__|100|
+|`orderBy`|Specify the field by which to order results. For example, `orderBy=name` or `orderBy=+name` sorts by name in ascending order, and `orderBy=-name` sorts in descending order. Omitting this value results in the default sorting of `name` in ascending order.|
+|`timeFilter.startTime`|Specify the start time to filter time-series objects (in milliseconds).|1539838505|
+|`timeFilter.endTime`|Specify the end time to filter time-series objects (in milliseconds).|1539838510|
+|`limit`|Numeric value specifying the maximum number of objects to return. <br>(*Default: 1000*)|100|
 
-#### Example request
+#### Request
 
-The following example would get an email and name for several consumers by a list of identities:
+The following request retrieves user IDs, local times, and country codes for time series events associated with a list of profile identities:
 
-```
+```shell
 curl -X POST \
   https://platform.adobe.io/data/core/ups/access/entities \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -d '{
     "schema": {
         "name": "_xdm.context.experienceevent"
@@ -844,17 +877,18 @@ curl -X POST \
         "placeContext.geo.countryCode"
     ],
     "identities": [
-        {
-            "relatedEntityId": "GkouAW-yD9aoRCPhRYROJ-TetAFW"
-        }
+        {"relatedEntityId": "GkouAW-yD9aoRCPhRYROJ-TetAFW"}
+        {"relatedEntityId": "GkouAW-2u-7iWt5vQ9u2wm40JOZY"}
     ],
     "limit": 10
 }'
 ```
 
-#### Example response
+#### Response
 
-```
+A successful response returns a paginated list of time series events associated with the multiple profiles specified in the request. In the example response below, notice the first listed profile ("GkouAW-yD9aoRCPhRYROJ-TetAFW") provides a value for `_links.next.payload`. Using this payload in the request body of another API call to the same endpoint will retrieve the subsequent page of time series data for that profile. See the next section on [accessing subsequent pages](#access-a-subsequent-page-of-results-1) for more details.
+
+```json
 {
     "GkouAW-yD9aoRCPhRYROJ-TetAFW": {
         "_page": {
@@ -937,8 +971,7 @@ curl -X POST \
                     }
                 },
                 "lastModifiedAt": "2018-10-24T17:35:01Z"
-            },
-            ...
+            }
         ],
         "_links": {
             "next": {
@@ -1050,8 +1083,7 @@ curl -X POST \
                     }
                 },
                 "lastModifiedAt": "2018-10-24T17:34:58Z"
-            },
-            ...
+            }
         ],
         "_links": {
             "next": {
@@ -1062,77 +1094,12 @@ curl -X POST \
 }`
 ```
 
-### Accessing a subsequent page of time series events
+### Access a subsequent page of results
 
-In the example above, notice the first profile ("GkouAW-yD9aoRCPhRYROJ-TetAFW") in the result set provides a value for `_links.next.payload`. Using this payload in a call to the same endpoint will retrieve the subsequent page of ExperienceEvent data for that profile.
+Results are paginated when retrieving time series events. If there are subsequent pages of results for a particular profile, the response's `_links.next.payload` parameter for that profile will contain a payload object. Using this object as the payload for another API call to the same endpoint will retrieve the subsequent page of time series data for that profile.
 
-> **Note:** If a related graph links more than 50 identities, this service will return an HTTP status code of 422 and a message "UPS-ACCSDK-1000005:Too many related identities. Got: 446, max: 50".
+## Access an exported segment
 
-#### Example request
+You can access Profile data using criteria (or rules) by using the Segmentation Service. The [Profile Segment Definition API](../../../../../../acdpr/swagger-specs/profile-segment-definitions-api.yaml) creates segment definitions, which are tested using the [Profile Preview API](../../../../../../acdpr/swagger-specs/profile-preview-api.yaml). These segments are then applied against your profile store using the [Profile Segment Jobs API](../../../../../../acdpr/swagger-specs/profile-segment-jobs-api.yaml). For more details on creating segments, see the [create a segment tutorial](../creating_a_segment_tutorial/creating_a_segment_tutorial.md).
 
-```
-curl -X POST \
-  https://platform.adobe.io/data/core/ups/access/entities \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg' \
-  -d '{
-    "schema": {
-        "name": "_xdm.context.experienceevent"
-    },
-    "relatedSchema": {
-        "name": "_xdm.context.profile"
-    },
-    "timeFilter": {
-        "startTime": 1537275882000
-    },
-    "fields": [
-        "endUserIDs",
-        "placeContext.localTime",
-        "placeContext.geo.countryCode"
-    ],
-    "identities": [
-        {
-            "relatedEntityId": "GkouAW-yD9aoRCPhRYROJ-TetAFW",
-            "start": "40cb2fb3-78cd-49d3-806f-9bdb22748226"
-        }
-    ],
-    "limit": 10
-}'
-```
-
----
-
-## Accessing an exported segment
-
-Accessing data using criteria, or rules, is facilitated by Segmentation Service. A segment definition is created using the Segmentation API, tested using the Preview API, and applied against your profile store using the Segment Jobs API. [Visit this tutorial](../creating_a_segment_tutorial/creating_a_segment_tutorial.md) for more details on this.
-
-The final step in segmentation is to export your segment using the Export API. An example of a response from the Profile Export API call is as follows:
-
-```
-{
-    "id": 111,
-    "jobType": "BATCH",
-    "destination" : {
-        "dataSetId" : "5aa6885ecf70a301dabdfa49"
-        "batchId": "5b565efc0a488f01e2c19972",
-      },
-    "fields": "",
-    "schema" : {
-        "name":"_xdm.context.profile"
-    },
-    "imsOrgId": "1BD6382559DF0C130A49422D@AdobeOrg",
-    "status": "PROCESSING",
-    "filter" : {
-        "segments" : [{"id":"segment-name:snapshot-name"}]
-     }
-    "mergePolicyId" : 123,
-    "updateTime": "2018-07-25 15:17:30",
-    "creationTime": "2018-07-25 15:17:30"
-}
-```
-
-Once export is complete, use the Data Access API to access the data using the `batchId` returned from the export service call, "5b565efc0a488f01e2c19972" in the example above. Note that a segment may be chunked, and a batch could consist of several files. You must first list the files belonging to the batch, and download each Parquet file by file ID. 
-
-For more information on using the Data Access API, [see the tutorial](../data_access_tutorial/data_access_tutorial.md).
+Once a segment has been created and exported, you can use the [Data Access API](../../../../../../acdpr/swagger-specs/data-access-api.yaml) to access the data using the returned `batchId` from when the segment was exported. For detailed steps on locating batch files and accessing their contents, see the [Data Access API tutorial](../data_access_tutorial/data_access_tutorial.md).
