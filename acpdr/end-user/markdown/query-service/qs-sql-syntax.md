@@ -1,3 +1,4 @@
+
 # SQL syntax
 
 ## Define a SELECT query
@@ -18,7 +19,6 @@ SELECT [ ALL | DISTINCT [ ON ( expression [, ...] ) ] ]
     [ LIMIT { count | ALL } ]
     [ OFFSET start [ ROW | ROWS ] ]
     [ FETCH { FIRST | NEXT } [ count ] { ROW | ROWS } ONLY ]
-
 ```	
 
 where `from_item` can be one of:
@@ -129,3 +129,4 @@ DEALLOCATE [PREPARE ] <plan name> | ALL
 Eg 1 : DEALLOCATE temp;
 Eg 2 : DEALLOCATE PREPARE ALL;
 ```
+
