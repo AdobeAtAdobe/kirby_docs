@@ -43,4 +43,4 @@ Click **Finish** to create the Service and redirect to the **Services** page sho
 
 ## Next steps
 
-This tutorial walked you through creating and accessing a Service, and concludes the Data Science Workspace tutorial workflow. For more information, visit the [Data Science Workspace Overview](www.adobe.com/go/data-science-overview-en) page.
+This tutorial walked you through creating and accessing a Service, and concludes the Data Science Workspace tutorial workflow. For more information, visit the [Data Science Workspace Overview](../../../../technical_overview/data_science_workspace_overview/dsw_overview.md) page.
