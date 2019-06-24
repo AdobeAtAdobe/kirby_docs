@@ -1,13 +1,12 @@
 # Sample ETL Transformations 
 
-This article demonstrates the following example transformations that an ETL developer can encounter:
+The following examples demonstrate transformations encountered by an ETL developer. 
 
-- [Flat CSV to hierarchy](#flat-csv-to-hierarchy):  
-   Convert a CSV file containing CRM data into hierarchical XDM Profile data. 
-- [Dataframe to XDM schema](#dataframe-to-xdm-schema):   
-   Express an XDM schema as a parquet dataframe.
-- [Identities to Identity Map](#identities-to-identity-map):  
-   Convert an array of individual identities into an `identityMap` object.
+This document contains the following example transformations:  
+1. Flat CSV to hierarchy:  
+   Converting a CSV file containing CRM data into hierarchical XDM Profile data.  
+1. Identities to Identity Map:  
+   Converting an array of individual identities into an `identityMap` object.
 
 ## Flat CSV to Hierarchy
 
@@ -22,7 +21,7 @@ Sample CSV and JSON files are available from the public ETL Reference GitHub rep
 
 The following CRM data has been exported as `CRM_profiles.csv`:
 
-```shell
+```SHELL
 TITLE   F_NAME  L_NAME  GENDER  DOB EMAIL   CRMID   ECID    LOYALTYID   ECID2   PHONE   STREET  CITY    STATE   COUNTRY ZIP LAT LONG
 Mr  Ewart   Bennedsen   M   2004-09-25  ebennedsenex@jiathis.com    71a16013-d805-7ece-9ac4-8f2cd66e8eaa    87098882279810196101440938110216748923  2e33192000007456-0365c00000000000   55019962992006103186215643814973128178  256-284-7231    72 Buhler Crossing  Anniston    Alabama US  36205   33.708276   -85.7922905
 Dr  Novelia Ansteys F   1987-10-31  nansteysdk@spotify.com  2eeb6532-82e1-0d58-8955-bf97de66a6f5    50829196174854544323574004005273946998  2e3319208000765b-3811c00000000001   65233136134594262632703695260919939885  704-181-6371    79 Northfield Hill  Charlotte   North Carolina  US  28299   35.2188655  -80.8108885
@@ -164,92 +163,11 @@ The following sample shows the first two rows of the CSV transformed to XDM, as 
 }
 ```
 
-## Dataframe to XDM schema
-
-The hierarchy of a dataframe (such as a Parquet file) must match that of the XDM schema being uploaded to.
-
-### Example dataframe
-
-The structure of the following example dataframe has been mapped to a schema that implements the XDM Profile class, and contains the most common fields associated with schemas of that type.
-
-```shell
-[
-    StructField("person", StructType(
-        [
-            StructField("name", StructType(
-                [
-                    StructField("courtesyTitle", StringType()),
-                    StructField("firstName", StringType()),
-                    StructField("lastName", StringType())
-                ]
-            )),
-            StructField("gender", StringType()),
-            StructField("birthDayAndMonth", StringType()),
-            StructField("birthDate", StringType()),
-            StructField("birthYear", LongType())
-        ]
-    )),
-    StructField("identityMap", MapType(
-        StructField("CRMID", ArrayType(
-            StructType(
-                [
-                    StructField("id", StringType()),
-                    StructField("primary", BooleanType())
-                ]
-            )
-        )),
-        StructField("ECID", ArrayType(
-            StructType(
-                [
-                    StructField("id", StringType()),
-                    StructField("primary", BooleanType())
-                ]
-            )
-        )),
-        StructField("LOYALTYID", ArrayType(
-            StructType(
-                [
-                    StructField("id", StringType()),
-                    StructField("primary", BooleanType())
-                ]
-            )
-        ))
-    )),
-    StructField("homePhone", StructType(
-        [
-            StructField("number", StringType())
-        ]
-    )),
-    StructField("personalEmail", StructType(
-        [
-            StructField("address", StringType())
-        ]
-    )),
-    StructField("homeAddress", StructType(
-        [
-            StructField("street1", StringType()),
-            StructField("city", StringType()),
-            StructField("stateProvince", StringType()),
-            StructField("country", StringType()),
-            StructField("postalCode", StringType()),
-            StructField("_schema", StructType(
-                [
-                    StructField("latitude", DoubleType()),
-                    StructField("latitude", DoubleType()),
-                ]
-            ))
-        ]
-    ))    
-]
-```
-
-When constructing a dataframe for use in Adobe Experience Platform, it is important to ensure that its hierarchical structure is an exact match to that of an existing XDM schema in order for the fields to map properly. 
-
 ## Identities to Identity Map
 
 ### Array of Identities
 
-```shell
+```
 [
   {
     "xdm:id": "someone1@example.com",
@@ -299,4 +217,3 @@ Below is the array of identities transformed to XDM:
       }]
    }
 ```
-
