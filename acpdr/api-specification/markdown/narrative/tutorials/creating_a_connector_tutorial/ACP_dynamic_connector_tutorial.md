@@ -1,6 +1,6 @@
-# Microsoft Dynamics connector for Adobe Experience Platform
+# Microsoft Dynamics Connector for Adobe Experience Platform
 
-The Microsoft Dynamics connector for Adobe Experience Platform provides an API and wizard to ingest your Microsoft Dynamics CRM data onto Adobe Experience Platform, allowing you to:
+The Microsoft Dynamics Connector for Adobe Experience Platform provides an API and wizard to ingest your Microsoft Dynamics CRM data onto Adobe Experience Platform, allowing you to:
 
 * Authenticate to your Microsoft Dynamics account.
 * Select one or more datasets from a list of available datasets.
@@ -9,26 +9,26 @@ The Microsoft Dynamics connector for Adobe Experience Platform provides an API a
 * Set a schedule and frequency for ingesting data.
 * Save the connector and modify it as needed.
 
-This article provides a step-by-step tutorial on how to set up and configure the Azure Blob connector through API calls. For a comprehensive list of all API calls that are compatible with the connector, please refer to the [API reference documentation](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/partner-connectors-api.yaml).
+This article provides steps to set up and configure the Microsoft Dynamics connector through API calls. For further details you can refer to - [Swagger Documentation](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/partner-connectors-api.yaml)
 
-## Authenticate and configure the Microsoft Dynamics connector
-The following steps cover how to authenticate the data connection with the Microsoft Dynamics connector.
+## Setting up the Microsoft Dynamics Connector
+Set up an account to access APIs and provide credentials to create a connector:
 
 <!---### Prerequisites
 * Register the schema of the incoming file.
 * Register the metadata associated with the file, such as *DataSetName*, *UserID*, *IMSOrg*, and *ConnectionParameters*.
 * Get the details of the file ingested using an API call to the Catalog API.--->
 
-### Gather Experience Platform credentials
-You will need an Adobe I/O account and the following credentials to authenticate API calls:
+### Set up an Adobe I/O account
+See [authenticating and accessing APIs](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to create an access token used to authenticate API calls from Adobe I/O.
+
+After you set up authorization for APIs, the following values are returned:
 
 * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
 * `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
 * `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
-If you do not know your authentication credentials, see the [authenticating and accessing APIs tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for more information.
-
-### Gather Microsoft Dynamics credentials
+### Set up a Platform connection to Microsoft Dynamics
 
 You will need the following credentials:
 
@@ -39,11 +39,14 @@ You will need the following credentials:
 * `{MS-Dynamics_HOST_NAME}`: Your MS Dynamics Host Name for dynamics-on premise
 After you are authorized to make API calls from the Adobe I/O Gateway and your Microsoft Dynamics credentials, generate a dataset from the Microsoft Dynamics objects.
 
-### Create account and connection
+## Setting up the Microsoft Dynamics Connector
+Follow these steps to create a dataset from Microsoft Dynamics and set up a connector to trigger a one-time or scheduled ingestion.
 
-Use your Microsoft Dynamics credentials to request an account and connection entity:
+#### Create Account and Connection
 
-#### Request
+First, request a Microsoft Dynamics CRM account entity. You need your Microsoft Dynamics CRM User Name, Microsoft Dynamics CRM  Password, Microsoft Dynamics CRM Organization URI and Microsoft Dynamics CRM Organization Name to request an account and connection entity. The response to this request includes the *Account ID* and *Connection ID* in Catalog.
+
+##### Request
 
 For dynamics-online:
 ```shell
@@ -84,8 +87,16 @@ curl -X POST \
   }
 }'
 ```
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{MS-Dynamics_USER_NAME}`: Your username for MS Dynamic CRM.
+* `{MS-Dynamics_PASSWORD}`: Your MS Dynamics CRM password
+* `{MS-Dynamics_ORGANIZATION_URI}`: Your MS Dynamics Organization URI
+* `{MS-Dynamics_ORGANIZATION_NAME}`: Your MS Dynamics Organization Name
+* `{MS-Dynamics_HOST_NAME}`: Your MS Dynamics Host Name
 
-#### Response
+##### Response
 ```javascript
 {
     "accountId": {ACCOUNT_ID},
@@ -96,21 +107,21 @@ curl -X POST \
 * `{ACCOUNT_ID}`: Account ID in catalog.
 * `{CONNECTION_ID}`: Connection ID in catalog.
 
-Copy down your `{ACCOUNT_ID}` and `{CONNECTION_ID}` for further use before moving on to the next step.
+Please note `{ACCOUNT_ID}` and `{CONNECTION_ID}` for further use.
 
-## Create custom schema
+#### Create Custom Schema
 
-Data that is ingested into the platform needs to be complaint with a schema. You can create a custom schema for the data you wish to ingest by making a POST request to the /schemas endpoint in the Data Connectors namespace. This custom schema is called adhoc schema since it has the capability to not comply with any of the standard XDM models. Please refer to [XDM System overview](https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md) for details on XDM models.
+For Ingesting data into the platform, data needs to be complaint with a schema. Data Connectors provide POST /schemas API to create custom schema of the data you wish to ingest. This custom schema is called Adhoc schema since it has the capability to not comply with any of the standard XDM models. Please refer to [XDM Schema Registry Guide](https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md) for details on XDM models.
 
-Creating a custom schema is a two-step process:
+Creating custom schema is a two step process -
 
-1. Select a desired table to ingest. You can use the GET /objects endpoint to list tables.
-2. Create a custom schema from the table or fields of that table.
+1. Selecting desired table to ingest. You can use GET /objects call to list tables.
+2. Creating custom schema from table or fields of that table.
 
-### Creating Custom Schema with table name
+##### Creating Custom Schema with table name
 Select a Microsoft Dynamics table to ingest. Use the below request to get a list of tables from the MS Dynamics connection:
 
-#### Request
+##### Request
 
 ```SHELL
 curl -X GET \
@@ -121,7 +132,12 @@ curl -X GET \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-#### Response
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
+
+##### Response
 ```javascript
 [
     {
@@ -148,9 +164,11 @@ curl -X GET \
 ]
 ```
 
-A successful response returns a partial list of all available Microsoft Dynamics CRM objects. Find the object you wish to ingest, and copy the `logicalName` of the selected object to use as `{OBJECT_ID}` in the following request:
+> **Note: ** The return response is a partial list of all available Microsoft Dynamics CRM objects. Use the `{OBJECT_ID}` as the `logicalName` of the objects.
 
-#### Request
+Use the `logicalName` of the selected object as `{OBJECT_ID}` to create custom schema in the next step.
+Create custom schema from table name:
+##### Request
 
 ```SHELL
 curl -X POST \
@@ -163,10 +181,13 @@ curl -X POST \
    "objectName" : {OBJECT_ID}
 }'
 ```
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
+* `{OBJECT_ID}`: Logical Name of the Microsoft Dynamics Object you want to ingest.
 
-* `{OBJECT_ID}`: The `logicalName` of the Microsoft Dynamics object you want to ingest.
-
-#### Response
+##### Response
 ```javascript
 {
     "title": {SCHEMA_TITLE},
@@ -178,16 +199,18 @@ curl -X POST \
 }
 ```
 * `{SCHEMA_TITLE}`: Title of schema in XDM Schema Registry.
-* `{SCHEMA_ID}`: Unique ID of schema in XDM Schema Registry.
+* `{SCHEMA_ID}`: Unique id of schema in XDM Schema Registry.
 * `{SCHEMA_CONTENT_TYPE}`: Content-type and version of schema.
 * `{NAMESPACE}`: Unique ID generated by XDM Schema Registry as namespace corresponding to adhoc schema.
 
-This `schemaRef` will be used to create a dataset entity later in this tutorial.
+This `schemaRef` can be used further to create dataset entity through dataset API. [Creating a Dataset](#create_dataset)
 
-### Creating Custom Schema from fields
-To construct a custom schema from a subset of fields of any object, start by using the /fields endpoint to fetch the object's fields:
+##### Creating Custom Schema from fields
+To construct custom schema from a subset of fields of any object, use "fields" API to fetch fields and use the required subset of fields as payload in create schema.
 
-#### Request
+Get fields of object:
+
+##### Request
 ```SHELL
 curl -X GET \
   'https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/fields?object={OBJECT_ID}' \
@@ -196,10 +219,13 @@ curl -X GET \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
-
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
 * `{OBJECT_ID}`: Logical Name of the Microsoft Dynamics Object whose fields are to be fetched.
 
-#### Response
+##### Response
 ```javascript
 [
   {
@@ -229,9 +255,9 @@ curl -X GET \
   }
 ]
 ```
- Determine the required subset of fields for the schema, and pass them to the POST /schemas endpoint to create a new adhoc schema:
+The required fields are passed to create /schemas API call for construction of custom adhoc schema:
 
-#### Request
+##### Request
 
 ```SHELL
 curl -X POST \
@@ -270,8 +296,12 @@ curl -X POST \
   ]
 }'
 ```
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
 
-#### Response
+##### Response
 ```javascript
 {
     "title": {SCHEMA_TITLE},
@@ -287,12 +317,12 @@ curl -X POST \
 * `{SCHEMA_CONTENT_TYPE}`: Content-type and version of schema.
 * `{ADHOC_NAMESPACE}`: Unique ID generated by XDM Schema Registry as namespace of adhoc schema.
 
-This `schemaRef` will be used to create a dataset entity later in this tutorial.
+This `schemaRef` is used in the next step to create dataset entity through dataset API. [Creating a Dataset](#create_dataset)
 
-### Configure schedule for ingestion
-Scheduling ingestion is mandatory for relational connectors before creating a dataset. You can schedule the `ingestStart` and `frequency` for data ingestion by making a call to the PUT /schedule endpoint:
+#### Configure schedule for ingestion
+Scheduling ingestion is mandatory for relational connectors before posting dataset. `ingestStart` and `frequency` are provided through PUT /schedule API call. Empty payload `{}` can be provided for one time ingestion.
 
-#### Request
+##### Request
 
 ```SHELL
 curl -X PUT \
@@ -313,10 +343,9 @@ curl -X PUT \
   }
 }'
 ```
-`ingestStart` denotes the start time of ingestion, and can only be current or a future date. If no value is provided, is it taken as current UTC time.
-
-`frequency` denotes the pace of ingestion. The preceding example ingests data every 15 minutes. Hourly, daily, monthly and yearly frequencies can be provided alongside custom schedules. Some sample frequencies are listed below:
-
+`ingestStart` can only be current or future date and denotes the start time of ingestion. If no value is provided, is it taken as current UTC time.
+`frequency` denotes the pace of ingestion. Preceeding example ingests data every 15 minutes. Hourly, daily, monthly and yearly frequencies can be provided alongside custom schedules.
+For example -
 ```javascript
 Daily
 "frequency": {
@@ -349,10 +378,16 @@ Yearly
   }
 ```
 
-## Create a dataset
-The dataset defines the structure of the data that the connector ingests. Once you create the account and connection, you can use the `{CONNECTION_ID}` to create a dataset. You can configure datasets, pipeline, and triggers with a successful POST call.
+* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+* `{IMG_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+* `{CONNECTION_ID}`: ID of the connector you created from the previous steps.
 
-#### Request
+#### <a name="create_dataset">Create a Dataset</a>
+The dataset defines the structure of the data the connector ingests. Once you create the account and connection, you can use the *Connection ID* to create a dataset. You can configure Platform datasets, pipeline, and triggers with a successful POST call.
+Provide a unique and identifiable name for the dataset to identify it clearly when monitoring your data ingestion.
+
+##### Request
 
 ```SHELL
 curl -X POST \
@@ -403,9 +438,7 @@ curl -X POST \
 * `{BACKFILL_DATE}`: Past date to begin ingestion.
 * `{FIELD_SCHEMA_PATH}`: Path of date-time field in schema.
 
-> **Important:** Ensure that you provide a unique and identifiable name for the dataset to identify it clearly when monitoring your data ingestion.
-
-#### Response
+##### Response
 
 ```javascript
 {
