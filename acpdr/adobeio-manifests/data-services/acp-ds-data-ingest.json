@@ -35,13 +35,8 @@
             },
             {
                 "pages": [],
-                "path": "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/direct_mapping_fields.md",
-                "title": "Direct mapping fields"
-            },
-            {
-                "pages": [],
-                "path": "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/generated_mapping_fields.md",
-                "title": "Transformed mapping fields"
+                "path": "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/analytics_mapping_fields.md",
+                "title": "Analytics mapping fields"
             },
             {
               "pages": [],

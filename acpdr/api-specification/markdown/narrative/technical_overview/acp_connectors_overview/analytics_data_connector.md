@@ -12,11 +12,7 @@ For more information about XDM, check out how [XDM is used in Adobe Experience P
 
 ## How are fields mapped from Adobe Analytics to XDM?
 
-Fields are either **directly mapped** or **transformed (generated) mapped**.
-
-For the directly mapped fields, check out [this document][direct].
-
-For the generated mapped fields, check out [this document][indirect].
+Fields are either **directly mapped** or **transformed (generated) mapped**. Please see documentation for [Analytics mapping fields][mapping] for more information. 
 
 ## What is the expected latency for Analytics Data on Platform?
 
@@ -31,5 +27,4 @@ For the generated mapped fields, check out [this document][indirect].
 
 [xdm]: ../schema_registry/xdm_system/xdm_system_in_experience_platform.md
 
-[direct]: direct_mapping_fields.md
-[indirect]: generated_mapping_fields.md
+[mapping]: analytics_mapping_fields.md
