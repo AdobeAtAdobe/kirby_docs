@@ -1,135 +1,180 @@
 # Import a packaged Recipe using the API <!-- omit in toc -->
 
-- [Objective](#objective)
-- [Prerequisites](#prerequisites)
-- [API workflow](#api-workflow)
-    - [Create an Engine](#create-an-engine)
-- [Next steps](#next-steps)
+This tutorial uses the [Sensei Machine Learning API](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/sensei-ml-api.yaml) to create an **Engine**, also known as a Recipe in the user interface. 
 
----
+Before getting started, it is important to note that Adobe Experience Platform Data Science Workspace uses different terms to refer to similar elements within the API and UI. The API terms are used throughout this tutorial and the following table outlines the correlating terms:
 
-## Objective
-In this step by step tutorial, we will consume the APIs which allow us to create an Engine, an Experiment, scheduled Experiment Runs, and Models. For a detailed list of API documentation please refer to [this document](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html).
+| UI Term | API Term |
+| ---- | ---- |
+| Recipe | Engine |
+| Model | MLInstance |
+| Training and evaluation | Experiment |
+| Service | MLService |
 
----
+An Engine contains machine learning algorithms and logic to solve specific problems. The diagram below provides a visualization showing the API workflow in Data Science Workspace. This tutorial focuses on creating an Engine, the brain of a machine learning Model.
 
-## Prerequisites
+![](./images/api/engine_hierarchy_api.png)
 
-Follow this [Tutorial](../../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
+## Getting started
 
-From the tutorial you should now have the following values:
+This tutorial requires a packaged Recipe file in the form of either a binary artifact or a Docker URL. Follow the [Package source files into a Recipe](../../author_a_model/package_source_files_into_recipe/package_source_files_into_recipe.md) tutorial to create a packaged Recipe file or provide your own.
+
+* Binary artifact : The binary artifact (eg. JAR, EGG) used to create an Engine.  
+* `{DOCKER_URL}` : An URL address to a Docker image of an intelligent service.
+
+This tutorial requires you to have completed the [Authentication to Adobe Experience Platform tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
 * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
 * `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
 * `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
-* Link to a Docker image of an intelligent service
+## Create an Engine
 
----
+Depending on the form of the packaged Recipe file to be included as a part of the API request, an Engine is created through one of two ways:
+- [Create an Engine with a binary artifact](#create-an-engine-with-a-binary-artifact)
+- [Create an Engine with a Docker URL](#create-an-engine-with-a-docker-url)
 
-## API workflow
+### Create an Engine with a binary artifact
 
-We will be consuming the APIs to create an Experiment Run for training and scoring. For this tutorial, we will be focused on Engines, MLInstances, and Experiments. The following chart outlines the relationship between the three and also introduces the idea of a Run and a Model. 
+In order to create an Engine using a local packaged `.jar` or `.egg` binary artifact, you must provide the absolute path to the binary artifact file in your local file system. Consider navigating to the directory containing the binary artifact in a Terminal environment, and execute the `pwd` Unix command for the absolute path.
 
-![](./images/engine_hierarchy_api.png)
+The following call creates an Engine with a binary artifact:
 
-> **Note:** The terms "Engine", "MLInstance", "MLService", "Experiment", and "Model" are referred to as different terms in the UI. If you're coming from the UI, the following table will map the differences.
-> 
-> UI Term | API Term
-> --- | ---
-> Recipe | Engine
-> Model | MLInstance/ Experiment
-> Service | MLService
+#### API Format
 
-### Create an Engine
-
-With the Docker image for the Engine created in the [Package Recipe to Data Science Workspace tutorial](../package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md), we can create a Engine. The Engine is an umbrella entity holding all MLInstances. An Engine is usually tied to one or more Docker images which is specified in the body of the request.
-
-
-#### Request <!-- omit in toc -->
-
-```SHELL
-curl -X POST \
-  https://platform.adobe.io/data/sensei/engines \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'X-API-KEY: {API_KEY}' \
-  -H 'content-type: multipart/form-data' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -F 'engine={
-        "name": "Sensei - Sentiment Analysis",
-        "description": "Description of Sensei - Retail",
-        "type": "Spark",
-        "artifacts": {
-            "default": {
-                "image": {
-                    "location": "{DOCKER_IMAGE}",
-                    "name": "retail",
-                    "executionType": "Spark",
-                    "metadata": {
-                        "__artifacts": "{ARTIFACT_BINARIES}"
-                    }
-                }
-            }
-        }
-    }'
+```http
+POST /engines
 ```
 
-`{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.  
-`{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
-`{DOCKER_IMAGE}`: Link to the Docker image.  
-`{ARTIFACT_BINARIES}`: The binary Engine artifact (eg. JAR, EGG) used for all operations by default.  
+#### Request
 
-> **Note:** If an image that is not `Spark` is used, the `type` and `executionType` fields should be set to the correct type (eg. `Python`, `Pyspark`).
+```shell
+curl -X POST \
+    https://platform.adobe.io/data/sensei/engines \
+    -H 'Authorization: {ACCESS_TOKEN}' \
+    -H 'X-API-KEY: {API_KEY}' \
+    -H 'content-type: multipart/form-data' \
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -F 'engine={
+        "name": "Retail Sales Engine PySpark",
+        "description": "A description for Retail Sales Engine, this Engines execution type is PySpark",
+        "type": "PySpark"
+    }' \
+    -F 'defaultArtifact=@path/to/binary/artifact/file/pysparkretailapp-0.1.0-py3.7.egg'
+```
 
-#### Response <!-- omit in toc -->
+* `engine > name` : The desired name for the Engine. The Recipe corresponding to this Engine will inherit this value to be displayed in Data Science Workspace user interface as the Recipe's name.
+* `engine > description` : An optional description for the Engine. The Recipe corresponding to this Engine will inherit this value to be displayed in Data Science Workspace user interface as the Recipe's description. Do not remove this property, let this value be an empty string if you choose not to provide a description.
+* `engine > type`: The execution type of the Engine. This value corresponds to the language in which the binary artifact was developed in.
+    > **Note:** When uploading a binary artifact to create an Engine, `type` is either `Spark` or `PySpark`.
+* `defaultArtifact` : The absolute path to the binary artifact file used to create the Engine.
+    > **Note:** Ensure to include `@` before the file path.
 
-The response from the Engine creation call is captured below.
+#### Response
 
 ```JSON
 {
-    "id": "{ENGINE_ID}",
-    "name": "Sensei - Retail",
-    "type": "Spark",
-    "created": "2018-11-11T11:11:11.111Z",
-    "updated": "2018-11-11T11:11:11.111Z",
-    "deleted": false,
+    "id": "00000000-1111-2222-3333-abcdefghijkl",
+    "name": "Retail Sales Engine PySpark",
+    "description": "A description for Retail Sales Engine, this Engines execution type is PySpark",
+    "type": "PySpark",
+    "created": "2019-01-01T00:00:00.000Z",
+    "createdBy": {
+        "userId": "your_user_id@AdobeID"
+    },
+    "updated": "2019-01-01T00:00:00.000Z",
     "artifacts": {
         "default": {
             "image": {
-                "location": "{DOCKER_IMAGE}",
-                "name": "retail",
-                "executionType": "Spark",
-                "packagingType": "docker"
-            },
-            "defaultMLInstanceConfigs": [
-                {
-                    "name": "train",
-                    "parameters": [
-                        {
-                            "key": "numFeatures",
-                            "value": "1000"
-                        },
-                        {
-                            "key": "maxIter",
-                            "value": "100"
-                        },
-                        {
-                            "key": "regParam",
-                            "value": "0.15"
-                        }
-                    ]
-                }
-            ]
+                "location": "wasbs://some-storage-location.net/some-path/your-uploaded-binary-artifact.egg",
+                "name": "pysparkretailapp-0.1.0-py3.7.egg",
+                "executionType": "PySpark",
+                "packagingType": "egg"
+            }
         }
     }
 }
 ```
 
-`{ENGINE_ID}`: This ID returned can be used to create a number of MLInstances.
+A successful response shows a JSON payload with information regarding the newly created Engine. The `id` key represents the unique Engine identifier and is required in the next tutorial to create an MLInstance. Ensure the Engine identifier is saved before continuing to the [next steps](#next-steps).
 
----
+### Create an Engine with a Docker URL
+
+In order to create an Engine with a packaged Recipe file stored in a Docker container, you must provide the Docker URL to the packaged Recipe file.
+
+The following call creates an Engine with a Docker URL:
+
+#### API Format
+
+```http
+POST /engines
+```
+
+#### Request
+
+```shell
+curl -X POST \
+    https://platform.adobe.io/data/sensei/engines \
+    -H 'Authorization: {ACCESS_TOKEN}' \
+    -H 'X-API-KEY: {API_KEY}' \
+    -H 'content-type: multipart/form-data' \
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -F 'engine={
+        "name": "Retail Sales Engine Python",
+        "description": "A description for Retail Sales Engine, this Engines execution type is Python",
+        "type": "Python"
+        "artifacts": {
+            "default": {
+                "image": {
+                    "location": "{DOCKER_URL}",
+                    "name": "retail_sales_python",
+                    "executionType": "Python"
+                }
+            }
+        }
+    }' 
+```
+
+* `engine > name` : The desired name for the Engine. The Recipe corresponding to this Engine will inherit this value to be displayed in Data Science Workspace user interface as the Recipe's name.
+* `engine > description` : An optional description for the Engine. The Recipe corresponding to this Engine will inherit this value to be displayed in Data Science Workspace user interface as the Recipe's description. Do not remove this property, let this value be an empty string if you choose not to provide a description.
+* `engine > type`: The execution type of the Engine. This value corresponds to the language in which the Docker image is developed in.
+    > **Note:** When a Docker URL is provided to create an Engine, `type` is either `Python`, `R`, or `Tensorflow`.
+* `artifacts > default > image > location` : Your `{DOCKER_URL}` goes here. A complete Docker URL has the following structure: 
+    ```
+    your_docker_host.azurecr.io/docker_image_file:version
+    ```
+* `artifacts > default > image > name` : An additional name for the Docker image file. Do not remove this property, let this value be an empty string if you choose not to provide an additional Docker image file name.
+* `artifacts > default > image > executionType` : The execution type of this Engine. This value corresponds to the language in which the Docker image is developed in.
+    > **Note:** When a Docker URL is provided to create an Engine, `executionType` is either `Python`, `R`, or `Tensorflow`.
+
+#### Response
+
+```JSON
+{
+    "id": "00000000-1111-2222-3333-abcdefghijkl",
+    "name": "Retail Sales Engine Python",
+    "description": "A description for Retail Sales Engine, this Engines execution type is Python",
+    "type": "Python",
+    "created": "2019-01-01T00:00:00.000Z",
+    "createdBy": {
+        "userId": "your_user_id@AdobeID"
+    },
+    "updated": "2019-01-01T00:00:00.000Z",
+    "artifacts": {
+        "default": {
+            "image": {
+                "location": "{DOCKER_URL}",
+                "name": "retail_sales_python",
+                "executionType": "Python",
+                "packagingType": "docker"
+            }
+        }
+    }
+}
+```
+
+A successful response shows a JSON payload with information regarding the newly created Engine. The `id` key represents the unique Engine identifier and is required in the next tutorial to create an MLInstance. Ensure the Engine identifier is saved before continuing to the next steps.
 
 ## Next steps
 
-This tutorial went over how to consume the APIs to create an Engine, an Experiment, scheduled Experiment Runs, and trained Models. In the [next exercise](../how_to_score_with_recipe/how_to_score_with_recipe.md), you will be making predictions by scoring a new dataset using the top performing trained model.
+You have created an Engine using the API and a unique Engine identifier was obtained as part of the response body. You can use this Engine identifier in the next tutorial as you learn how to [create, train, and evaluate a Model using the API](../../train_evaluate_score_a_model/train_and_evaluate_a_model_tutorial/train_and_evaluate_a_model_using_the_api.md).
