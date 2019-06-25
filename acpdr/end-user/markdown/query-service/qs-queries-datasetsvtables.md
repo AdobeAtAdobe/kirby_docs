@@ -1,6 +1,6 @@
 # Datasets vs tables and schema
 
-1. Review the Dataset list in [Platform UI](https://platform.adobe.com/datasets). 
+1. Review the Dataset list in the UI - https://platform.adobe.com/datasets. 
 
     Observe the dataset names. Note that they have spaces and might otherwise not be SQL safe. 
 
@@ -12,7 +12,7 @@
 
 	![Schema View](graphics/DataSetUI-Schema.png)
 
-3. Jump into [psql](https://platform.adobe.com/datasets/queries/connect) on Platform.
+3. Jump into psql - https://platform.adobe.com/datasets/queries/connect.
 
 	![Image](graphics/psqlcopy.png)
 	
