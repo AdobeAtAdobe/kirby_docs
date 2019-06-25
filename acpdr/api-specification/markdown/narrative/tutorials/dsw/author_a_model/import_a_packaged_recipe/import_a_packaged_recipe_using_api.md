@@ -19,20 +19,20 @@ An Engine contains machine learning algorithms and logic to solve specific probl
 
 This tutorial requires a packaged Recipe file in the form of either a binary artifact or a Docker URL. Follow the [Package source files into a Recipe](../../author_a_model/package_source_files_into_recipe/package_source_files_into_recipe.md) tutorial to create a packaged Recipe file or provide your own.
 
-* Binary artifact : The binary artifact (eg. JAR, EGG) used to create an Engine.  
-* `{DOCKER_URL}` : An URL address to a Docker image of an intelligent service.
+*   Binary artifact : The binary artifact (eg. JAR, EGG) used to create an Engine.  
+*   `{DOCKER_URL}` : An URL address to a Docker image of an intelligent service.
 
 This tutorial requires you to have completed the [Authentication to Adobe Experience Platform tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
-* `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
-* `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
-* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+*   `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
+*   `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
+*   `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
 
 ## Create an Engine
 
 Depending on the form of the packaged Recipe file to be included as a part of the API request, an Engine is created through one of two ways:
-- [Create an Engine with a binary artifact](#create-an-engine-with-a-binary-artifact)
-- [Create an Engine with a Docker URL](#create-an-engine-with-a-docker-url)
+-   [Create an Engine with a binary artifact](#create-an-engine-with-a-binary-artifact)
+-   [Create an Engine with a Docker URL](#create-an-engine-with-a-docker-url)
 
 ### Create an Engine with a binary artifact
 
@@ -63,11 +63,14 @@ curl -X POST \
     -F 'defaultArtifact=@path/to/binary/artifact/file/pysparkretailapp-0.1.0-py3.7.egg'
 ```
 
-* `engine > name` : The desired name for the Engine. The Recipe corresponding to this Engine will inherit this value to be displayed in Data Science Workspace user interface as the Recipe's name.
-* `engine > description` : An optional description for the Engine. The Recipe corresponding to this Engine will inherit this value to be displayed in Data Science Workspace user interface as the Recipe's description. Do not remove this property, let this value be an empty string if you choose not to provide a description.
-* `engine > type`: The execution type of the Engine. This value corresponds to the language in which the binary artifact was developed in.
-    > **Note:** When uploading a binary artifact to create an Engine, `type` is either `Spark` or `PySpark`.
-* `defaultArtifact` : The absolute path to the binary artifact file used to create the Engine.
+*   `engine > name` : The desired name for the Engine. The Recipe corresponding to this Engine will inherit this value to be displayed in Data Science Workspace user interface as the Recipe's name.
+*   `engine > description` : An optional description for the Engine. The Recipe corresponding to this Engine will inherit this value to be displayed in Data Science Workspace user interface as the Recipe's description. Do not remove this property, let this value be an empty string if you choose not to provide a description.
+*   `engine > type`: The execution type of the Engine. This value corresponds to the language in which the binary artifact was developed in.
+
+    >   **Note:** When uploading a binary artifact to create an Engine, `type` is either `Spark` or `PySpark`.
+
+*   `defaultArtifact` : The absolute path to the binary artifact file used to create the Engine.
+
     > **Note:** Ensure to include `@` before the file path.
 
 #### Response
@@ -135,16 +138,21 @@ curl -X POST \
     }' 
 ```
 
-* `engine > name` : The desired name for the Engine. The Recipe corresponding to this Engine will inherit this value to be displayed in Data Science Workspace user interface as the Recipe's name.
-* `engine > description` : An optional description for the Engine. The Recipe corresponding to this Engine will inherit this value to be displayed in Data Science Workspace user interface as the Recipe's description. Do not remove this property, let this value be an empty string if you choose not to provide a description.
-* `engine > type`: The execution type of the Engine. This value corresponds to the language in which the Docker image is developed in.
+*   `engine > name` : The desired name for the Engine. The Recipe corresponding to this Engine will inherit this value to be displayed in Data Science Workspace user interface as the Recipe's name.
+*   `engine > description` : An optional description for the Engine. The Recipe corresponding to this Engine will inherit this value to be displayed in Data Science Workspace user interface as the Recipe's description. Do not remove this property, let this value be an empty string if you choose not to provide a description.
+*   `engine > type`: The execution type of the Engine. This value corresponds to the language in which the Docker image is developed in.
+
     > **Note:** When a Docker URL is provided to create an Engine, `type` is either `Python`, `R`, or `Tensorflow`.
-* `artifacts > default > image > location` : Your `{DOCKER_URL}` goes here. A complete Docker URL has the following structure: 
+
+*   `artifacts > default > image > location` : Your `{DOCKER_URL}` goes here. A complete Docker URL has the following structure: 
+
     ```
     your_docker_host.azurecr.io/docker_image_file:version
     ```
-* `artifacts > default > image > name` : An additional name for the Docker image file. Do not remove this property, let this value be an empty string if you choose not to provide an additional Docker image file name.
-* `artifacts > default > image > executionType` : The execution type of this Engine. This value corresponds to the language in which the Docker image is developed in.
+
+*   `artifacts > default > image > name` : An additional name for the Docker image file. Do not remove this property, let this value be an empty string if you choose not to provide an additional Docker image file name.
+*   `artifacts > default > image > executionType` : The execution type of this Engine. This value corresponds to the language in which the Docker image is developed in.
+
     > **Note:** When a Docker URL is provided to create an Engine, `executionType` is either `Python`, `R`, or `Tensorflow`.
 
 #### Response

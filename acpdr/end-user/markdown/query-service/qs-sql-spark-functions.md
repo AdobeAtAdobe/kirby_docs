@@ -2,8 +2,9 @@
 
 The Spark SQL helpers provide built-in Spark SQL functions to extend SQL funcationality.
 
-Reference: 
-https://spark.apache.org/docs/2.4.0/api/sql/index.html
+Reference: [Spark SQL function documentation](https://spark.apache.org/docs/2.4.0/api/sql/index.html)
+
+> **Note:** not all functions in the external documentation are supported. 
 
 ## Categories
 - [Math and statistical operators and functions](#math-and-statistical-operators-and-functions)

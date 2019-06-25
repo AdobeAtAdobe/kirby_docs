@@ -1,6 +1,6 @@
 # Sample Queries for Adobe Analytics Data
 
-Data from selected Adobe Analytics report suites are transformed into Experience Event XDM schema and ingested into Experience Platform as datasets for you. There are many use cases for Query Service with this Data, and the following sample queries should work with your Adobe Analytics datasets. Information on where your Analytics Fields land in Experience Event XDM can be [found here](analytics-field-map.md).
+Data from selected Adobe Analytics report suites are transformed into Experience Event XDM schema and ingested into Experience Platform as datasets for you. There are many use cases for Query Service with this Data, and the following sample queries should work with your Adobe Analytics datasets. Information on where your Analytics Fields land in Experience Event XDM can be [found here](solutionref/analytics-field-map.md).
 
 A note about the following examples: you will need to edit the SQL to fill in the expected parameters for your queries based on the dataset, eVar, event, or timeframe you are interested in evaluating. You will need to provide parameters wherever you see { } in the SQL.
 
