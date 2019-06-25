@@ -203,3 +203,19 @@ GROUP BY Day, Activities.activityID, ExperienceID, SegmentID._id
 ORDER BY Day DESC, Activities.activityID, ExperienceID ASC, SegmentID._id ASC, Visitors DESC
 LIMIT 20
 ```
+
+## Return mboxnames and Count of Records for a Given Day
+
+```
+SELECT
+  _experience.target.mboxname,
+  COUNT(timestamp) AS records
+FROM
+  adobe_target_experience_events
+WHERE
+  _ACP_YEAR= {target_year} AND 
+  _ACP_MONTH= {target_month} AND 
+  _ACP_DAY= {target_day}
+  GROUP BY _experience.target.mboxname ORDER BY records DESC
+LIMIT 100
+```
