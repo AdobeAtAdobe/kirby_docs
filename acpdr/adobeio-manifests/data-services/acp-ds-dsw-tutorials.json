@@ -8,7 +8,7 @@
 	"meta_description": "Manifest file for DSW Tutorials",
 	"publish_date": "17/09/2018",
 	"show_edit_github_banner": false,
-	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
+	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/staging/acpdr",
 	"pages": [
 		{
 			"importedFileName": "access_and_explore_your_data_tutorial",
@@ -20,7 +20,7 @@
 			"importedFileName": "analyze_your_data_using_jupyter_notebooks",
 			"pages": [],
 			"path": "api-specification/markdown/narrative/tutorials/dsw/prepare_your_data/analyze_your_data_using_jupyter_notebooks/analyze_your_data_using_jupyter_notebooks.md",
-			"title": "Analyze your data using Jupyter notebooks"
+			"title": "Importing Package Recipes"
 		},
 		{
 			"importedFileName": "create_a_recipe_using_jupyter_notebooks",
@@ -77,12 +77,6 @@
 			"title": "Optimize your Model using the Sensei Model Insights Framework"
         },
         {
-			"importedFileName": "publish_model_as_service_ui",
-			"page": [],
-			"path": "api-specification/markdown/narrative/tutorials/dsw/operationalize_a_model/publish_model_as_a_service/publish_model_as_service_ui.md",
-			"title": "Publish a Model as a Service in the UI"
-        },
-        {
 			"importedFileName": "publish_model_as_service_using_the_api",
 			"page": [],
 			"path": "api-specification/markdown/narrative/tutorials/dsw/operationalize_a_model/publish_model_as_a_service/publish_model_as_service_using_the_api.md",
@@ -90,8 +84,6 @@
         }
 	],
 	"app2app_map": {
-		"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/":"/apis/experienceplatform/home/data-science-workspace.html",
-		"api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html",
 		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/":"/apis/experienceplatform/home/services/allservices.html", 
 		"api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation.html", 
 		"api-specification/markdown/narrative/technical_overview/streaming_ingest/": "/apis/experienceplatform/home/data-ingestion.html",
