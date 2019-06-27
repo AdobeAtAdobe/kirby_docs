@@ -46,4 +46,5 @@ Click **Create Query** in the Overview or Log tab to open the query editor and c
 
 ![](graphics/queryeditor.jpg)
 
-Type your query in the editor. As you type, the editor autocompletes SQL reserved words, as well as tables and field names within tables. Click the Play button to run the the query. Use the space below the editor to view the query results and the query console. The query console shows what Query Service is currently doing, including indicating when a query has been returned. Click over to the results tab to view the query results. See the [query editor](qs-editor.md) guide for more information on using the query editor. 
+Type your query in the editor. As you type, the editor autocompletes SQL reserved words, as well as tables and field names within tables.  Click the Play button to run the the query. Use the space below the editor to view the query results and the query console. The query console shows what Query Service is currently doing, including indicating when a query has been returned. Click over to the results tab to view the query results.
+
