@@ -339,7 +339,4 @@ where transaction_mode is one of:
 
     ISOLATION LEVEL { SERIALIZABLE | REPEATABLE READ | READ COMMITTED | READ UNCOMMITTED }
     READ WRITE | READ ONLY
-````
-
-Parameters
-see [SET TRANSACTION](#set-transaction) for information on the parameters to this statement. 
+```
