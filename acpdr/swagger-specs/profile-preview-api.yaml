@@ -52,8 +52,7 @@ paths:
             \ The model against which this predicate is to be evaulated. Please note\
             \ that 'touchpoint' is not treated as model as it can be associated with\
             \ any of the models like profile.\ngraphType - Graph Type you want to get\
-            \ the cluster from. Possible values are (coop - graph built by using coop\
-            \ data, pdg - private device graph, psr - propriatery stiched rules)"
+            \ the cluster from. Possible values are (None - Perform no identity stitching, Private Graph - Perform identity stitching based on your private identity graph. If no `graph-type` is provided, this is the default.)"
           required: true
           schema:
             $ref: "#/definitions/PreviewQuerySessionlessRequest"

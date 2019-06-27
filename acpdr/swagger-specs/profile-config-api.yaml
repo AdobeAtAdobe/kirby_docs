@@ -353,14 +353,11 @@ definitions:
     properties:
       type:
         type: string
-        example: coop
+        example: Private Graph
         description: identity graph type
         enum:
-        - none
-        - pdg
-        - coop
-        - auto
-        - psr
+        - None
+        - Private Graph
     description: identity graph
   AttributeMerge:
     type: object
@@ -398,7 +395,7 @@ definitions:
         description: path of the attribute need to be updated
       value:
         type: string
-        example: coop
+        example: Private Graph
         description: the new value used to update the specified attribute
     description: Patch operation
 parameters:

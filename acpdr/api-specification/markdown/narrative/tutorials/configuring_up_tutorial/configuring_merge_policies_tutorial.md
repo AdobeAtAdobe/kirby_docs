@@ -56,9 +56,8 @@ __`IdentityGraph` object__
 
 Where `{IDENTITY_GRAPH_TYPE}` is one of the following:
 
-* "none" : Do not do any identity stitching
-* "auto" (default) : Use the default identity graph; private identity graph (pdg)
-* "pdg" : Private device graph; refers to your organization's private identity graph
+* None - Perform no identity stitching.
+* Private Graph - Perform identity stitching based on your private identity graph. If no `graph-type` is provided, this is the default.
 
 __Example `IdentityGraph`__
 
@@ -313,7 +312,7 @@ A successful response returns a paginated list of merge policies that fit within
             },
             "version": 1,
             "identityGraph": {
-                "type": "pdg"
+                "type": "Private Graph"
             },
             "attributeMerge": {
                 "type": "timestampOrdered"
