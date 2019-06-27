@@ -1,75 +1,58 @@
-# Configuring edge destinations and projections via API
+# Configure edge destinations and projections using APIs
 
-## Overview
+This document provides a tutorial for configuring edge destinations and projections using Adobe Experience Platform APIs. This tutorial covers only some of the Edge Profile Projection Configuration API. For a comprehensive list of endpoints, see the [API Reference](../../../../../../acpdr/swagger-specs/edge-profile-projection-config.yaml).
 
-This tutorial walks you through configuration for Edge Service, which is discussed [here](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md#edge-service).
+The tutorial covers the following steps:
 
-Configuration for Edge Service involves creating projection configurations and the destinations they should be routed to, as used by Projection Service. 
+1. [List existing destinations](#list-destinations)  
+1. [Create a destination](#create-a-destination)  
+1. [List projection configurations](#list-projection-configurations)  
+1. [Create a projection configuration](#create-a-projection-configuration)
 
-This tutorial demonstrates the following configuration workflow:
+## Getting started
 
-[List existing destinations](#step-1-list-destinations)  
-[Create a destination](#step-2-create-a-destination)  
-[List projection configurations](#step-3-list-projection-configurations)  
-[Create a projection configuration](#step-4-create-a-projection-configuration)
+This tutorial requires a working understanding of the Experience Platform services involved in edge destinations and projections. Before beginning this tutorial, please review the documentation for the following services:
 
-> **Note:** Creating a projection configuration entails listing XDM field names indicating which data to replicate on the edges or pipeline. The [Appendix](#appendix) below includes details on this, `selector`, property.
+- [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, real-time consumer profile based on aggregated data from multiple sources.
+- [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
 
-### Projection Service components
+## Tutorial
 
-#### Projection destination
+This tutorial requires you to have completed the [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
-A projection destination defines where to route projections when they are created or changed. Projection Service supports routing to one or more edge, or projections can routed to a local pipeline topic from which they can be consumed by solutions or partners.
+* Authorization: Bearer `{ACCESS_TOKEN}`
+* x-api-key: `{API_KEY}`
+* x-gw-ims-org-id: `{IMS_ORG}`
 
-#### Projection configurations
+All POST, PUT, and PATCH requests require an additional header:
 
-Projection configurations are information about what data, of a complete union view, should be replicated to the edges or pipeline. 
+* Content-Type: application/json
 
-### Prerequisite topics
+## List destinations 
 
-[Unified Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md) is a generic lookup entity store, and is used to manage any XDM Platform data. Unified Profile facilitates building customer personalization use cases by merging data across various enterprise data assets and providing access to that unified data. Unified Profile provides tools for looking up entities by ID, as well as robust segmentation tools.  
-[Authenticating and Accessing Adobe Experience Platform APIs](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) - This tutorial shows the initial steps to set up an integration in Adobe I/O Console and use an integration to access Adobe Experience Platform APIs. The steps in this tutorial describe how to gain access to the following values needed for required headers:
-* IMS Organization ID
-* API Key (Client ID)
-* Access Token
+Using the [Profile Configuration API](../../../../../../acpdr/swagger-specs/profile-config-api.yaml), you can list the edge destinations that have already been configured for your organization.
 
-### Requirements
+#### API format
 
-All service calls in this document require the following headers. Some service calls may require additional headers which will be listed in context.
-
-|Header|Description|Example Value|
-|---|---|---|
-|Authorization|The Access Token as described in [Prerequisite topics](#prerequisite-topics), prefixed with "Bearer "|Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ....|
-|x-gw-ims-org-id|The IMS Organization ID as described in [Prerequisite topics](#prerequisite-topics)|17FA2AFD56CF35747F000101@AdobeOrg|
-|x-api-key|The API Key (Client ID) as described in [Prerequisite topics](#prerequisite-topics)|25622d14d3894ea590628717f2cb7462|
-
----
-
-## Step 1: List destinations 
-
-Prior to creating a new destination, you should understand what edge projection destinations have already been configured.
-
-#### Service endpoint
-
-```
-GET https://platform.adobe.io/data/core/ups/config/destinations
+```http
+GET /config/destinations
 ```
 
-#### Example request
+#### Request
 
-```
+```shell
 curl -X GET \
   https://platform.adobe.io/data/core/ups/config/destinations \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
-  -H 'Accept: application/vnd.adobe.platform.projectionDestinationList+json; version=1' \
-  -H 'cache-control: no-cache' 
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-#### Example response
+#### Response
 
-```
+A successful response returns a list of edge destinations within `_embedded > projectionDestinations`:
+
+```json
 {
     "_links": {
         "self": {
@@ -96,55 +79,29 @@ curl -X GET \
 }
 ```
 
-## Step 2: Create a destination
+## Create a destination
 
-If the destination you require does not already exist, create a new one. Depending on the destination type, 
+If the destination you require does not already exist, you can create a new one with a POST request. There are two kinds of destinations you can create: **edge destinations** and **pipeline destinations**. The following sections demonstrate how to make each of these destination types.
 
-#### Service endpoint
+### Create an edge destination
 
-```
-POST https://platform.adobe.io/data/core/ups/config/destinations
-```
+#### API format
 
-The request body depends on the destination type, each of which is demonstrated.
-
-#### Request body - Edge destination type
-
-```
-{
-  "type": "EDGE",
-  "dataCenters": ["{DATA_CENTER}"],
-  "ttl": 3600
-}
+```http
+POST /config/destinations
 ```
 
-Where `dataCenters` is a string array which could contain any of the following:
+#### Request
 
-* "OR1" - Western United States
-* "VA5" - Eastern United States
+The following API call creates a new edge destination.
 
-#### Request body - Pipeline destination type
-
-```
-{
-  "type": "PIPELINE",
-  "topic": "{TOPIC}"
-}
-```
-
-Where `topic` names an existing pipeline topic to which to route projections.
-
-#### Example request
-
-```
+```shell
 curl -X POST \
-  https://platform.adobe.io/data/core/ups/preview \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
+  https://platform.adobe.io/data/core/ups/config/destinations \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
   -H 'Content-Type: application/json' \
-  -H 'Accept: application/vnd.adobe.platform.projectionDestination+json; version=1' \
-  -H 'cache-control: no-cache' \
   -d '{
   "type": "EDGE",
   "dataCenters": [
@@ -154,9 +111,16 @@ curl -X POST \
 }'
 ```
 
-#### Example response
+- `type`: The type of destination to be created. By setting its value to "EDGE", this request creates an edge destination.
+- `dataCenters`: A string array that lists the destination's data centers. The array can contain any of the following:
+    - "OR1" - Western United States
+    - "VA5" - Eastern United States
 
-```
+#### Response
+
+A successful response returns the details of the newly created edge destination.
+
+```json
 {
     "self": {
         "href": "/data/core/ups/config/destinations/cc5a3bd1-f2b9-4965-b9bd-4e7416a02cd4",
@@ -172,39 +136,71 @@ curl -X POST \
 }
 ```
 
-## Step 3: List projection configurations
+### Create a pipeline destination
 
-Get a list of all projection configurations in existence.
+#### API format
 
-#### Service endpoint
-
-You can access projection configurations for a particular schema, schema and name, or use no filters to access all projection configurations.
-
-```
-GET https://platform.adobe.io/data/core/ups/config/projections
-
-GET https://platform.adobe.io/data/core/ups/config/projections?schemaName={SCHEMA_NAME}
-
-GET https://platform.adobe.io/data/core/ups/config/projections?schemaName={SCHEMA_NAME}&name={PROJECTION_NAME}
+```http
+POST /config/destinations
 ```
 
-> **Note:** When using the `name` parameter, `schemaName` is required, as a projection configuration name is only unique in the context of the schema.
+#### Request
 
-#### Example request
+The following request creates a new pipeline destination.
 
+```shell
+curl -X POST \
+  https://platform.adobe.io/data/core/ups/config/destinations \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'Content-Type: application/json' \
+  -d '{
+    "type": "PIPELINE",
+    "topic": "{TOPIC}"
+  }'
 ```
+
+- `type`: The type of destination to be created. By setting its value to "PIPELINE", this request creates a pipeline destination.
+- `topic`: The existing pipeline topic that the destination will route to.
+
+
+## List projection configurations
+
+You can use the [Edge Profile Projection Configuration API](../../../../../../acpdr/swagger-specs/edge-profile-projection-config.yaml) to lookup and list projection configurations that have been created for your organization.
+
+#### API format
+
+An API call to this endpoint returns all projection configurations available in your organization. By adding parameters to the request path, however, you can access projection configurations for a particular schema, or lookup an individual projection by its name.
+
+```http
+GET /config/projections
+
+GET /config/projections?schemaName={SCHEMA_NAME}
+
+GET /config/projections?schemaName={SCHEMA_NAME}&name={PROJECTION_NAME}
+```
+* `{SCHEMA_NAME}`: The name of the schema associated with the projection configuration you want to access.
+* `{PROJECTION_NAME}`: The name of the projection configuration you want to access.
+> **Note:** `schemaName` is required when using the `name` parameter, as a projection configuration name is only unique in the context of a schema.
+
+#### Request
+
+The following request lists all projection configurations associated with the XDM Profile schema.
+
+```shell
 curl -X GET \
   https://platform.adobe.io/data/core/ups/config/projections?schemaName=_xdm.context.profile \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
-  -H 'Accept: application/vnd.adobe.platform.projectionConfigList+json; version=1' \
-  -H 'cache-control: no-cache' 
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-### Example response
+#### Response
 
-```
+A successful response returns a list of projection configurations within the root `_embedded` attribute, contained in `projectionConfigs`:
+
+```json
 {
     "_links": {
         "self": {
@@ -252,49 +248,43 @@ curl -X GET \
 }
 ```
 
-## Step 4: Create a projection configuration
+## Create a projection configuration
 
-Create a new projection configuration that will dictate which XDM fields are made available on the edges or pipeline as persisted or published by Projection Service.
+You can create (POST) a new projection configuration that will dictate which XDM fields are made available on the edges or pipeline as persisted or published by Projection Service.
 
-#### Service endpoint
+#### API format
 
-```
-POST https://platform.adobe.io/data/core/ups/config/projections?schemaName={SCHEMA_NAME}
-```
-
-#### Request body
-
-```
-{
-  "selector": "{SELECTOR_STATEMENT}",
-  "name": "{NAME}",
-  "destinationId": "{DESTINATION_ID}"
-}
+```http
+POST /config/projections?schemaName={SCHEMA_NAME}
 ```
 
-Where `selector` is a string containing a list of properties under the extended data model that are to be replicated to the edges, i.e. the mask to apply on top of the data in Unified Profile to generate the projection. For more on this property, see [Selector](#selector) in the appendix below.
+- `{SCHEMA_NAME}`: The name of the schema associated with the XDM fields you want to configure for projection.
 
-#### Example request
+#### Request
 
-```
+```shell
 curl -X POST \
   https://platform.adobe.io/data/core/ups/config/projections?schemaName=_xdm.context.profile \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg'
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
   -H 'Content-Type: application/json' \
-  -H 'Accept: application/vnd.adobe.platform.projectionConfig+json; version=1' \
-  -H 'cache-control: no-cache' \
   -d '{
-  "selector": "emails,person(firstName)",
-  "name": "my_test_projection",
-  "destinationId": "cc5a3bd1-f2b9-4965-b9bd-4e7416a02cd4"
-}'
+    "selector": "emails,person(firstName)",
+    "name": "my_test_projection",
+    "destinationId": "cc5a3bd1-f2b9-4965-b9bd-4e7416a02cd4"
+  }'
 ```
 
-### Example response
+- `selector`: A string containing a list of properties within the schema that are to be replicated to the edges. This creates a mask to apply on top of Real-time Customer Profile data to generate the projection. To learn more on how to construct selectors, see the [selector](#selector) section in the appendix below.
+- `name`: A descriptive name for the new projection configuration.
+- `destinationId`: The identifier for the edge or pipeline destination the data will be projected to.
 
-```
+#### Response
+
+A successful response returns the details of the newly created projection configuration.
+
+```json
 {
     "_links": {
         "destination": {
@@ -330,42 +320,35 @@ curl -X POST \
 }
 ```
 
----
-
-## Conclusion
-
-Adobe Experience Platform solutions like Adobe Target and Adobe Campaign use the Edge Service features driven by the configurations discussed in this tutorial, allowing you to provide real-time personalization.
-
-This tutorial covers only some of the Edge Profile Projection Configuration API. For more details, see the [API Reference](../../../../../../acpdr/swagger-specs/edge-profile-projection-config.yaml).
-
 ## Appendix
 
 ### Selector
 
-Along with the schema to which it applies and the destination to which it should be routed, a projection configuration names the properties to include in projections as a property referred to as the `selector`. A selector is a comma delimited list of XDM field names, where dot notation is used to drill down to a field within a parent entity. 
+A selector is a comma-separated list of XDM field names. In a projection configuration, the selector designates the properties to be included in projections.
 
-The format of the `selector` parameter value is loosely based on XPath syntax. The supported syntax is summarized below; additional examples are provided in the following section.
+The format of the `selector` parameter value is loosely based on XPath syntax. Supported syntax is summarized below, with additional examples provided in the following section.
 
-* Use a comma-separated list to select multiple fields.
-* Use a.b to select a field b that is nested within field a; use a.b.c to select a field c nested within b, which in turn is nested under field a.
-* Specify field sub-selectors to request only specific sub-fields by placing expressions in parentheses "( )" after any selected field. For example: addresses(type,city.country) returns only the item type and city's country, for each addresses array element.
-* Expressions using sub-selectors are equivalent to their expanded form. For example: addresses(type,city.country) is equivalent to addresses.type,addresses.city.country. The former style of expression is preferred: it is more concise and a better illustration of the field hierarchy.
+* Use commas to select multiple fields. Do not use spaces.
+* Use dot-notation to select nested fields. 
+    * For example, to select a field named "field" which is nested within field named "foo", use the selector "foo.field".
+* When including a field that contains sub-fields, all sub-fields are also projected by default. However, you can filter the sub-fields returned by using parentheses `"( )"`.
+    * For example, `addresses(type,city.country)` returns only the address type and the country in which the address city is located for each `addresses` array element.
+    * The above example is equivalent to `addresses.type,addresses.city.country`.
+    * Both dot-notation and parenthetical notation are supported for referencing sub-fields. However, it is best practice to use dot-notation because it is more concise and provides a better illustration of field hierarchy.
+* Each field in a selector is specified relative to the root of the response.
+    * If the data is a collection of resources, the projection will include an array of resources.
+    * If the data is a single resource, the projection will include fields that are relative to that resource.
+    * If the field you select is (or is part of) an array, the projection will include the selected portion of all elements in the array.
 
-#### Examples of the `selector` parameter
+### Examples of the `selector` parameter
 
-The selector parameter value is a comma-separated list of fields, and each field is specified relative to the root of the response:
+The following examples show sample `selector` parameters, followed by the structured values they represent.
 
-* if the data is a collection of resources, the projection will include an array of resources
-* if the data is a single resource, the projection will include fields that are relative to that resource
-* if the field you select is (or is part of) an array, the projection will include the selected portion of all elements in the array.
-
-The following demonstrates some selectors.
-
-__"person.lastName"__
+**"person.lastName"**
 
 Returns the `lastName` sub-field of the `person` object in the requested resource.
 
-```
+```json
 {
   "person": {
     "lastName": "Smith"
@@ -373,32 +356,38 @@ Returns the `lastName` sub-field of the `person` object in the requested resourc
 }
 ```
 
-__"addresses"__
+**"addresses"**
 
 Returns all elements in the `addresses` array, including all fields in each element, but no other fields.	
 
-```
+```json
 {
   "addresses": [
     {
       "type": "home",
       "street1": "100 Great Mall Parkway",
-      "city": "San Jose"
+      "city": {
+        "name": "San Jose",
+        "country": "United States"
+      }
     },
     {
       "type": "work",
       "street1": "1 Main Street",
-      "city": "San Jose"
+      "city": {
+        "name": "San Jose",
+        "country": "United States"
+      }
     }
   ]
 }
 ```
 
-__"person.lastName,addresses"__
+**"person.lastName,addresses"**
 
-Returns both the `person.lastName` field and all elements in the `addresses` array.	
+Returns the `person.lastName` field and all elements in the `addresses` array.	
 
-```
+```json
 {
   "person": {
     "lastName": "Smith"
@@ -407,52 +396,68 @@ Returns both the `person.lastName` field and all elements in the `addresses` arr
     {
       "type": "home",
       "street1": "100 Great Mall Parkway",
-      "city": "San Jose"
+      "city": {
+        "name": "San Jose",
+        "country": "United States"
+      }
     },
     {
       "type": "work",
       "street1": "1 Main Street",
-      "city": "San Jose"
+      "city": {
+        "name": "San Jose",
+        "country": "United States"
+      }
     }
   ]
 }
 ```
 
-__"addresses.city"__
+**"addresses.city"**
 
 Returns only the city field for all elements in the addresses array.
 
-> **Note:** Whenever a nested field is returned, the projection includes the enclosing parent objects. The parent fields do not include any other child fields unless they are also selected explicitly.
-
-```
+```json
 {
   "addresses": [
     {
-      "city": "San Jose"
+      "city": {
+        "name": "San Jose",
+        "country": "United States"
+      }
     },
     {
-      "city": "San Jose"
+      "city": {
+        "name": "San Jose",
+        "country": "United States"
+      }
     }
   ]
 }
 ```
 
-By default, if a projection configuration specifies particular objects, the projection will contain the objects in their entirety. The customer can configure a projection that includes only certain sub-fields within the selected objects. The customer can do this using "( )" sub-selection syntax, as in the next example:
+> **Note:** Whenever a nested field is returned, the projection includes the enclosing parent objects. The parent fields do not include any other child fields unless they are also selected explicitly.
 
-__"addresses(type,city)"__
+**"addresses(type,city)"**
 
-Returns only the values of the `type` and `city` fields for each element in the `addresses` array.	
+Returns only the values of the `type` and `city` fields for each element in the `addresses` array. All other sub-fields contained in each `addresses` element are filtered out.
 
-```
+```json
 {
   "addresses": [
     {
       "type": "home",
-      "city": "San Jose"
+      "city": {
+        "name": "San Jose",
+        "country": "United States"
+      }
     },
     {
       "type": "work",
-      "city": "San Jose"
+      "city": {
+        "name": "San Jose",
+        "country": "United States"
+      }
     }
   ]
 }
