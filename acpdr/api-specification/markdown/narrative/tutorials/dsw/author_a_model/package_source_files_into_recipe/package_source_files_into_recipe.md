@@ -78,7 +78,7 @@ If you have not done so, clone the github repository onto your local system with
 git clone https://github.com/adobe/experience-platform-dsw-reference.git
 ```
 
-Navigate to the directory `experience-platform-dsw-reference/recipes/python/retail`. Here, you will find the scripts `login.sh` and `build.sh` which you will use to log in to docker and to build the python docker image. If you have your [docker credentials](#package-the-source-files) ready, enter the following commands in order:
+Navigate to the directory `experience-platform-dsw-reference/recipes/python/retail`. Here, you will find the scripts `login.sh` and `build.sh` which you will use to log in to docker and to build the python docker image. If you have your [docker credentials](#docker-based-model-authoring) ready, enter the following commands in order:
 
 ```BASH
 # for logging in to docker
@@ -105,7 +105,7 @@ If you have not done so, clone the github repository onto your local system with
 git clone https://github.com/adobe/experience-platform-dsw-reference.git
 ```
 
-Navigate to the directory `experience-platform-dsw-reference/recipes/R/Retail - GradientBoosting` inside your cloned repository. Here, you'll find the files `login.sh` and `build.sh` which you will use to log in to docker and to build the R docker image. If you have your [docker credentials](#package-the-source-files) ready, enter the following commands in order:
+Navigate to the directory `experience-platform-dsw-reference/recipes/R/Retail - GradientBoosting` inside your cloned repository. Here, you'll find the files `login.sh` and `build.sh` which you will use to log in to docker and to build the R docker image. If you have your [docker credentials](#docker-based-model-authoring) ready, enter the following commands in order:
 
 ```BASH
 # for logging in to docker

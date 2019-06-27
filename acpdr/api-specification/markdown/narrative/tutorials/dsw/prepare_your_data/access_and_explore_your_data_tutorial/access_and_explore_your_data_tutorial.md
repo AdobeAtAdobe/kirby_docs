@@ -86,7 +86,7 @@ python bootstrap.py
 ```
 > **Note:** Python 2.7 has to be installed before you can run the script. You can download Python from the [official site](https://www.python.org/download/releases/2.7/).
 
-> **Note:** The script may several minutes to complete.
+> **Note:** The script may take several minutes to complete.
 
 ## Preview your schema and data
 
@@ -111,4 +111,4 @@ To continue working with the ingested data:
 * [Analyze your data using Jupyter notebooks](../analyze_your_data_using_jupyter_notebooks/analyze_your_data_using_jupyter_notebooks.md)
     * Use Jupyter notebooks in Data Science Workspace to access, explore, visualize, and understand your data.
 * [Package source files into a Recipe](../../author_a_model/package_source_files_into_recipe/package_source_files_into_recipe.md)
-    * Follow this tutorial to learn you how to bring your own Model into Data Science Workspace by packaging source files in an importable Recipe file.
+    * Follow this tutorial to learn how to bring your own Model into Data Science Workspace by packaging source files in an importable Recipe file.

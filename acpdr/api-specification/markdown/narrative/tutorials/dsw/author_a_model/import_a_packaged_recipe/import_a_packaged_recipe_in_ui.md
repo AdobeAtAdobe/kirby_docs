@@ -169,7 +169,7 @@ Congratulations, you've created the Retail Sales recipe! Move on to the [next st
 
 ### Import Docker based recipe - R
 
-In the [Package source files into a Recipe]() tutorial, a Docker URL was provided at the end of building the Retail Sales recipe using R source files. 
+In the [Package source files into a Recipe](../package_source_files_into_recipe/package_source_files_into_recipe.md) tutorial, a Docker URL was provided at the end of building the Retail Sales recipe using R source files. 
 
 1. Paste the Docker URL corresponding to the packaged recipe built using R source files in the **Source URL** field. Next, import the provided configuration file by dragging and dropping, or use the file system **Browser**. The provided configuration file can be found at `experience-platform-dsw-reference/recipes/R/Retail\ -\ GradientBoosting/retail.config.json`. Click **Next** when both items have been supplied.
 ![](./images/ui/recipe_source_R.png)
