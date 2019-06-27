@@ -9,6 +9,7 @@ This document provides answers to frequently asked questions about Adobe Experie
 - [Where can I find my API key?](#where-can-i-find-my-api-key)
 - [How do I get an access token?](#how-do-i-get-an-access-token)
 - [How do I use query parameters?](#how-do-i-use-query-parameters)
+- [Can I use Postman to make calls to Platform APIs?](#can-i-use-postman-to-make-calls-to-platform-apis)
 
 ### Errors and troubleshooting
 - [API status codes](#api-status-codes)
@@ -30,7 +31,7 @@ The following is a list of answers to frequently asked questions about Adobe Exp
 
 ## What are Experience Platform APIs?
 
-Experience Platform offers multiple RESTful APIs that use HTTP requests to access Platform resources. These APIs (sometimes called **services**) each expose multiple endpoints, and allow you to perform operations to list (GET), lookup (GET), edit (PUT and/or PATCH), and delete (DELETE) resources.
+Experience Platform offers multiple RESTful APIs that use HTTP requests to access Platform resources. These Service APIs each expose multiple endpoints, and allow you to perform operations to list (GET), lookup (GET), edit (PUT and/or PATCH), and delete (DELETE) resources.
 
 For more information on specific endpoints and operations available for each service, please see the [API Reference documentation](../../../../../../acdpr/swagger-specs).
 
@@ -99,9 +100,9 @@ For more information on specific endpoints in Platform APIs, including required 
 
 ## What is my IMS organization?
 
-An IMS organization is an organization that has access to Experience Platform. An IMS organization assigns developer and user permissions for Platform to the organization's members.
+An IMS organization is an an Adobe representation of a customer. Any licensed Adobe solutions are integrated with this customer organization. When an IMS organization is entitled to Experience Platform, it can assign access to developers.
 
-An IMS org ID is required as a header in all API requests. This ID can be found through the [Adobe I/O Console](https://console.adobe.io/): in the **Integrations** tab, navigate to the **Overview** section for any particular integration to find the ID under **Client Credentials**. 
+The IMS Org ID (`x-gw-ims-org-id`) represents the organization that an API call should be executed for, and is therefore required as a header in all API requests. This ID can be found through the [Adobe I/O Console](https://console.adobe.io/): in the **Integrations** tab, navigate to the **Overview** section for any particular integration to find the ID under **Client Credentials**. 
 
 For a step-by-step walkthrough of how to authenticate into Platform, see the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
 
@@ -116,6 +117,10 @@ For a step-by-step walkthrough of how to authenticate to Platform, see the [auth
 Access tokens are required in the Authorization header of all API calls. They can be generated using a `curl` command, provided you have access to an integration for an IMS organization. Access tokens are only valid for 24 hours, after which a new token must be generated to continue using the API.
 
 For details on generating access tokens, see the [Generate access token](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md#generate-access-token) section in the authentication tutorial.
+
+## Can I use Postman to make calls to Platform APIs?
+
+[Postman](https://www.getpostman.com/) is a useful tool for visualizing calls to RESTful APIs. This [Medium post](https://medium.com/adobetech/using-postman-for-jwt-authentication-on-adobe-i-o-7573428ffe7f) describes how you can set up Postman to automatically perform authentication and use it to consume Experience Platform APIs.
 
 ## How do I use query parameters?
 
@@ -132,6 +137,7 @@ GET /batches?createdAfter=1559775880000&orderBy=desc:created
 ```
 
 For detailed information on which query parameters are available for a specific service or endpoint, please review the service-specific documentation.
+
 
 ## Errors and troubleshooting
 
@@ -223,7 +229,7 @@ This error message displays when an IMS org header (`x-gw-ims-org-id`) is missin
 }
 ```
 
-This error message displays when the organization ID header (`x-gw-ims-org-id`) is invalid. Ensure that you have provided the correct ID for your IMS organization in the header before trying again.
+This error message displays when the user or Adobe I/O integration (identified by the [access token](#how-do-I-get-an-access-token) in the `Authorization` header) is not entitled to make calls to Experience Platform APIs for the IMS Org provided in the `x-gw-ims-org-id` header. Ensure that you have provided the correct ID for your IMS organization in the header before trying again.
 
 If you do not know your organization ID, you can find it in the [Adobe I/O Console](https://console.adobe.io): in the **Integrations** tab, navigate to the **Overview** section for a specific integration to find the ID under **Client Credentials**.
 
@@ -250,8 +256,8 @@ Service | API Reference | Troubleshooting
 Catalog | [Catalog Service API](../../../../../swagger-specs/catalog.yaml)
 Data Ingestion | [Data Ingestion API](../../../../../swagger-specs/ingest-api.yaml) | [Batch Data Ingestion troubleshooting guide](../ingest_architectural_overview/batch_data_ingestion_troubleshooting_guide.md)
 Data Science Workspace | [Sensei Machine Learning API](../../../../../swagger-specs/sensei-ml-api.yaml)
-Data Usage Labeling and Enforcement (DULE) | [DULE Policy Service](../../../../../swagger-specs/dule-policy-service.yaml)
+Data Usage Labeling and Enforcement (DULE) | [DULE Policy Service API](../../../../../swagger-specs/dule-policy-service.yaml)
 Experience Data Model (XDM) | [Schema Registry API](../../../../../swagger-specs/schema-registry.yaml) | [XDM System FAQ and troubleshooting guide](../schema_registry/xdm_troubleshooting/xdm_system_faq_and_troubleshooting.md)
-Identity Service | [Identity Service](../../../../../swagger-specs/id-service-api.yaml) | [Identity Service FAQ and recommendations](../identity_services_architectural_overview/identity_services_faq.md)
+Identity Service | [Identity Service API](../../../../../swagger-specs/id-service-api.yaml) | [Identity Service FAQ and recommendations](../identity_services_architectural_overview/identity_services_faq.md)
 Query Service | [Query Service API](../../../../../swagger-specs/qs-api.yaml) | [Query Service errors and troubleshooting](../../../../../end-user/markdown/query-service/qs-errors-troubleshooting.md)
 Real-time Customer Profile | [Real-time Customer Profile APIs](../../../../../swagger-specs/unified-profile-service-apis.yaml)
