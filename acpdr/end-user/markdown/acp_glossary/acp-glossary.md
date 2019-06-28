@@ -1,5 +1,6 @@
 # Adobe Experience Platform Glossary
 
+[A](#a) &bull; [B](#b) &bull; [C](#c) &bull; [D](#d) &bull; [E](#e) &bull; [F](#f) &bull; [G](#g) &bull; [H](#h) &bull; [I](#i) &bull; [J](#j) &bull; [K](#k) &bull; [L](#l) &bull; [M](#m) &bull; [N](#n) &bull; [O](#o) &bull; [P](#p) &bull; [Q](#q) &bull; [R](#r) &bull; [S](#s) &bull; [T](#t) &bull; [U](#u) &bull; [V](#v) &bull; [W](#w) &bull; [X](#x) &bull; [Y](#y) &bull; [Z](#z)
 
 ## A
 
@@ -45,6 +46,8 @@ __Audience__: An audience is a collection of profiles that meet the segment defi
 <a name="Audience Snapshot"></a>
 __Audience Snapshot__: An audience snapshot is a segment definition capturing all who meet the segment rules at the time of segmentation.
 
+[Back to top](#adobe-experience-platform-glossary)
+
 ## B
 
 <a name="Backfill Period"></a>
@@ -61,6 +64,8 @@ __Build:__ In Experience Platform Launch, a build is a deployed library. The bui
 
 <a name="Business Intelligence Tools"></a>
 __Business Intelligence Tools:__ Business intelligence, also known as "BI" tools are primarily integrated with the Experience Platform Query Service. BI tools are types of application software that collect and process large amounts of unstructured data from internal and external systems.
+
+[Back to top](#adobe-experience-platform-glossary)
 
 ## C
 <a name="Capping"></a>
@@ -131,6 +136,8 @@ __Cross-site Data:__ Cross-site data is the combination of data from several sit
 
 <a name="Custom Identity Namespace"></a>
 __Custom Identity Namespace:__ Custom identity namespaces are customer created identifiers used to represent identities for a specific organization or business case.
+
+[Back to top](#adobe-experience-platform-glossary)
  
 ## D
 <a name="Data Dictionary"></a>
@@ -196,6 +203,8 @@ __Display Name:__ Display name is a user-friendly name of a field that is shown 
 <a name="DULE"></a>
 __DULE:__ DULE is an acronym for *Data Usage Labeling and Enforcement*. DULE is a key part of data governance and a collection of key features that allows for data usage labeling and applying data access policies for governance needs within an organization.
 
+[Back to top](#adobe-experience-platform-glossary)
+
 ## E
 <a name="Eligible Offer"></a>
 __Eligible Offer:__ In the Decisioning Service, an eligible offer meets the constraints defined upstream that can be consistently offered to a profile.
@@ -239,6 +248,8 @@ __Extension:__ In Experience Platform Launch, an extension is a package of funct
 <a name="Extension Package"></a>
 __Extension Package:__ In Experience Platform Launch, an extension package is a .zip file created and uploaded by an extension developer that provides everything necessary for Launch users to install the extension inside their property.  An extension package contains a manifest specifying information about the extension, HTML, and JavaScript needed for end-users to configure the behavior of the Launch extension and the executable JavaScript delivered to the client environment, if required.
 
+[Back to top](#adobe-experience-platform-glossary)
+
 ## F
 <a name="Fallback Offers"></a>
 __Fallback Offers:__ In the Decisioning Service, A fallback offer is the default offer displayed when an end-user is not eligible for any of the offers in the collection used.
@@ -258,6 +269,8 @@ __Field Name:__ Field is a name used to reference the field in queries and servi
 <a name="Frequency"></a>
 __Frequency:__ Frequency determines how often a recurring scheduled Query Service query will run.
 
+[Back to top](#adobe-experience-platform-glossary)
+
 ## G
 <a name="GDPR"></a>
 __GDPR:__ The General Data Protection Regulation (GDPR) is a legal framework that sets guidelines for the collection and processing of personal information of individuals within the European Union (EU). The GDPR sets out the principles for data management and the rights of the individual and covers all companies that deal with the data of EU citizens.
@@ -265,9 +278,13 @@ __GDPR:__ The General Data Protection Regulation (GDPR) is a legal framework tha
 <a name="GDPR Data Label"></a>
 __GDPR Data Label:__ GDPR governance label is used to define the fields that may contain personal identifiers for use in GDPR access and/or delete requests.
 
+[Back to top](#adobe-experience-platform-glossary)
+
 ## H
 <a name="Host"></a>
 __Host:__ In Experience Platform Launch, a host specifies the location, domain, and user credentials necessary for Launch to deliver a build.
+
+[Back to top](#adobe-experience-platform-glossary)
 
 ## I
 <a name="Identity"></a>
@@ -309,6 +326,7 @@ __Input Feature:__ Input feature is specified in feature mapping and is used by 
 <a name="Interest-Based Targeting or Personalization"></a>
 __Interest-Based Targeting or Personalization:__ Interest-based targeting, also known as personalization, occurs if the following three conditions are met: data collected on-site is used to make inferences about a user's interest, data is used in another context such as on another site or app (off-site), and if data is used to select which content or ads are served based on those inferences.
 
+[Back to top](#adobe-experience-platform-glossary)
 
 ## J
 <a name="JupyterLab"></a>
@@ -317,13 +335,18 @@ __JupyterLab:__ *JupyterLab* is an open-source web-based interface for Project J
 <a name="Jupyter Notebook"></a>
 __Jupyter Notebook:__ *Jupyter Notebook* is an open-source web application that enables users to create and share documents that contain live code, equations, visualizations, and narrative text.
 
+[Back to top](#adobe-experience-platform-glossary)
 
 ## K
+
+[Back to top](#adobe-experience-platform-glossary)
 
 ## L
 
 <a name="Library"></a>
 __Library:__ In Experience Platform Launch, a library is a set of business logic that contains instructions for how the Launch library should behave on the client device. 
+
+[Back to top](#adobe-experience-platform-glossary)
 
 ## M
 <a name="Machine Learning (ML)"></a>
@@ -347,7 +370,11 @@ __Modified Date Column:__ Selecting a `Modified Date` column is an option when s
 <a name="Module"></a>
 __Module:__ In Experience Platform Launch, a module is a snippet of executable JavaScript provided by an extension, which performs actions in a client environment without the need for the Launch user to create a rule.
 
+[Back to top](#adobe-experience-platform-glossary)
+
 ## N
+
+[Back to top](#adobe-experience-platform-glossary)
 
 ## O
 <a name="Offer"></a>
@@ -359,9 +386,10 @@ __Offer Decisioning:__ In the Decisioning Service, offer decisioning enables a m
 <a name="Offer Library"></a>
 __Offer Library:__ In the Decisioning Service, the offer library is a central library used to manage personalized and fallback offers, decision rules and activities.
 
-
 <a name="Overwrite Save Strategy"></a>
 __Overwrite Save Strategy:__ `Overwrite` save strategy is an option for ingesting third-party data via a connection, where the user specifies if ingested data will be overwritten on a specified schedule. Experience Platform will ingest the specified dataset from the 3rd party source and overwrite the dataset on Experience Platform.
+
+[Back to top](#adobe-experience-platform-glossary)
 
 ## P
 <a name="Parquet Files"></a>
@@ -391,6 +419,8 @@ __Profile ID:__ A profile ID is an auto-generated identifier associated with an 
 <a name="Property"></a>
 __Property:__ In Experience Platform Launch, a property is a container for everything needed to deploy a set of tags. 
 
+[Back to top](#adobe-experience-platform-glossary)
+
 ## Q
 
 <a name="Queries"></a>
@@ -401,6 +431,8 @@ __Query Editor:__ Query Editor is a tool for writing, validating, and submitting
 
 <a name="Query Service"></a>
 __Query Service for Adobe Experience Platform:__ *Experience Platform Query Service* enables data analysts to query ExperienceEvents and XDMs for use in analytics and machine learning.
+
+[Back to top](#adobe-experience-platform-glossary)
 
 ## R
 
@@ -425,6 +457,7 @@ __Rule:__ In Experience Platform Launch, a rule is a collection of rule componen
 <a name="Rule Component"></a>
 __Rule Component:__ In Experience Platform Launch, rule components are the events, conditions, and actions that make up a rule.
 
+[Back to top](#adobe-experience-platform-glossary)
 
 ## S
 
@@ -497,6 +530,8 @@ __Streaming Endpoint:__ A streaming endpoint URL is a unique endpoint provided b
 <a name="Symbol"></a>
 __Symbol:__ Symbol is an abbreviation of an identity namespace that can be used as a reference in APIs.
 
+[Back to top](#adobe-experience-platform-glossary)
+
 ## T
 <a name="Target Features"></a>
 __Target Features:__ Target feature is specified in feature mapping is the feature that is predicted by a model.
@@ -507,6 +542,8 @@ __Trained Model:__ A trained model represents the executable output of a model t
 <a name="Token"></a>
 __Token:__ A token is a type of two-factor authentication security that can be used to authorize the use of computer services with Query Service. 
 
+[Back to top](#adobe-experience-platform-glossary)
+
 ## U
 
 <a name="Unified Profile"></a>
@@ -515,9 +552,15 @@ __Unified Profile:__ Unified Profile, also known as real-time customer profiles,
 <a name="Union Schema"></a>
 __Union Schema:__ Union schema is a consolidation of schemas that have been enabled for Unified Profile.
 
+[Back to top](#adobe-experience-platform-glossary)
+
 ## V
 
+[Back to top](#adobe-experience-platform-glossary)
+
 ## W
+
+[Back to top](#adobe-experience-platform-glossary)
 
 ## X
 
@@ -536,6 +579,12 @@ __XDM Profile:__ An XDM Profile forms a singular representation of the attribute
 <a name="XDM System"></a>
 __XDM System:__ XDM System is the infrastructure, data semantics, and workflow in Experience Platform that is powered by standard schemas.
 
+[Back to top](#adobe-experience-platform-glossary)
+
 ## Y
 
+[Back to top](#adobe-experience-platform-glossary)
+
 ## Z
+
+[Back to top](#adobe-experience-platform-glossary)
