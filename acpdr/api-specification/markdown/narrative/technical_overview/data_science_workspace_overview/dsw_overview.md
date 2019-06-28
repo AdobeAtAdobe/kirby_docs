@@ -168,36 +168,39 @@ You can use Jupyter Notebook to simplify data pre-processing - possibly starting
  
 ![](./images/list_of_notebooks.png)
 
-Visit [this section](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/preparedata.html) for tutorials on exploring and preparing data in Data Science Workspace.
+For more information, check out this tutorial:
+* [How to Access and Explore Data in the Data Science Workspace](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html#!api-specification/markdown/narrative/tutorials/dsw/ml_access_and_explore_data_tutorial/ml_access_and_explore_data_tutorial.md)
 
 ### Author the recipe
 
 If you already found a recipe that meets all your needs, you can move on to experimentation. Or, you can modify the recipe a bit or create one from scratch - taking advantage of the Data Science Workspace authoring runtime in Jupyter Notebook. Using the authoring runtime ensures that you can both use the Data Science Workspace training and scoring workflow and convert the recipe later so it can be stored in the recipe gallery and reused by others in your organization.
 
-You can also import a recipe in to Data Science Workspace and take advantage of the experimentation workflows as you create your intelligent service.
+You can also use the [Data Science Workspace](http://platform.adobe.com/) to import a recipe, so that you can take advantage of the experimentation workflows as you create your intelligent service.
 
-Visit [this section](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/authormodel.html) for tutorials on recipe and model authoring in Data Science Workspace.
+For more information, check out this tutorial:
+* [Package Recipe to Import into the Data Science Workspace](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html#!api-specification/markdown/narrative/tutorials/dsw/package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md)
 
-### Experiment with the recipe 
+### Experiment with the recipe
 
-With a recipe that incorporates your core machine learning algorithms, many recipe instances can be created with a single recipe. These recipe instances are referred to as models. A model requires training and evaluation to optimize its operating efficiency and efficacy, a process typically consisting of trial and error.
+With a recipe that incorporates your core algorithms in hand, you'll create one or more unique instances of the recipe, and change the parameters for each instance so you can experiment. Then you'll test each unique recipe instance. 
 
-![](./images/recipe_hiearchy_ui.png)
+![](./images/recipe_hiearchy.png)
 
-As you train your models, training runs and evaluations are generated. Data Science Workspace keeps track of evaluation metrics for each unique model and their training runs. Evaluation metrics generated through experimentation will allow you to determine the training run that performs best. 
+As you test, Data Science Workspace keeps track of evaluation metrics for each unique recipe instance and each trained instance. You'll check Data Science Workspace's evaluation metrics as you experiment to find the instance that performs best. 
 
 ![](./images/evaluation_metrics.png)
 
-Visit [this section](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/trainmodel.html) for tutorials on how to train and evaluate models in Data Science Workspace.
+For more information, check out these tutorials:
+* [Import, Train, and Evaluate Recipe Tutorial via UI](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html#!api-specification/markdown/narrative/tutorials/dsw/how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_tutorial.md)
+* [Import, Train, and Evaluate Recipe Tutorial via API](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html#!api-specification/markdown/narrative/tutorials/dsw/how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_api_tutorial.md)
 
 
 ### Operationalize the model
 
-When you've selected the best trained recipe to address your business needs, you can create an intelligent service in Data Science Workspace without developer assistance. It's just a couple of clicks - no coding required. A published intelligent service is accessible to other members of your organization without the need to recreate the model.
+When you've selected the best trained recipe to address your business needs, you can create an intelligent service in Data Science Workspace without developer assistance. It's just a couple of clicks - no coding required. Then publish the intelligence service to Adobe I/O for deployment in digital experiences. 
 
-A published intelligent service is configurable to automatically train itself from time to time using new data as they become available. This ensures your service maintains its efficiency and efficacy as time continues.
+As your intelligent service is deployed, you can continue to track where it's used and how it's doing, retraining it to improve performance as more data becomes available. 
 
-Visit [this section](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/operationalize.html) for tutorials on how to publish services in Data Science Workspace.
 
 ## Conclusion
 
@@ -211,4 +214,4 @@ Adobe was recently named the only leader in "The Forrester Wave™: Digital Inte
 
 ## Additional resources
 For more information, check out [our walkthrough](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html#!api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_walkthrough/dsw_walkthrough.md) where we will be working through a day to day workflow.  
-To access all Data Science Workspace tutorials, visit [the tutorials page](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials.html).
+To access all our tutorials, visit [our tutorials page](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials.html).
