@@ -6,21 +6,20 @@ So what happens if you post data that has formatting errors? For example, when y
 {
     <span style="color:#4b7d46">"body"</span>: {
         <span style="color:#4b7d46">"xdmEntity"</span>: {
-            <span style="color:#4b7d46">"identityMap"</span>: {
-                <span style="color:#4b7d46">"ecid"</span>: [
-                    {
-                        <span style="color:#4b7d46">"id"</span>: "10000000000000000000000000000000000001"
-                    }
-                ],
-                <span style="color:#4b7d46">"email"</span>: [
-                    {
-                        <span style="color:#4b7d46">"id"</span>: "janedoe@example.com",
-                        <span style="color:#4b7d46">"primary"</span>: true
-                    }
-                ]
-            },
             <span style="color:#4b7d46">"id"</span>: "c8d11988-6b56-4571-a123-b6ce74236036",
-            <span style="color:#4b7d46">"timestamp"</span>: "2018-<span style="font-weight:bold">00</span>-10T22:07:56Z"
+            <span style="color:#4b7d46; font-weight:bold">"timestamp"</span>: "2018-<span style="font-weight:bold">00</span>-10T22:07:56Z",
+            <span style="color:#4b7d46">"environment"</span>: {
+                <span style="color:#4b7d46">"browserDetails"</span>: {
+                    <span style="color:#4b7d46">"userAgent"</span>: "Mozilla\/5.0 (Windows NT 5.1) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/29.0.1547.57 Safari\/537.36 OPR\/16.0.1196.62",
+                    <span style="color:#4b7d46">"acceptLanguage"</span>: "en-US",
+                    <span style="color:#4b7d46">"cookiesEnabled"</span>: true,
+                    <span style="color:#4b7d46">"javaScriptVersion"</span>: "1.6",
+                    <span style="color:#4b7d46">"javaEnabled"</span>: true
+                },
+                <span style="color:#4b7d46">"colorDepth"</span>: 32,
+                <span style="color:#4b7d46">"viewportHeight"</span>: 799,
+                <span style="color:#4b7d46">"viewportWidth"</span>: 414
+            },
         }
     }
 }
