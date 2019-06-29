@@ -32,9 +32,9 @@ Adobe either already meets, or is working towards meeting, the obligations set o
 * *Records of processing*
   * We are working to more formally document the privacy practices we have in place to comply with the enhanced record keeping requirements
 
-## Privacy Service API
+## GDPR API
 
-The Adobe Experience Platform Privacy Service API processes "access" and "delete" requests on behalf of Controllers for their data stored in Experience Cloud
+Adobe has built an API to help process "access" and "delete" requests on behalf of Controllers for their data stored in Experience Cloud
 
 ## Consent: opt-out management
 
