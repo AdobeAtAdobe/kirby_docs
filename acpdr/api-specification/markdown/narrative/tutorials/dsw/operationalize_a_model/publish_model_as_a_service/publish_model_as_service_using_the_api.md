@@ -3,12 +3,12 @@
 - [Prerequisite](#prerequisite)
 - [Key Terms](#key-terms)
 - [API Workflow](#api-workflow)
-  - [Creating a ML Service with an existing training Experiment Run and scheduled scoring](#Creating-a-ML-Service-with-an-existing-training-Experiment-Run-and-scheduled-scoring)
-  - [Creating a ML Service with an existing ML Instance](#Creating-a-ML-Service-from-an-existing-ML-Instance)
-    - [ML Service with scheduled Experiment for scoring](#ML-Service-with-scheduled-Experiment-for-scoring)
-    - [ML Service with scheduled Experiments for training and scoring](#ML-Service-with-scheduled-Experiments-for-training-and-scoring)
-  - [Retrieving ML Services](#Retrieving-ML-Services)
-  - [Schedule training or scoring](#Schedule-training-or-scoring)
+- [Creating a ML Service with an existing training Experiment Run and scheduled scoring](#creating-a-ml-service-with-an-existing-training-experiment-run-and-scheduled-scoring)
+- [Creating a ML Service from an existing ML Instance](#creating-a-ml-service-from-an-existing-ml-instance)
+    - [ML Service with scheduled Experiment for scoring](#ml-service-with-scheduled-experiment-for-scoring)
+    - [ML Service with scheduled Experiments for training and scoring](#ml-service-with-scheduled-experiments-for-training-and-scoring)
+- [Retrieving ML Services](#retrieving-ml-services)
+- [Schedule training or scoring](#schedule-training-or-scoring)
 
 ## Prerequisite
 - Follow this [Tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
@@ -16,9 +16,8 @@ From the tutorial you should now have the following information:
   * `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.
   * `{IMS_ORG}`: Your IMS org credentials found in your unique Adobe Experience Platform integration.
   * `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
-- This tutorial requires existing ML Engine, ML Instance, and Experiment entities. Refer to this [Tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html#!api-specification/markdown/narrative/tutorials/dsw/how_to_import_train_evaluate_recipe_tutorial/how_to_import_train_evaluate_recipe_api_tutorial.md) on creating ML Engine, ML Instane, or Experiment entities.
+- This tutorial requires existing ML Engine, ML Instance, and Experiment entities. Refer to this [Tutorial](../../author_a_model/import_a_packaged_recipe/import_a_packaged_recipe_using_api.md) on creating ML Engine, ML Instance, or Experiment entities.
 - For information on API endpoints and requests mentioned in this tutorial, check out the complete [Sensei Unified Machine Learning API](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/sensei-ml-api.yaml).
-
 
 ## Key Terms
 
@@ -39,12 +38,12 @@ Term | Definition
 
 This tutorial will go over creating, retrieving, and updating a ML Service.
 
-* [Creating a ML Service with an existing training Experiment Run and scheduled scoring](#Creating-a-ML-Service-with-an-existing-training-Experiment-Run-and-scheduled-scoring)
-* [Creating a ML Service from an existing ML Instance](#Creating-a-ML-Service-from-an-existing-ML-Instance)
-  * [ML Service with scheduled Experiment for scoring](#ML-Service-with-scheduled-Experiment-for-scoring)
-  * [ML Service with scheduled Experiments for training and scoring](#ML-Service-with-scheduled-Experiments-for-training-and-scoring)
-* [Retrieving ML Services](#Retrieving-ML-Services)
-* [Schedule training or scoring](#Schedule-training-or-scoring)
+- [Creating a ML Service with an existing training Experiment Run and scheduled scoring](#creating-a-ml-service-with-an-existing-training-experiment-run-and-scheduled-scoring)
+- [Creating a ML Service from an existing ML Instance](#creating-a-ml-service-from-an-existing-ml-instance)
+    - [ML Service with scheduled Experiment for scoring](#ml-service-with-scheduled-experiment-for-scoring)
+    - [ML Service with scheduled Experiments for training and scoring](#ml-service-with-scheduled-experiments-for-training-and-scoring)
+- [Retrieving ML Services](#retrieving-ml-services)
+- [Schedule training or scoring](#schedule-training-or-scoring)
 
 ## Creating a ML Service with an existing training Experiment Run and scheduled scoring
 
@@ -123,8 +122,8 @@ From the JSON response, the key `scoringExperimentId` with it's corresponding va
 
 Depending on your specific use case and requirements, creating a ML Service with a ML Instance is flexible in terms of scheduling training and scoring Experiment Runs. This tutorial will go through the specific cases where:
 
-* [You do not require scheduled training, but require scheduled scoring.](#ML-Service-with-scheduled-Experiment-for-scoring)
-* [You require scheduled Experiment Runs for both training and scoring.](#ML-Service-with-scheduled-Experiments-for-training-and-scoring)
+* [You do not require scheduled training, but require scheduled scoring.](#ml-service-with-scheduled-experiment-for-scoring)
+* [You require scheduled Experiment Runs for both training and scoring.](#ml-service-with-scheduled-experiments-for-training-and-scoring)
 
 Note that a ML Service can be created using a ML Instance without scheduling any training or scoring Experiments. Such ML Service will create oridinary Experiment entities and a single Experiment Run for training and scoring.
 
@@ -331,12 +330,12 @@ curl -X GET "https://platform.adobe.io/data/sensei/mlServices/{SERVICE_ID}"
 }
 ```
 
-The JSON response represents the ML Service object. This object is equivalent to the response for when the ML Service is created. Note that retrieving different ML Services may return a response with more or less key-value pairs. The above response is a representation of a [ML Service with both scheduled training and scoring Experiment Runs](#ML-Service-with-scheduled-Experiments-for-training-and-scoring).
+The JSON response represents the ML Service object. This object is equivalent to the response for when the ML Service is created. Note that retrieving different ML Services may return a response with more or less key-value pairs. The above response is a representation of a [ML Service with both scheduled training and scoring Experiment Runs](#ml-service-with-scheduled-experiments-for-training-and-scoring).
 
 
 ## Schedule training or scoring
 
-Suppose you want to schedule scoring and training on a ML Service that has already been published, you can do so by updating the existing ML Service with a `PUT` request on `/mlServices`. Ensure to have the ML Service identification you would like to update. For your reference, [retrieving the ML Service](#Retrieving-ML-Services) you want to update might be a useful first step.
+Suppose you want to schedule scoring and training on a ML Service that has already been published, you can do so by updating the existing ML Service with a `PUT` request on `/mlServices`. Ensure to have the ML Service identification you would like to update. For your reference, [retrieving the ML Service](#retrieving-ml-services) you want to update might be a useful first step.
 
 #### Request <!-- omit in toc -->
 
