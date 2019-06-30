@@ -4,7 +4,6 @@ Query Service provides the power to run SQL queries against datasets in Experien
 Follow the exercises in this section to get a good idea for how the Query Service works.
 
 * [Datasets vs tables and schema](qs-queries-datasetsvtables.md)
-* [General guidance for writing queries](qs-queries-writingqueries.md)
 * [ExperienceEvent queries](qs-queries-experienceevent.md)
 * [Joining datasets](qs-queries-joiningdatasets.md)
 * [Using Adobe functions](qs-queries-adobefunctions.md)
