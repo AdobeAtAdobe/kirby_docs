@@ -3,13 +3,13 @@
 title: Adobe Experience Platform Release Notes
 description: Experience Platform v1.0 release notes May 15, 2019
 doc-type: release notes
-last-update: May 15, 2019
+last-update: June 21, 2019
 author: crhoades
 
 ---
 
 # Adobe Experience Platform release notes 
-## v1.0, May 15, 2019
+## Release date: May 15, 2019
 
 New features in Adobe Experience Platform.
 
