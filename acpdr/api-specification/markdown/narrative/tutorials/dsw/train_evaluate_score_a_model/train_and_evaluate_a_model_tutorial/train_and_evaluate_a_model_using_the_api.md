@@ -15,15 +15,15 @@
 ---
 
 ## Objective
-This tutorial will show you how to create, train, and evaluate a Model using API calls. Refer to [this document](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/sensei-ml-api.yaml) for a detailed list of API documentation.
+This tutorial will show you how to create, train, and evaluate a Model using API calls. Refer to [this document](https://www.adobe.io/apis/cloudplatform/dataservices/api-reference.html) for a detailed list of API documentation.
 
 ---
 
 ## Prerequisites
 
-Follow the [Import a packaged Recipe using the API](../../author_a_model/import_a_packaged_recipe/import_a_packaged_recipe_using_api.md) for creating an Engine, which is required to train and evaluate a Model using the API.
+Follow the [Import a packaged Recipe using the API]() for creating an Engine, which is required to train and evaluate a Model using the API.
 
-Follow this [Tutorial](../../../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
+Follow this [Tutorial](../../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for authorization to start making API calls.
 
 From the tutorial you should now have the following values:
 
@@ -53,7 +53,7 @@ We will be consuming the APIs to create an Experiment Run for training. For this
 
 ### Create an MLInstance
 
-Creating a MLInstance can be done using the following request. You will be using the `{ENGINE_ID}` that was returned when creating an Engine from the [Import a packaged Recipe using the API](../../author_a_model/import_a_packaged_recipe/import_a_packaged_recipe_using_api.md) tutorial.
+Creating a MLInstance can be done using the following request. You will be using the `{ENGINE_ID}` that was returned when creating an Engine from the [Import a packaged Recipe using the API]() tutorial.
 
 #### Request <!-- omit in toc -->
 
@@ -383,7 +383,7 @@ You will get the following response which will let you know the `{EXPERIMENT_RUN
 The status of the Experiment run can be queried with the `{EXPERIMENT_RUN_ID}`.
 
 ##### Request <!-- omit in toc -->
-```shell
+```JSON
 curl -X GET \
   https://platform.adobe.io/data/sensei/experiments/{EXPERIMENT_ID}/runs/{EXPERIMENT_RUN_ID}/status \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
@@ -523,4 +523,4 @@ The following is the Response notifying that the Experiment is successfully dele
 
 ## Next steps
 
-This tutorial went over how to consume the APIs to create an Engine, an Experiment, scheduled Experiment Runs, and trained Models. In the [next exercise](../score_a_model/score_a_model_using_the_api.md), you will be making predictions by scoring a new dataset using the top performing trained model.
+This tutorial went over how to consume the APIs to create an Engine, an Experiment, scheduled Experiment Runs, and trained Models. In the [next exercise](../how_to_score_with_recipe/how_to_score_with_recipe.md), you will be making predictions by scoring a new dataset using the top performing trained model.
