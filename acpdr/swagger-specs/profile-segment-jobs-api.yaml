@@ -14,8 +14,7 @@ info:
 
     Notes:
       * PLATFORM Gateway URL: https://platform.adobe.io/
-      * Base path for this API: /data/core/ups/segment/jobs
-      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+      * Base path for this API: /data/core/ups
       * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
       to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
 
@@ -27,7 +26,7 @@ basePath: /data/core/ups/segment/jobs
 tags:
 - name: Segment jobs
 paths:
-  '/':
+  /segment/jobs:
     parameters:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
@@ -88,7 +87,9 @@ paths:
         - Segment jobs
       summary: Post a Segment Job Request
       description: ''
-      operationId: create
+      operationId: postSJRRoute
+      consumes:
+        - application/json
       produces:
         - application/json
       parameters:
@@ -112,6 +113,7 @@ paths:
             type: array
             items:
               $ref: '#/definitions/SegmentJobRequest'
+        - $ref: '#/parameters/json-header'
       responses:
         '200':
           description: Segment Job Request successfully posted
@@ -127,7 +129,7 @@ paths:
           description: There was issue reading the segment job from DB
         '503':
           description: Service Unavailable
-  '/{segmentJobId}':
+  '/segment/jobs/{segmentJobId}':
     parameters:
       - name: segmentJobId
         in: path
@@ -191,6 +193,7 @@ paths:
           description: Segment Job Request not found
         '503':
           description: Service Unavailable
+
 definitions:
   ErrorResponse:
     type: object
