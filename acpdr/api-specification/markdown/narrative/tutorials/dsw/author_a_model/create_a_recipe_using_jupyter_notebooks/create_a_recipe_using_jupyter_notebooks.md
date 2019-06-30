@@ -123,7 +123,7 @@ The purpose of the Training Data Loader is to instantiate data used for creating
 
 The following two sections will go over loading data and data preparation. 
 
-##### Loading data 
+##### Loading data <!-- omit in toc -->
 
 In this step, you will load the data into a [pandas dataframe](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html). Data can be loaded from files in Adobe Experience Platform via the Data Access SDK or externally, from pandas' `read_csv()` or `read_json()` functions.
 * [From Data Access SDK](#from-data-access-sdk)
@@ -131,7 +131,7 @@ In this step, you will load the data into a [pandas dataframe](https://pandas.py
 
 > **Note:** In the Recipe Builder notebook, data is loaded via the Data Access SDK.
 
-###### From Data Access SDK
+###### From Data Access SDK <!-- omit in toc -->
 
 Users can load data using the Data Access SDK. The library can be imported at the top of the page by including the line:
 
@@ -148,7 +148,7 @@ df = prodreader.load(data_set_id=configProperties['trainingDataSetId'],
                      ims_org=configProperties['ML_FRAMEWORK_IMS_TENANT_ID'])
 ```
 
-> **Note:** As mentioned in the [Configuration File section](#configuration-files), the following configuration parameters are set for you when you access data from Experience Platform:
+> **Note:** As mentioned in the [Configuration File section](#configuration-file), the following configuration parameters are set for you when you access data from Experience Platform:
 > * `ML_FRAMEWORK_IMS_USER_CLIENT_ID` 
 > * `ML_FRAMEWORK_IMS_TOKEN` 
 > * `ML_FRAMEWORK_IMS_ML_TOKEN` 
@@ -158,19 +158,19 @@ Now that you have your data, you can begin with data preparation and feature eng
 
 ---
 
-###### From external source 
+###### From external source <!-- omit in toc -->
 
 This section will show you how to import a JSON or CSV file to a pandas object. Official documentation from the pandas library can be found here:
 * [read_csv](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html)
 * [read_json](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_json.html)
 
-First, here is an example of importing a CSV file. The `data` argument is the path to the CSV file. This variable was imported from the `configProperties` in the [previous section](#configuration-files).
+First, here is an example of importing a CSV file. The `data` argument is the path to the CSV file. This variable was imported from the `configProperties` in the [previous section](#extract-fields-from-configuration-file).
 
 ```PYTHON
 df = pd.read_csv(data)
 ```
 
-You can also import from a JSON file. The `data` argument is the path to the CSV file. This variable was imported from the `configProperties` in the [previous section](#configuration-files).
+You can also import from a JSON file. The `data` argument is the path to the CSV file. This variable was imported from the `configProperties` in the [previous section](#extract-fields-from-configuration-file).
 
 ```PYTHON
 df = pd.read_json(data)
@@ -180,7 +180,7 @@ Now your data is in the dataframe object and can be analyzed and manipulated in 
 
 ---
 
-##### Data preparation and feature engineering
+##### Data preparation and feature engineering <!-- omit in toc -->
 
 After the data is loaded, the data undergoes preparation and is then split to the `train` and `val` datasets. Sample code is seen below:
 
@@ -226,7 +226,7 @@ The `load()` function should complete with the `train` and `val` dataset as the 
 
 ### Scoring data loader
 
-The procedure to load data for scoring is similar to the loading training data in the `split()` function. We use the Data Access SDK to load data from the `scoringDataSetId` found in our `recipe.conf` file. 
+The procedure to load data for scoring is similar to the loading training data in the [`split()` function]((#prepare-and-split-the-dataset)). We use the Data Access SDK to load data from the `scoringDataSetId` found in our `recipe.conf` file. 
 
 ```PYTHON
 def load(configProperties):
@@ -300,7 +300,7 @@ The `load()` function in your scoring data loader should complete with the scori
 
 The `pipeline.py` file includes logic for training and scoring. We will go over both in the next two sections.
 
-#### Training 
+#### Training <!-- omit in toc -->
 
 The purpose of training is to create a model using features and labels in your training dataset. 
 
@@ -346,7 +346,7 @@ Notice that depending on your application, you will have arguments in your `Grad
 
 ---
 
-#### Scoring 
+#### Scoring <!-- omit in toc -->
 
 The `score()` function should contain the scoring algorithm and return a measurement to indicate how successful the model performs. The `score()` function uses the scoring dataset labels and the trained model to generate a set of predicted features. These predicted values are then compared with the actual features in the scoring dataset. In this example, the `score()` function uses the trained model to predict features using the labels from the scoring dataset. The predicted features are returned.
 
@@ -374,7 +374,7 @@ def score(configProperties, data, model):
 
 The `evaluator.py` file contains logic for how you wish to evaluate your trained recipe as well as how your training data should be split. In the retail sales example, the logic for loading and preparing the training data will be included. We will go over the two sections below.
 
-#### Split the dataset 
+#### Split the dataset <!-- omit in toc -->
 
 The data preparation phase for training requires splitting the dataset to be used for training and testing. This `val` data will be used implicitly to evaluate the model after it is trained. This process is separate from scoring. 
 
@@ -393,7 +393,7 @@ def split(self, configProperties={}, dataframe=None):
     return train, val
 ```
 
-#### Evaluate the trained model
+#### Evaluate the trained model <!-- omit in toc -->
 
 The `evaluate()` function is performed after the model is trained and will return a metric to indicate how successful the model performs. The `evaluate()` function uses the testing dataset labels and the Trained model to predict a set of features. These predicted values are then compared with actual features in the testing dataset. Common scoring algorithms include:
 * [Mean absolute percentage error (MAPE)](https://en.wikipedia.org/wiki/Mean_absolute_percentage_error)
