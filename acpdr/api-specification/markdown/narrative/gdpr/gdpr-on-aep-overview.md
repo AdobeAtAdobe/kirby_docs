@@ -105,4 +105,4 @@ Request payload:
 
 ## Step 4: Track the status of the GDPR request
 
-Refer to the [GDPR Central Service API](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) or [GDPR UI](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/using-gdpr-ui.md) documentation for information about how to track the status (submitted, processing, completed, error, expired) of GDPR requests., error, expired) of GDPR requests.
+Refer to the [GDPR Central Service API](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) or [GDPR UI](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/using-gdpr-ui.md) documentation for information about how to track the status (submitted, processing, completed, error, expired) of GDPR requests.
