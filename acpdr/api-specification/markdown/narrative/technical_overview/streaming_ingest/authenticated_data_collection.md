@@ -125,19 +125,6 @@ An example of a published message:
             }
         },
         "xdmEntity": {
-            "identityMap": {
-                "ecid": [
-                    {
-                        "id": "10000000000000000000000000000000000001"
-                    }
-                ],
-                "email": [
-                    {
-                        "id": "janedoe@example.com",
-                        "primary": true
-                    }
-                ]
-            },
             "person": {
                 "name": {
                     "firstName": "Jane",
