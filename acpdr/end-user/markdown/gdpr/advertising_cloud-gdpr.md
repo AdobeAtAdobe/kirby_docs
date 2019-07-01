@@ -26,17 +26,17 @@ To make automated requests to access and delete data for Advertising Cloud, you'
     
     **Important:**  Requests to some Adobe Experience Cloud solutions don't require the JavaScript library, but requests to Advertising Cloud require it.
     
-    You should deploy the library on the web page from which data subjects can submit access and delete requests, such as your company's privacy portal. The library helps you retrieve Adobe cookies (namespace ID: gsurferID) so that you can submit these identities as part of access and delete requests via the Adobe Experience Cloud GDPR API.
+    You should deploy the library on the web page from which data subjects can submit access and delete requests, such as your company's privacy portal. The library helps you retrieve Adobe cookies (namespace ID: gsurferID) so that you can submit these identities as part of access and delete requests via the Adobe Experience Platform Privacy Service API.
     
     When the data subject asks to delete personal data, the library also deletes the data subject's cookie from the data subject's browser.
     
     > **Note:**  Deleting personal data is different than Opt-Out, which stops the targeting of an end user with audience segments. However, when a data subject asks to delete personal data from Creative, DSP, or DCO, the library also sends a request to Advertising Cloud to opt out the data subject from segment targeting.  For advertisers with Search, we recommend that you provide your data subjects a link to [https://www.adobe.com/privacy/opt-out.html](https://www.adobe.com/privacy/opt-out.html), which explains how to opt out of audience segment targeting.
     
-2.  Use either the Adobe Experience Cloud GDPR API (for automated requests) or the GDPR UI (for ad-hoc requests) to submit access and delete requests to Advertising Cloud on behalf of your data subjects, and to check the status of existing requests.
+2.  Use either the Privacy Service API (for automated requests) or the Privacy Service UI (for ad-hoc requests) to submit access and delete requests to Advertising Cloud on behalf of your data subjects, and to check the status of existing requests.
     
-    For advertisers who have a mobile app to interact with customers and launch campaigns with the DSP, you'll need to download the GDPR-ready Mobile SDKs for Experience Cloud. The Mobile SDKs allow data controllers to set opt-out status flags, retrieve the data subject's device ID (namespace ID: deviceID), and submit requests to the GDPR API. Your mobile app will require an SDK Version 4.15.0 or greater.
+    For advertisers who have a mobile app to interact with customers and launch campaigns with the DSP, you'll need to download the GDPR-ready Mobile SDKs for Experience Cloud. The Mobile SDKs allow data controllers to set opt-out status flags, retrieve the data subject's device ID (namespace ID: deviceID), and submit requests to the Privacy Service API. Your mobile app will require an SDK Version 4.15.0 or greater.
     
-    When you submit an access request, the GDPR API returns a data subject's information based on the specified cookie or device ID, which you then must return to the data subject.
+    When you submit an access request, the API returns a data subject's information based on the specified cookie or device ID, which you then must return to the data subject.
     
     When you submit a delete request, the cookie ID or device ID and all cost, click, and revenue data associated with the cookie are deleted from the server.
 
