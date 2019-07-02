@@ -71,6 +71,6 @@ Queries executed from the Query Editor run interactively. This means that if you
 
 ## How to Find Prior Query Executions
 
-All queries executed from the Query Editor are captured in the Log table. You can use the search functionality in the Log to find queries ([see instructions here] (qs-ui.md)). 
+All queries executed from the Query Editor are captured in the Log table. You can use the search functionality in the Log to find queries ([see instructions here](qs-ui.md)). 
 
 > **Note:** Queries that are not executed are not saved by the Log, so if you want Query Service to remember your query, be sure to run it in the Query Editor. 
