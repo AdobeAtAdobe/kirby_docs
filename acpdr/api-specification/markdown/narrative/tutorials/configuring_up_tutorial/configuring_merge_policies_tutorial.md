@@ -1,35 +1,42 @@
-# Working with merge policies via API
+# Work with merge policies using APIs
 
-## Overview
+This document provides a tutorial for working with merge policies using Adobe Experience Platform APIs. The tutorial covers the following use cases:
 
-This tutorial covers using RESTful services to work with merge policies, as discussed in the [merge policies section](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md#merge-policies) of the Unified Profile overview. In specific, this tutorial demonstrates:
+- [Access merge policies](#access-merge-policies)
+- [Create a merge policy](#create-a-merge-policy)
+- [Update an existing merge policy](#update-a-merge-policy)
 
-[Accessing your merge policies](#accessing-your-merge-policies) - Inspect the merge policies available for use by your organization.  
-[Creating a merge policy](#creating-a-merge-policy) - Create a new merge policy for use by your organization.  
-[Updating an existing merge policy](#updating-a-merge-policy) - Change all or part of a merge policy previously created.  
+## Getting started
 
-### Prerequisite topics
+This tutorial requires a working understanding of the various Experience Platform services involved with merge policies. Before beginning this tutorial, please review the documentation for the following services:
 
-[Unified Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md) is a generic lookup entity store, and is used to manage any XDM Platform data. Unified Profile facilitates building customer personalization use cases by merging data across various enterprise data assets and providing access to that unified data. Unified Profile provides tools for looking up entities by ID, as well as robust segmentation tools.  
-[Identity Service](../../technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md) stitches related identities when more than one are provided in a data fragment, building and managing your identity graph. Unified Profile uses Identity Service to glean all possible identities for a managed entity at access/segmentation time, merging all related entities into a unified view.  
-[Authenticating and Accessing Adobe Experience Platform APIs](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) - This tutorial shows the initial steps to set up an integration in Adobe I/O Console and use an integration to access Adobe Experience Platform APIs. The steps in this tutorial describe how to gain access to the following values needed for required headers:
-* IMS Organization ID
-* API Key (Client ID)
-* Access Token
+- [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, real-time consumer profile based on aggregated data from multiple sources.
+- [Identity Service](../../technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md): Enables Real-time Customer Profile by bridging identities from disparate data sources being ingested into Platform.
+- [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
 
-### Requirements
+## Tutorial
 
-All service calls in this document require the following headers. Some service calls may require additional headers which will be listed in context.
+This tutorial requires you to have completed the
+[Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
-|Header|Description|Example Value|
-|---|---|---|
-|Authorization|The Access Token as described in [Prerequisite topics](#prerequisite-topics), prefixed with "Bearer "|Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ....|
-|x-gw-ims-org-id|The IMS Organization ID as described in [Prerequisite topics](#prerequisite-topics)|17FA2AFD56CF35747F000101@AdobeOrg|
-|x-api-key|The API Key (Client ID) as described in [Prerequisite topics](#prerequisite-topics)|25622d14d3894ea590628717f2cb7462|
+* Authorization: Bearer `{ACCESS_TOKEN}`
+* x-api-key: `{API_KEY}`
+* x-gw-ims-org-id: `{IMS_ORG}`
 
----
+All POST, PUT, and PATCH requests require an additional header:
 
-## Components of merge policies
+* Content-Type: application/json
+
+
+<!-- 
+
+--------
+--------
+I feel like this content should be prerequisite material for this tutorial (like Profile and Identity Service), since it's not really explaining how to *do* something. At the same time though, there's some info here not really found anywhere else. Might warrant its own doc, or use it to enhance the merge policies section in the Unified Profile overview doc.
+--------
+--------
+
+ ## Components of merge policies
 
 Merge policies are private to an organization, allowing you to create different policies for merging different schemas in the ways you need. Any API to access Unified Profile data requires a merge policy, though a default will be used if one is not explicitly provided. Platform provides a default merge policy, or you can create a merge policy and mark it as your organization's default per an XDM schema.
 
@@ -49,9 +56,8 @@ __`IdentityGraph` object__
 
 Where `{IDENTITY_GRAPH_TYPE}` is one of the following:
 
-* "none" : Do not do any identity stitching
-* "auto" (default) : Use the default identity graph; private identity graph (pdg)
-* "pdg" : Private device graph; refers to your organization's private identity graph
+* None - Perform no identity stitching.
+* Private Graph - Perform identity stitching based on your private identity graph. If no `graph-type` is provided, this is the default.
 
 __Example `IdentityGraph`__
 
@@ -178,38 +184,43 @@ __Example `MergePolicy`__
     "default": true,
     "updateEpoch": 1551660639
 }
+``` 
+-->
+
+## Access merge policies
+
+Using the [Profile Configuration API](../../../../../../acdpr/swagger-specs/profile-config-api.yaml), you can access a specific merge policy by its ID, or list all of the merge policies in effect for your IMS Organization, filtered by specific criteria.
+
+### Access a single merge policy by ID
+
+Using the API, you can access a single merge policy by its ID.
+
+#### API format
+
+```http
+GET /mergePolicies/{mergePolicyId}
 ```
 
-## Accessing your merge policies
+* `{mergePolicyId}`: The identifier of the merge policy you want to access.
 
-Access a specific merge policy by ID, or list the merge policies in effect for your organization using criteria.
+#### Request
 
-### Access a merge policy by ID
-
-Glean the details of a specific merge policy by ID.
-
-__Service endpoint__
-
-```
-GET https://platform.adobe.io/data/core/ups/config/mergePolicies/{MERGE_POLICY_ID}
-```
-
-__Example request__
-
-```
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/core/ups/config/mergePolicies/10648288-cda5-11e8-a8d5-f2801f1b9fd1' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ....' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 1BD6382559DF0C130A49422D@AdobeOrg'
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-__Example response__
+#### Response
 
-```
+A successful response returns the details of the merge policy.
+
+```json
 {
     "id": "10648288-cda5-11e8-a8d5-f2801f1b9fd1",
-    "imsOrgId": "1BD6382559DF0C130A49422D@AdobeOrg",
+    "imsOrgId": "{IMS_ORG}",
     "schema": {
         "name": "_xdm.context.profile"
     },
@@ -225,46 +236,50 @@ __Example response__
 }
 ```
 
-### Access merge policies by criteria
+### List multiple merge policies by criteria
 
-List merge policies by a given set of parameters controlling filtering, ordering, and pagination.
+You can list multiple merge policies within your IMS Organization, using query parameters to filter, order, and paginate the response.
 
-__Service endpoint__
+#### API format
 
+```http
+GET /mergePolicies?{QUERY_PARAMS}
 ```
-GET https://platform.adobe.io/data/core/ups/config/mergePolicies
-```
 
-__Request parameters__
+* `{QUERY_PARAMS}`: (Optional) Parameters added to the request path which configure the results returned in the response. Multiple parameters can be included, separated by ampersands (`&`). Available parameters are listed in the next section below.
 
-All of the following parameters are optional. Calling this service with no parameters will retrieve all merge policies available for your organization.
+**Query parameters**
+
+The following is a list of available query parameters for listing merge policies. All of these parameters are optional. Making a call to this endpoint with no parameters will retrieve all merge policies available for your organization.
 
 |Parameter|Description|
 |---|---|
-|`default`|Filter results by whether the merge policies are default for a schema class. true/false|
-|`limit`|Specify the page size limit to control the number of results are included in a page. (__default value__: 20)|
-|`orderBy`|Specify the field by which to order results as in `orderBy=name` to sort by name in ascending order (the default), or `orderBy=-name`, to sort in descending order. To omit this value would result in the default sorting of `timestamp` in ascending order.|
+|`default`|Filters results by whether the merge policies are default for a schema class. (*Boolean*)|
+|`limit`|Specifies the page size limit to control the number of results that are included in a page. (*Default value: 20*)|
+|`orderBy`|Specifies the field by which to order results as in `orderBy=name` or `orderBy=+name` to sort by name in ascending order, or `orderBy=-name`, to sort in descending order. Omitting this value results in the default sorting of `name` in ascending order.|
 |`schema.name`|Name of the schema for which to retrieve available merge policies.|
-|`identityGraph.type`|Filter results by the identity graph.|
-|`attributeMerge.type`|Filter results by the attribute merge type used.|
-|`start`|Page offset - specify the starting ID for data to retrieve.  (__default value__: 0)|
+|`identityGraph.type`|Filters results by the identity graph.|
+|`attributeMerge.type`|Filters results by the attribute merge type used.|
+|`start`|Page offset - specify the starting ID for data to retrieve.  (*Default value: 0*)|
 |`version`|Specify this if you are looking to use a specific version of the merge policy. By default, the latest version will be used.|
 
-__Example request__
+#### Request
 
-The following example demonstrates listing all merge policies for a given schema.
+The following request lists all merge policies for a given schema:
 
-```
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/core/ups/config/mergePolicies?schema.name=_xdm.context.profile' \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ....' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 1BD6382559DF0C130A49422D@AdobeOrg'
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
-__Example response__
+#### Response
 
-```
+A successful response returns a paginated list of merge policies that fit within the criteria specified by the query parameters sent in the request (if any were included).
+
+```json
 {
     "_page": {
         "count": 2,
@@ -274,7 +289,7 @@ __Example response__
         {
             "id": "unified-profile-default",
             "name": "unified-profile-default",
-            "imsOrgId": "1BD6382559DF0C130A49422D@AdobeOrg",
+            "imsOrgId": "{IMS_ORG}",
             "schema": {
                 "name": "_xdm.context.profile"
             },
@@ -291,13 +306,13 @@ __Example response__
         {
             "id": "timestampOrdered-pdg-mp",
             "name": "timestampOrdered-pdg-mp",
-            "imsOrgId": "1BD6382559DF0C130A49422D@AdobeOrg",
+            "imsOrgId": "{IMS_ORG}",
             "schema": {
                 "name": "_xdm.context.profile"
             },
             "version": 1,
             "identityGraph": {
-                "type": "pdg"
+                "type": "Private Graph"
             },
             "attributeMerge": {
                 "type": "timestampOrdered"
@@ -314,55 +329,28 @@ __Example response__
 }
 ```
 
----
+* `_links > next > href`: A URI address for the next page of results. Use this URI as the request parameters for another API call to the same endpoint to view the page. If no next page exists, this value will be an empty string.
 
-## Creating a merge policy
+## Create a merge policy
 
-Create a new merge policy for your organization.
+You can create a new merge policy for your organization by using the [Profile Configuration API](../../../../../../acdpr/swagger-specs/profile-config-api.yaml).
 
-__Service endpoint__
+#### API format
 
-```
-POST https://platform.adobe.io/data/core/ups/config/mergePolicies
-```
-
-__Request body__
-
-```
-{
-    "name": "{UNIQUE_MERGE_POLICY_NAME}",
-    "identityGraph" : {
-        "type": "{IDENTITY_GRAPH_TYPE}"
-    },
-    "attributeMerge" : {
-        "type": "{ATTRIBUTE_MERGE_TYPE}",
-        "data": "{ATTRIBUTE_MERGE_TYPE_SUPPORTING_DATA}"
-    },
-    "schema": {
-        "name":"{SCHEMA_NAME}"
-    },
-    "default": "{IS_DEFAULT}"
-}
+```http
+POST /mergePolicies
 ```
 
-Where the values are as follows:
+#### Request
+This request creates a new merge policy, which is configured by the attribute values provided in the payload:
 
-|Attribute|Required|Description|
-|---|---|---|
-|`name`|Optional|Supply a human friendly name by which the merge policy can be identified in list views.|
-|`identityGraph`|Required|[`IdentityGraph`](#identitygraph) object indicating the identity graph from which to obtain related identities to merge.|
-|`attributeMerge`|Required|[`AttributeMerge`](#attributemerge) object indicating the manner by which to prioritize profile attribute values in the case of data conflicts.|
-|`schema`|Required|The [`Schema`](#schema) object providing the XDM schema class associated with the merge policy.|
-|`default`|Optional|Specify whether this merge policy is the default for the schema.|
-
-__Example request__
-
-```
+```shell
 curl -X POST \
   https://platform.adobe.io/data/core/ups/config/mergePolicies \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ....' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 1BD6382559DF0C130A49422D@AdobeOrg'
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "name": "All-ID-Order-By-CMS-Loyalty",
     "identityGraph" : {
@@ -383,14 +371,21 @@ curl -X POST \
     "default": true
 }'
 ```
+* `name`: *(Optional)* A human-friendly name by which the merge policy can be identified in list views.
+* `identityGraph`: The identity graph from which to obtain related identities to merge.
+* `attributeMerge`: The manner by which to prioritize profile attribute values in the case of data conflicts.
+* `schema`: The XDM schema class associated with the merge policy.
+* `default`: *(Optional)* Specifies whether this merge policy is the default for the schema.
 
-__Example response__
+#### Response
 
-```
+A successful response returns the details of the newly created merge policy.
+
+```json
 {
     "id": "e5bc94de-cd14-4cdf-a2bc-88b6e8cbfac2",
     "name": "All-ID-Order-By-CMS-Loyalty",
-    "imsOrgId": "1BD6382559DF0C130A49422D@AdobeOrg",
+    "imsOrgId": "{IMS_ORG}",
     "schema": {
         "name": "_xdm.context.profile"
     },
@@ -412,60 +407,57 @@ __Example response__
 }
 ```
 
----
+## Update a merge policy
 
-## Updating a merge policy
+You can modify an existing merge policy by editing individual attributes (PATCH) or by overwriting the entire merge policy with new attributes (POST). Examples of each are shown below.
 
-Modify an existing merge policy by editing individual attributes, or by overwriting the merge policy with a new one.
+### Edit individual merge policy fields
 
-### Update individual merge policy fields
+You can edit individual fields for a merge policy by making a PATCH request to the [Profile Configuration API](../../../../../../acdpr/swagger-specs/profile-config-api.yaml):
 
-Update a field for a given merge policy.
+#### API format
 
-__Service endpoint__
-
-```
-PATCH https://platform.adobe.io/data/core/ups/config/mergePolicies/{MERGE_POLICY_ID}
+```http
+PATCH /mergePolicies/{mergePolicyId}
 ```
 
-__Request body__
+* `{mergePolicyId}`: The identifier of the merge policy you want to update.
 
-```
-{
-  "op": "{OPERATION}",
-  "path": "{PATH_OF_FIELD}",
-  "value": "{SET_TO_VALUE}"
-}
-```
+#### Request
 
-The attributes break down as follows:
+The following request updates a specified merge policy by changing the value of its `default` property to "true":
 
-|Attribute|Description|
-|---|---|
-|`op`|Specify the operation to take. Currently only "add" is supported|
-|`path`|Provide the path of the field to update. Valid values are: "/name", "/identityGraph.type", "/attributeMerge.type", "/schema.name", "/version", "/default"|
-|`value`|Provide the value to set the specified attribute|
-
-__Example request__
-
-```
-curl -X PATCH \
+```shell
+curl -X POST \
   https://platform.adobe.io/data/core/ups/config/mergePolicies/e5bc94de-cd14-4cdf-a2bc-88b6e8cbfac2 \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ....' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 1BD6382559DF0C130A49422D@AdobeOrg'
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "op": "add",
     "path": "/default",
-    "value": true
-    }'
+    "value": "true"
+  }'
 ```
 
-__Example response__
+* `op`: Specifies the operation to take.
+* `path`: The path of the field to update. Accepted values are: 
+    - "/name"
+    - "/identityGraph.type"
+    - "/attributeMerge.type"
+    - "/schema.name"
+    - "/version"
+    - "/default"
+* `value`: The value to set the specified field to.
 
-```
+#### Response
+
+A successful response returns the details of the newly updated merge policy.
+
+```json
 {
-  "imsOrgId": "1BD6382559DF0C130A49422D@AdobeOrg",
+  "imsOrgId": "{IMS_ORG}",
   "schema": {
     "name": "_xdm.context.profile"
   },
@@ -489,53 +481,31 @@ __Example response__
 }
 ```
 
+Examples of other PATCH operations can be found in the [JSON Patch documentation](http://jsonpatch.com).
+
 ### Overwrite a merge policy
 
-Another way to modify a merge policy is to supply an entire merge policy, overwriting the existing.
+Another way to modify a merge policy is to supply an entirely new merge policy in the payload of a POST request, overwriting the existing policy.
 
-__Service endpoint__
+#### API format
 
-```
-POST https://platform.adobe.io/data/core/ups/config/mergePolicies/{MERGE_POLICY_ID}
-```
-
-__Request body__
-
-```
-{
-    "name": "{UNIQUE_MERGE_POLICY_NAME}",
-    "identityGraph" : {
-        "type": "{IDENTITY_GRAPH_TYPE}"
-    },
-    "attributeMerge" : {
-        "type": "{ATTRIBUTE_MERGE_TYPE}",
-        "data": "{ATTRIBUTE_MERGE_TYPE_SUPPORTING_DATA}"
-    },
-    "schema": {
-        "name":"{SCHEMA_CLASS_NAME}"
-    },
-    "default": "{IS_DEFAULT}"
-}
+```http
+POST /mergePolicies/{mergePolicyId}
 ```
 
-Where the values are as follows:
+* `{mergePolicyId}`: The identifier of the merge policy you want to overwrite.
 
-|Attribute|Required|Description|
-|---|---|---|
-|`name`|Optional|Supply a human friendly name by which the merge policy can be identified in list views.|
-|`identityGraph`|Required|[`IdentityGraph`](#identitygraph) object indicating the identity graph from which to obtain related identities to merge.|
-|`attributeMerge`|Required|[`AttributeMerge`](#attributemerge) object indicating the manner by which to prioritize profile attribute values in the case of data conflicts.|
-|`schema`|Required|The [`Schema`](#schema) object providing the XDM schema class associated with the merge policy.|
-|`default`|Optional|Specify whether this merge policy is the default for the schema.|
+#### Request
 
-__Example request__
+The following request overwrites the specified merge policy, replacing its attribute values with those supplied in the payload. Since this request completely replaces an existing merge policy, you are required to supply all of the same fields that were required when originally defining the merge policy. However, this time you are providing updated values for each field.
 
-```
+```shell
 curl -X POST \
   https://platform.adobe.io/data/core/ups/config/mergePolicies/e5bc94de-cd14-4cdf-a2bc-88b6e8cbfac2 \
-  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ....' \
-  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
-  -H 'x-gw-ims-org-id: 1BD6382559DF0C130A49422D@AdobeOrg'
+  -H 'Authorization: Bearer {ACCESS_TOKEN} \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H `Content-Type: application/json` \
   -d '{
     "name": "All-ID-Order-By-CMS-Loyalty",
     "identityGraph" : {
@@ -556,14 +526,21 @@ curl -X POST \
     "default": true
 }'
 ```
+* `name`: *(Optional)* A human-friendly name by which the merge policy can be identified in list views.
+* `identityGraph`: The identity graph from which to obtain related identities to merge.
+* `attributeMerge`: The manner by which to prioritize profile attribute values in the case of data conflicts.
+* `schema`: The XDM schema class associated with the merge policy.
+* `default`: *(Optional)* Specifies whether this merge policy is the default for the schema.
 
-__Example response__
+#### Response
 
-```
+A successful response returns the details of the updated merge policy.
+
+```json
 {
     "id": "e5bc94de-cd14-4cdf-a2bc-88b6e8cbfac2",
     "name": "All-ID-Order-By-CMS-Loyalty",
-    "imsOrgId": "1BD6382559DF0C130A49422D@AdobeOrg",
+    "imsOrgId": "{IMS_ORG}",
     "schema": {
         "name": "_xdm.context.profile"
     },
@@ -585,8 +562,6 @@ __Example response__
 }
 ```
 
----
+## Next steps
 
-## Conclusion
-
-This tutorial covers only some of the Unified Profile Configuration API. For more details, see the [API Reference](../../../../../../acpdr/swagger-specs/profile-config-api.yaml).
+Now that you have created and configured merge policies for your IMS Organization, you can use them to create audience segments from your Real-time Customer Profile data. See the [Create a segment tutorial](../creating_a_segment_tutorial/creating_a_segment_tutorial.md) for more information.
