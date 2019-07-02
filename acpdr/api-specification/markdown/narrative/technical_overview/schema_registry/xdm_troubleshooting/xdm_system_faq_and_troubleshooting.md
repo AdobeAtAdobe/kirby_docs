@@ -17,8 +17,8 @@ This document provides answers to frequently asked questions about XDM System an
 - **XDM and Identity Service**
     - [How do I define identities for my schema?](#how-do-i-define-identities-for-my-schema)
     - [Does my schema need a primary identity?](#does-my-schema-need-a-primary-identity)
-- **XDM and Unified Profile**
-    - [How do I enable a schema for use in Unified Profile Service?](#how-do-i-enable-a-schema-for-use-in-unified-profile-service)
+- **XDM and Real-time Customer Profile**
+    - [How do I enable a schema for use in Real-time Customer Profile?](#how-do-i-enable-a-schema-for-use-in-real-time-customer-profile)
     - [Can I edit a union schema directly?](#can-i-edit-a-union-schema-directly)
 - **XDM and data ingestion**
     - [How should I format my datafile to ingest data into my schema?](#how-should-i-format-my-datafile-to-ingest-data-into-my-schema)
@@ -27,7 +27,7 @@ This document provides answers to frequently asked questions about XDM System an
 
 - [Object not found](#object-not-found)
 - [Title must be unique](#title-must-be-unique)
-- [Custom fields must use a top level field named `_{TENANT_ID}`](#custom-fields-must-use-a-top-level-field-named-_{tenant_id})
+- [Custom fields must use a top level field](#custom-fields-must-use-a-top-level-field)
 - [To enable profile datasets the schema should be valid](#to-enable-profile-datasets-the-schema-should-be-valid)
 - [Accept header errors](#accept-header-errors)
     - [Accept header parameter is required](#accept-header-parameter-is-required)
@@ -59,7 +59,7 @@ For more information, see the [Schema identification](../schema_registry_develop
 
 ## When does a schema start preventing breaking changes?
 
-Breaking changes can be made to a schema as long as it has never been used in the creation of a dataset or enabled for use in [Unified Profile Service](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md). Once a schema has been used in dataset creation or enabled for use with Unified Profile Service, the rules of [Schema Evolution](../schema_composition/schema_composition.md#schema-evolution-principles) become strictly enforced by the system.
+Breaking changes can be made to a schema as long as it has never been used in the creation of a dataset or enabled for use in [Real-time Customer Profile](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md). Once a schema has been used in dataset creation or enabled for use with Real-time Customer Profile, the rules of [Schema Evolution](../schema_composition/schema_composition.md#schema-evolution-principles) become strictly enforced by the system.
 
 ## What is the maximum size of a long field type?
 
@@ -89,30 +89,30 @@ For more details on managing identities in the UI, see the [Identity](../../../t
 
 ## Does my schema need a primary identity?
 
-Primary identities are optional, since schemas may have 0 or 1 of them. However, a schema must have a primary identity in order for the schema to be enabled for use in Unified Profile Service. See the [Identity](../../../tutorials/schema_editor_tutorial/schema_editor_tutorial.md#identity) section of the Schema Editor tutorial for more information. 
+Primary identities are optional, since schemas may have 0 or 1 of them. However, a schema must have a primary identity in order for the schema to be enabled for use in Real-time Customer Profile. See the [Identity](../../../tutorials/schema_editor_tutorial/schema_editor_tutorial.md#identity) section of the Schema Editor tutorial for more information. 
 
-## How do I enable a schema for use in Unified Profile Service?
+## How do I enable a schema for use in Real-time Customer Profile?
 
-Schemas are enabled for use in [Unified Profile Service](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md) (UPS) through the addition of a "union" tag, located in the `meta:immutableTags` attribute of the schema. Enabling a schema for use with Unified Profile can be done using the API or the user interface.
+Schemas are enabled for use in [Real-time Customer Profile](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md) (UPS) through the addition of a "union" tag, located in the `meta:immutableTags` attribute of the schema. Enabling a schema for use with Profile can be done using the API or the user interface.
 
 ### Enabling an existing schema for UPS using the API
 
 Make a PATCH request to update the schema and add the `meta:immutableTags` attribute as an array containing the value "union". If the update is successful, the response will show the updated schema which now contains the union tag.
 
-For more information on using the API to enable a schema for use in UPS, see the [Unified Profile](../schema_registry_developer_guide.md#unified-profile) section of the Schema Registry developer guide. 
+For more information on using the API to enable a schema for use in UPS, see the [Real-time Customer Profile](../schema_registry_developer_guide.md#unified-profile) section of the Schema Registry developer guide. 
 
 ### Enabling an existing schema for UPS using the UI
 
 In Experience Platform, click on **Schemas** in the left-navigation, and select the name of the schema you wish to enable from the list of schemas. Then, on the right-hand side of the editor under **Schema Properties**, click on **Unified Profile** to toggle it on.
 
 
-For more information, see the [Use in Unified Profile Service](../../../tutorials/schema_editor_tutorial/schema_editor_tutorial.md#use-in-unified-profile-service) section in the Schema Editor tutorial.
+For more information, see the [Use in Real-time Customer Profile](../../../tutorials/schema_editor_tutorial/schema_editor_tutorial.md#use-in-unified-profile-service) section in the Schema Editor tutorial.
 
 ## Can I edit a union schema directly?
 
 Union schemas are read-only and are automatically generated by the system. They cannot be edited directly. Union schemas are created for a specific class when a "union" tag is added to schema that implements that class.
 
-For more information on unions in XDM, see the [Unified Profile](../schema_registry_developer_guide.md#unified-profile) section in the Schema Registry API developer guide.
+For more information on unions in XDM, see the [Real-time Customer Profile](../schema_registry_developer_guide.md#unified-profile) section in the Schema Registry API developer guide.
 
 ## How should I format my datafile to ingest data into my schema?
 
@@ -152,7 +152,7 @@ For more information on constructing lookup paths in the API, see the [container
 
 This error message displays when you attempt to create a resource with a title that is already being used by another resource. Titles must be unique across all resource types. For example, if you try to create a mixin with a title that is already being used by a schema, you will receive this error.
 
-## Custom fields must use a top level field named `_{TENANT_ID}`
+## Custom fields must use a top level field
 
 ```
 {
@@ -176,7 +176,7 @@ This error message displays when you attempt to create a new mixin with improper
 }
 ```
 
-This error message displays when you attempt to enable a profile dataset for a schema that has not been enabled for Unified Profile Service (UPS). Ensure that the schema contains a union tag before enabling the dataset. See the [Unified Profile](../schema_registry_developer_guide.md#unified-profile) section in the Schema Registry API developer guide for more information.
+This error message displays when you attempt to enable a profile dataset for a schema that has not been enabled for Real-time Customer Profile (UPS). Ensure that the schema contains a union tag before enabling the dataset. See the [Real-time Customer Profile](../schema_registry_developer_guide.md#unified-profile) section in the Schema Registry API developer guide for more information.
 
 ## Accept header errors
 
