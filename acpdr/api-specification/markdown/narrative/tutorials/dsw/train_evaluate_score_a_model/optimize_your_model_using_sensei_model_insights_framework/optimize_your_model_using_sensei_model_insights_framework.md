@@ -46,7 +46,7 @@ The Model Insights Framework provides the data scientist with tools in Data Scie
 
 Currently, the Model Insights Framework supports the following runtimes:
 * [Scala](#scala)
-* [Python/Tensorflow](#pythontensorflow)
+* [Python/Tensorflow](#python/tensorflow)
 * [R](#r)
 
 Sample code for recipes can be found in the [experience-platform-dsw-reference](https://github.com/adobe/experience-platform-dsw-reference) repository under `recipes`. Specific files from this repository will be referenced throughout this tutorial.
