@@ -1,126 +1,74 @@
-# Adobe Experience Platform Privacy Service UI overview
+# Interacting with Adobe Experience Platform GDPR Service through the UI
 
-> **Note:** The functionalities described in this document are currently in beta and will be publicly available as part of the July 25, 2019 release.
+## Adobe Experience Platform GDPR Service access
 
-Adobe Experience Platform Privacy Service provides a RESTful API and user interface that allow you to coordinate privacy and compliance requests across various solutions. This document explores the Privacy Service UI. For information on using the API, please see the [Privacy Service API overview](use-cases/gdpr-api-overview.md). 
+Platform GDPR Service currently supports two types of interactions: direct API, as we explored previously, and a Web UI, which helps simplify the authentication and interaction.
 
-This document covers steps for performing the following tasks in the Privacy Service UI:
+This lab will explore the UI portion of Platform GDPR Service, and help you understand how to best leverage both of these access options in your environment.
 
-* [Log in to the Privacy Service UI](#log-in-to-the-privacy-service-ui) 
-* [View job requests and statuses](#view-job-counts-and-statuses)
-* [Create a new GDPR request](#create-a-new-gdpr-request), using one of the following methods:
-    * [Use the Request Builder](#use-the-request-builder)
-    * [Upload a JSON file](#upload-a-json-file)
+## Logging in
 
-
-## Log in to the Privacy Service UI
-
-You must have an Adobe ID in order to authenticate to the Privacy Service UI. In addition, you must have System Administrator privileges within the organization your Adobe ID is associated with.
-
-Navigate to the Adobe Experience Cloud sign-in page at https://marketing.adobe.com. Click **Sign In with an Adobe ID**.
+Authentication with an Adobe ID is required, and the context of that user will determine what organization the GDPR requests are being made for. The user must have System Administrator privilege within the organization in order to see the link to the Administration tools in the Experience Cloud UI.
 
 ![](images/gdpr-ui-login.png)
 
-Enter your Adobe ID credentials when prompted. Once you are signed in, click **Administration**.
+Once authenticated, you should see the Experience Cloud shell where you can navigate to other solutions. If you click the product selector in the UI, you should see a link to the administrative tools.
 
-![Administration tab](images/gdpr-ui-administration-tab.png)
+![GDPR UI Admin Menu](images/gdpr-ui-admin-menu.png)
 
-> **Note:** The Administration tab will only appear if you have system admin privileges within your organization.
+Once in the Administration tools, you will see an option to launch the GDPR UI.
 
-Finally, select **Launch GDPR UI** on the next screen to open the Privacy Service UI.
+## The user interface
 
-![Administration page - navigate to the GDPR UI](images/gdpr-ui-admin-page.png)
+Currently, the user interface consists of three main screens, the job submission screen, status tracker, and job details page. We will cover each in depth here.
 
-## View job requests and statuses
+### Job Submission screen
 
-The dashboard for the Privacy Service UI provides two widgets that allow you to view the status of your GDPR jobs: **Status Report** and **Job Requests**.
+![GDPR UI Job Submission Screen](images/gdpr-ui-job-submission.png)
 
-![UI dashboard](images/gdpr-ui-new-dashboard.png)
+This simple UI is for uploading JSON requests to the central service. You can either drag and drop a file (well-formatted JSON) or click in the box to bring up a file browser window.
 
-### Status Report
+#### Details
 
-The graph on the left-hand side of the Status Report widget tracks submitted jobs against any jobs that may have reported back with errors. The graph on the right-hand side tracks jobs nearing the end of the 30-day compliance window (as defined by the GDPR law).
+- The UI prompts for a **Ticket ID** to be specified, which is primarily for integration into the ticketing systems used by our customers. Populate this field with a ticket ID if you have an internal ticketing system or other tracking code. This field allows you to link the GDPR request, specifically the job ID returned in the API to that specific identifier. Keep in mind that every user in the JSON file will be tagged with this ticket ID.
 
-You can view the exact number of jobs associated with any data point on the graphs by hovering your mouse over the data point in question.
+- **Email to notify** field allows you to submit one or multiple email addresses for notification. By default, the person submitting the request is always included. However, you may change that as needed, and add multiple email addresses. To add additional email addresses – press &lt;TAB&gt; or &lt;ENTER&gt; after each entry to complete each email in the list. The addresses included in this list will receive a copy of any email notifications, which are sent when the job completes, finishes with errors, or times out.
 
-![Mouse-over data points](images/gdpr-ui-mouse-over.png)
+- After gathering the GDPR data from the data subjects and identifying the company contexts and user IDs with associated namespaces, you should have a valid JSON file to drag and drop into the UI. Initially the client-side validation will check the file for well-formed JSON as well as the required fields needed to make a successful request. Please see [Adobe Experience Platform GDPR Service Overview](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) for examples of well-formed GDPR JSON files.
 
-To view further details about a given data point, click the data point in question to display the associated jobs in the Job Requests widget. Take note of the filter that is applied just above the job list.
+- If the file is accepted and passes client-side validation, you should see the file listed in the UI just below the drag-and-drop window. You may drag additional JSON files into the UI as well if you have more, and each one should be listed if it passes validation. At this point, you may submit the request with the valid JSON where the server-side validation will occur, including permissions for the organization, namespace validation on the user IDs, and more. If successful, a dialog will prompt you to navigate to the Status Tracker.
 
-![Applied filter from widget](images/gdpr-ui-mouse-over-apply-filter.png)
+### Status Tracker
 
-> **Note:** When a filter has been applied to the Job Requests widget, you can remove the filter by clicking the **X** on the filter pill. Job Requests will then return to the default tracking list.
+![GDPR UI Status Tracker](images/gdpr-ui-status-tracker.png)
 
-### Job Requests
+After submitting the file successfully, you may choose to be taken to the Status Tracker screen, where you will be able to view all your submitted jobs. Here, you can see a default view of information related to jobs that have been submitted for your organization.
 
-The Job Requests widget lists all available job requests in your organization, including details such as the request type, current status, due date, and requestor email.
+#### Details
 
-You can filter the list by typing keywords into the search bar below the Job Requests title. The list will automatically filter as you type, showing requests that contain values that match your search terms. You can also use the **Requested on** dropdown menu to select a time range for the listed jobs.
+- On the far right, you have the ability to customize your view by selecting columns to show or hide. Any data being shown in the table is searchable using the client-side filtering widget at the top of the table, as detailed below. Some of the columns include:
+  - Status: the overall status of the job, compiled from the individual solution statuses that have reported back to the service – either complete, expired, processing, error, or submitted.
+  - Type: the type of the request, either an **access** or **delete** request
+  - User key: the key associated with the job ID created from your JSON data in the request
+  - Submitted on: The date and time the job was submitted, in the GMT time zone.
 
-![Job Request search options](images/gdpr-ui-job-search.png)
 
-To view the details of a particular job request, click the request's job ID from the list to open the *Job Details* page.
+- The UI provides the ability to filter on any of the fields by simply typing in the search field. The search is executed against all visible columns, so go ahead and test it out. Experiment with showing and hiding fields and combine it with searching.
+
+- Easily switch back to submit new requests by clicking on the _Submit New Request_ button to the right, or by selecting the tab _Upload Request_ in the top left.
+
+- Each unique job ID is a link to a more detailed description of the job itself, containing updated status values and responses from each Experience Cloud product orchestrated by Platform GDPR Service. If you click on this, it takes you to the third UI screen, the Job Details Page.
+
+### Job Details page
 
 ![GDPR UI Job Details](images/gdpr-ui-job-details.png)
 
-This dialog contains status information about each Experience Cloud solution and its current state in relation to the overall job. As every GDPR job is asynchronous, the page displays the latest communication date and time (GMT) from each solution, as some will require more time than others to process the request.
+As mentioned above, navigating from the Status Tracker by clicking on a job ID generates a popup dialog with details about an individual job.
 
-If a solution has provided any additional data, it will be viewable in this dialog. You can view this data by clicking on individual product rows.
+#### Details
 
-To download the complete job data as a CSV file, click **Download** at the top-right of the window.
+- This dialog contains status information about each Experience Cloud solution and its current state in relation to the overall job. As every GDPR job is asynchronous, you can see the latest communication date and time (GMT) from each solution as well, as some will require more time than others to process the request.
 
+- If a solution has provided any additional data, it will be viewable in this dialog. You can expand the view by clicking on individual product rows and seeing what has been received.
 
-## Create a new GDPR request
-
-The Privacy Service UI provides two methods to create new GDPR requests:
-
-* Use the Request Builder
-* Upload a JSON file
-
-Steps for using each of these methods are provided in the following sections.
-
-### Use the Request Builder
-
-Using the Request Builder, you can manually create a new GDPR request in the user interface. The Request Builder is best used for simpler and smaller sets of requests, since the Request Builder limits requests to have only ID type per user. For more complicated requests, it may better to [upload a JSON file](#upload-a-json-file) instead.
-
-To start using the Request builder, click **Create Request** below the Status Report widget on the right-hand side of the screen.
-
-![Click Create Request](images/gdpr-ui-create-request-button.png)
-
-The *Create Request* dialog opens, displaying the available options for submitting a GDPR request.
-
-![Create Request dialog](images/gdpr-ui-request-builder.png)
-
-Select the **Job Type** of the request ("Delete" or "Access") and one or more available **Products** from the list. Under **Consumer Emails**, provide a comma-separated list of email addresses. The addresses included in this list will receive a copy of any email notifications, which are sent when a job completes, finishes with errors, or times out. You can also add an optional **Ticket ID** if desired.
-
-When finished, click **Create**. The dialog disappears, and the new job (or jobs) are listed in the Job Requests widget along with their current processing status.
-
-### Upload a JSON file
-
-When creating more complicated requests, such as those that use multiple ID types for each data subject being processed, you can create a request by uploading a JSON file.
-
-Click the arrow next to **Create Request**, below the Status Report widget on the right-hand side of the screen. From the list of options that appears, select **Upload JSON**.
-
-![Request creation options](images/gdpr-ui-create-options.png)
-
-Click the button once it changes to **Upload JSON**.
-
-![Upload JSON button](images/gdpr-ui-upload-json-button.png)
-
-The *Upload JSON* dialog appears, providing a window for you to drag and drop your JSON file into.
-
-<img src="images/gdpr-ui-upload-json-dialog.png" width="350"/><br/>
-
-If you do not have a JSON file to upload, click **Download Adobe-GDPR-Request.json** to download a template that you can populate according to the values you have collected from your data subjects.
-
-
-<img src="images/download-json-template.png" width="350"/><br/>
-
-
-Locate the JSON file on your computer, and drag it into the dialog window. If the upload is successful, the file name appears in the dialog. You can continue to add more JSON files as necessary by dragging and dropping them into the dialog.
-
-When finished, click **Create**. The dialog disappears, and the new job (or jobs) are listed in the Job Requests widget along with their current processing status.
-
-### Next steps
-
-Now that you have created a GDPR request, you can use the [previous steps](#view-job-requests-and-statuses) outlined in this document to view the details of the job, monitor its processing status, and download the results once it has completed.
+- You also have the ability to download the complete job data as viewed in this dialog as a .CSV file. Click on the download button and feel free to open the file to examine its contents.
