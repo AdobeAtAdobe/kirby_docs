@@ -14,6 +14,7 @@ info:
     Notes:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core/ups/export
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
       * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
       to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
 
@@ -66,8 +67,6 @@ paths:
       summary: Posts a Profile Export Job
       description: ''
       operationId: postScanJobRoute
-      consumes:
-        - application/json
       produces:
         - application/json
       parameters:
@@ -94,7 +93,6 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/ScanJobEntityRequest'
-        - $ref: '#/parameters/json-header'
       responses:
         '200':
           description: Profile Export Job successfully Posted
@@ -157,6 +155,7 @@ paths:
           description: Profile Export Job not found
         '503':
           description: Service Unavailable
+
 definitions:
   AdditionalFields:
     type: object
