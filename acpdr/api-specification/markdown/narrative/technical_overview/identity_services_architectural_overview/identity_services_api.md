@@ -74,8 +74,8 @@ Retrieve all cluster members for a single identity.
 
 > **Note:** Use optional `graph-type` parameter to indicate the identity graph to get the cluster from. Options are:
 >
-> * None - Perform no identity stitching.
-> * Private Graph - Perform identity stitching based on your private identity graph. If no `graph-type` is provided, this is the default.
+> * __coop__ - Subscription-based graph built by using coop data
+> * __pdg__ - Private device graph, built from your organization's data. If no `graph-type` is provided, this is the default.
 
 __Service endpoint__
 
@@ -126,10 +126,49 @@ POST https://platform.adobe.io/data/core/identity/clusters/members
 
 __Request body__
 
-The following demonstrates supplying a list of XIDs for which to retrieve cluster members.
+Option 1: Supply a list of XIDs for which to retrieve cluster members.
 ```
 {
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"]
+}
+```
+
+Option 2: Supply a list of XIDs and override the default `graph-type` value of "pdg".
+```
+{
+    "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
+    "graph-type": "coop"
+}
+```
+
+Option 3: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace code.
+```
+{
+    "compositeXids": [{
+            "ns": "AdCloud",
+            "id": "WRbM7AAAAJ_PBZHl"
+        },
+        {
+            "ns": "AdCloud",
+            "id": "WY-RNgAAArI4rGBo"
+        }
+    ]
+}
+```
+
+Option 4: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace ID. This example demonstrates using this method while overwriting the default `graph-type` of "pdg".
+```
+{
+    "compositeXids": [{
+            "nsid": 411,
+            "id": "WRbM7AAAAJ_PBZHl"
+        },
+        {
+            "nsid": 411,
+            "id": "WY-RNgAAArI4rGBo"
+        }
+    ],
+    "graph-type": "coop"
 }
 ```
 
@@ -157,7 +196,7 @@ curl -X POST \
   -H 'x-gw-ims-org-id: B3349894589501FE0A494034@AdobeOrg' \
   -d '{
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
-    "graph-type": "Private Graph"
+    "graph-type": "coop"
 }' | json_pp
 
 ## Real Call - Using UIDs
@@ -177,7 +216,7 @@ curl -X POST \
             "id": "WY-RNgAAArI4rGBo"
         }
     ],
-    "graph-type": "Private Graph"
+    "graph-type": "coop"
 }' | json_pp
 ```
 
@@ -284,8 +323,9 @@ __Example real response__
 Identities can move clusters over the course of various device graph runs. Identity Service provides visibility into the cluster associations of a given identity over time.
 
 > **Note:** Use optional `graph-type` parameter to indicate the output type to get the cluster from. Options are:
-> * None - Perform no identity stitching.
-> * Private Graph - Perform identity stitching based on your private identity graph. If no `graph-type` is provided, this is the default.
+
+* __coop__ - graph built by using coop data
+* __pdg__ - private device graph  
 
 ### Get the cluster history of a single identity
 
@@ -342,11 +382,19 @@ Option 1: Supply a list of XIDs for which to retrieve cluster members.
 ```
 {
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
-    "graph-type": "Private Graph"
+    "graph-type": "coop"
 }
 ```
 
-Option 2: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace code.
+Option 2: Supply a list of XIDs and override the default `graph-type` value of "pdg".
+```
+{
+    "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
+    "graph-type": "coop"
+}
+```
+
+Option 3: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace code.
 ```
 {
     "compositeXids": [{
@@ -358,6 +406,22 @@ Option 2: Supply a list of identities as composite IDs, where each names the ID 
             "id": "WY-RNgAAArI4rGBo"
         }
     ]
+}
+```
+
+Option 4: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace ID. This example demonstrates using this method while overwriting the default `graph-type` of "pdg".
+```
+{
+    "compositeXids": [{
+            "nsid": 411,
+            "id": "WRbM7AAAAJ_PBZHl"
+        },
+        {
+            "nsid": 411,
+            "id": "WY-RNgAAArI4rGBo"
+        }
+    ],
+    "graph-type": "coop"
 }
 ```
 
@@ -374,7 +438,7 @@ curl -X POST \
   -H 'x-uis-cst-ctx: stub' \
   -d '{
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
-    "graph-type": "Private Graph"
+    "graph-type": "coop"
 }'
 
 # Using XIDs
@@ -386,7 +450,7 @@ curl -X POST \
   -H 'x-gw-ims-org-id: B3349894589501FE0A494034@AdobeOrg' \
   -d '{
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
-    "graph-type": "Private Graph"
+    "graph-type": "coop"
 }' | json_pp
 
 # Using UIDs
@@ -406,7 +470,7 @@ curl -X POST \
             "id": "WY-RNgAAArI4rGBo"
         }
     ],
-    "graph-type": "Private Graph"
+    "graph-type": "coop"
 }' | json_pp
 ```
 
@@ -518,15 +582,37 @@ POST https://platform.adobe.io/data/core/identity/mappings
 __Example body__
 
 Option 1: Supply a list of XIDs for which to retrieve mappings.
-
 ```
 {
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
-    "graph-type": "Private Graph"
+    "graph-type": "coop"
 }
 ```
 
-Option 2: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace ID. This example demonstrates using this method while overwriting the default `graph-type` of "Private Graph".
+Option 2: Supply a list of XIDs and override the default `graph-type` value of "pdg".
+```
+{
+    "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
+    "graph-type": "coop"
+}
+```
+
+Option 3: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace code.
+```
+{
+    "compositeXids": [{
+            "ns": "AdCloud",
+            "id": "WRbM7AAAAJ_PBZHl"
+        },
+        {
+            "ns": "AddCloud",
+            "id": "WY-RNgAAArI4rGBo"
+        }
+    ]
+}
+```
+
+Option 4: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace ID. This example demonstrates using this method while overwriting the default `graph-type` of "pdg".
 ```
 {
     "compositeXids": [{
@@ -538,7 +624,7 @@ Option 2: Supply a list of identities as composite IDs, where each names the ID 
             "id": "WY-RNgAAArI4rGBo"
         }
     ],
-    "graph-type": "None"
+    "graph-type": "coop"
 }
 ```
 
@@ -555,7 +641,7 @@ curl -X POST \
   -d '{
  "xids" : ["GesCQXX0CAESEE8wHpswUoLXXmrYy8KBTVgA"],
  "targetNs": "0",
- "graph-type": "Private Graph"
+ "graph-type": "coop"
 }' | json_pp
 
 # Using UIDs
@@ -576,7 +662,7 @@ curl -X POST \
         }
     ],
  "targetNs": "0",
- "graph-type": "Private Graph"
+ "graph-type": "coop"
 }' | json_pp
 ```
 
