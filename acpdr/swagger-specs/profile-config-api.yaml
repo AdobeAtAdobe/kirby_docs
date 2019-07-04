@@ -1,28 +1,30 @@
+
 swagger: '2.0'
 info:
   description: >-
-    Use this API to control the manner by which Unified Profile merges XDM schema objects on Adobe Experience Platform. 
+    Use this API to control the manner by which Real-time Customer Profile merges Experience Data Model (XDM) schema objects on Adobe Experience Platform. 
 
 
     Related documentation:
 
-      * [Unified Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
-      * [Configuring Unified Profile](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/activating_up_tutorial/activating_up_tutorial.md)
+      * [Real-time Customer Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
+      * [Configuring Real-time Customer Profile](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_up_tutorial.md)
 
 
     Notes:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core/ups/config
       * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
-    to obtain these, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
+    to obtain these, visit the
+    [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
   version: 18.10.1
-  title: Unified Profile Configuration API
+  title: Real-time Customer Profile Configuration API
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 host: platform.adobe.io
 basePath: /data/core/ups/config
 tags:
   - name: Merge policies
+    description: "A merge policy is a set of configurations controlling aspects of identity stitching and data fragment merging. Merge policies are specific to a single schema, and can only be used to access entities adhering to that schema."
 paths:
   /mergePolicies:
     parameters:
@@ -403,24 +405,21 @@ parameters:
     name: Authorization
     description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
     For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
     required: true
     type: string
     in: header
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
     description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
     required: true
     type: string
     in: header
   x-api-key:
     name: x-api-key
     description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
     required: true
     type: string
     in: header
@@ -429,4 +428,4 @@ parameters:
     description: 'application/json'
     required: true
     type: string
-    in: header    
+    in: header
