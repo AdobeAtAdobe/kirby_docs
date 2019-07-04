@@ -63,6 +63,7 @@ xdm.receipt | The message contains a JSON formatted response for a create, updat
 The usage of each format variant depends on the specific API:  
 
 API | Content-Type header | Accept header 
+---|---|---|
 Create Instance <br/>Create Container | hal<br/>with schema parameter | xdm.receipt 
 Update Instance<br/>Update Container | hal<br/>with schema parameter | xdm.receipt 
 Patch Instance | patch.hal | xdm.receipt 
