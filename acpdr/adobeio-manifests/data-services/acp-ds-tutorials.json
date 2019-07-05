@@ -177,6 +177,7 @@
 		"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
 		"end-user/markdown/dule_overview/": "/apis/experienceplatform/home/dule/duleservices.html",
 		"api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-		"api-specification/markdown/narrative/technical_overview/streaming_ingest/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
+		"api-specification/markdown/narrative/technical_overview/streaming_ingest/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
+		"api-specification/markdown/narrative/technical_overview/decisioning-overview/":"/apis/experienceplatform/home/services/decisioning-service.html"
 	}
 }

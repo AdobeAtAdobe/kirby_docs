@@ -29,7 +29,7 @@ The tutorial covers the following steps:
 
 This tutorial requires a working understanding of the Experience Platform services involved in experience decisioning and determining the next best offer to present during customer experiences. Before beginning this tutorial, please review the documentation for the following:
 
-- [Decisioning Service](../../technical_overview/decisioning-overview/decisioning-overview.md): Provides the framework for adding and removing offers and creating algorithms for choosing the best to present during a customer's experience.
+- [Decisioning Service](../../technical_overview/decisioning-overview/decisioning-service-overview.md): Provides the framework for adding and removing offers and creating algorithms for choosing the best to present during a customer's experience.
 - [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
 - [Profile Query Language (PQL)](../../technical_overview/unified_profile_architectural_overview/unified_profile_pql.md): PQL is used to define rules and filters.
 

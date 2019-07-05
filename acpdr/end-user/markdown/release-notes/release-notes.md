@@ -72,7 +72,7 @@ A prebuilt rich data model enables the use case of "Next Best Offer" decisioning
 * The offer data model is not exposed through the Schema Registry and can therefore only be extended in limited ways. The model schema has built-in structures to allow the attachment of custom data. In the future, you will be able to extend a base XDM model class to define your own custom decisioning domains.
 * You must be provisioned with the Offer Management domain model and users and integrations must be managed in this product context.
 
-To learn more, visit the [Decisioning Service Overview](https://www.adobe.io/apis/experienceplatform/home/services/allservices.html#!api-specification/markdown/narrative/technical_overview/decisioning-overview/decisioning-service-overview.md).
+To learn more, visit the [Decisioning Service Overview](https://www.adobe.io/apis/experienceplatform/home/services/decisioning-service.html#!api-specification/markdown/narrative/technical_overview/decisioning-overview/decisioning-service-overview.md).
 
 ## Query Service
 
