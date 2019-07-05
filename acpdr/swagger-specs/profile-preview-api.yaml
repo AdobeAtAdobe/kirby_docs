@@ -16,7 +16,6 @@ info:
     Notes:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core/ups
-      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
       * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
       to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
 
@@ -40,6 +39,8 @@ paths:
       summary: "SESSIONLESS: Submits a Preview Job for a Profile Query"
       description: ""
       operationId: "postSessionlessPreviewRoute"
+      consumes:
+      - "application/json"
       produces:
       - "application/json"
       parameters:
@@ -51,11 +52,11 @@ paths:
             \ The model against which this predicate is to be evaulated. Please note\
             \ that 'touchpoint' is not treated as model as it can be associated with\
             \ any of the models like profile.\ngraphType - Graph Type you want to get\
-            \ the cluster from. Possible values are (coop - graph built by using coop\
-            \ data, pdg - private device graph, psr - propriatery stiched rules)"
+            \ the cluster from. Possible values are (None - Perform no identity stitching, Private Graph - Perform identity stitching based on your private identity graph. If no `graph-type` is provided, this is the default.)"
           required: true
           schema:
             $ref: "#/definitions/PreviewQuerySessionlessRequest"
+        - $ref: '#/parameters/json-header'
       responses:
         200:
           description: "successful operation"
@@ -77,7 +78,7 @@ paths:
     parameters:
       - name: "previewId"
         in: "path"
-        description: "Preview  Id."
+        description: "ID of the preview for which get the preview results"
         required: true
         type: "string"
         x-example: "MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA=="
@@ -137,6 +138,16 @@ paths:
         503:
           description: "Service unavailable"
   /estimate/{previewId}:
+    parameters:
+      - name: "previewId"
+        in: "path"
+        description: "Preview Id."
+        required: true
+        type: "string"
+        x-example: "MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA=="
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
       - "Estimate"
@@ -145,24 +156,6 @@ paths:
       operationId: "getEstimateStatusRoute"
       produces:
       - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        required: false
-        schema:
-          $ref: "#/definitions/DatabaseService"
-      - name: "previewId"
-        in: "path"
-        description: "Preview Id."
-        required: true
-        type: "string"
-        x-example: "123421"
-      - name: "x-gw-ims-org-id"
-        in: "header"
-        description: "IMS Client Id"
-        required: true
-        type: "string"
-        x-example: "1BD@Adobe.com"
       responses:
         200:
           description: "Estimate Successfully retrieved."
@@ -174,7 +167,6 @@ paths:
           description: "Preview id {previewId} does not exist."
         503:
           description: "Service unavailable"
-
 
 definitions:
   EstimateResponse:
