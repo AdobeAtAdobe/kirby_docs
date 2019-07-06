@@ -5,8 +5,8 @@ Unified Profile in Adobe Experience Platform provides a unified, real-time consu
 This overview describes the role and use of Unified Profile. In specific:
 
 [Understanding Unified Profile](#understanding-unified-profile) - See the big picture about Unified Profile and its role on Experience Platform.  
-[The union view](#the-union-view) - Understand the components involved in unifying profile data to build the union view, how to control the parameters involved, and the composition of the union view schema.   
-[The real-time customer profile](#the-real-time-customer-profile) - Streaming Ingestion and Edge Service allows you to access customer data to instantaneously perform computations and make decisions to deliver enhanced individualized experiences to customers, in real-time, as they interact with your brand.  
+[The union view](#the-unified-profile) - Understand the components involved in unifying profile data to build the union view, how to control the parameters involved, and the composition of the union view schema.   
+[The real-time customer profile](#the-real-time-profile) - Streaming Ingestion and Edge Service allows you to access customer data to instantaneously perform computations and make decisions to deliver enhanced individualized experiences to customers, in real-time, as they interact with your brand.  
 [Data governance](#data-governance) - Learn how you can use DULE and certain Unified Profile access parameters to ensure reliable compliance with any data usage restrictions and policies that govern your consumers' data.  
 [Getting data to Unified Profile](#getting-data-to-unified-profile) - The power of Unified Profile and Identity Service to build the union view depends on the data you supply.  
 [Creating audience segments](#creating-audience-segments) - Learn how to build audience segments which are used across Platform solutions, and can be used by your integrations as well.
