@@ -1,19 +1,16 @@
 
 # GDPR on Adobe Experience Platform Overview
-===================
 
 Adobe Experience Platform GDPR Service provides a method to submit both access and delete requests by the data controller, in an effort to comply with the General Data Protection Regulation on Adobe Experience Platform.
 
-GDPR requests can be submitted to Adobe Experience Platform using the [GDPR Central Service API](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) or [GDPR UI](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/using-gdpr-ui.md). There are two different data stores on the Platform where requests are to be processed:
+GDPR requests can be submitted to Adobe Experience Platform using the [GDPR Central Service API](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) or [GDPR UI](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/using-gdpr-ui.md). There are two different data stores on Experience Platform where requests are to be processed:
 
 * Data Lake
 * Unified Profile 
 
-
 The following workflow describes how data needs to be set up by the customer for Adobe Experience Platform to process the requests.
 
 ## Step 1: Associate identities when profile data is ingested to Adobe Experience Platform
-
 
 Data access and delete requests in Unified Profile on Adobe Experience Platform is facilitated by the Profile GDPR service.
 
@@ -59,7 +56,9 @@ In the example below:
 }
 ```
 
-`curl -X PATCH "https://platform.adobe.io/data/foundation/catalog/dataSets/5bc391a7e388cc12f991678e" -H "accept: application/json" -H "x-api-key: acp_foundation_example" -H "x-gw-ims-org-id: example@AdobeOrg" -H "Authorization: bearer example_token" -H "content-type: application/json" -d "{ \"schemaMetadata\": { \"gdpr\": [{ \"path\": \"/properties/personalEmail/properties/address\", \"namespace\": [\"email_ns\"] }] }}"`
+```json
+curl -X PATCH "https://platform.adobe.io/data/foundation/catalog/dataSets/5bc391a7e388cc12f991678e" -H "accept: application/json" -H "x-api-key: acp_foundation_example" -H "x-gw-ims-org-id: example@AdobeOrg" -H "Authorization: bearer example_token" -H "content-type: application/json" -d "{ \"schemaMetadata\": { \"gdpr\": [{ \"path\": \"/properties/personalEmail/properties/address\", \"namespace\": [\"email_ns\"] }] }}"
+```
 
 Labels are an array of string values. In the above example, the label is `email_ns`. Labels should only be applied to leaf fields (fields without children). In the sample above, the path refers to a leaf field.
 
@@ -77,9 +76,9 @@ Request payload:
 {
   "companyContexts": [{
     "namespace": "imsOrgID",
-    "value": "orgId"
+    "value": orgId
   }],
-  "users": [{
+  "users":
     "key": "David Smith", // user id on controller side submitting GDPR request
     "action": ["access"], // type of GDPR request - access or delete
     "userIDs": [  // list of namespaces to lookup in platform or other solutions
