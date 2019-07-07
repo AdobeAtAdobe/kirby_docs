@@ -54,7 +54,7 @@ In our tutorial, we will be using Python 3 in the Jupyter Notebook to show how t
 
 ![](./images/retail_sales.png)
 
-The Retail Sales recipe is a standalone example which uses the same Retail Sales dataset to show how data can be explored and visualized in Jupyter Notebook. Additionally, the notebook goes further in depth with training and verification. More information about this specific notebook can be found in this [walkthrough](../../../../technical_overview/data_science_workspace_overview/dsw_walkthrough/dsw_walkthrough.md).
+The Retail Sales recipe is a standalone example which uses the same Retail Sales dataset to show how data can be explored and visualized in Jupyter Notebook. Additionally, the notebook goes further in depth with training and verification. More information about this specific notebook can be found in this [walkthrough](../../../technical_overview/data_science_workspace_overview/dsw_walkthrough/dsw_walkthrough.md).
 
 ---
 
@@ -203,4 +203,4 @@ This tutorial went over how to create a new Jupyter notebook in the Data Science
 * Access datasets and schemas
 * Explore datasets 
 
-Now you are ready to go on to the [next section](../../author_a_model/package_source_files_into_recipe/package_source_files_into_recipe.md) to package a recipe and to import into Data Science Workspace.
+Now you are ready to go on to the [next section](../package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md) to package a recipe and to import into Data Science Workspace.
