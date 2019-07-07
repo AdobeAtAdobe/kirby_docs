@@ -6,7 +6,7 @@ GDPR not only applies to organizations located within the European Union, but it
 
 Adobe believes this presents a new opportunity for companies to strengthen their brand loyalty by focusing on consumer privacy while delivering amazing experiences. Adobe already meets or is implementing our obligations as a Data Processor. As a Data Processor, Adobe strives toward GDPR compliance across all Adobe Experience Cloud solutions.
 
-The following table points to articles outlining how to get GDPR-ready with your Experience Cloud Solutions. You will learn how to curate and label your data and how to configure your Experience Cloud Solutions for GDPR request processing using the Adobe Experience Platform Privacy Service API or tools.
+The following table points to articles outlining how to get GDPR-ready with your Experience Cloud Solutions. You will learn how to curate and label your data and how to configure your Experience Cloud Solutions for GDPR request processing using the Adobe GDPR API or tools.
 
 | Product | Description |
 | ------- | ----------- |
@@ -20,5 +20,8 @@ The following table points to articles outlining how to get GDPR-ready with your
 | [Livefyre](https://marketing.adobe.com/resources/help/en_US/livefyre/c_gdpr_compliance.html) | How to complete access and deletion requests permitted under GDPR. |
 | [Social](https://marketing.adobe.com/resources/help/en_US/social/c_gdpr-request.html) | How to use the GDPR request form to access or delete data collected in your use of Adobe Social. |
 | [Target](https://marketing.adobe.com/resources/help/en_US/target/target/privacy-and-general-data-protection-regulation.html) | How to enable customers to delete data in their Target Visitor Profile. |
+
+
+ir Target Visitor Profile. |
 
 
