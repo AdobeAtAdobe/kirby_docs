@@ -1,0 +1,336 @@
+swagger: "2.0"
+info:
+  description: >-
+    Run your PQL predicate using Unified Profile Preview Service for a summary of the resulting profile segment.
+    This API facilitates access to both estimation information, such as the projected audience size, and a preview the
+    qualified audience members.
+
+
+    Related documentation:
+
+      * [Unified Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
+      * [Creating segments in Experience Platform](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md)
+      * [Estimating and previewing segments](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md#optional-step-2-estimate-and-preview-audience)
+
+
+    Notes:
+      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * Base path for this API: /data/core/ups
+      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
+      to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
+
+  version: 18.8.1
+  title: Unified Profile Preview API
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
+host: "platform.adobe.io"
+basePath: "/data/core/ups"
+tags:
+- name: "Estimate"
+- name: "Preview"
+paths:
+  /preview:
+    parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+    post:
+      tags:
+      - "Preview"
+      summary: "SESSIONLESS: Submits a Preview Job for a Profile Query"
+      description: ""
+      operationId: "postSessionlessPreviewRoute"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "\npredicateExpression - Expression of the predicate that is\
+            \ to be evaluated \npredicateType - Default: PQL The only value that is\
+            \ available to use for this is PQL for now.\npredicateModel - Default: xdm.model.profile\
+            \ The model against which this predicate is to be evaulated. Please note\
+            \ that 'touchpoint' is not treated as model as it can be associated with\
+            \ any of the models like profile.\ngraphType - Graph Type you want to get\
+            \ the cluster from. Possible values are (None - Perform no identity stitching, Private Graph - Perform identity stitching based on your private identity graph. If no `graph-type` is provided, this is the default.)"
+          required: true
+          schema:
+            $ref: "#/definitions/PreviewQuerySessionlessRequest"
+        - $ref: '#/parameters/json-header'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PreviewQueryResponse"
+        201:
+          description: "Profile Preview successfully Posted"
+          schema:
+            $ref: "#/definitions/PreviewQueryResponse"
+          headers:
+            X-Location:
+              type: "string"
+              description: "HRef to the Profile Preview"
+        403:
+          description: "Forbidden"
+        503:
+          description: "Service Unavailable"
+  /preview/{previewId}:
+    parameters:
+      - name: "previewId"
+        in: "path"
+        description: "ID of the preview for which get the preview results"
+        required: true
+        type: "string"
+        x-example: "MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA=="
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+    get:
+      tags:
+      - "Preview"
+      summary: "SESSIONLESS: Gets result of the Preview Job in a paginated fashion. Ordering will\
+        \ be by objectId."
+      description: ""
+      operationId: "getSessionlessPreviewStatusRoute"
+      produces:
+      - "application/json"
+      parameters:
+        - name: "offset"
+          in: "query"
+          description: "Page offset"
+          required: false
+          type: "string"
+          x-example: "offset=10200"
+        - name: "limit"
+          in: "query"
+          description: "How many entries should be present in a page. 1000 if not specified."
+          required: false
+          type: "integer"
+          x-example: 100
+      responses:
+        200:
+          description: "XDM model objects of given {jobId} successfully returned. "
+          schema:
+            $ref: "#/definitions/EndCustomerEntityPageResponse"
+        403:
+          description: "You are forbidden to make this request."
+        404:
+          description: " Preview jobId {jobId} does not exist."
+        503:
+          description: "Service unavailable"
+    delete:
+      tags:
+      - "Preview"
+      summary: "SESSIONLESS: Cancels the execution of the Preview Job"
+      description: ""
+      operationId: "deleteSessionLessPreviewStatusRoute"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Job Successfully cancelled "
+          schema:
+            $ref: "#/definitions/MessageResponse"
+        403:
+          description: "You are forbidden to make this request."
+        404:
+          description: "Preview jobId {jobId} does not exist."
+        503:
+          description: "Service unavailable"
+  /estimate/{previewId}:
+    parameters:
+      - name: "previewId"
+        in: "path"
+        description: "Preview Id."
+        required: true
+        type: "string"
+        x-example: "MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA=="
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+    get:
+      tags:
+      - "Estimate"
+      summary: "SESSIONLESS: Gets result of the Estimate Job."
+      description: ""
+      operationId: "getEstimateStatusRoute"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Estimate Successfully retrieved."
+          schema:
+            $ref: "#/definitions/EstimateResponse"
+        403:
+          description: "You are forbidden to make this request."
+        404:
+          description: "Preview id {previewId} does not exist."
+        503:
+          description: "Service unavailable"
+
+definitions:
+  EstimateResponse:
+    type: "object"
+    required:
+    - "_links"
+    - "confidenceInterval"
+    - "estimatedSize"
+    - "profilesMatchedSoFar"
+    - "profilesReadSoFar"
+    - "standardError"
+    - "state"
+    - "totalRows"
+    properties:
+      estimatedSize:
+        type: "integer"
+        format: "int32"
+      standardError:
+        type: "integer"
+        format: "int32"
+      confidenceInterval:
+        type: "string"
+      profilesReadSoFar:
+        type: "integer"
+        format: "int32"
+      profilesMatchedSoFar:
+        type: "integer"
+        format: "int32"
+      totalRows:
+        type: "integer"
+        format: "int32"
+      state:
+        type: "string"
+      _links:
+        $ref: "#/definitions/PreviewLink"
+  PreviewLink:
+    type: "object"
+    required:
+    - "preview"
+    properties:
+      preview:
+        type: "string"
+  DatabaseService:
+    type: "object"
+  EndCustomerEntityPageResponse:
+    type: "object"
+    properties:
+      page:
+        description: "The page information of the current response entity."
+      link:
+        description: "The href links."
+      state:
+        type: "string"
+        description: "The execution State of the query"
+      results:
+        type: "array"
+        description: "The list of endcustomer entities."
+        items:
+          $ref: "#/definitions/PreviewSegmentsWrapperResponse"
+    description: "The endcustomer entity response, with current page information and\
+      \ next page link."
+  MessageResponse:
+    type: "object"
+    required:
+    - "message"
+    - "status"
+    properties:
+      status:
+        type: "boolean"
+      message:
+        type: "string"
+  PreviewQueryResponse:
+    type: "object"
+    required:
+    - "previewExecutionId"
+    - "previewQueryId"
+    - "previewQueryStatus"
+    - "state"
+    properties:
+      previewQueryId:
+        type: "string"
+      previewExecutionId:
+        type: "integer"
+        format: "int32"
+      previewQueryStatus:
+        type: "string"
+      state:
+        type: "string"
+  PreviewQuerySessionlessRequest:
+    type: "object"
+  Link:
+    type: "object"
+    properties:
+      nextPage:
+        type: "string"
+        description: "The href link to the next page of the records."
+    description: "The link information."
+  Page:
+    type: "object"
+    properties:
+      offset:
+        type: "integer"
+        format: "int32"
+        description: "The offset of the page. By default is the internal id for the\
+          \ first record."
+      size:
+        type: "integer"
+        format: "int32"
+        description: "The total number of records of this page."
+    description: "The page information of the response entity."
+  PreviewSegmentsIndividualResponse:
+    type: "object"
+    properties:
+      objectId:
+        type: "string"
+        description: "Unique identifier of XDM Model object."
+      _href:
+        type: "string"
+        description: "Profile Access Link to the Contents of the XDM Object"
+  PreviewSegmentsWrapperResponse:
+    type: "object"
+    properties:
+      objectId:
+        type: "string"
+        description: "Unique identifier of XDM Model object."
+      _href:
+        type: "string"
+        description: "Profile Access Link to the Contents of the XDM Object"
+      relatedObjects:
+        type: "array"
+        description: "List of related objectIds"
+        items:
+          $ref: "#/definitions/PreviewSegmentsIndividualResponse"
+
+
+parameters:
+  authorization:
+    name: Authorization
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
+    For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  x-gw-ims-org-id:
+    name: x-gw-ims-org-id
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  x-api-key:
+    name: x-api-key
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  json-header:
+    name: Content-Type
+    description: 'application/json'
+    required: true
+    type: string
+    in: header    
