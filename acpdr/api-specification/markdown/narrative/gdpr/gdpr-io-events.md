@@ -1,86 +1,104 @@
-# Setting up GDPR Job Events on Adobe I/O Events
+# Subscribe to Privacy Service event notifications
 
-These instructions describe how to set up GDPR Job events using Adobe I/O Events. You can use Adobe I/O for notification of GDPR Job events. 
+> **Note:** The functionalities described in this document are currently in beta and will be publicly available as part of the July 25, 2019 release.
 
-> **Note:** This document describes functionality that will be released with GDPR 2.0 in Q2 2019.
+Adobe Experience Platform Privacy Service event notifications are messages that leverage Adobe I/O Events sent to a configured webhook to facilitate efficient job request automation. They reduce or eliminate the need to poll the API in order to check if a job is complete or if a certain milestone within a workflow has been reached.
 
-You can subscribe to the following event types:
+There are currently four types of notifications related to the GDPR job request lifecycle:
 
-|Type|Description|
-|---|---|
-|jobcomplete|All solutions have completed their work (if required), and the overall job status is set to COMPLETE.|
-|joberror|At least one solution has reported an error and the overall job status is set to ERROR.|
-|productcomplete|One of the solutions has completed its work and reported back to the central service.|
-|producterror|One of the solutions has reported back with an error of some kind.|
+Type | Description
+--- | ---
+Job Complete | All Experience Cloud solutions have reported back and the overall or global status of the job has been marked as complete.
+Job Error | One or more solutions have reported an error while processing the request.
+Product Complete | One of the solutions associated with this job has completed its work.
+Product Error | One of the solutions reported an error while processing the request.
 
-## Create an integration
+This document provides steps for setting up an integration for Privacy Service notifications within Adobe I/O.
 
-For the purposes of this example, you’ll be creating an individual integration using your personal Adobe ID.
+## Getting started
 
-To create an integration for GDPR Job events:
+This tutorial uses **ngrok**, a software product which exposes local servers to the public internet through secure tunnels. Please [install ngrok](https://ngrok.com/download) before starting this tutorial in order to follow along and create a webhook to your local machine. This guide also requires you to have a GIT repository downloaded that contains a simple server written in [Node.js](https://nodejs.org/).
 
-1. Log in to [Adobe I/O Console](https://console.adobe.io). You’ll see a list of any integrations you’ve created so far. If this is your first, you’ll see a button for creating an integration.
+## Create a local server
 
-1. Select **New integration**. The “Create a new integration" screen appears. 
+Using the command line, navigate to the root directory of your Node.js server. Then, type the following commands:
 
-1. Select **Receive near real-time events** and continue.
+1. `npm install`
+1. `npm start`
 
-1. Select an event provider: Because you’re using your personal account, the only provider you’ll see is GDPR Assets. **Choose GDPR Assets** and continue.
+These commands install all dependencies and initialize the server. If successful, you can find your server running at http://localhost:3000/.
 
-1. You’re offered one last chance to update an existing integration, if you have any; select **New integration** and continue.
+## Create a webhook using ngrok
 
-1. Enter details for the integration. Console needs a name and a description; these can be whatever you want, subject only to length restrictions. Choose **Web** for the platform and provide a redirect URI and a redirect URI pattern.
+Within the same directory and in a new command line window, type the following command:
 
-> **Note:** Your integration needs to send a redirect URI to Adobe when it authenticates on behalf of a user, to send them to your integration once authentication is complete. The redirect URI you provide here is a default, to which Adobe I/O will fall back if the redirect URI in your authentication request fails. The redirect URI pattern is used by Adobe I/O to validate the redirect URI you provide with an authentication request. All redirect URIs must use HTTPS.
-
-## Add a webhook
-
-When you select “Add Event Registration”, the dialog expands to provide fields for you to define a webhook to receive Adobe Events. (For more on webhooks, see [Adobe I/O Events Webhooks](https://www.adobe.io/apis/experienceplatform/events/documentation.html#!adobedocs/adobeio-events/master/intro/webhook_docs_intro.md).) The webhook you ultimately use should be part of the app you develop as your integration. For now, however, it’s easy to set up a simple webhook to test your integration’s connection with Adobe Events.
-
-Several tools exist on the web that can be used for this purpose: ngrok, Postman, and more. For this example, use ngrok. Ngrok is a utility for enabling secure introspectable tunnels to your localhost. With ngrok, you can securely expose a local web server to the internet and run your own personal web services from your own machine, safely encrypted behind your local NAT or firewall.
-
-First, configure a local web server. There are a number of choices, depending on whether you're Windows, Mac, or Linux.
-Next, you'll need a simple function to respond to the Adobe I/O challenge. Try this JavaScript:
-
-```javascript
-var express = require('express');
-var Webtask = require('webtask-tools');
-var bodyParser = require('body-parser');
-var app = express();
-
-app.use(bodyParser.json());
-app.get('/webhook', function (req, res) {
-var result = "No challenge";
-if (req.query["challenge"]){
-    result = req.query["challenge"]
-    console.log("got challenge: " + req.query["challenge"]);
-} else {
-    console.log("no challenge")
-}
-res.status(200).send(result)
-});
-
-app.post('/webhook', function (req, res) { 
-console.log(req.body)
-res.writeHead(200, { 'Content-Type': 'application/text' });
-res.end("pong");
-});
-
-module.exports = Webtask.fromExpress(app);
+```shell
+ngrok http -bind-tls=true 3000
 ```
 
-This simple webhook is designed merely to do what Adobe Events requires: handle an HTTPS GET request containing a challenge parameter by returning the value of the challenge parameter itself.
+A successful output looks similar to the following:
 
-Now you’re ready to configure ngrok to serve your webhook over the internet:
+![ngrok output](images/ngrok-output.png)
 
-1. Go to https://ngrok.com/. Download and install the application. Add the ngrok folder to your PATH, so you can invoke it from any command prompt.
+Take note of the `Forwarding` URL (`https://e142b577.ngrok.io`), as this will be used to identify your webhook the next step.
 
-1. Open a command-line window and type ngrok http 80; or whichever port you wish to monitor.
-    In the ngrok UI, you can see the URL for viewing the ngrok logs, labeled "Web Interface", plus the public-facing URLs ngrok generates to forward HTTP and HTTPS traffic to your localhost. You can use either of those public-facing URLs to register your Webhook with Adobe I/O, so long as your application is configured to respond on your localhost accordingly. Once your testing phase is complete, you can replace the ngrok URL in your Adobe I/O integration with the public URL for your deployed app.
+## Create a new integration using Adobe I/O Console
 
-1. Now you’re ready to complete the webhook registration process in Adobe I/O Console. Return to that window and enter the name, URL, and description for the webhook, pasting in the URL you got from ngrok with the path under localhost to your webhook file and the /webhook term added. Select all four events to receive:
+Navigate to https://console.adobe.io and click **View Integrations**.
 
-1. Now you’re ready to complete the webhook registration process in Adobe I/O Console. Return to that window and enter the name, URL, and description for the webhook, pasting in the URL you got from ngrok with the path under localhost to your webhook file and the /webhook term added. Select all three events to receive:
+![View Integrations in Adobe I/O Console](images/view-integrations.png)
+
+The *Integrations* page appears. From here, click **New Integration**.
+
+![New Integration](images/new-integration.png)
+
+The *Create a new integration* window appears. Select **Receive near-real time events**, then click **Continue**.
+
+![Create new integration](images/create-new-integration.png)
+
+The next screen provides options to create integrations with different events, products, and services available to your organization based on your subscriptions, entitlements, and permissions. For this integration, select **GDPR Events**, then click **Continue**.
+
+![Select GDPR Events](images/gdpr-events-integration.png)
+
+The *Integration Details* form appears, requiring you to provide a name and description for the integration, as well as a public key certificate.
+
+![Integration details](images/integration-details.png)
+
+If you do not have a public key, you can generate one by using the following terminal command:
+
+```shell
+openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout private.key -out certificate_pub
+```
+
+Once you have generated a key, drag and drop the file into the **Public keys certificates** box, or click **Select a File** to browse your file directory and select the key directly.
+
+After adding your certificate, the *Event Registration* option appears. Click **Add Event Registration**.
+
+![Add Event Registration](images/add-event-registration.png)
+
+The dialog expands to show additional controls. Here you can select your desired event types and register your webhook. Enter a name for the Event Registration, the webhook URL (the `Forwarding` address returned when you initially [created the webhook](#create-a-webhook-using-ngrok)), as well as a brief description. Finally, select the event types you wish to subscribe to, then click **Save** to complete the I/O integration.
+
+![Event Registration form](images/event-registration-form.png)
+
+Once the Event Registration form is completed, click **Create integration** and the I/O integration will be complete.
+
+![Create integration](images/create-integration.png)
+
+## View event data
+
+Once you have created your I/O integration and GDPR jobs have been processed, you can view any received notifications from the **Integrations** tab in I/O Console. Navigate to your event registration and click **View**.
+
+![View Event Registration](images/view-event-registration.png)
+
+The *Event Details* window appears, allowing you to view more information about the registration, edit its configuration, or view the actual events that were received since activating your webhook. You can view event details as well as nagivate to the **Debug Tracing** option.
+
+![Debug Tracing](images/debug-tracing.png)
+
+The **Payload** section provides details about the selected event, including its event type (`"com.adobe.platform.gdpr.productcomplete"`) as highlighted in the example above.
+
+## Next steps
+
+You can repeat the above steps for adding new integrations for different webhook addresses as needed.ook registration process in Adobe I/O Console. Return to that window and enter the name, URL, and description for the webhook, pasting in the URL you got from ngrok with the path under localhost to your webhook file and the /webhook term added. Select all three events to receive:
 
     * GDPR Job Complete (jobcomplete)
     * GDPR Job Error (joberror)

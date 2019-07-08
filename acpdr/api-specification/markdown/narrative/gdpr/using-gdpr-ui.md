@@ -72,3 +72,20 @@ As mentioned above, navigating from the Status Tracker by clicking on a job ID g
 - If a solution has provided any additional data, it will be viewable in this dialog. You can expand the view by clicking on individual product rows and seeing what has been received.
 
 - You also have the ability to download the complete job data as viewed in this dialog as a .CSV file. Click on the download button and feel free to open the file to examine its contents.
+ars, providing a window for you to drag and drop your JSON file into.
+
+<img src="images/gdpr-ui-upload-json-dialog.png" width="350"/><br/>
+
+If you do not have a JSON file to upload, click **Download Adobe-GDPR-Request.json** to download a template that you can populate according to the values you have collected from your data subjects.
+
+
+<img src="images/download-json-template.png" width="350"/><br/>
+
+
+Locate the JSON file on your computer, and drag it into the dialog window. If the upload is successful, the file name appears in the dialog. You can continue to add more JSON files as necessary by dragging and dropping them into the dialog.
+
+When finished, click **Create**. The dialog disappears, and the new job (or jobs) are listed in the Job Requests widget along with their current processing status.
+
+### Next steps
+
+Now that you have created a GDPR request, you can use the [previous steps](#view-job-requests-and-statuses) outlined in this document to view the details of the job, monitor its processing status, and download the results once it has completed.
