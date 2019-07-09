@@ -1,21 +1,15 @@
-# Setting up Connectors for Adobe Experience Platform
+# Create a connector using APIs
 
-Each Adobe Experience Platform connector has its own guide. For specific information to set up a CRM or cloud-based storage connector, select from the following guides:
+Data connectors in Adobe Experience Platform allow you to ingest data from multiple sources, where it can then be labeled, structured, and enhanced using Platform services. See the [connectors overview](../../technical_overview/acp_connectors_overview/acp-connectors-overview.md) for more information.
 
-**Cloud-based Storage connectors**
+The following is a list of tutorials that cover the setup process for the different types of connectors available in Platform using APIs. For steps on how to create a CRM connector using the user interface, see the [data connector UI tutorial](using_data_connector_ui_tutorial.md).
 
-* [Amazon S3 Connector](ACP_s3_connector_tutorial.md)
-* [Azure Blob Connector](ACP_azure_blob_connector_tutorial.md)
+**Cloud-based storage connectors**
+
+* [Amazon S3 connector](ACP_s3_connector_tutorial.md)
+* [Azure Blob connector](ACP_azure_blob_connector_tutorial.md)
 
 **CRM connectors**
 
-* [Microsoft Dynamics Connector](ACP_dynamic_connector_tutorial.md) - API tutorial
-* [Salesforce Connector](ACP_salesforce_connector_tutorial.md) - API tutorial
-* [Data Connector UI Tutorial](using_data_connector_ui_tutorial.md)
-
-All connector types use the APIs in the connector tutorials, allowing you to ingest data, structure the data, and use the ingested data across the platform. See [Overview for Adobe Experience Platform Connectors](../../technical_overview/acp_connectors_overview/acp-connectors-overview.md) for additional information.
-
-**Set up an Adobe I/O account**.
-
-Before using Adobe Experience Platform Connector APIs, you must set up an account. See [authenticating and accessing APIs](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) to create an access token used to authenticate API calls from Adobe I/O.
-
+* [Microsoft Dynamics connector](ACP_dynamic_connector_tutorial.md)
+* [Salesforce connector](ACP_salesforce_connector_tutorial.md)
