@@ -229,7 +229,7 @@ paths:
           description: Graph type (output type) you want to get the cluster from
           required: false
           type: string
-          default: coop
+          default: Private Graph
         - name: x-uis-cst-ctx
           in: header
           description: Customer context to be used for stub response
@@ -521,7 +521,7 @@ paths:
           description: Graph type (output type) you want to get the cluster from
           required: false
           type: string
-          default: coop
+          default: Private Graph
         - name: x-uis-cst-ctx
           in: header
           description: Customer context to be used for stub response
@@ -574,7 +574,7 @@ paths:
                 example: 400
               description:
                 type: string
-                example: The IMS Org ABC123@AdobeOrg is not provisioned for private device graph or coop.
+                example: The IMS Org ABC123@AdobeOrg is not provisioned for private device graph.
           headers:
             content-type:
               description: Response is a JSON document with UTF-8 encoding
@@ -716,7 +716,7 @@ paths:
                 example: 400
               description:
                 type: string
-                example: The IMS Org ABC123@AdobeOrg is not provisioned for private device graph or coop.
+                example: The IMS Org ABC123@AdobeOrg is not provisioned for private device graph.
           headers:
             content-type:
               description: Response is a JSON document with UTF-8 encoding
