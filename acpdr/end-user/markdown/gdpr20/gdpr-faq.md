@@ -1,4 +1,4 @@
-# GDPR FAQ
+# GDPR faq
 
 **When is the GDPR coming into effect?**
 
@@ -42,18 +42,18 @@ Proposed regulations surrounding data breaches primarily relate to the notificat
 
 **How do I get information about the status of my GDPR request or job?**
 
-You can learn the status of your GDPR request or job by making a GET request to the [Adobe Experience Platform Privacy Service API](https://www.adobe.io/apis/cloudplatform/gdpr/api-reference.html) or by visiting the Privacy Service UI at [https://gdprui.cloud.adobe.io/](https://gdprui.cloud.adobe.io/). For example: from those locations, you can obtain a downloadable archive file with results of completed GDPR Access requests.
+You can learn the status of your GDPR request or job by using the [GDPR API’s GET request](https://www.adobe.io/apis/cloudplatform/gdpr/api-reference.html) or by visiting the GDPR UI at [https://gdprui.cloud.adobe.io/](https://gdprui.cloud.adobe.io/). For example: from those locations, you can obtain a downloadable archive file with results of completed GDPR Access requests.
 
-> **Note:** As of September 14, 2018, we are turning off email notifications for completion or erroring of your GDPR requests. Other GDPR functionality is not affected by this change.
+*Note:* As of September 14, 2018, we are turning off email notifications for completion or erroring of your GDPR requests. Other GDPR functionality is not affected by this change.
 
-The following is a sample response from an API GET request:
+The following is a sample API GET request:
 
 ```json
 {
     "jobs": [
         {
             "jobId": "XXXXXXX-XXXXXX-XXXXXXX-XXXX-XXXXXXXXXXX",
-            "requestId": "XXXXXX",
+            "requestId": XXXXXX,
             "lastUpdatedOn": "09/11/2018 2:02 AM",
             "customer": {
                 "user": {
