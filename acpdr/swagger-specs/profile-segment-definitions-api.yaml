@@ -1,30 +1,31 @@
 swagger: "2.0"
 info:
   description: >-
-    Segment Definition Service allows you to define rules which provide criteria for a marketable subset of your user profiles in Real-time Customer Profile. These rules are defined using Profile Query Language (PQL).
+    Segment Definition Service allows you to define rules which provide criteria for a
+    marketable subset of your user profiles in Unified Profile. These rules are defined
+    using the proprietary PQL (Predicate Query Language).
+    
   
-
     Related documentation:
-      * [Real-time Customer Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
-       * [Profile Query Language (PQL) overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_pql.md)
-      * [Create segments using Adobe Experience Platform APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md)
+
+      * [Unified Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
+      * [Creating segments in Experience Platform](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md)
+
 
     Notes:
-      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
-      * Base path for this API: /data/core/ups
-      * Example of a complete path: https://<span>platform.adobe.io/data/core/ups/segment/definitions
-      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * Base path for this API: /data/core/ups/segment
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
+      to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
 
-  version: 19.5.1
-  title: Real-time Customer Profile Segment Definition API
+  version: 18.11.1
+  title: Profile Segment Definition API
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 host: "platform.adobe.io"
 basePath: /data/core/ups
 tags:
-- name: "Definitions"
-  description: "A segment definition includes a PQL statement that defines the how to subdivide a customer base for a segment audience."
-- name: "Conversions"
-  description: "Convert PQL formatting between `pql/json` and `pql/text`."
+- name: "Segment"
 paths:
   "/segment/definitions":
     parameters:
@@ -33,8 +34,8 @@ paths:
       - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-      - Definitions
-      summary: Retrieve a list of segment definitions.
+      - Segment
+      summary: Get a list of Profile Segment Definitions
       description: ''
       operationId: getSegmentsRoute
       produces:
@@ -42,26 +43,26 @@ paths:
       parameters:
       - name: x-request-id
         in: header
-        description: Unique ID per request
+        description: Unique id per request
         required: true
         type: string
         x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
       - name: start
         in: query
-        description: Page offset - As per created time of resource
+        description: Page Offset - As per created Time of resource
         required: false
         type: integer
         format: int64
         x-example: 109103839
       - name: limit
         in: query
-        description: Page size
+        description: Page Size
         required: false
         type: integer
         x-example: 10
       - name: page
         in: query
-        description: Page number
+        description: Page Number
         required: false
         type: integer
         x-example: 0
@@ -75,53 +76,64 @@ paths:
         '200':
           description: List of Profile segment definitions returned
           schema:
-            "$ref": "#/definitions/SegmentDefinition"
+            "$ref": "#/definitions/SegmentsResponse"
         '403':
           description: Forbidden
         '503':
-          description: Service unavailable
+          description: Service Unavailable
     post:
       tags:
-      - Definitions
-      summary: Create a new segment definition.
+      - Segment
+      summary: Post a Profile Segment Definition
       description: ''
       operationId: postSegmentRoute
-      consumes:
-      - application/json
       produces:
       - application/json
       parameters:
-      - $ref: '#/parameters/json-header'
       - name: x-request-id
         in: header
-        description: Unique ID per request
+        description: Unique id per request
         required: true
         type: string
         x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
-      - $ref: '#/parameters/segment-body'
+      - in: body
+        name: body
+        description: |-
+          name - Name of the segment
+
+          description - Description of the segment
+
+          expression - PQL expression of type PQL, format pql/json or pql/text and value containing the actual query
+
+           schema - schema object with name and id
+
+           ttlInDays - number
+        required: true
+        schema:
+          "$ref": "#/definitions/SegmentEntityRequest"
       responses:
         '200':
-          description: Profile segment definition successfully posted
+          description: Profile Segment Definition successfully posted
           schema:
-            "$ref": "#/definitions/SegmentDefinition"
+            "$ref": "#/definitions/SegmentStoreEntity"
           headers:
             X-Location:
               type: string
-              description: HRef to the Profile segment definition
+              description: HRef to the Profile Segment Definition
         '400':
           description: Invalid profile segment
         '403':
           description: Forbidden
         '422':
-          description: Profile segment definition already exists. Please do patch
+          description: Profile Segment Definition already exists. Please do patch
             to update.
         '503':
-          description: Service unavailable
+          description: Service Unavailable
   "/segment/definitions/{segmentId}":
     parameters:
       - name: segmentId
         in: path
-        description: Segment Definition ID.
+        description: Segment Definition Id
         required: true
         type: string
         x-example: b9f6c339-f7f4-4141-b6c7-b562079da47c
@@ -130,8 +142,8 @@ paths:
       - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-      - Definitions
-      summary: Lookup a segment definition by ID.
+      - Segment
+      summary: Returns the Profile Segment Definition
       description: ''
       operationId: getSegmentRoute
       produces:
@@ -139,25 +151,26 @@ paths:
       parameters:
       - name: x-request-id
         in: header
-        description: Unique ID per request
+        description: Unique id per request
         required: true
         type: string
         x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
+
       responses:
         '200':
-          description: Profile segment definition successfully returned
+          description: Profile Segment Definition successfully returned
           schema:
-            "$ref": "#/definitions/SegmentDefinition"
+            "$ref": "#/definitions/SegmentEntity"
         '403':
           description: Forbidden
         '404':
-          description: Profile segment definition not found
+          description: Profile Segment Definition not found
         '503':
-          description: Service unavailable
+          description: Service Unavailable
     delete:
       tags:
-      - Definitions
-      summary: Delete a segment definition by ID.
+      - Segment
+      summary: Delete the segment given an id
       description: ''
       operationId: deleteSegmentRoute
       produces:
@@ -165,59 +178,62 @@ paths:
       parameters:
       - name: x-request-id
         in: header
-        description: Unique ID per request
+        description: Unique id per request
         required: true
         type: string
         x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
-      - name: segmentId
-        in: path
-        description: Segment Definition ID
-        required: true
-        type: string
-        x-example: b9f6c339-f7f4-4141-b6c7-b562079da47c
       responses:
         '200':
-          description: Profile segment definition deleted successfully
+          description: Profile Segment Definition deleted successfully
           schema:
             "$ref": "#/definitions/MessageResponse"
         '403':
           description: Forbidden
         '503':
-          description: Service unavailable
+          description: Service Unavailable
     patch:
       tags:
-      - Definitions
-      summary: Overwrite a segment definition.
+      - Segment
+      summary: Overwrites a Profile Segment Definition
       description: ''
       operationId: patchSegmentRoute
-      consumes:
-      - application/json
       produces:
       - application/json
       parameters:
-      - $ref: '#/parameters/json-header'
       - name: x-request-id
         in: header
-        description: Unique ID per request
+        description: Unique id per request
         required: true
         type: string
         x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
-      - $ref: '#/parameters/segment-body'
+      - in: body
+        name: body
+        description: |-
+          name - Name of the segment
+
+          description - Description of the segment
+
+          expression - PQL expression of type PQL, format pql/json or pql/text and value containing the actual query
+
+           schema - schema object with name and id
+        required: true
+        schema:
+          "$ref": "#/definitions/SegmentEntityUpdate"
       responses:
         '200':
-          description: Profile segment definition successfully updated
+          description: Profile Segment Definition successfully updated
           schema:
-            "$ref": "#/definitions/SegmentDefinition"
+            "$ref": "#/definitions/SegmentEntity"
           headers:
             X-Location:
               type: string
-              description: HRef to the Profile segment definition
+              description: HRef to the Profile Segment Definition
         '400':
           description: Invalid profile segment
         '403':
           description: Forbidden
         '503':
-          description: Service unavailable
+          description: Service Unavailable
   "/segment/conversion":
     parameters:
       - $ref: '#/parameters/authorization'
@@ -225,106 +241,333 @@ paths:
       - $ref: '#/parameters/x-gw-ims-org-id'
     post:
       tags:
-      - Conversions
-      summary: Convert PQL formatting between pql/text and pql/json.
+      - Segment
+      summary: Converts a Profile Segment Definition from pql/text to pql/json or vice versa
       description: ''
       operationId: postSegmentConversionRoute
       produces:
       - application/json
       parameters:
-      - $ref: '#/parameters/json-header'
       - name: x-request-id
         in: header
-        description: Unique ID per request
+        description: Unique id per request
         required: true
         type: string
         x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
-      - $ref: '#/parameters/segment-body'
+      - in: body
+        name: body
+        description: |-
+          name - Name of the segment
+
+          description - Description of the segment
+
+          expression - PQL expression of type PQL, format pql/json or pql/text and value containing the actual query
+
+           schema - schema object with name and id
+
+           ttlInDays - number
+        required: true
+        schema:
+          "$ref": "#/definitions/SegmentEntityRequest"
       responses:
         '200':
-          description: Profile segment definition successfully converted
+          description: Profile Segment Definition successfully converted
           schema:
-            "$ref": "#/definitions/SegmentDefinition"
+            "$ref": "#/definitions/SegmentResponse"
           headers:
             X-Location:
               type: string
-              description: HREF to the Profile segment definition
+              description: HRef to the Profile Segment Definition
         '400':
           description: Invalid profile segment
         '503':
-          description: Service unavailable
+          description: Service Unavailable
+
+
 definitions:
-  SegmentDefinition:
+  SegmentStoreEntity:
     type: object
     required:
+    - creationTime
+    - description
     - expression
+    - id
+    - imsOrgId
+    - mergePolicy
     - name
-    - schema
+    - namespace
+    - schemaId
+    - schemaName
     - ttlInDays
+    - updateTime
+    - version
     properties:
+      internalId:
+        type: number
       id:
         type: string
+      version:
+        type: integer
+        format: int32
       imsOrgId:
         type: string
-        example: 1BD6382559DF0C130A49422D@AdobeOrg
+      namespace:
+        type: string
       name:
         type: string
-        description: Unique name for the segment definition
-        example: People who ordered in the last 30 days
-      mergePolicyId:
+      mergePolicy:
         type: string
-        example: 5ed35fd8-6eeb-4ad2-bed9-43e695b8ac0b
-      profileInstanceId:
-        type: string
-        example: ups
       description:
         type: string
-        example: Last 30 days
       expression:
-        "$ref": "#/definitions/Expression"
-      schema:
-        "$ref": "#/definitions/SchemaClass"
-      payloadSchema:
+        type: string
+      schemaId:
+        type: string
+      schemaName:
         type: string
       ttlInDays:
         type: integer
         format: int32
-        example: 60
       creationTime:
         type: integer
         format: int64
       updateTime:
         type: integer
         format: int64
-      updateEpoch:
+  SegmentEntityRequest:
+    type: object
+    required:
+    - expression
+    - schema
+    properties:
+      name:
+        type: string
+      mergePolicy:
+        type: object
+        additionalProperties:
+          type: number
+      description:
+        type: string
+      expression:
+        type: object
+        additionalProperties:
+          type: number
+      schema:
+        type: object
+        additionalProperties:
+          type: number
+      ttlInDays:
+        type: number
+  SegmentEntity:
+    type: object
+    required:
+    - creationTime
+    - description
+    - expression
+    - id
+    - imsOrgId
+    - mergePolicy
+    - name
+    - namespace
+    - requestId
+    - schemaId
+    - schemaName
+    - ttlInDays
+    - updateTime
+    - version
+    properties:
+      internalId:
+        type: number
+      id:
+        type: string
+      version:
+        type: integer
+        format: int32
+      imsOrgId:
+        type: string
+      namespace:
+        type: string
+      name:
+        type: string
+      mergePolicy:
+        type: string
+      description:
+        type: string
+      expression:
+        type: string
+      schemaId:
+        type: string
+      schemaName:
+        type: string
+      ttlInDays:
+        type: integer
+        format: int32
+      creationTime:
         type: integer
         format: int64
-  Expression:
+      updateTime:
+        type: integer
+        format: int64
+      requestId:
+        type: string
+  SegmentEntityUpdate:
+    type: object
+    properties:
+      imsOrgId:
+        type: string
+      name:
+        type: string
+      mergePolicy:
+        type: object
+        additionalProperties:
+          type: number
+      description:
+        type: string
+      expression:
+        type: object
+        additionalProperties:
+          type: number
+      ttlInDays:
+        type: number
+  ExpressionEntity:
     type: object
     required:
     - format
+    - meta
     - type
     - value
     properties:
       type:
         type: string
-        enum: [PQL, ARL]
       format:
         type: string
-        enum: [pql/text. pql/json]
       value:
         type: string
-        example: workAddress.country="US"
       meta:
         type: string
-  SchemaClass:
+  Link:
+    type: object
+    properties:
+      next:
+        type: string
+        description: The href link to the next page of the segments. Empty if no more
+          segments.
+    description: The link information.
+  MergePolicyEntity:
     type: object
     required:
-    - name
+    - id
+    - internalId
+    - version
     properties:
+      internalId:
+        type: integer
+        format: int64
+      id:
+        type: string
+      version:
+        type: integer
+        format: int32
+  Page:
+    type: object
+    properties:
+      sortField:
+        type: string
+        description: The segments are sorted by default by updateTime.
+      sort:
+        type: string
+        description: The sorting order. Default is ascending order.
+      pageOffset:
+        type: string
+        description: The offset of the page. By default is the internal segmentId for the first segment.
+      pageSize:
+        type: integer
+        format: int32
+        description: The total number of segments of this page.
+      totalPages:
+        type: integer
+        format: int32
+        description: The total number of pages of segments.
+    description: The page information of the segments response.
+  SegmentResponse:
+    type: object
+    required:
+    - creationTime
+    - description
+    - expression
+    - id
+    - imsOrgId
+    - internalId
+    - mergePolicy
+    - name
+    - namespace
+    - schema
+    - ttlInDays
+    - updateTime
+    - version
+    properties:
+      internalId:
+        type: integer
+        format: int64
+      id:
+        type: string
+      version:
+        type: integer
+        format: int32
+      imsOrgId:
+        type: string
+      namespace:
+        type: string
       name:
         type: string
-        example: "_xdm.context.profile"
+      description:
+        type: string
+      ttlInDays:
+        type: integer
+        format: int32
+      schema:
+        "$ref": "#/definitions/XDMSchema"
+      expression:
+        "$ref": "#/definitions/ExpressionEntity"
+      mergePolicy:
+        "$ref": "#/definitions/MergePolicyEntity"
+      creationTime:
+        type: integer
+        format: int64
+      updateTime:
+        type: integer
+        format: int64
+  SegmentsResponse:
+    type: object
+    properties:
+      segments:
+        type: array
+        description: The list of segments.
+        items:
+          "$ref": "#/definitions/SegmentResponse"
+      page:
+        description: The page information of the current response entity.
+        "$ref": "#/definitions/Page"
+      link:
+        description: The href links.
+        "$ref": "#/definitions/Link"
+    description: The Segments response, with current page information and next page
+      link.
+  XDMSchema:
+    type: object
+    required:
+    - fqn
+    - id
+    - name
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      version:
+        type: string
+      fqn:
+        type: string
   MessageResponse:
     type: object
     required:
@@ -335,26 +578,30 @@ definitions:
         type: boolean
       message:
         type: string
+
 parameters:
   authorization:
     name: Authorization
     description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
     For more information on how 
-    to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
     required: true
     type: string
     in: header
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
     description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
     required: true
     type: string
     in: header
   x-api-key:
     name: x-api-key
     description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
     required: true
     type: string
     in: header
@@ -363,20 +610,4 @@ parameters:
     description: 'application/json'
     required: true
     type: string
-    in: header
-  segment-body: 
-    in: body
-    name: body
-    description: |-
-      `name` - Name of the segment which must be unique
-
-      `description` - Description of the segment
-
-      `expression` - PQL expression of type PQL, format pql/json or pql/text and value containing the actual query
-
-      `schema` - schema object with a name field
-
-      `ttlInDays` - number
-    required: true
-    schema:
-      "$ref": "#/definitions/SegmentDefinition"
+    in: header    
