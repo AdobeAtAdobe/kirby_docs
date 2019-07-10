@@ -3,12 +3,13 @@
 title: Adobe Experience Platform Release Notes
 description: Template for Experience Platform release notes
 doc-type: release notes
-last-update: January 2019
+last-update: June 2019
 author: crhoades
 
 ---
 
 # Adobe Experience Cloud release notes
+## Release date: Month dd, yyyy
 
 New features and fixes in Adobe Experience Platform.
 
