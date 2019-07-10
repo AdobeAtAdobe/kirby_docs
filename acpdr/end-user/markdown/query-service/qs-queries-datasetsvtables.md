@@ -12,7 +12,7 @@ Review the Dataset schema in the UI by clicking on a schema name in the dataset 
 
 ![Schema View](graphics/DataSetUI-Schema%20-%20Luma.png)
 
-Open the PSQL command line and use the connection details from here: [https://platform.adobe.com/datasets/queries/connect](https://platform.adobe.com/datasets/queries/connect).
+Open the PSQL command line and use the connection details from here: [https://platform.adobe.com/query/configuration](https://platform.adobe.com/query/configuration).
 
 ![Image](graphics/psqlcopy.png)
 	
