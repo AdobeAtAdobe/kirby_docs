@@ -67,7 +67,7 @@ curl -X POST \
 *   `engine > description` : An optional description for the Engine. The Recipe corresponding to this Engine will inherit this value to be displayed in Data Science Workspace user interface as the Recipe's description. Do not remove this property, let this value be an empty string if you choose not to provide a description.
 *   `engine > type`: The execution type of the Engine. This value corresponds to the language in which the binary artifact was developed in.
 
-    > **Note:** When uploading a binary artifact to create an Engine, `type` is either `Spark` or `PySpark`.
+    >   **Note:** When uploading a binary artifact to create an Engine, `type` is either `Spark` or `PySpark`.
 
 *   `defaultArtifact` : The absolute path to the binary artifact file used to create the Engine.
 
@@ -141,17 +141,17 @@ curl -X POST \
 *   `engine > name` : The desired name for the Engine. The Recipe corresponding to this Engine will inherit this value to be displayed in Data Science Workspace user interface as the Recipe's name.
 *   `engine > description` : An optional description for the Engine. The Recipe corresponding to this Engine will inherit this value to be displayed in Data Science Workspace user interface as the Recipe's description. Do not remove this property, let this value be an empty string if you choose not to provide a description.
 *   `engine > type`: The execution type of the Engine. This value corresponds to the language in which the Docker image is developed in.
-    
+
     > **Note:** When a Docker URL is provided to create an Engine, `type` is either `Python`, `R`, or `Tensorflow`.
 
 *   `artifacts > default > image > location` : Your `{DOCKER_URL}` goes here. A complete Docker URL has the following structure: 
-    
+
     ```
     your_docker_host.azurecr.io/docker_image_file:version
     ```
-    
+
 *   `artifacts > default > image > name` : An additional name for the Docker image file. Do not remove this property, let this value be an empty string if you choose not to provide an additional Docker image file name.
-*    `artifacts > default > image > executionType` : The execution type of this Engine. This value corresponds to the language in which the Docker image is developed in.
+*   `artifacts > default > image > executionType` : The execution type of this Engine. This value corresponds to the language in which the Docker image is developed in.
 
     > **Note:** When a Docker URL is provided to create an Engine, `executionType` is either `Python`, `R`, or `Tensorflow`.
 
