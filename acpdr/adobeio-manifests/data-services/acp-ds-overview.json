@@ -13,17 +13,17 @@
 		{
 			"pages": [],
 			"path": "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md",
-			"title": "Catalog Service"
+			"title": "Catalog Service Overview"
 		},
 		{
 			"pages": [],
 			"path": "api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md",
-			"title": "Batch Ingestion"
+			"title": "Batch Ingestion Overview"
 		},
 		{
 			"pages": [],
 			"path": "api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md",
-			"title": "Data Access"
+			"title": "Data Access Overview"
 		},
 		{
 			"pages": [
