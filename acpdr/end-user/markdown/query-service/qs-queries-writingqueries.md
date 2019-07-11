@@ -109,3 +109,26 @@ SELECT
 FROM {analytics_table_name}
 LIMIT 10
 ```
+## Query execution models
+
+Query Service has two models of query execution: interactive and non-interactive. Interactive queries should be used for query development and report generation in BI tools, and non-interactive queries are used for larger jobs and operational queries as a part of a data processing workflow. 
+
+### Interactive query execution
+
+Queries submitted through the Query Service UI or through a connected client using the information in the credentials tab will be executed interactively. This means that there is an active session between the client and Query Service, and that the client will block until a submitted query returns or times out. Interactive query execution has the following limitations:
+
+| Parameter       | Limitation  | 
+| ------------- |:-------------:|
+| Query timeout | 10 minutes |
+| Maximum rows returned | 50,000 |
+| Maximum concurrent queries | 5 |
+
+> **Note:** The maximum rows limitation can be overridden by including `LIMIT 0` in your query. Query timeout of 10 minutes will still apply. 
+
+Results of interactive queries are returned to the client and are not persisted unless `CREATE TABLE AS SELECT` syntax is used to persist the results as a dataset in Experience Platform. 
+
+### Non-interactive query execution
+
+Queries submitted through the Query Service API are run non-interactively. The API reference can be found [here.](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/qs-api.yaml)
+
+Non-interactive execution means that Query Service will receive the API call and execute the query in the order it was received. Non-interactive queries always result in either the generation of a new dataset in Experience Platform to receive the results, or the insertion of new rows into an existing dataset. 
