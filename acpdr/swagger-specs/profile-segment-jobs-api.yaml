@@ -1,33 +1,33 @@
 swagger: '2.0'
 info:
   description: >-
-    Real-time Customer Profile segment jobs process a previously built and persisted segment definition against your
+    Unified Profile segment jobs process a previously built and persisted segment definition against your
     profile store to generate a segment audience. The artifact of a complete and successful run of a profile
     segment job cannot be used directly and is instead exported to a dataset as a separate step.
     
 
     Related documentation:
 
-      * [Real-time Customer Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
-      * [Create segments using Adobe Experience Platform APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md)
+      * [Unified Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
+      * [Creating segments in Experience Platform](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md)
 
 
     Notes:
-      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
-      * Base path for this API: /data/core/ups
-      * Example of a complete path: https://<span>platform.adobe.io/data/core/ups/segment/jobs
-      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * Base path for this API: /data/core/ups/segment/jobs
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
+      to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
 
   version: 18.11.1
-  title: Real-time Customer Profile Segment Jobs API
+  title: Unified Profile Segment Jobs API
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 host: "platform.adobe.io"
 basePath: /data/core/ups/segment/jobs
 tags:
 - name: Segment jobs
-  description: "Segment jobs process previously established segment definitions against your profile store to generate a segment audience."
 paths:
-  /segment/jobs:
+  '/':
     parameters:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
@@ -35,7 +35,7 @@ paths:
     get:
       tags:
         - Segment jobs
-      summary: Get a list of segment job requests.
+      summary: Get a list of Segment Job Request
       description: ''
       operationId: get
       produces:
@@ -43,7 +43,7 @@ paths:
       parameters:
         - name: x-request-id
           in: header
-          description: Request ID
+          description: Request Id
           required: false
           type: string
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
@@ -74,7 +74,7 @@ paths:
           x-example: PROCESSING
       responses:
         '200':
-          description: List of segment job requests returned
+          description: List of Segment Job Request returned
           schema:
             $ref: '#/definitions/SegmentJob'
         '403':
@@ -82,15 +82,13 @@ paths:
         '500':
           description: There was issue reading the segment job from DB
         '503':
-          description: Service unavailable
+          description: Service Unavailable
     post:
       tags:
         - Segment jobs
-      summary: Post a segment job request.
+      summary: Post a Segment Job Request
       description: ''
-      operationId: postSJRRoute
-      consumes:
-        - application/json
+      operationId: create
       produces:
         - application/json
       parameters:
@@ -102,7 +100,7 @@ paths:
           x-example: ups
         - name: x-request-id
           in: header
-          description: Request ID
+          description: Request Id
           required: false
           type: string
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
@@ -114,10 +112,9 @@ paths:
             type: array
             items:
               $ref: '#/definitions/SegmentJobRequest'
-        - $ref: '#/parameters/json-header'
       responses:
         '200':
-          description: Segment job request successfully posted
+          description: Segment Job Request successfully posted
           schema:
             $ref: '#/definitions/SegmentJob'
         '400':
@@ -129,12 +126,12 @@ paths:
         '500':
           description: There was issue reading the segment job from DB
         '503':
-          description: Service unavailable
-  '/segment/jobs/{segmentJobId}':
+          description: Service Unavailable
+  '/{segmentJobId}':
     parameters:
       - name: segmentJobId
         in: path
-        description: Segment Jobs Request ID
+        description: Segment Jobs Request Id
         required: true
         type: string
         x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
@@ -144,7 +141,7 @@ paths:
     get:
       tags:
         - Segment jobs
-      summary: Return the segment job request by ID.
+      summary: Return the segment job request by id
       description: ''
       operationId: getById
       produces:
@@ -152,25 +149,25 @@ paths:
       parameters:
         - name: x-request-id
           in: header
-          description: Request ID
+          description: Request Id
           required: false
           type: string
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
       responses:
         '200':
-          description: Segment job request successfully returned
+          description: Segment Job Request successfully returned
           schema:
             $ref: '#/definitions/SegmentJob'
         '403':
           description: Forbidden
         '404':
-          description: Segment job request not found
+          description: Segment Job Request not found
         '503':
-          description: Service unavailable
+          description: Service Unavailable
     delete:
       tags:
         - Segment jobs
-      summary: Cancel a segment job request by ID.
+      summary: Cancel a Segment Job Request by id
       description: ''
       operationId: cancel
       produces:
@@ -178,23 +175,22 @@ paths:
       parameters:
         - name: x-request-id
           in: header
-          description: Request ID
+          description: Request Id
           required: false
           type: string
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
 
       responses:
         '200':
-          description: Segment job request has been marked for cancelling
+          description: Segment Job Request has been marked for cancelling
           schema:
             $ref: '#/definitions/StandardResponse'
         '403':
           description: Forbidden
         '404':
-          description: Segment job request not found
+          description: Segment Job Request not found
         '503':
-          description: Service unavailable
-
+          description: Service Unavailable
 definitions:
   ErrorResponse:
     type: object
@@ -202,14 +198,14 @@ definitions:
       code:
         type: string
         example: 0080000018
-        description: Batch segmentation job error code
+        description: batch segmentation job error code
       msg:
         type: string
         example: 'com.microsoft.azure.documentdb.DocumentClientException: Message: {"Errors":["Request rate is large"]}'
-        description: Batch segmentation job error message
+        description: batch segmentation job error message
       callStack:
         type: string
-        description: Call stack
+        description: call stack
     description: Error response from the batch job
   FeedbackMetrics:
     type: object
@@ -237,15 +233,15 @@ definitions:
       id:
         type: string
         example: 468eeefd-95a2-45a1-8bfc-b806dafce7ee
-        description: Segment job request ID
+        description: Segment job request id
       imsOrgId:
         type: string
         example: 1BD6382559DF0C130A49422D@AdobeOrg
-        description: IMS Org ID
+        description: IMS org id
       profileInstanceId:
         type: string
         example: 1BD6382559DF0C130A49422D@AdobeOrg
-        description: Profile instance ID
+        description: Profile instance id
       status:
         type: string
         example: PROCESSING
@@ -261,11 +257,11 @@ definitions:
         type: integer
         format: int64
         example: 1
-        description: Compute job ID
+        description: Compute job id
       computeGatewayJobId:
         type: string
         example: c3505859-d256-45d0-a6f3-c25f8f8508f5
-        description: 'Compute gateway job ID, which can be use to get the job status from compute gateway API'
+        description: 'Compute gateway job id, which can be use to get the job status from compute gateway API'
       creationTime:
         type: integer
         format: int64
@@ -298,7 +294,7 @@ definitions:
       requestId:
         type: string
         example: cc3d3381-8682-41d4-93bd-566e378624d3
-        description: 'Request ID, which can be used to trace the request along multiple components'
+        description: 'Request id, which can be used to trace the request along multiple components'
       modelName:
         type: string
         example: _xdm.context.profile
@@ -329,7 +325,7 @@ definitions:
         type: string
         example: workAddress.country = "US"
         description: PQL query string
-    description: 'Segment expression, part of a segment metadata response'
+    description: 'segment expression, part of a segment meta data response'
   SegmentInfo:
     type: object
     required:
@@ -339,7 +335,7 @@ definitions:
       segmentId:
         type: string
         example: 7863c010-e092-41c8-ae5e-9e533186752e
-        description: Segment ID
+        description: segment id
       segment:
         type: object
         required:
@@ -349,7 +345,7 @@ definitions:
           id:
             type: string
             example: 7863c010-e092-41c8-ae5e-9e533186752e
-            description: Segment ID
+            description: segment id
           version:
             type: integer
             format: int32
@@ -363,7 +359,7 @@ definitions:
               id:
                 type: string
                 example: ups-default
-                description: merge policy ID
+                description: merge policy id
               version:
                 type: integer
                 format: int32
@@ -382,7 +378,7 @@ definitions:
       name:
         type: string
         example: inUS
-        description: Snapshot name
+        description: snapshot name
       ttlInDays:
         type: integer
         format: int32
@@ -398,8 +394,8 @@ definitions:
         description: standard response code
       message:
         type: string
-        example: Segment job with ID '468eeefd-95a2-45a1-8bfc-b806dafce7ee' has been deleted
-        description: Response message
+        example: Segment job with id '468eeefd-95a2-45a1-8bfc-b806dafce7ee' has been deleted
+        description: response message
     description: Standard Response
   SegmentJobRequest:
     type: object
@@ -409,29 +405,33 @@ definitions:
       segmentId:
         type: string
         example: 7863c010-e092-41c8-ae5e-9e533186752e
-        description: Segment ID
+        description: segment id
       snapshot:
+        description: snapshot info
         $ref: '#/definitions/SegmentSnapshot'
 parameters:
   authorization:
     name: Authorization
     description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
     For more information on how 
-    to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
     required: true
     type: string
     in: header
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
     description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
     required: true
     type: string
     in: header
   x-api-key:
     name: x-api-key
     description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
     required: true
     type: string
     in: header
