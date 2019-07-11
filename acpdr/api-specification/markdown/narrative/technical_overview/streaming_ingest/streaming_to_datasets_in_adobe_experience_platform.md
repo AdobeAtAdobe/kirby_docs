@@ -13,7 +13,7 @@ The below example will show the request and response **if** you have a dataset I
 ### Request
 
 ```SHELL
-curl -X POST "https://dcs.data.adobe.net/collection/{DATA_INLET_ID}" \
+curl -X POST "https://dcs.adobedc.net/collection/{DATA_INLET_ID}" \
   -H "Cache-Control: no-cache" \
   -H "Content-Type: application/json" \
   -d '{JSON_PAYLOAD}'
@@ -115,7 +115,7 @@ The below example will show the request and response **if** you do not have a da
 ### Request
 
 ```shell
-curl -X POST "https://dcs.data.adobe.net/collection/{DATA_INLET_ID}" \
+curl -X POST "https://dcs.adobedc.net/collection/{DATA_INLET_ID}" \
   -H "Cache-Control: no-cache" \
   -H "Content-Type: application/json" \
   -d '{JSON_PAYLOAD}'

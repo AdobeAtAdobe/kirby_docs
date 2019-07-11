@@ -83,7 +83,7 @@ An example of a successful response can be seen below:
     "modifiedAt": "2019-04-04T18:48:47.606Z",
     "modifiedBy": "{API_KEY}",
     "validationRequired": true,
-    "inletUrl": "https://dcs.data.adobe.net/collection/{DATA_INLET_ID}"
+    "inletUrl": "https://dcs.adobedc.net/collection/{DATA_INLET_ID}"
 }
 ```
 
@@ -134,7 +134,7 @@ With the above call, you will receive a list of all the data inlets created.
             "createdBy": "{API_KEY}",
             "modifiedAt": "2018-10-05T00:00:00.000Z",
             "modifiedBy": "{API_KEY}",
-            "inletUrl": "https://dcs.data.adobe.net/collection/{INLET_ID}"
+            "inletUrl": "https://dcs.adobedc.net/collection/{INLET_ID}"
         }
     ],
     "total": 1
@@ -395,7 +395,7 @@ With the dataset in place, you can ingest XDM-formatted JSON records to create a
 #### Request
 
 ```SHELL
-CURL -X POST https://dcs.data.adobe.net/collection/{INLET_ID}?synchronousValidation=true \
+CURL -X POST https://dcs.adobedc.net/collection/{INLET_ID}?synchronousValidation=true \
   -H "Cache-Control: no-cache" \
   -H "Content-Type: application/json" \
   -d '{JSON_PAYLOAD}'
@@ -826,7 +826,7 @@ Now, you can send some XDM formatted JSON records to create an ExperienceEvent w
 #### Request
 
 ```SHELL
-curl -X POST "https://dcs.data.adobe.net/collection/{INLET_ID}?synchronousValidation=true" \
+curl -X POST "https://dcs.adobedc.net/collection/{INLET_ID}?synchronousValidation=true" \
   -H "Cache-Control: no-cache" \
   -H "Content-Type: application/json" \
   -d '{JSON_PAYLOAD}'
@@ -1030,7 +1030,9 @@ An example of a successful response can be seen below. As you can see, this is t
 
 ## Next Steps
 
-You have now successfully requested a data inlet, set up a descriptor and primary identifier to group data, stream and retrieve Profile Events, stream and retrieve ExperienceEvents from Adobe Experience Platform.
+You have now successfully used the streaming ingestion APIs to request a data inlet, group data together using a descriptor, and stream data into Profile Events and ExperienceEvents to be ingested into Experience Platform. 
+
+You can try using the [Adobe Experience Platform extension][aep-extension] to create a new streaming connection and use the streaming ingestion APIs to send and retrieve data from Experience Platform. 
 
 Now that you are able to get your data into Adobe Experience Platform, you can start monitoring your data through Platform UI, see the [monitoring streaming data flows][monitoring-streaming-data-flows] guide for more information.
 
@@ -1066,3 +1068,5 @@ Now that you are able to get your data into Adobe Experience Platform, you can s
 [identity-descriptor]: ../schema_registry/schema_registry_developer_guide.md#descriptors
 
 [monitoring-streaming-data-flows]: e2e-monitor-streaming-data-flows.md
+
+[aep-extension]: https://docs.adobe.com/content/help/en/launch/using/extensions-ref/adobe-extension/adobe-experience-platform-extension.html

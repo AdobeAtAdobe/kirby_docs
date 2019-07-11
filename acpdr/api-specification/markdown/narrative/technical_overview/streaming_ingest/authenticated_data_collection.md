@@ -64,7 +64,7 @@ An example of a successful response can be seen below:
     "createdAt": "2018-07-10T22:07:56Z",
     "modifiedAt": "2018-07-10T22:07:56Z",
     "modifiedBy": "{API_KEY}",
-    "dataInletUrl": "https://dcs.data.adobe.net/collection/{DATA_INLET_ID}"
+    "dataInletUrl": "https://dcs.adobedc.net/collection/{DATA_INLET_ID}"
 }
 ```
 

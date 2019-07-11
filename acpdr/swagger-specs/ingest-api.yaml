@@ -10,7 +10,7 @@ info:
       * Base path for Batch Ingestion APIs: https://platform.adobe.io/data/foundation/import
       * Base path for Streaming Ingestion APIs:
         * Data Inlet Management: https://platform.adobe.io/data/core/edge
-        * Data Collection: https://dcs.data.adobe.net/
+        * Data Collection: https://dcs.adobedc.net/
       * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
 
     Related documentation:
@@ -1347,7 +1347,7 @@ definitions:
         createdBy: "{API_KEY}",
         modifiedAt: "2018-10-05T00:00:00.000Z",
         modifiedBy: "{API_KEY}",
-        inletUrl: "https://dcs.data.adobe.net/collection/{INLET_ID}"
+        inletUrl: "https://dcs.adobedc.net/collection/{INLET_ID}"
       }]
       total: 1
   Inlet:
@@ -1398,7 +1398,7 @@ definitions:
       createdBy: "{API_KEY}"
       modifiedAt: "2019-04-02T23:11:19.564Z"
       modifiedBy: "{API_KEY}"
-      inletUrl: "https://dcs.data.adobe.net/collection/{DATA_INLET_ID}"
+      inletUrl: "https://dcs.adobedc.net/collection/{DATA_INLET_ID}"
     title: Inlet
     description: Inlet details (response)
   InletDTO:

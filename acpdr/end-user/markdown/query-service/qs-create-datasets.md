@@ -15,5 +15,5 @@ The Alpha Query Service allows the creation of datasets from the UI. Follow thes
 
 After a dataset is created, it can be accessed like any other dataset in the Data Lake and used for a variety of use cases. Be advised: in a live implementation you will need to apply Data Governance labels after the dataset is created. 
 
-### A note on CTAS functionality
-Creating a dataset from a query leverages a capability of SQL known as ```create table as SELECT```. In the Alpha, this functionality is only available through the UI. It is also limited to generating a new dataset each time the button is pushed. Our Beta version will allow for CTAS to be invoked from a connected client and it will allow the option for appending the output of a query to an existing dataset with matching schema. 
+### Output datasets
+Datasets created through this functionality are generated with an ad hoc schema that matches the structure of the output data as defined in the SQL statement. Some downstream services require datasets with particular Experience Data Model (XDM) schemas. Please verify the data formatting requirements for downstream services prior to writing your queries. 
