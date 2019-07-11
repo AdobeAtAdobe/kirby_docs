@@ -164,6 +164,6 @@
 		}
 	],
 	"app2app_map": {
-		"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
+		"acpdr/api-specification/markdown/narrative/technical_overview/acp_connectors_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
 	}
 }
