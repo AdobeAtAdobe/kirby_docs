@@ -27,7 +27,7 @@ The relationship between Unified Profile and other solutions is highlighted in t
 
 ## The profile
 
-A profile is a representation of a subject, an organization or an individual, also referred to as record data. The profile of a product may include a SKU and description, whereas the profile of a person contains information like first name, last name, and email address. On Experience Platform, these types of data are built per your agenda. The XDM Profile standard schema, the preferred schema to implement when describing consumer record data, supplies the data integral to supporting the interaction of many Platform solutions. In specific, it contains:
+A profile is a representation of a subject, an organization or an individual, also referred to as record data. The profile of a product may include an SKU and description, whereas the profile of a person contains information like first name, last name, and email address. On Experience Platform, these types of data are built per your agenda. The XDM Profile standard schema, the preferred schema to implement when describing consumer record data, supplies the data integral to supporting the interaction of many Platform solutions. In specific, it contains:
 
 * Time series events
 * Identities

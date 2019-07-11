@@ -18,7 +18,7 @@ This tutorial will demonstrate how to create an Experience Data Model (XDM) sche
 
 ## Prerequisites
 
-* Before being able to make calls using Platform APIs, you must first complete the tutorial on [authenticating and accessing Adobe Experience Platform APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+* Before being able to make calls using Platform APIs, you must first complete the tutorial on [authenticating and accessing Adobe Experience Platform APIs](../../../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
     * Completing the authentication tutorial will provide the following values that you will need in this tutorial:
         * `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.
         * `{IMS_ORG}` : Your IMS organization credentials found in your unique Adobe Experience Platform integration.

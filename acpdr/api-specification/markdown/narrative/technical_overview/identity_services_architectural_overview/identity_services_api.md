@@ -15,7 +15,7 @@ Identity Service manages cross-device, cross-channel, near real-time identificat
 ### Prerequisite Topics
 
 [__Identity Service__](../../technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md) - Identity Service solves the fundamental challenge posed by the fragmentation of consumer profile data. It does this by bridging identities across devices and across the various systems whereby your consumers engage with your brand.  
-[__Authenticating and Accessing Adobe Experience Platform APIs__](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) - This tutorial shows the initial steps to set up an integration in Adobe I/O Console and use the created integration to access Platform APIs. The steps in this tutorial describe how to create an integration and gain access to the following values needed for required headers:
+[__Authenticating and Accessing Adobe Experience Platform APIs__](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) - This tutorial shows the initial steps to set up an integration in Adobe I/O Console and use the created integration to access Platform APIs. The steps in this tutorial describe how to create an integration and gain access to the following values needed for required headers:
 * IMS Organization ID
 * API Key (Client ID)
 * Access Token 
@@ -466,7 +466,7 @@ A mapping is a collection of all identities in a cluster, for a specified namesp
 
 ### Get an identity mapping for a single identity
 
-Given an identity, returns all related identities the same namespace as that represented by the identity in the request.
+Given an identity, retrieve all related identities from the same namespace as that represented by the identity in the request.
 
 __Service endpoint__
 
