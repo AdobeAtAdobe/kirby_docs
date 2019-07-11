@@ -46,7 +46,7 @@ Experience Events can be either explicit or implicit. Explicit events are direct
 
 While not all events are easily categorized across all data sources, it is extremely valuable to harmonize similar events into similar types where possible for processing. 
 
-![ExperienceEvent Customer Journey](images/ExperienceEvent_customer_journey.png "Experience Events show a customer journey over time")
+![ExperienceEvent Customer Journey](images/ExperienceEvent-customer-journey.png "Experience Events show a customer journey over time")
 
 ## Experience Platform components and use of schema
 
@@ -78,7 +78,7 @@ Query Service allows you to use standard SQL to query Experience Platform data t
 
 After a schema has been composed, and a dataset has been created which references that schema, data is then ingested and stored in the data lake. Through Query Service, you can join any datasets in Experience Data Lake and capture the query results as a new dataset for use in reporting, Data Science Workspace, or for ingestion into Unified Profile Service. 
 
-Learn more about Query Service by reading the [Query Service Introduction](../../../../../../acpdr/end-user/markdown/query-service/qs-intro.md). 
+Learn more about Query Service by reading the [Query Service Introduction](../../../../../../end-user/markdown/query-service/qs-intro.md). 
 
 ### Data Science Workspace
 
