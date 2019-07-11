@@ -5,8 +5,8 @@ Unified Profile in Adobe Experience Platform provides a unified, real-time consu
 This overview describes the role and use of Unified Profile. In specific:
 
 [Understanding Unified Profile](#understanding-unified-profile) - See the big picture about Unified Profile and its role on Experience Platform.  
-[The union view](#the-unified-profile) - Understand the components involved in unifying profile data to build the union view, how to control the parameters involved, and the composition of the union view schema.   
-[The real-time customer profile](#the-real-time-profile) - Streaming Ingestion and Edge Service allows you to access customer data to instantaneously perform computations and make decisions to deliver enhanced individualized experiences to customers, in real-time, as they interact with your brand.  
+[The union view](#the-union-view) - Understand the components involved in unifying profile data to build the union view, how to control the parameters involved, and the composition of the union view schema.   
+[The real-time customer profile](#the-real-time-customer-profile) - Streaming Ingestion and Edge Service allows you to access customer data to instantaneously perform computations and make decisions to deliver enhanced individualized experiences to customers, in real-time, as they interact with your brand.  
 [Data governance](#data-governance) - Learn how you can use DULE and certain Unified Profile access parameters to ensure reliable compliance with any data usage restrictions and policies that govern your consumers' data.  
 [Getting data to Unified Profile](#getting-data-to-unified-profile) - The power of Unified Profile and Identity Service to build the union view depends on the data you supply.  
 [Creating audience segments](#creating-audience-segments) - Learn how to build audience segments which are used across Platform solutions, and can be used by your integrations as well.
@@ -65,7 +65,7 @@ An individual as it exists in a single dataset is considered a "profile fragment
 
 One of the key features of Unified Profile is the ability to unify multi-channel data. Unified Profile can supply you with a merged view of the individuals in your consumer base, across datasets and for linked identities, referred to as the union view. 
 
-Profile merging occurs on data access in Unified Profile, more specifically when accessing a profile by identity or segment export. To learn more about accessing profiles and union views, visit [Accessing Unified Profile data via API](../../tutorials/consuming_up_tutorial/consuming_up_tutorial.md).
+Profile merging occurs on data access in Unified Profile, more specifically when accessing a profile by identity or segment export. To learn more about accessing profiles and union views, visit [Accessing Unified Profile data via API](../../tutorials/consuming_unified_profile_data/consuming_unified_profile_data.md).
 
 There are several considerations to factor when merging profile data: 
 
