@@ -2,31 +2,30 @@ swagger: '2.0'
 info:
   description: >-
     
-    Real-time Customer Profile Edge Service maintains routing and replication information for profile projections.
+    Unified Profile Edge Service maintains routing and replication information for profile projections.
     
 
     Related documentation:
 
-      * [Real-time Customer Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
-      * [Configure edge destinations and projections using APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_edge_tutorial.md)
+      * [Unified Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
+      * [Configuring edge destinations and projections via API](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_edge_tutorial.md)
 
 
     Notes:
-       * PLATFORM Gateway URL: https://<span>platform.adobe.io/
+      * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core/ups/config
-      * Example of a complete path: https://<span>platform.adobe.io/data/core/ups/config/projections
-      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
 
   version: 0.0.1-SNAPSHOT
   title: Edge Profile Projection Configuration API
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 tags:
-  - name: Projections
+  - name: Projection Configuration
     description: >-
-      Edge projection configurations determine what data should be projected to each edge.
-  - name: Destinations
+      Projection configurations are information about what data should be available on each edge.
+  - name: Projection Destinations
     description: >-
-      Edge projection destinations define where to route a projection that has been created or changed.
+      Projection destinations define where to route a projection that has been created or changed.
 consumes:
   - application/json
 produces:
@@ -35,8 +34,8 @@ paths:
   '/projections/{projectionid}':
     get:
       tags:
-        - Projections
-      summary: Lookup an edge projection configuration by ID. The latest definition is returned.
+        - Projection Configuration
+      summary: Return the configuration of the edge projection for the given customer. The latest definition is returned.
       description: ''
       operationId: getProjectionConfiguration
       produces:
@@ -121,8 +120,8 @@ paths:
           description: This is an indicator that the back-end service did not complete a response within an allowed time period.
     put:
       tags:
-        - Projections
-      summary: Create or update an edge projection configuration by ID. Overwrites the entire configuration.
+        - Projection Configuration
+      summary: Create or update the edge projection configuration for a customer. The update operation overwrites the entire configuration.
       description: 'The API response is immediate, but the actual changes to the projections on the edges take place asynchronously. There is no guarantee whatsoever that changes to the definition of the projection are reflected instantly on the edges – in fact, it''s best to assume that there is a noticeable amount of time between the update of the definition of the projection and the update of the actual projection on any edge.'
       operationId: updateProjectionConfiguration
       consumes:
@@ -214,8 +213,8 @@ paths:
           description: This is an indicator that the back-end service did not complete a response within an allowed time period.
     delete:
       tags:
-        - Projections
-      summary: Delete an edge projection configuration by ID.
+        - Projection Configuration
+      summary: Delete the edge projection configuration for the given customer.
       description: 'API response is immediate, but the actual changes to the projections on the edges take place asynchronously. Eventually, the result is that the profile data for the given customer will be wiped from all edges.'
       operationId: deleteProjectionConfiguration
       parameters:
@@ -297,8 +296,8 @@ paths:
   /projections:
     get:
       tags:
-        - Projections
-      summary: Retrieve a list of edge projection configurations. The latest definitions are returned.
+        - Projection Configuration
+      summary: Return the configuration of the edge projection for the given customer. The latest definition is returned.
       description: ''
       operationId: listProjectionConfigurations
       produces:
@@ -386,8 +385,8 @@ paths:
           description: This is an indicator that the back-end service did not complete a response within an allowed time period.
     post:
       tags:
-        - Projections
-      summary: Create a new edge projection configuration.
+        - Projection Configuration
+      summary: Creates the edge projection configuration for a customer.
       description: 'The API response is immediate, but the actual changes to the projections on the edges take place asynchronously. There is no guarantee whatsoever that changes to the definition of the projection are reflected instantly on the edges – in fact, it''s best to assume that there is a noticeable amount of time between the update of the definition of the projection and the update of the actual projection on any edge.'
       operationId: createProjectionConfiguration
       consumes:
@@ -483,8 +482,8 @@ paths:
   '/destinations/{destinationId}':
     get:
       tags:
-        - Destinations
-      summary: Lookup an edge projection destination by ID. The latest definition is returned.
+        - Projection Destinations
+      summary: Return the projection destination for the given customer. The latest definition is returned.
       description: ''
       operationId: getProjectionDestination
       produces:
@@ -569,8 +568,8 @@ paths:
           description: This is an indicator that the back-end service did not complete a response within an allowed time period.
     put:
       tags:
-        - Destinations
-      summary: Create or update an edge projection destination by ID. Overwrites the entire configuration.
+        - Projection Destinations
+      summary: Create or update the projection destination for a customer. The update operation overwrites the entire configuration.
       description: 'The API response is immediate, but the actual changes to the projections on the edges take place asynchronously. There is no guarantee whatsoever that changes to the definition of the projection are reflected instantly on the edges – in fact, it''s best to assume that there is a noticeable amount of time between the update of the definition of the projection and the update of the actual projection on any edge.'
       operationId: putProjectionDestination
       consumes:
@@ -662,8 +661,8 @@ paths:
           description: This is an indicator that the back-end service did not complete a response within an allowed time period.
     delete:
       tags:
-        - Destinations
-      summary: Delete an edge projection destination by ID.
+        - Projection Destinations
+      summary: Delete the projection destination for the given customer.
       description: 'API response is immediate, but the actual changes to the projections on the edges take place asynchronously. Eventually, the result is that the profile data for the given customer will be wiped from all edges.'
       operationId: deleteProjectionDestination
       parameters:
@@ -749,8 +748,8 @@ paths:
   /destinations:
     get:
       tags:
-        - Destinations
-      summary: Retrieve a list of edge projection destinations. The latest definitions are returned.
+        - Projection Destinations
+      summary: Return a list of projection destinations associated with a given customer.
       description: ''
       operationId: listProjectionDestinations
       produces:
@@ -830,8 +829,8 @@ paths:
           description: This is an indicator that the back-end service did not complete a response within an allowed time period.
     post:
       tags:
-        - Destinations
-      summary: Create a new edge projection destination.
+        - Projection Destinations
+      summary: Creates the projection destination for a customer.
       description: 'The API response is immediate, but the actual changes to the projections on the edges take place asynchronously. There is no guarantee whatsoever that changes to the definition of the projection are reflected instantly on the edges – in fact, it''s best to assume that there is a noticeable amount of time between the update of the definition of the projection and the update of the actual projection on any edge.'
       operationId: createProjectionDestination
       consumes:
@@ -947,7 +946,7 @@ definitions:
       selector:
         type: string
         example: 'person.gender,addresses.city,phoneNumbers.number'
-        description: 'A property selector under the extended data model that are to be replicated to the edges, i.e. the mask to apply on top of the data in Real-time Customer Profile.'
+        description: 'A property selector under the extended data model that are to be replicated to the edges, i.e. the mask to apply on top of the data in Unified Profile.'
       version:
         type: integer
         format: int32
@@ -956,7 +955,7 @@ definitions:
       id:
         type: string
         example: 111-222-333-444
-        description: The ID of the profile projection configuration
+        description: The id of the profile projection configuration
       schemaName:
         type: string
         example: profile
@@ -968,7 +967,7 @@ definitions:
       destinationId:
         type: string
         example: 1111-2222-3333-4444
-        description: The ID of the projection destination containing routing metadata for the projection destination
+        description: The id of the projection destination containing routing metadata for the projection destination
         default: 123-123-123-123
       _links:
         type: object
@@ -984,7 +983,33 @@ definitions:
         properties:
           destination:
             $ref: '#/definitions/ProjectionDestinationRepresentation'
-    description: 'Projections are an edge "view" of the full profile data managed by Real-time Customer Profile. Edge projections are materialized by applying a mask on top of the complete Profile data. Each customer can manage the edge projections by maintaining a projection configuration using the Edge Projection Configuration API. There is one single projection configuration per customer. <br/>A projection configuration contains:<ul><li>A selector of properties under the extended data model that are to be replicated to the edges (the mask to apply on top of the data in Profile).</li><li>A time-to-live (TTL) value representing the default maximum time an idle profile projection is stored on the edge before being deleted. Expressed in seconds</li></ul>'
+    description: 'Projections are an edge "view" of the full profile data managed by the Unified Profile. Roughly put, edge projections are materialized by applying a mask on top of the complete profile data in the Unified Profile. Each customer can manage the edge projections by maintaining a projection configuration via the Edge Projection Configuration API. There is one single projection configuration per customer. <br/>A projection configuration contains:<ul><li>a selector of properties under the extended data model that are to be replicated to the edges, i.e. the mask to apply on top of the data in Unified Profile</li><li>a TTL representing the default maximum time an idle profile projection is stored on the edge before being deleted; expressed in seconds</li></ul>'
+  ProjectionConfigDestination:
+    allOf:
+      - $ref: '#/definitions/ProjectionDestinationRepresentation'
+      - type: object
+        properties:
+          id:
+            type: string
+            example: 111-222-333-444
+            description: The id of the projection destination
+          type:
+            type: string
+          topic:
+            type: string
+            description: 'A string representing the name of the pipeline topic, the projection get pushed to. Required field for PIPELINE destination type'
+          version:
+            type: integer
+            format: int32
+            example: 1
+            description: The current version number of the projection destination. Must be bigger than 1.
+          _links:
+            type: object
+            readOnly: true
+            properties:
+              self:
+                $ref: '#/definitions/HalLink'
+        description: A projection destination stores metadata regarding the target locations where projections get pushed by the Projection Service.
   ProjectionDestinationRepresentation:
     type: object
     discriminator: type
@@ -1018,7 +1043,7 @@ definitions:
       selector:
         type: string
         example: 'person.gender,addresses.city,phoneNumbers.number'
-        description: 'A property selector under the extended data model that are to be replicated to the edges, i.e. the mask to apply on top of the data in Real-time Customer Profile.'
+        description: 'A property selector under the extended data model that are to be replicated to the edges, i.e. the mask to apply on top of the data in Unified Profile.'
       currentVersion:
         type: integer
         format: int32
@@ -1029,9 +1054,9 @@ definitions:
       destinationId:
         type: string
         example: 1111-2222-3333-4444
-        description: The ID of the projection destination containing routing metadata for the projection destination
+        description: The id of the projection destination containing routing metadata for the projection destination
         default: 123-123-123-123
-    description: 'Projections are an edge "view" of the full profile data managed by Real-time Customer Profile. Edge projections are materialized by applying a mask on top of the complete Profile data. Each customer can manage the edge projections by maintaining a projection configuration using the Edge Projection Configuration API. There is one single projection configuration per customer. <br/>A projection configuration contains:<ul><li>A selector of properties under the extended data model that are to be replicated to the edges (the mask to apply on top of the data in Profile).</li><li>A time-to-live (TTL) value representing the default maximum time an idle profile projection is stored on the edge before being deleted. Expressed in seconds</li></ul>'
+    description: 'Projections are an edge "view" of the full profile data managed by the Unified Profile. Roughly put, edge projections are materialized by applying a mask on top of the complete profile data in the Unified Profile. Each customer can manage the edge projections by maintaining a projection configuration via the Edge Projection Configuration API. <br/>A projection configuration contains:<ul><li>a selector of properties under the extended data model that are to be replicated to the edges, i.e. the mask to apply on top of the data in Unified Profile</li><li>a TTL representing the default maximum time an idle profile projection is stored on the edge before being deleted; expressed in seconds</li></ul>'
   ProjectionConfigurationList:
     type: object
     properties:
@@ -1050,6 +1075,55 @@ definitions:
           self:
             $ref: '#/definitions/HalLink'
     description: A list of projection configurations.
+  InputEdgeProjectionDestinationRepresentation:
+    allOf:
+      - $ref: '#/definitions/InputProjectionDestination'
+      - type: object
+        required:
+          - dataCenters
+        properties:
+          ttl:
+            type: integer
+            format: int32
+            example: 86400
+            description: A TTL representing the default maximum time an idle profile projection is stored on the edge before being deleted; expressed in seconds. Ranges between 600 and 604800.
+            minimum: 600
+            maximum: 604800
+            default: 3600
+          dataCenters:
+            type: array
+            description: 'A list of identifiers of the data centers where the projection should be replicated. If the property is missing or its value is an empty list, then the projection will be replicated to all data centers.'
+            uniqueItems: true
+            items:
+              type: string
+          currentVersion:
+            type: integer
+            format: int32
+            example: 1
+            description: An integer representing the current version of the projection destination. It is used for updates. It must be bigger than 1.
+            minimum: 1
+            default: 1
+        description: A projection destination stores metadata regarding the target locations where projections get pushed by the Projection Service.
+  InputPipelineProjectionDestinationRepresentation:
+    allOf:
+      - $ref: '#/definitions/InputProjectionDestination'
+      - type: object
+        required:
+          - topic
+        properties:
+          topic:
+            type: string
+            description: 'A string representing the name of the pipeline topic, the projection get pushed to. Required field for PIPELINE destination type'
+            minLength: 0
+            maxLength: 128
+          currentVersion:
+            type: integer
+            format: int32
+            example: 1
+            description: An integer representing the current version of the projection destination. It is used for updates. It must be bigger than 1.
+            minimum: 1
+            default: 1
+        description: A projection destination stores metadata regarding the target locations where projections get pushed by the Projection Service.
   InputProjectionDestination:
     type: object
     discriminator: type
