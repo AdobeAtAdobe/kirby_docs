@@ -23,8 +23,8 @@ Before starting this tutorial, you must have the following prerequisites:
 
 *   A working understanding of the following key concepts used in this tutorial:
     *   [Experience Data Model (XDM) and XDM System](../../../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md)
-    *   [Query Service](../../../../../../../acpdr/end-user/markdown/query-service/qs-intro.md)
-    *   [Query Service SQL Syntax](../../../../../../../acpdr/end-user/markdown/query-service/qs-sql-syntax.md)
+    *   [Query Service](../../../../../../../end-user/markdown/query-service/qs-intro.md)
+    *   [Query Service SQL Syntax](../../../../../../../end-user/markdown/query-service/qs-sql-syntax.md)
     *   Adobe Analytics
 
 
