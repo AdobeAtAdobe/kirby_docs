@@ -15,7 +15,7 @@ Identity Service manages cross-device, cross-channel, near real-time identificat
 ### Prerequisite Topics
 
 [__Identity Service__](../../technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md) - Identity Service solves the fundamental challenge posed by the fragmentation of consumer profile data. It does this by bridging identities across devices and across the various systems whereby your consumers engage with your brand.  
-[__Authenticating and Accessing Adobe Experience Platform APIs__](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) - This tutorial shows the initial steps to set up an integration in Adobe I/O Console and use the created integration to access Platform APIs. The steps in this tutorial describe how to create an integration and gain access to the following values needed for required headers:
+[__Authenticating and Accessing Adobe Experience Platform APIs__](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) - This tutorial shows the initial steps to set up an integration in Adobe I/O Console and use the created integration to access Platform APIs. The steps in this tutorial describe how to create an integration and gain access to the following values needed for required headers:
 * IMS Organization ID
 * API Key (Client ID)
 * Access Token 
@@ -74,8 +74,8 @@ Retrieve all cluster members for a single identity.
 
 > **Note:** Use optional `graph-type` parameter to indicate the identity graph to get the cluster from. Options are:
 >
-> * __coop__ - Subscription-based graph built by using coop data
-> * __pdg__ - Private device graph, built from your organization's data. If no `graph-type` is provided, this is the default.
+> * None - Perform no identity stitching.
+> * Private Graph - Perform identity stitching based on your private identity graph. If no `graph-type` is provided, this is the default.
 
 __Service endpoint__
 
@@ -126,49 +126,10 @@ POST https://platform.adobe.io/data/core/identity/clusters/members
 
 __Request body__
 
-Option 1: Supply a list of XIDs for which to retrieve cluster members.
+The following demonstrates supplying a list of XIDs for which to retrieve cluster members.
 ```
 {
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"]
-}
-```
-
-Option 2: Supply a list of XIDs and override the default `graph-type` value of "pdg".
-```
-{
-    "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
-    "graph-type": "coop"
-}
-```
-
-Option 3: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace code.
-```
-{
-    "compositeXids": [{
-            "ns": "AdCloud",
-            "id": "WRbM7AAAAJ_PBZHl"
-        },
-        {
-            "ns": "AdCloud",
-            "id": "WY-RNgAAArI4rGBo"
-        }
-    ]
-}
-```
-
-Option 4: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace ID. This example demonstrates using this method while overwriting the default `graph-type` of "pdg".
-```
-{
-    "compositeXids": [{
-            "nsid": 411,
-            "id": "WRbM7AAAAJ_PBZHl"
-        },
-        {
-            "nsid": 411,
-            "id": "WY-RNgAAArI4rGBo"
-        }
-    ],
-    "graph-type": "coop"
 }
 ```
 
@@ -196,7 +157,7 @@ curl -X POST \
   -H 'x-gw-ims-org-id: B3349894589501FE0A494034@AdobeOrg' \
   -d '{
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
-    "graph-type": "coop"
+    "graph-type": "Private Graph"
 }' | json_pp
 
 ## Real Call - Using UIDs
@@ -216,7 +177,7 @@ curl -X POST \
             "id": "WY-RNgAAArI4rGBo"
         }
     ],
-    "graph-type": "coop"
+    "graph-type": "Private Graph"
 }' | json_pp
 ```
 
@@ -323,9 +284,8 @@ __Example real response__
 Identities can move clusters over the course of various device graph runs. Identity Service provides visibility into the cluster associations of a given identity over time.
 
 > **Note:** Use optional `graph-type` parameter to indicate the output type to get the cluster from. Options are:
-
-* __coop__ - graph built by using coop data
-* __pdg__ - private device graph  
+> * None - Perform no identity stitching.
+> * Private Graph - Perform identity stitching based on your private identity graph. If no `graph-type` is provided, this is the default.
 
 ### Get the cluster history of a single identity
 
@@ -382,19 +342,11 @@ Option 1: Supply a list of XIDs for which to retrieve cluster members.
 ```
 {
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
-    "graph-type": "coop"
+    "graph-type": "Private Graph"
 }
 ```
 
-Option 2: Supply a list of XIDs and override the default `graph-type` value of "pdg".
-```
-{
-    "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
-    "graph-type": "coop"
-}
-```
-
-Option 3: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace code.
+Option 2: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace code.
 ```
 {
     "compositeXids": [{
@@ -406,22 +358,6 @@ Option 3: Supply a list of identities as composite IDs, where each names the ID 
             "id": "WY-RNgAAArI4rGBo"
         }
     ]
-}
-```
-
-Option 4: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace ID. This example demonstrates using this method while overwriting the default `graph-type` of "pdg".
-```
-{
-    "compositeXids": [{
-            "nsid": 411,
-            "id": "WRbM7AAAAJ_PBZHl"
-        },
-        {
-            "nsid": 411,
-            "id": "WY-RNgAAArI4rGBo"
-        }
-    ],
-    "graph-type": "coop"
 }
 ```
 
@@ -438,7 +374,7 @@ curl -X POST \
   -H 'x-uis-cst-ctx: stub' \
   -d '{
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
-    "graph-type": "coop"
+    "graph-type": "Private Graph"
 }'
 
 # Using XIDs
@@ -450,7 +386,7 @@ curl -X POST \
   -H 'x-gw-ims-org-id: B3349894589501FE0A494034@AdobeOrg' \
   -d '{
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
-    "graph-type": "coop"
+    "graph-type": "Private Graph"
 }' | json_pp
 
 # Using UIDs
@@ -470,7 +406,7 @@ curl -X POST \
             "id": "WY-RNgAAArI4rGBo"
         }
     ],
-    "graph-type": "coop"
+    "graph-type": "Private Graph"
 }' | json_pp
 ```
 
@@ -530,7 +466,7 @@ A mapping is a collection of all identities in a cluster, for a specified namesp
 
 ### Get an identity mapping for a single identity
 
-Given an identity, returns all related identities the same namespace as that represented by the identity in the request.
+Given an identity, retrieve all related identities from the same namespace as that represented by the identity in the request.
 
 __Service endpoint__
 
@@ -582,37 +518,15 @@ POST https://platform.adobe.io/data/core/identity/mappings
 __Example body__
 
 Option 1: Supply a list of XIDs for which to retrieve mappings.
+
 ```
 {
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
-    "graph-type": "coop"
+    "graph-type": "Private Graph"
 }
 ```
 
-Option 2: Supply a list of XIDs and override the default `graph-type` value of "pdg".
-```
-{
-    "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
-    "graph-type": "coop"
-}
-```
-
-Option 3: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace code.
-```
-{
-    "compositeXids": [{
-            "ns": "AdCloud",
-            "id": "WRbM7AAAAJ_PBZHl"
-        },
-        {
-            "ns": "AddCloud",
-            "id": "WY-RNgAAArI4rGBo"
-        }
-    ]
-}
-```
-
-Option 4: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace ID. This example demonstrates using this method while overwriting the default `graph-type` of "pdg".
+Option 2: Supply a list of identities as composite IDs, where each names the ID value and namespace by namespace ID. This example demonstrates using this method while overwriting the default `graph-type` of "Private Graph".
 ```
 {
     "compositeXids": [{
@@ -624,7 +538,7 @@ Option 4: Supply a list of identities as composite IDs, where each names the ID 
             "id": "WY-RNgAAArI4rGBo"
         }
     ],
-    "graph-type": "coop"
+    "graph-type": "None"
 }
 ```
 
@@ -641,7 +555,7 @@ curl -X POST \
   -d '{
  "xids" : ["GesCQXX0CAESEE8wHpswUoLXXmrYy8KBTVgA"],
  "targetNs": "0",
- "graph-type": "coop"
+ "graph-type": "Private Graph"
 }' | json_pp
 
 # Using UIDs
@@ -662,7 +576,7 @@ curl -X POST \
         }
     ],
  "targetNs": "0",
- "graph-type": "coop"
+ "graph-type": "Private Graph"
 }' | json_pp
 ```
 
