@@ -63,7 +63,7 @@ Identity namespaces also prevent collision of identities that belong to differen
 
 An identity graph is a map of relationships between identities that updates with customer activity in near real time. Identity Service manages an identity graph visible by only your organization and built based on your data, referred to as the private graph. Identity Service augments your private graph when a record of ingested data contains more than one identity, adding a relationship between the identities found.
 
-As an example of the potential types of factors to consider when supplying and labeling identity data: Using phone numbers such as "work phone" may result in more relationships than you intend in the identity graph. You may find many employees refer to the same number for work, and that "home" and "mobile" better serve to keep relationships as precise as possible.
+As an example of of the potential types of factors to consider when supplying and labeling identity data: Using phone numbers such as "work phone" may result in more relationships than you intend in the identity graph. You may find many employees refer to the same number for work, and that "home" and "mobile" better serve to keep relationships as precise as possible.
 
 <!-- Update this section with reference to Co-op doc when it's avail -->
 
