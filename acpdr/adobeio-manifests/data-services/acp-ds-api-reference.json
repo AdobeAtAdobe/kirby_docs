@@ -13,36 +13,46 @@
 		{
 			"pages": [],
 			"path": "acpdr/swagger-specs/schema-registry.yaml",
-			"title": "Schema Registry"
+			"title": "Schema Registry API"
 		},
 		{
 			"pages": [],
 			"path": "acpdr/swagger-specs/catalog.yaml",
-			"title": "Catalog Service"
+			"title": "Catalog Service API"
 		},
 		{
 			"pages": [],
 			"path": "acpdr/swagger-specs/partner-connectors-api.yaml",
-			"title": "Connectors Service"
+			"title": "Connectors Service API"
 		},
 		{
 			"pages": [],
 			"path": "acpdr/swagger-specs/ingest-api.yaml",
-			"title": "Data Ingestion Service"
+			"title": "Data Ingestion Service API"
 		},
 		{
 			"pages": [],
 			"path": "acpdr/swagger-specs/data-access-api.yaml",
-			"title": "Data Access Service"
+			"title": "Data Access Service API"
 		},
 		{
 			"pages": [],
 			"path": "acpdr/swagger-specs/dule-policy-service.yaml",
-			"title": "DULE Policy Service"
+			"title": "DULE Policy Service API"
+		},
+		{
+			"pages": [],
+			"path": "acpdr/swagger-specs/mapping-service-api.yaml",
+			"title": "Mapping Service API"
+		},
+		{
+			"pages": [],
+			"path": "acpdr/swagger-specs/observability-insights.yaml",
+			"title": "Observability Insights API"
 		},
 		{
 			"path": "acpdr/swagger-specs/unified-profile-service-apis.yaml",
-			"title": "Unified Profile Service",
+			"title": "Unified Profile Service APIs",
 			"pages": [
 				{
 					"pages": [],
@@ -94,12 +104,22 @@
 		{
 			"pages": [],
 			"path": "acpdr/swagger-specs/id-service-api.yaml",
-			"title": "Identity Service"
+			"title": "Identity Service API"
 		},
 		{
 			"pages": [],
 			"path": "acpdr/swagger-specs/qs-api.yaml",
 			"title": "Query Service API"
+		},
+		{
+			"pages": [],
+			"path": "acpdr/swagger-specs/decisioning-repository.yaml",
+			"title": "XDM Core Object Repository API"
+		},
+		{
+			"pages": [],
+			"path": "acpdr/swagger-specs/decisioning-ode.yaml",
+			"title": "Offer Decision Service API"
 		},
 		{
 			"pages": [],
@@ -115,9 +135,11 @@
 		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
 		"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/": "/apis/cloudplatform/dataservices/data-science-workspace/dsw-overview.html",
 		"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/": "/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
+		"api-specification/markdown/narrative/technical_overview/observability_insights/": "apis/experienceplatform/home/services/observability.html",
 		"api-specification/markdown/narrative/gdpr/": "/apis/experienceplatform/gdpr/docs/alldocs.html",
-		"acpdr/end-user/markdown/query-service/": "/apis/cloudplatform/dataservices/query-service/query-service.html",
-		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html"
+		"end-user/markdown/query-service/": "/apis/cloudplatform/dataservices/query-service/query-service.html",
+		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
+		"api-specification/markdown/narrative/technical_overview/decisioning-overview/":"/apis/experienceplatform/home/services/decisioning-service.html"
 	}
 
 }
