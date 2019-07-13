@@ -1,33 +1,32 @@
 swagger: "2.0"
 info:
   description: >-
-    Run your PQL predicate using Unified Profile Preview Service for a summary of the resulting profile segment.
-    This API facilitates access to both estimation information, such as the projected audience size, and a preview the
-    qualified audience members.
+    Run your Profile Query Language (PQL) predicate using Real-time Customer Profile Preview Service for a summary of the resulting profile segment. This API facilitates access to estimation information such as the projected audience size, and previews for qualified segment audience members.
 
 
     Related documentation:
-
-      * [Unified Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
-      * [Creating segments in Experience Platform](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md)
-      * [Estimating and previewing segments](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md#optional-step-2-estimate-and-preview-audience)
+      * [Real-time Customer Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
+      * [Profile Query Language (PQL) overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_pql.md)
+      * [Create segments using Adobe Experience Platform APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md)
+      * [Estimate and preview an audience segment](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md#estimate-and-preview-an-audience)
 
 
     Notes:
-      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
       * Base path for this API: /data/core/ups
-      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
-      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
-      to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
+      * Example of a complete path: https://<span>platform.adobe.io/data/core/ups/preview
+      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
 
   version: 18.8.1
-  title: Unified Profile Preview API
+  title: Real-time Customer Profile Preview API
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 host: "platform.adobe.io"
 basePath: "/data/core/ups"
 tags:
 - name: "Estimate"
+  description: "Estimates provide statistical information on a segment definition, such as the projected audience size and confidence interval."
 - name: "Preview"
+  description: "Previews provide paginated lists of qualifying profiles for a segment definition."
 paths:
   /preview:
     parameters:
@@ -37,32 +36,35 @@ paths:
     post:
       tags:
       - "Preview"
-      summary: "SESSIONLESS: Submits a Preview Job for a Profile Query"
+      summary: "Submits a preview job for a Profile query."
       description: ""
       operationId: "postSessionlessPreviewRoute"
+      consumes:
+      - "application/json"
       produces:
       - "application/json"
       parameters:
         - in: "body"
           name: "body"
-          description: "\npredicateExpression - Expression of the predicate that is\
-            \ to be evaluated \npredicateType - Default: PQL The only value that is\
-            \ available to use for this is PQL for now.\npredicateModel - Default: xdm.model.profile\
-            \ The model against which this predicate is to be evaulated. Please note\
-            \ that 'touchpoint' is not treated as model as it can be associated with\
-            \ any of the models like profile.\ngraphType - Graph Type you want to get\
-            \ the cluster from. Possible values are (coop - graph built by using coop\
-            \ data, pdg - private device graph, psr - propriatery stiched rules)"
+          description: >- 
+            `npredicateExpression` - Expression of the predicate that is to be evaluated.
+            
+            `npredicateType` - (Default: PQL) The only value that is available to use for this is PQL for now.
+            
+            `predicateModel` - (Default: xdm.model.profile) The model against which this predicate is to be evaulated. Please note that 'touchpoint' is not treated as model as it can be associated with any of the models like profile.
+            
+            `graphType` - The graph type that you want to get the cluster from. Possible values are None (perform no identity stitching) and Private Graph (perform identity stitching based on your private identity graph). If no `graph-type` is provided, this is the default."
           required: true
           schema:
             $ref: "#/definitions/PreviewQuerySessionlessRequest"
+        - $ref: '#/parameters/json-header'
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation"
           schema:
             $ref: "#/definitions/PreviewQueryResponse"
         201:
-          description: "Profile Preview successfully Posted"
+          description: "Profile Preview successfully posted"
           schema:
             $ref: "#/definitions/PreviewQueryResponse"
           headers:
@@ -72,12 +74,12 @@ paths:
         403:
           description: "Forbidden"
         503:
-          description: "Service Unavailable"
+          description: "Service unavailable"
   /preview/{previewId}:
     parameters:
       - name: "previewId"
         in: "path"
-        description: "Preview  Id."
+        description: "ID of the preview for which get the preview results."
         required: true
         type: "string"
         x-example: "MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA=="
@@ -87,8 +89,7 @@ paths:
     get:
       tags:
       - "Preview"
-      summary: "SESSIONLESS: Gets result of the Preview Job in a paginated fashion. Ordering will\
-        \ be by objectId."
+      summary: "Gets result of the preview job in a paginated fashion. Ordering will be by objectId."
       description: ""
       operationId: "getSessionlessPreviewStatusRoute"
       produces:
@@ -108,7 +109,7 @@ paths:
           x-example: 100
       responses:
         200:
-          description: "XDM model objects of given {jobId} successfully returned. "
+          description: "XDM model objects of given {jobId} successfully returned."
           schema:
             $ref: "#/definitions/EndCustomerEntityPageResponse"
         403:
@@ -120,14 +121,14 @@ paths:
     delete:
       tags:
       - "Preview"
-      summary: "SESSIONLESS: Cancels the execution of the Preview Job"
+      summary: "Cancels the execution of the preview job."
       description: ""
       operationId: "deleteSessionLessPreviewStatusRoute"
       produces:
       - "application/json"
       responses:
         200:
-          description: "Job Successfully cancelled "
+          description: "Job successfully cancelled"
           schema:
             $ref: "#/definitions/MessageResponse"
         403:
@@ -137,44 +138,35 @@ paths:
         503:
           description: "Service unavailable"
   /estimate/{previewId}:
+    parameters:
+      - name: "previewId"
+        in: "path"
+        description: "Preview ID."
+        required: true
+        type: "string"
+        x-example: "MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA=="
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
       - "Estimate"
-      summary: "SESSIONLESS: Gets result of the Estimate Job."
+      summary: "Gets result of the estimate job."
       description: ""
       operationId: "getEstimateStatusRoute"
       produces:
       - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        required: false
-        schema:
-          $ref: "#/definitions/DatabaseService"
-      - name: "previewId"
-        in: "path"
-        description: "Preview Id."
-        required: true
-        type: "string"
-        x-example: "123421"
-      - name: "x-gw-ims-org-id"
-        in: "header"
-        description: "IMS Client Id"
-        required: true
-        type: "string"
-        x-example: "1BD@Adobe.com"
       responses:
         200:
-          description: "Estimate Successfully retrieved."
+          description: "Estimate successfully retrieved."
           schema:
             $ref: "#/definitions/EstimateResponse"
         403:
           description: "You are forbidden to make this request."
         404:
-          description: "Preview id {previewId} does not exist."
+          description: "Preview ID {previewId} does not exist."
         503:
           description: "Service unavailable"
-
 
 definitions:
   EstimateResponse:
@@ -217,25 +209,22 @@ definitions:
     properties:
       preview:
         type: "string"
-  DatabaseService:
-    type: "object"
   EndCustomerEntityPageResponse:
     type: "object"
     properties:
       page:
         description: "The page information of the current response entity."
       link:
-        description: "The href links."
+        description: "The HREF links."
       state:
         type: "string"
-        description: "The execution State of the query"
+        description: "The execution state of the query."
       results:
         type: "array"
         description: "The list of endcustomer entities."
         items:
           $ref: "#/definitions/PreviewSegmentsWrapperResponse"
-    description: "The endcustomer entity response, with current page information and\
-      \ next page link."
+    description: "The endcustomer entity response, with current page information and next page link."
   MessageResponse:
     type: "object"
     required:
@@ -265,26 +254,6 @@ definitions:
         type: "string"
   PreviewQuerySessionlessRequest:
     type: "object"
-  Link:
-    type: "object"
-    properties:
-      nextPage:
-        type: "string"
-        description: "The href link to the next page of the records."
-    description: "The link information."
-  Page:
-    type: "object"
-    properties:
-      offset:
-        type: "integer"
-        format: "int32"
-        description: "The offset of the page. By default is the internal id for the\
-          \ first record."
-      size:
-        type: "integer"
-        format: "int32"
-        description: "The total number of records of this page."
-    description: "The page information of the response entity."
   PreviewSegmentsIndividualResponse:
     type: "object"
     properties:
@@ -293,7 +262,7 @@ definitions:
         description: "Unique identifier of XDM Model object."
       _href:
         type: "string"
-        description: "Profile Access Link to the Contents of the XDM Object"
+        description: "Profile Access link to the contents of an XDM Object."
   PreviewSegmentsWrapperResponse:
     type: "object"
     properties:
@@ -302,10 +271,10 @@ definitions:
         description: "Unique identifier of XDM Model object."
       _href:
         type: "string"
-        description: "Profile Access Link to the Contents of the XDM Object"
+        description: "Profile Access link to the contents of an XDM Object."
       relatedObjects:
         type: "array"
-        description: "List of related objectIds"
+        description: "List of related objectIds."
         items:
           $ref: "#/definitions/PreviewSegmentsIndividualResponse"
 
@@ -313,26 +282,19 @@ definitions:
 parameters:
   authorization:
     name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
-    For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
     required: true
     type: string
     in: header
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
-    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
     required: true
     type: string
     in: header
   x-api-key:
     name: x-api-key
-    description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
     required: true
     type: string
     in: header
@@ -341,4 +303,4 @@ parameters:
     description: 'application/json'
     required: true
     type: string
-    in: header    
+    in: header
