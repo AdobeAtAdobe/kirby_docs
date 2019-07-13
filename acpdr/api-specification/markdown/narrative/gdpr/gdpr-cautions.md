@@ -2,7 +2,7 @@
 
 * Adobe does not provide consent management services, seek out a third-party provider for assistance.
 
-* Adobe Experience Platform Privacy Service API coding is required to send us GDPR requests
+* GDPR API coding is required to send us GDPR requests
 
 * Deploying the Adobe GDPR JavaScript tag is strongly recommended
  
