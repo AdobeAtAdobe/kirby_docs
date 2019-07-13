@@ -1,89 +1,128 @@
 # GDPR FAQ
 
-The following is a list of answers to frequently asked questions about the General Data Protection Regulation (GDPR) and its implementation in Adobe Experience Cloud.
+**When is the GDPR coming into effect?**
 
-Definitions for the various GDPR-related terms used in this document can be found in the [GDPR terminology](gdpr-terminology.md) article.
+The GDPR was approved and adopted by the EU Parliament in April, 2016. The regulation will take effect after a two-year transition period and, unlike a Directive it does not require any enabling legislation to be passed by government--meaning it will be in force May 2018.
 
-* [Who does the GDPR affect?](#who-does-the-gdpr-affect-)
-* [What are the penalties for non-compliance?](#what-are-the-penalties-for-non-compliance-)
-* [What constitutes personal data?](#what-constitutes-personal-data-)
-* [What is the difference between a data processor and a data controller?](#what-is-the-difference-between-a-data-processor-and-a-data-controller-)
-* [What is the difference between explicit and unambiguous data subject consent?](#what-is-the-difference-between-explicit-and-unambiguous-data-subject-consent-)
-* [Can data subjects under the age of 16 give consent?](#can-data-subjects-under-the-age-of-16-give-consent-)
-* [What is the difference between a regulation and a directive?](#what-is-the-difference-between-a-regulation-and-a-directive-)
-* [Does my business need to appoint a data protection officer (DPO)?](#does-my-business-need-to-appoint-a-data-protection-officer--dpo--)
-* [How does GDPR affect policy surrounding data breaches?](#how-does-gdpr-affect-policy-surrounding-data-breaches-)
-* [How do I get information about the status of my GDPR request or job?](#how-do-i-get-information-about-the-status-of-my-gdpr-request-or-job-)
-* [How do I download the results of my completed GDPR jobs?](#how-do-i-download-the-results-of-my-completed-gdpr-jobs-)
+**Who does the GDPR affect?**
 
+The GDPR not only applies to organizations located within the EU but it will also apply to organizations located outside of the EU if they offer goods or services to, or monitor the behavior of, EU [Data Subjects](gdpr-terminology.md#datasubject). It applies to all companies processing and holding the [Personal Data](gdpr-terminology.md#personaldata) of [Data Subjects](gdpr-terminology.md#datasubject) residing in the European Union, regardless of the company's location.
 
-## Who does the GDPR affect?
+**What are the penalties for non-compliance?**
 
-GDPR applies to all organizations that store and process the personal data of citizens within the European Union, regardless of the company's geographic location.
+Organizations can be fined up to 4% of annual global turnover for breaching GDPR or €20 Million. This is the maximum fine that can be imposed for the most serious infringements e.g.not having sufficient customer consent to process data or violating the core of [Privacy by Design](gdpr-terminology.md#privacybydesign) concepts. There is a tiered approach to fines e.g. a company can be fined 2% for not having their records in order (article 28), not notifying the supervising authority and [Data Subject](gdpr-terminology.md#datasubject) about a breach or not conducting impact assessment. It is important to note that these rules apply to both [Data Controllers](gdpr-terminology.md#datacontroller) and [Data Processor](gdpr-terminology.md#dataprocessor) - meaning 'clouds' will not be exempt from GDPR enforcement.
 
-## What are the penalties for non-compliance?
+**What constitutes [Personal Data](gdpr-terminology.md#personaldata)?**
 
-Organizations that breach GDPR can be fined up to 4% of annual global revenue or €20 million, whichever is greater. This is the maximum fine that can be imposed for the most serious infringements, such as not having sufficient customer consent to process data or violating the core of privacy-by-design concepts. 
+Any information related to a natural person or [Data Subject](gdpr-terminology.md#datasubject), that can be used to directly or indirectly identify the person. It can be anything from a name, a photo, an email address, bank details, posts on social networking websites, medical information, or a computer IP address.
 
-There is a tiered approach to fines. For example, a company can be fined 2% for not having their records in order ([Article 28](http://www.privacy-regulation.eu/en/article-28-processor-GDPR.htm)), not notifying the supervising authority and data subject about a breach or not conducting impact assessment. It is important to note that these rules apply to both data controllers and data processors, meaning "clouds" will not be exempt from GDPR enforcement.
+**What is the difference between a [Data Processor](gdpr-terminology.md#dataprocessor) and a [Data Controller](gdpr-terminology.md#datacontroller)?**
 
-## What constitutes personal data?
+A [Data Controller](gdpr-terminology.md#datacontroller) is the entity that determines the purposes, conditions and means of the processing of [Personal Data](gdpr-terminology.md#personaldata), while the [Data Processor](gdpr-terminology.md#dataprocessor) is an entity which processes [Personal Data](gdpr-terminology.md#personaldata) on behalf of the [Data Controller](gdpr-terminology.md#datacontroller).
 
-Personal data is any information related to a natural person or data subject that can be used to directly or indirectly identify the person. It can be anything from a name, a photo, an email address, bank details, posts on social networking websites, medical information, or a computer IP address.
+**Do [Data Processors](gdpr-terminology.md#dataprocessor) need 'explicit' or 'unambiguous' [Data Subject](gdpr-terminology.md#datasubject) [consent](gdpr-terminology.md#consent) - and what is the difference?**
 
-## What is the difference between a data controller and a data processor?
+The conditions for [consent](gdpr-terminology.md#consent) have been strengthened, as companies will no longer be able to utilize long illegible terms and conditions full of legalese, as the request for [consent](gdpr-terminology.md#consent) must be given in an intelligible and easily accessible form, with the purpose for data processing attached to that [consent](gdpr-terminology.md#consent) - meaning it must be unambiguous. [Consent](gdpr-terminology.md#consent) must be clear and distinguishable from other matters and provided in an intelligible and easily accessible form, using clear and plain language. It must be as easy to withdraw [consent](gdpr-terminology.md#consent) as it is to give it.​  Explicit [consent](gdpr-terminology.md#consent) is required only for processing sensitive [Personal Data](gdpr-terminology.md#personaldata) - in this context, nothing short of “opt in” will suffice. However, for non-sensitive data, “unambiguous” [consent](gdpr-terminology.md#consent) will suffice.
 
-A **data controller** is the entity that determines the purposes, conditions and means of processing personal data, while the **data processor** is an entity which processes personal data on behalf of the data controller.
+**What about [Data Subjects](gdpr-terminology.md#datasubject) under the age of 16?**
 
-## What is the difference between explicit and unambiguous data subject consent?
+Parental consent is required to process the [Personal Data](gdpr-terminology.md#personaldata) of children under the age of 16 for online services; member states may legislate for a lower age of [consent](gdpr-terminology.md#consent) but this will not be below the age of 13.
 
-GDPR strengthens the conditions for valid data subject consent. Companies can no longer offer terms and conditions that are difficult to comprehend, as the request for consent must be given in an intelligible and easily accessible form. The purpose for data processing must be unambiguously stated in the request to gain consent from the data subject.
+**What is the difference between a [Regulation](gdpr-terminology.md#regulation) and a [Directive](gdpr-terminology.md#directive)?**
 
-**Explicit consent** must be clear and distinguishable from other matters, provided in an intelligible and easily accessible form, using plain language. In addition, it must be as easy to withdraw consent as it is to give it.​ Explicit consent is required only for processing sensitive personal data, where nothing short of “opt in” will suffice. For non-sensitive data, however, **unambiguous consent** is acceptable.
+A [Regulation](gdpr-terminology.md#regulation) is a binding legislative act. It must be applied in its entirety across the EU, while a [Directive](gdpr-terminology.md#directive) is a legislative act that sets out a goal that all EU countries must achieve. However, it is up to the individual countries to decide how. It is important to note that the GDPR is a [Regulation](gdpr-terminology.md#regulation), in contrast the the previous legislation, which is a [Directive](gdpr-terminology.md#directive).
 
-## Can data subjects under the age of 16 give consent?
+**Does my business need to appoint a [Data Protection Officer (DPO)](gdpr-terminology.md#dataprotectionofficer)?**
 
-Parental consent is required to process the personal data of children under the age of 16 for online services. Member states may legislate for a lower age of consent, but not below the age of 13.
+[DPOs](gdpr-terminology.md#dataprotectionofficer) must be appointed in the case of: (a) public authorities, (b) organizations that engage in large scale systematic monitoring, or (c) organizations that engage in large scale processing of sensitive [Personal Data](gdpr-terminology.md#personaldata) (Art. 37).  If your organization doesnt fall into one of these categories, then you do not need to appoint a [DPO](gdpr-terminology.md#dataprotectionofficer).
 
-## What is the difference between a regulation and a directive?
+**How does the GDPR affect policy surrounding data breaches?**
 
-A **regulation** is a binding legislative act and must be applied in its entirety across the EU. A **directive** is a legislative act that sets out a goal that all EU countries must achieve, but it is up to the individual countries to decide how.
+Proposed regulations surrounding data breaches primarily relate to the notification policies of companies that have been breached. Data breaches which may pose a risk to individuals must be notified to the DPA within 72 hours and to affected individuals without undue delay.
 
-It is important to note that the GDPR is a regulation, in contrast the the previous legislation (the Data Protection Directive), which is a directive.
+**How do I get information about the status of my GDPR request or job?**
 
-## Does my business need to appoint a data protection officer (DPO)?
+You can learn the status of your GDPR request or job by using the [GDPR API’s GET request](https://www.adobe.io/apis/cloudplatform/gdpr/api-reference.html) or by visiting the GDPR UI at [https://gdprui.cloud.adobe.io/](https://gdprui.cloud.adobe.io/). For example: from those locations, you can obtain a downloadable archive file with results of completed GDPR Access requests.
 
-An organization must appoint a data protection officer in the following cases:
-* The organization is a public authority
-* The organization engages in large-scale systematic monitoring
-* The organization engages in large-scale processing of sensitive personal data.
+> **Note:** As of September 14, 2018, we are turning off email notifications for completion or erroring of your GDPR requests. Other GDPR functionality is not affected by this change.
 
-## How does GDPR affect policy surrounding data breaches?
+The following is a sample response from an API GET request:
 
-Proposed regulations surrounding data breaches primarily relate to the notification policies of companies that have been breached. Data breaches which may pose a risk to individuals must be notified to the data protection authority within 72 hours and to affected individuals without undue delay.
-
-## How do I get information about the status of my GDPR request or job?
-
-You can retrieve details about a particular job by using the Adobe Experience Platform Privacy Service API or user interface.
-
-### Using the API
-
-To retrieve the status of a particular job using the Privacy Service API, make a request to the root (`GET /`) endpoint, using the job's ID in the request path. For more details, see the section on [checking the status of a job](use-cases/gdpr-api-overview.md) in the Privacy Service API tutorial.
-
-### Using the UI
-
-All active job requests are listed in the **Job Requests** widget on the Privacy Service UI dashboard. The status for each job request is displayed under the **Status** column. For more information on viewing job requests in the UI, please see the [Privacy Service UI tutorial](using-gdpr-ui.md).
-
-## How do I download the results of my completed GDPR jobs?
-
-The Adobe Experience Platform Privacy Service API and user interface both provide methods for downloading the results of completed jobs in ZIP format.
-
-### Using the API
-
-Make a request to the root (`GET /`) endpoint in the Privacy Service API, using the ID of the job whose results you want to download in the request path. If the job's status is complete, the API will include a `downloadURL` attribute in the response body. This attribute contains a URL that you can paste into the address bar of your browser to download the ZIP file.
-
-For more details, see the section on [looking up a job by its ID](use-cases/gdpr-api-overview.md#check-the-status-of-a-job) in the Privacy Service API tutorial.
-
-### Using the UI
-
-On the Privacy Service UI dashboard, find the job you want to download from the **Job Requests** widget. Click the ID of the job to open the *Job Details* page. From here, click **Download** in the top-right corner to download the ZIP file. See the [Privacy Service UI tutorial](using-gdpr-ui.md) for more detailed steps.
+```json
+{
+    "jobs": [
+        {
+            "jobId": "XXXXXXX-XXXXXX-XXXXXXX-XXXX-XXXXXXXXXXX",
+            "requestId": "XXXXXX",
+            "lastUpdatedOn": "09/11/2018 2:02 AM",
+            "customer": {
+                "user": {
+                    "key": "155XXXX",
+                    "action": [
+                        "access"
+                    ],
+                    "userIDs": [
+                        {
+                            "namespace": "XXXX",
+                           "value": "XXXXXXXX",
+                            "type": "analytics",
+                            "isDeletedClientSide": false
+                        },
+                        {
+                            "namespace": "YYYYY",
+                            "value": "YYYYYYYYYYYYY",
+                            "type": "analytics",
+                            "isDeletedClientSide": false
+                        },
+                        {
+                            "namespace": "ZZZZZZZZ",
+                            "value": "ZZZZZZZZZZZZZZZZZ",
+                            "type": "analytics",
+                            "isDeletedClientSide": false
+                        }
+                    ]
+                },
+                "companyContexts": [
+                    {
+                        "namespace": "imsOrgID",
+                        "value": "XXXXXXXXXXXXXXXXXXX@AdobeOrg"
+                    }
+                ]
+            },
+           "emailId": "gdprstatus@mycompany.com",
+            "productResponses": [
+                {
+                    "product": "Analytics",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 1,
+                        "statusMessage": "complete",
+                        "solutionMessage": {
+                            "message": "success",
+                            "product": "analytics",
+                            "results": {
+                                "userContexts": [],
+                                "receiptData": {}
+                            },
+                            "jobId": "XXXXXXX-XXXXXX-XXXXXXX-XXXX-XXXXXXXXXXX",
+                            "status": "complete",
+                            "action": null
+                        }
+                    },
+                    "processedDate": "09/11/2018 2:00 AM"
+                }
+            ],
+            "lastUpdatedBy": "GDPRCentralService",
+            "timeRequested": "09/01/2018 4:52 AM",
+            "submittedBy": "XXXXX-XXXXXX-XXXXX-XXXXXXX@techacct.adobe.com",
+            "gdprStatusResponse": {
+                "statusCode": 1,
+                "statusMessage": "complete",
+                "solutionMessage": null
+            },
+            "downloadUrl": "https://va7gdprprodblob.blob.core.windows.net/va7gdprprodblobpublic/XXXXXX-XXXXXX-XXXXXXX-XXXXXXX-XXXXXX-XXXXXXX.zip"
+        }
+    ],
+    "totalRecords": 1
+}
+```
