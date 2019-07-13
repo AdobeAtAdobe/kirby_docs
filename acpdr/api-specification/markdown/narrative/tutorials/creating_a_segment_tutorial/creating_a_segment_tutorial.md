@@ -1,57 +1,111 @@
-# Create segments using APIs
+# Creating segments in Experience Platform via API
 
-This document provides a tutorial for using the Segmentation Service API to create segments in Adobe Experience Platform. For information on how to build segments using the user interface, please see the [Segment Builder documentation](../../../../../end-user/markdown/segmentation_overview/segmentation.md).
+## Overview
 
-The tutorial covers the following steps:
+This tutorial covers the workflow for using Segmentation Service to create a segment in Adobe Experience Platform. 
 
-1. [Develop a segment definition](#develop-a-segment-definition) 
-1. [Estimate and preview an audience](#estimate-and-preview-an-audience)
-1. [Segment your user base](#segment-your-user-base)
-1. [Export a segment](#export-a-segment)
+### Creating segments
 
-## Getting started
+Segmentation Service behaves on/with the following components:
 
-This tutorial requires a working understanding of the various Adobe Experience Platform services involved in segmentation. Before beginning this tutorial, please review the documentation for the following services:
+* __Segments__ are classified subsets of your user base, such as "Men over 50"
+* __Definitions__ are the rules, in terms of the conditions that an union schema object must meet to qualify for a Segment
+* __Segmentation jobs__ are asynchronous processes which isolate members of your user base per the rules described by a definition
+* An __audience__ is the collection of XDM objects which met the qualifications, or conditions, as set out by the segment definition
 
-- [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, real-time consumer profile based on aggregated data from multiple sources.
-- [Segment Builder](../../../../../end-user/markdown/segmentation_overview/segmentation.md): A workspace for building audience segments from your Real-time Customer Profile data.
-- [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
+In summary, the following tasks are involved in segmentation and are detailed in this section:
 
-## Tutorial
+[First, develop your segment definition](#step-1-develop-a-segment-definition) - Start with determining your marketable segment, first conceptually, then on Platform as criteria that your profile data must meet to qualify for your segment. Those that qualify constitute the members of that segment, or audience.  
+[Preview, or view estimates of, your segment](#optional-step-2-estimate-and-preview-audience) - As the testing step of the iterations of developing, testing, and refining your definition, you can apply your definition against a sample of your profile store, giving you summary information such as the estimated size of the resulting audience, or a sample set of qualifying profiles to spot-check against the results you expect.  
+[Then, segment your user base](#step-3-segment-your-user-base) - Once your definition has been built, tested, and saved, run it against your user base using the Segment Jobs API. A segment job builds the audience which you then must export to a dataset where it can be accessed directly or used by any Platform solution.  
+[Finally, export your segment](#step-4-export-your-segment) - Using the Export API, persist audience members to a Profile dataset where it can be accessed by Platform or custom solutions.  
 
-This tutorial requires you to have completed the [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+### Prerequisite topics
 
-* Authorization: Bearer `{ACCESS_TOKEN}`
-* x-api-key: `{API_KEY}`
-* x-gw-ims-org-id: `{IMS_ORG}`
+[Unified Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md) is a generic lookup entity store, and is used to manage any XDM Platform data. Unified Profile facilitates building customer personalization use cases by merging data across various enterprise data assets and providing access to that unified data. Unified Profile provides tools for looking up entities by identity, as well as robust segmentation tools.  
+[Authenticating and Accessing Adobe Experience Platform APIs](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) - This tutorial shows the initial steps to set up an integration in Adobe I/O Console and use an integration to access Platform APIs. The steps in this tutorial describe how to create an integration and gain access to the following values needed for required headers:
+* IMS Organization ID
+* API Key (Client ID)
+* Access Token 
 
-All POST, PUT, and PATCH requests require an additional header:
+### Related topics
 
-* Content-Type: application/json
+[Using Adobe Unified Profile Segment Builder](../../../../../end-user/markdown/segmentation_overview/segmentation.md) - This overview gives a walk-through of the Segment Builder, and should help familiarize you with the tools you'll use to build segments in the Experience Platform UI  
+[Experience Data Model (XDM)](../../technical_overview/schema_registry/schema_composition/schema_composition.md) provides the framework to refer to and manage the schemas that your data must conform to for use as entities on Platform.
 
-## Develop a segment definition
+### Requirements
 
-The first step in segmentation is to define a segment, represented in a construct called a **segment definition**. A segment definition is an object that encapsulates a query written in Profile Query Language (PQL). This object is also called a **PQL predicate**. PQL predicates define the rules for the segment based on conditions related to any profile or time series data you supply to Real-time Customer Profile. See the [list of supported PQL queries](../../technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md) for available options.
+All APIs in this document require the following headers. Some require additional headers which will be listed in context.
 
-You can create a new segment definition using the [Profile Segment Definitions API](../../../../../../acpdr/swagger-specs/profile-segment-definitions-api.yaml). The following example outlines how to format a definition request, including what information is required in order for a segment to be defined successfully.
+|Header|Description|Example Value|
+|---|---|---|
+|`Authorization`|The Access Token as described in [Prerequisite topics](#prerequisite-topics), prefixed with "Bearer "|Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ....|
+|`x-gw-ims-org-id`|The IMS Organization ID as described in [Prerequisite topics](#prerequisite-topics)|17FA2AFD56CF35747F000101@AdobeOrg|
+|`x-api-key`|The API Key (Client ID) as described in [Prerequisite topics](#prerequisite-topics)|25622d14d3894ea590628717f2cb7462|
 
-#### API format
+---
 
-```http
-POST /segment/definitions
+## Step 1: Develop a segment definition
+
+The first task in segmentation is to define the segment, represented in a construct aptly referred to as a segment definition. Rules can be based on conditions related to any Profile or ExperienceEvent data you supply to Unified Profile.
+
+A segment definition is represented as a construct which includes the PQL statement defining the rules for the segment using the [Unified Profile Segment Definitions API](../../../../../../acpdr/swagger-specs/profile-segment-definitions-api.yaml). For more information on PQL, a prerequisite, visit the [Profile Query Language Overview](../../technical_overview/unified_profile_architectural_overview/unified_profile_pql.md), or a reference [list of supported queries](../../technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md).
+
+#### Additional required headers
+
+The following headers are required in addition to those listed in [Requirements](#requirements), above.
+
+|Header|Value|
+|---|---|
+|Content-Type|application/json|
+
+#### Service endpoint
+
+```
+POST https://platform.adobe.io/data/core/ups/segment/definitions
 ```
 
-#### Request
+#### Request body
 
-The following request creates a new segment definition for a schema called "MyProfile".
+```
+{
+    "name": "{DEFINITION_NAME}",
+    "schema": {
+        "name": "{SCHEMA}",
+    },
+    "expression": {
+        "type": "{TYPE}",
+        "format": "{FORMAT}",
+        "value": "{PQL_STATEMENT}"
+    },
+    "mergePolicyId": "{MERGE_POLICY_ID}",
+    "description": "{DEFINITION_DESCRIPTION}"
+}
+```
 
-```shell
+Where the following describes the request body object:
+
+* `name` (__required__) - Specify a name by which to refer to the segment. Choose a name that is descriptive and unique per segment
+* `schema` (__required__) - Entity which consists of either an `id` or `name` field, naming the schema of the entities in the segment
+* `expression` (__required__) - Entity which consists of the following fields:
+  * `type` - Specifies the expression type. Currently only "PQL" is supported
+  * `format` - Indicating the structure of the expression in `value`. Options are:
+    * **"pql/text** - A textual representation of a segment definition, according to the published PQL grammar.  For example, "workAddress.stateProvince = homeAddress.stateProvince" is a pql/text segment definition.
+    * **"pql/json"** - A segment definition in json format. For more on JSON formatted PQL, start with [JSON formatted queries](../../technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md#json-formatted-queries).
+  * `value` - Expression of above type to select records from xdmSchema
+  * `meta` - This can contain more info about the expression and related meta data
+* `mergePolicyId` - Specify the merge policy to use for the exported data. For information on working with merge policies, see the tutorial [Working with merge policies via API](../../tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md)
+* `description` - Human readable description of the definition
+
+#### Example request
+
+```
 curl -X POST \
   https://platform.adobe.io/data/core/ups/segment/definitions \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
+  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
+  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg' \
   -d '{
         "name": "My Sample Cart Abandons Segment Definition",
         "schema": {
@@ -60,30 +114,16 @@ curl -X POST \
         "expression": {
             "type": "PQL",
             "format": "pql/text",
-            "value": "xEvent.metrics.commerce.abandons.value > 0",
+            "value": "xEvent.metrics.commerce.abandons.value > 0"
         },
         "mergePolicyId": "mpid1",
         "description": "This Segment represents those users who have abandoned a cart"
     }'
 ```
 
-* `name`: (**Required**) A unique name by which to refer to the segment. 
-* `schema`: (**Required**) The schema associated with the entities in the segment. Consists of either an `id` or `name` field.
-* `expression`: (**Required**) An entity containing the following fields:
-  * `type`: Specifies the expression type. Currently only "PQL" is supported.
-  * `format`: Indicates the structure of the expression in `value`. 
-    * You can choose between two possible formats:
-      * `pql/text`: A textual representation of a segment definition, according to the published PQL grammar.  For example, `workAddress.stateProvince = homeAddress.stateProvince`.
-      * `pql/json`: A segment definition in JSON format. For more information regarding JSON-formatted queries, see the [JSON section](../../technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md#json-formatted-queries) in the [Supported PQL queries guide](../../technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md).
-  * `value`: An expression that conforms to the type indicated in `format` to select records from "MyProfile".
-* `mergePolicyId`: The identifier of the merge policy to use for the exported data. See the [merge policies API tutorial](../../tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md) for more information.
-* `description`: A human readable description of the definition.
+#### Example response
 
-#### Response
-
-A successful response returns the details of the newly created segment definition, including its system-generated, read-only `id` which will be used later in this tutorial.
-
-```json
+```
 {
     "id": "1234",
     "name": "My Sample Cart Abandons Segment Definition",
@@ -99,51 +139,63 @@ A successful response returns the details of the newly created segment definitio
 }
 ```
 
-## Estimate and preview an audience
+From the response, collect the segment definition ID (`id`), which will be used in future steps.
 
-As you develop your segment definition, you can use the estimate and preview tools within Real-time Customer Profile to view summary-level information to help ensure you are isolating the expected audience. Estimates provide statistical information on a segment definition, such as the projected audience size and confidence interval. Previews provide paginated lists of qualifying profiles for a segment definition, allowing you to compare the results against what you expect.
+---
 
-By estimating and previewing your audience, you can test and optimize your PQL predicates until they produce a desireable result, where they can then be used in an updated segment definition.
+## Optional Step 2: Estimate and preview audience
 
-There are two required steps to preview or get an estimate of your segment:
+As you develop your segment definition, you can use Unified Profile's estimate and preview tools to gain summary-level information quickly along the way to help ensure you are isolating the expected audience. Estimate information includes the projected resulting audience size and the confidence interval. A preview would produce a paginated list of qualifying profiles for a segment definition, allowing you to spot-check the results against what you expect.
 
-1. [Create a preview job](#create-a-preview-job)
-1. [View estimate or preview](#view-an-estimate-or-preview) using the ID of the preview job
+Using the APIs to get an estimate of the number of qualifying profiles varies only slightly from previewing a sample of the resulting audience. Working with the [Unified Profile Preview API](../../../../../../acpdr/swagger-specs/profile-preview-api.yaml), you'll supply PQL to create a preview job rather than a segment definition. In this way, you are able to test your PQL predicates until they produce the desirable results and then use that PQL to create a segment definition which is applied against your actual user base to produce a segment.
+
+To preview or get an estimate of your segment there are a couple of steps involved, as you must:
+
+* [Create a preview job](#estimate-and-preview-audience---step-1-create-a-preview-job)
+* [Get estimate or preview](#estimate-and-preview-audience---step-2-verify-with-estimate-or-preview) using the ID of the preview, the artifact of running the preview job
   
-### How estimates are generated
-
 Data samples are used to evaluate segments and estimate the number of qualifying profiles. New data is loaded into memory each morning (between 12AM-2AM PT, which is 7-9AM UTC), and all segmentation queries are estimated using that day's sample data. Consequently, any new fields added or additional data collected will be reflected in estimates the following day.
 
-The sample size depends on the overall number of entities in your profile store. These sample sizes are represented in the following table:
+The sample size depends on the overall number of entities in your profile store and breaks down into the following categories:
 
-Entities in profile store | Sample size
---- | ---
-Less than 1 million | Full data set
-1 to 20 million | 1 million
-Over 20 million | 5% of total
+* __Up to 1 million profiles__: use full data set
+* __1 to 20 million profiles__: use a sample set of 1 million profiles
+* __Over 20 million profiles__: use a 5% sample size
 
 Estimates generally run over 10-15 seconds, beginning with a rough estimate and refining as more records are read.
 
-### Create a preview job
+### Estimate and preview audience - Step 1: Create a preview job
 
-Using the [Profile Preview API](../../../../../../acpdr/swagger-specs/profile-preview-api.yaml), you can create (POST) a new preview job.
- 
-#### API format
+Run a query as a preview job using the `POST https://platform.adobe.io/data/core/ups/preview` API call. The response from this call includes a `previewId` which will be used to `GET` estimate or preview results. In the body of this `POST` will be the query information. For example, the PQL expression, predicate type, predicate XDM model, graph type, and merge strategy.
 
-```http
-POST /preview
+Because of the varying length of time required to run a query, the estimate and preview processes are asynchronous. Once the query execution has initiated, you would need to `GET` the preview or estimate and determine its state as it progresses. The `state` of the preview will be "RUNNING" until processing is complete, at which point it becomes "RESULT_READY" or "FAILED".
+
+#### Service endpoint
+
+```
+POST https://platform.adobe.io/data/core/ups/preview
 ```
 
-#### Request
+#### Request body
 
-The following request creates a new preview job. The request body contains the query information related to the segment.
+```
+{
+    "predicateExpression": "{PREDICATE_EXPRESSION}",
+    "predicateType": "{PREDICATE_TYPE}",
+    "predicateModel": "{PREDICATE_MODEL}",
+    "graphType": "{GRAPH_TYPE}",
+    "mergeStrategy": "{MERGE_STRATEGY}"
+}
+```
 
-```shell
+#### Example request
+
+```
 curl -X POST \
   https://platform.adobe.io/data/core/ups/preview \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ....' \
+  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
+  -H 'x-gw-ims-org-id: 1BD6382559DF0C130A49422D@AdobeOrg'
   -d '{
         "predicateExpression": "xEvent.metrics.commerce.abandons.value > 0",
         "predicateType": "pql/text",
@@ -153,14 +205,9 @@ curl -X POST \
     }'
 ```
 
-* `predicateExpression`: The PQL expression to query the data by.
-* `predicateModel`: The name of the XDM schema the Profile data is based on.
+#### Example response
 
-#### Response
-
-A successful response returns the details of the newly created preview job, including its ID and current processing state.
-
-```json
+```
 {
    "state": "RUNNING",
    "previewQueryId": "4a45e853-ac91-4bb7-a426-150937b6af5c",
@@ -170,42 +217,29 @@ A successful response returns the details of the newly created preview job, incl
 }
 ```
 
-* `state`: The current state of the preview job. Will be "RUNNING" until processing is complete, at which point it becomes "RESULT_READY" or "FAILED".
-* `previewId`: The ID of the preview job, to be used for lookup purposes when viewing an estimate or preview, as outlined in the following section.
+### Estimate and preview audience - Step 2: Verify with estimate or preview
 
-### View an estimate or preview
+Using the `previewId` returned from Step 1, periodically get the estimate or preview using one of the following services until the `state` in the response reaches "RESULT_READY".
 
-Estimate and preview processes are run asynchronously as different queries can take different lengths of time to complete. Once a query has been initiated, you can use API calls to retrieve (GET) the current state of the estimate or preview as it progresses.
+#### Service endpoint to get estimate information
 
-Using the [Profile Preview API](../../../../../../acpdr/swagger-specs/profile-preview-api.yaml), you can lookup a preview job's current state by its ID. If the state is "RESULT_READY", you can view the results. Depending on whether you want to view an estimate or a preview, each have their own endpoint in the API. Examples for both are provided below.
-
-**View an estimate**
-
-#### API format
-
-```http
-GET /estimate/{previewId}
+```
+GET https://platform.adobe.io/data/core/ups/estimate/{PREVIEW_ID}
 ```
 
-* `{previewId}`: The ID of the preview job you want to access.
+#### Example request
 
-#### Request
-
-The following request retrieves an estimate, using the `previewId` created in the previous step.
-
-```shell
+```
 curl -X GET \
   https://platform.adobe.io/data/core/ups/estimate/MDoyOjRhNDVlODUzLWFjOTEtNGJiNy1hNDI2LTE1MDkzN2I2YWY1Yzo0Mg \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ....' \
+  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
+  -H 'x-gw-ims-org-id: 1BD6382559DF0C130A49422D@AdobeOrg'
 ```
 
-#### Response
+#### Example response
 
-A successful response returns the details of the estimate.
-
-```json
+```
 {
     "estimatedSize": 45,
     "state": "RESULT_READY",
@@ -223,36 +257,26 @@ A successful response returns the details of the estimate.
     }
 }
 ```
-* `state`: The current state of the preview job. Will be "RUNNING" until processing is complete, at which point it becomes "RESULT_READY" or "FAILED".
-* `_links > preview`: When the preview job's current state is "RESULT_READY", this attribute provides a URL to view the estimate.
 
-**View a preview**
+#### Service endpoint to preview audience
 
-#### API format
-
-```http
-GET /preview/{previewId}
+```
+GET https://platform.adobe.io/data/core/ups/preview/{previewId}
 ```
 
-* `{previewId}`: The ID of the preview job you want to view.
+#### Example request
 
-#### Request
-
-The following request retrieves a preview, using the `previewId` created in the previous step.
-
-```shell
+```
 curl -X GET \
   https://platform.adobe.io/data/core/ups/preview/MDoyOjRhNDVlODUzLWFjOTEtNGJiNy1hNDI2LTE1MDkzN2I2YWY1Yzo0Mg \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ....' \
+  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
+  -H 'x-gw-ims-org-id: 1BD6382559DF0C130A49422D@AdobeOrg'
 ```
 
-#### Response
+#### Example response
 
-A successful response returns the details of the preview.
-
-```json
+```
 {
    "results": [{
          "XID_ADOBE-MARKETING-CLOUD-ID-1": {
@@ -280,7 +304,8 @@ A successful response returns the details of the preview.
                }
             }
          },
-         "XID_ADOBE-MARKETING-CLOUD-ID-3": {
+         ...
+         "XID_ADOBE-MARKETING-CLOUD-ID-1000": {
             "_href": "https://platform.adobe.io/data/core/ups/models/profile/XID_ADOBE-MARKETING-CLOUD-ID-1000"
          },
          "state": "RESULT_READY",
@@ -293,52 +318,58 @@ A successful response returns the details of the preview.
    ],
    "page": {
       "offset": 0,
-      "size": 3
+      "size": 5
    }
 }
 ```
 
-## Segment your user base
+---
 
-Once you have developed, tested, and saved your segment definition, you can create a segment job to build an audience using the [Profile Segment Jobs API](../../../../../../acpdr/swagger-specs/profile-segment-jobs-api.yaml).
+## Step 3: Segment your user base
 
-### Create a segment job
+Once you have satisfactorily developed and tested your segment definition and saved the definition, you are able to create a segment job which will build the audience using the [Unified Profile Segment Jobs API](../../../../../../acpdr/swagger-specs/profile-segment-jobs-api.yaml).
 
-A segment job is an asynchronous process that creates a new audience segment. It references a segment definition, as well as any merge policies controlling how Real-time Customer Profile merges overlapping attributes across your profile fragments. When a segment job successfully completes, you can gather various information about your segment, such as any errors that may have occurred and the ultimate size of your audience.
+### Segment your user base - Step 1: Create a segment job
 
-You can create a segment job by using a POST request to the Profile Segment Jobs API.
+In this step, all qualifying profiles are augmented to add the segment to the profile's list of segment memberships. A segmentation job is asynchronous, and is created referencing the segment definition, as well as merge policies controlling the manner by which Unified Profile merges overlapping attributes across your profile fragments. When a segment job finalizes successfully, you can gather various information about your segment, such as any errors that may have occurred and the ultimate size of your audience.
 
-#### API format
+#### Service endpoint
 
-```http
-POST /segment/jobs
+```
+POST https://platform.adobe.io/data/core/ups/segment/jobs
 ```
 
-#### Request
+#### Request body
 
-The following request creates a new segment job for the segment definition provided in the payload.
+```
+[
+    {
+        "segmentId" : "{SEGMENT_ID}"
+    }
+]
+```
 
-```shell
+Where the value for `segmentId` is the `id` attribute of the response from creating the segment definition, identifying the definition for which to build the audience.
+
+#### Example request
+
+```
 curl -X POST \
   https://platform.adobe.io/data/core/ups/segment/jobs \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
+  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
+  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg' \
   -d '[
         {
-            "segmentId" : "42f49f2d-edb0-474f-b29d-2799d89cd5a6"
+            "segmentId" : "{SEGMENT_ID}"
         }
     ]'
 ```
 
-* `segmentId`: The identifier of the segment definition from which to build the audience.
+#### Example response
 
-#### Response
-
-A successful response returns the details of the newly created segment job.
-
-```json
+```
 {
     "profileInstanceId": "ups",
     "computeJobId": 1,
@@ -367,7 +398,7 @@ A successful response returns the details of the newly created segment job.
         }
     ],
     "updateTime": 1533581808162,
-    "imsOrgId": "{IMS_ORG}",
+    "imsOrgId": "1BD6382559DF0C130A49422D@AdobeOrg",
     "creationTime": 1533581808162,
     "_links": {
         "cancel": {
@@ -381,130 +412,106 @@ A successful response returns the details of the newly created segment job.
     }
 }
 ```
-* `id`: The identifier of the new segment job, used for lookup purposes later in this tutorial.
-* `status`: The current status of the segment job. Will be "PROCESSING" until processing is complete, at which point it becomes "SUCCEEDED" or "FAILED".
 
-Once a segment job is created, you can use the `id` returned to lookup (GET) the job's current status.
+Segment jobs run asynchronously, and a job's `status` can be checked by retrieving a segment job by ID (returned from creating the segment job), which will return its status.
 
-#### API format
+#### Service endpoint
 
-```http
-GET /segment/jobs/{segmentJobId}
+```
+GET https://platform.adobe.io/data/core/ups/segment/jobs/{SEGMENT_JOB_ID}
 ```
 
-* `{segmentJobId}`: The identifier of the segment job you want to access.
+#### Example request
 
-#### Request
-
-```shell
+```
 curl -X GET \
-  https://platform.adobe.io/data/core/ups/segment/jobs/80388706-29fa-40d3-81cf-a297d0224ad9 \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  https://platform.adobe.io/data/core/ups/segment/jobs/3456 \
+  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ....' \
+  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
+  -H 'x-gw-ims-org-id: 1BD6382559DF0C130A49422D@AdobeOrg'
 ```
 
-#### Response
+#### Example response
 
-A successful response returns the details of the segmentation job, and will provide different information depending on the job's current status.
-
-```json
+```
 {
-    "profileInstanceId": "ups",
-    "errors": [],
-    "computeJobId": 13377,
-    "modelName": "_xdm.context.profile",
-    "id": "80388706-29fa-40d3-81cf-a297d0224ad9",
-    "status": "SUCCEEDED",
-    "segments": [
-        {
-            "segmentId": "b560a09a-de85-4a1c-8477-2f3da1d9e86b",
-            "segment": {
-                "id": "b560a09a-de85-4a1c-8477-2f3da1d9e86b",
-                "version": 1,
-                "expression": {
-                    "type": "PQL",
-                    "format": "pql/json",
-                    "value": "homeAddress.country = \"US\""
-                },
-                "mergePolicy": {
-                    "id": "0bf16e61-90e9-4204-b8fa-ad250360957b",
-                    "version": 1
-                }
-            },
-            "snapshot": {
-                "name": "",
-                "ttlInDays": 0
-            }
-        }
-    ],
-    "requestId": "prgu92v4VNvsGuuXticcsqX96UXGjXtS",
-    "computeGatewayJobId": "a7c33b77-3aeb-497f-bc88-807915c57b5f",
-    "metrics": {
-        "totalTime": {
-            "startTimeInMs": 1547063631503,
-            "endTimeInMs": 1547063731181,
-            "totalTimeInMs": 99678
+    "status": true,
+    "segmentJob": {
+        "id": 3456,
+        "type": "string",
+        "imsOrgId": "string",
+        "status": "string",
+        "progress": "string",
+        "definitionIds": "string",
+        "definitions": "string",
+        "model": "Profile",
+        "computeJobId": 0,
+        "dataStart": "string",
+        "dataEnd": "string",
+        "dataGraphType": "string",
+        "snapshot" {
+            "name" : "Profiles_Segmented"
         },
-        "profileSegmentationTime": {
-            "startTimeInMs": 1547063669001,
-            "endTimeInMs": 1547063720887,
-            "totalTimeInMs": 51886
-        }
-    },
-    "updateTime": 1547063731181,
-    "imsOrgId": "{IMS_ORG}",
-    "creationTime": 1547063631503,
-    "_links": {
-        "cancel": {
-            "href": "/segment/jobs/80388706-29fa-40d3-81cf-a297d0224ad9",
-            "method": "DELETE"
-        },
-        "checkStatus": {
-            "href": "/segment/jobs/80388706-29fa-40d3-81cf-a297d0224ad9",
-            "method": "GET"
-        }
+        "mergeStrategy": "string",
+        "creationTime": "2018-03-20T08:24:07.200Z",
+        "updateTime": "2018-03-20T08:24:07.200Z"
     }
 }
 ```
 
-Repeat the above API call to continue retrieving the segment job until the `status` reaches "SUCCEEDED", indicating that you can export the segment to a dataset.
+Repeat the call to retrieve your segment job until the `status` reaches "SUCCEEDED", indicating you can export your audience to a dataset.
 
-## Export a segment
+---
 
-After a segmentation job has successfully completed, you can export your audience to a dataset where it can be accessed and acted upon. 
+## Step 4: Export your segment
 
-The [Profile Export API](../../../../../../acpdr/swagger-specs/profile-export-api.yaml) is used to isolate an audience built by a segment job for access. Once a segment job has completed running (its `status` attribute has reached "SUCCEEDED"), the Profile Export API can be used to generate XDM Profiles for each member of the audience in your chosen dataset. 
+After a segmentation job has successfully updated qualifying profiles in your profile store, adding the segment to the profile's list of segment memberships, you can export your audience to a dataset where it can be accessed and acted upon. 
 
-The following steps are required to export your audience:
+The Profile Export API is used to isolate an audience built by a segment job for access. Once a segment job has completed running (its `status` attribute has reached "SUCCEEDED"), the Profile Export API can be used to generate XDM Profiles for each member of the audience in your chosen dataset. In summary, the following steps are required to export your audience:
 
-1. [Create a target dataset](#create-a-target-dataset) - Create the dataset to hold audience members.
-1. [Generate audience profiles in a dataset](#generate-xdm-profiles-for-audience-members) - Populate the dataset with XDM Profiles based on the results of a segment job.
-1. [Monitor export progress](#monitor-export-progress) - Check the current progress of the export process. 
-1. [Read audience data](#read-audience-data) - Retrieve the resulting XDM Profiles representing the members of your audience.
+[Identify your dataset](#export-audience---step-1-create-or-select-audience-dataset) - Specify the dataset to hold audience members, creating a new one if needed  
+[Generate audience profiles in dataset](#export-audience---step-2-generate-xdm-profiles-for-audience-members) - Export jobs populate the results of a segment job as XDM Profiles in a dataset  
+[Wait for audience profiles to complete persisting](#export-audience---step-3-wait-for-export-to-complete) - Export jobs are asynchronous. Get an export job until its status indicates completion (its `status` attribute has reached "SUCCEEDED", or "FAILED")  
+[Read audience data](#export-audience---step-4-read-profiles-from-audience-dataset) - Using the Data Access API, retrieve the resulting XDM Profiles representing the members of your audience
 
-### Create a target dataset
+The following contains examples demonstrating use of the Profile Export API. Please visit the [Swagger API Reference](../../../../../../acpdr/swagger-specs/profile-export-api.yaml) for complete coverage of the Profile Export API.
 
-An audience must be exported to a dataset that is enabled for persisting in the union view schema, but not enabled for Real-time Customer Profile itself.
+### Export audience - Step 1: Create or select audience dataset
 
-The following section demonstrates how to create such a dataset using the [Catalog API](../../../../../../acpdr/swagger-specs/catalog.yaml). If you already have a compatible dataset and know its ID, you can proceed to the next step on [generating audience profiles](#generate-xdm-profiles-for-audience-members).
+An audience must be exported to a dataset created to persist the union view schema, but one that is not enabled for Unified Profile itself. 
 
-#### API format
+#### Service endpoint
 
-```http
-POST /dataSets
 ```
-#### Request
+POST https://platform.adobe.io/data/foundation/catalog/dataSets
+```
+#### Request body
 
-The following request creates a new dataset, providing configuration parameters in the payload.
+```
+{
+	"name": "Segment Export",
+	"schemaRef": {
+		"id": "https://ns.adobe.com/xdm/context/profile__union",
+		"contentType": "application/vnd.adobe.xed+json;version=1"
+	},
+	"fileDescription": {
+		"persisted": true,
+		"containerFormat": "parquet",
+		"format": "parquet"
+	},
+	"aspect": "production"
+}
+```
 
-```shell
+#### Example request
+
+```
 curl -X POST \
   https://platform.adobe.io/data/foundation/catalog/dataSets \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'Authorization: Bearer eyJ4NXUiOiJpbXNfbmExLXN0ZzEta2V5LTEuY2VyIiwiYWxnIjoiUlMyNTYifQ...' \
+  -H 'x-api-key: 25622d14d3894ea590628717f2cb7462' \
+  -H 'x-gw-ims-org-id: 17FA2AFD56CF35747F000101@AdobeOrg' \
   -d '{
 	"name": "Segment Export",
 	"schemaRef": {
@@ -520,204 +527,164 @@ curl -X POST \
 }'
 ```
 
-* `name`: A descriptive name for the dataset.
-* `schemaRef > id`: The ID of the union view schema that the dataset will be associated with.
-* `fileDescription > persisted`: When set to true, this enables the dataset to persist in the union view schema.
+#### Example response
 
-#### Response
-
-A successful response returns an array containing the read-only, system generated ID of the newly created dataset. Each dataset ID is unique. This ID will be used for lookup purposes later in this tutorial.
-
-```json
-[
-  "@/datasets/5b020a27e7040801dedba61b"
-] 
+```
+[@/datasets/5b020a27e7040801dedba61b"] 
 ```
 
-### Generate XDM Profiles for audience members
+The response to the API request to create a dataset comes in the form of an array of string dataset IDs containing exactly one ID, "5b020a27e7040801dedba61b" in the example above.
 
-Once you have a union-persisting dataset, you can create an export job to persist the audience members to the dataset by providing the `datasetId` and the segments to export in a POST request to the [Profile Export API](../../../../../../acpdr/swagger-specs/profile-export-api.yaml).
+### Export audience - Step 2: Generate XDM Profiles for audience members
 
-#### API format
+Trigger an export job to persist the audience members to the dataset from above by providing the `datasetId` from establishing the audience dataset in Step 1, and the segment(s) to export, by segment ID. 
 
-```http
-POST /jobs
+#### Service endpoint
+
+```
+POST https://platform.adobe.io/data/core/ups/export/jobs
 ```
 
-#### Request
+#### Request body
 
-The following request creates a new export job, providing configuration parameters in the payload.
-
-```shell
-curl -X POST \
-  https://platform.adobe.io/data/core/ups/export/jobs \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -d '{
-    "fields": "identities.id,personalEmail.address",
-    "mergePolicy": {
-      "id": "e5bc94de-cd14-4cdf-a2bc-88b6e8cbfac2",
-      "version": 1
-    },
-    "filter": {
-      "segments": [{
-        "segmentId": "4edc8488-2c35-4f6d-b4c6-9075c68d2df4"
-      }],
-      "fromIngestTimestamp": "2018-10-25T13:22:04-07:00"
-    },
-    "additionalFields" : {
-      "eventList": {
-        "fields": "environment.browserDetails.name,environment.browserDetails.version",
-        "filter": {
-          "fromIngestTimestamp": "2018-10-25T13:22:04-07:00"
-        }
-      }
-    },
-    "destination": {
-      "datasetId": "5b020a27e7040801dedba61b"
-    },
-    "schema": {
-      "name": "_xdm.context.profile"
-    }
-  }'
 ```
-
-* `fields` - Limits the data populated within the members in the dataset. This parameter is also available when creating a segment, as discussed in the [Segment your user base](#segment-your-user-base) section earlier in this document. Therefore, the fields in the segment may have already been filtered. Omitting this value will result in all fields being included in the exported data.
-* `filter`: Specifies one or more of the following filters to apply to the segment before export:
-  * `segments`: Specifies the segments to export. Omitting this value will result in all data from all segments being exported. Accepts an array of segment objects, each containing a `segmentId` attribute populated with the ID of the segment to export.
-  * `fromIngestTimestamp`: Limits exported events to only include those ingested after this timestamp. This is not the event time itself but the ingestion time for the events. The timestamp must be provided in [RFC 3339](https://tools.ietf.org/html/rfc3339) format.
-* `mergePolicy`: Specifies the merge policy to govern the exported data. Include this parameter when there are multiple segments being exported. Omitting this value will cause the Export Service to use the merge policy provided by the segment.
-  * `id`: The ID of the merge policy.
-  * `version`: The specific version of the merge policy to use. Omitting this value will default to the most recent version.
-* `additionalFields > eventList`: Controls the time series fields exported for child or associated objects by providing one or more of the following settings:
-  * `fields`: Control the fields to export.
-  * `filter`: Specifies criteria that limits the results included from associated objects. Expects a minimum value required for export, typically a date.
-* `destination > datasetId`: (**Required**) Indicates the dataset which will persist the XDM Profiles meeting the conditions of the related segment definition.
-* `schema > name`: (**Required**) The name of the schema associated with the exported dataset.
-
-#### Response
-
-A successful response returns a dataset populated with profiles that qualified for the last completed run of the segment job. Any profiles that may have previously existed in the dataset but did not qualify for the segment during the last completed run of the segment job, have been removed.
-
-```json
 {
-    "profileInstanceId": "ups",
-    "jobType": "BATCH",
-    "filter": {
-      "segments": [
-        {
-          "segmentId": "39549c64-0090-4c06-8a96-c8f7b212144e"
-        }
-      ]
-    },
-    "id": 24115,
-    "schema": {
-        "name": "_xdm.context.profile"
-    },
-    "mergePolicy": {
-        "id": "0bf16e61-90e9-4204-b8fa-ad250360957b",
-        "version": 1
-    },
-    "status": "NEW",
-    "requestId": "IwkVcD4RupdSmX376OBVORvcvTdA4ypN",
-    "computeGatewayJobId": {},
-    "metrics": {
-        "totalTime": {
-            "startTimeInMs": 1559674261657
-        }
-    },
-    "destination": {
-        "datasetId": "5cf6bcf79ecc7c14530fe436",
-        "batchId": ""
-    },
-    "updateTime": 1559674261868,
-    "imsOrgId": "{IMS_ORG}",
-    "creationTime": 1559674261657
+	"fields": "identities.id,personalEmail.address",
+	"mergePolicy": {
+		"id": "e5bc94de-cd14-4cdf-a2bc-88b6e8cbfac2",
+		"version": 1
+	},
+	"filter": {
+		"segments": [{
+			"segmentId": "4edc8488-2c35-4f6d-b4c6-9075c68d2df4"
+		}],
+		"fromIngestTimestamp": "2018-10-25T13:22:04-07:00"
+	},
+	"additionalFields" : {
+		"eventList": {
+			"fields": "environment.browserDetails.name,environment.browserDetails.version",
+			"filter": {
+				"fromIngestTimestamp": "2018-10-25T13:22:04-07:00"
+			}
+		}
+	},
+	"destination": {
+		"dataSetId": "5b020a27e7040801dedba61b"
+	},
+	"schema": {
+		"name": "_xdm.context.profile"
+	}
 }
 ```
 
-### Monitor export progress
+Breaking down the attributes of this request body:
 
-As the export job processes, monitor its status by making GET requests to the Profile Export API until the job's `status` reaches "SUCCEEDED".
+* `fields` - You can choose to limit the size of each audience member by using the `fields` property to limit the data populated within the members in the dataset. This parameter was also available at segment creation time, and so the fields in the segment may have been filtered. Using this parameter, you are only able to pare down what is included in the segment fields. Omitting this value will result in all fields being included in the exported data.
+* `filter` - Use this field to specify one or more filters to apply to the segment before export.
+  * `segments` - Specify the segments to export. While this property is optional, omitting it from your request will result in all data from all segments being exported. Provide an array of segment constructs with `segmentId` populated with the ID of the segment to export.
+  * `fromIngestTimestamp` - By supplying this value, all and only the events ingested after this timestamp will be exported from the segments being exported. This is not the event time itself but the ingestion time for the events. This will be in the [RFC 3339](https://tools.ietf.org/html/rfc3339) format.
+* `mergePolicy` - Specify the merge policy to govern the exported data. Specify a merge policy when there are multiple segments being exported. If merge policy is not specified here, export will default to use the merge policy of the segment.
+  * `id` - Provide the ID of the merge policy.
+  * `version` - You may optionally specify the specific version of the merge policy to use. Omitting this value will default to the most recent version.
+* `additionalFields` - This object controls the fields exported for child or associated objects. The settings provided as `eventList` govern the fields exported for ExperienceEvents.
+  * `fields` - Control the fields to export.
+  * `filter` - You can specify criteria limiting the results included from associated objects. Supply the minimum value required for export, typically a date.
+* `destination` (__required__) - This object's `dataSetId` attribute indicates the dataset into which to persist the members meeting the conditions of the related definition ("5c81ac183f0bd914b741ae35" from the example above).
+* `schema` (__required__) - This attribute's `name` property names the schema of the exported dataset.
 
-#### API format
+The result of successfully running an export job is a dataset populated with only those individuals that qualified for the last completed run of the segment job. Any members that existed in that dataset, but did not qualify for the segment at the time of the last completed run of the segment job, would be removed from the dataset.
 
-```http
-GET /jobs/{exportJobId}
+#### Example response
+
 ```
-
-* `{exportJobId}`: The ID of the export job you want to access.
-
-#### Request
-
-```shell
-curl -X POST \
-  https://platform.adobe.io/data/core/ups/export/jobs/24115 \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
-```
-
-#### Response
-
-```json
 {
-  "profileInstanceId": "ups",
+  "id": 100,
   "jobType": "BATCH",
-  "filter": {
-    "segments": [
-      {
-        "segmentId": "39549c64-0090-4c06-8a96-c8f7b212144e"
-      }
-    ]
+  "destination": {
+    "datasetId": "5b020a27e7040801dedba61b",
+    "batchId": "da5cfb4de32c4b93a09f7e37fa53ad52"
   },
-  "id": 24115,
+  "fields": "identities.id,personalEmail.address",
   "schema": {
     "name": "_xdm.context.profile"
   },
-  "mergePolicy": {
-    "id": "0bf16e61-90e9-4204-b8fa-ad250360957b",
-    "version": 1
+  "imsOrgId": "1BD6382559DF0C130A49422D@AdobeOrg",
+  "status": "FAILED",
+  "filter": {
+    "segments": [
+      {
+        "segmentId": "52c26d0d-45f2-47a2-ab30-ed06abc981ff",
+        "snapshotName": "peopleInCA"
+      }
+    ],
+    "fromIngestTimestamp": "2018-01-01T00:00:00Z",
+    "fromTimestamp": "2018-01-01T00:00:00Z"
   },
-  "status": "SUCCEEDED",
-  "requestId": "YwMt1H8QbVlGT2pzyxgwFHTwzpMbHrTq",
-  "computeGatewayJobId": {
-    "exportJob": "305a2e5c-2cf3-4746-9b3d-3c5af0437754",
-    "pushJob": "963f275e-91a3-4fa1-8417-d2ca00b16a8a"
-  },
-  "metrics": {
-    "totalTime": {
-      "startTimeInMs": 1547053539564,
-      "endTimeInMs": 1547054743929,
-      "totalTimeInMs": 1204365
-    },
-    "profileExportTime": {
-      "startTimeInMs": 1547053667591,
-      "endTimeInMs": 1547053778195,
-      "totalTimeInMs": 110604
-    },
-    "aCPDatasetWriteTime": {
-      "startTimeInMs": 1547054660416,
-      "endTimeInMs": 1547054698918,
-      "totalTimeInMs": 38502
+  "additionalFields": {
+    "eventList": {
+      "fields": "environment.browserDetails.name,environment.browserDetails.version",
+      "filter": {
+        "fromIngestTimestamp": "2018-01-01T00:00:00Z"
+      }
     }
   },
-  "destination": {
-    "datasetId": "5cf6bcf79ecc7c14530fe436",
-    "batchId": "c2591d40a1e04bb78228974f6eb4d5bc"
+  "mergePolicy": {
+    "id": "timestampOrdered-none-mp",
+    "version": 1
   },
-  "updateTime": 1547054743929,
-  "imsOrgId": "{IMS_ORG}",
-  "creationTime": 1547053539564
+  "profileInstanceId": "ups",
+  "errors": [
+    {
+      "code": "0100000003",
+      "msg": "Error in Export Job",
+      "callStack": "com.adobe.aep.unifiedprofile.common.logging.Logger"
+    }
+  ],
+  "metrics": {
+    "totalTime": {
+      "startTimeInMs": 123456789000,
+      "endTimeInMs": 123456799000,
+      "totalTimeInMs": 10000
+    },
+    "profileExportTime": {
+      "startTimeInMs": 123456789000,
+      "endTimeInMs": 123456799000,
+      "totalTimeInMs": 10000
+    },
+    "aCPDatasetWriteTime": {
+      "startTimeInMs": 123456789000,
+      "endTimeInMs": 123456799000,
+      "totalTimeInMs": 10000
+    }
+  },
+  "computeGatewayJobId": {
+    "exportJob": "f3058161-7349-4ca9-807d-212cee2c2e94",
+    "pushJob": "feaeca05-d137-4605-aa4e-21d19d801fc6"
+  },
+  "creationTime": 1538615973895,
+  "updateTime": 1538616233239,
+  "requestId": "d995479c-8a08-4240-903b-af469c67be1f"
 }
 ```
 
-* `batchId`: The identifier of the batch created from a successful export, to be used for lookup purposes when reading audience data as outlined in the next section.
+### Export audience - Step 3: Wait for export to complete
 
-### Read audience data
+Iteratively retrieve the export job by ID until the `status` reaches "SUCCEEDED".
 
-Once the export successfully completes, you can use the [Data Access API](../../../../../../acpdr/swagger-specs/data-access-api.yaml) to access the data using the `batchId` associated with the export. Note that, depending on the size of the segment, the data may be in chunks and the batch may consist of several files.
+### Export audience - Step 4: Read profiles from audience dataset
 
-For more information on using the Data Access API to access and download batch files, see the [Data Access tutorial](../../tutorials/data_access_tutorial/data_access_tutorial.md).
+Once export is complete, use the Data Access API to access the data using the `batchId` returned from the export service call, "da5cfb4de32c4b93a09f7e37fa53ad52" in the example above. Note that a segment may be chunked, and a batch could consist of several files. You must first list the files belonging to the batch, and download each Parquet file by file ID. 
+
+For more information on using the Data Access API, [see the tutorial](../../tutorials/data_access_tutorial/data_access_tutorial.md).
+
+---
+
+## Now you know
+
+After following this tutorial, which focuses on creating audience segments, the following should be demystified:
+
+* The data and condition types you can use to build the rules for your segments
+* Getting from your entire profile store to marketable subsets of your user-base
+* Exporting your segment to a dataset to be accessed by Platform solutions
+
+For more in-depth information on Unified Profile, see the [Unified Profile Overview](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
