@@ -86,4 +86,3 @@ Request payload:
 * The `include` field is optional in the request format. The central service sends the GDPR request to all registered products if no inclusion is specified. If an inclusion is specified, specify `AdobeCloudPlatform` and `profileService` in the list of include parameters for the GDPR request to be processed in Data Lake and Unified Profile respectively. 
 
 Refer to the [GDPR Central Service API](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) or [GDPR UI](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/using-gdpr-ui.md) documentation for information about how to track the status (submitted, processing, completed, error, expired) of GDPR requests.
-bmitted, processing, completed, error, expired) of GDPR requests.
