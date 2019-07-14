@@ -3,107 +3,87 @@
 - [Objective](#objective)
 - [Prerequisites](#prerequisites)
 - [UI workflow](#ui-workflow)
-    - [Create a Recipe](#create-a-recipe)
-        - [Build Docker image](#build-docker-image)
-        - [Push Docker image](#push-docker-image)
+    - [Configure a recipe](#configure-a-recipe)
+    - [Import binary based recipe - PySpark](#import-binary-based-recipe---pyspark)
+    - [Import binary based recipe - Scala Spark](#import-binary-based-recipe---scala-spark)
+    - [Import Docker based recipe - Python](#import-docker-based-recipe---python)
+    - [Import Docker based recipe - R](#import-docker-based-recipe---r)
 - [Next steps](#next-steps)
 
----
-
 ## Objective
-In this step by step tutorial, we will go over how to import a Recipe into the Adobe Experience Platform Data Science Workspace.
+
+This tutorial provides insight on how to configure and import a packaged recipe using the provided Retail Sales example. By the end of this tutorial, you will be ready to create, train, and evaluate a Model in Adobe Experience Platform Data Science Workspace.
 
 ## Prerequisites
 
-* A registered Adobe ID account
-    * The Adobe ID account must have been added to an Organization with access to "Adobe Experience Platform"
+This tutorial requires a packaged recipe in the form of either a Docker image URL or a binary file. See the tutorial on how to [Package source files into a Recipe](../package_source_files_into_recipe/package_source_files_into_recipe.md) for more information.
 
 ## UI workflow
 
-In this section, you will go over creating a Recipe where you can import your Docker image. We went through the steps to create a Docker image in the [Package Recipe to Data Science Workspace tutorial](../package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md).
+Importing a packaged recipe into Data Science Workspace requires specific recipe configurations, compiled into a single JavaScript Object Notation (JSON) file, this compilation of recipe configurations is referred to as the **configuration file**. A packaged recipe with a particular set of configurations is referred to as a **recipe instance**. One recipe can be used to create many recipe instances in Data Science Workspace.
 
-First, navigate to [Adobe Experience Platform](https://platform.adobe.com/) and go to the ML Models tab in the left navigation bar. You will be taken to the **Browse** tab where you will see three tabs:
-* Browse
-* Recipes
-* Notebooks
+The workflow for importing a package recipe consists of the following steps:
+- [Configure a recipe](#configure-a-recipe)
+- [Import binary based recipe - PySpark](#import-binary-based-recipe---pyspark)
+- [Import binary based recipe - Scala Spark](#import-binary-based-recipe---scala-spark)
+- [Import Docker based recipe - Python](#import-docker-based-recipe---python)
+- [Import Docker based recipe - R](#import-docker-based-recipe---r)
 
-The **Browse** tab shows a list of Models you or others in your IMS Organization have created or updated recently. A Model is a snapshot of a Recipe that will be tailored towards solving a specific business problem. One Recipe can create many Models.
+### Configure a recipe
 
-Similar to the **Browse** tab, the **Recipe** tab shows a list of recently updated Recipes. A Recipe refers to a proprietary algorithm, or an ensemble of algorithms, to help solve specific business problems.
+Every recipe instance in Data Science Workspace is accompanied with a set of configurations that tailor the recipe instance to suit a particular use case. Configuration files define the default training and scoring behaviors of a Model created using this recipe instance.
+> Note: Configuration files are recipe and case specific.
 
-In the UI, a Training Run is run within the context of a Model. Multiple Training Runs can be created for each Model.
+Below is a sample configuration file showing default training and scoring behaviors for the Retail Sales recipe. 
 
-### Create a Recipe
-
-You first want to create a new Recipe. From the **Recipes** tab, click on the **Create Recipe** button on the top right.
-
-![](./images/create_recipe.png)
-
-From here, a "New Recipe" dialog will popup on the screen. The `*` indicate which fields require to be filled. 
-
-![](./images/new_recipe_modal.png)
-
-* **Name** - This is the name of your Recipe
-* **Schema** - What XDM Schema you want to model your data with
-* **Recipe Type** - What language or tool you're going to use
-* **Recipe Source** - Where your image is uploaded to. Currently only supports Docker images or Binary artifacts, based on the selected Recipe type
-
-> **Note:** If Spark is selected for Recipe Type and Binary is set for Recipe Source, the asset that is expected will be a `.jar` file.
-
-![](./images/new_recipe_modal_binary.png)
-
-* **Docker Host** - Link to the Docker host to upload your Docker image to
-* **Username/Password** - Credentials to the Docker host
-* **Configuration File** - This file expects a JSON object containing parameters for the training and scoring of the Instance. You can leave this blank when creating the Recipe as the workflow will prompt you to enter the configuration when creating a Model or a Training Run. Here is an example of a [configuration file for the Retail Sales sample](https://github.com/adobe/experience-platform-dsw-reference/blob/master/recipes/python/retail/retail.config.json) application:
-
-```JSON
+```json
 [
-  {
-    "name": "train",
-    "parameters": [
-      {
-        "key": "learning_rate",
-        "value": "0.1"
-      },
-      {
-        "key": "n_estimators",
-        "value": "100"
-      },
-      {
-        "key": "max_depth",
-        "value": "3"
-      },
-      {
-        "key": "ACP_DSW_INPUT_FEATURES",
-        "value": "date,store,storeType,storeSize,temperature,regionalFuelPrice,markdown,cpi,unemployment,isHoliday"
-      },
-      {
-        "key": "ACP_DSW_TARGET_FEATURES",
-        "value": "weeklySales"
-      },
-      {
-        "key": "ACP_DSW_FEATURE_UPDATE_SUPPORT",
-        "value": false
-      },
-      {
-        "key": "tenantId",
-        "value": "_{TENANT_ID}"
-     },
-     {
-       "key": "ACP_DSW_TRAINING_XDM_SCHEMA",
-       "value": "<leave as is if going through UI workflow. Replace with Schema ID if creating recipe via API>"
-     },
-     {
-       "key": "evaluation.labelColumn",
-       "value": "weeklySalesAhead"
-     },
-     {
-       "key": "evaluation.metrics",
-       "value": "MAPE,MAE,RMSE,MASE"
-     }
-    ]
-  },
-  {
+    {
+        "name": "train",
+        "parameters": [
+            {
+                "key": "learning_rate",
+                "value": "0.1"  
+            },
+            {
+                "key": "n_estimators",
+                "value": "100"
+            },
+            {
+                "key": "max_depth",
+                "value": "3"
+            },
+            {
+                "key": "ACP_DSW_INPUT_FEATURES",
+                "value": "date,store,storeType,storeSize,temperature,regionalFuelPrice,markdown,cpi,unemployment,isHoliday"
+            },
+            {
+                "key": "ACP_DSW_TARGET_FEATURES",
+                "value": "weeklySales"
+            },
+            {
+                "key": "ACP_DSW_FEATURE_UPDATE_SUPPORT",
+                "value": false
+            },
+            {
+                "key": "tenantId",
+                "value": "_{TENANT_ID}"
+            },
+            {
+                "key": "ACP_DSW_TRAINING_XDM_SCHEMA",
+                "value": "{SEE BELOW FOR DETAILS}"
+            },
+            {
+                "key": "evaluation.labelColumn",
+                "value": "weeklySalesAhead"
+            },
+            {
+                "key": "evaluation.metrics",
+                "value": "MAPE,MAE,RMSE,MASE"
+            }
+        ]
+    },
+    {
         "name": "score",
         "parameters": [
             {
@@ -111,42 +91,100 @@ From here, a "New Recipe" dialog will popup on the screen. The `*` indicate whic
                 "value": "_{TENANT_ID}"
             },
             {
-              "key":"ACP_DSW_SCORING_RESULTS_XDM_SCHEMA",
-              "value":"<leave as is if going through UI workflow. Replace with Schema ID if creating recipe via API>"
+                "key":"ACP_DSW_SCORING_RESULTS_XDM_SCHEMA",
+                "value":"{SEE BELOW FOR DETAILS}"
             }
         ]
-  }
+    }
 ]
 ```
 
-You will need to modify the configuration file yourself. Specifically, the value of the `{TENANT_ID}`: This ID ensures resources you create are namespaced properly and contained within your IMS Organization. To find your ID, you can [follow the steps here](../../../technical_overview/schema_registry/schema_registry_developer_guide.md#know-your-tenant_id)
+| Parameter key | Type | Description |
+| ----- | ----- | ----- |
+| `learning_rate` | Number | Scalar for gradient multiplication. |
+| `n_estimators` | Number | Number of trees in the forest for Random Forest Classifier. |
+| `max_depth` | Number | Maximum depth of a tree in Random Forest Classifier. |
+| `ACP_DSW_INPUT_FEATURES` | String | List of comma separated input schema attributes. |
+| `ACP_DSW_TARGET_FEATURES` | String | List of comma separated output schema attributes. |
+| `ACP_DSW_FEATURE_UPDATE_SUPPORT` | Boolean | Determines whether input and output features are modifiable |
+| `tenantId` | String | This ID ensures resources you create are namespaced properly and contained within your IMS Organization. [Follow the steps here](../../../../technical_overview/schema_registry/schema_registry_developer_guide.md#know-your-tenant_id) to find your tenant ID. |
+| `ACP_DSW_TRAINING_XDM_SCHEMA` | String | The input schema used for training a Model. Leave this empty when importing in UI, replace with training SchemaID when importing using API. |
+| `evaluation.labelColumn` | String | Column label for evaluation visualizations. |
+| `evaluation.metrics` | String | Comma separated list of evaluation metrics to be used for evaluating a Model. |
+| `ACP_DSW_SCORING_RESULTS_XDM_SCHEMA` | String | The output schema used for scoring a Model. Leave this empty when importing in UI, replace with scoring SchemaID when importing using API. |
 
-For this tutorial, you will be creating a Python Recipe using the Docker image that you created in the [Package Recipe tutorial](../package_recipe_to_import_into_dsw/package_recipe_to_import_into_dsw.md). We are provided with the Docker host, username, and password values which you will be able to use to build our Docker image in the next section.
+For the purpose of this tutorial, you can leave the default configuration files for Retail Sales recipe in the Data Science Workspace Reference the way they are.
 
-#### Build Docker image
-With the Dockerfile, you can build the Docker image. In the directory with your Dockerfile type the following commands:
+### Import binary based recipe - PySpark
 
-```BASH
-#  These values are found in the New Recipe window
-docker login -u <username> -p <password> <Docker host>
- 
-#  Build the Docker image: e.g., docker build -t <docker-path>/sample-python:1.0 .
-docker build -t <Docker host>/<intelligent-service>:<version_tag> .
-```
+In the [Package source files into a Recipe](../package_source_files_into_recipe/package_source_files_into_recipe.md) tutorial, an **EGG** binary file was built using the Retail Sales PySpark source files. 
 
-> **Note:**  Don't forget the `.` after the `docker build` command!
+1. In [Adobe Experience Platform](https://platform.adobe.com/), find the left navigation panel and click **Workflows**. In the Workflows interface, **Launch** a new **Import Recipe from Source File** process.
+![](./images/ui/workflow_ss.png)
+2. Input an appropriate name for the Retail Sales recipe. For example, "Retail Sales recipe PySpark". Optionally include a recipe description and a documentation URL. Click **Next** when you're done.
+![](./images/ui/recipe_info.png)
+3. Import the PySpark Retail Sales recipe that was created in the [Package source files into a Recipe](../package_source_files_into_recipe/package_source_files_into_recipe.md) tutorial by dragging and dropping, or use the file system **Browser**. The packaged recipe should be is located in `experience-platform-dsw-reference/recipes/pyspark/dist`.
+Similarly, import the provided configuration file by dragging and dropping, or use the file system **Browser**. The provided configuration file can be found at `experience-platform-dsw-reference/recipes/pyspark/pipeline.json`. Click **Next** when both files have been supplied.
+![](./images/ui/recipe_source.png)
+4. You may encounter errors at this point. This is normal behavior and is to be expected. Select the Retail Sales input and output schemas under the section **Manage Schemas**, they were created using the provided bootstrap script in the [Access and explore your data](../../prepare_your_data/access_and_explore_your_data_tutorial/access_and_explore_your_data_tutorial.md) tutorial. 
+![](./images/ui/recipe_schema.png)
+Under the **Feature Manage** section, click on your tenant identification in the schema viewer to expand the Retail Sales input schema. Select the input and output features by highlighting the desired feature, and selecting either **Input Feature** or **Target Feature** in the right **Field Properties** window. For the purpose of this tutorial, set **weeklySales** as the  **Target Feature** and everything else as **Input Feature**. Click **Next** to review your new configured recipe. 
+5. Review the recipe, add, modify, or remove configurations as necessary. Click **Finish** to create the recipe.
+![](./images/ui/recipe_review.png)
 
-#### Push Docker image
+Congratulations, you've created the Retail Sales recipe! Move on to the [next steps](#next-steps) to find out how to create a Model in Data Science Workspace using the newly created Retail Sales recipe.
 
-```BASH
-#  The argument for the push command is the same as the build command without the period at the end
-docker push <Docker host>/<intelligent-service>:<version_tag>
-```
+
+### Import binary based recipe - Scala Spark
+
+In the [Package source files into a Recipe](../package_source_files_into_recipe/package_source_files_into_recipe.md) tutorial, a **JAR** binary file was built using the Retail Sales Scala Spark source files. 
+
+1. In [Adobe Experience Platform](https://platform.adobe.com/), find the left navigation panel and click **Workflows**. In the Workflows interface, **Launch** a new **Import Recipe from Source File** process.
+![](./images/ui/workflow_ss.png)
+2. Input an appropriate name for the Retail Sales recipe. For example, "Retail Sales recipe Scala Spark". Optionally include a recipe description and a documentation URL. Click **Next** when you're done.
+![](./images/ui/recipe_info_scala.png)
+3. Import the Scala Spark Retail Sales recipe that was created in the [Package source files into a Recipe](../package_source_files_into_recipe/package_source_files_into_recipe.md) tutorial by dragging and dropping, or use the file system **Browser**. The packaged recipe **with dependencies** is located in `experience-platform-dsw-reference/recipes/scala/target`. Similarly, import the provided configuration file by dragging and dropping, or use the file system **Browser**. The provided configuration file can be found at `experience-platform-dsw-reference/recipes/scala/src/main/resources/pipelineservice.json`. Click **Next** when both files have been supplied.
+![](./images/ui/recipe_source_scala.png)
+4. You may encounter errors at this point. This is normal behavior and is to be expected. Select the Retail Sales input and output schemas under the section **Manage Schemas**, they were created using the provided bootstrap script in the [Access and explore your data](../../prepare_your_data/access_and_explore_your_data_tutorial/access_and_explore_your_data_tutorial.md) tutorial. 
+![](./images/ui/recipe_schema.png)
+Under the **Feature Manage** section, click on your tenant identification in the schema viewer to expand the Retail Sales input schema. Select the input and output features by highlighting the desired feature, and selecting either **Input Feature** or **Target Feature** in the right **Field Properties** window. For the purpose of this tutorial, set **weeklySales** as the  **Target Feature** and everything else as **Input Feature**. Click **Next** to review your new configured recipe.
+5. Review the recipe, add, modify, or remove configurations as necessary. Click **Finish** to create the recipe.
+![](./images/ui/recipe_review.png)
+
+Congratulations, you've created the Retail Sales recipe! Move on to the [next steps](#next-steps) to find out how to create a Model in Data Science Workspace using the newly created Retail Sales recipe.
+
+### Import Docker based recipe - Python
+
+In the [Package source files into a Recipe](../package_source_files_into_recipe/package_source_files_into_recipe.md) tutorial, a Docker URL was provided at the end of building the Retail Sales recipe using Python source files. 
+
+1. Paste the Docker URL corresponding to the packaged recipe built using Python source files in the **Source URL** field. Next, import the provided configuration file by dragging and dropping, or use the file system **Browser**. The provided configuration file can be found at `experience-platform-dsw-reference/recipes/python/retail/retail.config.json`. Click **Next** when both items have been supplied.
+![](./images/ui/recipe_source_python.png)
+2. Select the Retail Sales input and output schemas under the section **Manage Schemas**, they were created using the provided bootstrap script in the [Access and explore your data](../../prepare_your_data/access_and_explore_your_data_tutorial/access_and_explore_your_data_tutorial.md) tutorial. 
+![](./images/ui/recipe_schema.png)
+Under the **Feature Manage** section, click on your tenant identification in the schema viewer to expand the Retail Sales input schema. Select the input and output features by highlighting the desired feature, and selecting either **Input Feature** or **Target Feature** in the right **Field Properties** window. For the purpose of this tutorial, set **weeklySales** as the  **Target Feature** and everything else as **Input Feature**. Click **Next** to review your new configured recipe.
+3. Review the recipe, add, modify, or remove configurations as necessary. Click **Finish** to create the recipe.
+![](./images/ui/recipe_review.png)
+
+Congratulations, you've created the Retail Sales recipe! Move on to the [next steps](#next-steps) to find out how to create a Model in Data Science Workspace using the newly created Retail Sales recipe.
+
+### Import Docker based recipe - R
+
+In the [Package source files into a Recipe](../package_source_files_into_recipe/package_source_files_into_recipe.md) tutorial, a Docker URL was provided at the end of building the Retail Sales recipe using R source files. 
+
+1. Paste the Docker URL corresponding to the packaged recipe built using R source files in the **Source URL** field. Next, import the provided configuration file by dragging and dropping, or use the file system **Browser**. The provided configuration file can be found at `experience-platform-dsw-reference/recipes/R/Retail\ -\ GradientBoosting/retail.config.json`. Click **Next** when both items have been supplied.
+![](./images/ui/recipe_source_R.png)
+2. Select the Retail Sales input and output schemas under the section **Manage Schemas**, they were created using the provided bootstrap script in the [Access and explore your data](../../prepare_your_data/access_and_explore_your_data_tutorial/access_and_explore_your_data_tutorial.md) tutorial. 
+![](./images/ui/recipe_schema.png)
+Under the **Feature Manage** section, click on your tenant identification in the schema viewer to expand the Retail Sales input schema. Select the input and output features by highlighting the desired feature, and selecting either **Input Feature** or **Target Feature** in the right **Field Properties** window. For the purpose of this tutorial, set **weeklySales** as the  **Target Feature** and everything else as **Input Feature**. Click **Next** to review your new configured recipe.
+3. Review the recipe, add, modify, or remove configurations as necessary. Click **Finish** to create the recipe.
+![](./images/ui/recipe_review.png)
+
+Congratulations, you've created the Retail Sales recipe! Move on to the [next steps](#next-steps) to find out how to create a Model in Data Science Workspace using the newly created Retail Sales recipe.
 
 ---
 
-Now insert the URL you have just built and pushed to the Docker host into the Source File field. After pressing "Save", you are taken to the new Recipe's overview page. From here you are able to view information about the Recipe you just created and are able to create Models.
-
 ## Next steps
 
-This tutorial went over how to consume the APIs to create a Recipe, an Experiment, and trained Models. In the [next exercise](../how_to_score_with_recipe/how_to_score_with_recipe.md), you will be making predictions by scoring a new dataset using the top performing trained model.
+This tutorial provided insight on configuring and importing a recipe into Data Science Workspace. You can now create, train, and evaluate a Model using the newly created recipe.
+* [Train and evaluate a Model in the UI](../../train_evaluate_score_a_model/train_and_evaluate_a_model_tutorial/train_and_evaluate_a_model_ui.md)
+* [Train and evaluate a Model using the API](../../train_evaluate_score_a_model/train_and_evaluate_a_model_tutorial/train_and_evaluate_a_model_using_the_api.md)
