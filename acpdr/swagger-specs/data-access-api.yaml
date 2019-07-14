@@ -1,29 +1,30 @@
 swagger: "2.0"
 info:
   version: "1.0.0"
-  title: "Data Access API"
+  title: "Data Access Service API"
   description: >-
 
-    Data Access provides users with the capability for data access and egress on Adobe Experience Platform.
+    Data Access Service facilitates data access and egress on Adobe Experience Platform.
 
     This includes, but not limited to, the following operations:
-      * Access and download Dataset files under a batch
-      * Retrieve HEADER information regarding files
-      * Parallel / Resumable downloads using HTTP Range headers
-      * Pagination Support for Directory listings
+      * Access and download dataset files under a batch
+      * Retrieve header information regarding files
+      * Parallel / resumable downloads using HTTP range headers
+      * Pagination support for directory listings
       * List dataset files under a succeeded/failed batch
       * Preview CSV and Parquet files
 
 
     Related documentation:
-      * [Technical overview of the Data Access API](https://www.adobe.io/apis/experienceplatform/home/services/allservices.html#!api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md)
-      * [Tutorial: How to Query Data via Data Access API](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md)
+      * [Data Access technical overview](https://www.adobe.io/apis/cloudplatform/dataservices/services/allservices.html#!api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md)
+      * [Query dataset data using the Data Access API](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md)
 
 
     Notes:
-      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
       * Base path for this API: /data/foundation/export
-      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+      * Example of a complete path: https://<span>platform.adobe.io/data/foundation/export/batches/{batchId}/files
+      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
 
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 
@@ -31,35 +32,33 @@ host: "platform.adobe.io"
 basePath: "/data/foundation/export"
 
 tags:
-- name: "dataAccess"
-  description: "APIs for data access and egress on Adobe Experience Platform"
+- name: "Data Access"
+  description: "Configure data access and egress for Experience Platform."
+- name: "Files"
+  description: "Retrieve headers containing metadata for a file specified by ID."
+- name: "Preview"
+  description: "Retrieve the first 100 rows of CSV or Parquet files."
+- name: "Health Detailed"
+  description: "Retrieve health status for all dependent services."
 
 paths:
-  /batches/{batchId}/files:
-    get:
-      security:
-      - Bearer: []
-      operationId: "get-dataset-files-by-batchId"
-      tags:
-      - dataAccess
-      summary: "Get dataset files under a batch."
-      description: "List all dataset files under a batch."
-      parameters:
-      - name: "x-gw-ims-org-id"
-        type: "string"
-        in: "header"
-        required: true
-        description: "Organization ID"
-      - name: "x-api-key"
-        type: "string"
-        in: "header"
-        required: true
-        description: "API Access key"
+  '/batches/{batchId}/files':
+    parameters:
       - name: "batchId"
         in: "path"
         required: true
         description: "Batch ID"
         type: "string"
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+    get:
+      operationId: "get-dataset-files-by-batchId"
+      tags:
+      - Data Access
+      summary: "Get dataset files under a batch."
+      description: "List all dataset files under a batch."
+      parameters:
       - name: "start"
         in: "query"
         required: false
@@ -81,32 +80,23 @@ paths:
           description: "Unauthorized"
         500:
           description: "Internal Server Error"
-
   /batches/{batchId}/failed:
-    get:
-      security:
-      - Bearer: []
-      operationId: "get-failed-batch-by-batchId"
-      tags:
-      - dataAccess
-      summary: "Get dataset files under a failed batch"
-      description: "List all files under failed batch"
-      parameters:
-      - name: "x-gw-ims-org-id"
-        type: "string"
-        in: "header"
-        required: true
-        description: "Organization ID"
-      - name: "x-api-key"
-        type: "string"
-        in: "header"
-        required: true
-        description: "API Access key"
+    parameters:
       - name: "batchId"
         in: "path"
         required: true
         description: "Batch ID"
         type: "string"
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+    get:
+      operationId: "get-failed-batch-by-batchId"
+      tags:
+      - Data Access
+      summary: "Get dataset files under a failed batch."
+      description: "List all files under failed batch"
+      parameters:
       - name: "start"
         in: "query"
         required: false
@@ -133,32 +123,23 @@ paths:
           description: "Unauthorized"
         500:
           description: "Internal Server Error"
-
   /files/{dataSetFileId}:
-    head:
-      security:
-      - Bearer: []
-      operationId: "get-dataset-file-operation"
-      tags:
-      - dataAccess
-      summary: "Get headers regarding a file"
-      description: "Retrieves headers in response with a file's metadata. The response header will indicate information regarding the specified file."
-      parameters:
-      - name: "x-gw-ims-org-id"
-        type: "string"
-        in: "header"
-        required: true
-        description: "Organization ID"
-      - name: "x-api-key"
-        type: "string"
-        in: "header"
-        required: true
-        description: "API Access key"
+    parameters:
       - name: "dataSetFileId"
         in: "path"
         required: true
         description: "File Identifier"
         type: "string"
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+    head:
+      operationId: "get-dataset-file-operation"
+      tags:
+      - Files
+      summary: "Get headers regarding a file."
+      description: "Retrieves headers in response with a file's metadata. The response header will indicate information regarding the specified file."
+      parameters:
       - name: "path"
         type: "string"
         description: "Full file name of file under partition identified by File Identifier. E.g, profiles.csv"
@@ -184,30 +165,13 @@ paths:
         500:
           description: "Internal Server Error"
     get:
-      security:
-      - Bearer: []
       operationId: "get-dataset-file-data"
       tags:
-      - dataAccess
-      summary: "Access / Download a file"
+      - Files
+      summary: "Access / download a file."
       description: |
         Returns either a complete file, or a directory of chunked data that make up the file. The response contains a data array that may contain a single entry, or a list of files belonging to that directory.
       parameters:
-      - name: "x-gw-ims-org-id"
-        type: "string"
-        in: "header"
-        required: true
-        description: "Organization ID"
-      - name: "x-api-key"
-        type: "string"
-        in: "header"
-        required: true
-        description: "API Access key"
-      - name: "dataSetFileId"
-        in: "path"
-        required: true
-        description: "File Identifier"
-        type: "string"
       - name: "Range"
         in: "header"
         type: "string"
@@ -253,30 +217,21 @@ paths:
         500:
           description: "Internal Server Error"
   /datasets/{id}/preview:
-    get:
-      security:
-      - Bearer: []
-      operationId: "get-preview-by-dataSetId"
-      tags:
-      - dataAccess
-      summary: "Preview files"
-      description: "Preview the first 100 rows of CSV or Parquet files"
-      parameters:
-      - name: "x-gw-ims-org-id"
-        type: "string"
-        in: "header"
-        required: true
-        description: "Organization ID"
-      - name: "x-api-key"
-        type: "string"
-        in: "header"
-        required: true
-        description: "API Access key"
+    parameters:
       - name: "id"
         in: "path"
         required: true
         description: "DataSet ID"
         type: "string"
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+    get:
+      operationId: "get-preview-by-dataSetId"
+      tags:
+      - Preview
+      summary: "Preview files."
+      description: "Preview the first 100 rows of CSV or Parquet files"
       produces:
       - application/json
       responses:
@@ -292,23 +247,16 @@ paths:
           description: "Internal Server Error"
 
   /health-detailed:
+    parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       operationId: "get-health-detailed"
       tags:
-      - dataAccess
-      summary: "Perform health check on dependent services"
+      - Health Detailed
+      summary: "Perform health check on dependent services."
       description: "Returns health status for all dependent services"
-      parameters:
-      - name: "x-gw-ims-org-id"
-        type: "string"
-        in: "header"
-        required: true
-        description: "Organization ID"
-      - name: "x-api-key"
-        type: "string"
-        in: "header"
-        required: true
-        description: "API Access key"
       responses:
         200:
           description: "OK"
@@ -316,6 +264,25 @@ paths:
             $ref: "#/definitions/health-detailed"
         500:
           description: "Internal Server Error"
+parameters:
+  authorization:
+    name: Authorization
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". For more information on how to obtain this value, see the [Authentication Tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
+  x-gw-ims-org-id:
+    name: x-gw-ims-org-id
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, see the [Authentication Tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
+  x-api-key:
+    name: x-api-key
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, see the [Authentication Tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
 
 definitions:
   preview:
