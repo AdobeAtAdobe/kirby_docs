@@ -64,7 +64,7 @@ An example of a successful response can be seen below:
     "createdAt": "2018-07-10T22:07:56Z",
     "modifiedAt": "2018-07-10T22:07:56Z",
     "modifiedBy": "{API_KEY}",
-    "dataInletUrl": "https://dcs.adobedc.net/collection/{DATA_INLET_ID}"
+    "dataInletUrl": "https://dcs.data.adobe.net/collection/{DATA_INLET_ID}"
 }
 ```
 
@@ -125,6 +125,19 @@ An example of a published message:
             }
         },
         "xdmEntity": {
+            "identityMap": {
+                "ecid": [
+                    {
+                        "id": "10000000000000000000000000000000000001"
+                    }
+                ],
+                "email": [
+                    {
+                        "id": "janedoe@example.com",
+                        "primary": true
+                    }
+                ]
+            },
             "person": {
                 "name": {
                     "firstName": "Jane",
