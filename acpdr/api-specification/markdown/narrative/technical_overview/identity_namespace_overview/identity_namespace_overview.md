@@ -1,6 +1,6 @@
 # Identity namespace overview
 
-Identity namespaces are a component of [Identity Service](../identity_services_architectural_overview/identity_services_architectural_overview.md) and serve as indicators of the context to which an identity relates, such as to contextualize a value of "someone<i></i>@somewhere.com" as an email address, or "443522" as a numeric ID used by a particular CRM. 
+Identity namespaces are a component of [Identity Service](../identity_services_architectural_overview/identity_services_architectural_overview.md) and serve as indicators of the context to which the identity relates, such as to contextualize a value of "someone<i></i>@somewhere.com" as an email address, or "443522" as a numeric ID used by a particular CRM. 
 
 This document discusses identity namespaces in depth, and is a good starting point to help orient you if you have questions like:
 
@@ -55,8 +55,6 @@ Identity namespaces are also used to comply with General Data Protection Regulat
 ## Managing namespaces for your organization
 
 Adobe provides several pre-defined standard identity namespaces including a namespace for each Adobe solution, as well as for many industry standard solutions IDs such as the Windows AID (WAID) and Google Ad ID (GAID). You may also create new namespaces to represent additional systems and identity types. The namespaces you create are private to your organization.
-
-> **Note:** Namespaces are a qualifier for identities. As such, once a namespace has been created, it cannot be deleted.
 
 On the Platform UI, available namespaces are listed on the Identity Namespace page, accessed by selecting "Identities" from the left rail. 
 
