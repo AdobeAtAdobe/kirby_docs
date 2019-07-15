@@ -28,7 +28,7 @@ Note that the top-level properties referenced in these two examples ("homeAddres
 
 #### Arrays
 
-PQL supports querying over arrays (as it must be XDM-compliant, as arrays form a key part of XDM).  Arrays can be used in a number of PQL functions such as `select`.  However, note that the "running dot" notation cannot be currently used to directly access properties of items within an array – e.g. if "arrayProp" is a property whose type is Array of Obj1, where Obj1 is a model which itself has a property "itemProp", the expression "arrayProp.itemProp" is not currently allowed in PQL, since itemProp is a property on the items in the array, not on the array itself.  The supported way to reference item properties within an array is as follows: 
+PQL supports querying over arrays (as it must to be XDM-compliant, as arrays form a key part of XDM).  Arrays can be used in a number of PQL functions such as count, select and sum (see below for the specifics of these functions).  However, note that the "running dot" notation cannot be currently used to directly access properties of items within an array – e.g. if "arrayProp" is a property whose type is Array of Obj1, where Obj1 is a model which itself has a property "itemProp", the expression "arrayProp.itemProp" is not currently allowed in PQL, since itemProp is a property on the items in the array, not on the array itself.  The supported way to reference item properties within an array is as follows: 
 
 `select X from arrayProp where X.itemProp = ...`
 
@@ -110,7 +110,7 @@ In PQL, there is always an implicit profile in context, so XDM profile reference
 
 ##### xEvent
 
-PQL contains a reserved word, `xEvent`, which is used to refer to the array of ExperienceEvents which is linked to a profile.  E.g. `xEvent.device.model` evaluates to a list devices used in recorded ExperienceEvents associated with a particular profile.  When PQL is extended to support a larger set of XDM schemas, it is likely that additional keywords will be introduced to capture similar links which apply to other schemas.  A more general mechanism to specify these relationships, which does not involve using reserved words such as xEvent, is also anticipated.
+PQL contains a reserved word, `xEvent`, which is used to refer to the array of ExperienceEvents which is linked to a profile.  E.g. `xEvent.count()` evaluates to the number of ExperienceEvents linked to a profile.  When PQL is extended to support a larger set of XDM schemas, it is likely that additional keywords will be introduced to capture similar links which apply to other schemas.  A more general mechanism to specify these relationships, which does not involve using reserved words such as xEvent, is also anticipated.
 
 XDM references in PQL can refer to primitive types (e.g. `person.birthYear` has type Integer), arrays (e.g. `xEvent`) or complex objects (e.g. `person`).  PQL's type coercion allows most references to be used in a Boolean position (e.g. at the top level of a query expression).  For example, the simple query `person` is a valid PQL query, and will evaluate to true if the profile has a `person` property defined, and false otherwise.  For array-valued XDM properties or other array-valued PQL expressions, the value is coerced to true if the property is defined and is non-empty, false otherwise, when in Boolean position.
 
@@ -191,13 +191,10 @@ The top-level type in PQL is always Boolean.  Put differently, we are defining w
 * If the select expression evaluates to an empty array, it is coerced to false.
 * Otherwise, it is coerced to true.
 
-For example, consider the following query:
+Note that therefore, the following two PQL queries are equivalent:
 
-```plaintext
-select X from xEvent where X.timestamp occurs yesterday
-```
-
-PQL first evaluates the `select` expression as an array. In this case, the value will be an array containing all ExperienceEvents which occurred yesterday. PQL then coerces the array to a boolean value according to the coersion rule outlined above. The end result is that this query will return true if there is at least one event which occurred yesterday, and false if there are no such events.
+* `select X from xEvent where X.timestamp occurs yesterday`
+* `(select X from xEvent where X.timestamp occurs yesterday).count() > 0`
 
 ##### Nested selects 
 
@@ -214,6 +211,18 @@ Multiple `from` clauses in a select expression are separated by commas.  Also no
 Variables which are defined within a select expression can only be referenced within that select expression, and, moreover, only to the right of where they are declared within the select expression.
 
 Select expressions can be nested (e.g. `{condition1}` above may itself contain a select expression).  In this case, variables declared in the outer select are visible to the inner select, subject to the "to the right of" rule noted above.
+
+##### Select result
+
+When a select expression is evaluated, the result is the set of tuples (`V1`, `V2`) which satisfy the conditions within the select expression.  A select expression is therefore multi-valued, and hence the `count()` function can be applied to the result.  For instance:
+
+* `(select X from xEvent where X.productListItems.count() > 2).count() > 5`
+
+The above defines profiles which have more than 5 associated ExperienceEvents each of which include more than 2 `productListItems`.
+
+##### Aggregate functions
+
+Since the select construct evaluates to a set of tuples, it is possible to run aggregation functions on them. PQL only supports the `count()` function applied to the result returned by select.  As of 18.8.1, PQL supports other aggregation functions (`sum`, `min`, `max` and `average`) which are implemented using their own operators using a similar syntax to select.  See [Aggregate Functions](#55aggregatefunctions)
 
 #### Statement
 
@@ -264,12 +273,12 @@ This example shows the query that combines searching the CRM data and the events
 ### Example 3: Operation on an Array-valued property
 
 ```
-(select X from xEvent where X.type = "FLIGHT").homeAddress.countryISO = "US"
+(select X from xEvent where X.type = "FLIGHT").count() > 1
 and
-(select X from xEvent where X.type = "LOST_BAG").stateProvinceISO = “CA" 
+(select X from xEvent where X.type = "LOST_BAG").count() > 0
 ```
 
-The above examples show that PQL can support arbitrary combinations of conjunctions and disjunctions. PQL supports the use of parentheses to enable these combinations.
+The above examples show that PQL can support arbitrary combinations of conjunctions and disjunctions. PQL supports the use of parentheses to enable these combinations. The other notable feature in this example is a function call on the result of the select operator to count the number of elements in it.
 
 ## PQL Functions Detail
 
@@ -323,7 +332,7 @@ The above examples show that PQL can support arbitrary combinations of conjuncti
 * Examples
   * `person.birthMonth < 3`
     * This example defines people whose birthdays fall in January or February.
-  * `select X from xEvent where X.person`
+  * `select X from xEvent where X.productListItems.count() < 3`
     * This example defines people with at least one experience event which product list items but less than three of them.
 
 #### &gt;
@@ -340,6 +349,8 @@ The above examples show that PQL can support arbitrary combinations of conjuncti
 * Examples
   * `person.birthMonth > 2`
     * This example defines people whose birthdays do not fall in January or February.
+  * `select X from xEvent where X.productListItems.count() > 3`
+    * This example defines people with at least one experience event with more than 3 product list items in it.
 
 #### &lt;=
 
@@ -355,6 +366,8 @@ The above examples show that PQL can support arbitrary combinations of conjuncti
 * Examples
   * `person.birthMonth <= 2`
     * This example defines people whose birthdays fall in January or February.
+  * `select X from xEvent where X.productListItems.count() <= 3`
+    * This example defines people with at least one experience event which contains product list items but at most 3 of them.
 
 #### &gt;=
 
@@ -370,6 +383,8 @@ The above examples show that PQL can support arbitrary combinations of conjuncti
 * Examples
   * `person.birthMonth >= 3`
     * This example defines people whose birthdays do not fall in January or February.
+  * `select X from xEvent where X.productListItems.count() >= 3`
+    * This example defines people with at least one experience event at least 3 product list items in it.
 
 
 ### Date/Time-related Functions
@@ -908,7 +923,7 @@ There are two special characters which can be used in the second argument:
 * Examples
   * `select X from xEvent where X.commerce.checkouts.value / X.commerce.cartAbandons.value > 1`
 
-<!-- ### Aggregation Functions
+### Aggregation Functions
 
 #### sum
 
@@ -1019,7 +1034,6 @@ The following describes functions that are available for comparing values with a
 * Result
   * Boolean: `true` only if both of the following are true:
      * both values are not null <!-- QUESTION: documentation states: "Note: Due to condition a) above, notIn is not the exact negation of in" though condition a is the same for both in and notIn -->
-<!--     
      * the first value does not occur in the list of values represented by the second parameter
 * Examples
   * `homeAddress.stateProvinceISO notIn ["CA", "OR"]`
@@ -1058,10 +1072,10 @@ Determine if two lists have one or more intersections.
 * Result
   * List: list of values found in common among both list arguments, or null if there are no intersections detected
 * Examples
-  * `person.favoriteColors.intersection(["red", "blue", "green"])`  (note: favoriteColors is referenced here as a hypothetical custom list field of an XDM Person)
+  * `person.favoriteColors.intersection(["red", "blue", "green"]).count() > 1`  (note: favoriteColors is referenced here as a hypothetical custom list field of an XDM Person)
     * `["blue"]` where `person.favoriteColors` = ["orange", "blue", "brown"] 
     * `null` where `person.favoriteColors` = ["yellow", "violet"] 
-  * `person.citiesVisited.intersection(person.favoriteCities)` -->
+  * `person.citiesVisited.intersection(person.favoriteCities).count() > 1`
 
 ## Language examples
 
@@ -1094,10 +1108,10 @@ and (
 
 ### Example 3: Operation on a Set
 
-The following example shows that PQL can support arbitrary combinations of conjunctions and disjunctions. PQL supports the use of parentheses to enable these combinations.
+The following example shows that PQL can support arbitrary combinations of conjunctions and disjunctions. PQL supports the use of parentheses to enable these combinations. The other notable feature in this example is a function call on the Set to count the number of elements in it.
 
 ```
-(select X from xEvent where X.type = "FLIGHT").homeAddress.countryISO = "US"
+(select X from xEvent where X.type = "FLIGHT").count() > 1
 and
-(select X from xEvent where X.type = "LOST_BAG").stateProvinceISO = “CA" 
+(select X from xEvent where X.type = "LOST_BAG").count() > 0
 ```
