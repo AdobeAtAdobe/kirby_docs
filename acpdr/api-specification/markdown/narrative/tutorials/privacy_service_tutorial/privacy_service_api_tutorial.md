@@ -1,0 +1,388 @@
+# Privacy Service API tutorial
+
+> **Note:** The functionalities described in this document are currently in beta and will be publicly available as part of the July 25, 2019 release.
+
+Adobe Experience Platform Privacy Service provides a RESTful API and user interface that allow you to manage (access and delete) the personal data of your customers (data subjects) across Adobe Experience Cloud solutions. Privacy Service also provides a central audit and logging mechanism that allows you to access the status and results of jobs involving Experience Cloud solutions.
+
+This tutorial covers how to use the Privacy Service API. For details on how to use the UI, see the [Privacy Service UI tutorial](privacy_service_ui_tutorial.md). For a comprehensive list of all available endpoints in the Privacy Service API, please see the [API reference](../../../../../acdpr/swagger-specs/gdpr-api.yaml).
+
+Steps for performing the following tasks are covered in this tutorial:
+
+* [Create a job request](#create-a-job-request)
+* [Check the status of a job](#check-the-status-of-a-job)
+* [View all job requests](#view-all-job-requests) within your organization
+
+## Prerequisites
+
+You are required to have completed the
+[Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+
+* Authorization: Bearer `{ACCESS_TOKEN}`
+* x-api-key: `{API_KEY}`
+* x-gw-ims-org-id: `{IMS_ORG}`
+
+All POST, PUT, and PATCH requests require an additional header:
+
+* Content-Type: application/json
+
+<!-- (This should go in a more general overview doc)
+Across Adobe Experience Cloud there are many products that support your digital marketing needs. Each solution handles data and user identities in unique ways, according to their business goals. However, they also must support to the overall Experience Cloud goals for security and compliance. Platform GDPR Service has been developed to do exactly this: coordinate privacy and compliance requests across various solutions in Experience Cloud, beginning with GDPR access and deletion requests. 
+-->
+
+## Create a job request
+
+The first step in creating a new job request is to gather your customer data. As the data controller, you need to collect information about the data subjects whose data you want to access or delete. Once you have the required data, provide it in the payload of a POST request to the root endpoint (`/`) of the [Privacy Service API](../../../../../acdpr/swagger-specs/gdpr-api.yaml).
+
+#### API format
+
+```http
+POST /
+```
+
+#### Request
+
+The following request creates a new job request, configured by the attributes supplied in the payload as described below.
+
+```shell
+curl -X POST \
+  https://platform.adobe.io/data/privacy/gdpr/ \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '{
+    "companyContexts": [
+      {
+        "namespace": "imsOrgID",
+        "value": "{IMS_ORG}"
+      },
+      {
+        "namespace": "Campaign",
+        "value": "acme-stg-us1"
+      }
+    ],
+    "users": [
+      {
+        "key": "DavidSmith",
+        "action": ["access"],
+        "userIDs": [
+          {
+            "namespace": "email",
+            "value": "dsmith@acme.com",
+            "type": "standard"
+          },
+          {
+            "namespace": "ECID",
+            "type": "standard",
+            "value":  "443636576799758681021090721276",
+            "isDeletedClientSide": false
+          }
+        ]
+      },
+      {
+        "key": "user12345",
+        "action": ["access","delete"],
+        "userIDs": [
+          {
+            "namespace": "email",
+            "value": "ajones@acme.com",
+            "type": "standard"
+          },
+          {
+            "namespace": "loyaltyAccount",
+            "value": "12AD45FE30R29",
+            "type": "integrationCode"
+          }
+        ]
+      }
+    ],
+    "include": ["Analytics", "AudienceManager"],
+    "expandIds": false,
+    "priority": "normal",
+    "analyticsDeleteMethod": "anonymize",
+    "ticketId": "GDPR-29304"
+}'
+```
+
+* `companyContexts`: An array containing authentication information for your organization.
+    * The following identifiers are accepted:
+        * `imsOrgId`: **(Required)** The ID of your IMS Organization.
+        * A product-specific company qualifier (for example, `Campaign`), which identifies an integration with an Adobe Solution belonging to your organization. Potential values include account names, client codes, tenant IDs, or other solution identifiers.
+    * Each listed identifier includes the following attributes:
+        * `namespace`: The namespace of an identifier.
+        * `value`: The value of the identifier.
+* `users`: An array containing a collection of at least one user whose information you would like to access or delete. A maximum of 1000 user IDs can be provided in a single request. Each user object contains the following information:
+    * `key`: An identifier that is used to qualify the separate job IDs in the response data. It is best practice to choose a unique, easily identifiable string for this value so it can easily be referenced or looked up later.
+    * `action`: A collection of desired actions to take on the data. Must include one or both of `access` or `delete`, depending on the actions you want to take. If both options are provided, the service will create two separate job IDs for the associated `key`; one for each action.
+    * `userIDs`: A collection of identifiers for a particular user. The number of identities a single user can have is limited to 9. Each identifier contains the following three values:
+        * `namespace`: The namespace of the ID. For example, `email`.
+        * `value`: The value of the identifier. For example, `1234@example.com`.
+        * `type`: The qualifier for the ID namespace being used. A list of [accepted namespace qualifiers](#namespace-qualifiers) is provided later in this tutorial.
+* `include`: An array of Adobe products to include in your processing. This value is missing or otherwise empty, the request will be rejected. Only include products that your organization has an integration with. A list of [accepted product values](#product-values) is provided later in this tutorial.
+* `expandIDs`: *(Optional)*: When set to `true`, this value represents an optimization for processing the IDs in the solutions (currently only supported by Analytics). If omitted, this value defaults to `false`.
+* `priority`: *(Optional)*: Sets the priority for processing requests based on customer need. Accepted values are `normal` and `low`.
+* `analyticsDeleteMethod`: *(Optional)*: Specifies how Analytics should handle the customer data. Two possible values are accepted for this attribute:
+    * `anonymize`: All data referenced by the given collection of user IDs is made anonymous. If `analyticsDeleteMethod` is omitted, this is the default behavior.
+    * `purge`: All data is removed completely.
+* `ticketId`: Links the jobs created by this request to any internal tracking ID used by your organization.
+
+<!-- (Is this a key only found in the response? Shouldn't be included here if so, especially if it's something specifically *not* to be included in the request payload)
+One key not detailed in the example above:
+* The key **isDeletedClientSide** is a Boolean (true/false) value that is handed in from the Adobe Privacy JS library, indicating the client-side cookie has been deleted. This flag resides at the userID level, as part of the `namespace`, `value` and `type` triumvirate, and should not be added to the request manually as it indicates additional processing work is not needed by some solutions 
+-->
+
+#### Response
+
+A successful response returns the details of the newly created jobs.
+
+```json
+{
+    "jobs": [
+        {
+            "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076b0842b6",
+            "customer": {
+                "user": {
+                    "key": "DavidSmith",
+                    "action": [
+                        "access"
+                    ]
+                }
+            }
+        },
+        {
+            "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076be029f3",
+            "customer": {
+                "user": {
+                    "key": "user12345",
+                    "action": [
+                        "access"
+                    ]
+                }
+            }
+        },
+        {
+            "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076bd023j1",
+            "customer": {
+                "user": {
+                    "key": "user12345",
+                    "action": [
+                        "delete"
+                    ]
+                }
+            }
+        }
+    ],
+    "requestStatus": 1,
+    "totalRecords": 3
+}
+```
+
+* `jobId`: A read-only, unique system-generated ID for a job. This value is used to lookup a specific job in the next step. 
+
+## Check the status of a job
+
+Using one of the `jobId` values returned in the previous step, you can retrieve information about that job, such as its current processing status.
+
+#### API format
+
+```http
+GET /{jobId}
+```
+
+* `{jobId}`: The ID of the job you want to lookup, returned under `jobId` in the response of the [previous step](#create-a-job-request).
+
+#### Request
+
+The following request retrieves the details of the job whose `jobId` is provided in the request path.
+
+```shell
+curl -X GET \
+  https://platform.adobe.io/data/privacy/gdpr/6fc09b53-c24f-4a6c-9ca2-c6076b0842b6 \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+```
+
+#### Response
+
+A successful response returns the details of the specified job.
+
+```json
+{
+    "jobs": [
+        {
+            "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076b0842b6",
+            "requestId": "979",
+            "ticketNumber": "GDPR-29304",
+            "customer": {
+                "user": {
+                    "key": "DavidSmith",
+                    "action": [
+                        "access"
+                    ],
+                    "userIDs": [
+                        {
+                            "namespace": "email",
+                            "value": "dsmith@acme.com",
+                            "type": "standard",
+                            "namespaceId": 6,
+                            "isDeletedClientSide": false
+                        }
+                    ]
+                },
+                "companyContexts": [
+                    {
+                        "namespace": "imsOrgID",
+                        "value": "{IMS_ORG}"
+                    }
+                ]
+            },
+            "emailId": "submitter@email.com",
+            "productResponses": [
+                {
+                    "product": "Analytics",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 1,
+                        "statusMessage": "complete",
+                        "solutionMessage": {
+                            "message": "success",
+                            "product": "analytics",
+                            "results": {
+                                "userContexts": [],
+                                "receiptData": {}
+                            },
+                            "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076b0842b6",
+                            "status": "complete",
+                            "action": null
+                        }
+                    },
+                    "processedDate": "06/11/2019 2:00 AM"
+                },
+                {
+                    "product": "AudienceManager",
+                    "retryCount": 0,
+                    "productStatusResponse": {
+                        "statusCode": 1,
+                        "statusMessage": "complete",
+                        "solutionMessage": {
+                            "message": "success",
+                            "product": "audienceManager",
+                            "results": {
+                                "userContexts": [],
+                                "receiptData": {}
+                            },
+                            "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076b0842b6",
+                            "status": "complete",
+                            "action": null
+                        }
+                    },
+                    "processedDate": "06/11/2019 2:03 AM"
+                }
+            ],
+            "lastUpdatedBy": "GDPRCentralService",
+            "timeRequested": "05/14/2018 8:39 PM",
+            "submittedBy": "{USER_ID}",
+            "gdprStatusResponse": {
+                "statusCode": 1,
+                "statusMessage": "complete",
+                "solutionMessage": null
+            },
+            "downloadURL": "https://va7gdprprodblob.blob.core.windows.net/va7gdprprodblobpublic/6fc09b53-c24f-4a6c-9ca2-c6076b0842b6.zip"
+        }
+    ],
+    "totalRecords": 1
+}
+```
+
+* `gdprStatusResponse`: The current status of the job. Details about each possible status are provided in the table below.
+* `downloadURL`: If the status of the job is `complete`, this attribute provides a URL to download the job results as a ZIP file. This file is available to download for 60 days after the job completes.
+
+### Job status responses
+
+The following table lists the different possible job statuses and their corresponding meaning:
+
+| Status Code | Status Message | Meaning |
+| ----------- | -------------- | -------- |
+| 1 | Complete | Job is complete and (if required) files are uploaded from every solution. |
+| 2 | Processing | Solutions have acknowledged the job and are currently processing. |
+| 3 | Submitted | Job is submitted to every applicable solution. |
+| 4 | Error | Something failed in the processing of the job - more specific information may be obtained by retrieving individual job details. |
+| 5 | Expired | Final response is not received from the solutions before the specified time. |
+
+> **Note:** A submitted job might remain in a processing state if it has a dependent child job that is still processing.
+
+## View all job requests
+
+You can view a list of all available job requests within your organization by making a GET request to the root (`/`) endpoint.
+
+#### API format
+
+This request format uses a `data=true` query parameter on the root (`/`) endpoint, therefore it begins with a question mark (`?`) as shown below. The response is paginated, allowing you to use other query parameters (`page` and `size`) to filter the response. You can separate multiple parameters using ampersands (`&`).
+
+```http
+GET ?data=true
+GET ?data=true&page={PAGE}
+GET ?data=true&size={SIZE}
+GET ?data=true&page={PAGE}&size={SIZE}
+```
+* `{PAGE}`: The page of data to be displayed, using 0-based numbering. The default is `0`.
+* `{SIZE}`: The number of results to display on each page. The default is `1` and the maximum is `100`. Exceeding the maximum will cause the API to return a 400-code error.
+
+#### Request
+
+The following request retrieves a paginated list of all jobs within an IMS Organization, starting from the third page with a page size of 50.
+
+```shell
+curl -X GET \
+  https://platform.adobe.io/data/privacy/gdpr?data=true&page=2&size=50 \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
+
+#### Response
+
+The above request returns a list of 50 jobs starting on the third page of results. Each job is returned with details, including its `jobId`. A successful response returns the details of a list of 50 jobs, starting on the second page of results.
+
+### Accessing subsequent pages
+
+To fetch the next set of results in a paginated response, you must make another API call to the same endpoint while increasing the `page` query parameter by 1.
+
+## Next steps
+
+You now know how to create and monitor privacy job requests using the Privacy Service API. For information on how to perform the same tasks using the user interface, see the [Privacy Service UI tutorial](privacy_service_ui_tutorial.md).
+
+
+## Reference
+
+### Namespace Qualifiers
+
+When specifying a `namespace` value in the Privacy Service API, a **namespace qualifier** must be included in a corresponding `type` parameter. The following table outlines the different accepted namespace qualifiers.
+
+| Qualifier | Definition |
+| --------- | ---------- |
+| standard | One of the standard namespaces defined globally, not tied to an individual organization data set (e.g. email, phone number, etc.). Namespace ID is provided. |
+| custom | A unique namespace created in the context of an organization, not shared across the Experience Cloud. The value represents the friendly name ("name" field) to be searched for. Namespace ID is provided. |
+| integrationCode | Integration code - similar to "custom", but specifically defined as the integration code of a datasource to be searched for. Namespace ID is provided. |
+| namespaceId | Indicates the value is the actual ID of the namespace that was created or mapped through the namespace service. |
+| unregistered | A freeform string that is not defined in the namespace service and is taken "as is". Any solution that handles these kinds of namespaces checks against them and handle if appropriate for the company context and data set. No namespace ID is provided. |
+| analytics | A custom namespace that is mapped internally in Analytics, not in the namespace service. This is passed in directly as specified by the original request, without a namespace ID |
+| dpsc | A custom field type for DPS mappings, which support a set of three standard namespaces. |
+| target | A custom namespace understood internally by Target, not in the namespace service. This is passed in directly as specified by the original request, without a namespace ID |
+
+### Product values
+
+The following table outlines the accepted values for specifying an Adobe product in the `include` attribute of a job creation request.
+
+Product | Value for use in the `include` attribute
+--- | ---
+Adobe Advertizing Cloud | "AdCloud"
+Adobe Analytics | "Analytics"
+Adobe Audience Manager | "AudienceManager"
+Adobe Campaign | "Campaign"
+Adobe Experience Platform | "AdobeCloudPlatform"
+Adobe Target | "Target"
+Customer Record Service | "CRS"
+Digital Publishing Suite Classic | "DPSC"
+Real-time Customer Profile | "ProfileService"

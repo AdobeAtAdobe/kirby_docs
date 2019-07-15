@@ -68,11 +68,11 @@ You can retrieve details about a particular job by using the Adobe Experience Pl
 
 ### Using the API
 
-To retrieve the status of a particular job using the Privacy Service API, make a request to the root (`GET /`) endpoint, using the job's ID in the request path. For more details, see the section on [checking the status of a job](use-cases/gdpr-api-overview.md) in the Privacy Service API tutorial.
+To retrieve the status of a particular job using the Privacy Service API, make a request to the root (`GET /`) endpoint, using the job's ID in the request path. For more details, see the section on [checking the status of a job](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) in the Privacy Service API tutorial.
 
 ### Using the UI
 
-All active job requests are listed in the **Job Requests** widget on the Privacy Service UI dashboard. The status for each job request is displayed under the **Status** column. For more information on viewing job requests in the UI, please see the [Privacy Service UI tutorial](using-gdpr-ui.md).
+All active job requests are listed in the **Job Requests** widget on the Privacy Service UI dashboard. The status for each job request is displayed under the **Status** column. For more information on viewing job requests in the UI, please see the [Privacy Service UI tutorial](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial).
 
 ## How do I download the results of my completed GDPR jobs?
 
@@ -82,8 +82,8 @@ The Adobe Experience Platform Privacy Service API and user interface both provid
 
 Make a request to the root (`GET /`) endpoint in the Privacy Service API, using the ID of the job whose results you want to download in the request path. If the job's status is complete, the API will include a `downloadURL` attribute in the response body. This attribute contains a URL that you can paste into the address bar of your browser to download the ZIP file.
 
-For more details, see the section on [looking up a job by its ID](use-cases/gdpr-api-overview.md#check-the-status-of-a-job) in the Privacy Service API tutorial.
+For more details, see the section on [looking up a job by its ID](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md#check-the-status-of-a-job) in the Privacy Service API tutorial.
 
 ### Using the UI
 
-On the Privacy Service UI dashboard, find the job you want to download from the **Job Requests** widget. Click the ID of the job to open the *Job Details* page. From here, click **Download** in the top-right corner to download the ZIP file. See the [Privacy Service UI tutorial](using-gdpr-ui.md) for more detailed steps.
+On the Privacy Service UI dashboard, find the job you want to download from the **Job Requests** widget. Click the ID of the job to open the *Job Details* page. From here, click **Download** in the top-right corner to download the ZIP file. See the [Privacy Service UI tutorial](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial) for more detailed steps.

@@ -240,7 +240,7 @@ Following are steps to prepare for submitting GDPR requests using HTTP, as well 
 - Submit request and capture return data (job ID&#39;s per user)
   - Make an HTTP request to API programmatically or download/access an HTTP utility and submit a request
 
-Following is more detailed information about Adobe Experience Platform GDPR Service. The resource path for all requests to the service is [here](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md). The Platform GDPR Service method types are listed below:
+Following is more detailed information about Adobe Experience Platform GDPR Service. The resource path for all requests to the service is [here](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md). The Platform GDPR Service method types are listed below:
 
 |   **API Name** | **Method Type** | **Path** | **Description** | **Input parameters** | **Response** |
 | --- | --- | --- | --- | --- | --- |

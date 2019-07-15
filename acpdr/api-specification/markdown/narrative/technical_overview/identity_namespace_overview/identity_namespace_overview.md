@@ -48,7 +48,7 @@ The following namespaces are provided for use by all organizations. These are re
 
 ### Identity namespaces and GDPR
 
-Identity namespaces are also used to comply with General Data Protection Regulation (GDPR) concerns, where GDPR requests can be made relative to a namespace. Visit [GDPR on Adobe Experience Platform Overview](../../../../../api-specification/markdown/narrative/gdpr/gdpr-on-platform-overview.md) for a step by step breakdown. Or, go straight to the [Adobe Experience Platform GDPR Service Overview](../../../../../api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) to understand the GDPR Service API.
+Identity namespaces are also used to comply with General Data Protection Regulation (GDPR) concerns, where GDPR requests can be made relative to a namespace. Visit [GDPR on Adobe Experience Platform Overview](../../../../../api-specification/markdown/narrative/gdpr/gdpr-on-platform-overview.md) for a step by step breakdown. Or, go straight to the [Adobe Experience Platform Privacy Service API tutorial](../../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) to understand the GDPR Service API.
 
 ---
 

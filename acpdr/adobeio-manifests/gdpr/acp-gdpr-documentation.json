@@ -37,8 +37,13 @@
 		},
     {
 			"pages": [],
-			"path": "api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md",
-			"title": "Adobe Experience Platform Privacy Service API overview"
+			"path": "api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md",
+			"title": "Privacy Service API tutorial"
+    },
+    {
+			"pages": [],
+			"path": "api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md",
+			"title": "Privacy Service UI tutorial"
 		},
     {
 			"pages": [],
@@ -59,11 +64,6 @@
 			"pages": [],
 			"path": "api-specification/markdown/narrative/gdpr/gdpr-cautions.md",
 			"title": "Adobe GDPR cautions"
-		},
-    {
-			"pages": [],
-			"path": "api-specification/markdown/narrative/gdpr/using-gdpr-ui.md",
-			"title": "Interacting with Adobe Experience Platform Privacy Service through the UI"
 		},
 		{
 			"pages": [],

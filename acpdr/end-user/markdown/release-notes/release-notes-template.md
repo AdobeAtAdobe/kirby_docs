@@ -318,7 +318,7 @@ New features and fixes in Profile, Identity, and Segmentation:
 * Fix
 * Fix
 
-For product documentation, see [Adobe Experience Platform GDPR Service overview](https://www.adobe.io/apis/experienceplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md).
+For product documentation, see [Adobe Experience Platform Privacy Service tutorial](../../../api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md).
 
 ### Opt-In and ECID {#optin-ecid}
 
