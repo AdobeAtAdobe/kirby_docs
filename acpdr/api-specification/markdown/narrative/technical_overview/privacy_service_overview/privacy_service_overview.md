@@ -20,8 +20,8 @@ Privacy Service provides a RESTful API and user interface that allow you to crea
 
 ### Using the API
 
-The [Privacy Service API](../../../../../../acpdr/swagger-specs/gdpr-api.yaml) allows you to create and manage privacy jobs using RESTful API calls, allowing you to programmatically approach privacy regulation compliance for your Experience Cloud solutions. For detailed steps on how to use the API, see the [Privacy Service API tutorial](../../gdpr/use-cases/gdpr-api-overview.md).
+The [Privacy Service API](../../../../../../acpdr/swagger-specs/gdpr-api.yaml) allows you to create and manage privacy jobs using RESTful API calls, allowing you to programmatically approach privacy regulation compliance for your Experience Cloud solutions. For detailed steps on how to use the API, see the [Privacy Service API tutorial](../../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md).
 
 ### Using the UI
 
-The Privacy Service UI allows you to create and monitor privacy jobs using a graphical interface. The UI includes a **Status Report** widget that provides a visual representation of the status of all active requests, and allows you to create new requests by using the built-in **Request Builder** or by uploading JSON files. For more information on using the UI, see the [Privacy Service UI tutorial](../../gdpr/using-gdpr-ui.md).
+The Privacy Service UI allows you to create and monitor privacy jobs using a graphical interface. The UI includes a **Status Report** widget that provides a visual representation of the status of all active requests, and allows you to create new requests by using the built-in **Request Builder** or by uploading JSON files. For more information on using the UI, see the [Privacy Service UI tutorial](../../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md).
