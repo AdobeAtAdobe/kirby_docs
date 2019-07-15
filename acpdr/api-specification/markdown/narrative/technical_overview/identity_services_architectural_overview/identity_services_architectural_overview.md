@@ -81,6 +81,8 @@ Depending on your enterprise data collection strategy, you will decide which fie
 
 To properly categorize your identities, you may need to create additional namespaces. For information on viewing and creating namespaces, view the section [View and create namespaces for your organization](../identity_namespace_overview/identity_namespace_overview.md#view-and-create-namespaces-for-your-organization) in the identity namespace overview.
 
+> **Note:** Namespaces are a qualifier for identities. As such, once a namespace has been created, it cannot be deleted.
+
 ### Include identity data in XDM
 
 Both consumer record and time series schemas provide the means to include identity data. As data is ingested, data fragments containing more than one identifier create new relationships in the identity graph between those identities.

@@ -689,6 +689,8 @@ When your goals require a Namespace besides what is available, you can create a 
 
 For recommendations around creating custom Namespaces, see [the FAQ](../identity_services_architectural_overview/identity_services_faq.md).
 
+> **Note:** Namespaces are a qualifier for identities. As such, once a Namespace has been created, it cannot be deleted.
+
 __Service endpoint__
 
 ```
