@@ -17,9 +17,7 @@ This tutorial requires a working understanding of the various Adobe Experience P
 - [Segment Builder](../../../../../end-user/markdown/segmentation_overview/segmentation.md): A workspace for building audience segments from your Real-time Customer Profile data.
 - [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
 
-## Tutorial
-
-This tutorial requires you to have completed the [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+This tutorial also requires you to have completed the [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
 * Authorization: Bearer `{ACCESS_TOKEN}`
 * x-api-key: `{API_KEY}`
@@ -31,7 +29,7 @@ All POST, PUT, and PATCH requests require an additional header:
 
 ## Develop a segment definition
 
-The first step in segmentation is to define a segment, represented in a construct called a **segment definition**. A segment definition is an object that encapsulates a query written in Profile Query Language (PQL). This object is also called a **PQL predicate**. PQL predicates define the rules for the segment based on conditions related to any profile or time series data you supply to Real-time Customer Profile. See the [list of supported PQL queries](../../technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md) for available options.
+The first step in segmentation is to define a segment, represented in a construct called a **segment definition**. A segment definition is an object that encapsulates a query written in Profile Query Language (PQL). This object is also called a **PQL predicate**. PQL predicates define the rules for the segment based on conditions related to any record or time series data you supply to Real-time Customer Profile. See the [list of supported PQL queries](../../technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md) for available options.
 
 You can create a new segment definition using the [Profile Segment Definitions API](../../../../../../acpdr/swagger-specs/profile-segment-definitions-api.yaml). The following example outlines how to format a definition request, including what information is required in order for a segment to be defined successfully.
 
@@ -316,7 +314,7 @@ POST /segment/jobs
 
 #### Request
 
-The following request creates a new segment job for the segment definition provided in the payload.
+The following request creates a new segment job based on the two segment definitions provided in the payload.
 
 ```shell
 curl -X POST \
@@ -327,12 +325,15 @@ curl -X POST \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -d '[
         {
-            "segmentId" : "42f49f2d-edb0-474f-b29d-2799d89cd5a6"
+          "segmentId" : "42f49f2d-edb0-474f-b29d-2799d89cd5a6"
+        },
+        {
+          "segmentId" : "54a20f19-9a0w-293a-9b82-409b1p3v0192"
         }
     ]'
 ```
 
-* `segmentId`: The identifier of the segment definition from which to build the audience.
+* `segmentId`: The identifier of a segment definition from which to build the audience. At least one segment ID must be supplied in the payload array.
 
 #### Response
 
@@ -362,6 +363,26 @@ A successful response returns the details of the newly created segment job.
             },
             "snapshot": {
                 "name": "Canadian1",
+                "ttlInDays": 1
+            }
+        },
+        {
+            "segmentId": "54a20f19-9a0w-293a-9b82-409b1p3v0192",
+            "segment": {
+                "id": "54a20f19-9a0w-293a-9b82-409b1p3v0192",
+                "version": 1,
+                "expression": {
+                    "type": "PQL",
+                    "format": "pql/text",
+                    "value": "homeAddress.country = \"US\""
+                },
+                "mergePolicy": {
+                    "id": "mpid1",
+                    "version": 1
+                }
+            },
+            "snapshot": {
+                "name": "USA3",
                 "ttlInDays": 1
             }
         }
