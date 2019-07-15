@@ -13,7 +13,7 @@ The below example will show the request and response **if** you have a dataset I
 ### Request
 
 ```SHELL
-curl -X POST "https://dcs.adobedc.net/collection/{DATA_INLET_ID}" \
+curl -X POST "https://dcs.data.adobe.net/collection/{DATA_INLET_ID}" \
   -H "Cache-Control: no-cache" \
   -H "Content-Type: application/json" \
   -d '{JSON_PAYLOAD}'
@@ -43,6 +43,19 @@ curl -X POST "https://dcs.adobedc.net/collection/{DATA_INLET_ID}" \
             }
         },
         "xdmEntity":{
+            "identityMap": {
+                "ecid": [
+                    {
+                        "id": "10000000000000000000000000000000000001"
+                    }
+                ],
+                "email": [
+                    {
+                        "id": "janedoe@example.com",
+                        "primary": true
+                    }
+                ]
+            },
             "_id": "9af5adcc-db9c-4692-b826-65d3abe68c22",
             "timestamp": "2019-02-23T22:07:01Z",
             "environment": {
@@ -68,17 +81,6 @@ curl -X POST "https://dcs.adobedc.net/collection/{DATA_INLET_ID}" \
             "commerce": {
                 "productViews": {
                     "value": 1
-                }
-            },
-            "_experience": {
-                "campaign": {
-                    "message": {
-                        "profileSnapshot": {
-                            "workEmail":{
-                                "address": "janedoe@example.com"
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -115,7 +117,7 @@ The below example will show the request and response **if** you do not have a da
 ### Request
 
 ```shell
-curl -X POST "https://dcs.adobedc.net/collection/{DATA_INLET_ID}" \
+curl -X POST "https://dcs.data.adobe.net/collection/{DATA_INLET_ID}" \
   -H "Cache-Control: no-cache" \
   -H "Content-Type: application/json" \
   -d '{JSON_PAYLOAD}'
@@ -144,6 +146,19 @@ curl -X POST "https://dcs.adobedc.net/collection/{DATA_INLET_ID}" \
             }
         },
         "xdmEntity":{
+            "identityMap": {
+                "ecid": [
+                    {
+                        "id": "10000000000000000000000000000000000001"
+                    }
+                ],
+                "email": [
+                    {
+                        "id": "janedoe@example.com",
+                        "primary": true
+                    }
+                ]
+            },
             "_id": "9af5adcc-db9c-4692-b826-65d3abe68c22",
             "timestamp": "2019-02-23T22:07:01Z",
             "environment": {
@@ -169,17 +184,6 @@ curl -X POST "https://dcs.adobedc.net/collection/{DATA_INLET_ID}" \
             "commerce": {
                 "productViews": {
                     "value": 1
-                }
-            },
-            "_experience": {
-                "campaign": {
-                    "message": {
-                        "profileSnapshot": {
-                            "workEmail":{
-                                "address": "janedoe@example.com"
-                            }
-                        }
-                    }
                 }
             }
         }
