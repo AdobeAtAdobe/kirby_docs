@@ -3,13 +3,12 @@
 title: Adobe Experience Platform Release Notes
 description: Template for Experience Platform release notes
 doc-type: release notes
-last-update: June 2019
+last-update: January 2019
 author: crhoades
 
 ---
 
 # Adobe Experience Cloud release notes
-## Release date: Month dd, yyyy
 
 New features and fixes in Adobe Experience Platform.
 
@@ -318,7 +317,7 @@ New features and fixes in Profile, Identity, and Segmentation:
 * Fix
 * Fix
 
-For product documentation, see [Adobe Experience Platform Privacy Service tutorial](../../../api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md).
+For product documentation, see [Adobe Experience Platform GDPR Service overview](https://www.adobe.io/apis/experienceplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md).
 
 ### Opt-In and ECID {#optin-ecid}
 
