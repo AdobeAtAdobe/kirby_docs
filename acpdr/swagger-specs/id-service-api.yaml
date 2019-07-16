@@ -229,7 +229,7 @@ paths:
           description: Graph type (output type) you want to get the cluster from
           required: false
           type: string
-          default: coop
+          default: Private Graph
         - name: x-uis-cst-ctx
           in: header
           description: Customer context to be used for stub response
@@ -521,7 +521,7 @@ paths:
           description: Graph type (output type) you want to get the cluster from
           required: false
           type: string
-          default: coop
+          default: Private Graph
         - name: x-uis-cst-ctx
           in: header
           description: Customer context to be used for stub response
@@ -574,7 +574,7 @@ paths:
                 example: 400
               description:
                 type: string
-                example: The IMS Org ABC123@AdobeOrg is not provisioned for private device graph or coop.
+                example: The IMS Org ABC123@AdobeOrg is not provisioned for private device graph.
           headers:
             content-type:
               description: Response is a JSON document with UTF-8 encoding
@@ -716,7 +716,7 @@ paths:
                 example: 400
               description:
                 type: string
-                example: The IMS Org ABC123@AdobeOrg is not provisioned for private device graph or coop.
+                example: The IMS Org ABC123@AdobeOrg is not provisioned for private device graph.
           headers:
             content-type:
               description: Response is a JSON document with UTF-8 encoding
@@ -1489,113 +1489,6 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Namespace'
-        '401':
-          description: Authentication failure for invalid IMS token or the given IMS Org is missing required product context acp or dma.
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 401
-              title:
-                type: string
-                example: Call to backend failed with status-code 401
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Authorization failed - No acp or dma product context for IMSOrg A55EBC@AdobeOrg.
-                  code:
-                    type: string
-                    example: 401
-        '404':
-          description: Namespace does not exist or it is not available for the given imsorg
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 404
-              title:
-                type: string
-                example: Call to backend failed with status-code 404
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Namespace does not exist or it is not available for the given IMS Org.
-                  code:
-                    type: string
-                    example: 404
-        '422':
-          description: Unexpected error from the backend
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 422
-              title:
-                type: string
-                example: Call to backend failed with status-code 422
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Unexpected error from the backend
-                  code:
-                    type: string
-                    example: 422
-        '500':
-          description: Internal server error
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
-              status:
-                type: integer
-                example: 500
-              title:
-                type: string
-                example: Call to backend failed with status-code 500
-              report:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Internal server error occured. Please try at a later time.
-                  code:
-                    type: string
-                    example: 500
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/Error'
-    delete:
-      tags:
-        - Identity Namespace
-      produces:
-        - application/json
-      summary: Delete namespace owned by `x-gw-ims-org-id` and identified by the given `id`.
-      operationId: DeleteDataSourcesByDPID
-      responses:
-        '204':
-          description: No Content. Delete Successful
-
         '401':
           description: Authentication failure for invalid IMS token or the given IMS Org is missing required product context acp or dma.
           schema:
