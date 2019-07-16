@@ -3,7 +3,7 @@
 
 Adobe Experience Platform GDPR Service provides a method to submit both access and delete requests by the data controller, in an effort to comply with the General Data Protection Regulation on Adobe Experience Platform.
 
-GDPR requests can be submitted to Adobe Experience Platform using the [Privacy Service API](../../../api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service UI](../../../api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md). There are two different data stores on Experience Platform where requests are to be processed:
+GDPR requests can be submitted to Adobe Experience Platform using the [GDPR Central Service API](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) or [GDPR UI](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/using-gdpr-ui.md). There are two different data stores on Experience Platform where requests are to be processed:
 
 * Data Lake
 * Unified Profile 
@@ -64,7 +64,7 @@ Labels are an array of string values. In the above example, the label is `email_
 
 ## Step 3: Submit GDPR request 
 
-Submit GDPR requests to Adobe Experience Platform using the [Privacy Service API](../../../api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service UI](../../../api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md). 
+Submit GDPR requests to Adobe Experience Platform using the [GDPR Central Service API](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) or [GDPR UI](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/using-gdpr-ui.md). 
 
 The following shows an example request:
 
@@ -97,11 +97,11 @@ Request payload:
 } 
 ```
 
-* Parameter type `unregistered` is required for the data lake because the namespace applied for the dataset in Step 2 is not registered with the identity. For more information regarding the type parameter, refer to [Privacy Service API](../../../api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md).
+* Parameter type `unregistered` is required for the data lake because the namespace applied for the dataset in Step 2 is not registered with the identity. For more information regarding the type parameter, refer to [Central Service Customer API](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md#namespace-qualifiers).
 * The parameter type should be `standard` for the profile to process based on standard namespaces.
 * The parameter type should be `custom` for the profile to process based on custom namespaces.
 * The `include` field is optional in the request format. The central service sends the GDPR request to all registered products if no inclusion is specified. If an inclusion is specified, specify `AdobeCloudPlatform` and `profileService` in the list of include parameters for the GDPR request to be processed in Data Lake and Unified Profile respectively. 
 
 ## Step 4: Track the status of the GDPR request
 
-Refer to the [Privacy Service API](../../../api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service UI](../../../api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md) documentation for information about how to track the status (submitted, processing, completed, error, expired) of GDPR requests.
+Refer to the [GDPR Central Service API](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) or [GDPR UI](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/using-gdpr-ui.md) documentation for information about how to track the status (submitted, processing, completed, error, expired) of GDPR requests.
