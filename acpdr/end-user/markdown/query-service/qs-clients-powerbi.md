@@ -34,7 +34,7 @@ After performing those preparatory steps, you can connect Power BI to Query Serv
     
     * **Database** can be either "all" or a dataset table name. (Try one of the CTAS-derived datasets.)
 
-5. Click **Advanced options**, and then uncheck **include relationship columns**.
+5. Click **Advanced options**, and then uncheck **include relationship columns**. Do not check **Navigate using full hierarchy**.
 
 6. (Optional but recommended when "all" is declared for the Database) Enter a SQL statement.
 
