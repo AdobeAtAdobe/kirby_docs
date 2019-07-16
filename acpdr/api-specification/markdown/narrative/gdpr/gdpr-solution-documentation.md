@@ -6,7 +6,7 @@ GDPR not only applies to organizations located within the European Union, but it
 
 Adobe believes this presents a new opportunity for companies to strengthen their brand loyalty by focusing on consumer privacy while delivering amazing experiences. Adobe already meets or is implementing our obligations as a Data Processor. As a Data Processor, Adobe strives toward GDPR compliance across all Adobe Experience Cloud solutions.
 
-The following table points to articles outlining how to get GDPR-ready with your Experience Cloud Solutions. You will learn how to curate and label your data and how to configure your Experience Cloud Solutions for GDPR request processing using the Adobe GDPR API or tools.
+The following table points to articles outlining how to get GDPR-ready with your Experience Cloud Solutions. You will learn how to curate and label your data and how to configure your Experience Cloud Solutions for GDPR request processing using the Adobe Experience Platform Privacy Service API or tools.
 
 | Product | Description |
 | ------- | ----------- |
