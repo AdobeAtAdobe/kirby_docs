@@ -1,9 +1,8 @@
-
 # GDPR on Adobe Experience Platform overview
 
-Adobe Experience Platform GDPR Service provides a method to submit both access and delete requests by the data controller, in an effort to comply with the General Data Protection Regulation on Adobe Experience Platform.
+Adobe Experience Platform Privacy Service provides a method to submit both access and delete requests by the data controller, in an effort to comply with the General Data Protection Regulation on Adobe Experience Platform.
 
-GDPR requests can be submitted to Adobe Experience Platform using the [GDPR Central Service API](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) or [GDPR UI](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/using-gdpr-ui.md). There are two different data stores on Experience Platform where requests are to be processed:
+GDPR requests can be submitted to Adobe Experience Platform using the [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service UI](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md). There are two different data stores on Experience Platform where requests are to be processed:
 
 * Data Lake
 * Unified Profile 
@@ -12,9 +11,9 @@ The following workflow describes how data needs to be set up by the customer for
 
 ## GDPR in Profile
 
-Data access and delete requests in Unified Profile on Adobe Experience Platform is facilitated by the Profile GDPR service.
+Data access and delete requests in Unified Profile on Platform is facilitated by Adobe Experience Platform Identity Service.
 
-The profile GDPR honors namespaces that are registered with the Identity core service for that IMSOrg. A list of standard namespaces are available for all organizations. For example: Email and ECID. Additionally, custom namespaces can be created for the organization. Both aspects are documented at [Identity Namespace Overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_namespace_overview/identity_namespace_overview.md). To know more about how to associate identities when sending data to Platform, please refer to the [Identity services architectural overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md).
+Identity Service honors namespaces that are registered with the Identity core service for that IMS Org. A list of standard namespaces are available for all organizations. For example: Email and ECID. Additionally, custom namespaces can be created for the organization. Both aspects are documented at [Identity Namespace Overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_namespace_overview/identity_namespace_overview.md). To know more about how to associate identities when sending data to Platform, please refer to the [Identity services architectural overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md).
 
 If data ingested into Profile has an associated identity namespace, Unified Profile can process a GDPR request in the appropriate format against that data, as shown in the section on “Submitting requests” below.
 
@@ -39,15 +38,29 @@ In the example below:
 }
 ```
 
-```json
-curl -X PATCH "https://platform.adobe.io/data/foundation/catalog/dataSets/5bc391a7e388cc12f991678e" -H "accept: application/json" -H "x-api-key: acp_foundation_example" -H "x-gw-ims-org-id: example@AdobeOrg" -H "Authorization: bearer example_token" -H "content-type: application/json" -d "{ \"schemaMetadata\": { \"gdpr\": [{ \"path\": \"/properties/personalEmail/properties/address\", \"namespace\": [\"email_ns\"] }] }}"
+```shell
+curl -X PATCH 'https://platform.adobe.io/data/foundation/catalog/dataSets/5bc391a7e388cc12f991678e' \
+  -H 'accept: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'content-type: application/json' \
+  -d '{ 
+    "schemaMetadata": { 
+      "gdpr": [
+        {
+          "path": "/properties/personalEmail/properties/address",
+          "namespace": ["email_ns"] 
+        }
+      ] 
+  }'
 ```
 
 Labels are an array of string values. In the above example, the label is `email_ns`. Labels should only be applied to leaf fields (fields without children). In the sample above, the path refers to a leaf field.
 
 ## Submitting requests 
 
-Submit GDPR requests to Adobe Experience Platform using the [GDPR Central Service API](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) or [GDPR UI](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/using-gdpr-ui.md). 
+Submit GDPR requests to Adobe Experience Platform using the [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service UI](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md). 
 
 The following shows an example request:
 
@@ -80,9 +93,9 @@ Request payload:
 } 
 ```
 
-* Parameter type `unregistered` is required for the data lake because the namespace applied for the dataset in Step 2 is not registered with the identity. For more information regarding the type parameter, refer to [Central Service Customer API](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md#namespace-qualifiers).
+* Parameter type `unregistered` is required for the data lake because the namespace applied for the dataset in Step 2 is not registered with the identity. For more information regarding the type parameter, refer to [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md#namespace-qualifiers).
 * The parameter type should be `standard` for the profile to process based on standard namespaces.
 * The parameter type should be `custom` for the profile to process based on custom namespaces.
 * The `include` field is optional in the request format. The central service sends the GDPR request to all registered products if no inclusion is specified. If an inclusion is specified, specify `AdobeCloudPlatform` and `profileService` in the list of include parameters for the GDPR request to be processed in Data Lake and Unified Profile respectively. 
 
-Refer to the [GDPR Central Service API](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md) or [GDPR UI](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/using-gdpr-ui.md) documentation for information about how to track the status (submitted, processing, completed, error, expired) of GDPR requests.
+Refer to the [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service UI](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md) documentation for information about how to track the status (submitted, processing, completed, error, expired) of GDPR requests.
