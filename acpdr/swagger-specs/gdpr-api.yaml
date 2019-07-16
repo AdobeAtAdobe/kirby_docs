@@ -1,41 +1,46 @@
 swagger: '2.0'
 info:
   description: >-
-    GDPR service is a service providing a common, centralized facilitation of GDPR access/delete requests for customers. 
-    The service includes a UI for selecting and creating requests, a business layer that will primarily drive all traffic out and 
-    process all traffic into the system, and a data store that can store audit and logging information along with temporary 
-    data retrieval storage while requests are pending or waiting to be viewed.
+    Adobe Experience Platform Privacy Service provides a common, centralized facilitation of access/delete requests for private data. The service includes a UI for selecting and creating requests, a business layer that processesses incoming and outgoing traffic, a data store for audit and logging information, and temporary storage for data retrieval while requests are pending or waiting to be viewed.
 
 
     Related documentation:
       * [GDPR on Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/gdpr-on-platform-overview.md)
-      * [Adobe Experience Platform GDPR Service Overview](https://www.adobe.io/apis/experienceplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md)
-
+      * [Privacy Service API tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md)
 
     Notes:
-      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
       * Base path for this API: /data/privacy/gdpr
-      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
+      * Example of a complete path: https://<span>platform.adobe.io/data/privacy/gdpr/ping
+      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
 
-  version: '0.1'
-  title: GDPR API
+  version: '1.0'
+  title: Privacy Service API
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 host: platform.adobe.io
 basePath: /data/privacy/gdpr
 tags:
-  - name: GDPR Central Service Health Check
-  - name: GDPR Files Management Service
-  - name: GDPR Product Management CRUD API
-  - name: GDPR User Management CRUD API
-  - name: GDPR central API
-  - name: jacoco
+  - name: Privacy Service
+    description: "Retrieve and create access/delete requests, including child jobs for existing requests."
+  - name: Ping
+    description: "Check the processing status of access or delete requests by supplying a status code integer as a query parameter."
+  - name: Files
+    description: "View and upload files from various Adobe solutions for specified job requests."
+  - name: Products
+    description: "View details of Adobe products available within your organization's Privacy Service integrations."
+  - name: Users
+    description: "View, create, update, or delete users and their permissions within your organization's Privacy Service configuration."
 
 paths:
   /:
+    parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - GDPR central API
-      summary: Retrieve details of all JobId's for a specific UserId/Logged in Users id
+        - Privacy Service
+      summary: Retrieve details of all jobs for the current logged-in user.
       description: ''
       operationId: getStatus(all)
       parameters:
@@ -51,26 +56,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: x-gw-ims-org-id
-          in: header
-          description: XXXXX47E56F59C747FXXXXX@AdobeOrg
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: Bearer XXXXX
-          required: true
-          type: string
-        - name: x-api-key
-          in: header
-          description: 'acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io'
-          required: true
-          type: string
-        - name: Content-Type
-          in: header
-          description: application/json
-          required: true
-          type: string
       responses:
         '200':
           description: 'If found, The details of requested jobId is returned.'
@@ -114,10 +99,14 @@ paths:
           description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     post:
       tags:
-        - GDPR central API
-      summary: Access or Delete GDPR service requests
-      description: An authenticated user can submit requests for Access or delete of their privacy data
+        - Privacy Service
+      summary: Create an access or delete job request.
+      description: An authenticated user can submit requests to access or delete their privacy data.
       operationId: handleExternalRequest
+      consumes: 
+        - application/json
+      produces:
+        - application/json
       parameters:
         - in: body
           name: body
@@ -125,26 +114,7 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/A%20GDPR%20Request%20model'
-        - name: x-gw-ims-org-id
-          in: header
-          description: XXXXX47E56F59C747FXXXXX@AdobeOrg
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: Bearer XXXXX
-          required: true
-          type: string
-        - name: x-api-key
-          in: header
-          description: 'acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io'
-          required: true
-          type: string
-        - name: Content-Type
-          in: header
-          description: application/json
-          required: true
-          type: string
+        - $ref: '#/parameters/json-header'
       responses:
         '200':
           description: successful operation
@@ -193,38 +163,23 @@ paths:
         '504':
           description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
   /files/{jobId}:
+    parameters:
+      - name: jobId
+        in: path
+        description: ID of the job from which to retrieve or list files.
+        required: true
+        type: string
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - GDPR Files Management Service
-      summary: Retrieve or list files utility for GDPR
+        - Files
+      summary: Retrieve the files associated with a job by ID.
       description: 'Returns list of files uploaded for {jobId}'
       operationId: getJobFiles
-      parameters:
-        - name: jobId
-          in: path
-          description: jobId to retrieve or list files
-          required: true
-          type: string
-        - name: x-gw-ims-org-id
-          in: header
-          description: XXXXX47E56F59C747FXXXXX@AdobeOrg
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: Bearer XXXXX
-          required: true
-          type: string
-        - name: x-api-key
-          in: header
-          description: 'acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io'
-          required: true
-          type: string
-        - name: Content-Type
-          in: header
-          description: application/json
-          required: true
-          type: string
+      produces:
+        - application/json
       responses:
         '200':
           description: Successful list of files
@@ -237,48 +192,37 @@ paths:
         '503':
           description: 'Exception Occurred!! '
   "/files/{jobId}/{solutionName}":
+    parameters:
+      - name: jobId
+        in: path
+        description: jobId to upload the files
+        required: true
+        type: string
+      - name: solutionName
+        in: path
+        description: SolutionName
+        required: true
+        type: string
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     post:
       tags:
-        - GDPR Files Management Service
-      summary: Files upload utility for GDPR
-      description: Returns File upload status and error object
+        - Files
+      summary: Upload files to a job by ID.
+      description: Returns file upload status and error object.
       operationId: postDataForCompletedJob
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
       parameters:
-        - name: jobId
-          in: path
-          description: jobId to upload the files
-          required: true
-          type: string
-        - name: solutionName
-          in: path
-          description: SolutionName
-          required: true
-          type: string
         - name: file
           in: formData
           description: file
           required: false
           type: file
-        - name: x-gw-ims-org-id
-          in: header
-          description: XXXXX47E56F59C747FXXXXX@AdobeOrg
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: Bearer XXXXX
-          required: true
-          type: string
-        - name: x-api-key
-          in: header
-          description: 'acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io'
-          required: true
-          type: string
-        - name: Content-Type
-          in: header
-          description: application/json
-          required: true
-          type: string
+        - $ref: '#/parameters/multipart-header'
       responses:
         '200':
           description: Successful upload of files
@@ -291,12 +235,16 @@ paths:
         '503':
           description: 'Exception Occurred!! '
   /ping:
+    parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - GDPR Central Service Health Check
-      summary: Access or Delete GDPR service requests
+        - Ping
+      summary: Retrieve the processing status of access or delete requests by status code.
       description: The message is read from the properties
-      operationId: saySomething
+      operationId: health-check
       parameters:
         - name: status
           in: query
@@ -325,33 +273,16 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
   /products:
+    parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - GDPR Product Management CRUD API
-      summary: Returns details of all products
+        - Products
+      summary: Retrieve the details of all products.
       description: Returns a complete list of all products with details.
       operationId: getAllProducts
-      parameters:
-        - name: x-gw-ims-org-id
-          in: header
-          description: XXXXX47E56F59C747FXXXXX@AdobeOrg
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: Bearer XXXXX
-          required: true
-          type: string
-        - name: x-api-key
-          in: header
-          description: 'acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io'
-          required: true
-          type: string
-        - name: Content-Type
-          in: header
-          description: application/json
-          required: true
-          type: string
       responses:
         '200':
           description: Successful retrieval of all product detail
@@ -366,38 +297,21 @@ paths:
         '503':
           description: 'Exception Occurred!! '
   /products/{productName}:
+    parameters:
+      - name: productName
+        in: path
+        description: Product Name for details
+        required: true
+        type: string
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-          - GDPR Product Management CRUD API
-      summary: Returns details of single product based on productName parameter
+          - Products
+      summary: Lookup a product by name.
       description: Returns details of a product.
       operationId: getProductsByName
-      parameters:
-        - name: productName
-          in: path
-          description: Product Name for details
-          required: true
-          type: string
-        - name: x-gw-ims-org-id
-          in: header
-          description: XXXXX47E56F59C747FXXXXX@AdobeOrg
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: Bearer XXXXX
-          required: true
-          type: string
-        - name: x-api-key
-          in: header
-          description: 'acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io'
-          required: true
-          type: string
-        - name: Content-Type
-          in: header
-          description: application/json
-          required: true
-          type: string
       responses:
         '200':
           description: Successful retrieval of product details
@@ -412,33 +326,16 @@ paths:
         '503':
           description: 'Exception Occurred!! '
   /userPrefs:
+    parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - GDPR central API
-      summary: Retrieve user preferences for logged in user email
+        - Privacy Service
+      summary: Retrieve user preferences for the current logged-in user.
       description: ''
       operationId: getUserPreferences
-      parameters:
-        - name: x-gw-ims-org-id
-          in: header
-          description: XXXXX47E56F59C747FXXXXX@AdobeOrg
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: Bearer XXXXX
-          required: true
-          type: string
-        - name: x-api-key
-          in: header
-          description: 'acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io'
-          required: true
-          type: string
-        - name: Content-Type
-          in: header
-          description: application/json
-          required: true
-          type: string
       responses:
         '200':
           description: 'If found, The details of requested jobId is returned.'
@@ -481,33 +378,16 @@ paths:
         '504':
           description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
   /users:
+    parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - GDPR User Management CRUD API
-      summary: Returns details of all users
+        - Users
+      summary: Retrieve the details of all users.
       description: Returns a complete list of all users with details.
       operationId: getAllUsers
-      parameters:
-        - name: x-gw-ims-org-id
-          in: header
-          description: XXXXX47E56F59C747FXXXXX@AdobeOrg
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: Bearer XXXXX
-          required: true
-          type: string
-        - name: x-api-key
-          in: header
-          description: 'acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io'
-          required: true
-          type: string
-        - name: Content-Type
-          in: header
-          description: application/json
-          required: true
-          type: string
       responses:
         '200':
           description: Successful retrieval of all user detail
@@ -523,8 +403,8 @@ paths:
           description: 'Exception Occurred!! '
     post:
       tags:
-        - GDPR User Management CRUD API
-      summary: Add user as admin for GDPR central service
+        - Users
+      summary: Create a user as an admin for Privacy Service.
       description: Returns added user json with status
       operationId: createUser
       parameters:
@@ -534,26 +414,7 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/UserInfo'
-        - name: x-gw-ims-org-id
-          in: header
-          description: XXXXX47E56F59C747FXXXXX@AdobeOrg
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: Bearer XXXXX
-          required: true
-          type: string
-        - name: x-api-key
-          in: header
-          description: 'acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io'
-          required: true
-          type: string
-        - name: Content-Type
-          in: header
-          description: application/json
-          required: true
-          type: string
+        - $ref: "#/parameters/json-header"
       responses:
         '200':
           description: 'Successful creation of user '
@@ -568,39 +429,22 @@ paths:
         '503':
           description: 'Exception Occurred!! '
   '/users/{userId}':
+    parameters:
+      - name: userId
+        in: path
+        description: User id for details
+        required: true
+        type: string
+        pattern: .+
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - GDPR User Management CRUD API
-      summary: Returns details of single user based on userId parameter
+        - Users
+      summary: Lookup a user by ID.
       description: Returns details of a user.
       operationId: getUsersById
-      parameters:
-        - name: userId
-          in: path
-          description: User id for details
-          required: true
-          type: string
-          pattern: .+
-        - name: x-gw-ims-org-id
-          in: header
-          description: XXXXX47E56F59C747FXXXXX@AdobeOrg
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: Bearer XXXXX
-          required: true
-          type: string
-        - name: x-api-key
-          in: header
-          description: 'acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io'
-          required: true
-          type: string
-        - name: Content-Type
-          in: header
-          description: application/json
-          required: true
-          type: string
       responses:
         '200':
           description: Successful retrieval of user details
@@ -616,43 +460,18 @@ paths:
           description: 'Exception Occurred!! '
     put:
       tags:
-        - GDPR User Management CRUD API
-      summary: Update user details
+        - Users
+      summary: Update the details of a user by ID.
       description: Returns updated user json with status
       operationId: updateUser
       parameters:
-        - name: userId
-          in: path
-          description: User Id
-          required: true
-          type: string
-          pattern: .+
         - in: body
           name: body
           description: User Details to be updated
           required: true
           schema:
             $ref: '#/definitions/UserInfo'
-        - name: x-gw-ims-org-id
-          in: header
-          description: XXXXX47E56F59C747FXXXXX@AdobeOrg
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: Bearer XXXXX
-          required: true
-          type: string
-        - name: x-api-key
-          in: header
-          description: 'acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io'
-          required: true
-          type: string
-        - name: Content-Type
-          in: header
-          description: application/json
-          required: true
-          type: string
+        - $ref: '#/parameters/json-header'
       responses:
         '200':
           description: 'Successful updation of user '
@@ -668,37 +487,10 @@ paths:
           description: 'Exception Occurred!! '
     delete:
       tags:
-        - GDPR User Management CRUD API
-      summary: Delete user from GDPR config
+        - Users
+      summary: Delete a user by ID.
       description: Returns deleted user json with status
       operationId: deleteUser
-      parameters:
-        - name: userId
-          in: path
-          description: User id to delete
-          required: true
-          type: string
-          pattern: .+
-        - name: x-gw-ims-org-id
-          in: header
-          description: XXXXX47E56F59C747FXXXXX@AdobeOrg
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: Bearer XXXXX
-          required: true
-          type: string
-        - name: x-api-key
-          in: header
-          description: 'acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io'
-          required: true
-          type: string
-        - name: Content-Type
-          in: header
-          description: application/json
-          required: true
-          type: string
       responses:
         '200':
           description: 'Successful deletion of user '
@@ -713,38 +505,21 @@ paths:
         '503':
           description: 'Exception Occurred!! '
   '/{jobId}':
+    parameters:
+      - name: jobId
+        in: path
+        description: jobId
+        required: true
+        type: string
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - GDPR central API
-      summary: Retrieve details of JobId specified in request
+        - Privacy Service
+      summary: Lookup the details of a job by ID.
       description: ''
       operationId: getStatus
-      parameters:
-        - name: jobId
-          in: path
-          description: jobId
-          required: true
-          type: string
-        - name: x-gw-ims-org-id
-          in: header
-          description: XXXXX47E56F59C747FXXXXX@AdobeOrg
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: Bearer XXXXX
-          required: true
-          type: string
-        - name: x-api-key
-          in: header
-          description: 'acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io'
-          required: true
-          type: string
-        - name: Content-Type
-          in: header
-          description: application/json
-          required: true
-          type: string
       responses:
         '200':
           description: 'If found, The details of requested jobId is returned.'
@@ -786,118 +561,30 @@ paths:
           description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
           description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
-    delete:
-      tags:
-        - GDPR central API
-      summary: 'Not in Use : : Request for deleting GDPR jobId'
-      description: 'Not In Use : Delete GDPR request for specified jobId'
-      operationId: deleteRequest()
-      parameters:
-        - name: jobId
-          in: path
-          description: jobId
-          required: true
-          type: string
-        - name: x-gw-ims-org-id
-          in: header
-          description: XXXXX47E56F59C747FXXXXX@AdobeOrg
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: Bearer XXXXX
-          required: true
-          type: string
-        - name: x-api-key
-          in: header
-          description: 'acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io'
-          required: true
-          type: string
-        - name: Content-Type
-          in: header
-          description: application/json
-          required: true
-          type: string
-      responses:
-        '202':
-          description: Delete request Accepted
-          schema:
-            $ref: '#/definitions/ResponseEntity'
-        '400':
-          description: Bad Request. The request is malformed
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '401':
-          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '403':
-          description: Forbidden. That combination of arguments is not allowed.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '404':
-          description: Not Found. The resource the client is looking for isn't there.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '405':
-          description: Method Not Allowed. Client sent a request using a HTTP method that the server doesn't support.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '406':
-          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '422':
-          description: Unprocessable Entity. Client sent a correct request that contained invalid values for one or more parameters.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '500':
-          description: Internal Server Error. This is an indicator of a server-side error.
-        '502':
-          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
-        '503':
-          description: Service Unavailable. This is an indicator of a potential server overload.
-        '504':
-          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
   '/{parentJobId}/child':
+    parameters:
+      - name: parentJobId
+        in: path
+        description: parentJobId
+        required: true
+        type: string
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
     post:
       tags:
-        - GDPR central API
-      summary: Creating Child job for an existing parent jobId
-      description: An authenticated user can submit requests for creating Child job for an existing parent jobId
-      operationId: handleExternalRequest
+        - Privacy Service
+      summary: Create a child job for an existing parent job by ID.
+      description: An authenticated user can submit requests for creating a child job for an existing parent job.
+      operationId: createChildJob
       parameters:
-        - name: parentJobId
-          in: path
-          description: parentJobId
-          required: true
-          type: string
         - in: body
           name: body
           description: JSON file or valid JSON to submit requests
           required: true
           schema:
             $ref: '#/definitions/ChildJobRequest'
-        - name: x-gw-ims-org-id
-          in: header
-          description: XXXXX47E56F59C747FXXXXX@AdobeOrg
-          required: true
-          type: string
-        - name: Authorization
-          in: header
-          description: Bearer XXXXX
-          required: true
-          type: string
-        - name: x-api-key
-          in: header
-          description: 'acp_XXX_XXXX, IMS Client id which is whitelisted and subscribed to consume services on adobe.io'
-          required: true
-          type: string
-        - name: Content-Type
-          in: header
-          description: application/json
-          required: true
-          type: string
+        - $ref: '#/parameters/json-header'
       responses:
         '200':
           description: successful operation
@@ -949,6 +636,37 @@ paths:
           description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
           description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
+parameters:
+  authorization:
+    name: Authorization
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer". For more information on how to obtain this value, visit the <a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md">authentication tutorial</a>.'
+    required: true
+    type: string
+    in: header
+  x-gw-ims-org-id:
+    name: x-gw-ims-org-id
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the <a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md">authentication tutorial</a>.'
+    required: true
+    type: string
+    in: header
+  x-api-key:
+    name: x-api-key
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the <a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md">authentication tutorial</a>.'
+    required: true
+    type: string
+    in: header
+  json-header:
+    name: Content-Type
+    description: 'application/json'
+    required: true
+    type: string
+    in: header
+  multipart-header:
+    name: Content-Type
+    description: 'multipart/form-data'
+    required: true
+    type: string
+    in: header
 definitions:
   A CompanyContext model:
     type: object
@@ -984,14 +702,13 @@ definitions:
         items:
           type: string
       expandIds:
-        type: string
-        pattern: (?i)true|(?i)false
+        type: boolean
       analyticsDeleteMethod:
         type: string
-        pattern: (?i)anonymize|(?i)purge
+        enum: [anonymize,purge]
       priority:
         type: string
-        pattern: (?i)low|(?i)normal
+        enum: [low,normal]
   A GDPR Response model:
     type: object
     properties:
