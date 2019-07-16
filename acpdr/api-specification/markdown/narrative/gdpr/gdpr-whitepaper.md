@@ -121,7 +121,7 @@ Adobe Experience Platform GDPR Service automates consumer GDPR `access` and `del
 2. Upon request of a consumer/Data Subject and to learn what data the brand has or to delete their data, the Controller collects identities from the Data Subject, verifies that data and submits it via Adobe Experience Platform GDPR Service.
 3. Adobe Experience Cloud responds to GDPR requests and returns data to the Controller
 
-Using Platform GDPR Service involves some up-front preparation on the part of brands. The following section outlines the technical documentation for these preparatory steps, as well as how to submit requests to Adobe Experience Cloud through the Adobe Experience Platform Privacy Service API.
+Using Platform GDPR Service involves some up-front preparation on the part of brands. The following section outlines the technical documentation for these preparatory steps, as well as how to submit requests to Adobe Experience Cloud through the API.
 
 ## Example workflow: submitting GDPR requests using Adobe Experience Platform GDPR Service
 
@@ -148,8 +148,8 @@ Following is an example workflow for clarification purposes only; its purpose is
 | Create a new integration to Platform GDPR Service through Adobe&#39;s IO Console (console.adobe.io)  |
 | Define your own API key (through the IO Console)  |
 | Generate your own JWT tokens to exchange for an authorized access token according to the Adobe IO standards and documented process ( [https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html](https://www.adobe.io/apis/cloudplatform/console/authentication/gettingstarted.html))  |
-| Leverage an HTTP protocol tool to send requests to the Privacy Service API (cURL, Postman, etc.)  |
-| Inventory all Adobe Experience Cloud products you use and make sure you know if they are connected to your Marketing Cloud Organization ID(s), aka IMS Org ID. If any products are not connected with a Marketing Cloud Organization ID, then note the legacy organizational ID for that product. This is important because a GDPR request needs one or more Marketing Cloud Organization IDs followed by multiple legacy org IDs. You could have multiple Marketing Cloud Organization IDs and if you wish to address data stored under any of those IDs, you must submit a separate request for each Marketing Cloud Organization ID. If a brand only has legacy org IDs and no Marketing Cloud Organization IDs, then you will need to talk to your Customer Success Manager or to Adobe Customer Care to be provisioned with a new Marketing Cloud Organization ID, which will allow you to issue GDPR requests via the Privacy Service API.  |
+| Leverage an HTTP protocol tool to send requests to the API (cURL, Postman, etc.)  |
+| Inventory all Adobe Experience Cloud products you use and make sure you know if they are connected to your Marketing Cloud Organization ID(s), aka IMS Org ID. If any products are not connected with a Marketing Cloud Organization ID, then note the legacy organizational ID for that product. This is important because a GDPR request needs one or more Marketing Cloud Organization IDs followed by multiple legacy org IDs. You could have multiple Marketing Cloud Organization IDs and if you wish to address data stored under any of those IDs, you must submit a separate request for each Marketing Cloud Organization ID. If a brand only has legacy org IDs and no Marketing Cloud Organization IDs, then you will need to talk to your Customer Success Manager or to Adobe Customer Care to be provisioned with a new Marketing Cloud Organization ID, which will allow you to issue GDPR requests via the API.  |
 | Curate your data in Adobe Application Manager (AAM) if relevant. Organize a process to obtain Data Subject identity mapping to Adobe identifiers when using onboarders or hashing mechanisms; e.g., hashed CRM ID in AAM.  |
 
 ### 2. Curate and label your data
@@ -161,7 +161,7 @@ When you identify fields that contain any GDPR-relevant data, you should label t
 **How to label data: an example**
 
 
-Let&#39;s say the Controller plans to collect cookie IDs from Data Subjects to process their GDPR requests. These cookie IDs are stored in a Report Suite in Adobe Analytics. To create a label for cookie IDs, the Controller must supply a label of his/her own or use Adobe Experience Platform&#39;s Data Usage Labeling &amp; Enforcement (DULE) framework in Analytics (if available). The Controller then takes the label from this activity and codes it as an API parameter in the Privacy Service API. When Adobe Analytics receives this GDPR request from the API call, it can identify that the supplied data refers to a cookie ID in a particular Report Suite, and return that data or process the deletion.
+Let&#39;s say the Controller plans to collect cookie IDs from Data Subjects to process their GDPR requests. These cookie IDs are stored in a Report Suite in Adobe Analytics. To create a label for cookie IDs, the Controller must supply a label of his/her own or use Adobe Experience Platform&#39;s Data Usage Labeling &amp; Enforcement (DULE) framework in Analytics (if available). The Controller then takes the label from this activity and codes it as an API parameter in Adobe Experience Cloud&#39;s GDPR API. When Adobe Analytics receives this GDPR request from the API call, it can identify that the supplied data refers to a cookie ID in a particular Report Suite, and return that data or process the deletion.
 
 ![GDPR Labels](images/gdpr-labels.png)
 
@@ -211,7 +211,7 @@ Integrating with Platform GDPR Service helps Data Controllers orchestrate data c
 
 >**Important reminder:** It&#39;s a good idea to make it clear to consumers/Data Subjects that `access/delete` requests are treated on a per-device basis. Therefore, a Data Subject must make separate `access/delete` requests to your brand from each of his/her devices (e.g., mobile, laptop, desktop, tablet).
 
-Following are steps to prepare for submitting GDPR requests using HTTP, as well as more detailed information about the Privacy Service API.
+Following are steps to prepare for submitting GDPR requests using HTTP, as well as more detailed information about the GDPR API.
 
 **To submit GDPR requests:**
 
@@ -240,7 +240,7 @@ Following are steps to prepare for submitting GDPR requests using HTTP, as well 
 - Submit request and capture return data (job ID&#39;s per user)
   - Make an HTTP request to API programmatically or download/access an HTTP utility and submit a request
 
-Following is more detailed information about Adobe Experience Platform GDPR Service. The resource path for all requests to the service is [here](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md). The Platform GDPR Service method types are listed below:
+Following is more detailed information about Adobe Experience Platform GDPR Service. The resource path for all requests to the service is [here](https://www.adobe.io/apis/cloudplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/use-cases/gdpr-api-overview.md). The Platform GDPR Service method types are listed below:
 
 |   **API Name** | **Method Type** | **Path** | **Description** | **Input parameters** | **Response** |
 | --- | --- | --- | --- | --- | --- |
