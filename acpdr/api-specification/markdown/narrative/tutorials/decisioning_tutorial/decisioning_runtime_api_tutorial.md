@@ -253,7 +253,7 @@ The values of the context data objects are available to be used in PQL expressio
             where e.type = \"productSearch\" 
               and e.category = p.category 
               and p.gender in (\"female\",\"unisex\")
-       )"
+       )",
     "xdm:format": "pql/text",
     "xdm:type": "PQL"
   }
