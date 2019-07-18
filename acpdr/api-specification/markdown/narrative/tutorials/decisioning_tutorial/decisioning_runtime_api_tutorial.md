@@ -4,8 +4,8 @@ This document provides a tutorial for working with the runtime services of Decis
 
 The tutorial covers the following:
 
-[Compilation of decision models](#compilation-of-decision-models)  
-[Synchronous calls and streaming requests to execute decisions](#synchronous-calls-and-streaming-requests-to-execute-decisions)  
+[Compilation of decision models](#Compilation-of-decision-models)  
+[REST API calls to execute decisions](#REST-API-calls-to-execute-decisions)  
 [Dynamic context data in decisioning requests](#Dynamic-context-data-in-decisioning-requests)  
 
 ## Getting started
@@ -51,7 +51,7 @@ Offers are continuously created, changes occur in their lifecycle status, or the
 
 ### Request
 
-```
+```shell
 curl -X GET ${decision_service_endpoint_path}/${containerId}/offers?activityId${activityURI} \
   -H 'Accept: application/vnd.adobe.xdm+json \
   -H 'x-api-key: ${API_KEY}' \
@@ -63,7 +63,7 @@ curl -X GET ${decision_service_endpoint_path}/${containerId}/offers?activityId${
 
 The parameter `activityId` can be repeated in the url and up to 30 different activity references can be given in one request. The response will be useful to spot any unexpected circumstances resulting from the setup and will look like: 
 
-```
+```json
 {
   "xdm:activityOffers": [
     {
@@ -120,7 +120,7 @@ A diagnostics API is provided to obtain any compilation errors that occurred in 
 
 #### Request
 
-```
+```shell
 curl -X GET ${decision_service_endpoint_path}/${containerId}/diagnostics \
   -H 'Accept: application/vnd.adobe.xdm+json \
   -H 'x-api-key: ${API_KEY}' \
@@ -132,7 +132,7 @@ The only parameter for this API call is `containerId`. The results all updates f
 
 #### Response
 
-```
+```json
 {
   "xdm:operations": {
     "xdm:offerCatalogUpdate": {
@@ -147,7 +147,7 @@ The only parameter for this API call is `containerId`. The results all updates f
 }
 ```
 
-## Synchronous calls and streaming requests to execute decisions
+## REST API calls to execute decisions
 
 The REST API is one of the routes for applications running on top of Platform to obtain the next best experience based on the rules, models and constraints that the organization has set for their users. Applications send one of the profile’s identities (profile ID and identity namespace) the decisioning service will look up the profile and the information is used to apply the business logic. Additional context data can be passed to the request and if specified in the business rules will be included in the data to make the decision.
 
@@ -161,7 +161,7 @@ The request schema and version supported at this time is `https://ns.adobe.com/e
 
 ### Request
 
-```
+```shell
 curl -X POST ${decision_service_endpoint_path}/${containerId}/diagnostics \
   -H 'Accept: application/json, application/problem+json \
   -H '
@@ -204,7 +204,7 @@ The request per this schema contains an array of URIs referencing offer activiti
 
 * **`xdm:offerActivities`** - This mandatory property is an array of objects where each item contains data about the offer activity. The offer activity has the following properties:
   * **`xdm:offerActivity`** - The unique identifier (URI) of the activity. This is the value of the `@id` property of the offer activity.
-  * **`xdm:identityMap`** - A mandatory property per XDM schema `https://ns.adobe.com/xdm/context/identitymap` that defines a map containing a set of end user identities, keyed on either namespace integration code or the namespace ID of the identity. The values of the map are an array, meaning that more than one identity of each namespace may be carried.
+* **`xdm:identityMap`** - A mandatory property holding a JSON object that complies with the XDM schema `https://ns.adobe.com/xdm/context/identitymap`. The property defines a map where the key is an identity namespace code and the value is a list of end user identifiers in the given namespace. If m.
 * **`xdm:contextData`** - An optional property that contains items that are described by an reference to their schema. Each context data item in the array must have the following properties:
   * **`@type`** - A mandatory property referencing the XDM schema of the object in this item.
   * **`xdm:data`** - A mandatory property containing the object properties per the XDM schema given in the `@type` property.
@@ -213,7 +213,7 @@ The request per this schema contains an array of URIs referencing offer activiti
 
 The previous section indicated how XDM objects can be passed to a decision request. The following is an example of such context object array:
 
-```
+```json
 "xdm:contextData": [
   {
     "@type":" https://ns.adobe.com/${TENANT_ID_OF_ORG}/schemas/${NUMERIC_SCHEMA_ID};version=1",
@@ -221,7 +221,7 @@ The previous section indicated how XDM objects can be passed to a decision reque
       "${TENANT_ID_OF_ORG}": {
         "productDetails":{ 
           "xdm:gender":      "unisex",
-          "xdm:fabriaction": "leather",
+          "xdm:fabrication": "leather",
           "xdm:category":    "wallets",
         }
       }
@@ -230,17 +230,17 @@ The previous section indicated how XDM objects can be passed to a decision reque
 ]
 ```
 
-The schema must have been constructed by your organization. To learn about constructing schemas please refer to the [Schema Editor Tutorial](../schema_editor_tutorial/schema_editor_tutorial.md). Your schema will be in a namespace "https<span></span>://ns.adobe.com/${TENANT_ID_OF_ORG}/schemas".
+The schema must have been constructed by your organization. To learn about constructing schemas please refer to the [Schema Editor Tutorial](../schema_editor_tutorial/schema_editor_tutorial.md). Your schema will be in a namespace `https://ns.adobe.com/${TENANT_ID}/schemas`.
 
 The [Schema Registry API developer guide](../schema_registry_api_tutorial/schema_registry_api_tutorial.md) explains how schemas can be accessed programmatically and how a developer obtains the tenant ID and the numeric identifier of your schema. The version number is required and is also provided by the schema registry APIs.
 
 A schema defined by an organization will typically have a root property named `_${tenantID}`, also called the tenant namespace string.
-Note that the proerties used from a global schema component such as `https://ns.adobe.com/xdm/context/product` have a namespace prefix `xdm:`. In this case the organization-defined property `productDetails` was constructed with that datatype. While tenant properties are nested in a property named after the tenant namespace, datatypes that are globally available use the reserved prefix `xdm:` to prevent collisions of property names.
+Note that the proerties used from a global schema component such as _`https://ns.adobe.com/xdm/context/product` have a namespace prefix `xdm:`. In this case the organization-defined property `productDetails` was constructed with that datatype. While tenant properties are nested in a property named after the tenant namespace, datatypes that are globally available use the reserved prefix `xdm:` to prevent collisions of property names.
 
 Multiple data objects can be listed in the `xdm:contextData` property. Each object must identify its type via the `@type` property.
-The values of the context data objects are available to be used in PQL expressions, for example in the condition of an eligibility rule. The context data object muse be addressed via the special path reference expression `@{schemaId}`. The expressions that follow this reference expression are regular path expressions that access the data object’s properties:
+The values of the context data objects are available to be used in PQL expressions, for example in the condition of an eligibility rule. The context data object must be addressed through the special path reference expression `@{schemaId}`. The expressions that follow this reference expression are regular path expressions that access the data object’s properties:
 
-```
+```json
 {
   "xdm:name": "Eligible for a free gender-specific item of interest",
   "xdm:condition": {
@@ -260,6 +260,15 @@ The values of the context data objects are available to be used in PQL expressio
 }
 ```
 
-In the example above, the variable `p` is iterating over the array of objects that were marked with the type that is used in the path reference expression `@{schemaId}`. 
+In the example above, the variable `p` is iterating over the array of objects that were marked with the `@type` = `https://ns.adobe.com/${TENANT_ID}/schemas/${NUMERIC_SCHEMA_ID}}`. 
 
-The PQL syntax does not use prefixes in properties. Global properties, by default, are simply referenced without the `xdm:` prefix. Properties your organization defines are nested within an additional property `_${tenantId}`, the tenant namespace string. To be able to reference the custom-defined properties directly, the variable `p` is bound to the result of the path that dereferences the additional nesting property.
+Note that the PQL syntax does not use prefixes in property names. Global properties, by default, are simply referenced without the `xdm:` prefix. Properties your organization defines are nested within an **additional** property named after the tenant namespace (in the example indicated by the variable `${TENANT_ID}`). To be able to reference the custom-defined properties directly, the variable `p` is bound to the result of the path that dereferences the additional nesting property.
+
+## Usage of profile records
+
+All records for profile and experience event entities are managed already in the profile store. By passing one or more profile identity to the request the profile for those identieties will be identified and looked up from the store. The data is then automatically available to decision rules and models evaluated by the decision strategy.
+
+To retrieve the profile and experience records the default merge policy is applied. 
+Note, that after uploading profile records to the Platform datalake there is a slight delay until the profile records can be looke up. The same holds true for ingesting profile and experience records via the streaming APIs, only after a few seconds the data will be available for evaluating decision rules that evaluate profile and experience event data.
+
+To learn more about addding data to profiles, see the tutorial [Configure Real-time Customer Profiles using API](../../tutorials/configuring_up_tutorial/configuring_up_tutorial.md)
