@@ -1,11 +1,11 @@
-# Creating and managing repository entities using APIs
+# Manage Decisioning objects and rules using APIs
 
 This document provides a tutorial for working with the business entities of Decisioning Service using Adobe Experience Platform APIs. 
 
 The tutorial has two parts:
 
 1. Generic Repository APIs to manage business objects. These APIs are generic in the sense that they provide create, read, update, delete and search capabilities for any type of business objects. The general navigation model is described and the relationship to the Hypertext Application Language is explained.
-2. Applying the knowledge about the design of the repository APIs, the [second part](#Creating-and-managing-Offer-Decisioning-entities-using-APIs) focuses on the business entities that are managed via the repository APIs. With the same APIs applied the only difference between managing two different entities such as an activity and a business rule is the request and response payload, plus the necessary header values that indicate the type of object that is managed.  
+2. Applying the knowledge about the design of the repository APIs, the [second part](#creating-and-managing-offer-decisioning-entities-using-apis) focuses on the business entities that are managed via the repository APIs. With the same APIs applied the only difference between managing two different entities such as an activity and a business rule is the request and response payload, plus the necessary header values that indicate the type of object that is managed.  
   
 
 ## Getting started
@@ -16,7 +16,7 @@ This tutorial requires a working understanding of the Experience Platform servic
 - [Decisioning Service](../../technical_overview/decisioning-overview/decisioning-service-overview.md): Provides the framework for adding and removing offers and creating algorithms for choosing the best to present during a customer's experience.
 - [Profile Query Language (PQL)](../../technical_overview/unified_profile_architectural_overview/unified_profile_pql.md): PQL is a powerful language to write expressions over XDM instances. PQL is used to define decision rules.
 
-## Tutorial
+# Managing repository entities using APIs
 
 This tutorial requires you to have completed the [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
@@ -24,7 +24,7 @@ This tutorial requires you to have completed the [Authentication to Adobe Experi
 * x-api-key: `{API_KEY}`
 * x-gw-ims-org-id: `{IMS_ORG}`
 
-### Repository API conventions
+## Repository API conventions
 
 Decisioning Service is controlled by a number of business objects that are related to each other. All business objects are stored in the Platform’s Business Object Repository. A key feature of this repository is that the APIs are orthogonal to the type of business object. Instead of using a POST, GET, PUT, PATCH or DELETE API that indicates the type of resource in its API endpoint, there are only 6 generic endpoints but they accept or return a parameter that indicates the type of the object when that disambiguation is needed. The schema must be registered with the repository, but beyond that the repository is usable for an open-ended set of object types.  
 
@@ -63,9 +63,6 @@ The list of accessible containers is obtained by calling the repository root end
 ## Managing access to containers
 
 An administrator can group similar principals, resources, access permissions into profiles. This reduces the management burden and is supported by [Adobe’s Admin Console UI](https://adminconsole.adobe.com). You must be a product administrator for the Adobe Adobe Experience Platform and Offers in your organization to create profiles and assign users to them.It is sufficient to create product profiles that match certain permissions in a one-time step and then simply add users to those profiles. Profiles act as groups that have been granted permissions and every real user or technical user in that group inherits those permissions. 
-
-## Generic APIs to manage entities
-
 ### List containers accessible to users and integrations
 
 When the administrator has granted access to containers for regular users or integrations those containers will show up in the so-called “Home” list of the repository. The list may be different for different users or integrations as it is a subset of all containers accessible to the caller. The list of containers can be filtered by their association to product contexts. The context for Platform product is `dma_offers`. 
@@ -127,6 +124,8 @@ curl -X GET ${endpoint_path}/?product=dma_offers \
 Note the `instanceId` listed in the results item(s). It is used as the `containerId` parameter in the APIs to read and manipulate regular business objects. 
 
 The list is already filtered for the users per their access privileges but can be further filtered by a property query.
+
+## Generic APIs to manage entities
 
 ### Create instances
 
@@ -536,7 +535,7 @@ Offers are a type of decisioning option and the JSON schema of offers inherits t
   } 
 } 
 ```
-See [Updating and patching instances](#Updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer` or `https://ns.adobe.com/experience/offer-management/fallback-offer` if the offer is a fallback offer.
+See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer` or `https://ns.adobe.com/experience/offer-management/fallback-offer` if the offer is a fallback offer.
 
 Each offer instance can have an optional set of properties that are characteristic for only that instance. Different offers can have different keys for those properties, the values must, however be strings. These properties can be used in decision and segmentation rules. They are also accessible to assemble the decided experience to further customize the messages.
 
@@ -559,7 +558,7 @@ A simple PATCH operation on the instance is usually used to just manipulate an `
   }
 ] 
 ```
-See [Updating and patching instances](#Updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer` or `https://ns.adobe.com/experience/offer-management/fallback-offer` if the offer is a fallback offer.
+See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer` or `https://ns.adobe.com/experience/offer-management/fallback-offer` if the offer is a fallback offer.
 
 ### Representations and placements
 
@@ -581,7 +580,7 @@ Before representations can be added to an offer the placement instances must exi
   "xdm:description": "Generic placeholder for offers in the Kiosk application. \nTechnical constraints: max width 530dpi, min width 480 dpi, aspect ratio 12:5. \nStylistic constraints: single background color with text block in complementary colors, \nNo magenta, please!"
 } 
 ```
-See [Updating and patching instances](#Updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer` or `https://ns.adobe.com/experience/offer-management/fallback-offer` if the offer is a fallback offer.
+See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer` or `https://ns.adobe.com/experience/offer-management/fallback-offer` if the offer is a fallback offer.
 
 A placement instance can have the following properties:
 
@@ -642,7 +641,7 @@ An example of PATCH operation on an offer instance shows how to manipulate the r
   }
 ]' 
 ```
-See [Updating and patching instances](#Updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer` or `https://ns.adobe.com/experience/offer-management/fallback-offer` if the offer is a fallback offer.
+See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer` or `https://ns.adobe.com/experience/offer-management/fallback-offer` if the offer is a fallback offer.
 
 The PATCH operation may fail when there is no property `xdm:representations` yet. In that case the add operation above could be preceded by an another add operation that creates the `xdm:representations` array or the single add operation sets the array directly.
 The schemas and properties described are used for all offer types, personalization offers as well as fallback offers. The following two sections on constraints and decision rules of explain aspects of personalization offers.
@@ -672,7 +671,7 @@ Changing a calendar constraint can be accomplished with the following PATCH call
   }
 ]' 
 ```
-See [Updating and patching instances](#Updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer`. Fallbacl offers do not have any constraints.
+See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer`. Fallbacl offers do not have any constraints.
 
 ### Capping constraints
 
@@ -695,7 +694,7 @@ Setting or changing the capping constraint on a personalization offer can be acc
   }
 ]' 
 ```
-See [Updating and patching instances](#Updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer`. Fallbacl offers do not have any constraints.
+See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer`. Fallbacl offers do not have any constraints.
 
 To remove the capping values the operation "add" is replaced with the operation "remove". Note that the capping values exists individually and can be set or removed individually as well.
 
@@ -719,7 +718,7 @@ Adding and deleting a rule can be accomplished with a PATCH operation as well:
   }
 ]' 
 ```
-See [Updating and patching instances](#Updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer`. Fallbacl offers do not have any constraints.
+See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer`. Fallbacl offers do not have any constraints.
 
 Note that the eligibility rule is embedded in the `xdm:selectionConstraint` property together with the calendar constraints. PATCH operations should not attempt remove the entire `SelectionConstraint` property.
 
@@ -747,7 +746,7 @@ curl -X PATCH ${endpoint_path}/${containerId}/instances/${instanceId} \
   }
 ]'
 ```
-See [Updating and patching instances](#Updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer`. Fallbacl offers do not have any ranking properties.
+See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer`. Fallbacl offers do not have any ranking properties.
 
 ## Managing decision rules
 
@@ -774,7 +773,7 @@ https://ns.adobe.com/experience/offer-management/eligibility-rule. The `_instanc
   }
 }
 ```
-See [Updating and patching instances](#Updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/eligibility-rule`.
+See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/eligibility-rule`.
 
 The value in the rule’s condition property contains a PQL expression. The context data is referenced via the special path expression @{schemaID}.
 
@@ -803,7 +802,7 @@ https://ns.adobe.com/experience/offer-management/tag. The `_instance` property f
   "xdm:name": "credit card"
 } 
 ```
-See [Updating and patching instances](#Updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/tag`.
+See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/tag`.
 
 
 An offer instance can be created with the list of tag references like:
@@ -829,7 +828,7 @@ Alternatively, an offer could be patched to change its list of tags:
   }
 ]' 
 ```
-For both cases, see [Updating and patching instances](#Updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer`.
+For both cases, see [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer`.
 
 Note that the `xdm:tags` property must already exist for the add operation to succeed. It no tags exist in an instance the PATCH operation can first add the array property and then add a tag reference to that array.
 
@@ -848,7 +847,7 @@ https://ns.adobe.com/experience/offer-management/offer-filter. The `_instance` p
   ]
 }
 ```
-See [Updating and patching instances](#Updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/offer-filter`.
+See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/offer-filter`.
 
 * **`xdm:filterType`** - This property indicates whether the filter is set up using tags or directly references offers by their ids. When the filter is set up to use tags the filter type can further indicate if all tags must match the tags on a particular offer or if any of the given tags is sufficient for the offer to qualify for the filter. The valid values of this enum property are: 
   * `offers`
@@ -894,7 +893,7 @@ The activity instances are created with schema identifier
   "xdm:fallback":  ":fallback-offer:f6529b31b3c0ba6"
 }
 ```
-See [Updating and patching instances](#Updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/offer-activity`.
+See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/offer-activity`.
 
 * **`xdm:name`** - This mandatory property contains activity name. The name is displayed in various user interfaces.
 * **`xdm:status`** - This property is used for lifecycle management of the instance. The value represents a workflow state that is used to indicate if the activity is still under construction (value = draft), can be generally considered by the runtime (value = live) or if it should not be used any longer (value = archived).
@@ -925,4 +924,4 @@ Before activity instances can be created a fallback offer must exist that qualif
   ]
 }  
 ```
-See [Updating and patching instances](#Updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/fallback-offer`.
+See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/fallback-offer`.
