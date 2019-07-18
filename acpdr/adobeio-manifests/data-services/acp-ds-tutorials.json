@@ -155,15 +155,15 @@
       "importedFileName": "managing_decisioning_entities_tutorial",
       "pages": [],
       "path": "api-specification/markdown/narrative/tutorials/decisioning_tutorial/decisioning_entities_api_tutorial.md",
-      "title": "Manage Decisioning Service entities using APIs",
-      "description": "Create and manage entities supporting Decisioning Service features."
+			"title": "Manage Decisioning objects and rules using APIs",
+			"description": "Create and manage business objects supporting Decisioning Service features."
     },
     {
       "importedFileName": "using_decisioning_runtime_tutorial",
       "pages": [],
       "path": "api-specification/markdown/narrative/tutorials/decisioning_tutorial/decisioning_runtime_api_tutorial.md",
       "title": "Work with the Decisioning Service runtime using APIs",
-      "description": "Create decision models and make decisioning requests."
+			"description": "Make decisioning requests to obtain the next best offer."
     },
     {
       "importedFileName": "privacy_service_api_tutorial",
