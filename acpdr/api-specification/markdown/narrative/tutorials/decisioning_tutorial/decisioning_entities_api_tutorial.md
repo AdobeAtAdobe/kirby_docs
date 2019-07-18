@@ -700,7 +700,7 @@ curl -X PATCH ${endpoint_path}/${containerId}/instances/${instanceId} \
 A capping constraint is a component in a decision option that defines the parameters for capping. Capping is the process of limiting how many times an option can be proposed, for an individual profile as well as across all profiles. The properties hold an integer value that must be greater or equal to 1. The properties are nested inside a property `xdm:cappingConstraint`:
 
 * **`xdm:globalCap`** - A global cap is a constraint on how many times an offer can be proposed in totality.
-* **`xdm:proefileCap`** - A profile cap is a constraint on how many times an offer can be proposed to a certain profile.
+* **`xdm:profileCap`** - A profile cap is a constraint on how many times an offer can be proposed to a certain profile.
 
 Setting or changing the capping constraint on a personalization offer can be accomplished with the following patch call:
 
