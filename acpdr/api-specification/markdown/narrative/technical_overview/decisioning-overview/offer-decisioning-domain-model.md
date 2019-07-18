@@ -46,6 +46,7 @@ The following sections explain the components for the Offer Decisioning domain i
 General offers, also called personalized offers, are the options at the center of the offer decision activities. They have attributes like name and status. The status attribute indicates if the entity is ready to be included in the list of active approved offers. General offers will have several constraints added to them. More about this in section ‎Constraints [below](#constraints).
 
 ## Content in Offers
+
 ### Offer Placements
 
 Placements define content constraints and used with an activity to specify the place into which the next best experience is delivered. This reduces further the number of options that can be considered and is another constraint imposed by the activity. This is called the placement constraint. Only options that have content meeting a placement constraint, such as offers, will be considered. This is evaluated in the early stages of the decision strategy. When option objects change the placement constraints of each activity are reevaluated and the option may come into consideration or fall out of it for one or more activities.
