@@ -583,12 +583,9 @@ curl -X POST \
       "version": 1
     },
     "filter": {
-      "segments": [
-        {
-          "segmentId": "4edc8488-2c35-4f6d-b4c6-9075c68d2df4",
-          "segmentNs": "ups"
-        }
-      ],
+      "segments": [{
+        "segmentId": "4edc8488-2c35-4f6d-b4c6-9075c68d2df4"
+      }],
       "fromIngestTimestamp": "2018-10-25T13:22:04-07:00"
     },
     "additionalFields" : {
@@ -608,19 +605,18 @@ curl -X POST \
   }'
 ```
 
-* `fields` - *(Optional)* Limits the data fields to be included in the export to only those provided in this parameter. The same parameter is also available when creating a segment, as discussed in the [Segment your user base](#segment-your-user-base) section earlier in this document. Therefore, the fields in the segment may have already been filtered. Omitting this value will result in all fields being included in the exported data.
-* `mergePolicy`: *(Optional)* Specifies the merge policy to govern the exported data. Include this parameter when there are multiple segments being exported. Omitting this value will cause the Export Service to use the merge policy provided by the segment.
+* `fields` - Limits the data populated within the members in the dataset. This parameter is also available when creating a segment, as discussed in the [Segment your user base](#segment-your-user-base) section earlier in this document. Therefore, the fields in the segment may have already been filtered. Omitting this value will result in all fields being included in the exported data.
+* `filter`: Specifies one or more of the following filters to apply to the segment before export:
+  * `segments`: Specifies the segments to export. Omitting this value will result in all data from all segments being exported. Accepts an array of segment objects, each containing a `segmentId` attribute populated with the ID of the segment to export.
+  * `fromIngestTimestamp`: Limits exported events to only include those ingested after this timestamp. This is not the event time itself but the ingestion time for the events. The timestamp must be provided in [RFC 3339](https://tools.ietf.org/html/rfc3339) format.
+* `mergePolicy`: Specifies the merge policy to govern the exported data. Include this parameter when there are multiple segments being exported. Omitting this value will cause the Export Service to use the merge policy provided by the segment.
   * `id`: The ID of the merge policy.
   * `version`: The specific version of the merge policy to use. Omitting this value will default to the most recent version.
-* `filter`: *(Optional)* Specifies one or more of the following filters to apply to the segment before export:
-  * `segments`: Specifies the segments to export. Omitting this value will result in all data from all segments being exported. Accepts an array of segment objects, each containing a `segmentId` attribute populated with the ID of the segment to export. If applicable, the listed objects can also include the namespace of the segment under a `segmentNs`attribute.
-  * `fromIngestTimestamp`: Limits exported profiles to only include those that have been updated after this timestamp. The timestamp must be provided in [RFC 3339](https://tools.ietf.org/html/rfc3339) format.
-* `additionalFields > eventList`: *(Optional)* Controls the time series event fields exported for child or associated objects by providing one or more of the following settings:
+* `additionalFields > eventList`: Controls the time series fields exported for child or associated objects by providing one or more of the following settings:
   * `fields`: Control the fields to export.
   * `filter`: Specifies criteria that limits the results included from associated objects. Expects a minimum value required for export, typically a date.
-      * `fromIngestTimestamp`: Filters time series events to those that have been ingested after the provided timestamp. This is not the event time itself but the ingestion time for the events.
-* `destination > datasetId`: (**Required**) The ID of the dataset which will persist the audience members meeting the conditions of the related segment definition.
-* `schema > name`: (**Required**) The name of the schema associated with the dataset being exported to.
+* `destination > datasetId`: (**Required**) Indicates the dataset which will persist the XDM Profiles meeting the conditions of the related segment definition.
+* `schema > name`: (**Required**) The name of the schema associated with the exported dataset.
 
 #### Response
 
