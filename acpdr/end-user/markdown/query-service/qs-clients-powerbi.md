@@ -4,7 +4,7 @@ PC users can install Power BI from [https://powerbi.microsoft.com/en-us/desktop/
 
 ## Set up Power Bi
 
-Once you have Power BI installed, you need to set up the necessary components to support the PostgreSQL connector. Follow these steps:
+After you have Power BI installed, you need to set up the necessary components to support the PostgreSQL connector. Follow these steps:
 
 1. Procure and install `npgsql`, a .NET driver package for PostgresSQL that is the official way for PowerBI to connect.
 
@@ -36,7 +36,7 @@ After performing those preparatory steps, you can connect Power BI to Query Serv
 
 5. Click **Advanced options**, and then uncheck **include relationship columns**. Do not check **Navigate using full hierarchy**.
 
-6. (Optional but recommended when "all" is declared for the Database) Enter a SQL statement.
+6. (Optional but recommended when "all" is declared for the database) Enter a SQL statement.
 
     ```
     SELECT web.webPageDetails.name AS Page_Name, 
