@@ -1,324 +1,109 @@
 ---
 
 title: Adobe Experience Platform Release Notes
-description: Experience Platform v1.0 release notes June 27, 2019
+description: Experience Platform release notes June 28, 2019
 doc-type: release notes
-last-update: May 31, 2019
+last-update: June 27, 2019
 author: crhoades
 
 ---
 
 # Adobe Experience Platform release notes 
-## v1.0, June 27, 2019
+## Release date: June 28, 2019
 
-New features in Adobe Experience Platform.
-
-* [Data Governance](#data-governance)
-* [Data Ingestion and Management](#data-ingestion-and-management)
+New features in Adobe Experience Platform:
 * [Data Science Workspace](#data-science-workspace)
 * [Decisioning Service](#decisioning-service)
-* [Experience Data Model (XDM) and XDM System](#experience-data-model-xdm-and-xdm-system)
-* [Profile, Identity, and Segmentation](#profile-identity-and-segmentation)
 * [Query Service](#query-service)
 
-## Data Governance
-
-**New features**
-
-| Feature    | Description  |
-| -----------| ---------- |
-| Feature A  | Text |
-| Feature B  | Text |
-| Feature C  | Text |
-
-**Fixes**
-
-* Fix
-* Fix
-* Fix
-* Fix
-
-**Known issues**
-
-* Issue
-* Issue
-
-For more information, please see the [Data Usage Labeling and Enforcement (DULE) User Guide](https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!end-user/markdown/dule_overview/dule_overview.md).
-
-## Data Ingestion and Management
-
-New features in Data Ingestion and Management:
-
-* [Data Ingestion](#data-ingestion)
-* [Batch](#batch)
-* [Connectors](#connectors)
-* [Adobe Solutions](#adobe-solutions)
-* [Streaming Ingestion](#streaming-ingestion)
-* [Monitoring](#monitoring)
-* [Dataset Management](#dataset-management)
-* [Catalog](#catalog)
-* [ETL](#etl)
-
-For product documentation, see [Data Ingestion](https://www.adobe.io/apis/experienceplatform/home/data-ingestion.html).
-
-### Data Ingestion
-
-**New features**
-
-| Feature    | Description  |
-| -----------| ---------- |
-| Feature A  | Text |
-| Feature B  | Text |
-| Feature C  | Text |
-
-**Fixes**
-
-* Fix
-* Fix
-* Fix
-* Fix
-
-**Known issues**
-
-* Issue
-* Issue
-
-### Batch
-
-**New features**
-
-| Feature    | Description  |
-| -----------| ---------- |
-| Feature A  | Text |
-| Feature B  | Text |
-| Feature C  | Text |
-
-**Fixes**
-
-* Fix
-* Fix
-* Fix
-* Fix
-
-**Known issues**
-
-* Issue
-* Issue
-
-For product documentation, see [Batch Ingestion Overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md).
-
-### Connectors
-
-**New features**
-
-| Feature    | Description  |
-| -----------| ---------- |
-| Feature A  | Text |
-| Feature B  | Text |
-| Feature C  | Text |
-
-**Fixes**
-
-* Fix
-* Fix
-* Fix
-* Fix
-
-**Known issues**
-
-* Issue
-* Issue
-
-
-For product documentation, see [Connectors for Adobe Experience Platform](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md).
-
-### Adobe Solutions
-
-**New features**
-
-| Feature    | Description  |
-| -----------| ---------- |
-| Feature A  | Text |
-| Feature B  | Text |
-| Feature C  | Text |
-
-**Fixes**
-
-* Fix
-* Fix
-* Fix
-* Fix
-
-**Known issues**
-
-* Issue
-* Issue
-
-### Streaming Ingestion
-
-**New features**
-
-| Feature    | Description  |
-| -----------| ---------- |
-| Feature A  | Text |
-| Feature B  | Text |
-| Feature C  | Text |
-
-**Fixes**
-
-* Fix
-* Fix
-* Fix
-* Fix
-
-**Known issues**
-
-* Issue
-* Issue
-
-For product documentation, see [Getting Started with Adobe Experience Platform Streaming Ingestion APIs](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md).
-
-### Monitoring
-
-**New features**
-
-| Feature    | Description  |
-| -----------| ---------- |
-| Feature A  | Text |
-| Feature B  | Text |
-| Feature C  | Text |
-
-**Fixes**
-
-* Fix
-* Fix
-* Fix
-* Fix
-
-**Known issues**
-
-* Issue
-* Issue
-
-### Dataset Management
-
-**New features**
-
-| Feature    | Description  |
-| -----------| ---------- |
-| Feature A  | Text |
-| Feature B  | Text |
-| Feature C  | Text |
-
-**Fixes**
-
-* Fix
-* Fix
-* Fix
-* Fix
-
-**Known issues**
-
-* Issue
-* Issue
-
-### Catalog
-
-**New features**
-
-| Feature    | Description  |
-| -----------| ---------- |
-| Feature A  | Text |
-| Feature B  | Text |
-| Feature C  | Text |
-
-**Fixes**
-
-* Fix
-* Fix
-* Fix
-* Fix
-
-**Known issues**
-
-* Issue
-* Issue
-
-To begin working with the Catalog Service API, please review the [Catalog Service Overview](https://www.adobe.io/apis/experienceplatform/home/services/allservices.html#!api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md).
-
-### ETL
-
-**New features**
-
-| Feature    | Description  |
-| -----------| ---------- |
-| Feature A  | Text |
-| Feature B  | Text |
-| Feature C  | Text |
-
-**Fixes**
-
-* Fix
-* Fix
-* Fix
-* Fix
-
-**Known issues**
-
-* Issue
-* Issue
-
-For product documentation, see [Developing ETL Integrations for Adobe Experience Platform](https://www.adobe.io/apis/experienceplatform/home/services/allservices.html#!api-specification/markdown/narrative/integration_guides/etl_integration_guide/etl_integration_guide.md).
+Updates to existing features:
+* [Experience Data Model (XDM) and XDM System](#experience-data-model-xdm-and-xdm-system)
+* [Segmentation Service](#segmentation-service)
 
 ## Data Science Workspace
 
-Driven by machine learning and data science, Adobe Experience Platform Data Science Workspace enables you to better understand your business data and deliver customer experiences at scale.
-
-Data Science Workspace is designed with simplicity, reusability, and scalability in mind. It provides the right tools in common environments for data scientists to create, modify, and reuse machine learning models to analyze, understand, engineer, and predict data.
+Adobe Experience Platform Data Science Workspace is a fully managed service within Experience Platform that enables data scientists to seamlessly generate insights from data and content across Adobe solutions and third party systems by building and operationalizing Machine Learning Models. Data Science Workspace is tightly integrated with Platform and powers the end-to-end data science lifecycle, including exploration and preparation of XDM data, followed by the development and operationalization of Models to automatically enrich Real-time Customer Profile with Machine Learning Insights.
 
 **Key features**
 
 | Feature    | Description  |
 | -----------| ---------- |
-| JupyterLab | Open-source web-based interface to utilize Jupyter Notebooks, enabling users to create notebook documents containing live code, algorithms, visualizations, and narrative text |
-| Data Exploration | Notebook interface to read, explore, and write data from and to Experience Platform |
-| Launcher Notebooks for XDM data discovery | Quick start Jupyter Notebook templates with samples to access XDM Events, XDM Aggregators, and XDM Queries in JupyterLab |
-| Query Service Integration | Ability to execute SQL queries in Jupyter Notebooks |
-| Mountable File System | Support for accessing local files in JupyterLab, including support for Git version control |
-| User Configurable Memory | Ability to configure maximum allocable memory per JupyterLab user |
-| Feature Pipelines | Support and ability to extract and transform data features from raw data schemas into feature schemas at scale for Model development |
-| Model Authoring | Create and define machine learning models using Jupyter Notebooks, or import your own into Data Science Workspace |
-| Model Evaluation | Regression and classification model evaluation support in Python, PySpark, R, and Scala |
-| Model Scoring | Generate insights using Models in Data Science Workspace |
-| Scheduling Support | Provides the ability to automate Model training and scoring, as well as scheduling Feature Pipelines with user defined schedules. Scheduling supported only for API, UI support is expected in next release |
-| Service Gallery | API and UI support to publish a Model as an accessible service |
-| First Time User Experience | Sample workflows designed for a guided user experience, including a new Data Science Workspace overview providing a quick start and walk through for new users |
-| User Enablement | Extensive library of tutorials with 12+ topics available, structured into high level categories to mirror the Data Science Workspace life-cycle and journey |
+| Provisioning and compute isolation | Provision dedicated compute resources needed to enable data scientists to execute untrusted code within Experience Platform in a secure manner. |
+| First-time user experience | Includes out-of-the box samples for various Machine Learning frameworks and languages such as Python, R, PySpark and Scala Spark.|
+| Notebooks| Customized environment for data scientists/data engineers powered by Jupyter Notebooks to enable them to prepare data, extract features, and develop ML Models with a curated list of libraries and popular Machine Learning frameworks. |
+| Data exploration | Seamless access to XDM data ingested into Platform integrated with Platform Data Access SDK. |
+| Data visualization | Ability to execute SQL queries in Jupyter Notebooks to accelerate data prep and feature engineering.|
+| Feature pipelines | API/SDK for Scala/PySpark to deploy feature engineering pipelines for transforming core XDM data into feature schemas. |
+| Model authoring | Template and Runtimes that enable data scientists to focus on Model development without having to implement infrastructure code for accessing data and compute resources. You can import model code and operationalize it to derive Insights from data in Platform. |
+| Enterprise model management| Support for multi-tenant data model to track model versions and associated hyperparameter configurations to provide foundation for partner ecosystem. |
+| Model evaluation | Evaluate and optimize regression and classification models in Python, PySpark, R, and Scala.|
+| Model deployment | Ability to compare evaluation metrics and configurations across multiple experiment runs and publish the optimal model as a Service.|
+| Batch scoring | Enrich Real-time Customer Profile with Machine Learning insights or write them as datasets back to Platform|
+| Scheduling | Integrated with Platform Orchestration Service to automate Model training, scoring, and feature pipelines with user-defined schedules through APIs. |
 
 **Known issues**
 
-None
+* Scheduling and feature pipelines are currently available via API only, with a UI to be added in a future release.
 
 For more information, visit the [Data Science Workspace Overview](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html) or refer to the [Data Science Workspace Tutorials](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials.html).
 
 ## Decisioning Service
 
-(Description for initial release)
+Adobe Experience Platform Decisioning Service provides the ability to programmatically and intelligently select the ‘Next Best Experience’ from a set of available options for a given individual, deliver them to any channel or application, and perform reporting and analysis.
+
+A prebuilt rich data model enables the use case of "Next Best Offer" decisioning in a channel agnostic way.
 
 **Key features**
 
 | Feature    | Description  |
 | -----------| ---------- |
-| Feature A  | Text |
-| Feature B  | Text |
-| Feature C  | Text |
+| Business object repository  | A repository driven by JSON schema models allows a developer to create, read, update and delete a variety of business objects. The repository provides general purpose, expressive query APIs as well as schema aware search.|
+| Repository containers | Within the business object repository a developer may isolate their concerns around projects, business or organizational units, or around life cycle stages of a project (for example, in development and integration, staging, or for live production use). Those isolations are called repository containers.
+| Roles and permissions | Using the Admin Console, an organization can create and manage profiles to grant targeted access to resources by type, access operation, and container. Users can be added to those access profiles and effective access privileges are automatically computed from those policies. |
+| Prebuilt offer object model | Without the need to first build a data model, a Platform developer can leverage prebuilt JSON schemas and relationships to create an offer catalog, define decision rules and constraints, and assemble offer collections for decisioning. |
+| Decision rules based on profile and non-profile data | A tight integration with the Real-time Customer Profile allows a developer to create decision rules that leverage Profile data. Not only can decisions be made using profile attributes but also based on the experience event history of a profile and based on business entities unrelated to a user identity (e.g. traffic conditions, product inventory). Any Experience Data Model (XDM) entity for which a schema exists in the Schema Registry can be used for the decision rules. Rules are first class entities and can be reused for any of the decision options and activities. |
+| Ranking and capping | Decision options that fulfill all eligibility and other constraints for a given user are ranked and the best option is selected. Additional per user and global capping constraints can be used to limit the exposure of the available options, thus enabling personalization with resource constraints and user fatigue in mind. |
+| Decisioning REST APIs | The Decisioning Service can be invoked using a simple REST API to get the Next Best Offer for a given individual. A metrics API can be used to check real-time offer proposition and capping values. |
+| Streaming Decision Events into Data Lake and Query Service | The Decisioning Service auto-creates datasets to stream all XDM Decision Events automatically into the Data Lake. The datasets are then available for analysis and reporting using Query Service. |
+| Developer enablement | Self service opt-in with documentation on Adobe I/O including tutorials for various topics. |
 
 **Known issues**
 
-* Issue
-* Issue
+* The offer data model is not exposed through the Schema Registry and can therefore only be extended in limited ways. The model schema has built-in structures to allow the attachment of custom data. In the future, you will be able to extend a base XDM model class to define your own custom decisioning domains.
+* You must be provisioned with the Offer Management domain model and users and integrations must be managed in this product context.
 
-(Link to documentation)
+To learn more, visit the [Decisioning Service Overview](https://www.adobe.io/apis/experienceplatform/home/services/decisioning-service.html#!api-specification/markdown/narrative/technical_overview/decisioning-overview/decisioning-service-overview.md).
+
+## Query Service
+
+Query Service provides the ability to use standard SQL to query data in Adobe Experience Platform to support many different analysis and data management use cases. It is a serverless tool which allows you to join any datasets in the Data Lake and capture the query results as a new dataset for use in reporting, Data Science Workspace, or for ingestion into Profile Service.
+
+You can use Query Service to build data analysis ecosystems, creating a picture of consumers across their various interaction channels. These channels might include:
+
+* Point-of-sale system
+* Web
+* Mobile
+* CRM system
+
+**Key features**
+
+| Feature    | Description  |
+| -----------| ---------- |
+| Query editor | Use a web-based tool to write, validate, test, and execute queries. It includes a console for detailed information on the execution of queries, as well as the ability to preview query results. | 
+| Dataset creation | Create datasets on Experience Platform via standard SQL syntax. |
+| Adobe-defined functions | Leverage shortcut functions for common tasks like identifying sessions or setting attribution. |
+| BI tool connectivity | Use the PostgreSQL (Postgres) drivers found in common BI tools to connect to Query Service to create reports and visualizations. Supported tools include: Tableau, Power BI, and Looker. Find authentication information on the Credentials tab. |
+| Database management tool connectivity | Connect Aqua Data Studio or DB visualizer to Query Service for data exploration and dataset creation functionality. Query Service also supports connectivity from R Studio. Find authentication information on the Credentials tab. |
+| Command line query tool | Connect PSQL to be able to run queries from the command line. |
+| Query Log  | Keeps a history of queries executed by Query Service and enables you to find prior SQL for editing, execution, or for creating a dataset out of the results. |
+| Query scheduling API  | Schedule queries for recurring execution via this API. |
+
+**Known issues**
+
+* Query Editor shows a sample of 100 rows of the results for your queries. In order to persist the complete result set, use the dataset creation capabilities from the Query Log. 
+* Near-term releases will add support for Views and a UI for applying schedules to queries. 
+
+For more information about Query Service, see the [product documentation](https://www.adobe.io/apis/experienceplatform/home/services/query-service/query-service.html).
 
 ## Experience Data Model (XDM) and XDM System
 
@@ -356,114 +141,30 @@ The methodology on which Experience Platform is built, XDM System operationalize
 
 To learn more about working with XDM using the Schema Registry API and Schema Editor, please read the [XDM System documentation](https://www.adobe.io/apis/experienceplatform/home/xdm.html).
 
+## Segmentation Service
 
-## Profile, Identity, and Segmentation
+Segmentation Service defines a particular subset of profiles from your profile store, describing the criteria to distinguish a marketable group of people within your profile store. Segments can be based on record data (such as demographic information) or time series events representing customer touch points with your brand.
 
-New features in Profile, Identity, and Segmentation:
-
-* [Profile](#profile)
-* [Identity Service](#identity-service)
-* [Segmentation Service](#segmentation-service)
-
-### Profile
+For example, in an email campaign focused on running shoes, you could use an audience segment of all users who searched for running shoes within the last 30 days, but did not complete a purchase. Another example could be using a segment to target site content so that it displays only to visitors who belong to a certain tier of your rewards program.
 
 **New features**
 
 | Feature    | Description  |
 | -----------| ---------- |
-| Feature A  | Text |
-| Feature B  | Text |
-| Feature C  | Text |
+| Relative time rules |You can now choose rolling time windows such as 14 days ago, 3 to 5 hours ago, etc.|
+|XDM field summaries |For Attributes on the left-rail, summaries are now available providing a view into your underlying data.|
+|Left-rail search |Improved search capabilities for the segments portion of the left rail.
+|eVar friendly names |Improved support for friendly names, allowing you to see more easily what information is captured within custom events and dimensions from Adobe Analytics.|
+|Merge policy support |You can now choose which merge policy to apply to their segment definition using a simple dropdown.|
 
 **Fixes**
 
-* Fix
-* Fix
-* Fix
-* Fix
+* Fixed an intermittent issue causing slow loading of the attributes and events building blocks in the left-rail.
+* Fixed a bug which caused the estimator to return “NaN” response.
+* Fixed an error where some fields were opening the incorrect rule building canvas.
 
 **Known issues**
 
-* Issue
-* Issue
+* None.
 
-For product documentation, see [Profile Overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
-
-### Identity Service
-
-**New features**
-
-| Feature    | Description  |
-| -----------| ---------- |
-| Feature A  | Text |
-| Feature B  | Text |
-| Feature C  | Text |
-
-**Fixes**
-
-* Fix
-* Fix
-* Fix
-* Fix
-
-**Known issues**
-
-* Issue
-* Issue
-
-For product documentation, see [Identity Service Overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md).
-
-### Segmentation Service
-
-**New features**
-
-| Feature    | Description  |
-| -----------| ---------- |
-| Feature A  | Text |
-| Feature B  | Text |
-| Feature C  | Text |
-
-**Fixes**
-
-* Fix
-* Fix
-* Fix
-* Fix
-
-**Known issues**
-
-* Issue
-* Issue
-
-For product documentation, see [Segment Builder Overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!end-user/markdown/segmentation_overview/segmentation.md) for building segments using the Platform UI, or [Creating segments via API](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md) for instructions on building segments using the API.
-
-## Query Service
-
-Query Service provides the ability to use standard SQL to query data in Adobe Experience Platform to support many different analysis and data management use cases. It is a serverless tool which allows you to join any datasets in Experience Data Lake and capture the query results as a new dataset for use in reporting, Data Science Workspace, or for ingestion into Profile Service.
-
-You can use Query Service to build data analysis ecosystems, creating a picture of consumers across their various interaction channels. These channels might include:
-
-* Point-of-sale system
-* Web
-* Mobile
-* CRM system
-
-**Key features**
-
-| Feature    | Description  |
-| -----------| ---------- |
-| Query Editor | Use a web-based tool to write, validate, test, and execute queries. It includes a console for detailed information on the execution of queries, as well as the ability to preview query results. | 
-| Dataset Creation | Create datasets on Experience Platform via standard SQL syntax. |
-| Adobe-Defined Functions | Leverage shortcut functions for common tasks like identifying sessions or setting attribution. |
-| BI Tool Connectivity | Use the Postgres drivers found in common BI tools to connect to Query Service to create reports and visualizations. Supported tools include: Tableau, Power BI, and Looker. Find authentication information on the Credentials tab. |
-| Database Management Tool Connectivity | Connect Aqua Data Studio or DB visualizer to Query Service for data exploration and dataset creation functionality. Query Service also supports connectivity from R Studio. Find authentication information on the Credentials tab. |
-| Command Line Query Tool | Connect PSQL to be able to run queries from the command line. |
-| Query Log  | Keeps a history of queries executed by Query Service and enables you to find prior SQL for editing, execution, or for creating a dataset out of the results. |
-| Query Scheduling API  | Schedule queries for recurring execution via this API. |
-
-**Known issues**
-
-* Query Editor shows a sample of 100 rows of the results for your queries. In order to persist the complete result set, use the dataset creation capabilities from the Query Log. 
-* Near-term releases will add support for Views and a UI for applying schedules to queries. 
-
-For more information about Query Service, see the [product documentation](https://www.adobe.io/apis/experienceplatform/home/services/query-service/query-service.html).
+For more information, including how to use the Segment Builder user interface, see the [Segment Builder overview documentation](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!end-user/markdown/segmentation_overview/segmentation.md). For instructions on building segments using the API, see the [creating segments via API tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md).
