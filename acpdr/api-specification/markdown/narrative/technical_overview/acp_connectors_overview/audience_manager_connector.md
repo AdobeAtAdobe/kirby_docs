@@ -5,7 +5,7 @@ The Audience Manager Data Connector streams first party data collected in Audien
 - **Onboarded (inbound) data:** These are the files uploaded by a user into an Amazon S3 location hosted by Audience Manager. Audience Manager uses this data to populate onboarded traits using the inbound file method and will have some latency. 
 - **Profile data:** Audience Manager uses realtime and onboarded data to derive customer profiles. These profiles are used to populate identity graphs and traits on segment realizations. 
 
-The Audience Manager connector maps these data categories to an Experience Data Model (XDM) and sends them to Platform. Realtime data and Onboarded data are sent as XDM ExperienceEvent data, while Profile data is sent as XDM Profiles.
+The Audience Manager connector maps these data categories to Experience Data Model (XDM) schema and sends them to Platform. Realtime data and Onboarded data are sent as XDM ExperienceEvent data, while Profile data is sent as XDM Profiles.
 
 ## What is Experience Data Model (XDM)?
 XDM is a publicly documented specification that provides a standardized framework by which Platform organizes customer experience data.
@@ -16,7 +16,7 @@ For more information about how XDM is used in Experience Platform, see the [XDM 
 
 ## XDM schemas examples
 
-Below are examples of the AAM structure mapped to XDM ExperienceEvent and XDM Profile in Platform.
+Below are examples of the Audience Manager structure mapped to XDM ExperienceEvent and XDM Profile in Platform.
 
 ### ExperienceEvent - for Realtime data and Onboarded data
 ![](images/aam-experience-events-for-dcs-and-onboarding-data.png)
@@ -45,7 +45,7 @@ There is a _meta dataset_ for Inbound with either of the following names:
 - **AAM inbound Meta Dataset**	
 - **[Meta - No Data] AAM Inbound**	
 
-These datasets are important for AAM inbound ingestion and contain 0 size batches. Do not delete these meta datasets. 	
+These datasets are important for Audience Manager inbound ingestion and contain 0 size batches. Do not delete these meta datasets. 	
 
 **Profile**
 In Platform, all the profiles created from CRM data can be found in the dataset "**AAM Profile Dataset userprofile**". All the profiles created from CRMs can be found in the dataset "**AAM Profile Dataset crmprofile {Datasource ID}**". Where the {Datasource id} is the CRM datasource ID. 	
@@ -54,7 +54,7 @@ The following _meta datasets_ exist for Profile:
 - **[Meta - No Data] AAM crmprofile**	
 - **[Meta - No Data] AAM userprofile**	
 
-These datasets are important for AAM profile ingestion and contain 0 size batches. Do not delete these meta datasets	
+These datasets are important for Audience Manager profile ingestion and contain 0 size batches. Do not delete these meta datasets.	
 
 ### Connections	
 
@@ -66,7 +66,7 @@ Adobe Audience Manager creates one connection in Catalog: **Audience Manager Con
 | --- | --- | --- |
 | Realtime data | < 35 minutes. | Time from being captured at Realtime node to appearing on Platform Data Lake. |
 | Inbound data | < 13 hours | Time from being captured at S3 buckets to appearing on Platform Data Lake. |
-| Profile data | < 2 days  | Time form being captured from Realtime/Inbound data to being added to a keystone profile and finally appearing on Platform Data Lake. | 
+| Profile data | < 2 days  | Time from being captured from Realtime/Inbound data to being added to a user profile and finally appearing on Platform Data Lake. | 
 
 [xdm]: ../schema_registry/xdm_system/xdm_system_in_experience_platform.md
 [xdm-field-dictionary]: ../schema_registry/schema_composition/xdm_field_dictionary.md
