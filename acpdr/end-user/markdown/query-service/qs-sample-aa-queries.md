@@ -1,12 +1,12 @@
-# Sample queries for Adobe Analytics data
+# Sample Queries for Adobe Analytics Data
 
-Data from selected Adobe Analytics report suites are transformed into Experience Event XDM schema and ingested into Experience Platform as datasets for you. There are many use cases for Query Service with this data, and the following sample queries should work with your Adobe Analytics datasets. Information on where your Analytics fields land in Experience Event XDM can be [found here](solutionref/analytics-field-map.md).
+Data from selected Adobe Analytics report suites are transformed into Experience Event XDM schema and ingested into Experience Platform as datasets for you. There are many use cases for Query Service with this Data, and the following sample queries should work with your Adobe Analytics datasets. Information on where your Analytics Fields land in Experience Event XDM can be [found here](solutionref/analytics-field-map.md).
 
-A note about the following examples: You need to edit the SQL to fill in the expected parameters for your queries based on the dataset, eVar, event, or timeframe you are interested in evaluating. Provide parameters wherever you see { } in the SQL.
+A note about the following examples: you will need to edit the SQL to fill in the expected parameters for your queries based on the dataset, eVar, event, or timeframe you are interested in evaluating. You will need to provide parameters wherever you see { } in the SQL.
 
-Also, note whether the sample SQL calls for post_values. If it does, then you need to use a table that represents a dataset with post values in it. Datasets have tablenames that tell you if they are mid or post values. If the sample query does not specify, you can use either. 
+Also, note whether the sample SQL calls for post_values or not. If it does, then you need to use a table that represents a dataset with post values in it. Datasets will have tablenames that tell you if they are mid or post values. If the sample query does not specify, you can use either. 
 
-## Hourly visitor count for a given day
+## Hourly Visitor Count for a Given Day
 ```
 SELECT Substring(from_utc_timestamp(timestamp, 'America/New_York'), 1, 10)                               AS Day,
        Substring(from_utc_timestamp(timestamp, 'America/New_York'), 12, 2)                               AS Hour, 
@@ -20,7 +20,7 @@ ORDER  BY Hour;
 ```
 
 
-## Hourly activity count for a given day
+## Hourly Activity Count for a Given Day
 ```
 SELECT Substring(from_utc_timestamp(timestamp, 'America/New_York'), 1, 10)                        AS Day,
        Substring(from_utc_timestamp(timestamp, 'America/New_York'), 12, 2)                        AS Hour, 
@@ -35,7 +35,7 @@ GROUP  BY Day, Hour
 ORDER  BY Hour;
 ```
 
-## Number of events per visit
+## Number of Events per Visit
 ```
 SELECT concat(enduserids._experience.aaid.id, 
               '-#', 
@@ -49,7 +49,7 @@ GROUP BY aaid_sess_key
 ORDER BY Count DESC;
 ```
 
-## Top 10 viewed pages for a given day
+## Top 10 Viewed Pages for a Given Day
 ```
 SELECT web.webpagedetails.name                 AS Page_Name, 
        Sum(web.webpagedetails.pageviews.value) AS Page_Views 
@@ -62,7 +62,7 @@ ORDER  BY page_views DESC
 LIMIT  10;
 ```
 
-## Top 10 most active users
+## Top 10 Most Active Users
 ```
 SELECT enduserids._experience.aaid.id AS aaid, 
        Count(timestamp)               AS Count
@@ -75,7 +75,7 @@ ORDER  BY Count DESC
 LIMIT  10;
 ```
 
-## Top 10 cities by user activity
+## Top 10 Cities by User Activity
 ```
 SELECT concat(placeContext.geo.stateProvince, ' - ', placeContext.geo.city) AS state_city, 
        Count(timestamp)                                                     AS Count
@@ -87,7 +87,7 @@ GROUP  BY state_city
 ORDER  BY Count DESC
 LIMIT  10;
 ```
-## Top 10 viewed products 
+## Top 10 Viewed Products 
 ```
 SELECT Product_SKU,
        Sum(Product_Views) AS Total_Product_Views
@@ -103,7 +103,7 @@ ORDER BY Total_Product_Views DESC
 LIMIT  10;
 ```
 
-## Top 10 total order revenue
+## Top 10 Total Order Revenue
 ```
 SELECT Purchase_ID, 
        Round(Sum(Product_Items.priceTotal * Product_Items.quantity), 2) AS Total_Order_Revenue 
@@ -118,7 +118,7 @@ GROUP  BY Purchase_ID
 ORDER  BY total_order_revenue DESC 
 LIMIT  10;
 ```
-## Evar instances
+## Evar Instances
 ```
 SELECT _experience.analytics.customdimensions.evars.{target_evar} AS {target_evar},
        Count(_experience.analytics.customdimensions.evars.{target_evar}) AS Instances
@@ -132,7 +132,7 @@ ORDER  BY instances DESC
 LIMIT  10;
 ```
 
-## Event counts by day
+## Event Counts by Day
 ```
 SELECT Substring(from_utc_timestamp(timestamp, 'America/New_York'), 1, 10) AS Day, 
        Substring(from_utc_timestamp(timestamp, 'America/New_York'), 12, 2) AS Hour, 
