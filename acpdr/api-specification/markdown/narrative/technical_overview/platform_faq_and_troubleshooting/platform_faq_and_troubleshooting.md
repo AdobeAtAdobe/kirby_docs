@@ -33,7 +33,7 @@ The following is a list of answers to frequently asked questions about Adobe Exp
 
 Experience Platform offers multiple RESTful APIs that use HTTP requests to access Platform resources. These Service APIs each expose multiple endpoints, and allow you to perform operations to list (GET), lookup (GET), edit (PUT and/or PATCH), and delete (DELETE) resources.
 
-For more information on specific endpoints and operations available for each service, please see the [API Reference documentation](../../../../../../acdpr/swagger-specs).
+For more information on specific endpoints and operations available for each service, please see the [API Reference documentation](https://www.adobe.io/apis/experienceplatform/home/api-reference.html).
 
 ## How do I format an API request?
 
@@ -96,7 +96,7 @@ The response illustrates what you would expect to receive following a successful
 }
 ```
 
-For more information on specific endpoints in Platform APIs, including required headers and request bodies, please see the [API Reference documentation](../../../../../../acdpr/swagger-specs).
+For more information on specific endpoints in Platform APIs, including required headers and request bodies, please see the [API Reference documentation](https://www.adobe.io/apis/experienceplatform/home/api-reference.html).
 
 ## What is my IMS organization?
 
@@ -157,7 +157,7 @@ Status Code | Description | Possible Causes
 
 ## Request header errors
 
-All API calls in Platform require specific request headers. To see which headers are required for individual services, please see the [API Reference documentation](../../../../../../acdpr/swagger-specs). To find the values for the required authentication headers, see the [Authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+All API calls in Platform require specific request headers. To see which headers are required for individual services, please see the [API Reference documentation](https://www.adobe.io/apis/experienceplatform/home/api-reference.html). To find the values for the required authentication headers, see the [Authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
 
 If any of these headers are missing or invalid when making an API call, the following errors may occur.
 
@@ -253,11 +253,11 @@ The following is a list of troubleshooting guides and API reference documentatio
 
 Service | API Reference | Troubleshooting
 --- | --- | ---
-Catalog | [Catalog Service API](../../../../../swagger-specs/catalog.yaml)
-Data Ingestion | [Data Ingestion API](../../../../../swagger-specs/ingest-api.yaml) | [Batch Data Ingestion troubleshooting guide](../ingest_architectural_overview/batch_data_ingestion_troubleshooting_guide.md)
-Data Science Workspace | [Sensei Machine Learning API](../../../../../swagger-specs/sensei-ml-api.yaml)
-Data Usage Labeling and Enforcement (DULE) | [DULE Policy Service API](../../../../../swagger-specs/dule-policy-service.yaml)
-Experience Data Model (XDM) | [Schema Registry API](../../../../../swagger-specs/schema-registry.yaml) | [XDM System FAQ and troubleshooting guide](../schema_registry/xdm_troubleshooting/xdm_system_faq_and_troubleshooting.md)
-Identity Service | [Identity Service API](../../../../../swagger-specs/id-service-api.yaml) | [Identity Service FAQ and recommendations](../identity_services_architectural_overview/identity_services_faq.md)
-Query Service | [Query Service API](../../../../../swagger-specs/qs-api.yaml) | [Query Service errors and troubleshooting](../../../../../end-user/markdown/query-service/qs-errors-troubleshooting.md)
-Real-time Customer Profile | [Real-time Customer Profile APIs](../../../../../swagger-specs/unified-profile-service-apis.yaml)
+Catalog | [Catalog Service API](../../../../../acpdr/swagger-specs/catalog.yaml)
+Data Ingestion | [Data Ingestion API](../../../../../acpdr/swagger-specs/ingest-api.yaml) | [Batch Data Ingestion troubleshooting guide](../ingest_architectural_overview/batch_data_ingestion_troubleshooting_guide.md)
+Data Science Workspace | [Sensei Machine Learning API](../../../../../acpdr/swagger-specs/sensei-ml-api.yaml)
+Data Usage Labeling and Enforcement (DULE) | [DULE Policy Service API](../../../../../acpdr/swagger-specs/dule-policy-service.yaml)
+Experience Data Model (XDM) | [Schema Registry API](../../../../../acpdr/swagger-specs/schema-registry.yaml) | [XDM System FAQ and troubleshooting guide](../schema_registry/xdm_troubleshooting/xdm_system_faq_and_troubleshooting.md)
+Identity Service | [Identity Service API](../../../../../acpdr/swagger-specs/id-service-api.yaml) | [Identity Service FAQ and recommendations](../identity_services_architectural_overview/identity_services_faq.md)
+Query Service | [Query Service API](../../../../../acpdr/swagger-specs/qs-api.yaml) | [Query Service errors and troubleshooting](../../../../../end-user/markdown/query-service/qs-errors-troubleshooting.md)
+Real-time Customer Profile | [Real-time Customer Profile APIs](../../../../../acpdr/swagger-specs/unified-profile-service-apis.yaml)
