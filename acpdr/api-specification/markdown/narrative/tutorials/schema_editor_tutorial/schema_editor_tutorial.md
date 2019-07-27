@@ -2,25 +2,30 @@
 
 The Schema Registry provides a user interface and RESTful API from which you can view and manage all resources in the Adobe Experience Platform Schema Library. The Schema Library contains resources made available to you by Adobe, Experience Platform partners, and vendors whose applications you use, as well as resources that you define and save to the Schema Registry.
 
-Using the Schema Editor within Experience Platform, this tutorial will walk you through the steps to [compose a schema](#create-schema), including showing you how to:
+This tutorial covers the steps for creating a schema using the Schema Editor within Experience Platform. If you would prefer to compose a schema using the Schema Registry API, please begin by reading the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md) before attempting the [Schema Registry API tutorial](../schema_registry_api_tutorial/schema_registry_api_tutorial.md).
 
-* [Name a schema](#name-schema) and [assign a class](#assign-class)
-* [Add a mixin](#add-mixin) to a schema
-* [Define a new mixin](#create-new-mixin)
-* [Add fields to a mixin](#add-field-to-mixin), including best practices for defining fields
-* Convert a multi-field structure into a [data type](#convert-data-type)
-* Set a schema field as an [Identity field](#identity)
-* Enable a schema for use with [Unified Profile Service](#use-in-unified-profile-service)
+The tutorial covers the following steps:
+
+* [Create and name a schema](#create-and-name-a-schema)
+* [Assign a class](#assign-a-class)
+* [Add a mixin](#add-a-mixin) to the schema
+* [Define a new mixin](#define-a-new-mixin)
+* [Add fields to the mixin](#add-fields-to-the-mixin)
+* [Convert a multi-field structure into a data type](#convert-a-multi-field-object-into-a-data-type)
+* [Set a schema field as an identity field](#set-a-schema-field-as-an-identity-field)
+* [Enable the schema for use in Real-time Customer Profile](#enable-the-schema-for-use-in-real-time-customer-profile)
 
 This tutorial also includes steps to [define a new class](#create-new-class) that you could then use to compose a schema.
 
 ## Getting started
 
-Before starting this tutorial, it is recommended that you first review the [basics of schema composition](../../technical_overview/schema_registry/schema_composition/schema_composition.md) in order to better understand schemas and their building blocks: classes, mixins, data types, and fields.
+This tutorial requires a working understanding of the various aspects of Adobe Experience Platform involved in using the Schema Editor. Before beginning this tutorial, please review the documentation for the following concepts:
+
+- [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
+- [Basics of schema composition](../../technical_overview/schema_registry/schema_composition/schema_composition.md): An overview of XDM schemas and their building blocks, including classes, mixins, data types, and fields.
+- [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, real-time consumer profile based on aggregated data from multiple sources.
 
 This tutorial requires you to have access to Experience Platform. If you do not have access to an IMS Organization in Experience Platform, please speak to your system administrator before proceeding. 
-
-If you would prefer to compose a schema using the Schema Registry API, please begin by reading the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md) before attempting the [Schema Registry API tutorial](../schema_registry_api_tutorial/schema_registry_api_tutorial.md).
 
 ## Schemas workspace
 
@@ -34,7 +39,7 @@ You can also click on the filter icon next to the Search bar to use filtering ca
 
 ![View the Schema Library](images/schemas_filter.png "View the Schema Library containing a list of all available schemas.")
 
-## Create schema
+## Create and name a schema
 
 To begin composing a schema, click **Create Schema** in the top right corner of the Schemas workspace. 
 
@@ -42,60 +47,61 @@ You will then be taken to the Schema Editor, the canvas upon which you will comp
 
 ![Schema Editor](images/schema_editor.png "The editor will contain an 'untitled schema' ready for you to customize.")
 
-## Name schema
-
 On the right-hand side of the editor are **Schema Properties** where you can provide a name for the schema (using the **Display Name** field). Once a name is entered, the canvas updates to reflect the new name of the schema.
 
 ![Schema Canvas](images/name_schema.png)
 
 This tutorial composes a schema to ingest data related to the members of a loyalty program, therefore the schema is named "Loyalty Members". If your organization had separate loyalty programs for different brands, it would be wise to name your schema "Brand A Loyalty Members" to make it easy to distinguish from other loyalty-related schemas you might define later.
 
-_**Notes on Schema Names:**_
+_**Notes on schema names:**_
 * Schema names should be short and descriptive so that the schema can be easily found in the library later. 
 * Schema names must be unique, meaning it should also be specific enough that it will not be reused in the future. 
 * You also have the option to provide additional information about the schema using the **Description** field.
 
-## Assign class
+## Assign a class
 
 On the left-hand side of the editor is a section called **Composition**. It currently contains two sub-sections: **Schema** and **Class**. 
 
-Now that the schema has a name, it is time to assign the class the schema will implement. Click **Assign** next to **Class** to open the **Assign Class** dialog.
+Now that the schema has a name, it is time to assign the class that the schema will implement. Click **Assign** next to **Class**.
 
-![Assign Class Dialog](images/assign_class.png "Select the class your schema will implement.")
+![](images/assign_class_button.png)
 
-The dialog displays a list of all available classes, including any defined by your organization (with a Type of "Customer") as well as standard classes defined by Adobe. 
+The *Assign Class* dialog appears. This window displays a list of all available classes, including any defined by your organization (with a Type of "Customer") as well as standard classes defined by Adobe. 
 
 Click on the class name to display the description of the class. You can also choose to **Preview Class Structure** to see the fields and metadata associated with the class.
 
-This tutorial uses the *XDM Profile* class. Click the radio button beside the class to select it, then click **Assign Class** to assign the class and return to the editor. 
+This tutorial uses the XDM Profile class. Click the radio button beside the class to select it, then click **Assign Class**.
+
+![Assign Class Dialog](images/assign_class.png "Select the class your schema will implement.")
+
+The canvas reappears, the **Class** section now containing the class you selected (XDM Profile) and the fields contributed by the XDM Profile class now visible within the **Structure** section.
 
 ![XDM Profile Class Assigned](images/class_assigned_structure.png "The XDM Profile class now appears in the Schema Editor.")
-
-Back in the canvas, the **Class** section now contains the class you selected (XDM Profile) and you can see the fields contributed by the XDM Profile class are now visible within the **Structure** section.
 
 The fields appear in the format "fieldName | Data Type". The proper way to define a field in the UI will be discussed in more detail later.
 
 > **Note:** You can [change the class](#change-schema-class) at any point during the initial schema composition process before the schema has been saved, but this should only be done with extreme caution. Mixins are only compatible with certain classes, therefore changing the class will reset the canvas and any fields you have added. 
 
-## Add mixin
+## Add a mixin
 
 Now that a class has been assigned, the **Composition** section contains a third sub-section: Mixins. 
 
 You can now begin to add fields to your schema by adding mixins. A mixin is a group of one or more fields that describe a particular concept. This tutorial uses mixins to describe the members of the loyalty program and capture key information such as name, birthday, phone number, address, and more.
 
-To add a mixin, click **Add** in the **Mixins** sub-section to open the **Add Mixin** dialog.
+To add a mixin, click **Add** in the **Mixins** sub-section.
+
+![](images/add_mixin_button.png)
+
+The **Add Mixin** dialog appears.
+Mixins are only intended for use with specific classes, therefore the list of mixins shows only those compatible with the class you selected (in this case, the XDM Profile class).
+
+Selecting the radio button next to a mixin will give you the option to **Preview Mixin Structure**. Select the "Profile Person Details" mixin, then click **Add Mixin**.
 
 ![](images/add_mixin_person_details.png)
 
-Mixins are only intended for use with specific classes, therefore the list of mixins shows only those compatible with the class you selected (in this case, the XDM Profile class).
-
-Selecting the radio button next to a mixin will give you the option to **Preview Mixin Structure**. Once you have found the mixin you wish to use, click **Add Mixin**.
-
-The "Profile Person Details" mixin will be added first.
+The schema canvas reappears. The **Mixins** section on the left now lists the "Profile Person Details" mixin and the **Structure** in the middle now includes the fields contributed by the mixin. 
 
 ![](images/person_details_structure.png)
-
-After clicking **Add Mixin**, you will be returned to the schema canvas. The **Mixins** section on the left now lists the "Profile Person Details" mixin and the **Structure** in the middle now includes the fields contributed by the mixin. 
 
 This mixin contributes several fields under the top-level name "person" with the data type "Person". This group of fields describes information about an individual, including name, birth date, and gender. 
 
@@ -119,7 +125,7 @@ Similar to the "name" field, the fields you just added represent multi-field con
 
 ![](images/personal_details_structure.png)
 
-## Create new mixin
+## Define a new mixin
 
 The "Loyalty Members" schema is meant to capture data related to the members of a loyalty program, so it will require some specific loyalty-related fields. There are no standard mixins available that contains the necessary fields, therefore you will need to define a new mixin.
 
@@ -133,7 +139,7 @@ For this tutorial, name the new mixin "Loyalty Details".
 
 Click **Add Mixin** to return to the schema editor. "Loyalty Details" should now appear under **Mixins** on the left-side of the canvas, but there are no fields associated with it yet and therefore no new fields appear under **Structure**.
 
-## Add field to mixin
+## Add fields to the mixin
 
 Now that you have created the "Loyalty Details" mixin, it is time to define the fields that the mixin will contribute to the schema.
 
@@ -149,11 +155,11 @@ Inside that namespaced node is a "New Field". This is the beginning of the "Loya
 
 ![](images/new_field_loyalty.png)
 
-Using **Field Properties** on the right-hand side of the editor, start by creating a "loyalty" field with type "Object" that will be used to hold your loyalty-related fields.
+Using **Field Properties** on the right-hand side of the editor, start by creating a "loyalty" field with type "Object" that will be used to hold your loyalty-related fields. When finished, click **Apply**.
 
 ![](images/loyalty_object.png)
 
-From there, click **Add Field** next to the newly created "loyalty" object to add additional loyalty-related fields. A "New Field" will appear and **Field Properties** will be visible on the right-hand side of the canvas.
+The changes are applied and the newly created "loyalty" object appears. Click **Add Field** next to the object to add additional loyalty-related fields. A "New Field" will appear and **Field Properties** will be visible on the right-hand side of the canvas.
 
 ![](images/new_field_in_loyalty_object.png)
 
@@ -162,6 +168,12 @@ Each field requires the following information:
 * **Display Name:** The name of the field, written in title case. Example: Loyalty Level
 * **Type:** The data type of the field. This includes basic scalar types and any data types defined in the Schema Registry. Examples: string, integer, boolean, Person, Address, Phone Number, etc.
 * **Description:** An optional description of the field should be included, written in sentence case. (200 character max.)
+
+The first field for the Loyalty object will be a string called "loyaltyId". When setting the new field's type to "String", the **Field Properties** window becomes populated with several options for applying constraints, including *Default Value*, *Format*, and *Maximum Length*.
+
+![](images/string_constraints.png)
+
+Different constraint options are available depending on the on the data type selected. Since "loyaltyId" will be an email address, select "email" from the **Format** dropdown menu. Select **Apply** to apply your changes.
 
 ![](images/loyaltyId_field.png)
 
@@ -195,11 +207,12 @@ When you have completed all field properties, click **Apply** and the "loyaltyLe
 ![](images/loyalty_level_enum.png)
 
 More information about available additional constraints:
+* **Required:** Indicates that the field is required for data ingestion. Any data uploaded to a dataset based on this schema that does not contain this field will fail upon ingestion.
 * **Array:** Indicates that the field contains an array of values, each with the data type specified. For example, selecting a data type of "String" and checking the "Array" checkbox means that the field will contain an array of strings.
 * **Identity:** Indicates that this field contains an "Identity". More information regarding identities is provided [later in this tutorial](#identity).
 * **Enum:** Indicates that this field must contain one of the values from an enumerated (hence, "Enum") list of possible values.  
 
-## Convert data type
+## Convert a multi-field object into a data type
 
 After adding several loyalty-specific fields, the "loyalty" object now contains a common data structure that could be useful in other schemas. 
 
@@ -217,7 +230,7 @@ In a future schema, you could now assign a field the **Type** of "Loyalty" and i
 
 ![](images/loyalty_data_type.png)
 
-## Identity
+## Set a schema field as an identity field
 
 Schemas are used for ingesting data into Experience Platform, and that data is ultimately used to identify individuals and stitch together information coming from multiple sources. To help with this process, key fields can be marked as "Identity" fields. 
 
@@ -227,7 +240,7 @@ For example, there may be thousands of members of the loyalty program belonging 
 
 In the **Structure** section of the editor, click on the "loyaltyId" field that you created and you will see the **Identity** checkbox appear under **Field Properties**. Check the box and you will have the option to set this as the **Primary Identity**. Check that box as well. 
 
-Next, you must provide an **Identity Type**. There are several pre-defined types, but since the "loyaltyId" is the member's email address, select "Email" from the dropdown list. You can now click **Apply** to confirm the updates to the "loyaltyId" field.
+Next, you must provide an **Identity Namepsace**. There are several pre-defined namespaces, but since the "loyaltyId" is the member's email address, select "Email" from the dropdown list. You can now click **Apply** to confirm the updates to the "loyaltyId" field.
 
 Now all data ingested into the "loyaltyId" field will be used to help identify that individual and stitch together a single view of that customer.
 
@@ -247,21 +260,21 @@ In order to define a relationship, click on the field and check the **Relationsh
 
 More information about relationships and other schema metadata can be found in the [Schema Registry API Developer Guide](../schema_registry_developer_guide.md). -->
 
-## Use in Unified Profile Service
+## Enable the schema for use in Real-time Customer Profile
 
-The Schema Editor provides the ability to enable a schema for use with [Unified Profile Service](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md) (UPS). UPS provides a holistic view of each individual customer by building a robust, 360&deg; profile of customer attributes as well as a timestamped account of every interaction that customer has had across any system integrated with Experience Platform. 
+The Schema Editor provides the ability to enable a schema for use with [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md). Profile provides a holistic view of each individual customer by building a robust, 360&deg; profile of customer attributes as well as a timestamped account of every interaction that customer has had across any system integrated with Experience Platform. 
 
-In order for a schema to be enabled for use with UPS, it must have a primary identity defined. You will receive a "Missing Primary Identity" error message if you attempt to enable a schema without first defining a primary identity. The error message includes a checkbox for using an alternative primary identity. If you wish to use a primary identity defined in the identityMap field, you can select the checkbox and proceed with enabling your schema.
+In order for a schema to be enabled for use with Real-time Customer Profile, it must have a primary identity defined. You will receive a "Missing Primary Identity" error message if you attempt to enable a schema without first defining a primary identity.
 
 ![](images/missing_primary_identity.png)
 
-To enable the "Loyalty Members" schema for use in Unified Profile Service, begin by clicking on "Loyalty Members" in the **Structure** section of the editor. 
+To enable the "Loyalty Members" schema for use in Profile, begin by clicking on "Loyalty Members" in the **Structure** section of the editor. 
 
 On the right-hand side of the editor, under **Schema Properties**, information is shown about the schema including its **Display Name**, **Description**, and **Type**. In addition to this information, there is a toggle button entitled **Unified Profile**.
 
-When you click to toggle-on Unified Profile, a pop-up will appear asking you to confirm that you wish to enable the schema for Unified Profile. 
+When you click to toggle-on Unified Profile, a pop-up will appear asking you to confirm that you wish to enable the schema for Profile. 
 
-> **Note:** Once a schema has been enabled for Unified Profile and saved, it cannot be disabled.
+> **Note:** Once a schema has been enabled for Real-time Customer Profile and saved, it cannot be disabled.
 
 ![](images/enable_unified_profile.png)
 
@@ -271,7 +284,7 @@ Now that you have finished composing a "Loyalty Members" schema, you can see the
 
 Your new schema is now able to be used to ingest data into Platform. Remember that once the schema has been used to ingest data, only additive changes may be made. See [Basics of schema composition](../../technical_overview/schema_registry/schema_composition/schema_composition.md) for more information on schema versioning.
 
-The "Loyalty Members" schema is also available to be viewed and managed via the Schema Registry API. To begin working with the API, start by reading the [Schema Registry API developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md).
+The "Loyalty Members" schema is also available to be viewed and managed using the Schema Registry API. To begin working with the API, start by reading the [Schema Registry API developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md).
 
 ## Appendix
 
