@@ -88,10 +88,10 @@
       "description": "Use the Data Usage Labeling and Enforcement (DULE) Policy Service API to create and evaluate data usage policies."
     },
     {
-      "importedFileName": "data_governance_and_profile",
+      "importedFileName": "data_governance_and_segmentation",
       "pages": [],
-      "path": "api-specification/markdown/narrative/tutorials/dule/data_governance_and_profile.md",
-      "title": "Enforce Data Governance for an audience segment using APIs",
+      "path": "api-specification/markdown/narrative/tutorials/dule/data_governance_and_segmentation.md",
+      "title": "Enforce data governance for an audience segment using APIs",
       "description": "Enforce data usage compliance for Real-time Customer Profile audience segments using APIs."
     },
     {
