@@ -11,28 +11,23 @@
   "base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
   "pages": [
     {
-      "pages": [],
-      "path": "api-specification/markdown/narrative/technical_overview/privacy_service_overview/privacy_service_overview.md",
+			"pages": [],
+			"path": "api-specification/markdown/narrative/technical_overview/privacy_service_overview/privacy_service_overview.md",
       "title": "Privacy Service overview",
       "description": "Privacy Service provides a RESTful API and user interface that allow you to make data access and delete requests that comply with privacy regulations."
     },
     {
-      "pages": [],
-      "path": "api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md",
-      "title": "Privacy Service API tutorial",
-      "description": "Create and manage data access and delete requests that comply with privacy regulations using APIs"
+			"pages": [],
+			"path": "api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md",
+			"title": "Privacy Service API tutorial",
+			"description": "Create and manage data access and delete requests that comply with privacy regulations using APIs"
     },
     {
-      "pages": [],
-      "path": "api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md",
-      "title": "Privacy Service UI tutorial",
-      "description": "Create and manage data access and delete requests that comply with privacy regulations using the UI"
-    },
-    {
-      "pages": [],
-      "path": "api-specification/markdown/narrative/technical_overview/privacy_service_overview/gdpr-on-platform-overview.md",
-      "title": "GDPR on Adobe Experience Platform overview"
-    }
+			"pages": [],
+			"path": "api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md",
+			"title": "Privacy Service UI tutorial",
+			"description": "Create and manage data access and delete requests that comply with privacy regulations using the UI"
+		}
   ],
     "app2app_map": {
       "acpdr/swagger-specs/":"/apis/experienceplatform/home/api-reference.html",
