@@ -10,6 +10,7 @@ This document provides answers to frequently asked questions about Adobe Experie
 - [How do I get an access token?](#how-do-i-get-an-access-token)
 - [How do I use query parameters?](#how-do-i-use-query-parameters)
 - [Can I use Postman to make calls to Platform APIs?](#can-i-use-postman-to-make-calls-to-platform-apis)
+- [What are the system requirements for Platform?](#what-are-the-system-requirements-for-platform)
 
 ### Errors and troubleshooting
 - [API status codes](#api-status-codes)
@@ -118,10 +119,6 @@ Access tokens are required in the Authorization header of all API calls. They ca
 
 For details on generating access tokens, see the [Generate access token](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md#generate-access-token) section in the authentication tutorial.
 
-## Can I use Postman to make calls to Platform APIs?
-
-[Postman](https://www.getpostman.com/) is a useful tool for visualizing calls to RESTful APIs. This [Medium post](https://medium.com/adobetech/using-postman-for-jwt-authentication-on-adobe-i-o-7573428ffe7f) describes how you can set up Postman to automatically perform authentication and use it to consume Experience Platform APIs.
-
 ## How do I use query parameters?
 
 Some Platform API endpoints accept query parameters to locate specific information and filter the results returned in the response. Query parameters are appended to request paths with a question mark (`?`) symbol, followed by one or more query parameters using the format `paramName=paramValue`. When combining multiple parameters in a single call, you must use an ampersand (`&`) to separate individual parameters.
@@ -138,6 +135,21 @@ GET /batches?createdAfter=1559775880000&orderBy=desc:created
 
 For detailed information on which query parameters are available for a specific service or endpoint, please review the service-specific documentation.
 
+## Can I use Postman to make calls to Platform APIs?
+
+[Postman](https://www.getpostman.com/) is a useful tool for visualizing calls to RESTful APIs. This [Medium post](https://medium.com/adobetech/using-postman-for-jwt-authentication-on-adobe-i-o-7573428ffe7f) describes how you can set up Postman to automatically perform authentication and use it to consume Experience Platform APIs.
+
+## What are the system requirements for Platform?
+
+Depending on whether you are using the the UI or API, the following system requirements apply:
+
+**For UI based operations:**
+- A modern, standard web browser. While the latest version of Chrome is recommended, current and previous major releases of Firefox, Internet Explorer, and Safari are also supported.
+    - Each time a new major version is released, Platform starts supporting the most recent version while support for the third most recent version is dropped.
+- All browsers must have cookies and JavaScript enabled.
+
+**For API and developer interactions:**
+- A development environment to develop for REST, streaming, and Webhook integrations.
 
 ## Errors and troubleshooting
 
