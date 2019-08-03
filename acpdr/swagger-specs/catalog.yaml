@@ -4838,32 +4838,6 @@ definitions:
           - "US-ASCII"
           - "UTF-8"
           - "ISO-8859-1"
-  containerFormat:
-    type: string
-    description: >-
-      (DEPRECATED) The Container format for all dataSetFiles associated with this
-      view.
-    enum:
-      - text
-      - sequence
-      - parquet
-  persisted:
-    type: boolean
-    description: >-
-      (DEPRECATED) Determines whether or not the view is persisted. If
-      this is false then the other fields in this object are redundant,
-      but may be used for identifying old data that was persisted
-      previously.
-  format:
-    type: string
-    description: The file format for all dataSetFiles associated with this view. Required for CSV upload workflows, but optional in all other cases.
-    enum:
-      - ''
-      - csv
-      - text
-      - parquet
-      - json
-      - sequencefile
   batchResponse:
     type: object
     properties:
@@ -5959,6 +5933,11 @@ definitions:
           type: array
           items:
             type: string
+      dataContributors:
+        type: array
+        description: Describes the processes that have contributed data to this dataset
+        items:
+          $ref: '#/definitions/contributors'
       statsCache:
         type: object
         description: >-
@@ -6077,11 +6056,31 @@ definitions:
         description: Metadata describing the dataset files associated with this DataSetView.
         properties:
           persisted:
-            $ref: '#/definitions/persisted'
+            type: boolean
+            description: >-
+              Determines whether or not we are persisting the view to disk.  If
+              this is false then the other fields in this object are redundant,
+              but may be used for identifying old data that was persisted
+              previously.
           containerFormat:
-            $ref: '#/definitions/containerFormat'
+            type: string
+            description: >-
+              The Container format for all dataSetFiles associated with this
+              view.
+            enum:
+              - text
+              - sequence
+              - parquet
           format:
-            $ref: '#/definitions/format'
+            type: string
+            description: The file format for all dataSetFiles associated with this view.
+            enum:
+              - ''
+              - csv
+              - text
+              - parquet
+              - json
+              - sequencefile
           delimiters:
             type: array
             description: Characters used to separate fields.
@@ -6380,11 +6379,31 @@ definitions:
         description: Metadata describing the dataset files associated with this DataSetView.
         properties:
           persisted:
-            $ref: '#/definitions/persisted'
+            type: boolean
+            description: >-
+              Determines whether or not we are persisting the view to disk.  If
+              this is false then the other fields in this object are redundant,
+              but may be used for identifying old data that was persisted
+              previously.
           containerFormat:
-            $ref: '#/definitions/containerFormat'
+            type: string
+            description: >-
+              The Container format for all dataSetFiles associated with this
+              view.
+            enum:
+              - text
+              - sequence
+              - parquet
           format:
-            $ref: '#/definitions/format'
+            type: string
+            description: The file format for all dataSetFiles associated with this view.
+            enum:
+              - ''
+              - csv
+              - text
+              - parquet
+              - json
+              - sequencefile
           delimiters:
             type: array
             description: Characters used to separate fields.
@@ -6457,6 +6476,11 @@ definitions:
           type: array
           items:
             type: string
+      dataContributors:
+        type: array
+        description: Describes the processes that have contributed data to this dataset
+        items:
+          $ref: '#/definitions/contributors'
       statsCache:
         type: object
         description: >-
@@ -6697,11 +6721,31 @@ definitions:
           This attribute is immutable and cannot be updated using PUT or PATCH requests.
         properties:
           persisted:
-            $ref: '#/definitions/persisted'
+            type: boolean
+            description: >-
+              Determines whether or not we are persisting the view to disk.  If
+              this is false then the other fields in this object are redundant,
+              but may be used for identifying old data that was persisted
+              previously.
           containerFormat:
-            $ref: '#/definitions/containerFormat'
+            type: string
+            description: >-
+              The Container format for all dataSetFiles associated with this
+              view.
+            enum:
+              - text
+              - sequence
+              - parquet
           format:
-            $ref: '#/definitions/format'
+            type: string
+            description: The file format for all dataSetFiles associated with this view.
+            enum:
+              - ''
+              - csv
+              - text
+              - parquet
+              - json
+              - sequencefile
           delimiters:
             type: array
             description: Characters used to separate fields.
@@ -6859,11 +6903,31 @@ definitions:
           This attribute is immutable and cannot be updated using PUT or PATCH requests.
         properties:
           persisted:
-            $ref: '#/definitions/persisted'
+            type: boolean
+            description: >-
+              Determines whether or not we are persisting the view to disk.  If
+              this is false then the other fields in this object are redundant,
+              but may be used for identifying old data that was persisted
+              previously.
           containerFormat:
-            $ref: '#/definitions/containerFormat'
+            type: string
+            description: >-
+              The Container format for all dataSetFiles associated with this
+              view.
+            enum:
+              - text
+              - sequence
+              - parquet
           format:
-            $ref: '#/definitions/format'
+            type: string
+            description: The file format for all dataSetFiles associated with this view.
+            enum:
+              - ''
+              - csv
+              - text
+              - parquet
+              - json
+              - sequencefile
           delimiters:
             type: array
             description: Characters used to separate fields.
@@ -7020,11 +7084,31 @@ definitions:
         description: Metadata describing the dataset files associated with this DataSetView.
         properties:
           persisted:
-            $ref: '#/definitions/persisted'
+            type: boolean
+            description: >-
+              Determines whether or not we are persisting the view to disk.  If
+              this is false then the other fields in this object are redundant,
+              but may be used for identifying old data that was persisted
+              previously.
           containerFormat:
-            $ref: '#/definitions/containerFormat'
+            type: string
+            description: >-
+              The Container format for all dataset files associated with this
+              view.
+            enum:
+              - text
+              - sequence
+              - parquet
           format:
-            $ref: '#/definitions/format'
+            type: string
+            description: The file format for all dataset files associated with this view.
+            enum:
+              - ''
+              - csv
+              - text
+              - parquet
+              - json
+              - sequencefile
           delimiters:
             type: array
             description: Characters used to separate fields.
@@ -7606,6 +7690,22 @@ definitions:
         type: object
         description: Contains metrics related to this dataset.
         additionalProperties: true
+  contributors:
+    type: object
+    properties:
+      contributor:
+        type: string
+        description: The friendly name of the process contributing data to a dataset
+      type:
+        type: string
+        description: >-
+          The enumerated category the process belongs to (if you don't
+          think  your process matches one of these types please contact
+          the team)
+        enum:
+          - connector
+          - bulk-ingest
+          - stream
   contacts:
     type: object
     properties:
