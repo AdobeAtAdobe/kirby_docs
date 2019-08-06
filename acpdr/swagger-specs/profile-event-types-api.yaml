@@ -1,0 +1,331 @@
+swagger: '2.0'
+info:
+  description: >-
+    Work with event types on Adobe Experience Platform using the Real-time Customer Profile Event Types API.
+ 
+
+    Related documentation:
+
+      * [Real-time Customer Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
+
+    
+    Notes:
+      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
+      * Base path for this API: /data/core/ups/config
+      * Example of a complete path: https://<span>platform.adobe.io/data/core/ups/config/eventTypes
+      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
+      to obtain these, please see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
+
+  version: '1.0'
+  title: Profile Event Types API
+  termsOfService: ''
+host: platform.adobe.io
+basePath: /data/core/ups/config
+tags:
+  - name: Event types
+    description: Event types are context descriptors for time series events within Real-time Customer Profile.
+paths:
+  /eventTypes:
+    parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+    get:
+      tags:
+        - Event types
+      summary: Retrieve a list of event types.
+      description: ''
+      operationId: getMany
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/x-request-id'
+        - name: start
+          in: query
+          description: Page offset for the response. Default is 0.
+          required: false
+          type: integer
+          x-example: 2
+        - name: limit
+          in: query
+          description: Page size
+          required: false
+          type: integer
+          x-example: 10
+        - name: orderBy
+          in: query
+          description: The model attribute to be used for ordering.
+          required: false
+          type: string
+          x-example: value
+      responses:
+        '200':
+          description: A list of event types returned.
+          schema:
+            $ref: '#/definitions/EventTypesResponse'
+        '500':
+          description: Internal server error.
+        '503':
+          description: Service unavailable.
+    post:
+      tags:
+        - Event types
+      summary: Create a new event type.
+      description: ''
+      operationId: post
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/x-profile-instance-id'
+        - $ref: '#/parameters/x-request-id'
+        - $ref: '#/parameters/event-type-body'
+      responses:
+        '200':
+          description: Event type successfully created.
+          schema:
+            $ref: '#/definitions/EventType'
+        '400':
+          description: Please double check your post body
+        '403':
+          description: Forbidden
+        '429':
+          description: Request rate too large.
+        '500':
+          description: Internal server error.
+        '503':
+          description: Service unavailable.
+  '/eventTypes/{eventTypeId}':
+    parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/eventTypeId'
+    get:
+      tags:
+        - Event types
+      summary: Lookup an event type by ID.
+      description: ''
+      operationId: getById
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/x-request-id'
+      responses:
+        '200':
+          description: Event type successfully returned.
+          schema:
+            $ref: '#/definitions/EventType'
+        '403':
+          description: Forbidden
+        '404':
+          description: Event type not found.
+        '503':
+          description: Service unavailable.
+    put:
+      tags:
+      - Event types
+      summary: Overwrite an event type by ID.
+      description: ''
+      operationId: put
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/x-profile-instance-id'
+      - $ref: '#/parameters/x-request-id'
+      - $ref: '#/parameters/event-type-body'
+      responses:
+        '200':
+          description: Event Type successfully updated
+          schema:
+            $ref: '#/definitions/EventType'
+        '400':
+          description: Please double check your post body
+        '403':
+          description: Forbidden
+        '429':
+          description: Request rate too large!
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+    patch:
+      tags:
+      - Event types
+      summary: Update one or more attributes of an event type by ID.
+      description: ''
+      operationId: patch
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/x-profile-instance-id'
+      - $ref: '#/parameters/x-request-id'
+      - in: body
+        name: body
+        description: A list of patch operations
+        required: true
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/PatchOperation'
+      responses:
+        '200':
+          description: Event Type successfully updated
+        '400':
+          description: Please double check your post body
+        '403':
+          description: Forbidden
+        '429':
+          description: Request rate too large!
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+    delete:
+      tags:
+        - Event types
+      summary: Delete an event type by ID.
+      description: ''
+      operationId: delete
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/x-request-id'
+      responses:
+        '200':
+          description: EventType deleted successfully
+        '403':
+          description: Forbidden
+        '404':
+          description: EventType not found
+        '503':
+          description: Service Unavailable
+parameters:
+  authorization:
+    name: Authorization
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
+  x-gw-ims-org-id:
+    name: x-gw-ims-org-id
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
+  x-api-key:
+    name: x-api-key
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
+  json-header:
+    name: Content-Type
+    description: 'application/json'
+    required: true
+    type: string
+    in: header
+  x-request-id:
+    name: x-request-id
+    in: header
+    description: Request ID
+    required: false
+    type: string
+    x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+  eventTypeId:
+    name: eventTypeId
+    in: path
+    description: Event type ID
+    required: true
+    type: string
+    x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
+  x-profile-instance-id:  
+    name: x-profile-instance-id
+    in: header
+    description: Profile instance ID
+    required: true
+    type: string
+    x-example: ups
+  event-type-body:
+    in: body
+    name: body
+    description: Event type object
+    required: true
+    schema:
+      $ref: '#/definitions/EventType'
+definitions:
+  EventTypesResponse:
+    type: object
+    required:
+      - _page
+      - children
+    properties:
+      _page:
+        $ref: '#/definitions/Page'
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/EventType'
+  Page:
+    type: object
+    required:
+      - count
+    properties:
+      count:
+        type: integer
+        example: 100
+        description: Number of objects per page
+      next:
+        type: integer
+        example: 1
+        description: The index of the next page in the paginated list. (0-based)
+  EventType:
+    type: object
+    properties:
+      id:
+        type: string
+        example: ups-default
+        description: event type id
+      imsOrgId:
+        type: string
+        example: 1BD6382559DF0C130A49422D@AdobeOrg
+        description: IMS Org ID
+      title:
+        type: string
+        example: Click
+        description: event type title
+      description:
+        type: string
+        example: Web page clicks
+        description: event type description
+      global:
+        type: boolean
+        example: false
+        description: global flag
+      updateEpoch:
+        type: integer
+        example: 1234567890
+        description: update timestamp
+    description: 'event type'
+  PatchOperation:
+    type: object
+    required:
+    - op
+    - path
+    - value
+    properties:
+      op:
+        type: string
+        example: add
+        description: op
+        enum:
+        - add
+      path:
+        type: string
+        example: /description
+        description: path of the attribute need to be updated
+      value:
+        type: string
+        example: Web page clicks
+        description: the new value used to update the specified attribute
+    description: Patch operation
