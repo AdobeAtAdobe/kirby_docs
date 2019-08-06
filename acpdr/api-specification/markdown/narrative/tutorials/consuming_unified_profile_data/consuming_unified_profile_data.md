@@ -5,12 +5,12 @@ This document provides a tutorial for accessing Real-time Customer Profile data 
 - [List Real-time Customer Profile data fields](#list-real-time-customer-profile-data-fields)
 - [Summarize a data field](#summarize-an-xdm-field)
 - Access profile data by:
-    - [Identity](#Access-profile-data-by-identity)
-    - [List of identities](#Access-profile-data-by-list-of-identities) 
+    - [Identity](#access-profile-data-by-identity)
+    - [List of identities](#access-profile-data-by-list-of-identities) 
 - Access time series events by:
-    - [Identity](#Access-time-series-events-for-a-profile-by-identity)
-    - [List of identities](#Access-time-series-events-for-multiple-profiles-by-identities)
-- [Access an exported segment](#Access-an-exported-segment)
+    - [Identity](#access-time-series-events-for-a-profile-by-identity)
+    - [List of identities](#access-time-series-events-for-multiple-profiles-by-identities)
+- [Access an exported segment](#access-an-exported-segment)
 - [Ensure your requests are GDPR-compliant](#ensure-your-requests-are-gdpr-compliant)
 
 ## Getting started
