@@ -84,13 +84,13 @@ An example of a marketing action might be the desire to export a dataset to a th
 
 ### How to create and work with data usage policies
 
-Once data usage labels have been applied, data stewards can create policies via the DULE Policy Service API.
+Once data usage labels have been applied, data stewards can create policies using the DULE Policy Service API.
 
-The Policy Service is a RESTful API that allows data stewards to manage and evaluate policies related to marketing actions being taken on data containing data usage labels.
+As a data steward, you can use the Policy Service API to manage and evaluate policies related to marketing actions being taken on data containing data usage labels. Using the API, you can create and update policies, determine the status of a policy, and work with marketing actions to evaluate whether a specific action violates a data usage policy.
 
-Within the Policy Service API, all policies and marketing actions are referred to as either `core` or `custom` resources. `Core` resources are defined and maintained by Adobe, whereas `custom` resources are created and maintained by individual customers. The `custom` resources are therefore unique and visible solely to the organization that created them.
+Within the Policy Service API, all policies and marketing actions are referred to as either `core` or `custom` resources. `core` resources are defined and maintained by Adobe, whereas `custom` resources are created and maintained by individual customers. The `custom` resources are therefore unique and visible solely to the organization that created them.
 
-The [Working with Data Usage Policies](../../../api-specification/markdown/narrative/tutorials/dule/dule_working_with_policies.md) tutorial walks you through key operations you can perform using the Policy Service API. These include creating and updating policies, determining the status of a policy, and working with marketing actions to evaluate if a specific action violates a data usage policy.
+For steps on performing the key operations provided by the Policy Service API, see the tutorial on [working with data usage policies](../../../api-specification/markdown/narrative/tutorials/dule/dule_working_with_policies.md). For information on enforcing policies with Real-time Customer Profile data, see the tutorial on [enforcing data usage compliance for audience segments](../../../api-specification/markdown/narrative/tutorials/dule/data_governance_and_segmentation.md).
 
 ## Future releases
 
