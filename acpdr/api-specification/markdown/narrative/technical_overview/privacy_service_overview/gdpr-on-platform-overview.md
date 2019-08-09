@@ -25,7 +25,7 @@ For the data lake to process GDPR requests, you should first identify fields in 
 In the example below:
 
 * A dataset based on the Profile schema includes email address in the `personalEmail.address` field. If you deem that the field should be available for GDPR requests, label the field with a namespace.
-* Use the catalog dataset API to patch the dataset and apply the label you want. In this case the `email_ns` namespace is applied. Step 3 (below) shows how the namespace is used when submitting access and delete requests using the central service API.
+* Use the catalog dataset API to patch the dataset and apply the label you want. In this case the `email_label` namespace is applied. Step 3 (below) shows how the namespace is used when submitting access and delete requests using the central service API.
 
 ```json
 {
@@ -50,13 +50,13 @@ curl -X PATCH 'https://platform.adobe.io/data/foundation/catalog/dataSets/5bc391
       "gdpr": [
         {
           "path": "/properties/personalEmail/properties/address",
-          "namespace": ["email_ns"] 
+          "namespace": ["email_label"] 
         }
       ] 
   }'
 ```
 
-Labels are an array of string values. In the above example, the label is `email_ns`. Labels should only be applied to leaf fields (fields without children). In the sample above, the path refers to a leaf field.
+Labels are an array of string values. In the above example, the label is `email_label`. Labels should only be applied to leaf fields (fields without children). In the sample above, the path refers to a leaf field.
 
 ## Submitting requests 
 
