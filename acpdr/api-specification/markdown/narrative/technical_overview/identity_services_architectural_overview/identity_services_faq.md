@@ -28,25 +28,25 @@ Data that identifies a single customer is often fragmented across the various de
 
 ### Troubleshooting
 - Identity Service error messages
-  - [Missing required query parameter](#missing-required-query-parameter)
-  - [Timestamp should be within last 180 days](#timestamp-should-be-within-last-180-days)
-  - [There is a limit of 1000 XIDs in a single call](#there-is-a-limit-of-1000-xids-in-a-single-call)
-  - [There is a limit for 1000 compositeXids in a single call](#there-is-a-limit-for-1000-compositexids-in-a-single-call)
-  - [The graph-type specified is invalid](#the-graph-type-specified-is-invalid)
-  - [Service token does not have valid scope](#service-token-does-not-have-valid-scope)
-  - [Gateway service token is not valid](#gateway-service-token-is-not-valid)
-  - [Authorization service token is not valid](#authorization-service-token-is-not-valid)
-  - [User token does not have valid product context](#user-token-does-not-have-valid-product-context)
-  - [Internal error when getting native XID from identity and namespace code](#internal-error-when-getting-native-xid-from-identity-and-namespace-code)
-  - [The IMS Org is not provisioned for Identity Service usage](#the-ims-org-is-not-provisioned-for-identity-service-usage)
-  - [Internal Server Error](#internal-server-error)
+    - [Missing required query parameter](#missing-required-query-parameter)
+    - [Timestamp should be within last 180 days](#timestamp-should-be-within-last-180-days)
+    - [There is a limit of 1000 XIDs in a single call](#there-is-a-limit-of-1000-xids-in-a-single-call)
+    - [There is a limit for 1000 compositeXids in a single call](#there-is-a-limit-for-1000-compositexids-in-a-single-call)
+    - [The graph-type specified is invalid](#the-graph-type-specified-is-invalid)
+    - [Service token does not have valid scope](#service-token-does-not-have-valid-scope)
+    - [Gateway service token is not valid](#gateway-service-token-is-not-valid)
+    - [Authorization service token is not valid](#authorization-service-token-is-not-valid)
+    - [User token does not have valid product context](#user-token-does-not-have-valid-product-context)
+    - [Internal error when getting native XID from identity and namespace code](#internal-error-when-getting-native-xid-from-identity-and-namespace-code)
+    - [The IMS Org is not provisioned for Identity Service usage](#the-ims-org-is-not-provisioned-for-identity-service-usage)
+    - [Internal Server Error](#internal-server-error)
 - Batch Ingestion error codes
-  - [Unknown XDM schema](#unknown-xdm-schema)
-  - [There were 0 valid identities in the first 100 rows of the processed batch](#there-were-0-valid-identities-in-the-first-100-rows-of-the-processed-batch)
-  - [Skipped records as they had only 1 identity per XDM record](#skipped-records-as-they-had-only-1-identity-per-xdm-record)
-  - [Namespace Code is not registered for this IMS Org](#namespace-code-is-not-registered-for-this-ims-org)
-  - [Skipping batch ingestion as IMS Org is not provisioned for Private Identity Graph](#skipping-batch-ingestion-as-ims-org-is-not-provisioned-for-private-identity-graph)
-  - [Internal Error](#internal-error)
+    - [Unknown XDM schema](#unknown-xdm-schema)
+    - [There were 0 valid identities in the first 100 rows of the processed batch](#there-were-0-valid-identities-in-the-first-100-rows-of-the-processed-batch)
+    - [Skipped records as they had only 1 identity per XDM record](#skipped-records-as-they-had-only-1-identity-per-xdm-record)
+    - [Namespace Code is not registered for this IMS Org](#namespace-code-is-not-registered-for-this-ims-org)
+    - [Skipping batch ingestion as IMS Org is not provisioned for Private Identity Graph](#skipping-batch-ingestion-as-ims-org-is-not-provisioned-for-private-identity-graph)
+    - [Internal Error](#internal-error)
 
 ## FAQ
 
