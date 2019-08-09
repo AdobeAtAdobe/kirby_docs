@@ -5,12 +5,13 @@ This document provides a tutorial for accessing Real-time Customer Profile data 
 - [List Real-time Customer Profile data fields](#list-real-time-customer-profile-data-fields)
 - [Summarize a data field](#summarize-an-xdm-field)
 - Access profile data by:
-    - [Identity](#Access-profile-data-by-identity)
-    - [List of identities](#Access-profile-data-by-list-of-identities) 
+    - [Identity](#access-profile-data-by-identity)
+    - [List of identities](#access-profile-data-by-list-of-identities) 
 - Access time series events by:
-    - [Identity](#Access-time-series-events-for-a-profile-by-identity)
-    - [List of identities](#Access-time-series-events-for-multiple-profiles-by-identities)
-- [Access an exported segment](#Access-an-exported-segment) 
+    - [Identity](#access-time-series-events-for-a-profile-by-identity)
+    - [List of identities](#access-time-series-events-for-multiple-profiles-by-identities)
+- [Access an exported segment](#access-an-exported-segment)
+- [Ensure your requests are GDPR-compliant](#ensure-your-requests-are-gdpr-compliant)
 
 ## Getting started
 
@@ -34,7 +35,7 @@ Additional headers may be required to complete specific requests. The correct he
 
 All Real-time Customer Profile data is stored in data fields that conform to Profile-enabled XDM schemas. The names of these XDM data fields are often required when interacting with Profile APIs, such as when indicating specific data fields to retrieve, or when building segment rules.
 
-Using the [Profile Preview API](../../../../../../acdpr/swagger-specs/profile-preview-api.yaml), you can list all fields for a given schema for which data has been supplied during any ingest.
+Using the [Profile Preview API](../../../../../../acpdr/swagger-specs/profile-preview-api.yaml), you can list all fields for a given schema for which data has been supplied during any ingest.
 
 #### API format
 
@@ -146,7 +147,7 @@ Real-time Customer Profile provides summaries for data fields that contain conti
 
 If the field being summarized has no values that occur more than 5%, a failure response will be returned as these fields do not convey useful information.
 
-Below are some example use cases for the summary endpoint in the [Profile Preview API](../../../../../../acdpr/swagger-specs/profile-preview-api.yaml).
+Below are some example use cases for the summary endpoint in the [Profile Preview API](../../../../../../acpdr/swagger-specs/profile-preview-api.yaml).
 
 ### Longitude example
 
@@ -347,7 +348,7 @@ A successful response returns the summary data for the XDM field. Notice the lac
 
 ## Access Profile data by identity
 
-Using the [Profile Access API](../../../../../../acdpr/swagger-specs/profile-access.yaml), you can access an entity by an identity, which consists of an ID value (`entityId`) and the identity namespace (`entityIdNS`).
+Using the [Profile Access API](../../../../../../acpdr/swagger-specs/profile-access.yaml), you can access an entity by an identity, which consists of an ID value (`entityId`) and the identity namespace (`entityIdNS`).
 
 #### API format
 
@@ -460,7 +461,7 @@ curl -X GET \
 
 ## Access profile data by list of identities
 
-You can use the [Profile Access API](../../../../../../acdpr/swagger-specs/profile-access.yaml) to access multiple profile entities by their identities. These identities consist of an ID value (`entityId`) and an identity namespace (`entityIdNS`).
+You can use the [Profile Access API](../../../../../../acpdr/swagger-specs/profile-access.yaml) to access multiple profile entities by their identities. These identities consist of an ID value (`entityId`) and an identity namespace (`entityIdNS`).
 
 #### API format
 
@@ -655,7 +656,7 @@ A successful response returns the requested fields of entities specified in the 
 
 ## Access time series events for a profile by identity
 
-You can use the [Profile Access API](../../../../../../acdpr/swagger-specs/profile-access.yaml) to access time series events by the identity of their associated profile entity. This identity consists of an ID value (`entityId`) and an identity namespace (`entityIdNS`).
+You can use the [Profile Access API](../../../../../../acpdr/swagger-specs/profile-access.yaml) to access time series events by the identity of their associated profile entity. This identity consists of an ID value (`entityId`) and an identity namespace (`entityIdNS`).
 
 
 
@@ -824,7 +825,7 @@ A successful response returns the next page of results. This example demonstrate
 
 ## Access time series events for multiple profiles by identities
 
-Using the [Profile Access API](../../../../../../acdpr/swagger-specs/profile-access.yaml), you can access time series events by a collection of identities from multiple associated profiles, where an identity consists of an ID value (`entityId`) and the identity namespace (`entityIdNS`).
+Using the [Profile Access API](../../../../../../acpdr/swagger-specs/profile-access.yaml), you can access time series events by a collection of identities from multiple associated profiles, where an identity consists of an ID value (`entityId`) and the identity namespace (`entityIdNS`).
 
 #### API format
 
@@ -1100,6 +1101,22 @@ Results are paginated when retrieving time series events. If there are subsequen
 
 ## Access an exported segment
 
-You can access Profile data using criteria (or rules) by using the Segmentation Service. The [Profile Segment Definition API](../../../../../../acdpr/swagger-specs/profile-segment-definitions-api.yaml) creates segment definitions, which are tested using the [Profile Preview API](../../../../../../acdpr/swagger-specs/profile-preview-api.yaml). These segments are then applied against your profile store using the [Profile Segment Jobs API](../../../../../../acdpr/swagger-specs/profile-segment-jobs-api.yaml). For more details on creating segments, see the [create a segment tutorial](../creating_a_segment_tutorial/creating_a_segment_tutorial.md).
+You can access Profile data using criteria (or rules) by using the Segmentation Service. The [Profile Segment Definition API](../../../../../../acpdr/swagger-specs/profile-segment-definitions-api.yaml) creates segment definitions, which are tested using the [Profile Preview API](../../../../../../acpdr/swagger-specs/profile-preview-api.yaml). These segments are then applied against your profile store using the [Profile Segment Jobs API](../../../../../../acpdr/swagger-specs/profile-segment-jobs-api.yaml). For more details on creating segments, see the [create a segment tutorial](../creating_a_segment_tutorial/creating_a_segment_tutorial.md).
 
-Once a segment has been created and exported, you can use the [Data Access API](../../../../../../acdpr/swagger-specs/data-access-api.yaml) to access the data using the returned `batchId` from when the segment was exported. For detailed steps on locating batch files and accessing their contents, see the [Data Access API tutorial](../data_access_tutorial/data_access_tutorial.md).
+Once a segment has been created and exported, you can use the [Data Access API](../../../../../../acpdr/swagger-specs/data-access-api.yaml) to access the data using the returned `batchId` from when the segment was exported. For detailed steps on locating batch files and accessing their contents, see the [Data Access API tutorial](../data_access_tutorial/data_access_tutorial.md).
+
+## Ensure your requests are GDPR-compliant
+
+Adobe Experience Platform Privacy Service allows you to ensure your data access requests are compliant with the European Union [General Data Protection Regulation (GDPR)](https://eugdpr.org/) by automating GDPR `access` and `delete` requests across Platform components. 
+
+For general information on how GDPR applies to Experience Platform, see the [GDPR on Experience Platform overview](../../gdpr/gdpr-on-platform-overview.md). For definitions to some of the GDPR terminology used below, visit the [GDPR terminology](../../gdpr/gdpr-terminology.md) glossary.
+
+The following workflow outlines how Privacy Service interacts with Platform components to ensure GDPR compliance:
+
+1. As part of good data hygiene, the data controller should curate and appropriately label all personal data that is ingested into Experience Platform. See the [Data Governance user guide](../../../../../end-user/markdown/dule_overview/dule_overview.md) for more information on working with data labels.
+1. When a data subject requests to access or delete their data, the data controller collects identities from the data subject, verifies that data, and submits it to Privacy Service.
+1. Privacy Service sends the request to Pipeline and confirms that it was accepted by returning a "processing" status.
+1. Privacy Service sends the request to Real-time Customer Profile.
+1. Profile either deletes all data for the given identity and all related identities, or gathers all uploaded file data associated with the identity.
+1. Profile sends the response back to Privacy Service, indicating the action and a status message of "complete" or "error".
+1. Privacy Service stores the response sent from Profile.
