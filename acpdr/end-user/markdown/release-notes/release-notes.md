@@ -1,109 +1,42 @@
 ---
 
 title: Adobe Experience Platform Release Notes
-description: Experience Platform release notes June 28, 2019
+description: Experience Platform release notes July 25, 2019
 doc-type: release notes
-last-update: June 27, 2019
-author: crhoades
+last-update: July 31, 2019
+author: ens28527
 
 ---
 
 # Adobe Experience Platform release notes 
-## Release date: June 28, 2019
+## Release date: July 25, 2019
 
 New features in Adobe Experience Platform:
-* [Data Science Workspace](#data-science-workspace)
-* [Decisioning Service](#decisioning-service)
-* [Query Service](#query-service)
+* [Privacy Service](#privacy-service)
 
 Updates to existing features:
 * [Experience Data Model (XDM) and XDM System](#experience-data-model-xdm-and-xdm-system)
 * [Segmentation Service](#segmentation-service)
 
-## Data Science Workspace
+## Privacy Service
 
-Adobe Experience Platform Data Science Workspace is a fully managed service within Experience Platform that enables data scientists to seamlessly generate insights from data and content across Adobe solutions and third party systems by building and operationalizing Machine Learning Models. Data Science Workspace is tightly integrated with Platform and powers the end-to-end data science lifecycle, including exploration and preparation of XDM data, followed by the development and operationalization of Models to automatically enrich Real-time Customer Profile with Machine Learning Insights.
+Adobe Experience Platform Privacy Service provides a RESTful API and user interface to help companies manage customer data requests. With Privacy Service, you can submit requests to access and delete private or personal customer data, facilitating automated compliance with organizational and legal privacy regulations such as the General Data Protection Regulation (GDPR) introduced in the European Union.
 
-**Key features**
-
-| Feature    | Description  |
-| -----------| ---------- |
-| Provisioning and compute isolation | Provision dedicated compute resources needed to enable data scientists to execute untrusted code within Experience Platform in a secure manner. |
-| First-time user experience | Includes out-of-the box samples for various Machine Learning frameworks and languages such as Python, R, PySpark and Scala Spark.|
-| Notebooks| Customized environment for data scientists/data engineers powered by Jupyter Notebooks to enable them to prepare data, extract features, and develop ML Models with a curated list of libraries and popular Machine Learning frameworks. |
-| Data exploration | Seamless access to XDM data ingested into Platform integrated with Platform Data Access SDK. |
-| Data visualization | Ability to execute SQL queries in Jupyter Notebooks to accelerate data prep and feature engineering.|
-| Feature pipelines | API/SDK for Scala/PySpark to deploy feature engineering pipelines for transforming core XDM data into feature schemas. |
-| Model authoring | Template and Runtimes that enable data scientists to focus on Model development without having to implement infrastructure code for accessing data and compute resources. You can import model code and operationalize it to derive Insights from data in Platform. |
-| Enterprise model management| Support for multi-tenant data model to track model versions and associated hyperparameter configurations to provide foundation for partner ecosystem. |
-| Model evaluation | Evaluate and optimize regression and classification models in Python, PySpark, R, and Scala.|
-| Model deployment | Ability to compare evaluation metrics and configurations across multiple experiment runs and publish the optimal model as a Service.|
-| Batch scoring | Enrich Real-time Customer Profile with Machine Learning insights or write them as datasets back to Platform|
-| Scheduling | Integrated with Platform Orchestration Service to automate Model training, scoring, and feature pipelines with user-defined schedules through APIs. |
-
-**Known issues**
-
-* Scheduling and feature pipelines are currently available via API only, with a UI to be added in a future release.
-
-For more information, visit the [Data Science Workspace Overview](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html) or refer to the [Data Science Workspace Tutorials](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials.html).
-
-## Decisioning Service
-
-Adobe Experience Platform Decisioning Service provides the ability to programmatically and intelligently select the ‘Next Best Experience’ from a set of available options for a given individual, deliver them to any channel or application, and perform reporting and analysis.
-
-A prebuilt rich data model enables the use case of "Next Best Offer" decisioning in a channel agnostic way.
+Privacy Service was developed in response to a fundamental shift in how businesses are required to manage the personal data of their customers. The central purpose of Privacy Service is to automate compliance with data privacy regulations which, when violated, can result in major fines and disrupt data operations for your business.
 
 **Key features**
 
-| Feature    | Description  |
-| -----------| ---------- |
-| Business object repository  | A repository driven by JSON schema models allows a developer to create, read, update and delete a variety of business objects. The repository provides general purpose, expressive query APIs as well as schema aware search.|
-| Repository containers | Within the business object repository a developer may isolate their concerns around projects, business or organizational units, or around life cycle stages of a project (for example, in development and integration, staging, or for live production use). Those isolations are called repository containers.
-| Roles and permissions | Using the Admin Console, an organization can create and manage profiles to grant targeted access to resources by type, access operation, and container. Users can be added to those access profiles and effective access privileges are automatically computed from those policies. |
-| Prebuilt offer object model | Without the need to first build a data model, a Platform developer can leverage prebuilt JSON schemas and relationships to create an offer catalog, define decision rules and constraints, and assemble offer collections for decisioning. |
-| Decision rules based on profile and non-profile data | A tight integration with the Real-time Customer Profile allows a developer to create decision rules that leverage Profile data. Not only can decisions be made using profile attributes but also based on the experience event history of a profile and based on business entities unrelated to a user identity (e.g. traffic conditions, product inventory). Any Experience Data Model (XDM) entity for which a schema exists in the Schema Registry can be used for the decision rules. Rules are first class entities and can be reused for any of the decision options and activities. |
-| Ranking and capping | Decision options that fulfill all eligibility and other constraints for a given user are ranked and the best option is selected. Additional per user and global capping constraints can be used to limit the exposure of the available options, thus enabling personalization with resource constraints and user fatigue in mind. |
-| Decisioning REST APIs | The Decisioning Service can be invoked using a simple REST API to get the Next Best Offer for a given individual. A metrics API can be used to check real-time offer proposition and capping values. |
-| Streaming Decision Events into Data Lake and Query Service | The Decisioning Service auto-creates datasets to stream all XDM Decision Events automatically into the Data Lake. The datasets are then available for analysis and reporting using Query Service. |
-| Developer enablement | Self service opt-in with documentation on Adobe I/O including tutorials for various topics. |
+|Feature|Description|
+|---|---|
+| Privacy Service User Interface (UI) | The new GDPR request metrics dashboard provides visibility into GDPR requests that have been submitted, including whether they were completed or returned an error. |
+| Create Request Builder | To service organizations with both non-technical and technical users submitting GDPR requests, “Create Request” functionality has been added to the UI. The JSON file submission capability is still available in the Privacy Service UI for those organizations who prefer to continue using it.|
+| GDPR Job Event Notifications| Event notifications about GDPR job statuses are a critical element to many workflows. Notifications were previously served using individual email notices. With the move away from email, GDPR event notifications are messages that leverage Adobe I/O events, which are sent to a configured webhook facilitating job request automation. Users of the Privacy Service UI can subscribe to Adobe I/O GDPR events to receive updates when a product or the GDPR job has been completed. |
 
-**Known issues**
+**Bug fixes**
 
-* The offer data model is not exposed through the Schema Registry and can therefore only be extended in limited ways. The model schema has built-in structures to allow the attachment of custom data. In the future, you will be able to extend a base XDM model class to define your own custom decisioning domains.
-* You must be provisioned with the Offer Management domain model and users and integrations must be managed in this product context.
+* None.
 
-To learn more, visit the [Decisioning Service Overview](https://www.adobe.io/apis/experienceplatform/home/services/decisioning-service.html#!api-specification/markdown/narrative/technical_overview/decisioning-overview/decisioning-service-overview.md).
-
-## Query Service
-
-Query Service provides the ability to use standard SQL to query data in Adobe Experience Platform to support many different analysis and data management use cases. It is a serverless tool which allows you to join any datasets in the Data Lake and capture the query results as a new dataset for use in reporting, Data Science Workspace, or for ingestion into Profile Service.
-
-You can use Query Service to build data analysis ecosystems, creating a picture of consumers across their various interaction channels. These channels might include:
-
-* Point-of-sale system
-* Web
-* Mobile
-* CRM system
-
-**Key features**
-
-| Feature    | Description  |
-| -----------| ---------- |
-| Query editor | Use a web-based tool to write, validate, test, and execute queries. It includes a console for detailed information on the execution of queries, as well as the ability to preview query results. | 
-| Dataset creation | Create datasets on Experience Platform via standard SQL syntax. |
-| Adobe-defined functions | Leverage shortcut functions for common tasks like identifying sessions or setting attribution. |
-| BI tool connectivity | Use the PostgreSQL (Postgres) drivers found in common BI tools to connect to Query Service to create reports and visualizations. Supported tools include: Tableau, Power BI, and Looker. Find authentication information on the Credentials tab. |
-| Database management tool connectivity | Connect Aqua Data Studio or DB visualizer to Query Service for data exploration and dataset creation functionality. Query Service also supports connectivity from R Studio. Find authentication information on the Credentials tab. |
-| Command line query tool | Connect PSQL to be able to run queries from the command line. |
-| Query Log  | Keeps a history of queries executed by Query Service and enables you to find prior SQL for editing, execution, or for creating a dataset out of the results. |
-| Query scheduling API  | Schedule queries for recurring execution via this API. |
-
-**Known issues**
-
-* Query Editor shows a sample of 100 rows of the results for your queries. In order to persist the complete result set, use the dataset creation capabilities from the Query Log. 
-* Near-term releases will add support for Views and a UI for applying schedules to queries. 
-
-For more information about Query Service, see the [product documentation](https://www.adobe.io/apis/experienceplatform/home/services/query-service/query-service.html).
+For more information, visit the [Privacy Service overview](https://www.adobe.io/apis/experienceplatform/home/services/privacy-service.html#!api-specification/markdown/narrative/technical_overview/privacy_service_overview/privacy_service_overview.md) or refer to the [GDPR on Adobe Experience Platform overview](https://www.adobe.io/apis/experienceplatform/home/services/privacy-service.html#!api-specification/markdown/narrative/technical_overview/privacy_service_overview/gdpr-on-platform-overview.md).
 
 ## Experience Data Model (XDM) and XDM System
 
@@ -117,54 +50,44 @@ The methodology on which Experience Platform is built, XDM System operationalize
 
 **New features**
 
-| Feature    | Description  |
-| ---------- | ------------ |
-| JSON Schema constraints  | The following datatypes now have additional options in the user interface to define constraints: <ul><li>`string` - min/max length, pattern, default value, formats (as defined in [JSON Schema draft-6](https://tools.ietf.org/html/draft-wright-json-schema-01))</li><li>`double` - min/max, default value</li></ul> |
-| Custom `$id`  | You can now provide your own `$id` value when creating resources in POST requests. |
-| Schema Registry performance improvements  | Optimized union schema generation, and enhanced schema caching to greatly improve API response times. |
+|Feature|Description|
+|---|---|
+| Improved icon system | The Schema Editor UI has updated icons that better align with the overall Platform design. |
+| Support for JSON Schema properties and constraints for scalars | The Schema Editor UI now provides optional fields for defining [JSON Schema draft-6](https://tools.ietf.org/html/draft-wright-json-schema-01) constraints on scalar fields, such as `default` and `required`. |
+| Support JSON Schema properties and constraints for arrays | The Schema Editor UI now provides optional fields for defining [JSON Schema draft-6](https://tools.ietf.org/html/draft-wright-json-schema-01) constraints on array fields such as `minItems`, `maxItems`, and `uniqueItems`. |
 
-**Fixes**
+**Bug fixes**
 
-* Moved the identityMap field out of context/profile and into its own mixin to make defining identities more intuitive.
-* Patched all existing schemas based on context/profile with context/identitymap.
-* Fixed error message when no version is supplied.
-* Fixed bug where Schema Registry was giving random responses for profile union schema calls.
-* Fixed bug where union schemas were not displaying the correct fields in Schema Registry.
-* Fixed bug where identity descriptors were occasionally not able to be created with valid namespaces.
-* Fixed dereference issue if an object uses `properties` instead of `allOf`.
+* When extending Adobe mixins by adding a field, the mixin is now implicitly extended in the UI.
+* Descriptors are now deleted when a mixin is removed from the schema composition.
+* Overloaded `meta:intendedToExtend` values in mixins are now respected when saving in the UI.
+* Fixed bug where the API could not properly handle URLs with plus (`+`) encoded spaces.
+* Improved the error message when no version is supplied in API calls.
 
 **Known issues**
 
-* Cannot extend a Platform-supplied mixin by adding a field.
-* Descriptors are not deleted when a mixin is removed from the schema composition.
 * Unable to create an enum field with no labels.
+* JSON that is captured by the "Copy JSON" button in the UI contains extraneous meta properties.
 
 To learn more about working with XDM using the Schema Registry API and Schema Editor, please read the [XDM System documentation](https://www.adobe.io/apis/experienceplatform/home/xdm.html).
 
 ## Segmentation Service
 
-Segmentation Service defines a particular subset of profiles from your profile store, describing the criteria to distinguish a marketable group of people within your profile store. Segments can be based on record data (such as demographic information) or time series events representing customer touch points with your brand.
-
-For example, in an email campaign focused on running shoes, you could use an audience segment of all users who searched for running shoes within the last 30 days, but did not complete a purchase. Another example could be using a segment to target site content so that it displays only to visitors who belong to a certain tier of your rewards program.
+Adobe Experience Platform Segmentation Service enables you to create rules that describe the attributes and behaviors for a marketable group of people, and then build actionable audiences based on those rules using profiles in your profile store.
 
 **New features**
 
 | Feature    | Description  |
 | -----------| ---------- |
-| Relative time rules |You can now choose rolling time windows such as 14 days ago, 3 to 5 hours ago, etc.|
-|XDM field summaries |For Attributes on the left-rail, summaries are now available providing a view into your underlying data.|
-|Left-rail search |Improved search capabilities for the segments portion of the left rail.
-|eVar friendly names |Improved support for friendly names, allowing you to see more easily what information is captured within custom events and dimensions from Adobe Analytics.|
-|Merge policy support |You can now choose which merge policy to apply to their segment definition using a simple dropdown.|
+| Audiences as building blocks|In addition to copying the logic from other platform segments, you can now choose to reference segment membership (audiences) when building additional segments.|
+|Contextual access to Dynamic Variables|You can now access dynamic variables in the context of the rule builder canvas rather than having to navigate to them via the left rail.|
+|Multi-value operands for strings|You can now add multiple potential values on a single string rule (example: SKU contains “ABC” or “DEF” or “GHI”).|
 
-**Fixes**
+**Bug fixes**
 
-* Fixed an intermittent issue causing slow loading of the attributes and events building blocks in the left-rail.
-* Fixed a bug which caused the estimator to return “NaN” response.
-* Fixed an error where some fields were opening the incorrect rule building canvas.
-
-**Known issues**
-
-* None.
+* Fixed an intermittent issue causing errors when “only show populated fields” was deselected.
+* Fixed an error where attribute summaries were surfacing on hover – they now surface on click.
+* Fixed a pagination error with segment search.
+* Minor usability enhancements.
 
 For more information, including how to use the Segment Builder user interface, see the [Segment Builder overview documentation](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!end-user/markdown/segmentation_overview/segmentation.md). For instructions on building segments using the API, see the [creating segments via API tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md).
