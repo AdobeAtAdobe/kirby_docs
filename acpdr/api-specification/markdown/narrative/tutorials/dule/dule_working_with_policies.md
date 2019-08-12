@@ -1268,11 +1268,9 @@ In the response below, you can see that the list of `duleLabels` is now shorter,
 ```
 
 
-<!-- ## Policy evaluation for Unified Profile Service
+## Policy evaluation for Real-time Customer Profile
 
-The Policy Service API can also be used to check for policy violations involving the use of Unified Profile Service (UPS) segments. 
-
-Detailed instructions for Unified Profile Service, including working with merge policies and obtaining datasets from UPS segments, can be found in the [Unified Profile and data usage compliance](../../markdown/dule_and_unified_profile/dule_and_unified_profile.md) documentation. -->
+The Policy Service API can also be used to check for policy violations involving the use of Real-time Customer Profile segments. See the tutorial on [enforcing data usage compliance for audience segments](data_governance_and_segmentation.md) for more information.
 
 ## Next steps
 
