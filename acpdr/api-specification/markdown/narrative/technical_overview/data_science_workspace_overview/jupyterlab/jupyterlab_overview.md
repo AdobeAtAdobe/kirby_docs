@@ -5,14 +5,10 @@
 JupyterLab is a web-based user interface for <a href="https://jupyter.org/" target="_blank">Project Jupyter</a> and is tightly integrated into Adobe Experience Platform. It provides an interactive development environment for data scientists to work with Jupyter notebooks, code, and data.
 
 This document provides an overview of JupyterLab and its features as well as instructions to perform common actions:
--   [JupyterLab on Adobe Experience Platform]()
--   [Integration with other Platform services]()
--   [JupyterLab features and user guide]()
-    -   [Access JupyterLab]()
-    -   [JupyterLab interface]()
-    -   [Launcher notebook]()
-    -   [Notebook cells]()
-    -   [Notebook session]()
+-   [JupyterLab on Adobe Experience Platform](#jupyterlab-on-adobe-experience-platform)
+-   [Integration with other Platform services](#integration-with-other-platform-services)
+-   [JupyterLab features and user guide](#jupyterlab-features-and-user-guide)
+
 
 The appendix to this document includes additional useful resources related to JupyterLab, including:
 -   [Supported libraries](#appendix-supported-libraries)
@@ -20,34 +16,34 @@ The appendix to this document includes additional useful resources related to Ju
 
 ## JupyterLab on Adobe Experience Platform
 
-The integration of JupyterLab on Experience Platform is accompanied with architectural changes, design considerations, customized notebook extensions, and an interface makeover with a custom Adobe theme.
+The integration of JupyterLab on Experience Platform is accompanied with architectural changes, design considerations, customized notebook extensions, pre-installed libraries, and an Adobe themed interface.
 
-The following is a list of features that are unique to JupyterLab on Platform:
+The following list outline some of the features that are unique to JupyterLab on Platform:
 
 *   **Kernels**
     *   Kernels provide notebook and other JupyterLab front-ends the ability to execute and introspect code in different programming languages. Experience Platform provides additional kernels to support development in Python, R, PySpark, and Spark. See the [kernels](#kernels) section for more details
 *   **Data access**
     *   Access existing datasets directly from within JupyterLab with full support for read and write capabilities
 *   **Development libraries**
-    *   JupyterLab on Experience Platform provides pre-installed libraries for all your development needs. See the [appendix](#supported-libraries) for a complete list of supported libraries
+    *   JupyterLab on Experience Platform provides pre-installed libraries for all your development needs. See the [appendix](#appendix-supported-libraries) for a complete list of supported libraries
 *   **Platform service integration**
     *   Built-in integrations allows you to utilize other Platform services directly from within JupyterLab. A complete list of supported integrations is provided in the section [Integration with other Platform services](#integration-with-other-platform-services)
 *   **Authentication**
-    *   In addition to <a href="https://jupyter-notebook.readthedocs.io/en/latest/security.html" target="_blank">JupyterLab's built-in security model</a>, every interaction between your application and Experience Platform, including Platform service-to-service communication is encrypted and authenticated through the [Adobe Identity Management System (IMS)](https://www.adobe.io/authentication/auth-methods.html)
+    *   In addition to <a href="https://jupyter-notebook.readthedocs.io/en/latest/security.html" target="_blank">JupyterLab's built-in security model</a>, every interaction between your application and Experience Platform, including Platform service-to-service communication is encrypted and authenticated through the <a href="https://www.adobe.io/authentication/auth-methods.html" target="_blank">Adobe Identity Management System (IMS)</a>
 *   **Library controller**
-    *   When the the pre-installed libraries are lacking for your needs, additional libraries can be installed and are temporarily stored in isolated containers for maintaining Platform integrity and to keep your data safe
+    *   When the the pre-installed libraries are lacking for your needs, additional libraries can be installed for Python and R, and are temporarily stored in isolated containers for maintaining Platform integrity and to keep your data safe. See the [kernels](#kernels) section for more details
         >   **Note:** Additional libraries are only available for the session in which they were installed. If needed, reinstall any additional libraries for new sessions.
 
 [//]: # (*   **OPTION 1:** To ensure compatibility and stability, an extensive list of approved libraries are supported. These libraries provide access to functionalities such as exploration, transformation, numerical simulation, machine learning, data visualization, and many more. Refer to the [appendix]\(#supported-libraries\) for a complete list of pre-installed libraries)
 [//]: # (*   **OPTION 2:** An extensive list of supported libraries providing you with access to functionalities such as exploration, transformation, numerical simulation, machine learning, data visualization, and many more. Refer to the [appendix]\(#supported-libraries\) for a complete list of pre-installed libraries)
 
-## Integration with other Platform services - WIP
+## Integration with other Platform services
 
 Standardization and interoperability are key concepts behind Experience Platform. The integration of JupyterLab on Platform as an embedded IDE allows it to interact directly with other platform services, providing you the ability to utilize Platform at its full potential. The following Platform services are available in JupyterLab:
 
-*   **Data Catalog:** access datasets/schemas
-*   **Query Service:** access and explore datasets using SQL, might be faster than Data Catalog
-*   **Sensei ML Framework:** Model development with the ability to model train/score data and create recipes within a notebook
+*   **Data Catalog:** Access and explore datasets with read and write functionalities.
+*   **Query Service:** Access and explore datasets using SQL, providing lower data access overheads when dealing with large amounts of data.
+*   **Sensei ML Framework:** Model development with the ability to train and score data, as well as recipe creation with a single click.
 
 >   **Note:** Some Platform service integrations on JupyterLab are limited to specific kernels. Refer to the section on [Kernels](#kernels) for more details.
 
@@ -55,29 +51,22 @@ Standardization and interoperability are key concepts behind Experience Platform
 
 Information regarding key features of JupyterLab and instructions on common usages are provided in the sections below:
 
--   [Access JupyterLab]()
--   [JupyterLab interface]()
-    -   [Menu bar]()
-    -   [Left sidebar]()
-    -   [Main work area]()
--   [Launcher]()
--   [Kernels]()
-    -   [Kernel sessions]()
--   [Notebook cells]()
-    -   [Add, move, execute, and delete a cell]()
--   [Notebook session]()
-    -   [Restart a session]()
-    -   [Terminate a session]()
+-   [Access JupyterLab](#access-jupyterlab)
+-   [JupyterLab interface](#jupyterlab-interface)
+    -   [Menu bar](#menu-bar)
+    -   [Left sidebar](#left-sidebar)
+    -   [Main work area](#main-work-area)
+-   [Kernels](#kernels)
+    -   [Kernel sessions](#kernel-sessions)
+-   [Launcher](#launcher)
+-   [Code cells](#code-cells)
+    -   [Add, move, execute, and delete a cell](#add-move-execute-and-delete-a-cell)
 
 ### Access JupyterLab
 
-To access JupyterLab, first log in to <a href="https://platform.adobe.com" target="_blank"> Adobe Experience Platform </a>, then click **Models** from the left navigation column.
+On <a href="https://platform.adobe.com" target="_blank">Adobe Experience Platform</a>, click **Models** from the left navigation column, then click **Notebooks** found in the top navigation to access JupyterLab. Allow some time for JupyterLab to fully initialize.
 
-[//]: # (Graphics here to show left nav column and Models)
-
-On the *Models* page, click **Notebooks** found in the top navigation to access JupyterLab. Allow some time for JupyterLab to fully initialize.
-
-[//]: # (Gif here, clicking Notebooks and showing initialization of JupyterLab)
+![](./images/access_jupyterlab.png)
 
 ### JupyterLab interface
 
@@ -117,6 +106,29 @@ The main work area in JupyterLab enables you to arrange documents and other acti
 
 ![](./images/main_work_area.gif)
 
+### Kernels
+
+Notebook kernels are the language-specific computing engines for processing notebook cells. In addition to Python, JupyterLab on Experience Platform provides additional language support in R, PySpark, and Spark. When you open a notebook document, the associated kernel is launched. When a notebook cell is executed, the kernel performs the computation and produces results which may consume significant CPU and memory resources. Note that allocated memory is not freed until the kernel is shut-down.
+
+Certain features and functionalities are limited to particular kernels as described in the table below:
+
+| kernel | library installation support | Platform integrations |
+| :----: | :--------------------------: | :-------------------- |
+| **Python** | yes | <ul><li>Sensei ML Framework</li><li>Data Catalog</li><li>Query Service</li></ul> |
+| **R** | yes | <ul><li>Sensei ML Framework</li><li>Data Catalog</li></ul> |
+| **PySpark** | no | <ul><li>Sensei ML Framework</li><li>Data Catalog</li></ul> |
+| **Spark** | no | <ul><li>Sensei ML Framework</li><li>Data Catalog</li></ul> |
+
+#### Kernel sessions
+
+Each active notebook or activity on JupyterLab utilizes a kernel session, all active sessions can be found by expanding the **Running terminals and kernels** tab from the left sidebar. The type and state of the kernel for a notebook can be identified by observing the top right of the notebook interface. In the diagram below, the notebook's associated kernel is **Python 3** and the its current state is represented by a grey circle to the right. A hollow circle implies an idling kernel and a solid circle implies a busy kernel.
+
+![](./images/kernel_and_state_1.png)
+
+If the kernel is shut-down or inactive for a prolonged period, then **No Kernel!** with a solid circle is shown. Activate a kernel by clicking the kernel status and selecting the appropriate kernel type as demonstrated below:
+
+![](./images/switch_kernel.gif)
+
 ### Launcher
 
 [//]: # (Talk about the different Notebooks, introduce that certain starter notebooks are limited to particular kernels)
@@ -133,108 +145,74 @@ The customized *Launcher* provides you with useful notebook templates for their 
 *   **Aggregation:** A pre-filled notebook demonstrating sample workflows to aggregate large amounts of data into smaller, manageable chunks
 *   **Clustering:** A pre-filled notebook demonstrating the end-to-end machine learning modeling process using clustering algorithms
 
-Some notebook templates are available to certain kernels, availability is mapped in the table below:
-
-markdown:
-
-| kernel | Blank | Starter | Retail Sales | Recipe Builder | Query Service | XDM Events | XDM Queries | Aggregation | Clustering |
-| :----- | :---: | :-----: | :----------: | :------------: | :-----------: | :--------: | :---------: | :---------: | :--------: |
-| **Python** | yes | yes | yes | yes | yes | yes | no | no | no |
-| **R** | yes | yes | yes | no | no | no | no | no | no |
-| **PySpark** | yes | yes | no | no | no | no | yes | yes | no |
-| **Spark** | yes | yes | no | no | no | no | no | no | yes |
-
-html:
+Some notebook templates are limited to certain kernels, availability is mapped in the table below:
 
 <table>
     <tr>
         <td></td>
-        <th scope="col">Blank</th>
-        <th scope="col">Starter</th>
-        <th scope="col">Retail Sales</th>
-        <th scope="col">Recipe Builder</th>
-        <th scope="col">Query Service</th>
-        <th scope="col">XDM Events</th>
-        <th scope="col">XDM Queries</th>
-        <th scope="col">Aggregation</th>
-        <th scope="col">Clustering</th>
+        <th scope="col"><strong>Blank</strong></th>
+        <th scope="col"><strong>Starter</strong></th>
+        <th scope="col"><strong>Retail Sales</strong></th>
+        <th scope="col"><strong>Recipe Builder</strong></th>
+        <th scope="col"><strong>Query Service</strong></th>
+        <th scope="col"><strong>XDM Events</strong></th>
+        <th scope="col"><strong>XDM Queries</strong></th>
+        <th scope="col"><strong>Aggregation</strong></th>
+        <th scope="col"><strong>Clustering</strong></th>
     </tr>
     <tr>
-        <th scope="row" style="text-align:left">Python</th>
+        <th scope="row" style="text-align:left"><strong>Python</strong></th>
         <td style="text-align:center; background-color:#66ff66">yes</td>
         <td style="text-align:center; background-color:#66ff66">yes</td>
         <td style="text-align:center; background-color:#66ff66">yes</td>
         <td style="text-align:center; background-color:#66ff66">yes</td>
         <td style="text-align:center; background-color:#66ff66">yes</td>
         <td style="text-align:center; background-color:#66ff66">yes</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
     </tr>
     <tr>
-        <th scope="row" style="text-align:left">R</th>
+        <th scope="row" style="text-align:left"><strong>R</strong></th>
         <td style="text-align:center; background-color:#66ff66">yes</td>
         <td style="text-align:center; background-color:#66ff66">yes</td>
         <td style="text-align:center; background-color:#66ff66">yes</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
     </tr>
     <tr>
-        <th scope="row" style="text-align:left">PySpark</th>
+        <th scope="row" style="text-align:left"><strong>PySpark</strong></th>
         <td style="text-align:center; background-color:#66ff66">yes</td>
         <td style="text-align:center; background-color:#66ff66">yes</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
         <td style="text-align:center; background-color:#66ff66">yes</td>
         <td style="text-align:center; background-color:#66ff66">yes</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
     </tr>
     <tr>
-        <th scope="row" style="text-align:left">Spark</th>
+        <th scope="row" style="text-align:left"><strong>Spark</strong></th>
         <td style="text-align:center; background-color:#66ff66">yes</td>
         <td style="text-align:center; background-color:#66ff66">yes</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
-        <td style="text-align:center; background-color:#ff4d4d">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
+        <td style="text-align:center; background-color:#ff6666">no</td>
         <td style="text-align:center; background-color:#66ff66">yes</td>
     </tr>
 </table>
 
-To open a new *Launcher*, expand the **File** menu and click **New Launcher**. Alternatively, expand the **File browser** from the left sidebar and click the plus symbol (**+**):
+To open a new *Launcher*, click the **File** menu and click **New Launcher**. Alternatively, expand the **File browser** from the left sidebar and click the plus symbol (**+**):
 
 ![](./images/new_launcher.gif)
-
-### Kernels
-
-Notebook kernels are the language-specific computing engines for processing notebook cells. JupyterLab on Experience Platform comes with built-in kernels that provides language support in Python, R, PySpark, and Spark. Certain features and functionalities are limited to particular kernels as described in the table below:
-
-| kernel | library installation support | Platform integrations |
-| :----: | :--------------------------: | --------------------- |
-| **Python** | yes | <ul><li>Sensei ML Framework</li><li>Data Catalog</li><li>Query Service</li></ul> | 
-| **R** | yes | <ul><li>Sensei ML Framework</li><li>Data Catalog</li></ul> |
-| **PySpark** | no | <ul><li>Sensei ML Framework</li><li>Data Catalog</li></ul> |
-| **Spark** | no | <ul><li>Sensei ML Framework</li><li>Data Catalog</li></ul> |
-
-When you open a notebook document, the associated kernel is launched. When a notebook cell is executed, the kernel performs the computation and produces results which may consume significant CPU and memory resources. Note that allocated memory is not freed until the kernel is shut-down. 
-
-#### Kernel sessions
-
-Each active notebook or activity on JupyterLab utilizes a kernel session, all active sessions can be found by expanding the **Running terminals and kernels** tab from the left sidebar. The type and state of the kernel for a notebook can be identified by observing the top right of the notebook interface. In the diagram below, the notebook's associated kernel is **Python 3** and the its current state is represented by a grey circle to the right. A hollow circle implies an idling kernel and a solid circle implies a busy kernel.
-
-![](./images/kernel_and_state_1.png)
-
-If the kernel is shut-down or inactive for a prolonged period, then **No Kernel!** with a solid circle is shown. Activate a kernel by clicking the kernel status and selecting the appropriate kernel type as demonstrated below:
-
-![](./images/switch_kernel.gif)
 
 ### Code cells
 
@@ -242,9 +220,9 @@ Code cells are the primary content of notebooks, they contain source code in the
 
 ![](./images/code_cell.png)
 
-Common cell actions are described and demonstrated in the following sections.
-
 #### Add, move, execute, and delete a cell
+
+Common cell actions are described below:
 
 *   **Add a cell:** Click the plus symbol (**+**) from the notebook menu to add an empty cell. New cells are placed under the cell that is currently being interacted with, or at the end of the notebook if no particular cell is in focus.
 
@@ -253,9 +231,6 @@ Common cell actions are described and demonstrated in the following sections.
 *   **Execute a cell:** Click on the body of the cell you wish to execute and then click the **play** icon from the notebook menu. An asterisk (**\***) is displayed in the cell's execution counter when the kernel is processing the execution, and is replaced with an integer upon completion.
 
 *   **Delete a cell:** Click on the body of the cell you wish to delete and then click the **scissor** icon.
-
-## Additional resources
-
 
 ## Appendix: supported libraries
 
@@ -393,9 +368,9 @@ mkl-rt | 11.1
 ## Appendix: technical limitations
 
 [//]: # (information in https://git.corp.adobe.com/ml/ml/tree/master/limits can possibly go here)
-[//]: # (Let Seth Reilly decide whether this section is necessary)
+[//]: # (Let PM decide whether this section is necessary)
 
-The table below provides details on temporal limitations when using JupyterLab:
+The table below provides details on known limitations regarding JupyterLab:
 
 use case | description | limit (hours) | notes
 -------- | ----------- | ------------- | -----
