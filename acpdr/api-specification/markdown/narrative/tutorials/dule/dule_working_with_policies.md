@@ -1,10 +1,10 @@
 # Work with data usage policies
 
-Data Usage Labeling and Enforcement (DULE) is at the core of the data governance infrastructure included in Adobe Experience Platform. If you have not yet done so, please begin by reviewing the [DULE User Guide](../../../../../end-user/markdown/dule_overview/dule_overview.md) to familiarize yourself with the DULE framework.
+Data Usage Labeling and Enforcement (DULE) is the core mechanism of Data Governance within Adobe Experience Platform. The DULE Policy Service provides a RESTful API that allows you to create and manage data usage policies to determine what marketing actions can be taken against data that has been labeled with certain data usage labels.
 
-Through a RESTful API, DULE enables the creation and management of data usage policies to determine what marketing actions can be taken against data that has been labelled with certain data usage labels.
+This document provides instructions for performing the key operations available in the Policy Service API. If you have not yet done so, please begin by reviewing the [DULE User Guide](../../../../../end-user/markdown/dule_overview/dule_overview.md) to familiarize yourself with the DULE framework. For step-by-step instructions on enforcing policies on Real-time Customer Profile data, see the tutorial on [enforcing data usage compliance for audience segments](data_governance_and_segmentation.md).
 
-The examples in this document will walk you through key operations you can perform using the DULE Policy Service API. This includes:
+This document provides instructions for performing the following operations using the Policy Service API:
 
 * [Listing all available policies](#list-all-policies)
 * [Performing a lookup for a specific policy](#lookup-specific-policy)
@@ -1268,11 +1268,9 @@ In the response below, you can see that the list of `duleLabels` is now shorter,
 ```
 
 
-<!-- ## Policy evaluation for Unified Profile Service
+## Policy evaluation for Real-time Customer Profile
 
-The Policy Service API can also be used to check for policy violations involving the use of Unified Profile Service (UPS) segments. 
-
-Detailed instructions for Unified Profile Service, including working with merge policies and obtaining datasets from UPS segments, can be found in the [Unified Profile and data usage compliance](../../markdown/dule_and_unified_profile/dule_and_unified_profile.md) documentation. -->
+The Policy Service API can also be used to check for policy violations involving the use of Real-time Customer Profile segments. See the tutorial on [enforcing data usage compliance for audience segments](data_governance_and_segmentation.md) for more information.
 
 ## Next steps
 
