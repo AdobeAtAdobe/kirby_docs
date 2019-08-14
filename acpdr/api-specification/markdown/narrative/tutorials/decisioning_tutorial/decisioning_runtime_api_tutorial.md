@@ -81,7 +81,7 @@ The parameter `activityId` can be repeated in the url and up to 30 different act
           "@id": "${OFFER_URI_1}",
           "_links": {
             "self": {
-              "href": "${REPOSITORY_ENDPOINT}/${CONTAINER_ID}/instances/${offerInstanceId_1}"
+              "href": "${REPOSITORY_ENDPOINT}/${CONTAINER_ID}/instances/${OFFER_INSTANCE_ID_1}"
             }
           },
           "repo:etag": "15"
@@ -90,7 +90,7 @@ The parameter `activityId` can be repeated in the url and up to 30 different act
           "@id": "${OFFER_URI_2}",
           "_links": {
             "self": {
-              "href": "${REPOSITORY_ENDPOINT}/${CONTAINER_ID}/instances/${offerInstanceId_2}"
+              "href": "${REPOSITORY_ENDPOINT}/${CONTAINER_ID}/instances/${OFFER_INSTANCE_ID_2}"
             }
           },
           "repo:etag": "5"
@@ -162,7 +162,7 @@ The request schema and version supported at this time is `https://ns.adobe.com/e
 ### Request
 
 ```shell
-curl -X POST ${DECISION_SERVICE_ENDPOINT_PATH}/${CONTAINER_ID}/diagnostics \
+curl -X POST ${DECISION_SERVICE_ENDPOINT_PATH}/${CONTAINER_ID}/decisions \
   -H 'Accept: application/json, application/problem+json \
   -H '
   -H 'x-api-key: ${API_KEY}' \
