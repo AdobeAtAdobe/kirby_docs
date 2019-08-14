@@ -4,9 +4,9 @@ This document provides a tutorial for working with the runtime services of Decis
 
 The tutorial covers the following:
 
-[Compilation of decision models](#compilation-of-decision-models)  
-[REST API calls to execute decisions](#rest-api-calls-to-execute-decisions)  
-[Dynamic context data in decisioning requests](#dynamic-context-data-in-decisioning-requests)  
+[Compilation of decision models](#Compilation-of-decision-models)  
+[REST API calls to execute decisions](#REST-API-calls-to-execute-decisions)  
+[Dynamic context data in decisioning requests](#Dynamic-context-data-in-decisioning-requests)  
 
 ## Getting started
 
@@ -15,7 +15,7 @@ This tutorial requires a working understanding of the Experience Platform servic
 * [Decisioning Service](../../technical_overview/decisioning-overview/decisioning-service-overview.md): Provides the framework for adding and removing offers and creating algorithms for choosing the best to present during a customer's experience.
 * [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
 * [Profile Query Language (PQL)](../../technical_overview/unified_profile_architectural_overview/unified_profile_pql.md): PQL is used to define rules and filters.
-* [Manage Decisioning objects and rules using APIs](./decisioning_entities_api_tutorial.md): Prior to using the Decisioning Services runtime, you will need to set up the related entities.
+* [Creating and managing decisioning entities using APIs](decisioning_entities_tutorial.md): Prior to using the Decisioning Services runtime, you will need to set up the related entities.
 
 ## Tutorial
 
@@ -52,7 +52,7 @@ Offers are continuously created, changes occur in their lifecycle status, or the
 ### Request
 
 ```shell
-curl -X GET ${DECISION_SERVICE_ENDPOINT_PATH}/${CONTAINER_ID}/offers?activityId=${ACTIVITY_URI} \
+curl -X GET ${decision_service_endpoint_path}/${containerId}/offers?activityId${activityURI} \
   -H 'Accept: application/vnd.adobe.xdm+json \
   -H 'x-api-key: ${API_KEY}' \
   -H 'x-gw-ims-org-id: ${IMS_ORG} \
@@ -68,39 +68,39 @@ The parameter `activityId` can be repeated in the url and up to 30 different act
   "xdm:activityOffers": [
     {
       "xdm:offerActivity": {
-        "@id": "${ACTIVITY_URI}",
+        "@id": "${activityURI}",
         "_links": {
           "self": {
-            "href": "${repository_endpoint}/${CONTAINER_ID}/instances/${ACTIVITY_INSTANCE_ID}"
+            "href": "${repository_endpoint}/${containerId}/instances/${activityInstanceId}"
           }
         },
         "repo:etag": "1"
       },
       "xdm:offers": [
         {
-          "@id": "${OFFER_URI_1}",
+          "@id": "${offerURI_1}",
           "_links": {
             "self": {
-              "href": "${REPOSITORY_ENDPOINT}/${CONTAINER_ID}/instances/${OFFER_INSTANCE_ID_1}"
+              "href": "${repository_endpoint}/${containerId}/instances/${offerInstanceId_1}"
             }
           },
           "repo:etag": "15"
         },
         {
-          "@id": "${OFFER_URI_2}",
+          "@id": "${offerURI_2}",
           "_links": {
             "self": {
-              "href": "${REPOSITORY_ENDPOINT}/${CONTAINER_ID}/instances/${OFFER_INSTANCE_ID_2}"
+              "href": "${repository_endpoint}/${containerId}/instances/${offerInstanceId_2}"
             }
           },
           "repo:etag": "5"
         }
       ],
       "xdm:fallbackOffer": {
-        "@id": "${FALLBACK_URI}",
+        "@id": "${fallbackURI}",
         "_links": {
           "self": {
-            "href": "${REPOSITORY_ENDPOINT}/${CONTAINER_ID}/instances/${FALLBACK_INSTANCE_ID}"
+            "href": "${repository_endpoint}/${containerId}/instances/${fallbackInstanceId}"
           }
         },
         "repo:etag": "2"
@@ -121,7 +121,7 @@ A diagnostics API is provided to obtain any compilation errors that occurred in 
 #### Request
 
 ```shell
-curl -X GET ${DECISION_SERVICE_ENDPOINT_PATH}/${CONTAINER_ID}/diagnostics \
+curl -X GET ${decision_service_endpoint_path}/${containerId}/diagnostics \
   -H 'Accept: application/vnd.adobe.xdm+json \
   -H 'x-api-key: ${API_KEY}' \
   -H 'x-gw-ims-org-id: ${IMS_ORG} \
@@ -155,44 +155,44 @@ Applications can achieve better performance by requesting a decision for up to 3
 
 It is possible that two different activities come up with the same option as their “best”. To avoid repeating a composed experience, by default, Decisioning Service arbitrates between the activities that are referenced in the same request. Arbitration means that for each of the activities their top-N options are considered, but no option will be proposed more than once across those activities. If two activities have the same topmost ranked option one of them will be elected to use its second-best choice or third-best and so forth. Those de-duplication rules try to avoid that any of the activities must use their fallback option.
 
-The decision request contains the arguments its body of a POST request. The body is formatted as JSON `Content-Type` header value `application/vnd.adobe.xdm+json; schema="${REQUEST_SCHEMA_AND_VERSION}"`
+The decision request contains the arguments its body of a POST request. The body is formatted as JSON `Content-Type` header value `application/vnd.adobe.xdm+json; schema="${requestSchemaAndVersion}"`
 
 The request schema and version supported at this time is `https://ns.adobe.com/experience/offer-management/decision-request;version=0.9`. In the future, additional request schemas or versions will be provided.
 
 ### Request
 
 ```shell
-curl -X POST ${DECISION_SERVICE_ENDPOINT_PATH}/${CONTAINER_ID}/decisions \
+curl -X POST ${decision_service_endpoint_path}/${containerId}/diagnostics \
   -H 'Accept: application/json, application/problem+json \
   -H '
   -H 'x-api-key: ${API_KEY}' \
   -H 'x-gw-ims-org-id: ${IMS_ORG} \
   -H 'x-request-id: ${NEW_UUID}' \
   -d '{
-  "xdm:dryRun": ${DRY_RUN_TRUE_FALSE},
-  "xdm:validateContextData": ${VALIDATE_CONTEXT_DATA_TRUE_FALSE},
+  "xdm:dryRun": ${dryRun_true_false},
+  "xdm:validateContextData": ${validate_context_data_true_false},
 
   "xdm:offerActivities":[
     {
-      "xdm:offerActivity": "${ACTIVITY_URI_1}"
+      "xdm:offerActivity": "${activityUri_1}"
     },
   ],
   "xdm:identityMap":{
-    "${PROFILE_ID_NAMESPACE_CODE}":[
+    "${profile_id_namespace_code}":[
       {
-        "xdm:id":"${PROFILE_ID}"
+        "xdm:id":"${profile_id}"
       }
     ]
   },
-  "xdm:profileModel":"${PROFILE_MODEL}",
+  "xdm:profileModel":"${profile_model}",
   "xdm:contextData": [
     {
-      "@type": "${CONTEXT_DATASSCHEMA_ID}"
+      "@type": "${contextDataSchemaId}"
       "xdm:data": { JSON PROPERTIES OF CONTEXT ENTITY }
     }
   ] ,
   "xdm:allowDuplicatePropositions": {
-    "xdm:acrossActivities": ${DUPLICATE_OFFER_IDS_OF_TRUE_FALSE},
+    "xdm:acrossActivities": ${duplicate_offerIds_ok_true_false},
   }
 }’
 ```
@@ -234,7 +234,7 @@ The schema must have been constructed by your organization. To learn about const
 
 The [Schema Registry API developer guide](../schema_registry_api_tutorial/schema_registry_api_tutorial.md) explains how schemas can be accessed programmatically and how a developer obtains the tenant ID and the numeric identifier of your schema. The version number is required and is also provided by the schema registry APIs.
 
-A schema defined by an organization will typically have a root property named `_${TENANT_ID}`, also called the tenant namespace string.
+A schema defined by an organization will typically have a root property named `_${tenantID}`, also called the tenant namespace string.
 Note that the proerties used from a global schema component such as _`https://ns.adobe.com/xdm/context/product` have a namespace prefix `xdm:`. In this case the organization-defined property `productDetails` was constructed with that datatype. While tenant properties are nested in a property named after the tenant namespace, datatypes that are globally available use the reserved prefix `xdm:` to prevent collisions of property names.
 
 Multiple data objects can be listed in the `xdm:contextData` property. Each object must identify its type via the `@type` property.
@@ -253,7 +253,7 @@ The values of the context data objects are available to be used in PQL expressio
             where e.type = \"productSearch\" 
               and e.category = p.category 
               and p.gender in (\"female\",\"unisex\")
-       )",
+       )"
     "xdm:format": "pql/text",
     "xdm:type": "PQL"
   }
