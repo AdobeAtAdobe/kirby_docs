@@ -12,14 +12,12 @@ info:
 
 
     Notes:
-      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
+      * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core/ups/export
-      * Example of a complete path: https://<span>platform.adobe.io/data/core/ups/export/jobs
       * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
       to obtain these, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
-      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
 
-  version: '1.0'
+  version: 0.0.1
   title: Real-time Customer Profile Export API
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 host: "platform.adobe.io"
@@ -36,7 +34,7 @@ paths:
     get:
       tags:
         - Jobs
-      summary: Retrieve a list of all export jobs.
+      summary: Get list of all export jobs
       description: ''
       operationId: getScanJobsRoute
       produces:
@@ -47,11 +45,13 @@ paths:
           description: Page size
           required: false
           type: integer
+          x-example: 10
         - name: offset
           in: query
           description: Page offset
           required: false
           type: string
+          x-example: '109103839'
       responses:
         '200':
           description: List of export jobs returned
@@ -64,7 +64,7 @@ paths:
     post:
       tags:
         - Jobs
-      summary: Create a new export job.
+      summary: Creates an export job
       description: ''
       operationId: postScanJobRoute
       consumes:
@@ -77,16 +77,25 @@ paths:
           description: Profile Instance ID
           required: false
           type: string
-        - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/json-header'
+          x-example: ups
         - in: body
           name: body
-          description: '<ul><li><strong>fields</strong> - [Optional] Column filters (comma-separated list of columns in dot notation). If not provided, all fields are exported. </li><li><strong>mergePolicy</strong> - [Optional] Takes the ID and version of an existing merge policy as nested parameters. If not provided, it takes the same value as the segmentId or snapshotName</li><li><strong>filter</strong> - [Optional]<ul><li><strong>segments</strong> - Array of segments, identified either by segmentId or snapshotName.</li><li><strong>fromIngestTimestamp</strong> - Filters the resulting profiles to those that have been updated after the provided timestamp. Value is provided in RFC 3339 format.</li></ul></li><li><strong>additionalFields</strong> - [Optional] Additional profile fields that need to be exported.<ul><li><strong>eventList</strong> - Used if ExperienceEvents need to be exported with profiles.<ul><li><strong>fields</strong> - Comma-separated list of ExperienceEvent fields to be included in the export. If not provided, all ExperienceEvent fields are exported.</li><li><strong>filter</strong> - Filters ExperienceEvents based on the parameters below. If not provided, all events corresponding to the resulting profiles will be exported.<ul><li><strong>fromIngestTimestamp</strong> - Filters ExperienceEvents to those that have been updated after the provided timestamp. Value is provided in RFC 3339 format.</li></ul></li></ul></li></ul></li><li><strong>destination</strong> - [Required] The ID of the dataset where the exported data will be stored.</li><li><strong>schema</strong> - [Required] The name of the schema associated with the profile data.</li></ul>'
+          description: |2-
+             fields - Column filters (comma separated dot notation of columns)
+
+            mergePolicy - Takes ID and version as nested parameters, if not provided, will take the same value as in segmentId or snapshotName
+
+            filter - Array of segments with either segmentId or snapshotName
+
+            additionalFields: Additional fields that need to be exported
+
+            destination - DatasetId where the exported data will be stored
+
+            schema - Schema name for the data
           required: true
           schema:
             $ref: '#/definitions/ScanJobEntityRequest'
+        - $ref: '#/parameters/json-header'
       responses:
         '200':
           description: Export job successfully created
@@ -107,13 +116,14 @@ paths:
         description: Export job ID
         required: true
         type: string
+        x-example: '12345678'
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
         - Jobs
-      summary: Lookup an export job by ID.
+      summary: Returns the export job
       description: ''
       operationId: getScanJobRoute
       produces:
@@ -132,7 +142,7 @@ paths:
     delete:
       tags:
         - Jobs
-      summary: Cancel or delete an export job by ID.
+      summary: Cancel export job
       description: ''
       operationId: cancelScanJobRoute
       produces:
@@ -153,6 +163,7 @@ definitions:
     type: object
     properties:
       eventList:
+        example: eventList
         description: Name of additional field to be exported
         type: object
         properties:
@@ -196,17 +207,21 @@ definitions:
             segmentId:
               type: string
               example: 52c26d0d-45f2-47a2-ab30-ed06abc981ff
-              description: Segment Id.
-            segmentNs:
+              description: Segment ID.
+            snapshotName:
               type: string
-              example: ups
-              description: Segment Namespace (default "ups" if not provided).
+              example: peopleInCA
+              description: Snapshot name from a successful segmentation job.
           description: Segment values for filter.
       fromIngestTimestamp:
         type: string
         example: '2018-01-01T00:00:00Z'
         description: Filters profiles and experience events updated after the given timestamp; RFC_3339 format
-    description: Array of filter values for a job to export profiles.
+      fromTimestamp:
+        type: string
+        example: '2018-01-01T00:00:00Z'
+        description: '[Deprecated] Filters profiles and experience events updated after the given timestamp; RFC_3339 format'
+    description: Array of filter values for an export job to export Profiles.
   MergePolicyObject:
     type: object
     properties:
@@ -256,7 +271,7 @@ definitions:
             description: Schema name.
       imsOrgId:
         type: string
-        example: "{IMS_ORG}"
+        example: 1BD6382559DF0C130A49422D@AdobeOrg
         description: ImsOrgId provided.
       status:
         type: string
@@ -332,10 +347,13 @@ definitions:
         example: 'identities.id,personalEmail.address'
         description: Column filters (comma separated dot notation of columns)
       mergePolicy:
+        description: 'Takes ID and version as nested parameters, if not provided, will take the same value as in segmentId or snapshotName'
         $ref: '#/definitions/MergePolicyObject'
       filter:
+        description: Array of segments with either segmentId or snapshotName
         $ref: '#/definitions/Filter'
       additionalFields:
+        description: Additional fields that needs to be exported
         $ref: '#/definitions/AdditionalFields'
       destination:
         description: DatasetId where the exported data will be stored
