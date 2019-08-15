@@ -17,7 +17,7 @@ info:
       * Example of a complete path: https://<span>platform.adobe.io/data/core/ups/config/projections
       * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
 
-  version: 0.0.1-SNAPSHOT
+  version: '1.0'
   title: Edge Profile Projection Configuration API
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 tags:
