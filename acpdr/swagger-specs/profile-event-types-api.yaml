@@ -1,40 +1,38 @@
-
 swagger: '2.0'
 info:
   description: >-
-    Use this API to control the manner by which Real-time Customer Profile merges Experience Data Model (XDM) schema objects on Adobe Experience Platform. 
-
+    Work with event types on Adobe Experience Platform using Unified Profile Event Types API.
+ 
 
     Related documentation:
 
-      * [Real-time Customer Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
-      * [Configuring Real-time Customer Profile](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_up_tutorial.md)
+      * [Unified Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
 
-
+    
     Notes:
       * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core/ups/config
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
       * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
-    to obtain these, visit the
-    [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
-  version: 18.10.1
-  title: Real-time Customer Profile Configuration API
-  termsOfService: 'https://www.adobe.com/legal/terms.html'
+      to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
+
+  version: 19.3.1
+  title: Profile Event Types API
+  termsOfService: ''
 host: platform.adobe.io
 basePath: /data/core/ups/config
 tags:
-  - name: Merge policies
-    description: "A merge policy is a set of configurations controlling aspects of identity stitching and data fragment merging. Merge policies are specific to a single schema, and can only be used to access entities adhering to that schema."
+  - name: Event types
 paths:
-  /mergePolicies:
+  /eventTypes:
     parameters:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - Merge policies
-      summary: Get a list of merge policies
+        - Event types
+      summary: Get a list of event types
       description: ''
       operationId: getMany
       produces:
@@ -48,7 +46,7 @@ paths:
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
         - name: start
           in: query
-          description: Page offset - As per created time of resource
+          description: Page Offset - As per created Time of resource
           required: false
           type: string
           x-example: K1JJRDpFaWc5QUpZWHY1c2JBQUFBQUFBQUFBPT0jUlQ6MSNUUkM6MiNGUEM6QWdFQUFBQldBQkVBQVBnaFFQLzM4VUIvL2tKQi8rLysvMUpBLzMrMi8wRkFmLzR4UUwvL0VrRC85em4zRTBEcmNmYi92Kzh4UUwvL05rQVgzRi8rMStqNS80WHQwN2NhUUVzQUFBUUFleGpLQ1JnVXRVcEFCQUFFQVBBRA==
@@ -60,35 +58,23 @@ paths:
           x-example: 10
         - name: orderBy
           in: query
-          description: Model attribute which will be using for ordering
+          description: model attribute which will be using for ordering
           required: false
           type: string
           x-example: value
-        - name: schema.name
-          in: query
-          description: Schema class ID
-          required: false
-          type: string
-          x-example: _xdm.context.profile
-        - name: default
-          in: query
-          description: default flag
-          required: false
-          type: boolean
-          x-example: true
       responses:
         '200':
-          description: List of merge policies returned
+          description: a list of event types returned
           schema:
-            $ref: '#/definitions/MergePoliciesResponse'
+            $ref: '#/definitions/EventTypesResponse'
         '500':
           description: Internal Server Error
         '503':
           description: Service Unavailable
     post:
       tags:
-        - Merge policies
-      summary: Post a MergePolicy
+        - Event types
+      summary: Post an event type
       description: ''
       operationId: post
       produces:
@@ -108,16 +94,15 @@ paths:
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
         - in: body
           name: body
-          description: merge policy object
+          description: event type object
           required: true
           schema:
-            $ref: '#/definitions/MergePolicy'
-        - $ref: '#/parameters/json-header'
+            $ref: '#/definitions/EventType'
       responses:
         '200':
-          description: Merge Policy successfully created
+          description: Event Type successfully created
           schema:
-            $ref: '#/definitions/MergePolicy'
+            $ref: '#/definitions/EventType'
         '400':
           description: Please double check your post body
         '403':
@@ -128,21 +113,15 @@ paths:
           description: Internal Server Error
         '503':
           description: Service Unavailable
-  '/mergePolicies/{mergePolicyId}':
+  '/eventTypes/{eventTypeId}':
     parameters:
-      - name: mergePolicyId
-        in: path
-        description: MergePolicy Id
-        required: true
-        type: string
-        x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - Merge policies
-      summary: Return the Merge Policy by id
+        - Event types
+      summary: Return the event type by id
       description: ''
       operationId: getById
       produces:
@@ -154,22 +133,27 @@ paths:
           required: false
           type: string
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
-
+        - name: eventTypeId
+          in: path
+          description: Event Type Id
+          required: true
+          type: string
+          x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
       responses:
         '200':
-          description: MergePolicy successfully returned
+          description: Event Type successfully returned
           schema:
-            $ref: '#/definitions/MergePolicy'
+            $ref: '#/definitions/EventType'
         '403':
           description: Forbidden
         '404':
-          description: MergePolicy not found
+          description: EventType not found
         '503':
           description: Service Unavailable
     put:
       tags:
-      - Merge policies
-      summary: Overwrite a merge policy
+      - Event types
+      summary: Overwrite an event type
       description: ''
       operationId: put
       produces:
@@ -187,17 +171,23 @@ paths:
         required: false
         type: string
         x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+      - name: eventTypeId
+        in: path
+        description: Event Type Id
+        required: true
+        type: string
+        x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
       - in: body
         name: body
-        description: merge policy object
+        description: event type object
         required: true
         schema:
-          $ref: '#/definitions/MergePolicy'
+          $ref: '#/definitions/EventType'
       responses:
         '200':
-          description: Merge Policy successfully updated
+          description: Event Type successfully updated
           schema:
-            $ref: '#/definitions/MergePolicy'
+            $ref: '#/definitions/EventType'
         '400':
           description: Please double check your post body
         '403':
@@ -210,8 +200,8 @@ paths:
           description: Service Unavailable
     patch:
       tags:
-      - Merge policies
-      summary: Update a merge policy
+      - Event types
+      summary: Update en event type
       description: ''
       operationId: patch
       produces:
@@ -229,6 +219,12 @@ paths:
         required: false
         type: string
         x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+      - name: eventTypeId
+        in: path
+        description: Event Type Id
+        required: true
+        type: string
+        x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
       - in: body
         name: body
         description: a list of patch operation
@@ -239,7 +235,7 @@ paths:
             $ref: '#/definitions/PatchOperation'
       responses:
         '200':
-          description: Merge Policy successfully updated
+          description: Event Type successfully updated
         '400':
           description: Please double check your post body
         '403':
@@ -252,8 +248,8 @@ paths:
           description: Service Unavailable
     delete:
       tags:
-        - Merge policies
-      summary: Delete a merge policy by id
+        - Event types
+      summary: Delete an event type by id
       description: ''
       operationId: delete
       produces:
@@ -265,17 +261,55 @@ paths:
           required: false
           type: string
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+        - name: eventTypeId
+          in: path
+          description: Event Type Id
+          required: true
+          type: string
+          x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
       responses:
         '200':
-          description: Merge Policy deleted successfully
+          description: EventType deleted successfully
         '403':
           description: Forbidden
         '404':
-          description: MergePolicy not found
+          description: EventType not found
         '503':
           description: Service Unavailable
+parameters:
+  authorization:
+    name: Authorization
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
+    For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  x-gw-ims-org-id:
+    name: x-gw-ims-org-id
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  x-api-key:
+    name: x-api-key
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  json-header:
+    name: Content-Type
+    description: 'application/json'
+    required: true
+    type: string
+    in: header
 definitions:
-  MergePoliciesResponse:
+  EventTypesResponse:
     type: object
     required:
       - _page
@@ -286,7 +320,7 @@ definitions:
       children:
         type: array
         items:
-          $ref: '#/definitions/MergePolicy'
+          $ref: '#/definitions/EventType'
   Page:
     type: object
     required:
@@ -295,89 +329,39 @@ definitions:
       count:
         type: number
         example: 100
-        description: number of merge policies per page
+        description: number of marcos per page
       next:
         type: string
         example: K1JJRDpFaWc5QUwyZFgtMEpBQUFBQUFBQUFBPT0jUlQ6MSNUUkM6MiNGUEM6QWdFQUFBQVFBQWZBQUg0Ly9yL25PcmpmZndEZUR3QT0=
         description: page offset
-  MergePolicy:
+  EventType:
     type: object
-    required:
-      - schema
-      - identityGraph
-      - attributeMerge
     properties:
       id:
         type: string
         example: ups-default
-        description: macro id
-      name:
-        type: string
-        example: 5c48b93a53214114cf85e378
-        description: merge policy name
+        description: event type id
       imsOrgId:
         type: string
         example: 1BD6382559DF0C130A49422D@AdobeOrg
         description: ims org id
-      schema:
-        $ref: '#/definitions/SchemaClass'
-      version:
-        type: integer
-        example: 1
-        description: merge policy version
-      default:
+      title:
+        type: string
+        example: Click
+        description: event type title
+      description:
+        type: string
+        example: Web page clicks
+        description: event type description
+      global:
         type: boolean
         example: false
-        description: default flag
-      identityGraph:
-        $ref: '#/definitions/IdentityGraph'
-      attributeMerge:
-        $ref: '#/definitions/AttributeMerge'
+        description: global flag
       updateEpoch:
         type: integer
         example: 1234567890
         description: update timestamp
-    description: 'merge policy'
-  SchemaClass:
-    type: object
-    required:
-      - name
-    properties:
-      name:
-        type: string
-        example: _xdm.context.profile
-        description: schema class id
-    description: schema class
-  IdentityGraph:
-    type: object
-    required:
-    - type
-    properties:
-      type:
-        type: string
-        example: Private Graph
-        description: identity graph type
-        enum:
-        - None
-        - Private Graph
-    description: identity graph
-  AttributeMerge:
-    type: object
-    required:
-    - type
-    properties:
-      type:
-        type: string
-        example: timestampOrdered
-        description: attribute merge type
-        enum:
-        - timestampOrdered
-        - dataSetPrecedence
-      order:
-        type: array
-        items:
-          type: string
-    description: attribute merge
+    description: 'event type'
   PatchOperation:
     type: object
     required:
@@ -393,39 +377,10 @@ definitions:
         - add
       path:
         type: string
-        example: /identityGraph.type
+        example: /description
         description: path of the attribute need to be updated
       value:
         type: string
-        example: Private Graph
+        example: Web page clicks
         description: the new value used to update the specified attribute
     description: Patch operation
-parameters:
-  authorization:
-    name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
-    For more information on how 
-    to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-    required: true
-    type: string
-    in: header
-  x-gw-ims-org-id:
-    name: x-gw-ims-org-id
-    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-    required: true
-    type: string
-    in: header
-  x-api-key:
-    name: x-api-key
-    description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-    required: true
-    type: string
-    in: header
-  json-header:
-    name: Content-Type
-    description: 'application/json'
-    required: true
-    type: string
-    in: header
