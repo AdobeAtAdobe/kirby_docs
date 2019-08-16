@@ -1,30 +1,28 @@
 swagger: '2.0'
 info:
   description: >-
-    Work with event types on Adobe Experience Platform using the Real-time Customer Profile Event Types API.
+    Work with event types on Adobe Experience Platform using Unified Profile Event Types API.
  
 
     Related documentation:
 
-      * [Real-time Customer Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
+      * [Unified Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
 
     
     Notes:
-      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
+      * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/core/ups/config
-      * Example of a complete path: https://<span>platform.adobe.io/data/core/ups/config/eventTypes
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
       * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
-      to obtain these, please see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
-      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
+      to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
 
-  version: '1.0'
+  version: 19.3.1
   title: Profile Event Types API
   termsOfService: ''
 host: platform.adobe.io
 basePath: /data/core/ups/config
 tags:
   - name: Event types
-    description: Event types are context descriptors for time series events within Real-time Customer Profile.
 paths:
   /eventTypes:
     parameters:
@@ -34,55 +32,75 @@ paths:
     get:
       tags:
         - Event types
-      summary: Retrieve a list of event types.
+      summary: Get a list of event types
       description: ''
       operationId: getMany
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/x-request-id'
+        - name: x-request-id
+          in: header
+          description: Request Id
+          required: false
+          type: string
+          x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
         - name: start
           in: query
-          description: Page offset for the response. Default is 0.
+          description: Page Offset - As per created Time of resource
           required: false
-          type: integer
-          x-example: 2
+          type: string
+          x-example: K1JJRDpFaWc5QUpZWHY1c2JBQUFBQUFBQUFBPT0jUlQ6MSNUUkM6MiNGUEM6QWdFQUFBQldBQkVBQVBnaFFQLzM4VUIvL2tKQi8rLysvMUpBLzMrMi8wRkFmLzR4UUwvL0VrRC85em4zRTBEcmNmYi92Kzh4UUwvL05rQVgzRi8rMStqNS80WHQwN2NhUUVzQUFBUUFleGpLQ1JnVXRVcEFCQUFFQVBBRA==
         - name: limit
           in: query
-          description: Page size
+          description: Page Size
           required: false
           type: integer
           x-example: 10
         - name: orderBy
           in: query
-          description: The model attribute to be used for ordering.
+          description: model attribute which will be using for ordering
           required: false
           type: string
           x-example: value
       responses:
         '200':
-          description: A list of event types returned.
+          description: a list of event types returned
           schema:
             $ref: '#/definitions/EventTypesResponse'
         '500':
-          description: Internal server error.
+          description: Internal Server Error
         '503':
-          description: Service unavailable.
+          description: Service Unavailable
     post:
       tags:
         - Event types
-      summary: Create a new event type.
+      summary: Post an event type
       description: ''
       operationId: post
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/x-profile-instance-id'
-        - $ref: '#/parameters/x-request-id'
-        - $ref: '#/parameters/event-type-body'
+        - name: x-profile-instance-id
+          in: header
+          description: Profile Instance ID
+          required: true
+          type: string
+          x-example: ups
+        - name: x-request-id
+          in: header
+          description: Request Id
+          required: false
+          type: string
+          x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+        - in: body
+          name: body
+          description: event type object
+          required: true
+          schema:
+            $ref: '#/definitions/EventType'
       responses:
         '200':
-          description: Event type successfully created.
+          description: Event Type successfully created
           schema:
             $ref: '#/definitions/EventType'
         '400':
@@ -90,50 +108,81 @@ paths:
         '403':
           description: Forbidden
         '429':
-          description: Request rate too large.
+          description: Request rate too large!
         '500':
-          description: Internal server error.
+          description: Internal Server Error
         '503':
-          description: Service unavailable.
+          description: Service Unavailable
   '/eventTypes/{eventTypeId}':
     parameters:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/eventTypeId'
     get:
       tags:
         - Event types
-      summary: Lookup an event type by ID.
+      summary: Return the event type by id
       description: ''
       operationId: getById
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/x-request-id'
+        - name: x-request-id
+          in: header
+          description: Request Id
+          required: false
+          type: string
+          x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+        - name: eventTypeId
+          in: path
+          description: Event Type Id
+          required: true
+          type: string
+          x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
       responses:
         '200':
-          description: Event type successfully returned.
+          description: Event Type successfully returned
           schema:
             $ref: '#/definitions/EventType'
         '403':
           description: Forbidden
         '404':
-          description: Event type not found.
+          description: EventType not found
         '503':
-          description: Service unavailable.
+          description: Service Unavailable
     put:
       tags:
       - Event types
-      summary: Overwrite an event type by ID.
+      summary: Overwrite an event type
       description: ''
       operationId: put
       produces:
       - application/json
       parameters:
-      - $ref: '#/parameters/x-profile-instance-id'
-      - $ref: '#/parameters/x-request-id'
-      - $ref: '#/parameters/event-type-body'
+      - name: x-profile-instance-id
+        in: header
+        description: Profile Instance ID
+        required: true
+        type: string
+        x-example: ups
+      - name: x-request-id
+        in: header
+        description: Request Id
+        required: false
+        type: string
+        x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+      - name: eventTypeId
+        in: path
+        description: Event Type Id
+        required: true
+        type: string
+        x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
+      - in: body
+        name: body
+        description: event type object
+        required: true
+        schema:
+          $ref: '#/definitions/EventType'
       responses:
         '200':
           description: Event Type successfully updated
@@ -152,17 +201,33 @@ paths:
     patch:
       tags:
       - Event types
-      summary: Update one or more attributes of an event type by ID.
+      summary: Update en event type
       description: ''
       operationId: patch
       produces:
       - application/json
       parameters:
-      - $ref: '#/parameters/x-profile-instance-id'
-      - $ref: '#/parameters/x-request-id'
+      - name: x-profile-instance-id
+        in: header
+        description: Profile Instance ID
+        required: true
+        type: string
+        x-example: ups
+      - name: x-request-id
+        in: header
+        description: Request Id
+        required: false
+        type: string
+        x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+      - name: eventTypeId
+        in: path
+        description: Event Type Id
+        required: true
+        type: string
+        x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
       - in: body
         name: body
-        description: A list of patch operations
+        description: a list of patch operation
         required: true
         schema:
           type: array
@@ -184,13 +249,24 @@ paths:
     delete:
       tags:
         - Event types
-      summary: Delete an event type by ID.
+      summary: Delete an event type by id
       description: ''
       operationId: delete
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/x-request-id'
+        - name: x-request-id
+          in: header
+          description: Request Id
+          required: false
+          type: string
+          x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+        - name: eventTypeId
+          in: path
+          description: Event Type Id
+          required: true
+          type: string
+          x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
       responses:
         '200':
           description: EventType deleted successfully
@@ -203,19 +279,26 @@ paths:
 parameters:
   authorization:
     name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
+    For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
     required: true
     type: string
     in: header
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
-    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
     required: true
     type: string
     in: header
   x-api-key:
     name: x-api-key
-    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
     required: true
     type: string
     in: header
@@ -225,34 +308,6 @@ parameters:
     required: true
     type: string
     in: header
-  x-request-id:
-    name: x-request-id
-    in: header
-    description: Request ID
-    required: false
-    type: string
-    x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
-  eventTypeId:
-    name: eventTypeId
-    in: path
-    description: Event type ID
-    required: true
-    type: string
-    x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
-  x-profile-instance-id:  
-    name: x-profile-instance-id
-    in: header
-    description: Profile instance ID
-    required: true
-    type: string
-    x-example: ups
-  event-type-body:
-    in: body
-    name: body
-    description: Event type object
-    required: true
-    schema:
-      $ref: '#/definitions/EventType'
 definitions:
   EventTypesResponse:
     type: object
@@ -272,13 +327,13 @@ definitions:
       - count
     properties:
       count:
-        type: integer
+        type: number
         example: 100
-        description: Number of objects per page
+        description: number of marcos per page
       next:
-        type: integer
-        example: 1
-        description: The index of the next page in the paginated list. (0-based)
+        type: string
+        example: K1JJRDpFaWc5QUwyZFgtMEpBQUFBQUFBQUFBPT0jUlQ6MSNUUkM6MiNGUEM6QWdFQUFBQVFBQWZBQUg0Ly9yL25PcmpmZndEZUR3QT0=
+        description: page offset
   EventType:
     type: object
     properties:
@@ -289,7 +344,7 @@ definitions:
       imsOrgId:
         type: string
         example: 1BD6382559DF0C130A49422D@AdobeOrg
-        description: IMS Org ID
+        description: ims org id
       title:
         type: string
         example: Click
