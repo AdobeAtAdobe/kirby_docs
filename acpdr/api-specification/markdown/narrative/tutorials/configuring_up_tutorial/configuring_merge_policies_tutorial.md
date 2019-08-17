@@ -1,3 +1,4 @@
+<!--CORE-32502 Wrong document for replacing a merge policy-->
 # Work with merge policies using APIs
 
 This document provides a tutorial for working with merge policies using Adobe Experience Platform APIs. The tutorial covers the following use cases:
@@ -5,6 +6,8 @@ This document provides a tutorial for working with merge policies using Adobe Ex
 - [Access merge policies](#access-merge-policies)
 - [Create a merge policy](#create-a-merge-policy)
 - [Update an existing merge policy](#update-a-merge-policy)
+    - [Edit individual merge policy fields](#edit-individual-merge-policy-fields)
+    - [Overwrite a merge policy](#overwrite-a-merge-policy)
 
 ## Getting started
 
@@ -189,7 +192,7 @@ __Example `MergePolicy`__
 
 ## Access merge policies
 
-Using the [Profile Configuration API](../../../../../../acdpr/swagger-specs/profile-config-api.yaml), you can access a specific merge policy by its ID, or list all of the merge policies in effect for your IMS Organization, filtered by specific criteria.
+Using the [Profile Configuration API](../../../../../../acpdr/swagger-specs/profile-config-api.yaml), you can access a specific merge policy by its ID, or list all of the merge policies in effect for your IMS Organization, filtered by specific criteria.
 
 ### Access a single merge policy by ID
 
@@ -409,7 +412,7 @@ A successful response returns the details of the newly created merge policy.
 
 ## Update a merge policy
 
-You can modify an existing merge policy by editing individual attributes (PATCH) or by overwriting the entire merge policy with new attributes (POST). Examples of each are shown below.
+You can modify an existing merge policy by editing individual attributes (PATCH) or by overwriting the entire merge policy with new attributes (PUT). Examples of each are shown below.
 
 ### Edit individual merge policy fields
 
@@ -428,7 +431,7 @@ PATCH /mergePolicies/{mergePolicyId}
 The following request updates a specified merge policy by changing the value of its `default` property to "true":
 
 ```shell
-curl -X POST \
+curl -X PATCH \
   https://platform.adobe.io/data/core/ups/config/mergePolicies/e5bc94de-cd14-4cdf-a2bc-88b6e8cbfac2 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
@@ -441,7 +444,7 @@ curl -X POST \
   }'
 ```
 
-* `op`: Specifies the operation to take.
+* `op`: Specifies the operation to take. Examples of other PATCH operations can be found in the [JSON Patch documentation](http://jsonpatch.com).
 * `path`: The path of the field to update. Accepted values are: 
     - "/name"
     - "/identityGraph.type"
@@ -480,17 +483,14 @@ A successful response returns the details of the newly updated merge policy.
   "updateEpoch": 1551898378
 }
 ```
-
-Examples of other PATCH operations can be found in the [JSON Patch documentation](http://jsonpatch.com).
-
 ### Overwrite a merge policy
 
-Another way to modify a merge policy is to supply an entirely new merge policy in the payload of a POST request, overwriting the existing policy.
+Another way to modify a merge policy is to use a PUT request, which overwrites a merge policy. 
 
 #### API format
 
 ```http
-POST /mergePolicies/{mergePolicyId}
+PUT /mergePolicies/{mergePolicyId}
 ```
 
 * `{mergePolicyId}`: The identifier of the merge policy you want to overwrite.
@@ -500,30 +500,31 @@ POST /mergePolicies/{mergePolicyId}
 The following request overwrites the specified merge policy, replacing its attribute values with those supplied in the payload. Since this request completely replaces an existing merge policy, you are required to supply all of the same fields that were required when originally defining the merge policy. However, this time you are providing updated values for each field.
 
 ```shell
-curl -X POST \
-  https://platform.adobe.io/data/core/ups/config/mergePolicies/e5bc94de-cd14-4cdf-a2bc-88b6e8cbfac2 \
-  -H 'Authorization: Bearer {ACCESS_TOKEN} \
+curl -X PUT \
+  https://platform.adobe.io/data/core/ups/config/mergePolicies/b83185bb-0bc6-489c-9363-0075eb30b4c8 \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -H `Content-Type: application/json` \
   -d '{
     "name": "All-ID-Order-By-CMS-Loyalty",
-    "identityGraph" : {
+    "identityGraph": {
         "type": "auto"
     },
-    "attributeMerge" : {
-        "type":"dataSetPrecedence",
-        "data": {
-            "order" : [
-                "5b020a27e7040801dedbf46e",
-                "5b565efc0a488f01e2c19972"
-            ]
-        }
+    "attributeMerge": {
+        "type": "dataSetPrecedence",
+        "order": [
+            "5bb5331a94ef7e000091b1d4",
+            "5a909a508db82e01d6654940"
+        ]
     },
     "schema": {
-        "name":"_xdm.context.profile"
+        "name": "_xdm.context.profile"
     },
-    "default": true
+    "default": true,
+    "version": 1,
+    "updateEpoch": 1559156392,
+    "imsOrgId": "{IMS_ORG}"
 }'
 ```
 * `name`: *(Optional)* A human-friendly name by which the merge policy can be identified in list views.
@@ -538,7 +539,7 @@ A successful response returns the details of the updated merge policy.
 
 ```json
 {
-    "id": "e5bc94de-cd14-4cdf-a2bc-88b6e8cbfac2",
+    "id": "b83185bb-0bc6-489c-9363-0075eb30b4c8",
     "name": "All-ID-Order-By-CMS-Loyalty",
     "imsOrgId": "{IMS_ORG}",
     "schema": {
@@ -550,12 +551,10 @@ A successful response returns the details of the updated merge policy.
     },
     "attributeMerge": {
         "type":"dataSetPrecedence",
-        "data": {
-            "order" : [
-                "5b020a27e7040801dedbf46e",
-                "5b565efc0a488f01e2c19972"
-            ]
-        }
+        "order" : [
+            "5b020a27e7040801dedbf46e",
+            "5b565efc0a488f01e2c19972"
+        ]
     },
     "default": true,
     "updateEpoch": 1551898378
