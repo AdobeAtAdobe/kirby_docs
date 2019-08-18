@@ -72,11 +72,6 @@
 		},
 		{
 			"pages": [],
-			"path": "api-specification/markdown/narrative/gdpr/gdpr-on-platform-overview.md",
-			"title": "GDPR on Adobe Experience Platform overview"
-		},
-		{
-			"pages": [],
 			"path": "api-specification/markdown/narrative/gdpr/gdpr-io-events.md",
 			"title": "GDPR IO Events"
 		}
