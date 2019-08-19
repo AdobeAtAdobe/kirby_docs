@@ -18,7 +18,7 @@ brew install postgres
 which psql
 ```
 
-After issuing these commands, you should see the following:
+After issuing these commands. you should see the following:
 
 ```
 /usr/local/bin/psql
@@ -26,7 +26,7 @@ After issuing these commands, you should see the following:
 
 ## Install Postgres on a PC
 
-1. Download and install Postgres from this [location](https://www.postgresql.org/download/windows/).
+1. Download and install Postgres from this [location](https://www.postgresql.org/download/windows/)
 
 2. Edit your path variable:
 
@@ -34,7 +34,7 @@ After issuing these commands, you should see the following:
     
     Next, you need to add the two lines shown that include "Postgres."
     
-3. Save your updates, then open a command prompt and type:
+3. Save your updates, then open a Command prompt and type:
 
     ```
     psql -V
