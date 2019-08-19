@@ -31,7 +31,7 @@ This tutorial requires you to have completed the [Authentication to Adobe Experi
 
 This workflow begins by accessing a known audience segment. Segments that are enabled for use in Real-time Customer Profile contain a merge policy ID within their segment definition. This merge policy contains information about which datasets are to be included in the segment, which in turn contain any applicable data usage labels.
 
-Using the [Profile Segment Definitions API](../../../../../../swagger-specs/profile-segment-definitions.yaml), you can lookup a segment definition by its ID to find its associated merge policy.
+Using the [Real-time Customer Profile API](../../../../../../acpdr/swagger-specs/real-time-customer-profile.yaml), you can lookup a segment definition by its ID to find its associated merge policy.
 
 #### API format
 
@@ -53,8 +53,6 @@ curl -X GET \
 #### Response
 
 A successful response returns the details of the segment definition.
-
-<!-- TODO: I need an official response. I pulled this together from a couple places. Swagger is unclear -->
 
 ```json
 {
@@ -93,14 +91,12 @@ A successful response returns the details of the segment definition.
 
 ## Find the source datasets from the merge policy
 
-Using the [Profile Configuration API](../../../../../../swagger-specs/profile-config-api.yaml), you can lookup the details of a merge policy by its ID.
-
-<!-- If the merge policy has an `attributeMerge.type` of "dataSetPrecedence", the merge policy will list the datasets included in merged data (`attributeMerge.data.order`).  -->
+Merge policies contain information about the their source datasets, which in turn contain DULE labels. You can lookup the details of a merge policy by providing the merge policy ID in a GET request to the Profile API.
 
 #### API format
 
 ```http
-GET /mergePolicies/{MERGE_POLICY_ID}
+GET /config/mergePolicies/{MERGE_POLICY_ID}
 ```
 * `{MERGE_POLICY_ID}`: The ID of the merge policy obtained in the [previous step](#lookup-a-merge-policy-for-a-segment-definition).
 
@@ -225,7 +221,7 @@ Updating the merge policy of a segment definition will adjust the datasets and f
 
 ### Restrict specific data fields when exporting the segment
 
-When exporting a segment to a dataset using the [Profile Export API](../../../../../../swagger-specs/profile-export-api.yaml), you can filter the data that is included in the export by using the `fields` parameter. Any data fields added to this parameter will be included in the export, while all other data fields will be excluded.
+When exporting a segment to a dataset using the Real-time Customer Profile API, you can filter the data that is included in the export by using the `fields` parameter. Any data fields added to this parameter will be included in the export, while all other data fields will be excluded.
 
 Consider a segment that has data fields named "A", "B", and "C". If you wished to only export field "C", then the `fields` parameter would contain field "C" alone. By doing this, fields "A" and "B" would be excluded when exporting the segment.
  
