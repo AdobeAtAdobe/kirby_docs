@@ -1,8 +1,6 @@
 # Configure edge destinations and projections using APIs
 
-This document provides a tutorial for configuring edge destinations and projections using the [Real-time Customer Profile API](../../../../../../acpdr/real-time-customer-profile.yaml). This tutorial covers only some of the Edge Profile Projection Configuration API. For a comprehensive list of endpoints, see the [API Reference](../../../../../../acpdr/swagger-specs/edge-profile-projection-config.yaml).
-
-The tutorial covers the following steps:
+This document provides a tutorial for configuring edge destinations and projections using the [Real-time Customer Profile API](../../../../../../acpdr/real-time-customer-profile.yaml). The tutorial covers the following steps:
 
 1. [List existing destinations](#list-destinations)  
 1. [Create a destination](#create-a-destination)  
