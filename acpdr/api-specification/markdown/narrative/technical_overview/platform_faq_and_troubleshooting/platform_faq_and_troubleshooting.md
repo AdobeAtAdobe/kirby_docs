@@ -175,7 +175,7 @@ If any of these headers are missing or invalid when making an API call, the foll
 
 ### OAuth token is missing
 
-```
+```json
 {
     "error_code": "403010",
     "message": "Oauth token is missing."
@@ -186,7 +186,7 @@ This error message displays when an `Authorization` header is missing from an AP
 
 ### OAuth token is not valid
 
-```
+```json
 {
     "error_code": "401013",
     "message": "Oauth token is not valid"
@@ -197,7 +197,7 @@ This error message displays when the provided access token in the `Authorization
 
 ### API key is required
 
-```
+```json
 {
     "error_code": "403000",
     "message": "Api Key is required"
@@ -208,7 +208,7 @@ This error message displays when an API key header (`x-api-key`) is missing from
 
 ### API key is invalid
 
-```
+```json
 {
     "error_code": "403003",
     "message": "Api Key is invalid"
@@ -223,7 +223,7 @@ If you do not know your API key, you can find it in the [Adobe I/O Console](http
 
 ### Missing header
 
-```
+```json
 {
     "error_code": "400003",
     "message": "Missing header"
@@ -234,7 +234,7 @@ This error message displays when an IMS org header (`x-gw-ims-org-id`) is missin
 
 ### Profile is not valid
 
-```
+```json
 {
     "error_code": "403025",
     "message": "Profile is not valid"
@@ -247,7 +247,7 @@ If you do not know your organization ID, you can find it in the [Adobe I/O Conso
 
 ### Valid content-type not specified
 
-```
+```json
 {
     "type": "/placeholder/type/uri",
     "status": 400,
@@ -272,4 +272,4 @@ Data Usage Labeling and Enforcement (DULE) | [DULE Policy Service API](../../../
 Experience Data Model (XDM) | [Schema Registry API](../../../../../acpdr/swagger-specs/schema-registry.yaml) | [XDM System FAQ and troubleshooting guide](../schema_registry/xdm_troubleshooting/xdm_system_faq_and_troubleshooting.md)
 Identity Service | [Identity Service API](../../../../../acpdr/swagger-specs/id-service-api.yaml) | [Identity Service FAQ and recommendations](../identity_services_architectural_overview/identity_services_faq.md)
 Query Service | [Query Service API](../../../../../acpdr/swagger-specs/qs-api.yaml) | [Query Service errors and troubleshooting](../../../../../end-user/markdown/query-service/qs-errors-troubleshooting.md)
-Real-time Customer Profile | [Real-time Customer Profile APIs](../../../../../acpdr/swagger-specs/unified-profile-service-apis.yaml)
+Real-time Customer Profile | [Real-time Customer Profile API](../../../../../acpdr/swagger-specs/real-time-customer-profile.yaml)
