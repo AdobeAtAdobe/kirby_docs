@@ -27,15 +27,15 @@ This document provides answers to frequently asked questions about XDM System an
 - [Title must be unique](#title-must-be-unique)
 - [Custom fields must use a top level field](#custom-fields-must-use-a-top-level-field)
 - [Real-time Customer Profile errors](#real-time-customer-profile-errors)
-  * [To enable profile datasets the schema should be valid](#to-enable-profile-datasets-the-schema-should-be-valid)
-  * [There must be an reference identity descriptor](#there-must-be-an-reference-identity-descriptor)
-  * [The namespaces of the reference identity descriptor field and destination schema must match](#the-namespaces-of-the-reference-identity-descriptor-field-and-destination-schema-must-match)
+    - [To enable profile datasets the schema should be valid](#to-enable-profile-datasets-the-schema-should-be-valid)
+    - [There must be an reference identity descriptor](#there-must-be-an-reference-identity-descriptor)
+    - [The namespaces of the reference identity descriptor field and destination schema must match](#the-namespaces-of-the-reference-identity-descriptor-field-and-destination-schema-must-match)
 - [Accept header errors](#accept-header-errors)
-  * [Accept header parameter is required](#accept-header-parameter-is-required)
-  * [Unknown Accept media supplied](#unknown-accept-media-supplied)
-  * [Unknown Accept format available](#unknown-accept-format-available)
-  * [Version must be supplied in the Accept header](#version-must-be-supplied-in-the-accept-header)
-  * [Version must not be supplied in the Accept header](#version-must-not-be-supplied-in-the-accept-header)
+    - [Accept header parameter is required](#accept-header-parameter-is-required)
+    - [Unknown Accept media supplied](#unknown-accept-media-supplied)
+    - [Unknown Accept format available](#unknown-accept-format-available)
+    - [Version must be supplied in the Accept header](#version-must-be-supplied-in-the-accept-header)
+    - [Version must not be supplied in the Accept header](#version-must-not-be-supplied-in-the-accept-header)
 
 ## FAQ
 
