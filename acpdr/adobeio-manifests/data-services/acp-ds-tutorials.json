@@ -155,7 +155,7 @@
       "importedFileName": "creating_a_segment_tutorial",
       "pages": [],
       "path": "api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md",
-      "title": "Create a segment using APIs",
+      "title": "Create a segment using the Real-time Customer Profile API",
       "description": "Create segments using Real-time Customer Profiles."
     },
     {
