@@ -137,7 +137,7 @@
 		"api-specification/markdown/narrative/technical_overview/identity_namespace_overview/": "/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
 		"api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
-		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
+		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
 		"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/": "/apis/cloudplatform/dataservices/data-science-workspace/dsw-overview.html",
 		"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/": "/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
 		"api-specification/markdown/narrative/technical_overview/observability_insights/": "apis/experienceplatform/home/services/observability.html",
