@@ -75,14 +75,19 @@ SELECT statement 2
 The following syntax defines a `CREATE TABLE AS SELECT` (CTAS) query supported by Query Service:
 
 ```
-CREATE TABLE table_name AS (select_query)
+CREATE TABLE table_name [ WITH (schema='target_schema_title') ] AS (select_query)
 ```
 
-where `select_query` is a `SELECT` statement, the syntax of which is defined above in this document.
+where `target_schema_title` is the title of XDM schema. Use this clause only if you wish to use an existing XDM schema for the new dataset created by CTAS query.
+
+and `select_query` is a `SELECT` statement, the syntax of which is defined above in this document.
+
+
 
 Example:
 ```
 CREATE TABLE Chairs AS (SELECT color, count(*) AS no_of_chairs FROM Inventory i WHERE i.type=="chair" GROUP BY i.color)
+CREATE TABLE Chairs WITH (schema='target schema title') AS (SELECT color, count(*) AS no_of_chairs FROM Inventory i WHERE i.type=="chair" GROUP BY i.color)
 ```
 Please note that for a given CTAS query:
 
