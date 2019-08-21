@@ -1503,7 +1503,27 @@ For more information on how these profiles are used across Platform, see the [Re
 
 By enabling a schema for use with Profile, you are indicating that the data the schema defines should be included in the union view for the class that the schema implements.
 
-This is done through the use of the `meta:immutableTags` attribute. 
+### Union view
+
+Union views are system-generated, read-only schemas that aggregate the fields of all Profile-enabled schemas which share the same class (XDM ExperienceEvent or XDM Profile). See the section on unions in the [basics of schema composition](schema_composition/schema_composition.md#union) for more information.
+
+The Schema Registry automatically includes three mixins within the union schema: `identityMap`, `timeSeriesEvents`, and `segmentMembership`.
+
+**Identity map**
+
+A union schema's `identityMap` is a representation of the known identities within the union's associated record schemas. The identity map separates identities into different arrays keyed by namespace. Each listed identity is itself an object containing a unique `id` value.
+
+See the [Identity Service documentation](../identity_services_architectural_overview/identity_services_architectural_overview.md) for more information.
+
+**Time-series events**
+
+The `timeSeriesEvents` array is a list of time-series events that relate to the record schemas that are associated with the union. When Profile data is exported to datasets, this array is included for each record. This is useful for various use-cases, such as machine learning where models need a profile's entire behavior history in addition to its record attributes.
+
+**Segment membership map**
+
+The `segmentMembership` map stores the results of segment evaluations. When segment jobs are successfully run using the [Segment Jobs API](../../../../../../acpdr/swagger-specs/profile-segment-jobs-api.yaml), the map is updated. `segmentMembership` also stores any pre-evaluated audience segments that are ingested into Platform, allowing for integration with other solutions like Adobe Audience Manager.
+
+See the tutorial on [creating segments using APIs](../../tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md) for more information.
 
 ### Enable "union" tag
 
