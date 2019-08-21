@@ -68,7 +68,6 @@
 		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "/apis/cloudplatform/dataservices/data-ingestion/data-ingestion-services.html",
 		"api-specification/markdown/narrative/technical_overview/schema_registry/": "/apis/experienceplatform/home/xdm/xdmservices.html",
 		"api-specification/markdown/narrative/technical_overview/streaming_ingest/": "/apis/experienceplatform/home/data-ingestion.html",
-    "api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
-    "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/":"/apis/experienceplatform/home/services/troubleshooting.html"
+		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html"
 	}
 }
