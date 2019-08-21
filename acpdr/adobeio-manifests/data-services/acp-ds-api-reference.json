@@ -50,57 +50,11 @@
 			"path": "acpdr/swagger-specs/observability-insights.yaml",
 			"title": "Observability Insights API"
 		},
-		{
-			"path": "acpdr/swagger-specs/unified-profile-service-apis.yaml",
-			"title": "Unified Profile Service APIs",
-			"pages": [
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-config-api.yaml",
-					"title": "Unified Profile Configuration API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-access.yaml",
-					"title": "Unified Profile Access API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-export-api.yaml",
-					"title": "Unified Profile Export API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-segment-definitions-api.yaml",
-					"title": "Unified Profile Segment Definitions API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-segment-jobs-api.yaml",
-					"title": "Unified Profile Segment Jobs API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-preview-api.yaml",
-					"title": "Unified Profile Preview API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/edge-profile-projection-config.yaml",
-					"title": "Edge Profile Projection Configuration API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-event-types-api.yaml",
-					"title": "Profile Event Types API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-event-type-macros-api.yaml",
-					"title": "Profile Event Type Macros API"
-				}
-			]
-		},
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/real-time-customer-profile.yaml",
+      "title": "Real-time Customer Profile API"
+    },
 		{
 			"pages": [],
 			"path": "acpdr/swagger-specs/id-service-api.yaml",
@@ -132,7 +86,7 @@
 		"api-specification/markdown/narrative/technical_overview/identity_namespace_overview/": "/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
 		"api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
-		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
+		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
 		"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/": "/apis/cloudplatform/dataservices/data-science-workspace/dsw-overview.html",
 		"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/": "/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
 		"api-specification/markdown/narrative/technical_overview/observability_insights/": "apis/experienceplatform/home/services/observability.html",
