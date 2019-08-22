@@ -104,7 +104,7 @@
     {
       "importedFileName": "sending_multiple_messages_in_an_http_request",
       "pages": [],
-      "path": "api-specification/markdown/narrative/tutorials/sending_multiple_messages_in_an_http_request/sending-multiple-messages-in-an-http-request.md",
+      "path": "api-specification/markdown/narrative/tutorials/sending_multiple_messages_in_an_http_request/sending_multiple_messages_in_an_http_request.md",
       "title": "Sending multiple messages in a single HTTP request",
       "description": "Send multiple messages to Experience Platform within a single HTTP request using the streaming ingestion API."
     },
