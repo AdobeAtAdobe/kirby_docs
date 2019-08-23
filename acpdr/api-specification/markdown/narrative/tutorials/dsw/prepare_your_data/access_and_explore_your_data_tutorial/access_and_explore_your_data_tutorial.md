@@ -1,111 +1,113 @@
 # Access and explore your data <!-- omit in toc -->
 
-- [Objective](#objective)
-- [Concepts introduced](#concepts-introduced)
-- [Prerequisites](#prerequisites)
-- [Create Retail Sales schema and dataset](#create-retail-sales-schema-and-dataset)
-- [Preview your schema and data](#preview-your-schema-and-data)
-- [Next steps](#next-steps)
+This tutorial provides you with the prerequisites and assets required for all other Adobe Experience Platform Data Science Workspace tutorials. Upon completion, the Retail Sales schema and datasets will be available for you and members of your IMS Organization on Experience Platform.
 
-## Objective
+-   [Create Retail Sales schema and dataset](#create-retail-sales-schema-and-dataset)
+-   [Preview your schema and data](#preview-your-schema-and-data)
 
-This tutorial will demonstrate how to create an Experience Data Model (XDM) schema and ingest data into Adobe Experience Platform with the provided retail sales example.
+## Getting started
 
-## Concepts introduced
-
-* Experience Data Model: [XDM](https://www.adobe.io/open/standards/xdm.html) is used in Experience Platform to standardize customer experience data and define schemas for customer experience management.
-* Dataset: A dataset is a collection of data that includes schema and fields. Datasets available in the platform can be read and exported.
-
-## Prerequisites
-
-* Before being able to make calls using Platform APIs, you must first complete the tutorial on [authenticating and accessing Adobe Experience Platform APIs](../../../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
-    * Completing the authentication tutorial will provide the following values that you will need in this tutorial:
-        * `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.
-        * `{IMS_ORG}` : Your IMS organization credentials found in your unique Adobe Experience Platform integration.
-        * `{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration. 
-        * `{CLIENT_SECRET}` : Your secret string used to authenticate to the authorization server.
-        * `{PRIVATE_KEY}` : Your private certificate file created during Adobe I/O integration. Typically, this file is named `private.key`. Ensure you provide the relative directory path to your private certificate file.
-* [Python 2.7](https://www.python.org/download/releases/2.7/)
+Before starting this tutorial, you must have the following prerequisites:
+*   Access to Adobe Experience Platform. If you do not have access to an IMS Organization in Experience Platform, please speak to your system administrator before proceeding.
+*   Authorization to make Experience Platform API calls. Complete the [Authenticate and access Adobe Experience Platform APIs](../../../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) tutorial to obtain the following values in order to successful complete this tutorial:
+    *   Authorization: `{ACCESS_TOKEN}`
+    *   x-api-key: `{API_KEY}`
+    *   x-gw-ims-org-id: `{IMS_ORG}`
+    *   Client secret: `{CLIENT_SECRET}`
+    *   Client certificate: `{PRIVATE_KEY}`
+*   Sample data and source files for the [Retail Sales Recipe](../../../../technical_overview/data_science_workspace_overview/dsw_prebuilt_recipes/retail_sales_recipe/retail_sales_recipe.md). Download the assets required for this and other Data Science Workspace tutorials from the <a href="https://github.com/adobe/experience-platform-dsw-reference/" target="_blank">Adobe public Git repository</a>.
+*   <a href="https://www.python.org/download/releases/2.7/" target="_blank">Python 2.7</a> and the following Python packages:
+    *   <a href="https://pypi.org/project/pip/" target="_blank">pip</a>
+    *   <a href="https://pyyaml.org/" target="_blank">PyYAML</a>
+    *   <a href="https://pypi.org/project/dictor/" target="_blank">dictor</a>
+    *   <a href="https://pypi.org/project/jwt/" target="_blank">JWT</a>
+*   A working understanding of the following concepts used in this tutorial:
+    *   [Experience Data Model (XDM)](../../../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md)
+    *   [Basics of schema composition](../../../../technical_overview/schema_registry/schema_composition/schema_composition.md)
 
 ## Create Retail Sales schema and dataset
 
-In order to ingest external data into Experience Platform, you must first create an XDM schema. Once the schema is defined, data is ingested and structured according to the schema. For the purpose of this tutorial, this process will be automated using the bootstrap script included as part of the tutorial resources.
-
-Begin by downloading the resources used for this, and many other Data Science Workspace tutorials, from the [Adobe public Git repository](https://github.com/adobe/experience-platform-dsw-reference).
+The Retail Sales schema and datasets are created automatically by using the provided bootstrap script. Follow the steps below in order:
 
 ### Configure files
 
-* Inside the Experience Platform tutorial resource package, navigate into the directory `bootstrap`, and open `config.yaml` using an appropriate text editor. Under the `Enterprise` section, input the following values:
-```yaml
-Enterprise:
-    api_key: {API_KEY}
-    org_id: {IMS_ORG}
-    tech_acct: {technical_account_id}
-    client_secret: {CLIENT_SECRET}
-    priv_key_filename: {PRIVATE_KEY}
-```
-> Refer to the [authorization tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for information on obtaining the required values.
+1.  Inside the Experience Platform tutorial resource package, navigate into the directory `bootstrap`, and open `config.yaml` using an appropriate text editor. 
+2.  Under the `Enterprise` section, input the following values:
 
-* Under the `Platform` section, input your `{ACCESS_TOKEN}`:
+    ```yaml
+    Enterprise:
+        api_key: {API_KEY}
+        org_id: {IMS_ORG}
+        tech_acct: {technical_account_id}
+        client_secret: {CLIENT_SECRET}
+        priv_key_filename: {PRIVATE_KEY}
+    ```
 
-```yaml
-Platform:
-    platform_gateway: https://platform.adobe.io
-    ims_token: {ACCESS_TOKEN}
-```
+3.  Edit the values found under the `Platform` section, Example shown below:
 
-> `ims_token`: The IMS token is the access token provided during authentication. It is written in the format "Bearer `{ACCESS_TOKEN}`"
+    ```yaml
+    Platform:
+        platform_gateway: https://platform.adobe.io
+        ims_token: {ACCESS_TOKEN}
+        ingest_data: "True"
+        build_recipe_artifacts: "False"
+        kernel_type: Python
+    ```
 
-* Under the `Titles` section, provide the following information appropriately for the Retail Sales sample data. Example shown below:
+    *   `platform_gateway` : The base path for API calls. Do not modify this value.
+    *   `ims_token` : Your `{ACCESS_TOKEN}` goes here.
+    *   `ingest_data` : For the purpose of this tutorial, set this value as `"True"` in order to create the Retail Sales schemas and datasets. A value of `"False"` will only create the schemas.
+    *   `build_recipe_artifacts` : For the purpose of this tutorial, set this value as `"False"` to prevent the script from generating a Recipe artifact.
+    *   `kernel_type` : The execution type of the Recipe artifact. Leave this value as `Python` if `build_recipe_artifacts` is set as `"False"`, otherwise specify the correct execution type.
 
-```yaml
-Titles:
-    input_class_title: retail_sales_input_class
-    input_mixin_title: retail_sales_input_mixin
-    input_mixin_definition_title: retail_sales_input_mixin_definition
-    input_schema_title: retail_sales_input_schema
-    input_dataset_title: retail_sales_input_dataset
-    file_replace_tenant_id: DSWRetailSalesForXDM0.9.9.9.json
-    file_with_tenant_id: DSWRetailSales_with_tenant_id.json
-    is_output_schema_different: True
-    output_mixin_title: retail_sales_output_mixin
-    output_mixin_definition_title: retail_sales_output_mixin_definition
-    output_schema_title: retail_sales_output_title
-    output_dataset_title: retail_sales_output_dataset
-```
+4.  Under the `Titles` section, provide the following information appropriately for the Retail Sales sample data, save and close the file after edits are in place. Example shown below:
 
-> Refer to the [Basics of schema composition](https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/schema_composition/schema_composition.md) for more information on Classes and Mixins.
+    ```yaml
+    Titles:
+        input_class_title: retail_sales_input_class
+        input_mixin_title: retail_sales_input_mixin
+        input_mixin_definition_title: retail_sales_input_mixin_definition
+        input_schema_title: retail_sales_input_schema
+        input_dataset_title: retail_sales_input_dataset
+        file_replace_tenant_id: DSWRetailSalesForXDM0.9.9.9.json
+        file_with_tenant_id: DSWRetailSales_with_tenant_id.json
+        is_output_schema_different: "True"
+        output_mixin_title: retail_sales_output_mixin
+        output_mixin_definition_title: retail_sales_output_mixin_definition
+        output_schema_title: retail_sales_output_title
+        output_dataset_title: retail_sales_output_dataset
+    ```
 
 ### Run the bootstrap script
 
-* Once you've finished editing `config.yaml`, save your changes and open your terminal application and set the working directory to the Experience Platform tutorial resource directory.
-* Navigate into `bootstrap` directory, and run the `bootstrap.py` python script by entering the following command:
+1.  Open your terminal application and navigate to the Experience Platform tutorial resource directory.
+2.  Set the `bootstrap` directory as the current working path and run the `bootstrap.py` python script by entering the following command:
 
-```bash
-python bootstrap.py
-```
-> **Note:** Python 2.7 has to be installed before you can run the script. You can download Python from the [official site](https://www.python.org/download/releases/2.7/).
+    ```bash
+    python bootstrap.py
+    ```
 
-> **Note:** The script may take several minutes to complete.
+    >   **Note:** The script may take several minutes to complete.
 
 ## Preview your schema and data
 
-Once the script has completed, your newly created schema and dataset will be viewable on Experience Platform. In the left navigation listing, navigate into **Schemas** to find the schema created by the bootstrap script, the schema name will correspond to what you've configured it to be in the previous step. View the Schema details and it's composition by clicking into it.
+Upon successful completion of the bootstrap script, the Retail Sales input and output schemas and datasets can be viewed on Experience Platform. 
 
-![](./images/schema_overview.png)
+1.  Click the **Schemas** link located in the left navigation column and find the input schema created by the bootstrap script. The name of the schema will correspond to what was defined in `config.yaml` from the previous step. View the schema details and it's composition by clicking into it.
 
-In the left navigation panel, navigate into **Datasets** and find the dataset that was created, it's name will correspond to the input dataset name you've provided in the previous step.
+    ![](./images/schema_overview.png)
 
-![](./images/dataset_overview.png)
+2.  Click the **Datasets** link located in the left navigation column and open the input dataset that was created by clicking on the name of the listing. The name of the dataset will correspond to what was defined in `config.yaml` from the previous step. 
 
+    ![](./images/dataset_overview.png)
 
-Click on **Preview Dataset** located at the top right see a subset of the dataset.
+3.  Click **Preview Dataset** located at the top right preview a subset of the dataset.
 
-![](./images/preview_dataset.png)
+    ![](./images/preview_dataset.png)
 
 ## Next steps
 
-You have now successfully ingested Retail Sales sample data into Experience Platform using the provided bootstrap script."
+You have now successfully ingested Retail Sales sample data into Experience Platform using the provided bootstrap script.
 
 To continue working with the ingested data:
 * [Analyze your data using Jupyter notebooks](../analyze_your_data_using_jupyter_notebooks/analyze_your_data_using_jupyter_notebooks.md)
