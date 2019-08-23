@@ -9,6 +9,7 @@ This overview will help you understand Segmentation Service and the role it play
 * [Rule builder canvas](#rule-builder-canvas): Add a new rule to the container of your choice.
 * [Segment properties](#segment-properties): Understand the resulting segment properties from the rules created on the rule builder canvas.
 * [Building a segment](#building-a-segment): Learn how rules influence the building of a segment.
+* [Advanced segmentation service features](#advanced-segmentation-features): Learn how contextual data can enhance your segment definitions.
 * [Containers](#containers): Learn what this feature is and how it allows you to control segment rules. 
 * [Get feedback while you build](#get-feedback-while-you-build): Learn the role estimates play in your segment definitions.
 * [Segment types](#segment-types): Learn different ways to generate audiences using different segment types.
@@ -110,6 +111,54 @@ A rule refers to the smallest portion of a segment that resolves to "true" or "f
 To build a rule, select an attribute or event from the left rail and drag the field onto the rule area. This enables controls to configure the rule further. Extended schema fields may take up to 24 hours (from the time of ingestion into Experience Platform) to be available to the Segment Builder UI for use in building rules.
 
 A segment can be built from rules based on profile data, related time series data, or both.
+
+## Advanced segmentation features
+
+Segmentation Service now features an expanded Segment Builder with two new features: Multi-Entity Segmentation and Segment Payload.
+
+<!--topic of CORE-33639-->
+<!-- ### Multi-Entity Segmentation -->
+
+### Segment Payload
+
+Segments can now carry a payload of contextual details to enable deep personalization of Adobe Solutions as well as external non-Adobe applications. These payloads can be added while defining your target segment.
+
+With contextual data built into the segment itself, this advanced Segmentation Service feature allows you to better connect with your customer.
+
+Segment Payload helps you answer questions surrounding your customer’s frame of reference such as:
+* What?: What product was purchased? What product should be recommended next?
+* When? At what time and date did the purchase occur?
+* Where? In which store or city did the customer make their purchase?
+
+While this solution does not change the binary nature of segment membership, it does add additional context to each profile through an associated segment membership object. Each segment membership object has the capacity to include three kinds of contextual data:
+
+* **Identifier**: this is the ID for the segment 
+* **Attributes**: this would include information about the segment ID such as last qualification time, XDM version, status and so on.
+* **Event data**: Specific aspects of experience events which resulted in the profile qualifying for the segment
+
+Adding this specific data to the segment itself allows execution engines to personalize the experience for the customers in their target audience.
+
+### Use cases
+
+To illustrate the value of this advanced segmentation feature, consider three standard use cases that illustrate the challenges that were present in marketing applications prior to the Segment Payload enhancement:
+* Email personalization
+* Email retargeting
+* Ad retargeting
+
+**Email personalization**
+
+A marketer building an email campaign may have attempted to build a segment for a target audience by using recent customer store purchases within the last three months. Ideally, this segment would require both the item name and the name of the store where the purchase was made. Prior to enhancement, the challenge was capturing the store identifier from the purchase event and assigning it to that customer’s profile.
+
+**Email retargeting**
+
+It is often complex to create and qualify segments for email campaigns targeting "cart abandonment". Prior to the enhancement, sending a discount coupon for the last product left in the cart along with a customer’s first name was difficult due to the availability of the required data. Data for which products were abandoned is tied to experience events which were formerly challenging to monitor and extract data from.
+
+**Ad Retargeting**
+
+Another traditional challenge for marketers has been creating ads to retarget customers with abandoned shopping cart items. While segment definitions addressed this challenge, prior to the enhancement, there was no formal method to differentiate between purchased products and abandoned products. Now you can target specific data sets during your segment definition.
+
+<!--to be added once the enhanced workflow is complete-->
+<!--to learn more about payloads and how to add context to a segment, see the enhanced segment workflow--->
 
 ## Containers
 
