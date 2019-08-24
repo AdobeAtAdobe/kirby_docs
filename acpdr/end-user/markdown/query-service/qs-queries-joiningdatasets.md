@@ -6,7 +6,7 @@ Datasets:
 * your_analytics_table
 * custom_operating_system_lookup
 
-Create a select statement for the top 50 operating systems by number of page views.
+Create a `SELECT` statement for the top 50 operating systems by number of page views.
 ```sql
 SELECT 
   b.operatingsystem AS OperatingSystem,
