@@ -1,3 +1,0 @@
-# XDM Overview
-
-Content here
