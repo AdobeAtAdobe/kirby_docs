@@ -2,7 +2,7 @@
 
 Adobe Experience Platform Privacy Service provides a RESTful API and user interface that allow you to manage (access and delete) the personal data of your customers (data subjects) across Adobe Experience Cloud solutions. Privacy Service also provides a central audit and logging mechanism that allows you to access the status and results of jobs involving Experience Cloud solutions.
 
-This tutorial covers how to use the Privacy Service API. For details on how to use the UI, see the [Privacy Service UI tutorial](privacy_service_ui_tutorial.md). For a comprehensive list of all available endpoints in the Privacy Service API, please see the [API reference](../../../../../acdpr/swagger-specs/gdpr-api.yaml).
+This tutorial covers how to use the Privacy Service API. For details on how to use the UI, see the [Privacy Service UI tutorial](privacy_service_ui_tutorial.md). For a comprehensive list of all available endpoints in the Privacy Service API, please see the [API reference](../../../../../acdpr/swagger-specs/privacy-service.yaml).
 
 Steps for performing the following tasks are covered in this tutorial:
 
@@ -29,7 +29,7 @@ Across Adobe Experience Cloud there are many products that support your digital 
 
 ## Create a job request
 
-The first step in creating a new job request is to gather your customer data. As the data controller, you need to collect information about the data subjects whose data you want to access or delete. Once you have the required data, provide it in the payload of a POST request to the root endpoint (`/`) of the [Privacy Service API](../../../../../acdpr/swagger-specs/gdpr-api.yaml).
+The first step in creating a new job request is to gather your customer data. As the data controller, you need to collect information about the data subjects whose data you want to access or delete. Once you have the required data, provide it in the payload of a POST request to the root endpoint (`/`) of the [Privacy Service API](../../../../../acdpr/swagger-specs/privacy-service.yaml).
 
 #### API format
 

@@ -208,8 +208,8 @@ When you have completed all field properties, click **Apply** and the "loyaltyLe
 More information about available additional constraints:
 * **Required:** Indicates that the field is required for data ingestion. Any data uploaded to a dataset based on this schema that does not contain this field will fail upon ingestion.
 * **Array:** Indicates that the field contains an array of values, each with the data type specified. For example, selecting a data type of "String" and checking the "Array" checkbox means that the field will contain an array of strings.
-* **Identity:** Indicates that this field contains an "Identity". More information regarding identities is provided [later in this tutorial](#identity).
 * **Enum:** Indicates that this field must contain one of the values from an enumerated list of possible values.  
+* **Identity:** Indicates that this field is an identity field. More information regarding identity fields is provided [later in this tutorial](#set-a-schema-field-as-an-identity-field).
 
 ## Convert a multi-field object into a data type
 
