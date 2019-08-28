@@ -9,7 +9,7 @@ This overview will help you understand Segmentation Service and the role it play
 * [Rule builder canvas](#rule-builder-canvas): Add a new rule to the container of your choice.
 * [Segment properties](#segment-properties): Understand the resulting segment properties from the rules created on the rule builder canvas.
 * [Building a segment](#building-a-segment): Learn how rules influence the building of a segment.
-* [Advanced segmentation service features](#advanced-segmentation-features): Learn how contextual data can enhance your segment definitions.
+* [Advanced segmentation service features](#advanced-segmentation-features): Learn how to create segments using multiple XDM classes and how contextual data can enhance your segment definitions.
 * [Containers](#containers): Learn what this feature is and how it allows you to control segment rules. 
 * [Get feedback while you build](#get-feedback-while-you-build): Learn the role estimates play in your segment definitions.
 * [Segment types](#segment-types): Learn different ways to generate audiences using different segment types.
@@ -114,10 +114,30 @@ A segment can be built from rules based on profile data, related time series dat
 
 ## Advanced segmentation features
 
-Segmentation Service now features an expanded Segment Builder with two new features: Multi-Entity Segmentation and Segment Payload.
+Segmentation Service includes an expanded Segment Builder with two advanced segmentation features: multi-entity segmentation and segment payload. These advanced features will be discussed in more detail in the sections that follow.
 
-<!--topic of CORE-33639-->
-<!-- ### Multi-Entity Segmentation -->
+### Multi-entity segmentation
+
+With the advanced multi-entity segmentation feature, you can create segments using multiple XDM classes thereby adding extensions to person schemas. As a result, Segmentation Service can access additional fields during segment definition as if they were native to the profile data store.
+
+Multi-entity segmentation provides the flexibility needed to identify audiences based on data relevant to your business needs. This process can be done quickly and easily without requiring expertise in querying databases. This enables you to add key data to your segments without having to make costly changes to data streams or wait for a back-end data merge. 
+
+### Use case: price driven promotion
+To illustrate the value of this advanced segmentation feature, consider a data architect collaborating with a marketer. 
+
+In this example, the data architect is joining data for an individual (made up of schemas with XDM Profile and XDM ExperienceEvent as their base classes) to another class using a key. Once joined, the data architect or the marketer can use of these new fields during segment definition as if they were native to the base class schema.
+
+**The problem**
+The data architect and marketer both work for the same clothing retailer. The retailer has over 1,000 stores across North America and periodically lowers product prices throughout their lifecycle. As a result, the marketer wants to run a special campaign to give shoppers who have shopped for these items a chance to purchase them at the discounted price.
+
+The data architect's resources include access to web data from customer browsing as well as cart addition data containing product SKU identifiers. He also has access to a separate "products" class, where additional product information (including product price) is stored. His guidance is to focus on customers who added a product to their cart within the last 14 days, but did not purchase the item, whose price has now dropped.
+
+**The solution**
+>Note: We will assume in this example that the data architect has already established an ID Namespace.
+
+Using the APIs, the data architect relates the key from the ExperienceEvent schema with the "products" class. Doing so allows the data architect to make use of the additional fields from the "products" class as if they are native to the ExperienceEvent schema. As the final step of the configuration work, the data architect needs to bring the appropriate data into Real-time Customer Profile. This is done by enabling the "products" dataset for use with Profile. With the configuration work complete, either the data architect or the marketer can build the target segment in Segment Builder.
+
+<!--to learn more, see the [multi-entity segmentation](to be completed) workflow--->
 
 ### Segment Payload
 
@@ -126,9 +146,9 @@ Segments can now carry a payload of contextual details to enable deep personaliz
 With contextual data built into the segment itself, this advanced Segmentation Service feature allows you to better connect with your customer.
 
 Segment Payload helps you answer questions surrounding your customer’s frame of reference such as:
-* What?: What product was purchased? What product should be recommended next?
-* When? At what time and date did the purchase occur?
-* Where? In which store or city did the customer make their purchase?
+* What: What product was purchased? What product should be recommended next?
+* When: At what time and date did the purchase occur?
+* Where: In which store or city did the customer make their purchase?
 
 While this solution does not change the binary nature of segment membership, it does add additional context to each profile through an associated segment membership object. Each segment membership object has the capacity to include three kinds of contextual data:
 
@@ -157,8 +177,7 @@ It is often complex to create and qualify segments for email campaigns targeting
 
 Another traditional challenge for marketers has been creating ads to retarget customers with abandoned shopping cart items. While segment definitions addressed this challenge, prior to the enhancement, there was no formal method to differentiate between purchased products and abandoned products. Now you can target specific data sets during your segment definition.
 
-<!--to be added once the enhanced workflow is complete-->
-<!--to learn more about payloads and how to add context to a segment, see the enhanced segment workflow--->
+<!--to learn more, see the [segment payloads workflow](to be completed)--->
 
 ## Containers
 
