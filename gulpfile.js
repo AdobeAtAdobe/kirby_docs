@@ -95,7 +95,7 @@ gulp.task('checkout-master', done => {
 });
 
 gulp.task('checkout-staging', done =>{
-  git.checkout('staging', {args:'-b'}, function (err) {
+  git.checkout('staging', {args:'-b',maxBuffer: Infinity}, function (err) {
       if (err){
           console.log('checking out staging error',err);
           git.checkout('staging', function (err) {
