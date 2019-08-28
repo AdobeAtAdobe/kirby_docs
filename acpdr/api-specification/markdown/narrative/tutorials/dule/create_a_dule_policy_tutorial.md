@@ -2,7 +2,7 @@
 
 Data Usage Labeling and Enforcement (DULE) is the core mechanism of Adobe Experience Platform Data Governance. The [DULE Policy Service API](../../../../../../dule-policy-service.yaml) allows you to create and manage DULE policies to determine what marketing actions can be taken against data that contains certain DULE labels.
 
-This document provides a step-by-step tutorial for creating a DULE policy and using it to evaluate a marketing action for policy violations. For a more comprehensive guide to the different operations available in the Policy Service API, see the [Policy Service developer guide](dule_working_with_policies.md).
+This document provides a step-by-step tutorial for creating a DULE policy and using it to evaluate a marketing action for policy violations. For a more comprehensive guide to the different operations available in the Policy Service API, see the [Policy Service developer guide](../../technical_overview/data_governance/dule_policy_service_developer_guide.md).
 
 The tutorial covers the following steps:
 1. [Define a marketing action](#define-a-marketing-action)
@@ -14,7 +14,7 @@ The tutorial covers the following steps:
 
 This tutorial requires a working understanding of the following key concepts involved in creating and evaluating DULE policies:
 
-* [Data Governance](../../../../../end-user/markdown/dule_overview/dule_overview.md) &ndash; The framework by which Platform enforces data usage compliance.
+* [Data Governance](../../technical_overview/data_governance/dule_overview.md) &ndash; The framework by which Platform enforces data usage compliance.
 * [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md) &ndash; The standardized framework by which Platform organizes customer experience data.
 * [DULE labels](dule_working_with_labels.md) &ndash; Data usage labels are applied to XDM data fields, specifying restrictions for how that data can be accessed.
 
@@ -707,4 +707,4 @@ A successful response returns the URL for the marketing action, the DULE labels 
 
 ## Next steps
 
-By following this tutorial, you have successfully created and evaluated a DULE policy for a marketing action. For more information on the different available operations in the Policy Service API,  see the [Policy Service developer guide](dule_working_with_policies.md). For information on how to enforce DULE policies for Real-time Customer Profile data, see the tutorial on [enforcing data usage compliance for audience segments](data_governance_and_segmentation.md).
+By following this tutorial, you have successfully created and evaluated a DULE policy for a marketing action. For more information on the different available operations in the Policy Service API,  see the [Policy Service developer guide](../../technical_overview/data_governance/dule_policy_service_developer_guide.md). For information on how to enforce DULE policies for Real-time Customer Profile data, see the tutorial on [enforcing data usage compliance for audience segments](data_governance_and_segmentation.md).
