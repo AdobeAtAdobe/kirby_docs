@@ -178,7 +178,7 @@ Data Usage Labeling and Enforcement (DULE) allows you to control how fields are 
 * __Identity data__: Data that could be used to identify or contact a person. These labels indicate whether data can directly or indirectly identify a person.
 * __Sensitive data__: Sensitive geographic data.
 
-For more information on usage labeling, see the [Data Usage Labeling and Enforcement (DULE) user guide](../../../../../end-user/markdown/dule_overview/dule_overview.md).
+For more information on usage labeling, see the [Data Usage Labeling and Enforcement (DULE) user guide](../data_governance/dule_overview.md).
 
 ### Dataset selection
 

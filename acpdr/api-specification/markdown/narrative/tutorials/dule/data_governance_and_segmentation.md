@@ -17,9 +17,9 @@ This tutorial requires a working understanding of the following components of Ad
 - [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Real-time Customer Profile is a generic lookup entity store, and is used to manage Experience Data Model (XDM) data within Platform. Profile merges data across various enterprise data assets and provides access to that data in a unified presentation.
     - [Merge policies](../configuring_up_tutorial/configuring_merge_policies_tutorial.md): Rules used by Real-time Customer Profile to determine what data can be merged into a unified view under certain conditions. Merge policies can be configured for Data Governance purposes.
     - [Segmentation](../../../../../end-user/markdown/segmentation_overview/segmentation.md): How Real-time Customer Profile divides a large group of individuals contained in the profile store into smaller groups that share similar traits and will respond similarly to marketing strategies.
-- [Data Governance](../../../../../end-user/markdown/dule_overview/dule_overview.md): Data Governance provides the infrastructure for data usage labeling and enforcement (DULE), using the following components:
+- [Data Governance](../../technical_overview/data_governance/dule_overview.md): Data Governance provides the infrastructure for data usage labeling and enforcement (DULE), using the following components:
     - [Data usage labels](dule_working_with_labels.md): Labels used to describe datasets and fields in terms of the level of sensitivity with which to handle their respective data.
-    - [Data usage policies](dule_working_with_policies.md): Configurations indicating which marketing actions are allowed on data categorized by particular data usage labels.
+    - [Data usage policies](../../technical_overview/data_governance/dule_policy_service_developer_guide.md): Configurations indicating which marketing actions are allowed on data categorized by particular data usage labels.
 
 This tutorial requires you to have completed the [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
@@ -229,8 +229,8 @@ See the section on [exporting a segment](../creating_a_segment_tutorial/creating
 
 ## Evaluate data for policy violations
 
-Now that you have gathered the data usage labels associated with your audience segment, you can test these labels against marketing actions to evaluate for any data usage policy violations. For detailed steps on how to perform policy evaluations using the [DULE Policy Service API](../../../../../../swagger-specs/dule-policy-service.yaml), see the section on [policy evaluation](dule_working_with_policies.md#policy-evaluation) in the data usage policies tutorial.
+Now that you have gathered the data usage labels associated with your audience segment, you can test these labels against marketing actions to evaluate for any data usage policy violations. For detailed steps on how to perform policy evaluations using the [DULE Policy Service API](../../../../../../swagger-specs/dule-policy-service.yaml), see the section on [policy evaluation](../../technical_overview/data_governance/dule_policy_service_developer_guide.md#policy-evaluation) in the DULE Policy Service developer guide.
 
 ## Next steps
 
-By following this tutorial, you have looked up the data usage labels associated with an audience segment and tested them for policy violations against specific marketing actions. For more information on Data Governance in Experience Platform, see the [Data Governance overview](../../../../../end-user/markdown/dule_overview/dule_overview.md).
+By following this tutorial, you have looked up the data usage labels associated with an audience segment and tested them for policy violations against specific marketing actions. For more information on Data Governance in Experience Platform, see the [Data Governance overview](../../technical_overview/data_governance/dule_overview.md).

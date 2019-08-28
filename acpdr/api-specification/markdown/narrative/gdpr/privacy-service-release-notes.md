@@ -1,6 +1,6 @@
 # Privacy Service release notes
 
-This document contains information about new Privacy Service features, as well as enhancements and significant bug fixes.
+This document contains information about new features for Adobe Experience Platform Privacy Service, as well as enhancements and significant bug fixes.
 
 ## 25 July, 2019
 

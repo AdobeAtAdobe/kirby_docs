@@ -1073,7 +1073,7 @@ For general information on how GDPR applies to Experience Platform, see the [GDP
 
 The following workflow outlines how Privacy Service interacts with Platform components to ensure GDPR compliance:
 
-1. As part of good data hygiene, the data controller should curate and appropriately label all personal data that is ingested into Experience Platform. See the [Data Governance user guide](../../../../../end-user/markdown/dule_overview/dule_overview.md) for more information on working with data labels.
+1. As part of good data hygiene, the data controller should curate and appropriately label all personal data that is ingested into Experience Platform. See the [Data Governance user guide](../../technical_overview/data_governance/dule_overview.md) for more information on working with data labels.
 1. When a data subject requests to access or delete their data, the data controller collects identities from the data subject, verifies that data, and submits it to Privacy Service.
 1. Privacy Service sends the request to Pipeline and confirms that it was accepted by returning a "processing" status.
 1. Privacy Service sends the request to Real-time Customer Profile.

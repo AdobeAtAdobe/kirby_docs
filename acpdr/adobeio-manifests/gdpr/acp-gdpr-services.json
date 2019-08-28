@@ -29,6 +29,11 @@
         },
         {
           "pages": [],
+          "path": "api-specification/markdown/narrative/gdpr/gdpr-io-events.md",
+          "title": "Subscribe to Privacy Service event notifications"
+        },
+        {
+          "pages": [],
           "path": "api-specification/markdown/narrative/gdpr/privacy-service-release-notes.md",
           "title": "Privacy Service release notes"
         }
@@ -70,11 +75,6 @@
       "pages": [],
       "path": "api-specification/markdown/narrative/gdpr/solutions/index.md",
       "title": "GDPR and Experience Cloud solutions"
-    },
-    {
-      "pages": [],
-      "path": "api-specification/markdown/narrative/gdpr/gdpr-io-events.md",
-      "title": "GDPR and Adobe I/O Events"
     },
     {
       "pages": [],
