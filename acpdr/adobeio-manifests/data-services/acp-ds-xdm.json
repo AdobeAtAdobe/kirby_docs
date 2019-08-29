@@ -45,6 +45,12 @@
 					"path": "api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md",
 					"title": "Schema Registry API tutorial",
 					"description": "Follow step-by-step instructions to compose a schema using the Schema Registry API, including assigning a class and defining mixins."
+        },
+        {
+					"pages": [],
+					"path": "api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/relationship_descriptor_tutorial.md",
+					"title": "Define a relationship between two schemas",
+					"description": "Follow step-by-step instructions for defining a one-to-one relationship between two schemas using the Schema Registry API."
 				},
 				{
 					"pages": [],

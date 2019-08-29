@@ -32,6 +32,13 @@
       "description": "Use the Schema Registry API to create a schema, including assigning a class and defining mixins."
     },
     {
+      "importedFileName": "relationship_descriptor_tutorial",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/relationship_descriptor_tutorial.md",
+      "title": "Define a relationship between two schemas",
+      "description": "Follow step-by-step instructions for defining a one-to-one relationship between two schemas using the Schema Registry API."
+    },
+    {
       "importedFileName": "creating_a_dataset_tutorial",
       "pages": [],
       "path": "api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md",
