@@ -14,27 +14,34 @@
 			"pages": [
 				{
 					"pages": [],
-					"path": "end-user/markdown/dule_overview/dule_supported_labels.md",
+					"path": "api-specification/markdown/narrative/technical_overview/data_governance/dule_supported_labels.md",
 					"title": "Supported Data Usage Labels",
 					"description": "DULE features enable the application of data usage labels to connections, datasets, and fields to categorize data according to the type of data usage policies that apply. This list outlines all data usage labels currently supported by Experience Platform."
 				}
 			],
-			"path": "end-user/markdown/dule_overview/dule_overview.md",
-			"title": "DULE User Guide",
+			"path": "api-specification/markdown/narrative/technical_overview/data_governance/dule_overview.md",
+			"title": "Data Governance overview",
 			"description": "Adobe Experience Platform brings data from multiple enterprise systems together to better allow marketers to identify, understand, and engage customers. Experience Platform includes end-to-end data governance infrastructure, including Data Usage Labeling & Enforcement (DULE) to ensure the proper use of data within Platform and when being shared between systems."
 		},
-		{
+    {
+			"pages": [],
+			"path": "api-specification/markdown/narrative/technical_overview/data_governance/dule_policy_service_developer_guide.md",
+			"title": "DULE Policy Service developer guide",
+			"description": "An overview of the Policy Service API and its supported operations."
+		},
+    {
 			"pages": [],
 			"path": "api-specification/markdown/narrative/tutorials/dule/dule_working_with_labels.md",
 			"title": "Working with DULE labels",
 			"description": "Follow these step-by-step instructions to properly add and edit labels at the Connection, Dataset, and Field level in Adobe Experience Platform."
-		},
-		{
-			"pages": [],
-			"path": "api-specification/markdown/narrative/tutorials/dule/dule_working_with_policies.md",
-			"title": "Working with DULE policies",
-			"description": "A step-by-step guide to using the DULE Policy Service API to manage DULE policies and marketing actions within Adobe Experience Platform."
-		}
+    },
+    {
+      "importedFileName": "create_a_dule_policy_tutorial",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/dule/create_a_dule_policy_tutorial.md",
+      "title": "Create and evaluate DULE policies using Policy Service API",
+      "description": "Create and evaluate Data Usage Labeling and Enforcement (DULE) policies using the Policy Service API."
+    }
 	],
 	"app2app_map": {
 		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
