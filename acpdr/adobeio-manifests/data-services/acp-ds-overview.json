@@ -17,11 +17,6 @@
 		},
 		{
 			"pages": [],
-			"path": "api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md",
-			"title": "Batch Ingestion Overview"
-		},
-		{
-			"pages": [],
 			"path": "api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md",
 			"title": "Data Access Overview"
 		},
