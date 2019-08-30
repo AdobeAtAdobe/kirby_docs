@@ -3,24 +3,9 @@
 
 The Batch Ingestion API allows you to ingest data into Adobe Experience Platform as batch files. Data being ingested can be the profile data from a flat file in a CRM system (such as a parquet file), or data that conforms to a known schema in the Experience Data Model (XDM) registry.
 
-This document will provide information on the following topics:
-- [Using the API](#using-the-api)
-    - [Data Ingestion prerequisites](#data-ingestion-prerequisites)
-    - [Batch ingestion best practices](#batch-ingestion-best-practices)
-    - [Create a batch](#create-a-batch)
-- [File upload](#file-upload)
-    - [Small file upload](#small-file-upload)
-    - [Large file upload - create file](#large-file-upload---create-file)
-    - [Large file upload - upload subsequent parts](#large-file-upload---upload-subsequent-parts)
-- [Signal batch completion](#signal-batch-completion)
-- [Check batch status](#check-batch-status)
-- [Batch ingestion statuses](#batch-ingestion-statuses)
+![](batch_ingestion.png)
 
 See [Data Ingestion API](../../../../../../acpdr/swagger-specs/ingest-api.yaml) reference for additional information.
-
-The following diagram outlines the batch ingestion process:
-
-![](batch_ingestion.png)
 
 ## Using the API
 
@@ -31,13 +16,13 @@ The Data Ingestion API allows you to ingest data as batches (a unit of data that
 3. Signal the end of the batch. 
 
 
-### Data Ingestion prerequisites
+### Data Ingestion Prerequisites
 - Data to upload must be either in Parquet or JSON formats.
 - A dataset created in the [Catalog services](../catalog_architectural_overview/catalog_architectural_overview.md).
 - Contents of the parquet file must match a subset of the schema of the dataset being uploaded into.
 - Have your unique Access Token after authentication.
 
-### Batch ingestion best practices
+### Batch Ingestion Best Practices
 
 - The recommended batch size is between 256 MB and 100 GB.
 - Each batch should contain at most 1500 files.
@@ -45,7 +30,7 @@ The Data Ingestion API allows you to ingest data as batches (a unit of data that
 To upload a file larger than 512MB, the file will need to be divided into smaller chunks. Instructions to upload a large file can be found [here](#large-file-upload---create-file).
 
 
-### Create a batch
+### Creating a Batch
 
 Before data can be added to a dataset, it must be linked to a batch, which will later be uploaded into a specified dataset.
 
@@ -97,12 +82,12 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
 `{DATASET_ID}`: The ID of the dataset to upload the files into.
 
 
-## File upload
+## File Upload
 After successfully creating a new batch for uploading, files can then be uploaded to a specific dataset.
 
 You can upload files using the **Small File Upload API**. However, if your files are too large and the gateway limit is exceeded (such as extended timeouts, requests for body size exceeded, and other constrictions), you can switch over to the **Large File Upload API**. This API uploads the file in chunks, and stitches data together using the **Large File Upload Complete API** call.
 
-### Small file upload
+### Small File Upload
 Once a batch is created, data can be uploaded to a preexisting dataset.  The file being uploaded must match its referenced XDM schema.
 
 ```http
@@ -132,7 +117,7 @@ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}
 #Status 200 OK, with empty response body
 ```
 
-### Large file upload - create file
+### Large File Upload - Create File
 To upload a large file, the file must be split into smaller chunks and uploaded one at a time.
 
 ```http
@@ -158,7 +143,7 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID
 #Status 201 CREATED, with empty response body
 ```
 
-### Large file upload - upload subsequent parts
+### Large File Upload - Upload Subsequent Parts
 After the file has been created, all subsequent chunks can be uploaded by making repeated PATCH requests, one for each section of the file.
 
 ```http
@@ -190,7 +175,7 @@ curl -X PATCH "https://platform.adobe.io/data/foundation/import/batches/{BATCH_I
 #Status 200 OK, with empty response
 ```
 
-## Signal batch completion
+### Signal Batch Completion
 After all files have been uploaded to the batch, the batch can be signaled for completion. By doing this, the Catalog **DataSetFile** entries are created for the completed files and associated with the batch generated above. The Catalog batch is then marked as successful, which triggers downstream flows to ingest the available data.
 
 #### Request
@@ -215,7 +200,7 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID
 #Status 200 OK, with empty response
 ```
 
-## Check batch status
+### Check Batch Status
 While waiting for the files to uploaded to the batch, the batch's status can be checked to see its progress.
 
 ```http
@@ -328,7 +313,7 @@ curl GET "https://platform.adobe.io/data/foundation/catalog/batch/{BATCH_ID}" \
 
 The `"status"` field is what shows the current status of the batch requested. The batches can have one of the following states:
 
-## Batch ingestion statuses
+## Batch Ingestion Statuses
 
 Status | Description 
 ------ | -----------
