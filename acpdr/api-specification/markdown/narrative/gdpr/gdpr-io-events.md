@@ -96,4 +96,8 @@ The **Payload** section provides details about the selected event, including its
 
 ## Next steps
 
+You can repeat the above steps for adding new integrations for different webhook addresses as needed.highlighted in the example above.
+
+## Next steps
+
 You can repeat the above steps for adding new integrations for different webhook addresses as needed.
