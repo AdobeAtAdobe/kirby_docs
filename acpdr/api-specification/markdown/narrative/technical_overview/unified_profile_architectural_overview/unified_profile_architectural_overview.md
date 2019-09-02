@@ -1,228 +1,222 @@
-# Unified Profile in Adobe Experience Platform
+# Real-time Customer Profile in Adobe Experience Platform
 
-Unified Profile in Adobe Experience Platform provides a unified, real-time consumer profile that enables marketers to drive coordinated, consistent and relevant experiences with their audiences across channels. With Unified Profile, you have one place to go to get a holistic view of your consumer base aggregated across all systems, as well as actionable timestamped account of every event they've had in any of your systems, when you need it.
+Adobe Experience Platform enables you to drive coordinated, consistent, and relevant experiences for your customers no matter where or when they interact with your brand. With Real-time Customer Profile, you can see a holistic view of each individual customer that combines data from multiple channels, including online, offline, CRM, and third party data. Profile allows you to consolidate your disparate customer data into a unified view offering an actionable, timestamped account of every customer interaction.
 
-This overview describes the role and use of Unified Profile. In specific:
+This overview will help you understand the role and use of Real-time Customer Profile in Experience Platform. The following topics are covered:
 
-[Understanding Unified Profile](#understanding-unified-profile) - See the big picture about Unified Profile and its role on Experience Platform.  
-[The union view](#the-union-view) - Understand the components involved in unifying profile data to build the union view, how to control the parameters involved, and the composition of the union view schema.   
-[The real-time customer profile](#the-real-time-customer-profile) - Streaming Ingestion and Edge Service allows you to access customer data to instantaneously perform computations and make decisions to deliver enhanced individualized experiences to customers, in real-time, as they interact with your brand.  
-[Data governance](#data-governance) - Learn how you can use DULE and certain Unified Profile access parameters to ensure reliable compliance with any data usage restrictions and policies that govern your consumers' data.  
-[Getting data to Unified Profile](#getting-data-to-unified-profile) - The power of Unified Profile and Identity Service to build the union view depends on the data you supply.  
-[Creating audience segments](#creating-audience-segments) - Learn how to build audience segments which are used across Platform solutions, and can be used by your integrations as well.
+*   [Understanding Real-time Customer Profile](#understanding-real-time-customer-profile): See the big picture about Profile and its role within Experience Platform.  
+*   [The union view](#the-union-view): Understand the components involved in unifying profile data to build the union view.
 
----
+*   [Real-time components](#real-time-components): Learn how real-time input is captured and used.
+ 
+*   [Data governance](#data-governance): Learn how to use data labels and certain Profile access parameters. 
+*   [Sending data to Real-time Customer Profile](#sending-data-to-real-time-customer-profile): Learn the tools used to send your record and time series data to Profile.
+*   [Creating audience segments](#creating-audience-segments): Learn how to isolate sections of your customer base as audience segments, based on specified criteria.
 
-## Understanding Unified Profile
+## Understanding Real-time Customer Profile
+Real-time Customer Profile is a generic lookup entity store that merges data across various enterprise data assets and provides access to that data in the form of unified customer profiles and related time series events.
 
-Unified Profile is a generic lookup entity store that merges data across various enterprise data assets and provides access to that data in the form of unified consumer profiles, and related time series events. Though Unified Profile ingests data from Catalog Batch Ingestion and uses Identity Service for alternate mapped identities to merge related data, it maintains its own data in the profile store. In other words, the profile store is separate from Catalog data (Data Lake), and separate from Identity Service data (identity graph).
+This feature enables marketers to drive coordinated, consistent and relevant experiences with their audiences across channels as summarized in the video below:
 
-Unified Profile helps to inform and empower actions across channels, Platform, and Adobe solution integrations. Furthermore, Unified Profile is used to power machine learning & Sensei. Unified Profile APIs can also be used directly to enrich the functionality of third-party solutions, CRMs, and proprietary solutions.
+<a href="https://video.tv.adobe.com/v/27251" target="_blank"><img src="Intro_Real-time_Customer_Profile.png"></a>
 
-![Unified Profile In Action](unified-profile.png)
+Although Real-time Customer Profile processes ingested data and uses Identity Service to merge related data through identity mapping, it maintains its own data in the profile store. In other words, the profile store is separate from Catalog data (Data Lake), and separate from Identity Service data (identity graph).
 
-The relationship between Unified Profile and other solutions is highlighted in this overview. 
+Real-time Customer Profile creates a single, 360 degree view of your customer by aggregating record and time-series data while empowering you to act accordingly across digital channels. Furthermore, Profile is used to power machine learning for Adobe Sensei. Profile APIs can also be used to enrich the functionality of third-party solutions, CRMs, and proprietary solutions.
 
----
+The relationship between Real-time Customer Profile and other services within Experience Platform is highlighted in the following diagram:
 
-## The profile
+![Profile In Action](unified-profile.png) 
 
-A profile is a representation of a subject, an organization or an individual, also referred to as record data. The profile of a product may include an SKU and description, whereas the profile of a person contains information like first name, last name, and email address. On Experience Platform, these types of data are built per your agenda. The XDM Profile standard schema, the preferred schema to implement when describing consumer record data, supplies the data integral to supporting the interaction of many Platform solutions. In specific, it contains:
+### The profile
 
-* Time series events
-* Identities
-* Segment memberships
+A profile is a representation of a subject, an organization or an individual, also referred to as record data. For example, the profile of a product may include a SKU and description, whereas the profile of a person contains information like first name, last name, and email address. 
+
+Using Experience Platform, you can customize profiles to use types of data relevant to your business. The standard Experience Data Model (XDM) Profile schema is the preferred schema to implement when describing customer record data, and supplies the data integral to many interactions between Platform services. These elements are described in detail in the sections below.
 
 ### Time series events
 
-Time series data provides a snapshot of the system at the time an action was taken either directly or indirectly by a subject, as well as data detailing the event itself. Represented by the standard XDM schema ExperienceEvent, time series data can describe items being added to a cart, link clicks, video views, etc.
+Time series data provides a snapshot of the system at the time an action was taken either directly or indirectly by a subject, as well as data detailing the event itself. Represented by the standard schema XDM ExperienceEvent, time series data can describe events such as items being added to a cart, link clicks and video views.
 
-Time series data can be used to base segmentation rules, and events can be accessed individually in the context of a profile.
-
-To learn more about using ExperienceEvent data for segmentation using the Platform UI, visit the documentation on [Segment Builder](../../../../../end-user/markdown/segmentation_overview/segmentation.md). For segmentation using the API, visit [Creating segments in Experience Platform via API](../../tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md).
+Time series data can be used to base segmentation rules on, and events can be accessed individually in the context of a profile.
 
 ### Identities
 
+Every business wants to communicate with their customers in a way that feels personal. However, one of the challenges of delivering relevant digital experiences to customers is understanding how to tie their disconnected data together, which is often spread across different digital channels such as tablets, mobile phones and laptops.
+
+Identity Service allows you to piece together the complete picture of your customer by recognizing them in each channel through the use of unique identifiers called identity namespaces. Then, Identity Service links these namespaces, creating an identity map for each customer, allowing you to better understand them. 
+
+For example, if a user logs into their loyalty account on a tablet, Identity Service links the anonymous webID to an email address and that customer's profile. If they log in later with their mobile phone, additional links are created in that customer's identity map.
+
 Within a particular identity map, identities are linked when multiple identities are sent together in a single record. These identities are considered shared for a profile and can be accessed when retrieving the profile. 
 
-Identity Service manages identity maps. You can learn more by visiting the [Identity Service overview](../identity_services_architectural_overview/identity_services_architectural_overview.md).
+Visit the [Identity Service overview](../identity_services_architectural_overview/identity_services_architectural_overview.md) for more information about how identities are managed in Experience Platform.
 
 ### Segment memberships
 
-When a segmentation job is run, qualifying profiles are amended, adding the segment to their list of segment memberships. Segment memberships (field `segments`) is not a standard field of XDM Profiles, but are a mixin added to your schema when that schema has been enabled for Unified Profile, including it in the union.
+Segment rules are built and applied to Real-time Customer Profile using the Segment Builder. As explained in the following video, the Segment Builder produces the audiences needed to power the customer experience: 
 
-To learn more about using segmentation using the Platform UI, visit the documentation on [Segment Builder](../../../../../end-user/markdown/segmentation_overview/segmentation.md). For segmentation using the API, visit [Creating segments in Experience Platform via API](../../tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md).
+<a href="https://video.tv.adobe.com/v/27254" target="_blank"><img src="Creating_Segments.png"></a>
 
-A discussion on enabling schemas for the union view can be found [below](#union-schema).
+When an audience segment is created, qualifying profiles add the ID of that segment to their list of segment memberships.
+Segment memberships are stored in a `segments` field. This field is included in a [mixin](../schema_registry/schema_composition/schema_composition.md#mixin) that is added to the schema once it has been [enabled for use in Real-time Customer Profile](#union-schema).
+
+To learn more about using ExperienceEvent data for segmentation using the Platform UI, visit the documentation on [Segment Builder](../../../../../end-user/markdown/segmentation_overview/segmentation.md). If you are using the API, see the guide on [creating segments using APIs](../../tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md).
 
 ### Profile fragments
 
-An individual as it exists in a single dataset is considered a "profile fragment". This is fitting, as it is only a fragment of the total potential data you could have for that individual. When Unified Profile is used to access an entity, it can supply you with a merged view of all profile fragments for that entity across datasets, referred to as the union view.
-
----
+A **profile fragment** is a fragment of data associated with an individual profile.
+When Real-time Customer Profile is used to access an entity, it can supply you with a merged view of all profile fragments for that entity across datasets, referred to as the union view.
 
 ## The union view
 
-One of the key features of Unified Profile is the ability to unify multi-channel data. Unified Profile can supply you with a merged view of the individuals in your consumer base, across datasets and for linked identities, referred to as the union view. 
+One of the key features of Real-time Customer Profile is the ability to unify multi-channel data. Profile provides a merged view of the individuals in your customer base, across datasets and for linked identities. This view is called a **union view**. 
 
-Profile merging occurs on data access in Unified Profile, more specifically when accessing a profile by identity or segment export. To learn more about accessing profiles and union views, visit [Accessing Unified Profile data via API](../../tutorials/consuming_unified_profile_data/consuming_unified_profile_data.md).
+Real-time Customer Profile data is merged across sources when a profile is accessed by its ID or exported as a segment. To learn more about accessing profiles and union views, visit [Accessing Profile data using APIs](../../tutorials/consuming_unified_profile_data/consuming_unified_profile_data.md).
 
-There are several considerations to factor when merging profile data: 
+When profile data is merged, several decisions must be made by the system to determine what data to include: 
 
 * Which datasets to include in the union view
-* Which data wins in the event of a data conflict - where merged datasets report different values for the same property
-* Regulations, contractual obligations, and corporate policies that apply to your consumer data
+* Which data wins in the event of a data conflict, where merged datasets report different values for the same property
+* Regulations, contractual obligations, and corporate policies that apply to your customer data
 * Whether to include data under linked identities, and which identity map to use
 
-Many aspects of the options around these considerations are controlled by merge policies.
+These decisions are configured and controlled by the use of merge policies.
 
 ### Merge policies
 
-A merge policy is a set of configurations controlling aspects of identity stitching and data fragment merging. Merge policies are specific to a single schema, and can only be used to access entities adhering to that schema. Merge policies are private to an organization and, though there may be several for a single schema, there can only be one default for each schema.
+A merge policy is a set of configurations controlling aspects of identity stitching and data fragment merging. While a single schema may have several merge policies, it can have only one "default" merge policy assigned to it. Merge policies are private and cannot be accessed outside of the organization they belong to. 
 
-Using Unified Profile to access data, you are presented with the option of specifying the merge policy by which to govern the data to retrieve. Platform provides a default merge policy for any XDM schema, or you can create a merge policy and mark it as your organization's default for a schema. 
+Using Real-time Customer Profile to access data, you are presented with the option of specifying the merge policy by which to govern the data to retrieve. Platform provides a default merge policy for Profile-enabled XDM schemas, but you can also create your own merge policy and mark it as your organization's default for a schema. 
 
-> **Note:** If no merge policy is defined, and the schema or related schema to retrieve is "_xdm.context.profile", Unified Profile fetches and merges all data fragments for all related identities.
+> **Note:** If no merge policy is defined, and the schema or related schema to retrieve is "_xdm.context.profile", Real-time Customer Profile fetches and merges all data fragments for all related identities.
 
 Merge policies are used to control variables of:
 
-* Identity stitching - Merge policies include configurations for choosing which identity graph, if any, to fetch linked identities for which to merge data.
-* Attribute merging - Data conflicts require an access-time rule to follow for resolution. This is provided as an attribute merge type in merge policies.
+* Identity stitching: Merge policies include configurations for choosing which identity graph, if any, to fetch linked identities from which to merge data.
+* Attribute merging: Data conflicts require an access-time rule to follow for resolution. This is provided as an attribute merge type in merge policies.
 
-For information on working with merge policies, see the tutorial [Working with merge policies via API](../../tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md).
+For more information on working with merge policies, see the tutorial on [working with merge policies using APIs](../../tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md).
 
 ### Identity stitching
 
-Unified Profile uses [Identity Service](../identity_services_architectural_overview/identity_services_architectural_overview.md) to get linked identities for each individual. In merge policies, you specify which (if any) identity graph to use, where profile fragments for associated identities are merged with the individual's union view.
+Real-time Customer Profile uses [Identity Service](../identity_services_architectural_overview/identity_services_architectural_overview.md) to construct linked identities for each individual. Merge policies configure which identity graph to use when merging profile fragments. 
 
 ### Attribute merging
 
-When multiple profile fragments are being merged that contain the same data elements, data conflicts will arise. Merge policies can be used to tune prioritization of your data by allowing you to specify the order of data precedence by dataset or timestamp. 
+When multiple profile fragments containing the same data elements are merged, data conflicts can arise. Merge policies can be used to tune prioritization of your data by allowing you to specify the order of data precedence by dataset or timestamp. 
 
 ![](merging-across-datasets.png)
 
 ### Union schema
 
-A union schema is one that has been enabled for Unified Profile. The union view schema is an aggregate of the union schemas merged to form the union view. A union schema can be viewed on Adobe Experience Platform by selecting it from those listed on the "Union Schemas" page.
+A union schema is one that has been enabled for Real-time Customer Profile. The union view schema is an aggregate of the union schemas merged to form the union view. A union schema can be viewed on Adobe Experience Platform by selecting it from those listed on the "Union Schemas" page.
 
 ![](unified-profile-schema.png)
 
-For more information on working with the schema editor, which enables you to enable a schema for union using the UI, visit the [Basics of schema composition](../../technical_overview/schema_registry/schema_composition/schema_composition.md#union). 
-For direction on how to enable a schema via API, see [Schema Registry API developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md#unified-profile). 
+Visit the [Schema Editor tutorial](../../tutorials/schema_editor_tutorial/schema_editor_tutorial.md#schema-editor-tutorial) for steps on how to enable a union schema using the UI. 
+If you are using the API, see the [Schema Registry API developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md). 
 
----
+## Real-time components
+This section explains the components that allow Real-time Customer Profile to update and monitor record and time series data in real-time.
 
-## The real-time customer profile
+Real-time input is made possible through a process called [Streaming Ingestion](../streaming_ingest/streaming_ingest_overview.md). Once ingested, Real-time Customer Profile then filters relevant data, based on pre-defined requirements, through a process called [Streaming segmentation](#streaming-segmentation) before merging it with existing data and updating the union view. 
 
-Unified Profile ingests data delivered in real time via data inlets, merges it with existing data in the profile store, and creates or modifies the unified view at near real time. This data, evolving in time with your customers' experience, can be used to make personalized recommendations.
-
-Additionally, Unified Profile checks modified profiles and time series data as having an impact on the profile's qualifying segments. A profile qualifying for the "Abandoned cart" segment would be immediately disqualified from the segment, discontinuing display of targeted content, the instant he clicks the "Confirm checkout" button.
-
-For more, start with the [Streaming Ingestion overview](..\streaming_ingest\streaming_ingest_overview.md).
-
+Real-time output is made possible by [Edge Service](#edge-service) and [Projection Service](#projection-service) , which relay updated data to your customers. 
+  
 ### Streaming segmentation
 
-Unified Profile checks post-ingest profiles and time series data as having included or excluded them from segments. A profile qualifying for the "Abandoned cart" segment would be immediately disqualified from the segment, discontinuing display of targeted content, the instant he clicks the "Confirm checkout" button.
+As profile and time series data is ingested, Real-time Customer Profile automatically decides to include or exclude that data from segments through an ongoing process called **streaming segmentation**, before merging it with existing data and updating the union view. As a result, you can instantaneously perform computations and make decisions to deliver enhanced, individualized experience to customers as they interact with your brand.  
+
+For example, if a customer fills their online cart but doesn't purchase its contents during the same session, their profile qualifies for the "Abandoned cart" segment and would display content appropriate for that segment. However, should they return later to complete their purchase, Real-time Customer Profile would receive this updated data and immediately disqualify the profile from the "Abandoned cart" segment, discontinuing the display of content related to "Abandoned cart" the instant the "Confirm checkout" button is clicked. 
 
 ### Edge Service
 
-Edge Service is a component of Unified Profile that serves as a framework for low-latency data collection, pluggable computing and rapid data activation across all addressable channels. Platform components like Adobe Target and Adobe Campaign use Edge Service for real-time personalization.
+Edge Service makes it easy to quickly deploy new capabilities to your customers through geographically placed servers called edges. It is a component of Real-time Customer Profile that serves as a framework for low-latency data collection, pluggable computing, and rapid data activation across all addressable channels. Solutions like Adobe Target and Adobe Campaign use Edge Service for real-time personalization.
 
-Edge Service provides a single consolidated SDK, for every channel (JavaScript, mobile, server-side), which will send data to a common Adobe domain (adobedc.net) and receive a single payload in response for data and experience delivery. On the server-side, a unified edge gateway and a common platform services framework make it easy to plug-in and deploy new capabilities into this real-time computing environment. This revolutionary architecture decreases customer time to value, stops the need for "point" integrations, decreases costs, increases the speed of innovation, and creates sustained competitive advantages for Adobe customers. 
+Edge projections provide a single consolidated SDK, for every channel (JavaScript, mobile, server-side), which will send data to a common Adobe domain (adobedc.net) and receive a single payload in response for data and experience delivery. 
 
-A single consolidated edge system allows you to manage your advertising, marketing or personalization campaigns across all channels as an integrated experience. It also helps increase the speed of product innovation by making the real-time edge pluggable and allowing Adobe and its customers to more rapidly, _and_ more cost-effectively, add new capabilities and customer-defined logic to that real-time system.
+On the server-side, a unified edge gateway and a common platform services framework make it easy to plug-in and deploy new capabilities into this real-time computing environment. This decreases customer time to value, stops the need for "point" integrations, decreases costs, increases the speed of innovation, and creates sustained competitive advantages for Adobe customers. 
 
-#### Projection Service
+A single consolidated edge system allows you to manage your advertising, marketing or personalization campaigns across all channels as an integrated experience. Making the real-time edge pluggable allows you to add new capabilities and customer-defined logic to the real-time system in a rapid, and cost-effective manner.
 
-A projection is a lightweight view of an entity, pared down to the fields necessary for a specific use case. 
+### Projection Service
 
-Unified Profile sends out information about changes to profile data (creations, updates, deletes) as they happen, and Projection Service reflects these changes in entities on the edges in real-time. When entity change notifications are received, the service processes the notifications, creates projections and sends them to the edges.
+Projection Service relays updated Real-time Customer Profile data to the Edges in real-time.   
 
-Records are initially pushed to the edges where you have a presence. The edges are then continuously updated. Some notes:
+As profile data is updated (creations, updates, deletions), Profile sends out information about these changes using components called projections. Because a projection is a lightweight view of an entity, pared down to the fields necessary for a specific use case, it is useful in updating the edges in a timely manner. When entity change notifications are received, the service processes the notifications, creates projections and sends them to the edges. 
 
-* Updates that happen on the hub flow from the hub to the edges – this includes entity creates, updates, deletes.
-* Profiles that are active on an edge are pushed/refreshed on that edge
-* Profiles that are idle on an edge are removed from that edge
+Records are initially pushed to the edges where you have a presence. The edges are then continuously updated using the following guidelines:
 
-The projections are informed by:
+* Updates that happen on the hub flow from the hub to the edges – this includes entity creations, updates and deletions.
+* Profiles that are active on an edge are pushed/refreshed on that edge.
+* Profiles that are idle on an edge are removed from that edge.
 
-* Attributes needed on the edge
-  * Attributes that are directly used by calling components
-  * Attributes used by server-side decisioning rules
-  * Attributes used by client-side apps
-* Entity activity on the edge
-* Customer-specific settings
-* Global settings
+Edges are controlled in two ways:
 
-As an organization, you control the edges in two ways:
+*   **Projection configurations** : Projection configurations are information about what data should be available on each edge.
+*   **Projection destinations** : Projection Service allows you to route projections to one or more edges, or to a local pipeline topic from which they can be consumed by solutions or partners.
 
-__Projection configurations__ - Projection configurations are information about what data should be available on each edge.  
-__Projection destinations__ - Projection Service supports routing to one or more edge, or projections can routed to a local pipeline topic from which they can be consumed by solutions or partners.
+To learn about configuring edge destinations and projections for Real-time Customer Profile, visit [Configuring edge destinations and projections using APIs](../../tutorials/configuring_up_tutorial/configuring_edge_tutorial.md).
 
-To learn about configuring edge destinations and projections for your real-time customer profiles, visit [Configuring Edge destinations and projections via API](../../tutorials/configuring_up_tutorial/configuring_edge_tutorial.md).
+## Data governance
 
----
+Data governance is a series of strategies and technologies used to manage customer data and ensure compliance with regulations, restrictions, and policies applicable to data use. 
 
-## Data governance 
+As it relates to accessing data, data governance plays a key role within Experience Platform at various levels: 
+*   Data usage labeling 
+*   Data access policies 
+*   Access control on data for marketing actions
 
-Data governance is a series of strategies and technologies used to manage customer data and ensure compliance with regulations, restrictions, and policies applicable to data use. As it relates to accessing data, it plays a key role within Experience Platform at various levels, including data usage labeling, data access policies, and access control on data for marketing actions.
-
-Data governance is managed at several points, from deciding what data to add to Platform to what specific data fields to retrieve on accessing that data as well as from what datasets. 
+Data governance is managed at several points. These include deciding what data is ingested into Platform and what data is accessible after ingestion for a given marketing action. 
 
 ### Data Usage Labeling and Enforcement (DULE)
 
-Data Usage Labeling and Enforcement (DULE) is a means to control how fields are used from the schema level using usage labels. Usage labels categorize data that falls into the following:
+Data Usage Labeling and Enforcement (DULE) allows you to control how fields are used from the schema level using usage labels. Usage labels separate data into the following categories:
 
-* __Contractual data__ - Used to indicate data that is controlled by contractual obligations, including that the data cannot be exported to a 3rd party or that it isn't permissible for use in data science workflows.
-* __Identity data__ - Indicates data that could be used to identify or contact a person. These labels indicate whether data can directly or indirectly identify a person.
-* __Sensitive data__ - These labels categorize sensitive geographic data.
+* __Contractual data__: Data that is controlled by contractual obligations, including that the data cannot be exported to a third party or that is not permissible for use in data science workflows.
+* __Identity data__: Data that could be used to identify or contact a person. These labels indicate whether data can directly or indirectly identify a person.
+* __Sensitive data__: Sensitive geographic data.
 
-For more information on usage labeling, start with the [Data Usage Labeling and Enforcement (DULE) User Guide](https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html).
+For more information on usage labeling, see the [Data Usage Labeling and Enforcement (DULE) user guide](../data_governance/dule_overview.md).
 
 ### Dataset selection
 
-Using merge policies, you are able to indicate what datasets to include where a merge would occur; during segmentation, access, and segment export. Any datasets not included would not be merged into the union view. This method can be used to exclude data from datasets that are restricted from being used for the reason for which the data is being accessed.
+Using merge policies, you can indicate what datasets to include when accessing data, creating segments, or exporting segments.
+
+Excluded datasets are not be merged into the union view. By using this strategy, you can prevent restricted data from being accessed from undesirable channels or circumstances.
 
 ### Field selection
+Real-time Customer Profile supports filtering responses by specific fields, meaning that rather than retrieving entire profiles, you are able to indicate which subset of fields to return. In this way, you are able to reduce your response to only the fields required for your purpose.
 
-Unified Profile supports redacted data responses <!-- or do we call this something else? Subset? -->, meaning that rather than retrieve entire profiles, you are able to indicate which fields to return. In this way, you are able to reduce your result sets to only the fields required for your purpose.
+## Sending data to Real-time Customer Profile
 
----
+Platform can be configured to send your record and time-series data to Profile, supporting real-time streaming ingestion and batch ingestion. 
 
-## Getting data to Unified Profile
-
-Platform provides tools that you can use to send your record and time series data to Unified Profile, supporting real time streaming ingestion and batch ingestion. 
-
-> **Note:** All data collected through Adobe solutions, including Analytics Cloud, Marketing Cloud, and Advertising Cloud, flows into Experience Platform and is ingested into Unified Profile. <!-- ? --> 
-
-Platform provides tools that you can use to send your record and time series data to Unified Profile, supporting real-time streaming ingestion and batch ingestion. 
+> **Note:** All data collected through Adobe solutions, including Analytics Cloud, Marketing Cloud, and Advertising Cloud, flows into Experience Platform and is ingested into Profile. 
 
 ![](up-in-adobe-experience-platform.png)
 
-See the tutorial [Adding data to Unified Profile](../ingest_architectural_overview/ingest_architectural_overview.md) for more details.
+See the tutorial on [how to add data to Real-time Customer Profile](../../tutorials/adding_data_to_unified_profile/adding_data_to_unified_profile.md) for more details.
 
-### Understanding Data Lake, profile store, and identity graph
+### Understanding the Data Lake, profile store, and identity graph
 
-Each Catalog Service, Unified Profile Service, and Identity Service, maintains its own store and the relevant data supporting the objectives of the service. All data ingested (batch or streaming) into platform lands into Data lake and from there, individual services like Unified Profile can get that data and store it in their store as per their usage patterns.
+Catalog, Real-time Customer Profile, and Identity Service each maintain their own data store. These stores contain the relevant data needed to support the individual objectives of each service. All data ingested into Platform is stored in the Data Lake, and can be retrieved by individual services for use in its own data store.
 
-In order to see if a batch has successfully been ingested into Profile store, please refer to the below screenshot. Since each of the services (Catalog, Unified Profile and Identity) can have their own respective failures, we show the status of the batch across each of those stores.
+In order to see if a batch has successfully been ingested into the data store for Real-time Customer Profile, please refer to the screenshot below. Since each of the services (Catalog, Profile and Identity) can have their own respective failures, the status of the batch is shown across each of those stores.
 
-Please note that for a batch to be ingested into Profile or Identity, the dataset has to be enabled for Profile.
+Please note that for a batch to be ingested into Real-time Customer Profile or Identity Service, the dataset has to be enabled for Profile.
 
 ![](solutions-ingest-success.png)
 
----
 
 ## Creating audience segments
 
-The cornerstone of your marketing campaign is your audience. Unified Profile provides the tools for segmenting your customer base into audiences consisting of members meeting criteria with exactly the precision you require. With segmentation, you can isolate members of your user base by criteria such as:
+The cornerstone of your marketing campaign is your audience. Real-time Customer Profile provides the tools for segmenting your customer base into audiences consisting of members meeting the precise criteria you require. With segmentation, you can isolate audience members using criteria such as:
 
-* Users for whom one week has passed since last making a purchase
-* Users for whom the sum of the purchases is greater than $10,000
-* Users who have seen a campaign and then clicked on it within 30 minutes, for any 3 of a list of campaigns specified by their Campaign ID
-
-For step by step instructions to create and work with segmentation using the API, see the tutorial [Creating Segments in Experience Platform](../../tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md).
-
-For information on working with segmentation using the Adobe Experience Platform UI, visit [Segment Builder](../../../../../end-user/markdown/segmentation_overview/segmentation.md).
+* Customers for whom one week has passed since last making a purchase.
+* Customers for whom the sum of the purchases is greater than $10,000.
+* Customers who have seen a set number of unique marketing campaigns from a pre-defined list, specified by their Campaign ID, and explored them within 30 minutes.
 
 
+Visit the [Segment Builder overview](../../../../../end-user/markdown/segmentation_overview/segmentation.md) to learn how to build and manage segments using the Adobe Experience Platform UI. If you are using the API, see the [Create a segment tutorial](../../tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md). 
