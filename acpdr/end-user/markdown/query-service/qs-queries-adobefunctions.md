@@ -4,7 +4,7 @@ One of Adobe's big differentiators is that they understand experience data and w
 
 ## Sessionization
 
-The `SESS_TIMEOUT()` reproduces the visit groupings found with Adobe Analytics. It performs a similar time-based grouping, but with customizable parameters.
+The `SESS_TIMEOUT()` reproduces the visit groupings found with Adobe Analytics. It performs a similar time-based grouping, but customizable parameters.
 
 **Syntax:**
 
@@ -33,7 +33,7 @@ Structure with fields `(timestamp_diff, num, is_new, depth)`
   LIMIT 100;
   ```
   ![Image](graphics/2C-S-1.png)
-2. Create a new trended report with visitors, sessions, and page views:
+2. Create a new trended report with visitors, sessions, and page-views:
   ```sql
   SELECT 
     date_format( from_utc_timestamp(timestamp, 'EDT') , 'yyyy-MM-dd') as Day,
@@ -62,13 +62,13 @@ Structure with fields `(timestamp_diff, num, is_new, depth)`
 
 ## Attribution
 
-Attribution is how you allocate metrics or conversions like revenue, order, or signups to your marketing effort.
+Attribution is how you allocate metrics or conversions like revenue, order, or signups to some marketing effort.
 
 In Adobe Analytics, attribution settings are configured per variables like an eVar and generated as data is ingested.
 
 The Attribution ADFs found in the query service allow those allocations to be defined and generated at query time.
 
-This example focuses on last-touch attribution, but Adobe also offers first-touch attribution. Other options with timeouts and event-based expiration will be available in future versions of Query Service.
+This example focuses on last-touch attribution, but Adobe also offers first-touch attribution. Other flavors with timeouts and event-based expiration will be available in future versions.
 
 **Syntax:**
 
