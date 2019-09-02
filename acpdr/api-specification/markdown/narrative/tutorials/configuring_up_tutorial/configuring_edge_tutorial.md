@@ -1,6 +1,8 @@
 # Configure edge destinations and projections using APIs
 
-This document provides a tutorial for configuring edge destinations and projections using the [Real-time Customer Profile API](../../../../../../acpdr/real-time-customer-profile.yaml). The tutorial covers the following steps:
+This document provides a tutorial for configuring edge destinations and projections using Adobe Experience Platform APIs. This tutorial covers only some of the Edge Profile Projection Configuration API. For a comprehensive list of endpoints, see the [API Reference](../../../../../../acpdr/swagger-specs/edge-profile-projection-config.yaml).
+
+The tutorial covers the following steps:
 
 1. [List existing destinations](#list-destinations)  
 1. [Create a destination](#create-a-destination)  
@@ -14,7 +16,9 @@ This tutorial requires a working understanding of the Experience Platform servic
 - [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, real-time consumer profile based on aggregated data from multiple sources.
 - [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
 
-This tutorial also requires you to have completed the [authentication tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+## Tutorial
+
+This tutorial requires you to have completed the [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
 * Authorization: Bearer `{ACCESS_TOKEN}`
 * x-api-key: `{API_KEY}`
@@ -26,7 +30,7 @@ All POST, PUT, and PATCH requests require an additional header:
 
 ## List destinations 
 
-You can list the edge destinations that have already been configured for your organization by making a GET request to the `/config/destinations` endpoint.
+Using the [Profile Configuration API](../../../../../../acpdr/swagger-specs/profile-config-api.yaml), you can list the edge destinations that have already been configured for your organization.
 
 #### API format
 
@@ -99,12 +103,12 @@ curl -X POST \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
   -H 'Content-Type: application/json' \
   -d '{
-    "type": "EDGE",
-    "dataCenters": [
-      "OR1"
-    ],
-    "ttl": 3600
-  }'
+  "type": "EDGE",
+  "dataCenters": [
+    "OR1"
+  ],
+  "ttl": 3600
+}'
 ```
 
 - `type`: The type of destination to be created. By setting its value to "EDGE", this request creates an edge destination.
@@ -163,15 +167,17 @@ curl -X POST \
 
 ## List projection configurations
 
-You can lookup and list projection configurations that have been created for your organization by making a GET request to the `/config/projections` endpoint. You can also add optional parameters to the request path to access projection configurations for a particular schema, or lookup an individual projection by its name.
+You can use the [Edge Profile Projection Configuration API](../../../../../../acpdr/swagger-specs/edge-profile-projection-config.yaml) to lookup and list projection configurations that have been created for your organization.
 
 #### API format
 
-
+An API call to this endpoint returns all projection configurations available in your organization. By adding parameters to the request path, however, you can access projection configurations for a particular schema, or lookup an individual projection by its name.
 
 ```http
 GET /config/projections
+
 GET /config/projections?schemaName={SCHEMA_NAME}
+
 GET /config/projections?schemaName={SCHEMA_NAME}&name={PROJECTION_NAME}
 ```
 * `{SCHEMA_NAME}`: The name of the schema associated with the projection configuration you want to access.
@@ -244,7 +250,7 @@ A successful response returns a list of projection configurations within the roo
 
 ## Create a projection configuration
 
-You can create (POST) a new projection configuration that will dictate which XDM fields are made available on the edges or pipeline, to be persisted or published by Projection Service.
+You can create (POST) a new projection configuration that will dictate which XDM fields are made available on the edges or pipeline as persisted or published by Projection Service.
 
 #### API format
 
