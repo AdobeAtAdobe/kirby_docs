@@ -45,12 +45,6 @@
 					"path": "api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md",
 					"title": "Schema Registry API tutorial",
 					"description": "Follow step-by-step instructions to compose a schema using the Schema Registry API, including assigning a class and defining mixins."
-        },
-        {
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/relationship_descriptor_tutorial.md",
-					"title": "Define a relationship between two schemas",
-					"description": "Follow step-by-step instructions for defining a one-to-one relationship between two schemas using the Schema Registry API."
 				},
 				{
 					"pages": [],
@@ -68,7 +62,6 @@
 		"end-user/markdown/query-service/qs-intro.md":"/apis/experienceplatform/home/services/query-service/query-service.html",
 		"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_overview.md":"/apis/experienceplatform/home/data-science-workspace/dsw-overview.html",
 		"end-user/markdown/segmentation_overview/segmentation.md":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/batch_data_ingestion_developer_guide.md":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
-    "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/":"/apis/experienceplatform/home/services/troubleshooting.html"
-  }
+		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/batch_data_ingestion_developer_guide.md":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
+	}
 }
