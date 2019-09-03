@@ -14,9 +14,7 @@ Midvalues data has data processing applied, but no attribution. Typically, these
 
 Postvalues data has additional processing applied, including attribution and visit based fields. Typically, these fields start with the prefix `post_`.
 
-> **Note:** This table includes the following columns: "Analytics Field", "XDM Field", "XDM Type", "Dataset", "Description", and "Properties". Please scroll left/right to view the full contents of this table.
-
-Analytics Field | XDM Field | XDM Type | Dataset | Description | Properties
+Analytics Field | XDM Field | XDM Type | DataSet | Description | Properties
 --------------- | --------- | -------- | ------- | ---------- | ---------
 m_evar1 - m_evar250 | _experience.analytics.customDimensions.eVars.eVar1 - _experience.analytics.customDimensions.eVars.eVar250 | string | mid | A custom variable, which can range from 1-250. Each organization will use these custom eVars differently.
 m_prop1 - m_prop75 | _experience.analytics.customDimensions.props.prop1 - _experience.analytics.customDimensions.props.prop75 | string | mid | Custom traffic variables, which can range from 1-75.
@@ -146,7 +144,7 @@ videosecondssincelastcall | media.mediaTimed.primaryAssetViewDetails.sessionTime
 
 These fields have a single source and map to **multiple** XDM locations.
 
-Analytics Field | XDM Field | XDM Type | Dataset | Description
+Analytics Field | XDM Field | XDM Type | DataSet | Description
 --------------- | --------- | -------- | ------- | ----------
 s_resolution | device.screenWidth, device.screenHeight | integer | mid,post | Numeric ID representing the resolution of the monitor.
 mobileosversion | environment.operatingSystem, environment.operatingSystemVersion | string | mid,post | Mobile operating system version.
@@ -156,9 +154,7 @@ videoadlength | advertising.adAssetReference._xmpDM.duration | integer | mid,pos
 
 These fields need to be transformed, and require logic beyond a direct copy from Adobe Analytics to be generated into Experience Data Model (XDM).
 
-> **Note:** This table includes the following columns: "Analytics Field", "XDM Field", "XDM Type", "Dataset", "Description", and "Properties". Please scroll left/right to view the full contents of this table.
-
-Analytics Field | XDM Field | XDM Type | Dataset | Description | Properties 
+Analytics Field | XDM Field | XDM Type | DataSet | Description | Properties 
 --------------- | --------- | -------- | ------- | ----------- | ----------
 m_prop1 - m_prop75 | _experience.analytics.customDimensions.listprops.prop1 - _experience.analytics.customDimensions.listprops.prop75 | Object | mid | Custom traffic variables, ranging from 1-75 | {} 
 m_hier1 - m_hier5 | _experience.analytics.customDimensions.hierarchies.hier1 - _experience.analytics.customDimensions.hierarchies.hier5 | Object | mid | Used by hierarchy variables. It contains a delimited llist of values. | {values (array), delimiter (string)} 
