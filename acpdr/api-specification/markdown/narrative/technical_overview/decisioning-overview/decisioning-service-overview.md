@@ -10,7 +10,7 @@ Decisioning Service facilitates evolved experience personalization.
 
 Before Experience Decisioning | After Experience Decisioning
 --- | ---
-Personalize and optimize their user’s experiences within a single channel or in small set of experience touch points. | Experiences are orchestrated responses across interactions.
+Personalize and optimize their user’s experiences within a single channel or in small set of experience touchpoints. | Experiences are orchestrated responses across interactions.
 Optimizations are focused a single and typically short phase of the end user’s journey | Decisions are based on the entire interaction history spanning from behaviors detected in the past to the latest situational context.
 Options, and the strategies for selecting which to present during a customer's experience, are typically coded deeply inside of an application. | Strategies for selecting the best option are defined outside the channel specific applications and become reusable.
 Customer experiences are personalized and optimized according to a simplistic goal, e.g. increase the number of successful checkouts on a web page or the acceptance of an offer presented in an interaction with a representative. | Customer experiences are optimized based on a holistic understanding of the customer's current needs and adapts to all experiences the user had, good or bad. For example, a marketing campaign may not be appropriate for a customer who has recently placed a complaint about a product or service.
@@ -30,11 +30,11 @@ Experiences can be customized using Decisioning Service in real time, as your cu
 
 Decisions can be made in many ways. One approach is to eliminate options successively until either only one is left or the options have been pared down and there is some subset remaining or a winner is randomly picked from the reduced set. A variant of this approach to pick the winning option according to a calculated formula. Ranking eligible options is accomplished using a function. For offer decisioning, that function could calculate the cost, the value of the offer to the business and use a pre-determined the likelihood that the offer is accepted by the end user. The resulting score could be used to order the offers.
 
-Alternatively or additionally, a strategy could be based on outcomes collected from prior interactions with similar customers who were proposed similar options. In this strategy, the function that calculated the priority values is learned. The optimal outcome value is tied to the goals of the activity and the performance indicator for the prediction is how frequently the outcome was achieved after the option was proposed.
+Alternatively or additionally, a strategy could be based on outcomes collected from prior interactions with similar customers who were proposed similar options. In this strategy, the funtion that calculated the priority values is learned. The optimal outcome value is tied to the goals of the activity and the performance indicator for the prediction is how frequently the outcome was achieved after the option was proposed.
 
 ### Decision strategy
 
-Decision strategies are configured via objects called _activities_. Each decision strategy is essentially an algorithm or a function that takes N options {o1, o2, …oN} as input and produces an ordered list of options (o1, o2,…oK) whereby the first option in the list is considered the best one according to an optimization criteria, the second option in the result list is then considered the second best option and so forth.
+Decision stretegies are configured via objects called _activities_. Each decision strategy is essentially an algorithm or a function that takes N options {o1, o2, …oN} as input and produces an ordered list of options (o1, o2,…oK) whereby the first option in the list is considered the best one according to an optimization criteria, the second option in the result list is then considered the second best option and so forth.
 
 At any given time during a customer's journey, the best option for a given activity is re-evaluated based on the most current set of context variables, rules, and constraints. Context variables include the records stored in Real Time Customer Profile. A central record entity is a customer’s profile, but other entities like operational business data are equally available to the activity.
 
@@ -62,7 +62,7 @@ The typical sequence of steps starts with building out profiles:
 2.	Define a schema based on the profile class and optionally define a schema based on the experience event class.
 3.	Configure a dataset to upload record and time series data to Customer Profile.
 4.	Add data via the dataset configured in the prior step or stream instance data via Pipeline.
-5.  Stream experience events into the Platform to enrich the profile with behavioral data.
+5.  Stream experince events into the Platform to enrich the profile with behavioral data.
 
 Additionally, to use Decisioning Service, the following steps:
 
@@ -85,7 +85,7 @@ The decision logic is organized by activities, each of which specifies a filter 
 
 Each decision is made by first applying constraints to reduce the number of options and then ranking the remaining options. Although most of the logic is evaluated inside Decisioning Service, various adjunct services are used to help with these two aspects. For example, a capping service manages upper bounds for how often an option can be used in any decision, and another service may host an machine learning model that is used to calculate scores for a profile and option.
 
-To learn more about using the Repository APIs, see the tutorial [Manage Decisioning objects and rule using APIs](../../tutorials/decisioning_tutorial/decisioning_entities_api_tutorial.md).<br/>
+To learn more about using the Repository APIs, see the tutorial [Manage decisioning objects and rule using APIs](../../tutorials/decisioning_tutorial/decisioning_entities_api_tutorial.md).<br/>
 To learn more about using the Decisioning Service runtime, see the tutorial [Work with the Decisioning Service runtime using APIs](../../tutorials/decisioning_tutorial/decisioning_runtime_api_tutorial.md).
 
 <!--
