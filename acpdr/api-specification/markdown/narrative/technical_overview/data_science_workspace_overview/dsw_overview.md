@@ -86,9 +86,7 @@ Data Science Workspace is fully integrated with Adobe Experience Platform, inclu
 
 ### Prebuilt machine learning recipes
 
-Data Science Workspace includes prebuilt machine learning recipes for common business needs, like retail sales prediction and anomaly detection, so data scientists and developers don't have to start from scratch. Visit the <a href="https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/prebuilt-recipes.html" target="_blank">prebuilt recipe page</a> to discover what is readily available.
-
-[//]: # (The built-in recipe gallery offers recommendations for prebuilt recipes based on your business needs.)
+Data Science Workspace includes prebuilt machine learning recipes for common business needs, like retail sales prediction and anomaly detection, so data scientists and developers don't have to start from scratch. The built-in recipe gallery offers recommendations for prebuilt recipes based on your business needs.
 
 If you prefer, you can adapt a prebuilt recipe to your needs, import a recipe, or start from scratch to build a custom recipe. However you begin, once you train and hyper-tune a recipe, creating a custom intelligent service doesn't require a developer - just a few clicks and you're ready to build a targeted, personalized digital experience. 
 
@@ -109,7 +107,7 @@ As part of the data exploration workflow, you can also ingest new data or use ex
 
 With Data Science Workspace, you decide how you want to author recipes. 
 
-* Save time by browsing for a <a href="https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/prebuilt-recipes.html" target="_blank">prebuilt recipe</a> that addresses your business needs, which you can use as is or configure to meet your specific requirements. 
+* Save time by browsing for a prebuilt recipe that addresses your business needs, which you can use as is or configure to meet your specific requirements. 
 * Create a recipe from scratch, using the authoring runtime in Jupyter Notebook to develop and register the recipe.
 * Upload a recipe authored outside Adobe Experience Platform into Data Science Workspace or import recipe code from a repository, such as Git, using the authentication and integration available between Git and Data Science Workspace.
 
@@ -158,7 +156,9 @@ Based on the business problem defined, you know the recipe should look at all th
 
 A data scientist typically spends up to 75% of the time required to create a recipe exploring and transforming the data. Data often comes from multiple repositories and is saved in different schemas - it must be combined and mapped before it can be used to create a recipe. 
 
-[//]: # (Your first step is to check the recipe gallery to see if an existing recipe meets your needs, or comes close. An alternative is to import a recipe you created outside of Adobe Experience Platform. Starting with an existing recipe often streamlines the data exploration phase and makes it easier for a data scientist.)
+Your first step is to check the recipe gallery to see if an existing recipe meets your needs, or comes close. An alternative is to import a recipe you created outside of Adobe Experience Platform. Starting with an existing recipe often streamlines the data exploration phase and makes it easier for a data scientist.
+ 
+![](./images/list_of_notebooks.png)
 
 If you're starting from scratch or configuring an existing recipe, you begin your data search in a centralized and standardized data catalog for your organization, which simplifies the hunt considerably. You might even find that another data scientist in your organization has already identified a similar dataset, and choose to fine-tune that dataset rather than start from scratch.
 All the data in Adobe Experience Platform complies with a standardized XDM schema, eliminating the need to create a complex model for joining data or obtain help from a data engineer.
@@ -166,13 +166,13 @@ All the data in Adobe Experience Platform complies with a standardized XDM schem
 If you don't immediately find the data you need, but it exists outside Adobe Experience Platform, it's a relatively simple task to ingest additional datasets, which will also transform into the standardized XDM schema.  
 You can use Jupyter Notebook to simplify data pre-processing - possibly starting with a notebook template or a notebook you've used previously for propensity to buy.  
  
-![](./images/notebook_templates.png)
+![](./images/list_of_notebooks.png)
 
 Visit [this section](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/preparedata.html) for tutorials on exploring and preparing data in Data Science Workspace.
 
 ### Author the recipe
 
-If you already found a recipe that meets all your needs, you can move on to experimentation. Or, you can modify the recipe a bit or create one from scratch - taking advantage of the Data Science Workspace authoring runtime in Jupyter Notebook. Using the authoring runtime ensures that you can both use the Data Science Workspace training and scoring workflow and convert the recipe later so it can be stored and reused by others in your organization.
+If you already found a recipe that meets all your needs, you can move on to experimentation. Or, you can modify the recipe a bit or create one from scratch - taking advantage of the Data Science Workspace authoring runtime in Jupyter Notebook. Using the authoring runtime ensures that you can both use the Data Science Workspace training and scoring workflow and convert the recipe later so it can be stored in the recipe gallery and reused by others in your organization.
 
 You can also import a recipe in to Data Science Workspace and take advantage of the experimentation workflows as you create your intelligent service.
 
