@@ -9,23 +9,23 @@ Query Service gives you the ability to run interactive queries for development p
 
 ### Accessing Query Editor
 
-To start writing queries, click on **Create Query** in the top right of the screen. This link is available from any of the pages in the Query Service workspace. 
+To start writing queries, click on **Create Query** at the top right of the screen. This link is available from any of the pages in the Query Service workspace. 
 
   ![Image](graphics/create.png)
   
-### Writing Queries
+### Writing queries
 
-Query Editor is organized to make writing queries as easy as possible. Key parts of the Editor are highlighted below. It is recommended that you develop your queries with limits on the rows returned to minimize query development time. Then, after you have validated your query output, remove the limits and run the query with `Create Table tablename as SELECT` to generate a dataset with the output. 
+Query Editor is organized to make writing queries as easy as possible. Key parts of the editor are highlighted below. It is recommended that you develop your queries with limits on the rows returned to minimize query development time. Then, after you have validated your query output, remove the limits and run the query with `Create Table tablename as SELECT` to generate a dataset with the output. 
 
  ![Image](graphics/editor.png)
 
-#### Key Features of the Query Editor
+#### Key features of the Query Editor
 
-* **Automatic syntax highlighting:** Makes reading and organizing SQL easy.
+* **Automatic syntax highlighting:** Makes reading and organizing SQL easier.
 
 ![Image](graphics/syntaxhighlight.png)
 
-* **SQL key word auto-complete:** Start typing your query and Query Editor provides suggestions for the SQL you are typing. Simply arrow down to your desired term and press **Enter**.
+* **SQL key word auto-complete:** Start typing your query and Query Editor provides suggestions for the SQL you are typing. Arrow down to your desired term and press **Enter**.
 
 ![Image](graphics/syntaxauto.png)
 
@@ -33,9 +33,9 @@ Query Editor is organized to make writing queries as easy as possible. Key parts
 
 ![Image](graphics/tablesauto.png)
 
-### Error Detection
+### Error detection
 
-Query Editor validates your query as you write it. It provides generic SQL validation, as well as specific execution validation. This happens automatically. If your query has a red underline, as in the image below, then it has an error.
+Query Editor validates your query as you write it. It provides generic SQL validation, as well as specific execution validation. This happens automatically. If your query has a red underline, as in the image below, then it contains an error.
 
 ![Image](graphics/syntaxhighlight.png)
 
@@ -45,31 +45,33 @@ You can view an informative error message by hovering over the SQL code. This sh
 
 ### Console
 
-The console gives you information on the status and operation of Query Service. It tells you if the connection to Query Service is operational, if it is running a query, and if there are any errors in executing a query. 
+The console provides information on the status and operation of Query Service. It shows whether the connection to Query Service is operational, whether it is running a query, and whether there are any errors in executing a query. 
 
 > **Note:** The console only shows errors that resulted from executing a query. It does not show query validation errors before a query is executed.)
 
 ![Image](graphics/console.png)
 
-### Query Results
+### Query results
 
 After a query has completed, the results are displayed in the Results tab, which can be found next to Console. This view shows the tabular output of your query, up to 50,000 rows. This view is intended to allow you to validate your query. If you want to generate a dataset out of your query, remove limits and run the query with `Create Table tablename as SELECT` to generate a dataset with the output.
 
-## How Query Editor Works
+## How Query Editor works
 
 Query Editor provides flexible execution of queries. To use it effectively, it is helpful to understand how it works. 
 
 ### Connecting to Query Service
 
-Query Editor takes a few seconds to initialize and connect to Query Service when it is opened. Console tells you when it is connected, as shown below. If you paste in a query and attempt to run it before it has connected, it will delay execution until the connection is complete. 
+Query Editor takes a few seconds to initialize and connect to Query Service when it is opened. Console tells you when it is connected, as shown below. If you paste in a query and attempt to run it before it has connected, it delays execution until the connection is complete. 
 
 ![Image](graphics/initializing.png)
 
-### Executing Queries
+### Executing queries
 
-Queries executed from the Query Editor run interactively. This means that if you close the browser or navigate away, the query is canceled. This is also true for `CREATE TABLE as SELECT` queries. You need to leave your browser window open until the query completes successfully. 
+Queries executed from the Query Editor run interactively. This means that if you close the browser or navigate away, the query is canceled. This is also true for `CREATE TABLE as SELECT` queries. 
 
-## How to Find Prior Query Executions
+> **Important:** Do not close your browser window until the query completes successfully. 
+
+## How to find prior query executions
 
 All queries executed from the Query Editor are captured in the Log table. You can use the search functionality in the Log to find queries ([see instructions here](qs-ui.md)). 
 
