@@ -83,7 +83,7 @@
     {
       "pages": [],
       "path": "acpdr/swagger-specs/sensei-ml-api.yaml",
-      "title": "Sensei Unified Machine Learning API"
+      "title": "Sensei Machine Learning API"
     }
   ],
   "app2app_map": {
