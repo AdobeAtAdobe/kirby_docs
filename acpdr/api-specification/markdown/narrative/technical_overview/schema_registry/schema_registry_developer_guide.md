@@ -2291,7 +2291,7 @@ Signals that the "sourceProperty" of the "sourceSchema" is an Identity field as 
 <tr>
 <td><p><strong>xdm:descriptorOneToOne</strong>
 </p>
-<p>Describes a relationship between two different schemas, keyed on the properties described in "sourceProperty" and "destinationProperty".</p>
+<p>Describes a relationship between two different schemas, keyed on the properties described in "sourceProperty" and "destinationProperty". See the tutorial on <a href="../../tutorials/schema_registry_api_tutorial/relationship_descriptor_tutorial.md">defining a relationship between two schemas</a> for more information.</p>
 </td>
 <td>
 <pre class="JSON language-JSON hljs">
