@@ -1,7 +1,5 @@
 # JupyterLab user guide
 
-[//]: # (Intro paragraph here - High level description and What is JupyterLab and Notebooks)
-
 JupyterLab is a web-based user interface for <a href="https://jupyter.org/" target="_blank">Project Jupyter</a> and is tightly integrated into Adobe Experience Platform. It provides an interactive development environment for data scientists to work with Jupyter notebooks, code, and data.
 
 This document provides an overview of JupyterLab and its features as well as instructions to perform common actions:
@@ -15,9 +13,16 @@ This document provides an overview of JupyterLab and its features as well as ins
     -   [Kernel sessions](#kernel-sessions)
     -   [PySpark/Spark execution resource](#pysparkspark-execution-resource)
     -   [Launcher](#launcher)
+-   [Access Platform data using Notebooks](#access-platform-data-using-notebooks)
+    -   [Read from a dataset in Python/R](#read-from-a-dataset-in-pythonr)
+    -   [Read from a dataset in PySpark/Spark](#read-from-a-dataset-in-pysparkspark)
+    -   [Query data using Query Service in Python](#query-data-using-query-service-in-python)
+    -   [Filter ExperienceEvent data in Python/R](#filter-experienceevent-data-in-pythonr)
+    -   [Filter ExperienceEvent data in PySPark/Spark](#filter-experienceevent-data-in-pysparkspark)
 
 The appendix to this document includes additional useful resources related to JupyterLab:
 -   [Supported libraries](#appendix-supported-libraries)
+-   [Optional SQL flags for Query Service](#appendix-optional-sql-flags-for-query-service)
 
 ## JupyterLab on Adobe Experience Platform
 
@@ -193,7 +198,7 @@ The customized *Launcher* provides you with useful notebook templates for their 
 
 *   **Blank:** An empty notebook file.
 *   **Starter:** A pre-filled notebook demonstrating data exploration using sample data.
-*   **Retail Sales:** A pre-filled notebook featuring the [Retail Sales Recipe]() using sample data.
+*   **Retail Sales:** A pre-filled notebook featuring the <a href="https://adobe.ly/2wOgO3L" target="_blank">Retail Sales Recipe</a> using sample data.
 *   **Recipe Builder:** A notebook template for creating a recipe in JupyterLab. It is pre-filled with code and commentary that demonstrates and describes the recipe creation process. Refer to the <a href="https://www.adobe.com/go/data-science-create-recipe-notebook-tutorial-en" target="_blank">notebook to recipe tutorial</a> for a detailed walkthrough.
 *   **Query Service:** A pre-filled notebook demonstrating the usage of Query Service directly in JupyterLab with provided sample workflows that analyzes data at scale.
 *   **XDM Events:** A pre-filled notebook demonstrating data exploration on postvalue Experience Event data, focusing on features common across the data structure.
@@ -269,6 +274,235 @@ Some notebook templates are limited to certain kernels. Template availability fo
 To open a new *Launcher*, click **File > New Launcher**. Alternatively, expand the **File browser** from the left sidebar and click the plus symbol (**+**):
 
 ![](./images/new_launcher.gif)
+
+## Access Platform data using Notebooks
+
+Each supported kernel provides built-in functionalities that allow you to read Platform data from a dataset within a notebook. However, support for paginating data is limited to Python and R notebooks.
+
+### Read from a dataset in Python/R
+
+Python and R notebooks allow you to paginate data when accessing datasets. Sample code to read data with and without pagination is demonstrated below.
+
+[//]: # (In the following samples, the first step is currently required but once the SDK is complete, users are no longer required to explicitly define client_context)
+
+**Read from a dataset in Python/R without pagination**
+
+Executing the following code will read the entire dataset. If the execution is successful, then data will be saved as a Pandas dataframe referenced by the variable `df`.
+
+```python
+# Python
+
+client_context = PLATFORM_SDK_CLIENT_CONTEXT
+from platform_sdk.dataset_reader import DatasetReader
+dataset_reader = DatasetReader(client_context, "{DATASET_ID}")
+df = dataset_reader.read()
+df.head()
+```
+
+```R
+# R
+
+library(reticulate)
+use_python("/usr/local/bin/ipython")
+psdk <- import("platform_sdk")
+py_run_file("../.ipython/profile_default/startup/platform_sdk_context.py")
+client_context <- py$PLATFORM_SDK_CLIENT_CONTEXT
+DatasetReader <- psdk$dataset_reader$DatasetReader
+dataset_reader <- DatasetReader(client_context, "{DATASET_ID}") 
+df <- dataset_reader$read() 
+df
+```
+
+*   `{DATASET_ID}`: The unique identity of the dataset to be accessed
+
+**Read from a dataset in Python/R with pagination**
+
+Executing the following code will read data from the specified dataset. Pagination is achieved by limiting and offsetting data through the functions `limit()` and `offset()` respectively. Limiting data refers to the maximum number of data points to be read, while offsetting refers to the number of data points to skip prior to reading data. If the read operation executes successfully, then data will be saved as a Pandas dataframe referenced by the variable `df`.
+
+```python
+# Python
+
+client_context = PLATFORM_SDK_CLIENT_CONTEXT
+from platform_sdk.dataset_reader import DatasetReader
+
+dataset_reader = DatasetReader(client_context, "{DATASET_ID}")
+df = dataset_reader.limit(100).offset(10).read()
+```
+
+```R
+# R
+
+library(reticulate)
+use_python("/usr/local/bin/ipython")
+psdk <- import("platform_sdk")
+py_run_file("../.ipython/profile_default/startup/platform_sdk_context.py")
+client_context <- py$PLATFORM_SDK_CLIENT_CONTEXT
+
+DatasetReader <- psdk$dataset_reader$DatasetReader
+dataset_reader <- DatasetReader(client_context, "{DATASET_ID}") 
+df <- dataset_reader$limit(100L)$offset(10L)$read() 
+```
+
+*   `{DATASET_ID}`: The unique identity of the dataset to be accessed
+
+### Read from a dataset in PySpark/Spark
+
+With an an active PySpark or Spark notebook opened, expand the **Data Explorer** tab from the left sidebar and double click **Datasets** to view a list of available datasets. Right click on the dataset listing you wish to access and click **Explore Data in Notebook**. The following code cells are generated:
+
+```python
+# PySpark
+
+pd0 = spark.read.format("com.adobe.platform.dataset").\
+    option('orgId', "YOUR_IMS_ORG_ID@AdobeOrg").\
+    load("{DATASET_ID}")
+pd0.describe()
+pd0.show(10, False)
+```
+
+```scala
+// Spark
+
+import com.adobe.platform.dataset.DataSetOptions
+val dataFrame = spark.read.
+    format("com.adobe.platform.dataset").
+    option(DataSetOptions.orgId, "YOUR_IMS_ORG_ID@AdobeOrg").
+    load("{DATASET_ID}")
+dataFrame.printSchema()
+dataFrame.show()
+```
+
+### Query data using Query Service in Python
+
+JupyterLab on Platform allows you to use SQL in a Python notebook to access data through <a href="https://www.adobe.com/go/query-service-home-en" target="_blank">Adobe Experience Platform Query Service</a>. Accessing data through Query Service can be useful for dealing with large datasets due to its superior running times. Be advised that querying data using Query Service has a processing time limit of ten minutes.
+
+Before you use Query Service in JupyterLab, ensure you have a working understanding of the <a href="https://www.adobe.com/go/query-service-sql-syntax-en" target="_blank">Query Service SQL syntax</a>.
+
+Querying data using Query Service requires you to provide the name of the target dataset. You can generate the necessary code cells by finding the desired dataset using the **Data explorer**. Right click on the dataset listing and click **Query Data in Notebook** to generate the following two code cells in your notebook:
+
+<ol>
+<li>
+
+In order to utilize Query Service in JupyterLab, you must first create a connection between your working Python notebook and Query Service. This can be achieved by executing the first generated cell.
+
+```python
+qs_connect()
+```
+
+</li>
+<li>
+
+In the second generated cell, the first line must be defined before the SQL query. By default, the generated cell defines an optional variable (`df0`) which saves the query results as a Pandas dataframe. <br>The `-c QS_CONNECTION` argument is mandatory and tells the kernel to execute the SQL query against Query Service. See the [appendix](#appendix-optional-sql-flags-for-query-service) for a list of additional arguments.
+
+```python
+%%read_sql df0 -c QS_CONNECTION
+SELECT *
+FROM name_of_the_dataset
+LIMIT 10
+/* Querying table "name_of_the_dataset" (datasetId: {DATASET_ID})*/
+```
+
+</li>
+</ol>
+
+Python variables can be directly referenced within a SQL query by using string-formatted syntax and wrapping the variables in curly brackets (`{}`), as shown in the following example:
+
+```python
+table_name = 'name_of_the_dataset'
+table_columns = ','.join(['col_1','col_2','col_3'])
+```
+
+```python
+%%read_sql demo -c QS_CONNECTION
+SELECT {table_columns}
+FROM {table_name}
+```
+
+### Filter ExperienceEvent data in Python/R
+
+In order to access and filter an ExperienceEvent dataset in a Python or R notebook, you must provide the ID of the dataset (`{DATASET_ID}`) along with the filter rules that define a specific time range using logical operators. When a time range is defined, any specified pagination is ignored and the entire dataset is considered. 
+
+A list of filtering operators are described below: 
+
+*   `eq()`: Equal to
+*   `gt()`: Greater than
+*   `ge()`: Greater than or equal to
+*   `lt()`: Less than
+*   `le()`: Less than or equal to
+*   `And()`: Logical AND operator
+*   `Or()`: Logical OR operator
+
+The following cells filter an ExperienceEvent dataset to data existing exclusively between January 1, 2019 and the end of December 31, 2019.
+
+```python
+# Python
+
+client_context = PLATFORM_SDK_CLIENT_CONTEXT
+from platform_sdk.dataset_reader import DatasetReader
+
+dataset_reader = DatasetReader(client_context, "{DATASET_ID}")
+df = dataset_reader.\
+    where(dataset_reader["timestamp"].gt("2019-01-01 00:00:00").\
+    And(dataset_reader["timestamp"].lt("2019-12-31 23:59:59"))\
+).read()
+```
+
+```R
+# R
+
+library(reticulate)
+use_python("/usr/local/bin/ipython")
+psdk <- import("platform_sdk")
+py_run_file("../.ipython/profile_default/startup/platform_sdk_context.py")
+client_context <- py$PLATFORM_SDK_CLIENT_CONTEXT
+
+DatasetReader <- psdk$dataset_reader$DatasetReader
+dataset_reader <- DatasetReader(client_context, "{DATASET_ID}") 
+df <- dataset_reader$
+    where(dataset_reader["timestamp"]$gt("2019-01-01 00:00:00")$
+    And(dataset_reader["timestamp"]$lt("2019-12-31 23:59:59"))
+)$read()
+```
+
+### Filter ExperienceEvent data in PySpark/Spark
+
+Accessing and filtering an ExperienceEvent dataset in a PySpark or Spark notebook requires you to provide the dataset identity (`{DATASET_ID}`), your organization's IMS identity, and the filter rules defining a specific time range. A Filtering time range is defined by using the function `spark.sql()`, where the function parameter is a SQL query string.
+
+The following cells filter an ExperienceEvent dataset to data existing exclusively between January 1, 2019 and the end of December 31, 2019.
+
+```python
+# PySpark
+
+pd = spark.read.format("com.adobe.platform.dataset").\
+    option("orgId", "YOUR_IMS_ORG_ID@AdobeOrg").\
+    load("{DATASET_ID}")
+
+pd.createOrReplaceTempView("event")
+timepd = spark.sql("""
+    SELECT *
+    FROM event
+    WHERE timestamp > CAST('2019-01-01 00:00:00.0' AS TIMESTAMP)
+    AND timestamp < CAST('2019-12-31 23:59:59.9' AS TIMESTAMP)
+""")
+```
+
+```scala
+// Spark
+
+import com.adobe.platform.dataset.DataSetOptions
+val dataFrame = spark.read.
+    format("com.adobe.platform.dataset").
+    option(DataSetOptions.orgId, "YOUR_IMS_ORG_ID@AdobeOrg").
+    load("{DATASET_ID}")
+
+dataFrame.createOrReplaceTempView("event")
+val timedf = spark.sql("""
+    SELECT * 
+    FROM event 
+    WHERE timestamp > CAST('2019-01-01 00:00:00.0' AS TIMESTAMP)
+    AND timestamp < CAST('2019-12-31 23:59:59.9' AS TIMESTAMP)
+""")
+```
+
 
 ## Appendix: supported libraries
 
@@ -402,3 +636,45 @@ python | 3.6.7
 mkl-rt | 11.1
 
 </details>
+
+
+## Appendix: Optional SQL flags for Query Service
+
+<table>
+    <tr>
+        <th style="text-align:left"><strong>Flag</strong></th>
+        <th style="text-align:left"><strong>Description</strong></th>
+    </tr>
+    <tr>
+        <td style="text-align:left" nowrap>
+            <code>-h</code>, <code>--help</code>
+        </td>
+        <td style="text-align:left">
+            Show the help message and exit.
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:left" nowrap>
+            <code>-n</code>, <code>--notify</code>
+        </td>
+        <td style="text-align:left">
+            Toggle option for notifying query results.
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:left" nowrap>
+            <code>-a</code>, <code>--async</code>
+        </td>
+        <td style="text-align:left">
+            Using this flag will execute the query asynchonously and can free up the kernel while the query is executing. Be cautious when assigning query results to variables as it may be undefined if the query is not complete.
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:left" nowrap>
+            <code>-d</code>, <code>--display</code>
+        </td>
+        <td style="text-align:left">
+            Using this flag will prevent results from being displayed.
+        </td>
+    </tr>
+</table>
