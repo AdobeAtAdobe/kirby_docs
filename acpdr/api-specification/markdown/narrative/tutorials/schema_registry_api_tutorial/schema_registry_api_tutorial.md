@@ -1154,11 +1154,11 @@ The response is a filtered list of schemas, containing only those that satisfy b
 
 ## Next steps
 
-You have now successfully composed a schema using both standard mixins and a mixin that you defined. You can now use this schema to create a dataset and ingest record data into Adobe Experience Platform.
+By following this tutorial, you have successfully composed a schema using both standard mixins and a mixin that you defined. You can now use this schema to create a dataset and ingest record data into Adobe Experience Platform.
 
 The full Loyalty Members schema, as created throughout this tutorial, is available in the Appendix that follows. As you look at the schema, you can see how the mixins contribute to the overall structure and what fields are available for data ingestion.
 
-Remember that this tutorial only includes one possible workflow and does not cover all of the possible calls that can be made to the Schema Registry API. For detailed examples of how to perform all operations (GET, POST, PUT, PATCH, and DELETE) in the registry, please refer to the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md) while working with the API.
+Once you have created more than one schema, you can define relationships between them through the use of relationship descriptors. See the tutorial for [defining a relationship between two schemas](../../tutorials/schema_registry_api_tutorial/relationship_descriptor_tutorial.md) for more information. For detailed examples of how to perform all operations (GET, POST, PUT, PATCH, and DELETE) in the registry, please refer to the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md) while working with the API.
 
 # Appendix
 
