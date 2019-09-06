@@ -1,4 +1,4 @@
-# Schema Registry API tutorial
+# Create a schema using the Schema Registry API
 
 The Schema Registry is used to access the Schema Library within Adobe Experience Platform. The Schema Library contains resources made available to you by Adobe, Experience Platform partners, and vendors whose applications you use. The registry provides a user interface and RESTful API from which all available library resources are accessible.
 
@@ -21,8 +21,6 @@ If you would prefer to use the user interface in Experience Platform, the [Schem
 Before beginning this tutorial, first review the [Basics of schema composition](../../technical_overview/schema_registry/schema_composition/schema_composition.md) to learn more about schemas, including key principles and best practices in schema composition.
 
 Next, review the [Schema Registry Developer Guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md) as it includes important information that you need to know in order to successfully perform calls to the Schema Registry API. This includes your `{TENANT_ID}`, the concept of "containers", and the required headers for making requests (with special attention to the Accept header and its possible values). Ensure that you have reviewed this information in full before beginning this tutorial.
-
-## Tutorial
 
 This tutorial requires you to have first read the [Schema Registry Developer Guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md) and completed the [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) before you can begin.
 

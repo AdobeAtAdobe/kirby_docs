@@ -1,4 +1,4 @@
-# Schema Editor tutorial
+# Create a schema using the Schema Editor
 
 The Schema Registry provides a user interface and RESTful API from which you can view and manage all resources in the Adobe Experience Platform Schema Library. The Schema Library contains resources made available to you by Adobe, Experience Platform partners, and vendors whose applications you use, as well as resources that you define and save to the Schema Registry.
 

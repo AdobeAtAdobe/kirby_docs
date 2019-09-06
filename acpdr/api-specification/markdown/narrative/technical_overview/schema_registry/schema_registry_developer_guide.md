@@ -2613,4 +2613,4 @@ A successful response returns the details of the schema, including all fields ne
 }
 ```
 
-<button style="position: fixed; bottom: 30px; float: right; right: 15%; left: 85%; max-width: 80px; width: 100%; font-size: 12px; border-color: rgba(85, 85, 85, 0.2); background-color: white; padding: .5px; border-radius: 4px; opacity: 0.3; height: 50px;" onmouseover="this.style.opacity='1.0';"><a href="#schema-registry-api-developer-guide">Back to top</a></button>
+<img src="https://i.imgur.com/FBDrax9.png" alt="back-to-top" width="50" height="50" style="position: fixed; bottom: 30px; float: right; right: 10%; left: 90%; opacity: 0.5; padding-top: 0px; padding-bottom: 0px; border-style: hidden; border-radius: 50%;" onmouseover="this.style.opacity = 0.95;" onmouseout="this.style.opacity = 0.5;" onclick="document.documentElement.scrollTop = document.getElementsByClassName('udp-header')[0].offsetHeight;">
