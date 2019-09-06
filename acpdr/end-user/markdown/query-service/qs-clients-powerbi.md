@@ -4,7 +4,7 @@ PC users can install Power BI from [https://powerbi.microsoft.com/en-us/desktop/
 
 ## Set up Power Bi
 
-After you have Power BI installed, you need to set up the necessary components to support the PostgreSQL connector. Follow these steps:
+Once you have Power BI installed, you need to set up the necessary components to support the PostgreSQL connector. Follow these steps:
 
 1. Procure and install `npgsql`, a .NET driver package for PostgresSQL that is the official way for PowerBI to connect.
 
@@ -18,7 +18,7 @@ After you have Power BI installed, you need to set up the necessary components t
 
 5. Procure the PowerBI Desktop evaluation version.
 
-## Connect Power BI to Query Service
+##Connect Power BI to Query Service
 
 After performing those preparatory steps, you can connect Power BI to Query Service:
 
@@ -34,19 +34,12 @@ After performing those preparatory steps, you can connect Power BI to Query Serv
     
     * **Database** can be either "all" or a dataset table name. (Try one of the CTAS-derived datasets.)
 
-5. Click **Advanced options**, and then uncheck **include relationship columns**. Do not check **Navigate using full hierarchy**.
+5. Click **Advanced options**, and then uncheck **include relationship columns**.
 
-6. (Optional but recommended when "all" is declared for the database) Enter a SQL statement.
+6. (Optional but recommended when "all" is declared for the Database) Enter a SQL statement.
 
-    ```
-    SELECT web.webPageDetails.name AS Page_Name, 
-    SUM(web.webPageDetails.pageviews.value) AS Page_Views 
-    FROM _TABLE_ 
-    WHERE _ACP_YEAR=2018 AND _ACP_MONTH=11 AND _ACP_DAY=20 
-    GROUP BY web.webPageDetails.name 
-    ORDER BY SUM(web.webPageDetails.pageviews.value) DESC 
-    LIMIT 10
-    ``` 
+    `SELECT web.webPageDetails.name as Page_Name, SUM(web.webPageDetails.pageviews.value) as Page_Views FROM _TABLE_ WHERE _ACP_YEAR=2018 AND _ACP_MONTH=11 AND _ACP_DAY=20 GROUP BY web.webPageDetails.name ORDER BY SUM(web.webPageDetails.pageviews.value) DESC LIMIT 10`
+    
     > **Note:** Query Service currently supports import, but not direct query in Power BI. You need to identify the query that will import the data you need for your project.
 
 7. Click **OK**.
