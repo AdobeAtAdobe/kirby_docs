@@ -1,4 +1,6 @@
-# Privacy Service UI tutorial
+# Adobe Experience Platform Privacy Service UI overview
+
+> **Note:** The functionalities described in this document are currently in beta and will be publicly available as part of the July 25, 2019 release.
 
 Adobe Experience Platform Privacy Service provides a RESTful API and user interface that allow you to coordinate privacy and compliance requests across various solutions. This document explores the Privacy Service UI. For information on using the API, please see the [Privacy Service API tutorial](privacy_service_api_tutorial.md). 
 
@@ -23,7 +25,7 @@ Enter your Adobe ID credentials when prompted. Once you are signed in, click **A
 
 ![Administration tab](images/gdpr-ui-administration-tab.png)
 
-> **Note:** The Administration tab only appears if you have system admin privileges within your organization.
+> **Note:** The Administration tab will only appear if you have system admin privileges within your organization.
 
 Finally, select **Launch GDPR UI** on the next screen to open the Privacy Service UI.
 
@@ -47,13 +49,13 @@ To view further details about a given data point, click the data point in questi
 
 ![Applied filter from widget](images/gdpr-ui-mouse-over-apply-filter.png)
 
-> **Note:** When a filter has been applied to the Job Requests widget, you can remove the filter by clicking the **X** on the filter pill. Job Requests then return to the default tracking list.
+> **Note:** When a filter has been applied to the Job Requests widget, you can remove the filter by clicking the **X** on the filter pill. Job Requests will then return to the default tracking list.
 
 ### Job Requests
 
 The Job Requests widget lists all available job requests in your organization, including details such as the request type, current status, due date, and requestor email.
 
-You can filter the list by typing keywords into the search bar below the Job Requests title. The list automatically filters as you type, showing requests that contain values that match your search terms. You can also use the **Requested on** dropdown menu to select a time range for the listed jobs.
+You can filter the list by typing keywords into the search bar below the Job Requests title. The list will automatically filter as you type, showing requests that contain values that match your search terms. You can also use the **Requested on** dropdown menu to select a time range for the listed jobs.
 
 ![Job Request search options](images/gdpr-ui-job-search.png)
 
@@ -61,9 +63,9 @@ To view the details of a particular job request, click the request's job ID from
 
 ![GDPR UI Job Details](images/gdpr-ui-job-details.png)
 
-This dialog contains status information about each Experience Cloud solution and its current state in relation to the overall job. As every GDPR job is asynchronous, the page displays the latest communication date and time (GMT) from each solution, as some require more time than others to process the request.
+This dialog contains status information about each Experience Cloud solution and its current state in relation to the overall job. As every GDPR job is asynchronous, the page displays the latest communication date and time (GMT) from each solution, as some will require more time than others to process the request.
 
-If a solution has provided any additional data, it is viewable in this dialog. You can view this data by clicking on individual product rows.
+If a solution has provided any additional data, it will be viewable in this dialog. You can view this data by clicking on individual product rows.
 
 To download the complete job data as a CSV file, click **Download** at the top-right of the window.
 
@@ -79,7 +81,7 @@ Steps for using each of these methods are provided in the following sections.
 
 ### Use the Request Builder
 
-Using the Request Builder, you can manually create a new GDPR request in the user interface. The Request Builder is best used for simpler and smaller sets of requests, because the Request Builder limits requests to have only ID type per user. For more complicated requests, it may better to [upload a JSON file](#upload-a-json-file) instead.
+Using the Request Builder, you can manually create a new GDPR request in the user interface. The Request Builder is best used for simpler and smaller sets of requests, since the Request Builder limits requests to have only ID type per user. For more complicated requests, it may better to [upload a JSON file](#upload-a-json-file) instead.
 
 To start using the Request builder, click **Create Request** below the Status Report widget on the right-hand side of the screen.
 
