@@ -43,8 +43,6 @@ tags:
     description: Tags are used to attach information to an object and then be used later to retrieve the object. The choice of what tags are used and how they are applied depends on your organizational processes.
   - name: Transforms
     description: Transforms are used to house the instructions that translate data into a new form. As a customer maps their newly uploaded data to an Experience Data Model (XDM) schema, a transform is created to document links to the repository where the code resides, as well as a link to the vehicle (or engine) used to perform that work.
-  - name: Health
-    description: Healthcheck for Catalog Service.
   
 produces:
   - application/json
@@ -1058,52 +1056,6 @@ paths:
           description: Not found
         '500':
           description: Internal server error
-        default:
-          description: Unexpected error
-  /health:
-    get:
-      tags:
-        - Health
-      summary: Healthcheck report for Catalog Service.
-      operationId: get_catalog_healthcheck
-      produces:
-        - application/json
-      parameters:
-        - name: x-api-key
-          description: API key for request.
-          required: true
-          type: string
-          in: header
-      responses:
-        '200':
-          description: healthcheck response
-          schema:
-            $ref: '#/definitions/healthcheck'
-        '503':
-          description: service unavailable
-        default:
-          description: Unexpected error
-  /health-detailed:
-    get:
-      tags:
-        - Health
-      summary: Healthcheck report for Catalog Service with dependencies.
-      operationId: get_catalog_detailed_healthcheck
-      produces:
-        - application/json
-      parameters:
-        - name: x-api-key
-          description: API key for request.
-          required: true
-          type: string
-          in: header
-      responses:
-        '200':
-          description: healthcheck response
-          schema:
-            $ref: '#/definitions/health-detailed'
-        '503':
-          description: service unavailable
         default:
           description: Unexpected error
   '/largedocuments/{id}':

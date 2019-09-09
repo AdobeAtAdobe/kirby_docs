@@ -244,7 +244,7 @@ paths:
         - Ping
       summary: Retrieve the processing status of access or delete requests by status code.
       description: The message is read from the properties
-      operationId: health-check
+      operationId: getProcessingStatus
       parameters:
         - name: status
           in: query

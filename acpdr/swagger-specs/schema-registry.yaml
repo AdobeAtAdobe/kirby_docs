@@ -188,8 +188,6 @@ paths:
       responses:
         '200':
           description: Returns JSON schema with updated attributes
-          schema:
-            $ref: '#/definitions/putSchemaResponse'
         '400':
           description: Bad request
         '500':
@@ -652,7 +650,7 @@ paths:
       - "Data Types"
       summary: Replace a tenant-defined data type.
       description: <p>A PUT request is essentially re-writing the data type, therefore the request body must include all fields required to create (POST) a data type. This is especially useful when updating a lot of information in the data type at once.</p>
-      operationId: replace_class
+      operationId: replace_datatype
       consumes:
         - application/json
       produces:

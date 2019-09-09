@@ -44,7 +44,7 @@ tags:
       Allows machine learning Model management and registration (Model artifact that is created by the training process).
   - name: Insights
     description: >-
-      Insights conatin metrics which are used to empower a 
+      Insights contain metrics which are used to empower a 
       data scientist to evaluate and choose optimal ML Models by displaying 
       relevant evaluation metrics.
 paths:
@@ -1822,7 +1822,7 @@ parameters:
     in: query
     description: >-
       Property matching expression for filtering paginated results. Indicates
-      the comparision expression that items must match in order to be returned.
+      the comparison expression that items must match in order to be returned.
     required: false
     type: array
     collectionFormat: csv

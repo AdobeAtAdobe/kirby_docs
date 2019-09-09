@@ -351,7 +351,7 @@ paths:
         202:
           description: "Request to patch accepted"
         400:
-          description: "Schedule already in the state requeste OR Schedule is in Inactive state. Please try after sometime."
+          description: "Schedule already in the state request OR Schedule is in Inactive state. Please try after sometime."
         401:
           description: "Unauthorized"
         404:
@@ -1082,7 +1082,7 @@ definitions:
           href:
             type: string
             description: "URI to call to try to cancel this query. Cancelling a query only works if the
-              query is in state SUBMITTED or IN_PROGRESSS."
+              query is in state SUBMITTED or IN_PROGRESS."
           method:
             type: string
             description: the HTTP method to use

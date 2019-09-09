@@ -32,8 +32,6 @@ tags:
   description: Returns a list object files or tables at the source location.
 - name: "Schema and Preview"
   description: Returns a list of schema fields or a data preview for a given object.
-- name: "Health Check"
-  description: Health check of the service, with dependencies.
 - name: "Custom Schema"
   description: Create a custom schema by fields or objectName.
 host: platform.adobe.io
@@ -571,75 +569,7 @@ paths:
             description: "Unauthorized"
           422:
             description: "Unprocessable entity"
-  /health:
-    get:
-      tags:
-      - "Health Check"
-      summary: "Check the health of the service."
-      description: ""
-      operationId: "getStatus"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "x-api-key"
-        in: "header"
-        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-        required: true
-        type: "string"
-      responses:
-          200:
-            description: "OK"
-          503:
-            description: "Not Healthy"
-  /health-detailed:
-      get:
-        tags:
-        - "Health Check"
-        summary: "Check the detailed health of the service."
-        description: ""
-        operationId: "getStatusDetailed"
-        consumes:
-        - "application/json"
-        produces:
-        - "application/json"
-        parameters:
-              - name: "x-api-key"
-                in: "header"
-                description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-                required: true
-                type: "string"
-        responses:
-          200:
-            description: "OK"
-            schema:
-              $ref: '#/definitions/healthResponse'
-            examples:
-              application/json:
-                {
-                  "status": true,
-                  "dependencies": [
-                      {
-                          "service": "catalog",
-                          "status": true
-                      },
-                      {
-                          "service": "discovery",
-                          "status": true
-                      },
-                      {
-                          "service": "connectors-dotnet",
-                          "status": true
-                      },
-                      {
-                          "service": "ims",
-                          "status": true
-                      }
-                  ]
-              }
-          503:
-            description: "Not Healthy"
+
 definitions:
   Resource:
     type: "object"

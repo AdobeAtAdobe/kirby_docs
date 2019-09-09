@@ -391,7 +391,7 @@ paths:
           type: number
         - name: orderby
           in: query
-          description: 'The sort order of retrieved ExperienceEvents by timestamp. Syntax: (+/-)timestsamp. Default: +timestamp'
+          description: 'The sort order of retrieved ExperienceEvents by timestamp. Syntax: (+/-)timestamp. Default: +timestamp'
           x-example: '-timestamp'
           required: false
           type: string
@@ -1080,7 +1080,7 @@ paths:
             
             `predicateType` - (Default: PQL) The only value that is available to use for this is PQL for now.
             
-            `predicateModel` - (Default: xdm.model.profile) The model against which this predicate is to be evaulated. Please note that 'touchpoint' is not treated as model as it can be associated with any of the models like profile.
+            `predicateModel` - (Default: xdm.model.profile) The model against which this predicate is to be evaluated. Please note that 'touchpoint' is not treated as model as it can be associated with any of the models like profile.
             
             `graphType` - The graph type that you want to get the cluster from. Possible values are None (perform no identity stitching) and Private Graph (perform identity stitching based on your private identity graph). If no `graph-type` is provided, this is the default."
           required: true
@@ -2417,7 +2417,7 @@ definitions:
   Macro:
     type: object
     required:
-      - DataSetId
+      - dataSetId
       - field
       - expression
     properties:
@@ -2720,10 +2720,10 @@ definitions:
         description: "The execution state of the query."
       results:
         type: "array"
-        description: "The list of endcustomer entities."
+        description: "The list of end customer entities."
         items:
           $ref: "#/definitions/PreviewSegmentsWrapperResponse"
-    description: "The endcustomer entity response, with current page information and next page link."
+    description: "The end customer entity response, with current page information and next page link."
   PreviewQueryResponse:
     type: "object"
     required:
@@ -3156,7 +3156,7 @@ definitions:
         description: NEW/PROCESSING/SUCCEEDED/FAILED.
       filter:
         $ref: '#/definitions/Filter'
-      additonalFields:
+      additionalFields:
         $ref: '#/definitions/AdditionalFields'
       mergePolicy:
         $ref: '#/definitions/MergePolicyObject'
@@ -3448,7 +3448,7 @@ definitions:
         example: 10
       orderby:
         type: string
-        description: 'The sort order of retrieved ExperienceEvents by timestamp. Syntax: (+/-)timestsamp. Default: +timestamp'
+        description: 'The sort order of retrieved ExperienceEvents by timestamp. Syntax: (+/-)timestamp. Default: +timestamp'
         example: "-timestamp"
   PostTimeFilterEntity:
     type: object
