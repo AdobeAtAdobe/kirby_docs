@@ -2,7 +2,7 @@
 
 1. Install Tableau, if it is not already installed.
 
-    You can get a 14-day trial of "Tableau Desktop" [here](https://www.tableau.com/products/desktop/download).
+    You can get a 14 day trial of "Tableau Desktop" [here](https://www.tableau.com/products/desktop/download)
     
     The version `2018.1.2 (20181.18.0615.1128 64 bit)` has been successful in connecting to Query Service.
 
