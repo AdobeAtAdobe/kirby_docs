@@ -1,27 +1,24 @@
-# Data Usage Labeling and Enforcement (DULE) user guide
+# Data Governance overview
 
-Adobe Experience Platform allows companies to bring data from multiple enterprise systems together to better allow marketers to identify, understand, and engage customers. Experience Platform includes end-to-end data governance infrastructure to help companies ensure the proper use of data within Platform and when being shared between systems.
+One of the core capabilities of Adobe Experience Platform is to bring data from multiple enterprise systems together to better allow marketers to identify, understand, and engage customers. This data may be subject to usage restrictions defined by your organization or by legal regulations. It is therefore important to ensure that your data operations within Platform are compliant with data usage policies. 
 
-This guide provides an overview of the following concepts:
+Adobe Experience Platform Data Governance allows you to manage customer data and ensure compliance with regulations, restrictions, and policies applicable to data use. It plays a key role within Experience Platform at various levels, including cataloging, data lineage, data usage labeling, data usage policies, and controlling usage of data for marketing actions.
 
-* [Data governance](#data-governance)
-* [DULE framework](#dule-framework)
-* [Data usage labels](#data-usage-labels) 
-* [When and how to apply data usage labels](#when-and-how-to-apply-data-labels)
+This guide provides an overview of the following concepts related to Data Governance:
+
+* [Data governance roles](#data-governance-roles)
+* [Data Usage Labeling and Enforcement (DULE)](#dule-framework)
+* [Data usage labels](#data-usage-labels)
+  * [When and how to apply usage labels](#when-and-how-to-apply-usage-labels)
 * [Data usage policies](#data-usage-policies)
-* [How to create and work with data usage policies](#how-to-create-and-work-with-data-usage-policies)
+  * [How to create and work with data usage policies](#how-to-create-and-work-with-data-usage-policies)
+* [Future releases](#future-releases)
 
-At the end of this guide you will find a table outlining key [DULE terminology](#appendix-dule-terminology) with definitions that will assist you when working with data governance concepts.
+At the end of this guide you will find a table outlining key [Data Governance terminology](#appendix-data-governance-terminology) with definitions that will assist you when working with Data Governance concepts.
 
-## Data governance
+## Data governance roles
 
-Data governance is a series of strategies and technologies used to manage customer data and ensure compliance with regulations, restrictions, and policies applicable to data use. It plays a key role within Experience Platform at various levels, including cataloging, data lineage, data usage labeling, data access policies, and access control on data for marketing actions.
-
-Getting started with data governance requires a strong understanding of the regulations, contractual obligations, and corporate policies that apply to your customer data. From there, data can be classified by applying the appropriate data usage labels, and its use can be controlled through the definition of data usage policies. 
-
-### Data governance roles
-
-Data governance is neither automatic, nor does it occur in a vacuum. What began as a role for one individual, typically recognized as a _**data steward**_, has grown considerably as the data governance ecosystem has expanded. Today, data governance requires continual management and monitoring in order to be successful and relies on data stewards having tools with which data can be properly labeled, usage policies can be created, and compliance with those policies can be enforced.
+As a concept, data governance is neither automatic, nor does it occur in a vacuum. What began as a role for one individual, typically recognized as a _**data steward**_, has grown considerably as the data governance ecosystem has expanded. Today, data governance requires continual management and monitoring in order to be successful and relies on data stewards having tools with which data can be properly labeled, usage policies can be created, and compliance with those policies can be enforced.
 
 While data governance should be the responsibility of every individual in the organization, here are some of the essential roles within the data governance cycle:
 
@@ -30,7 +27,7 @@ While data governance should be the responsibility of every individual in the or
 #### Data steward
 
 Data stewards are the heart of data governance. This role is responsible for interpreting regulations, contractual restrictions, and policies, and applying them directly to the data. Informed by their understanding of these regulations, restrictions, and policies, the role of a data steward includes:
-* Reviewing data, datasets, and data samples to apply and manage metadata DULE labeling.
+* Reviewing data, datasets, and data samples to apply and manage metadata usage labeling.
 * Creating data policies and applying them to a data connection, dataset, or field.
 * Communicating data policies to the organization.
 
@@ -43,7 +40,7 @@ Marketers are the end point of data governance. They request data from the data 
 
 ## DULE framework
 
-The Data Usage Labeling and Enforcement (DULE) framework simplifies and streamlines the process of categorizing data and creating data usage policies. Once data labels have been applied and data usage policies are in place, marketing actions can be evaluated to ensure the correct use of data.
+Data Usage Labeling and Enforcement (DULE) is the core framework for Experience Platform Data Governance. DULE simplifies and streamlines the process of categorizing data and creating data usage policies. Once data labels have been applied and data usage policies are in place, marketing actions can be evaluated to ensure the correct use of data.
 
 There are three key elements to the DULE framework: Labels, Policies, and Enforcement.
 
@@ -53,7 +50,7 @@ There are three key elements to the DULE framework: Labels, Policies, and Enforc
 
 ## Data usage labels
 
-Experience Platform includes infrastructure that supports data governance with DULE labeling at the core of that infrastructure. DULE features enable data stewards to apply usage labels at the connection-, dataset-, and field-level to categorize the data according to the type of policies that apply.
+Data Governance enables data stewards to apply usage labels at the connection-, dataset-, and field-level to categorize data according to the type of policies that apply.
 
 The DULE framework includes predefined data usage labels that can be used to categorize data in four ways:
 
@@ -64,17 +61,17 @@ The DULE framework includes predefined data usage labels that can be used to cat
 * **Sensitive "S" Data Labels:** Label and categorize data related to sensitive data such as geographic data.
 * **GDPR Data Labels:** Label and categorize data that may contain personal identifiers for use in GDPR access and/or delete requests.
 
-See the [supported data usage labels](dule_supported_labels.md) document for a complete list of available labels, as well as definitions for each label type.
+See the guide on [supported data usage labels](dule_supported_labels.md) for a complete list of available labels, as well as definitions for each label type.
 
-### When and how to apply data labels
+### When and how to apply usage labels
 
-Data usage labels can be applied at three levels. Those data labels are inherited down from connections to datasets and fields, and from datasets to fields. This means that data usage labels applied at the connection level are propagated to all datasets and fields in the connection, while labels applied to datasets are propagated to all fields in the dataset. Labels can also be applied directly to individual fields (column headers) in a dataset, without propagation.
+Data usage labels can be applied at three levels. Those data labels propagate from connections, to datasets, then to fields. This means that data usage labels applied at the connection level are inherited by all datasets and fields in the connection, while labels applied to datasets are propagated to all fields in the dataset. Labels can also be applied directly to individual fields (column headers) in a dataset, without propagation.
+
+![Data Usage Label Hierarchy](dule_images/Data_usage_label_hierarchy.png "Data Usage Labels can be applied at three levels and are inherited from the top down.")
 
 Labels can be applied at any time, providing flexibility in how you choose to govern data. Best practice encourages labeling data as soon as it is ingested into Experience Platform, or as soon as data becomes available in Platform.
 
-Step-by-step instructions for how to apply data usage labels to Connections, Datasets, and Fields using the UI are available in the [Working with Data Usage Labels](../../tutorials/dule/dule_working_with_labels.md) tutorial.
-
-![Data Usage Label Hierarchy](dule_images/Data_usage_label_hierarchy.png "Data Usage Labels can be applied at three levels and are inherited from the top down.")
+See the tutorial on [working with data usage labels](../../tutorials/dule/dule_working_with_labels.md) for step-by-step instructions on how to apply DULE labels to connections, datasets, and fields using the UI.
 
 ## Data usage policies
 
@@ -86,39 +83,39 @@ An example of a marketing action might be the desire to export a dataset to a th
 
 Once data usage labels have been applied, data stewards can create policies using the DULE Policy Service API.
 
-As a data steward, you can use the Policy Service API to manage and evaluate policies related to marketing actions being taken on data containing data usage labels. Using the API, you can create and update policies, determine the status of a policy, and work with marketing actions to evaluate whether a specific action violates a data usage policy.
+As a data steward, you can use the Policy Service API to manage and evaluate policies related to marketing actions being taken on data containing DULE labels. Using the API, you can create and update policies, determine the status of a policy, and work with marketing actions to evaluate whether a specific action violates a data usage policy.
 
 Within the Policy Service API, all policies and marketing actions are referred to as either `core` or `custom` resources. `core` resources are defined and maintained by Adobe, whereas `custom` resources are created and maintained by individual customers. The `custom` resources are therefore unique and visible solely to the organization that created them.
 
-For steps on performing the key operations provided by the DULE Policy Service API, see the [Policy Service developer guide](dule_policy_service_developer_guide.md). For information on enforcing policies with Real-time Customer Profile data, see the tutorial on [enforcing data usage compliance for audience segments](../../tutorials/dule/data_governance_and_segmentation.md).
+For more information on performing the key operations provided by the DULE Policy Service API, see the [Policy Service developer guide](dule_policy_service_developer_guide.md). For step-by-step instructions on working with DULE policies, see the tutorial on [creating and evaluating DULE policies](../../tutorials/dule/create_a_dule_policy_tutorial.md).
 
 ## Future releases
 
-Adobe Experience Platform currently supports DULE labeling at three levels (connection, dataset, and field) with full support for inheritance between levels. Platform also supports the creation and management of data usage policies and marketing actions via the DULE Policy Service API.
+Data Governance currently supports DULE labeling at three levels (connection, dataset, and field) with full support for inheritance between levels. Data Governance also supports the creation and management of data usage policies and marketing actions via the DULE Policy Service API.
 
 Subsequent releases will provide the following features:
 
-* Custom Data Usage Labels: Create new labels and definitions based on your organization’s needs.
-* Policy Enforcement: Use the policy framework to advise and enforce policies across different data access patterns.
+* Custom data usage labels: Create new labels and definitions based on your organization’s needs.
+* Policy enforcement: Use the policy framework to advise and enforce policies across different data access patterns.
 * Auditing: Monitor data access activities and identify and report on compliance issues.
 
-## Appendix: DULE terminology
+## Appendix: Data Governance terminology
 
 |Term|Definition |
 |---|---|
-|**Connection Labels**|Connection labels are data governance labels that are applied when setting up or editing a connection. Data governance labels added to a connection are inherited down and will be applied to all datasets and fields ingested through the connection.| 
-|**Contract Labels**|Contract "C" labels are used to categorize data that has contractual obligations or is related to your organization's data governance policies.|
-|**Cross-site Data**|Cross-site data is the combination of data from several sites, including a combination of on-site data and off-site data or a combination of data from several off-site sources.|
-|**Data Governance**|Data governance encompasses the strategies and technologies used to ensure data is in compliance with regulations and corporate policies with respect to data usage.|
-|**Data Steward**|The data steward is the person responsible for the management, oversight, and enforcement of an organization's data assets. A data steward also ensures data governance policies are safeguarded and maintained to be compliant with government regulations and organization policies.|
-|**Data Usage Labels**|Data usage labels provide users the ability to categorize data that reflects privacy-related considerations and contractual conditions to be compliant with regulations and corporate policies.|
-|**Dataset Labels**|Dataset labels can inherit labels added via a connection. Edit connection to add, edit or remove dataset labels. Labels can be added to a dataset. Fields will inherit all dataset labels.|
+|**Connection labels**|Connection labels are data governance labels that are applied when setting up or editing a connection. Data governance labels added to a connection are inherited down and will be applied to all datasets and fields ingested through the connection.| 
+|**Contract labels**|Contract "C" labels are used to categorize data that has contractual obligations or is related to your organization's data governance policies.|
+|**Cross-site data**|Cross-site data is the combination of data from several sites, including a combination of on-site data and off-site data or a combination of data from several off-site sources.|
+|**Data governance**|Data governance encompasses the strategies and technologies used to ensure data is in compliance with regulations and corporate policies with respect to data usage.|
+|**Data steward**|The data steward is the person responsible for the management, oversight, and enforcement of an organization's data assets. A data steward also ensures data governance policies are safeguarded and maintained to be compliant with government regulations and organization policies.|
+|**Data usage labels**|Data usage labels provide users the ability to categorize data that reflects privacy-related considerations and contractual conditions to be compliant with regulations and corporate policies.|
+|**Dataset labels**|Dataset labels can inherit labels added via a connection. Edit connection to add, edit or remove dataset labels. Labels can be added to a dataset. Fields will inherit all dataset labels.|
 |**DULE**|DULE is an acronym for "Data Usage Labeling and Enforcement." A key part of data governance, DULE is a collection of features that allows for data usage labeling and applying data access policies for governance needs within an organization.|
-|**Field Labels**|Field labels are data governance labels that are either inherited from a connection or a dataset, or applied directly to a field.  Data governance labels applied to a field are not inherited up to a dataset or connection.|
+|**Field labels**|Field labels are data governance labels that are either inherited from a connection or a dataset, or applied directly to a field.  Data governance labels applied to a field are not inherited up to a dataset or connection.|
 |**Geofence**| A geofence is a virtual geographic boundary, defined by GPS or RFID technology, that enables software to trigger a response when a mobile device enters or leaves a particular area.|
-|**Identity Labels**|Identity "I" labels are used to categorize data that can identify or contact a specific person.|
-|**Interest-based Targeting**|Interest-based targeting, also known as personalization, occurs if the following three conditions are met: data collected on-site is, used to make inferences about a users’ interest, is used in another context, such as on another site or app (off-site) and is used to select which content or ads are served based on those inferences.|
-|**Marketing Action**|A marketing action, in the context of the data governance framework, is an action that an Experience Platform data consumer takes, for which there is a need to check for violations of data usage policies|
+|**Identity labels**|Identity "I" labels are used to categorize data that can identify or contact a specific person.|
+|**Interest-based targeting**|Interest-based targeting, also known as personalization, occurs if the following three conditions are met: data collected on-site is, used to make inferences about a users’ interest, is used in another context, such as on another site or app (off-site) and is used to select which content or ads are served based on those inferences.|
+|**Marketing action**|A marketing action, in the context of the data governance framework, is an action that an Experience Platform data consumer takes, for which there is a need to check for violations of data usage policies|
 |**Policy**|In the data governance framework, a policy is a rule that describes what kind of marketing actions are allowed or not allowed to be taken on specific data.|
 |**Sensitive Labels**|Sensitive “S” labels are used to categorize data that you, and your organization, consider sensitive.|
 
