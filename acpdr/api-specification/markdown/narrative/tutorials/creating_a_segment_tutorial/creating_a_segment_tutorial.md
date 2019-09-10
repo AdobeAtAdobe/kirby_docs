@@ -1,6 +1,6 @@
 # Create a segment using the Real-time Customer Profile API
 
-This document provides a tutorial for creating and exporting an audience segment using the [Real-time Customer Profile API](../../../../../../acpdr/real-time-customer-profile.yaml). For information on how to build segments using the user interface, please see the [Segment Builder documentation](../../../../../end-user/markdown/segmentation_overview/segmentation.md).
+This document provides a tutorial for creating and exporting an audience segment using the [Real-time Customer Profile API](../../../../../../acpdr/swagger-specs/real-time-customer-profile.yaml). For information on how to build segments using the user interface, please see the [Segment Builder documentation](../../../../../end-user/markdown/segmentation_overview/segmentation.md).
 
 The tutorial covers the following steps:
 
