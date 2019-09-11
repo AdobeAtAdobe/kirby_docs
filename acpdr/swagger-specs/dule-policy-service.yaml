@@ -1,8 +1,8 @@
 swagger: '2.0'
 info:
-  version: 1.0.0
+  version: '1.0'
   title: DULE Policy Service
-  description: <p>The Data Usage Labeling and Enforcement (DULE) framework simplifies and streamlines the process of categorizing data and creating data usage policies. Once data labels have been applied and data usage policies are in place, marketing actions can be evaluated to ensure the correct use of data.</p><p>The Policy Service API is used to manage and evaluate policies on marketing actions in the presence of data usage labels.</p><p><strong>Related Documentation:</strong><br/><ul><li><a href="https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html">DULE User Guide</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!end-user/markdown/dule_overview/dule_supported_labels.md">Supported Data Usage Labels</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/dule/dule_working_with_labels.md">Working with Data Usage Labels</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/dule/dule_working_with_policies.md">Working with Data Usage Policies</a></li></ul></p><p><strong>Notes:</strong><br/><ul><li>PLATFORM Gateway URL:<span> https://platform.adobe.io</li><li>Base path for this API:<span> /data/foundation/dulepolicy</li><li>Example of a complete path for making a call to "/policies/core":<span> https://platform.adobe.io/data/foundation/dulepolicy/policies/core</ul></p>
+  description: <p>The Data Usage Labeling and Enforcement (DULE) framework simplifies and streamlines the process of categorizing data and creating data usage policies. Once data labels have been applied and data usage policies are in place, marketing actions can be evaluated to ensure the correct use of data.</p><p>The Policy Service API is used to manage and evaluate policies on marketing actions in the presence of data usage labels.</p><p><strong>Related Documentation:</strong><br/><ul><li><a href="https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html">Data Governance overview</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!api-specification/markdown/narrative/technical_overview/data_governance/dule_supported_labels.md">Supported data usage labels</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/dule/dule_working_with_labels.md">Working with data usage labels</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/technical_overview/data_governance/dule_policy_service_developer_guide.md">DULE Policy Service developer guide</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/dule/create_a_dule_policy_tutorial.md">Create and evaluate a DULE policy</a></li></ul></p><p><strong>Notes:</strong><br/><ul><li>PLATFORM Gateway URL:<span> https://platform.adobe.io</li><li>Base path for this API:<span> /data/foundation/dulepolicy</li><li>Example of a complete path for making a call to "/policies/core":<span> https://platform.adobe.io/data/foundation/dulepolicy/policies/core</ul></p>
 
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 basePath: /data/foundation/catalog
@@ -12,43 +12,13 @@ tags:
     description: "Data usage policies are rules that describe the kinds of marketing actions that are allowed or not allowed to be performed on data within Adobe Experience Platform."
   - name: "Marketing Actions"
     description: "Marketing actions, in the context of Data Governance, are actions that an Experience Platform data consumer takes, for which there is a need to check for violations of data usage policies."
-  - name: "Health"
-    description: "Health check for DULE Policy Service"
-  - name: "Health Detailed"
-    description: "Health check with dependencies for DULE Policy Service"
+
 consumes:
   - application/json
 produces:
   - application/json
 paths:
-  /health:
-    parameters:
-      - $ref: '#/parameters/x-api-key'
-    get:
-      security: []
-      summary: Basic health check
-      operationId: healthCheck
-      tags:
-        - Health
-      responses:
-        '200':
-          description: Service is functioning
-          schema:
-            $ref: '#/definitions/HealthCheckStatus'
-  /health-detailed:
-    parameters:
-      - $ref: '#/parameters/x-api-key'
-    get:
-      security: []
-      summary: Detailed health check with status of dependent services
-      operationId: healthCheckDetailed
-      tags:
-        - Health Detailed
-      responses:
-        '200':
-          description: Service dependencies are all healthy
-          schema:
-            $ref: '#/definitions/HealthDetailedStatus'
+
   /policies/core:
     parameters:
       - $ref: '#/parameters/x-api-key'
