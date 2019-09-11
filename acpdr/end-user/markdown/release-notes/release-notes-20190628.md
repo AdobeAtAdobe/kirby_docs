@@ -123,7 +123,7 @@ The methodology on which Experience Platform is built, XDM System operationalize
 | Custom `$id`  | You can now provide your own `$id` value when creating resources in POST requests. |
 | Schema Registry performance improvements  | Optimized union schema generation, and enhanced schema caching to greatly improve API response times. |
 
-**Fixes**
+**Bug Fixes**
 
 * Moved the identityMap field out of context/profile and into its own mixin to make defining identities more intuitive.
 * Patched all existing schemas based on context/profile with context/identitymap.
@@ -157,7 +157,7 @@ For example, in an email campaign focused on running shoes, you could use an aud
 |eVar friendly names |Improved support for friendly names, allowing you to see more easily what information is captured within custom events and dimensions from Adobe Analytics.|
 |Merge policy support |You can now choose which merge policy to apply to their segment definition using a simple dropdown.|
 
-**Fixes**
+**Bug Fixes**
 
 * Fixed an intermittent issue causing slow loading of the attributes and events building blocks in the left-rail.
 * Fixed a bug which caused the estimator to return “NaN” response.
