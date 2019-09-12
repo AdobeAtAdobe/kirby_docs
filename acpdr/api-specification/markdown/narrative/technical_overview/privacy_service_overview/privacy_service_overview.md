@@ -20,7 +20,7 @@ Privacy Service provides a RESTful API and user interface that allow you to crea
 
 ### Using the API
 
-The [Privacy Service API](../../../../../../acpdr/swagger-specs/privacy-service.yaml) allows you to create and manage privacy jobs using RESTful API calls, allowing you to programmatically approach privacy regulation compliance for your Experience Cloud solutions. For detailed steps on how to use the API, see the [Privacy Service API tutorial](../../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md).
+The [Privacy Service API](../../../../../../acpdr/swagger-specs/gdpr-api.yaml) allows you to create and manage privacy jobs using RESTful API calls, allowing you to programmatically approach privacy regulation compliance for your Experience Cloud solutions. For detailed steps on how to use the API, see the [Privacy Service API tutorial](../../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md).
 
 ### Using the UI
 
