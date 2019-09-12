@@ -33,7 +33,7 @@ Whether created using the API or using the Segment Builder, segments are ultimat
 
 As shown below, the Segment Builder provides a rich workspace that allows you to interact with Profile data elements. The workspace provides intuitive controls for building and editing segment rules, such as drag-and-drop tiles used to represent data properties. To access the Segment Builder within Experience Platform, click **Segments** in the left navigation, then click **Create Segment** in the top right corner of the screen. 
 
-![](builder-ui.png)
+![](images/builder-ui-noMarkup.png)
 
 ## Segment building blocks
 
@@ -47,7 +47,7 @@ Within the Segment Builder, the left rail provides access to the core building b
  
 Any type of component can be searched for by typing all or part of its name in the search bar. For example, to build a rule based on the XDM field `ExperienceEvent.commerce.productViews`, start typing “product views” in the search field. As shown below, the search results begin to populate after the word "product" has been typed, listing the object hierarchy to which it belongs:
 
-![](builder-find-field.png)
+![](images/builder-find-field.png)
 
 By default, only the populated schema fields from your data store are shown. To change your configuration settings and show all schema fields, click the gear icon in the left rail. 
 
@@ -83,7 +83,7 @@ Any attribute from the **Events** tab of the left rail must be dragged onto the 
 
 As seen in the image below, when multiple events are used in segment rules, you are presented with options for defining the time relativity between any two events, as well as options for defining the time span during which all events of a group must have occurred. 
 
-![](builder-event-rule.png)
+![](images/builder-event-rule.png)
 
 ### Segments
 
@@ -92,11 +92,11 @@ When embedded segments are added to the rule builder canvas, event-based rules a
 ## Segment properties
 As shown below, when building a segment rule, the right-rail displays the resulting segment properties to help you understand the behavior of your target audience.
 
-![](builder-data-estimate.png)
+![](images/builder-data-estimate.png)
 
 As you build your segment definitions, you can view a paginated preview of the audience by selecting **View Profiles** in the right-rail:
 
-![](builder-preview.png)
+![](images/builder-preview.png)
 
 ## Building a segment
 
