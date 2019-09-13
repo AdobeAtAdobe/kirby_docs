@@ -556,4 +556,4 @@ __Example `MergePolicy`__
     "updateEpoch": 1551660639
 }
 ``` 
--->
+-->o create audience segments from your Real-time Customer Profile data. See the [Create a segment tutorial](../creating_a_segment_tutorial/creating_a_segment_tutorial.md) for more information.
