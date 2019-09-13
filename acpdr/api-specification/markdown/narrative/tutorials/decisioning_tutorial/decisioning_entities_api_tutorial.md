@@ -1,22 +1,39 @@
-# Manage Decisioning objects and rules using APIs
+# Creating and managing decisioning entities using APIs
 
 This document provides a tutorial for working with the business entities of Decisioning Service using Adobe Experience Platform APIs. 
 
-The tutorial has two parts:
+The tutorial covers the following steps:
 
-1. Generic Repository APIs to manage business objects are introduced in the [first part](#managing-repository-entities-using-apis). These APIs are generic in the sense that they provide create, read, update, delete and search capabilities for **any** type of business objects. The general API model is described and the relationship to the Hypertext Application Language (HAL) is explained.
-2. Applying the knowledge about the repository APIs, the [second part](#creating-and-managing-offer-decisioning-entities-using-apis) focuses on the business entities that are managed via the repository APIs. With the same APIs applied the only difference between managing two different entities such as an activity and a business rule is the request and response payload, plus the necessary header values that indicate the type of object that is managed.  
-  
+[List containers accessible to users and integrations](#list-containers-accessible-to-users-and-integrations)  
+[Create instances](#create-instances)  
+[Get an instance by ID](#get-an-instance-by-id)  
+[Test for newer revisions of an instance](#test-for-newer-revisions-of-an-instance)  
+[List instances for a schema - Sorting and paging](#list-instances-for-a-schema---sorting-and-paging)  
+[Filter a list](#filter-a-list)  
+[Full text search and structured queries](#full-text-search-and-structured-queries)  
+[Update and patch](#update-and-patch)  
+[Control property value edits](#control-property-value-edits)  
+[Test for concurrent update](#test-for-concurrent-update)  
+[Delete](#delete)  
+[Create offers and their sub components](#create-offers-and-their-sub-components)  
+[Manage calendar constraints](#manage-calendar-constraints)  
+[Manage capping constraints](#manage-capping-constraints)  
+[Eligibility constraints](#eligibility-constraints)  
+[Set the priority of an offer](#set-the-priority-of-an-offer)  
+[Manage rules](#manage-rules)  
+[Offer collections - Create a tag](#offer-collections---create-a-tag)  
+[Manage activities](#manage-activities)  
+[Manage fallback offers](#manage-fallback-offers)  
 
 ## Getting started
 
-This tutorial requires a working understanding of the Experience Platform services and the API conventions. The Platform repository is a service used by several other Platform services to store business objects and various types of metadata. It provides a secure and flexible way to manage and query those objects for use by several runtime services. The Decisioning Service is one of those. Before beginning this tutorial, please review the documentation for the following:
+This tutorial requires a working understanding of the Experience Platform services involved in experience decisioning and determining the next best offer to present during customer experiences. Before beginning this tutorial, please review the documentation for the following:
 
+- [Decisioning Service](../../technical_overview/decisioning-overview/decisioning-service-overview.md): Provides the framework for adding and removing offers and creating algorithms for choosing the best to present during a customer's experience.
 - [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
-- [Decisioning Service](../../technical_overview/decisioning-overview/decisioning-service-overview.md): Explains the concepts and components used for Experience Decisioning in general and Offer decisioning in particular. Illustrates the strategies used for choosing the best option to present during a customer's experience.
-- [Profile Query Language (PQL)](../../technical_overview/unified_profile_architectural_overview/unified_profile_pql.md): PQL is a powerful language to write expressions over XDM instances. PQL is used to define decision rules.
+- [Profile Query Language (PQL)](../../technical_overview/unified_profile_architectural_overview/unified_profile_pql.md): PQL is used to define rules and filters.
 
-# Managing repository entities using APIs
+## Tutorial
 
 This tutorial requires you to have completed the [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
@@ -24,57 +41,54 @@ This tutorial requires you to have completed the [Authentication to Adobe Experi
 * x-api-key: `{API_KEY}`
 * x-gw-ims-org-id: `{IMS_ORG}`
 
-## Repository API conventions
+All POST, PUT, and PATCH requests require an additional header:
+
+* Content-Type: application/json
 
 Decisioning Service is controlled by a number of business objects that are related to each other. All business objects are stored in the Platform’s Business Object Repository. A key feature of this repository is that the APIs are orthogonal to the type of business object. Instead of using a POST, GET, PUT, PATCH or DELETE API that indicates the type of resource in its API endpoint, there are only 6 generic endpoints but they accept or return a parameter that indicates the type of the object when that disambiguation is needed. The schema must be registered with the repository, but beyond that the repository is usable for an open-ended set of object types.  
 
 In addition to the headers listed above, the APIs to create, read, update, delete and query repository objects have the following conventions: 
 
-* The endpoint paths for all repository APIs start with `https://platform.adobe.io/data/core/xcore/`.
+* The endpoint paths for all repository APIs start with "https<span></span>://platform.adobe.io/data/core/xcore/".
 
 API Payload formats are negotiated with an `Accept` or `Content-Type` header. Message formats in the `Accept` or `Content-Type` header are indicated by a value `application/vnd.adobe.platform.xcore.{FORMAT}+json` where {FORMAT} is dependent on the specific repository API request or response message, per the following table.
 
 FORMAT variant | Description of request or response entity
  --- | ---
-hal<br>followed by a parameter `schema={schemaId}` | The message contains an instance described by a JSON Schema that is indicated by the format parameter schema. The instance is wrapped in a JSON property `_instance`. The other top level properties in the response payload specify repository information that is available for all resources.  Messages that comply with the HAL format have a `_links` property that contains references in HAL format. 
-`patch.hal` | The message contains a JSON PATCH payload with the assumption the instance to be patched is HAL compliant. That means that not only the instance’s own instance properties but also the HAL links of the instance can be patched. Note that there are restrictions on which properties can be updated by the client. 
-`home.hal` | The message contains a JSON formatted representation of a home document resource for the repository. 
-xdm.receipt | The message contains a JSON formatted response for a create, update (full and patch) or delete operation. Receipts contain control data indicating the revision of the instance in form of an ETag. 
+hal<br>followed by a parameter `schema={schemaId}` | The message contains an instance described by a JSON Schema that is indicated by the format parameter schema. The instance is wrapped in a JSON property `_instance`. The other top level properties in the response payload specify repository information that is available for all resources.  Messages that comply with the hal format have a _links property that contains references in HAL format. 
+patch.hal | The message contains a JSON Patch payload with the assumption the instance to be patched is HAL compliant. That means that not only the instance’s own instance properties but also the HAL links of the instance can be patched. Note that there are restrictions on which properties can be updated by the client. 
+home.hal | The message contains a JSON formatted representation of a home document resource for the repository. 
+xdm.receipt | The message contains a JSON formatted response for a create, update (full and patch) or delete operation. Receipts contain control data indicating the revision of the instance in form of an etag 
 
-The usage of each **format variant** depends on the specific API:  
+The usage of each format variant depends on the specific API:  
 
 API | Content-Type header | Accept header 
 ---|---|---|
-Create Instance <br/>Create Container | `hal`<br/>with schema parameter | `xdm.receipt` 
-Update Instance<br/>Update Container | `hal`<br/>with schema parameter | `xdm.receipt` 
-Patch Instance | `patch.hal` | `xdm.receipt` 
-Delete instance<br/>Delete container | N/A | `xdm.receipt` 
-Read Instance<br/>Read Container | N/A | `hal` with `schema` parameter 
-List instances<br/>List containers | N/A | `hal` with special `schema` parameter `https://ns.adobe.com/experience/xcore/hal/results` 
-Search instances | N/A | hal with special `schema` parameter `https://ns.adobe.com/experience/xcore/hal/results` 
-Read repo root | N/A | `home.hal` 
+Create Instance <br/>Create Container | hal<br/>with schema parameter | xdm.receipt 
+Update Instance<br/>Update Container | hal<br/>with schema parameter | xdm.receipt 
+Patch Instance | patch.hal | xdm.receipt 
+Delete instance<br/>Delete container | N/A | xdm.receipt 
+Read Instance<br/>Read Container | N/A | hal with schema parameter 
+List instances<br/>List containers | N/A | hal with special schema parameter "https<span></span>://ns.adobe.com/experience/xcore/hal/results" 
+Search instances | N/A | hal with special schema parameter "https<span></span>://ns.adobe.com/experience/xcore/hal/results" 
+Read repo root | N/A | home.hal 
 
-For the container create, update and read APIs, the format parameter schema has the value `https://ns.adobe.com/experience/xcore/container`.
+For the container create, update and read APIs, the format parameter schema has the value "https<span></span>://ns.adobe.com/experience/xcore/container".
 
 `ContainerId` is the first path parameter for the instance APIs. All business entities reside in what is called a container. A container is an isolation mechanism to keep different concerns apart. The first path element for the repository instance APIs following general endpoint is the `containerId`. The identifier is obtained from the list of containers accessible to the caller. E.g. the API to create an instance in a container is `POST https://platform.adobe.io/data/core/xcore/{containerId}/instances`. 
 
-The list of accessible containers is obtained by calling the repository root endpoint "/" with an HTTP GET request using the standard headers.
+The list of accessible containers is obtained by calling the repository root endpoint "/" with an HTTP GET request using the standard headers. 
 
-## Managing access to containers
+## List containers accessible to users and integrations
 
-An administrator can group similar principals, resources, access permissions into profiles. This reduces the management burden and is supported by [Adobe’s Admin Console UI](https://adminconsole.adobe.com). You must be a product administrator for the Adobe Adobe Experience Platform and Offers in your organization to create profiles and assign users to them.It is sufficient to create product profiles that match certain permissions in a one-time step and then simply add users to those profiles. Profiles act as groups that have been granted permissions and every real user or technical user in that group inherits those permissions. 
-### List containers accessible to users and integrations
+When the administrator has granted access to containers for regular users or integrations those containers will show up in the so-called “Home” list of the repository. The list may be different for different users or integrations as it is a subset of all containers accessible to the caller. The list of containers can be filtered by their association to product contexts. The context for Platform product is `dma_offers`. 
 
-When the administrator has granted access to containers for regular users or integrations those containers will show up in the so-called “Home” list of the repository. The list may be different for different users or integrations as it is a subset of all containers accessible to the caller. The list of containers can be filtered by their association to product contexts. The filter parameter is called `product` and can be repeated. If more than one product context filter is given then the union of the containers that have associations with any of the given product contexts will be returned. Note that a single container can be associated to multiple product contexts.
+> **Note:** The context for Platform is soon to change to `acp`. Filtering is optional, but filters by `dma_offers` will require edits upon a future release.
 
-The context for the Platform Decisioning Service containters is currently `dma_offers`.
+### Request
 
-> **Note:** The context for Platform Decisioning Containers is soon to change to `acp`. Filtering is optional, but filters by only `dma_offers` will require edits upon a future release. To prepare for this change clients should use no filters or apply both product contexts as their filter.
-
-#### Request
-
-```shell
-curl -X GET ${ENDPOINT_PATH}/?product=dma_offers&product=acp \ 
+```
+curl -X GET ${endpoint_path}/?product=dma_offers \ 
   -H 'Accept: application/vnd.adobe.platform.xcore.home.hal+json' \ 
   -H 'Authorization: Bearer ${ACCESS_TOKEN}' \ 
   -H 'x-api-key: ${API_KEY}' \ 
@@ -82,9 +96,9 @@ curl -X GET ${ENDPOINT_PATH}/?product=dma_offers&product=acp \
   -H 'x-request-id: ${NEW_UUID}' 
 ```
 
-#### Response
+### Response
 
-```json
+```
 { 
     "_embedded": { 
         "https://ns.adobe.com/experience/xcore/container": [ 
@@ -127,9 +141,7 @@ Note the `instanceId` listed in the results item(s). It is used as the `containe
 
 The list is already filtered for the users per their access privileges but can be further filtered by a property query.
 
-## Generic APIs to manage entities
-
-### Create instances
+## Create instances
 
 The API to create a new instance in repository takes a `containerId` path parameter and identifies the type of the instance in the `Content-Type` header with the schema parameter.
 
@@ -137,11 +149,11 @@ The instance properties are given in the payload wrapped in the `_instance` prop
 
 The HAL `_links` property must be present but can be empty. It means that no custom links are defined for this instance. 
 
-#### Request
+### Request
 
-```shell
-curl -X POST ${ENDPOINT_PATH}/${CONTAINER_ID}/instances \ 
-  -H 'Content-Type: application/vnd.adobe.platform.xcore.hal+json; schema="${SCHEMA_ID}"' \  
+```
+curl -X POST ${endpoint_path}/${containerId}/instances \ 
+  -H 'Content-Type: application/vnd.adobe.platform.xcore.hal+json; schema="${schemaId}"' \  
   -H 'Accept: application/vnd.adobe.platform.xcore.xdm.receipt+json \ 
   -H 'x-api-key: ${API_KEY}' \ 
   -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
@@ -155,9 +167,9 @@ curl -X POST ${ENDPOINT_PATH}/${CONTAINER_ID}/instances \
 }' 
 ```
 
-#### Response
+### Response
 
-```json
+```
 { 
   "instanceId": "3684ceb0-8744-11e9-a989-89f60b24f6cc", 
   "@id": "GENERATED_URI", 
@@ -183,15 +195,15 @@ The `repo:etag` property specifies the revision of the instance. This value can 
 
 The remaining properties indicate which account and API key was used to create and last modify the instance. Since the instance was created by this call the respective values are those of the request. 
 
-### Lookup an instance by ID
+## Get an instance by ID
 
 Using the URL in the Location header returned with the Create call, an application can look up an instance. 
 
-#### Request 
+### Request 
 
-```shell
-curl -X GET ${ENDPOINT_PATH}/${CONTAINER_ID}/instances/${INSTANCE_ID} \ 
-  -H 'Accept: *, application/vnd.adobe.platform.xcore.hal+json; schema="${SCHEMA_ID}" \ 
+```
+curl -X GET ${endpoint_path}/${containerId}/instances/${instanceId} \ 
+  -H 'Accept: *, application/vnd.adobe.platform.xcore.hal+json; schema="${schemaId}" \ 
   -H 'x-api-key: ${API_KEY}' \ 
   -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
   -H 'x-request-id: ${NEW_UUID}'  
@@ -199,9 +211,9 @@ curl -X GET ${ENDPOINT_PATH}/${CONTAINER_ID}/instances/${INSTANCE_ID} \
 
 > **Note:** Although `instanceId` is given as a path parameter, applications should, whenever possible, not construct the path themselves and instead follow links to instances contained in list and search operations. See sections ‎6.4.4 and ‎6.4.6 for details. 
 
-#### Response 
+### Response 
 
-```json
+```
 { 
   "instanceId": "ID_OF_THIS_INSTANCE", 
   "schemas": [ 
@@ -230,17 +242,17 @@ The resource also contains an array of JSON schema IDs. This array indicates the
 
 Each instance contains a HAL link of relation type self that corresponds with the IANA registered self relation (as defined by [RFC5988]).  
 
-**Test for newer revisions of an instance**
+## Test for newer revisions of an instance
 
 The current `eTag` value of the instance is returned with the response, it allows clients to issue conditional operations against the instance, either to avoid retrieving the same resource state again or to avoid overwriting a later revision’s values without the client’s knowledge. 
 
 The lookup API allows a client to specify an `If-None-Match` header parameter. See the definition of this standard HTTP parameter [RFC2616]. The entity tag value a client specifies is the value it received with the latest response, either from an update, read, list or search API call. Note that the `etag` value should be opaque to the client and must be given as a string, surrounded by quotes.  
 
-#### Request
+### Request
 
-```shell
-curl -X GET ${ENDPOINT_PATH}/${CONTAINER_ID}/instances/${INSTANCE_ID} \ 
-  -H 'Accept: *, application/vnd.adobe.platform.xcore.hal+json; schema="${SCHEMA_ID}" \ 
+```
+curl -X GET ${endpoint_path}/${containerId}/instances/${instanceId} \ 
+  -H 'Accept: *, application/vnd.adobe.platform.xcore.hal+json; schema="${schemaId}" \ 
   -H 'If-None-Match: "${LAST_RECEIVED_ETAG}" \ 
   -H 'x-api-key: ${API_KEY}' \ 
   -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
@@ -249,27 +261,27 @@ curl -X GET ${ENDPOINT_PATH}/${CONTAINER_ID}/instances/${INSTANCE_ID} \
 
 The repository API will respond with a status 304 Not Modified when the instance’s last revision is that with the etag given. 
 
-### List instances for a schema - Sorting and paging
+## List instances for a schema - Sorting and paging
 
 Clients will not be able to keep track of the instances they are creating and therefore accessing them by their physical instanceId. Using the Read instance API will be the exception. Clients are also unaware what instances other clients have created. 
 
 A more typical access pattern will be to page through the set of all instances. 
 
-#### Request
+### Request
 
-```shell
-curl -X GET ${ENDPOINT_PATH}/${CONTAINER_ID}/instances?schema="${SCHEMA_ID}" \ 
+```
+curl -X GET ${endpoint_path}/${containerId}/instances?schema="${schemaId}" \ 
   -H 'Accept: *, application/vnd.adobe.platform.xcore.hal+json; schema="https://ns.adobe.com/experience/xcore/hal/results" \ 
   -H 'x-api-key: ${API_KEY}' \ 
   -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
   -H 'x-request-id: ${NEW_UUID}'  
 ```
 
-#### Response
+### Response
 
 The response depends on the `{schemaId}` specified. For instance for "https<span></span>://ns.adobe.com/experience/offer-management/offer-activity&id=xcore:offer-activity:fa24f9e8fc15c73" the response resembles the following.
 
-```json
+```
 {
 	"requestTime": "2019-06-28T06:54:05.606Z",
 	"_embedded": {
@@ -304,37 +316,28 @@ Paging is controlled by the following parameters:
 * **`start`**: Clients use the start parameter to define the page they want to retrieve. The start parameter determines the beginning of the desired page. The response will contain instances beginning with those that have an `orderBy` property value strictly greater than (for ascending) or strictly less than (for descending) the specified value. When the query parameter is not specified, it defaults to an instanceId value that sorts before the first possible instance identifier, and therefore this value is omitted from the first page.
 * **`limit`**: specifies a positive integer as a hint as to the maximum number of items that should be returned for a given request. The actual response size may be smaller or larger, as constrained by the need to provide reliable operation of the start parameter 
 
-### Filtering lists
+## Filter a list
 
 Filtering list results is possible and happens independent of the paging mechanism. Filters simply skip instances in the lists’ order or explicitly ask only to include the instances that satisfy a given condition. A client can request property expression to be used as a filter or it can specify a list of URIs to be used as the values of the primary key of the instances. 
 
-* **`property`**: Contains a property name path followed by a comparison operator followed by a value. <br/>
-The list of instances returned contains those for which the expression evaluates to true. For instance, assuming that the instance has a payload property `status` and the possible values are `draft`, `approved`, `archived` and `deleted` then the query parameter `property=_instance.status==approved` returns only instances for which the status is approved. <br/>
-<br/>
-The property to be compared with the given value is identified as a path. The individual path components are separated by `.`, like: `_instance.xdm:prop1.xdm:prop1_1.xdm:prop1_1_1`<br/>
-
-For properties that have string, numeric or date/time values, the allowed operators are: `==`, `!=`, `<`, `<=`, `>` and `>=`. In addition, for properties with a string value, an operator `~` can be used. The `~` operator matches the given property according to a regular expression. The property's string value must match the **entire** expression for the entities to be included in the filtered results. For instance, looking for the string `cars` anywhere inside the property value requires the regular expression to be `.*cars.*`. Without the leading or trailing `.*`, only entities would match that have a property value starting or ending with `cars`, respectively. For the `~` operator the comparison of letter characters is case-insensitive. For all other operators the comparison is case-sensitive.<br/><br/>
-Not only instance payload properties can be used in filter expressions. Envelope properties are compared in the same way, e.g. `property=repo:lastModifiedDate>=2019-02-23T16:30:00.000Z`. <br/>
-<br/>
-The `property` query parameter can be repeated so that multiple filter conditions are applied, e.g to return all instances that were last modified after a certain date and before a certain date. Values in those expressions must be URL encoded. If no expression is given and the property’s name is simply listed the items that qualify are those that have a property with the given name.<br/>
-<br/>
-* **`id`**: Sometimes a list needs to be filtered by the URI of the instances. The `property` query parameter can be used to filter out one instance, but to obtain more than one instance, a list of URIs can be given to the request. The `id` parameter is repeated and each occurrence specifies one URI value, `id=${URI_1}&id=${URI_2},…` The URI values must be URL encoded.
+* **`property`**: Contains a property name followed by a relational operator followed by a value. The list of instances to be returned contains those who have a property value for which the expression evaluates to true. For instance, assuming that the instance has a payload property status and the possible values are draft, approved, archived and deleted then the query parameter `property=_instance.status==approved` returns only instances for which the status is approved. Not only instance payload properties can be used in filter expressions, the parameter can be used to filter instances by their repository properties as well, e.g. `property=repo:lastModifiedDate>=2019-02-23T16:30:00.000Z`. The property can be repeated so that multiple filter conditions can be applied, for instance, to return all instances that were last modified after a certain date and before a certain date. Values in those expressions must be URL encoded. If no expression is given and the property’s name is simply listed the items that qualify are those that have a property with the given name.
+* **`id`**: Sometimes a list needs to be filtered by the URI of the instances. A list of URIs can be given as a filter condition. The id parameter is repeated and each occurrence specifies one URI value, `id=${uri1}&id=${uri2},…` The URI values must be URL encoded.
 
 Paged results will be returned as a special mime-type `application/vnd.adobe.platform.xcore.hal+json; schema="https://ns.adobe.com/experience/xcore/hal/results"`. 
 
-#### Request
+### Request
 
-```shell
-curl -X GET ${ENDPOINT_PATH}/${CONTAINER_ID}/instances?schema="${SCHEMA_ID}"&orderby=${ORDER_BY_PROPERTY_PATH}&property=${TIMESTAMP_PROPERTY_PATH}>=2019-02-19T03:19:03.627Z&property=${TIMESTAMP_PROPERTY_PATH}<=2019-06-19T03:19:03.627Z \ 
+```
+curl -X GET ${endpoint_path}/${containerId}/instances?schema="${schemaId}"&orderby=${orderbyPropPath}&property=${timestampPropPath}>=2019-02-19T03:19:03.627Z&property=${timestampPropPath}<=2019-06-19T03:19:03.627Z \ 
   -H 'Accept: *, application/vnd.adobe.platform.xcore.hal+json; schema="https://ns.adobe.com/experience/xcore/hal/results" \ 
   -H 'x-api-key: ${API_KEY}' \ 
   -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
   -H 'x-request-id: ${NEW_UUID}'  
 ```
 
-#### Response
+### Response
 
-```json
+```
 { 
   "requestTime": "2019-06-10T22:12:13.642Z", 
   "_embedded": { 
@@ -396,14 +399,14 @@ curl -X GET ${ENDPOINT_PATH}/${CONTAINER_ID}/instances?schema="${SCHEMA_ID}"&ord
 
 The response contains the list of result items inside the JSON property results next to two properties that indicate the number of results on this page and the total number of items in the filtered list starting with the page that was just returned. 
 
-### Full text search and structured queries
+## Full text search and structured queries
 
 In cases where clients want to provide more complex filter conditions and search instances by terms contained in string properties the repository offers a more powerful search API.  
 
-#### Request
+### Request
 
-```shell
-curl -X GET ${ENDPOINT_PATH}/${CONTAINER_ID}/queries/core/search?schema="${SCHEMA_ID}"&… \ 
+```
+curl -X GET ${endpoint_path}/${containerId}/queries/core/search?schema="${schemaId}"&… \ 
   -H 'Accept: *, application/vnd.adobe.platform.xcore.hal+json; schema="https://ns.adobe.com/experience/xcore/hal/results" \ 
   -H 'x-api-key: ${API_KEY}' \ 
   -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
@@ -420,77 +423,77 @@ Full text search is controlled by the following parameters:
 * **`field`**: If the search terms should only be matched against a subset of the properties then the field parameter can indicate the path to that property. The parameter can be repeated to indicate more than one property that should be matched against. 
 * **`qop`**: Contains a control parameter that is used to modify the matching behavior of the search. When the parameter is set to and then all search terms must match and when the parameter is absent or its value is set to or then any of terms can count for a match. 
 
-### Updating and patching instances
+## Update and patch
 
-To update an instance, a client can either overwrite the complete list of properties at once or use a JSON PATCH request to manipulate individual property values including lists. 
+To update an instance, a client can either overwrite the complete list of properties at once or use a JSON patch request to manipulate individual property values including lists. 
 
 In both cases the URL of the request specifies the path to the physical instance and in both cases the response will be a JSON receipt payload like the one returned from the [create operation](#create-instances). A client should preferably use the `Location` header or a HAL link it received from a prior API call for this object as the complete URL path for this API. If this is not possible the client can construct the URL from the `containerId` and the `instanceId`.
 
-#### Request (PUT)
+### Request
 
-```shell
-curl -X PUT ${ENDPOINT_PATH}/${CONTAINER_ID}/instances/${INSTANCE_ID} \ 
-  -H 'Content-Type: application/vnd.adobe.platform.xcore.hal+json; schema="${SCHEMA_ID}"' \  
+```
+curl -X PUT ${endpoint_path}/${containerId}/instances/${instanceId} \ 
+  -H 'Content-Type: application/vnd.adobe.platform.xcore.hal+json; schema="${schemaId}"' \  
   -H 'Accept: application/vnd.adobe.platform.xcore.xdm.receipt+json \ 
   -H 'x-api-key: ${API_KEY}' \ 
   -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
   -H 'x-request-id: ${NEW_UUID}'\ 
   -d '{ 
   "_instance": { 
-    ${JSON_PROPERTIES_OF_THIS_INSTANCE} 
+    JSON_PROPERTIES_OF_THIS_INSTANCE 
   }, 
   "_links": { 
-    ${HAL_LINKS_OF_THIS_INSTANCE} 
+    HAL_LINKS_OF_THIS_INSTANCE 
   } 
 }'  
 ```
 
-#### Request (PATCH)
+### Response
 
-```shell
-curl -X PATCH ${ENDPOINT_PATH}/${CONTAINER_ID}/instances/${INSTANCE_ID} \ 
-  -H 'Content-Type: application/vnd.adobe.platform.xcore.patch.hal+json; schema="${SCHEMA_ID}"' \  
+```
+curl -X PATCH ${endpoint_path}/${containerId}/instances/${instanceId} \ 
+  -H 'Content-Type: application/vnd.adobe.platform.xcore.patch.hal+json; schema="${schemaId}"' \  
   -H 'Accept: application/vnd.adobe.platform.xcore.xdm.receipt+json \ 
   -H 'x-api-key: ${API_KEY}' \ 
   -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
   -H 'x-request-id: ${NEW_UUID}' \ 
   -d '[ 
   { 
-    ${JSON_PATCH_INSTRUCTIONS_FOR_THIS_INSTANCE} 
+    JSON_PATCH_INSTRUCTIONS_FOR_THIS_INSTANCE 
   } 
 ]'
 ```
 
 The PATCH request applies the instructions and then validates the resulting entity against the schema and the same entity and referential integrity rules as the PUT request. 
 
-**Controlling property value edits**
+## Control property value edits
 
 You are able to prevent properties from being set on create and/or on update, using the following annotations:
 
 * **`"meta:usereditable"`**: Boolean - When a request originates from a user agent that identifies the caller with a user or technical account access token then properties that are annotated with `"meta:usereditable": false` should not be present in the payload. If they are, they must not have a different value than the one that is currently set. If the values differ the update or patch request is rejected with a status 422 Unprocessable Entity. 
 * **`"meta:immutable"`**: Boolean - Properties that are annotated with `"meta:immutable": true` cannot not be changed once they are set. This applies to requests coming from an end user, technical account integration or a special service. 
 
-**Test for concurrent update**
+## Test for concurrent update
 
 There are conditions where multiple clients attempt to update an instance concurrently. The repository is operated on a cluster of compute nodes without central transaction management. To avoid that one client writes an instance that is simultaneously written by another one, the clients can use a conditional update or patch request. By specifying the `etag` string in the header `If-Match` the repository make sure that only the first request succeeds and the follow-on requests by other clients using the same `etag` value will fail. The `etag` value changes with each modification of the instance. Clients must retrieve the instance to obtain the latest `etag` value and then only one client out of many attempting the update can succeed with that value. Other clients will get rejected with a message 409 Conflict.
 
-### Deleting instances 
+## Delete 
 
 Instances can be deleted with a DELETE call. A client should preferably use the `Location` header or a HAL link it received from a prior API call for this this as the complete URL path. If this is not possible the client can construct the URL from the `containerId` and the physical `instanceId`. 
 
-#### Request
+### Request
 
-```shell
-curl -X DELETE ${ENDPOINT_PATH}/${CONTAINER_ID}/instances/${INSTANCE_ID} \ 
+```
+curl -X DELETE ${endpoint_path}/${containerId}/instances/${instanceId} \ 
   -H 'Accept: application/vnd.adobe.platform.xcore.xdm.receipt+json \ 
   -H 'x-api-key: ${API_KEY}' \ 
   -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
   -H 'x-request-id: ${NEW_UUID}'  
 ```
 
-#### Response
+### Response
 
-```json
+```
 { 
   "instanceId": "3684ceb0-8744-11e9-a989-89f60b24f6cc", 
   "@id": "INSTANCE_URI", 
@@ -508,22 +511,19 @@ Upon receiving a delete request, the repository checks for any other instances, 
 
 If an instance is found that references the instance being deleted, the outcome will be a rejection of the delete operation. If no other foreign key references are discovered, then the delete is completed. If the outcome is not yet decided the response will indicate that by another 202 Accepted response with the same `Location` header and will ask the client to keep checking. When the outcome is determined, the response will indicate that with a 200 Ok status and the payload of the response will contain the outcome of the original delete request. Note that the 200 Ok response only means the outcome is known and the response body will contain the confirmation or rejection of the delete request. 
 
-# Creating and managing Offer Decisioning entities using APIs 
-
-## Creating offers and their sub components 
+## Create offers and their sub components 
 
 The APIs described in the previous section uniformly apply to all types of business objects. The only difference between, say creating an offer and an activity would be the `content-type` header noting the JSON schema the JSON payload of the request that complies with the schema. Therefore, the following sections will only need to focus on those schemas and the relationships between them. 
 
-When using the APIs with the content type `application/vnd.adobe.platform.xcore.hal+json; schema="${SCHEMA_ID}"`, the instance’s own properties are embedded in the `_instance` property next to which there is a `_links` property. This will be the general format in which all instances are represented: 
+When using the APIs with the content type `application/vnd.adobe.platform.xcore.hal+json; schema="${schemaId}"`, the instance’s own properties are embedded in the `_instance` property next to which there is a `_links` property. This will be the general format in which all instances are represented: 
 
-```json
+```
 { 
   … ENVELOPE PROPERTIES 
   "_instance": { 
     INSTANCE PROPERTIES 
   }, 
-  "_links": {
-    HAL PROPERTIES 
+  "_links": { 
   } 
 }
 ```
@@ -537,7 +537,7 @@ Offers are a type of decisioning option and the JSON schema of offers inherits t
 * **`@id`** - A unique identifier for each option that is the primary key and used to reference the option from other objects. This property is assigned when the instance is created, is immutable and not editable.
 * **`xdm:name`** - Every option has a name that is used for search and display purposes. The name is not immutable and cannot be used to uniquely identify the instance. The name can be selected freely but should be unique across offer instances. 
 
-```json
+```
 { 
   "@id": "INSTANCE_URI",                         // meta:immutable=true, meta:usereditable=false 
   "xdm:name": "A name for the Decision Option",  // meta:immutable=false 
@@ -546,7 +546,6 @@ Offers are a type of decisioning option and the JSON schema of offers inherits t
   } 
 } 
 ```
-See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer` or `https://ns.adobe.com/experience/offer-management/fallback-offer` if the offer is a fallback offer.
 
 Each offer instance can have an optional set of properties that are characteristic for only that instance. Different offers can have different keys for those properties, the values must, however be strings. These properties can be used in decision and segmentation rules. They are also accessible to assemble the decided experience to further customize the messages.
 
@@ -558,18 +557,23 @@ There is a simple state-transition flow that all Options will follow. They start
 
 * **`xdm:status`** - This property is used for lifecycle management of the instance. The value represents a workflow state that is used to indicate if the offer is still under construction (value = draft), can be generally considered by the runtime (value = approved) or if it should not be used any longer (value = archived).
 
-A simple PATCH operation on the instance is usually used to just manipulate an `xdm:status` property:
+A simple patch operation on the instance is usually used to just manipulate an `xdm:status` property:
 
-```json
-[
+```
+curl -X PATCH ${endpoint_path}/${containerId}/instances/${instanceId} \
+  -H 'Content-Type: application/vnd.adobe.platform.xcore.patch.hal+json; schema="${schemaId}"' \ 
+  -H 'Accept: application/vnd.adobe.platform.xcore.xdm.receipt+json \
+  -H 'x-api-key: ${API_KEY}' \
+  -H 'x-gw-ims-org-id: ${IMS_ORG} \
+  -H 'x-request-id: ${NEW_UUID}' \
+  -d '[
   {
     "op":    "replace",
     "path":  "/_instance/xdm:status",
     "value": "approved" 
   }
-] 
+]' 
 ```
-See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer` or `https://ns.adobe.com/experience/offer-management/fallback-offer` if the offer is a fallback offer.
 
 ### Representations and placements
 
@@ -579,7 +583,7 @@ During the decision operation, the placement is determined in conjunction with t
 Before representations can be added to an offer the placement instances must exist. Those instances are created the schema identifier 
 `https://ns.adobe.com/experience/offer-management/offer-placement`. 
 
-```json
+```
 {
   "xdm:name": "Kiosk Placement 1",
   "xdm:channel": "https://ns.adobe.com/xdm/channels/web",
@@ -591,20 +595,19 @@ Before representations can be added to an offer the placement instances must exi
   "xdm:description": "Generic placeholder for offers in the Kiosk application. \nTechnical constraints: max width 530dpi, min width 480 dpi, aspect ratio 12:5. \nStylistic constraints: single background color with text block in complementary colors, \nNo magenta, please!"
 } 
 ```
-See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer` or `https://ns.adobe.com/experience/offer-management/fallback-offer` if the offer is a fallback offer.
 
-A **Placement** instance can have the following properties:
+A placement instance can have the following properties:
 
 * **`xdm:name`** - Contains assigned name for the placement to refer to it in human interactions and user interfaces.
 * **`xdm:description`** - Used to convey human readable intentions for how content in this placement is used in the overall message delivery. When delivery channels define new placements, they can add further information in this property so that a content creator can create or select the content accordingly. Those instructions are not formally interpreted or enforced. This property merely serves as a place to communicate the intentions.
 * **`xdm:channel`** - The URI of a channel. The channel indicates where the dynamic content is intended to be delivered. The channel constraint is used to convey not only where the offer will be used but also to determine the content editor or validator that is used for the experience.
 * **`xdm:componentType`** -  A model identifier, i.e. URI, for the content that can be shown in the location described by this placement. Component types are: image link, html or plain text. Each component type may imply a specific set of properties (a model) that the content item may have. The list of component types can be extended. There are three predefined component type values:
-  * `https://ns.adobe.com/experience/offer-management/content-component-imagelink`
-  * `https://ns.adobe.com/experience/offer-management/content-component-text`
-  * `https://ns.adobe.com/experience/offer-management/content-component-html`
+  * https<span></span>://ns.adobe.com/experience/offer-management/content-component-imagelink
+  * https<span></span>://ns.adobe.com/experience/offer-management/content-component-text
+  * https<span></span>://ns.adobe.com/experience/offer-management/content-component-html
 * **`xdm:contentTypes`**, A constraint for the media types of the components that are expected in this placement. There could be more than one media type for one component type such as different image formats.
 
-**Representation** items in an offer have an object structure in the array property `xdm:representations`. Each item can have the following properties:
+Representation items in an offer have an object structure in the array property `xdm:representations`. Each item can have the following properties:
 
 * **`xdm:placement`** - This property contains the reference to the placement instance. The value is checked when the representation is added to the offer. A placement instance with that URI must exist and must not been marked as deleted. In addition, a check is performed to ensure an offer instance does not have two representations with the same value for their placement reference.
 * **`xdm:components`** - Content components are the fragments associated with the a particular offer representation. Those fragments are later used to compose the end-user experience. Note that the Decisioning Service by itself does not compose the full end user experience. The following properties are part of every component’s model.
@@ -631,15 +634,22 @@ Additional properties can be used by clients to set and evaluate context handlin
 * Inside each item in the `xdm:components` array, the Offer Library UI client adds the following properties. Those properties should not be deleted or manipulated without understanding the impact on the UI:
   * **`offerui:previewThumbnail`** - This is an optional property that the Offer Library UI uses to display a rendering of the asset. This rendition is not the same as the asset itself. For instance, the content could be HTML and the rendition is a bitmap image only showing an approximation of it. This (lower-quality) rendition is shown within the offer’s representation block.
 
-An example of PATCH operation on an offer instance shows how to manipulate the representations:
+An example of patch operation on an offer instance shows how to manipulate the representations:
 
-```json
-[
+```
+curl -X PATCH ${endpoint_path}/${containerId}/instances/${instanceId} \
+  -H 'Content-Type: application/vnd.adobe.platform.xcore.patch.hal+json; schema="${schemaId}"' \ 
+  -H 'Accept: application/vnd.adobe.platform.xcore.xdm.receipt+json \
+  -H 'x-api-key: ${API_KEY}' \
+  -H 'x-gw-ims-org-id: ${IMS_ORG} \
+  -H 'x-request-id: ${NEW_UUID}' \
+  -d '[
   {
     "op":    "add",
     "path":  "/_instance/xdm:representations/-",
     "value": {
       "xdm:placement": "xcore:offer-placement:e51944a87919861",
+      "xdm:channel": "https://ns.adobe.com/xdm/channels/email",
       "xdm:components": [
         {
           "xdm:copyline": "Get what you want!",
@@ -651,26 +661,29 @@ An example of PATCH operation on an offer instance shows how to manipulate the r
   }
 ]' 
 ```
-See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer` or `https://ns.adobe.com/experience/offer-management/fallback-offer` if the offer is a fallback offer.
 
-The PATCH operation may fail when there is no property `xdm:representations` yet. In that case the add operation above could be preceded by an another add operation that creates the `xdm:representations` array or the single add operation sets the array directly.
+The patch operation may fail when there is no property `xdm:representations` yet. In that case the add operation above could be preceded by an another add operation that creates the `xdm:representations` array or the single add operation sets the array directly.
 The schemas and properties described are used for all offer types, personalization offers as well as fallback offers. The following two sections on constraints and decision rules of explain aspects of personalization offers.
 
-## Setting offer constraints
-
-### Calendar constraints
+## Manage calendar constraints
 
 Decision options in general can be give a start and end date and time that serves as a calendar constraint. The properties are embedded in the property `xdm:selectionConstraint`:
 
-* **`xdm:startDate`** - This property indicates the start date and time. The value is a string formatted per RFC 3339 rules, i.e. like this timestamp: "2019-06-13T11:21:23.356Z".
+* **`xdm:startDate`** - This property indicates the start date and time. The value is a string formatted per RFC 3339 rules, ie. like this timestamp: "2019-06-13T11:21:23.356Z".
 Decision options that have not reached their start date and time are not yet considered eligible in the decisioning.
-* **`xdm:endDate`** - This property indicates the end date and time. The value is a string formatted per RFC 3339 rules, i.e. like this timestamp: "2019-07-13T11:00:00.000Z"
+* **`xdm:endDate`** - This property indicates the end date and time. The value is a string formatted per RFC 3339 rules, ie. like this timestamp: "2019-07-13T11:00:00.000Z"
 Decision Options that have passed their end date and time are no longer considered eligible in the decisioning process.
 
-Changing a calendar constraint can be accomplished with the following PATCH call:
+Changing a calendar constraint can be accomplished with the following patch call:
 
-```json
-[
+```
+curl -X PATCH ${endpoint_path}/${containerId}/instances/${instanceId} \
+  -H 'Content-Type: application/vnd.adobe.platform.xcore.patch.hal+json; schema="${schemaId}"' \ 
+  -H 'Accept: application/vnd.adobe.platform.xcore.xdm.receipt+json \
+  -H 'x-api-key: ${API_KEY}' \
+  -H 'x-gw-ims-org-id: ${IMS_ORG} \
+  -H 'x-request-id: ${NEW_UUID}' \
+  -d '[
   {
     "op":   "replace",
     "path": "/_instance/xdm:selectionConstraint",
@@ -681,19 +694,24 @@ Changing a calendar constraint can be accomplished with the following PATCH call
   }
 ]' 
 ```
-See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer`. Fallback offers do not have any constraints.
 
-### Capping constraints
+## Manage capping constraints
 
 A capping constraint is a component in a decision option that defines the parameters for capping. Capping is the process of limiting how many times an option can be proposed, for an individual profile as well as across all profiles. The properties hold an integer value that must be greater or equal to 1. The properties are nested inside a property `xdm:cappingConstraint`:
 
 * **`xdm:globalCap`** - A global cap is a constraint on how many times an offer can be proposed in totality.
 * **`xdm:profileCap`** - A profile cap is a constraint on how many times an offer can be proposed to a certain profile.
 
-Setting or changing the capping constraint on a personalization offer can be accomplished with the following PATCH call:
+Setting or changing the capping constraint on a personalization offer can be accomplished with the following patch call:
 
-```json
-[
+```
+curl -X PATCH ${endpoint_path}/${containerId}/instances/${instanceId} \
+  -H 'Content-Type: application/vnd.adobe.platform.xcore.patch.hal+json; schema="${schemaId}"' \ 
+  -H 'Accept: application/vnd.adobe.platform.xcore.xdm.receipt+json \
+  -H 'x-api-key: ${API_KEY}' \
+  -H 'x-gw-ims-org-id: ${IMS_ORG} \
+  -H 'x-request-id: ${NEW_UUID}' \
+  -d '[
   {
     "op":   "add",
     "path": "/_instance/xdm:cappingConstraint",
@@ -704,11 +722,10 @@ Setting or changing the capping constraint on a personalization offer can be acc
   }
 ]' 
 ```
-See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer`. Fallback offers do not have any constraints.
 
 To remove the capping values the operation "add" is replaced with the operation "remove". Note that the capping values exists individually and can be set or removed individually as well.
 
-### Eligibility constraints 
+## Eligibility constraints 
 
 Offers can be conditionally selected in the decision process. When a personalization offer has a reference to an eligibility rule, the condition of the rule must evaluate to true for the offer object to be considered for a given profile. The eligibility rules are created and managed independent of the decision options and the same rule can be referenced from multiple personalization offers.
 
@@ -717,10 +734,16 @@ The reference to the rule is embedded in the property `xdm:selectionConstraint`:
 * **`xdm:eligibilityRule`** - This property holds a reference to an eligibility rule. The value is the `@id` of an instance of schema 
 https://ns.adobe.com/experience/offer-management/eligibility-rule.
 
-Adding and deleting a rule can be accomplished with a PATCH operation as well:
+Adding and deleting a rule can be accomplished with a patch operation as well:
 
 ```
-[
+curl -X PATCH ${endpoint_path}/${containerId}/instances/${instanceId} \
+  -H 'Content-Type: application/vnd.adobe.platform.xcore.patch.hal+json; schema="${schemaId}"' \ 
+  -H 'Accept: application/vnd.adobe.platform.xcore.xdm.receipt+json \
+  -H 'x-api-key: ${API_KEY}' \
+  -H 'x-gw-ims-org-id: ${IMS_ORG} \
+  -H 'x-request-id: ${NEW_UUID}' \
+  -d '[
   {
     "op":   "replace",
     "path": "/_instance/xdm:selectionConstraint/xdm:eligibilityRule",
@@ -728,22 +751,21 @@ Adding and deleting a rule can be accomplished with a PATCH operation as well:
   }
 ]' 
 ```
-See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer`. Fallback offers do not have any constraints.
 
-Note that the eligibility rule is embedded in the `xdm:selectionConstraint` property together with the calendar constraints. PATCH operations should not attempt remove the entire `SelectionConstraint` property.
+Note that the eligibility rule is embedded in the `xdm:selectionConstraint` property together with the calendar constraints. Patch operations should not attempt remove the entire `SelectionConstraint` property.
 
-## Setting the priority of an offer
+## Set the priority of an offer
 
 Qualifying decision options will be ranked to determine the best option for the given profile. To support the ranking and to provide a default in case the ranking cannot be determined by another mechanism a base priority can be set for each personalization offer.
 The base priority is embedded in the property `xdm:rank`:
 
 * **`xdm:priority`** - This property represents the default order in which one offer is selected over another in case there is no profile specific ranking order known. If after comparing the priority value two or more personalization offers are still tied one is chosen at random and used in the offer proposition. The value for this property must be an integer greater or equal to 0.
 
-Adjusting the base priority can be done with the following PATCH call:
+Adjusting the base priority can be done with the following patch call:
 
-```shell
-curl -X PATCH ${ENDPOINT_PATH}/${CONTAINER_ID}/instances/${INSTANCE_ID} \
-  -H 'Content-Type: application/vnd.adobe.platform.xcore.patch.hal+json; schema="${SCHEMA_ID}"' \ 
+```
+curl -X PATCH ${endpoint_path}/${containerId}/instances/${instanceId} \
+  -H 'Content-Type: application/vnd.adobe.platform.xcore.patch.hal+json; schema="${schemaId}"' \ 
   -H 'Accept: application/vnd.adobe.platform.xcore.xdm.receipt+json \
   -H 'x-api-key: ${API_KEY}' \
   -H 'x-gw-ims-org-id: ${IMS_ORG} \
@@ -756,9 +778,8 @@ curl -X PATCH ${ENDPOINT_PATH}/${CONTAINER_ID}/instances/${INSTANCE_ID} \
   }
 ]'
 ```
-See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer`. Fallback offers do not have any ranking properties.
 
-## Managing decision rules
+## Manage rules
 
 Eligibility rules hold the conditions that are evaluated to determine if a given decision option is eligible for a given profile. Attaching a rule to one or more decision options implicitly defines that for this option the rule must evaluate to true for the option to be considered for this user. The rule can contain tests on profile attributes, can evaluate expressions involving experience events for this profile, and can include context data that was passed to the decision request. For instance, a condition may be described like:
 
@@ -767,7 +788,7 @@ Eligibility rules hold the conditions that are evaluated to determine if a given
 The instances are created with schema identifier 
 https://ns.adobe.com/experience/offer-management/eligibility-rule. The `_instance` property for the create or update call looks like:
 
-```json
+```
 {
   "xdm:name": "Eligible for a free flight upgrade",
   "xdm:condition": {
@@ -775,7 +796,7 @@ https://ns.adobe.com/experience/offer-management/eligibility-rule. The `_instanc
       "membership.status = \"elite\" 
        and (select e from xEvent 
             where e.type = \"flight\" 
-              and e.flightnumber = @{${SCHEMA_ID}}.flightnumber
+              and e.flightnumber = @{${schemaId}}.flightnumber
               and (e.timestamp occurs <= 6 months before now).count() > 3
            )",
     "xdm:format": "pql/text",
@@ -783,15 +804,12 @@ https://ns.adobe.com/experience/offer-management/eligibility-rule. The `_instanc
   }
 }
 ```
-See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/eligibility-rule`.
 
 The value in the rule’s condition property contains a PQL expression. The context data is referenced via the special path expression @{schemaID}.
 
 Rules naturally align with segments in the Experience Platform and often a rule will simply reuse a segment’s intent by testing a profile’s `segmentMembership` property. The `segmentMembership` property contains the results of segments conditions that were already evaluated. This allows an organization to define their domain specific audiences once, name them and evaluate the conditions once.
 
-## Managing offer collections
-
-### Creating a tags and tagging offers
+## Offer collections - Create a tag
 
 Offers can be organized in collections where each collection defines the filter condition that shall be applied. Currently filter expression in a collection can have one of two forms:
 
@@ -807,17 +825,15 @@ Tag objects serve to establish a categorization among decision options (offers).
 The tag instances are created with the schema identifier 
 https://ns.adobe.com/experience/offer-management/tag. The `_instance` property for the create or update call looks like:
 
-```json
+```
 {
   "xdm:name": "credit card"
 } 
 ```
-See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/tag`.
-
 
 An offer instance can be created with the list of tag references like:
 
-```json
+```
 {
   "xdm:name": "ABC Bank Credit Card",
   "xdm:tags": [
@@ -829,8 +845,14 @@ An offer instance can be created with the list of tag references like:
 
 Alternatively, an offer could be patched to change its list of tags:
 
-```json
-[
+```
+curl -X PATCH ${endpoint_path}/${containerId}/instances/${instanceId} \
+  -H 'Content-Type: application/vnd.adobe.platform.xcore.patch.hal+json; schema="${schemaId}"' \ 
+  -H 'Accept: application/vnd.adobe.platform.xcore.xdm.receipt+json \
+  -H 'x-api-key: ${API_KEY}' \
+  -H 'x-gw-ims-org-id: ${IMS_ORG} \
+  -H 'x-request-id: ${NEW_UUID}' \
+  -d '[
   {
     "op":    "add",
     "path":  "/_instance/xdm:tags/-",
@@ -838,40 +860,41 @@ Alternatively, an offer could be patched to change its list of tags:
   }
 ]' 
 ```
-For both cases, see [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/personalized-offer`.
 
-Note that the `xdm:tags` property must already exist for the add operation to succeed. It no tags exist in an instance the PATCH operation can first add the array property and then add a tag reference to that array.
+<!-- TODO: response needed -->
 
-### Define filters for offer collections
+Note that the `xdm:tags` property must already exist for the add operation to succeed. It no tags exist in an instance the patch operation can first add the array property and then add a tag reference to that array.
+
+## Define filters for offer collections
 
 The filter instances are created with schema identifier 
-https://ns.adobe.com/experience/offer-management/offer-filter. The `_instance` property for the create or update call might look like:
+https://ns.adobe.com/experience/offer-management/offer-filter. The `_instance` property for the create or update call looks like:
 
-```json
+```
 {
   "xdm:name": "All Upgrade offers",
   "xdm:filterType": "allTags",
-  "ids": [
+  "tagIds": [
     "xcore:tag:f66f67dbe6d6ee1",
     "xcore:tag:f66f677ad3c0ba7"
   ]
 }
 ```
-See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/offer-filter`.
 
 * **`xdm:filterType`** - This property indicates whether the filter is set up using tags or directly references offers by their ids. When the filter is set up to use tags the filter type can further indicate if all tags must match the tags on a particular offer or if any of the given tags is sufficient for the offer to qualify for the filter. The valid values of this enum property are: 
-  * `offers`
-  * `anyTags`
-  * `allTags`
-* **`ids`** - A property contains an array of URIs that are references to offer instances or tag instances, depending on the value of `xdm:filterType`. .
+  * offers
+  * anyTags
+  * allTags
+* **`tagIds`** - An optional property contains an array of URIs that are references to tag instances. This property is only used when the `xdm:filterType` property has the value "anyTags" or "allTags"
+* **`offerIds`** - An optional property contains an array of URIs that are references to personalization offer instances. This property is only used when the `xdm:filterType` property has the value offers.
 
 The following call illustrates how the `_instance` property for the create or update call looks like in case offers are directly referenced:
 
-```json
+```
 {
   "xdm:name": "All Upgrade offers",
   "xdm:filterType": "offers",
-  "ids": [
+  "offerIds": [
     "xcore:personalized-offer:f85e8298e53398d",
     "xcore:personalized-offer:f83a85c2bca3f1f",
     "xcore:personalized-offer:f9195bd412180b1",
@@ -885,25 +908,24 @@ The following call illustrates how the `_instance` property for the create or up
 } 
 ```
 
-## Managing activities
+## Manage activities
 
 An offer activity is used to control the decisioning process. It specifies the offer filter applied to the total inventory to narrow down offers by topic/category, the placement to narrow down the inventory to those offers that fit into the reserved space and specifies a fallback option should the combined constraints disqualify all available personalization options (offers).
 
 The activity instances are created with schema identifier 
 `https://ns.adobe.com/experience/offer-management/offer-activity`. The `_instance` property for the create or update call looks like:
 
-```json
+```
 {
-  "xdm:name": "Call center IVR Personalization",
-  "xdm:startDate": "2019-03-01T05:59:59.999Z",
-  "xdm:endDate":   "2019-12-27T00:00:00.000Z",
+  "xdm:name": "Call center IVR Personalization"}}",
+  "xdm:startDate": "2019-03-01T05:59:999Z",
+  "xdm:endDate":   "2019-12-27T00:00:000",
   "xdm:status":    "live",
-  "xdm:placement": "xcore:offer-placement:f652486959731ff",
-  "xdm:filter":    "xcore:offer-filter:f6998eb62ed6f15",
-  "xdm:fallback":  "xcore:fallback-offer:f6529b31b3c0ba6"
+  "xdm:placement": "REFERENCE TO AN EXISTING, NOT DELETED INSTANCE",
+  "xdm:filter":    "REFERENCE TO AN EXISTING, NOT DELETED INSTANCE",
+  "xdm:fallback":  "REFERENCE TO AN EXISTING, NOT DELETED INSTANCE"
 }
 ```
-See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/offer-activity`.
 
 * **`xdm:name`** - This mandatory property contains activity name. The name is displayed in various user interfaces.
 * **`xdm:status`** - This property is used for lifecycle management of the instance. The value represents a workflow state that is used to indicate if the activity is still under construction (value = draft), can be generally considered by the runtime (value = live) or if it should not be used any longer (value = archived).
@@ -911,12 +933,12 @@ See [Updating and patching instances](#updating-and-patching-instances) for the 
 * **`xdm:filter`** - A mandatory property containing a reference to an offer filter that is applied to the inventory when a decision is made in the context of this activity. The value is the URI (`@id`) of the offer filter that is used. 
 * **`xdm:fallback`** - A mandatory property containing a reference to a fallback offer. A fallback offer is used when decisioning for this activity does not qualify any of the personalization offers. The value is the URI (`@id`) of a fallback offer instance. 
 
-### Managing fallback offers
+## Manage fallback offers
 
 Before activity instances can be created a fallback offer must exist that qualifies for the placement of the activity. The fallback offer instances are created with schema identifier 
 `https://ns.adobe.com/experience/offer-management/fallback-offer`. The `_instance` property for the create or update call contains the same general properties that a personalization offer has, but it cannot have any other constraints.
 
-```json
+```
 {
   "xdm:name": "Default for Kiosk Placements",
   "xdm:status": "approved",
@@ -934,4 +956,4 @@ Before activity instances can be created a fallback offer must exist that qualif
   ]
 }  
 ```
-See [Updating and patching instances](#updating-and-patching-instances) for the full cURL syntax. The `schemaId` parameter must be `https://ns.adobe.com/experience/offer-management/fallback-offer`.
+
