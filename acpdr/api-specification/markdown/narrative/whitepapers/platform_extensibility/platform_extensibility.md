@@ -139,7 +139,7 @@ GET /files/{datasetFileId}
 ```
 curl -X GET \
   https://platform.adobe.io/data/foundation/export/files/f25a0dd3-rh6h-4ebe-b094 \
-  -H 'Authorization: Bearer {ACCESS_TOKEN' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
 ```
