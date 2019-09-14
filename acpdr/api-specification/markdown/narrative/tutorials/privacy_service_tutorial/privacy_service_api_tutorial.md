@@ -1,8 +1,10 @@
 # Privacy Service API tutorial
 
+> **Note:** The functionalities described in this document are currently in beta and will be publicly available as part of the July 25, 2019 release.
+
 Adobe Experience Platform Privacy Service provides a RESTful API and user interface that allow you to manage (access and delete) the personal data of your customers (data subjects) across Adobe Experience Cloud solutions. Privacy Service also provides a central audit and logging mechanism that allows you to access the status and results of jobs involving Experience Cloud solutions.
 
-This tutorial covers how to use the Privacy Service API. For details on how to use the UI, see the [Privacy Service UI tutorial](privacy_service_ui_tutorial.md). For a comprehensive list of all available endpoints in the Privacy Service API, please see the [API reference](../../../../../../acpdr/swagger-specs/privacy-service.yaml).
+This tutorial covers how to use the Privacy Service API. For details on how to use the UI, see the [Privacy Service UI tutorial](privacy_service_ui_tutorial.md). For a comprehensive list of all available endpoints in the Privacy Service API, please see the [API reference](../../../../../acdpr/swagger-specs/gdpr-api.yaml).
 
 Steps for performing the following tasks are covered in this tutorial:
 
@@ -12,7 +14,8 @@ Steps for performing the following tasks are covered in this tutorial:
 
 ## Prerequisites
 
-You are required to have completed the [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+You are required to have completed the
+[Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
 * Authorization: Bearer `{ACCESS_TOKEN}`
 * x-api-key: `{API_KEY}`
@@ -28,7 +31,7 @@ Across Adobe Experience Cloud there are many products that support your digital 
 
 ## Create a job request
 
-The first step in creating a new job request is to gather your customer data. As the data controller, you need to collect information about the data subjects whose data you want to access or delete. Once you have the required data, provide it in the payload of a POST request to the root endpoint (`/`) of the [Privacy Service API](../../../../../acpdr/swagger-specs/privacy-service.yaml).
+The first step in creating a new job request is to gather your customer data. As the data controller, you need to collect information about the data subjects whose data you want to access or delete. Once you have the required data, provide it in the payload of a POST request to the root endpoint (`/`) of the [Privacy Service API](../../../../../acdpr/swagger-specs/gdpr-api.yaml).
 
 #### API format
 
@@ -110,7 +113,7 @@ curl -X POST \
         * `value`: The value of the identifier.
 * `users`: An array containing a collection of at least one user whose information you would like to access or delete. A maximum of 1000 user IDs can be provided in a single request. Each user object contains the following information:
     * `key`: An identifier that is used to qualify the separate job IDs in the response data. It is best practice to choose a unique, easily identifiable string for this value so it can easily be referenced or looked up later.
-    * `action`: A collection of desired actions to take on the data. Must include one or both of `access` or `delete`, depending on the actions you want to take. If both options are provided, the service creates two separate job IDs for the associated `key`; one for each action.
+    * `action`: A collection of desired actions to take on the data. Must include one or both of `access` or `delete`, depending on the actions you want to take. If both options are provided, the service will create two separate job IDs for the associated `key`; one for each action.
     * `userIDs`: A collection of identifiers for a particular user. The number of identities a single user can have is limited to 9. Each identifier contains the following three values:
         * `namespace`: The namespace of the ID. For example, `email`.
         * `value`: The value of the identifier. For example, `1234@example.com`.
@@ -324,7 +327,7 @@ GET ?data=true&size={SIZE}
 GET ?data=true&page={PAGE}&size={SIZE}
 ```
 * `{PAGE}`: The page of data to be displayed, using 0-based numbering. The default is `0`.
-* `{SIZE}`: The number of results to display on each page. The default is `1` and the maximum is `100`. Exceeding the maximum causes the API to return a 400-code error.
+* `{SIZE}`: The number of results to display on each page. The default is `1` and the maximum is `100`. Exceeding the maximum will cause the API to return a 400-code error.
 
 #### Request
 
@@ -359,7 +362,7 @@ When specifying a `namespace` value in the Privacy Service API, a **namespace qu
 
 | Qualifier | Definition |
 | --------- | ---------- |
-| standard | One of the standard namespaces defined globally, not tied to an individual organization data set (for example, email, phone number, etc.). Namespace ID is provided. |
+| standard | One of the standard namespaces defined globally, not tied to an individual organization data set (e.g. email, phone number, etc.). Namespace ID is provided. |
 | custom | A unique namespace created in the context of an organization, not shared across the Experience Cloud. The value represents the friendly name ("name" field) to be searched for. Namespace ID is provided. |
 | integrationCode | Integration code - similar to "custom", but specifically defined as the integration code of a datasource to be searched for. Namespace ID is provided. |
 | namespaceId | Indicates the value is the actual ID of the namespace that was created or mapped through the namespace service. |
