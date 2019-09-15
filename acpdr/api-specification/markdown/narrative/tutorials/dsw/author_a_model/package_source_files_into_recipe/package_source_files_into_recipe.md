@@ -24,10 +24,10 @@ This tutorial provides instructions on how you can package the provided Retail S
 
 ## Prerequisites
 
-*   <a href="https://docs.docker.com/install/#supported-platforms" target="_blank">Docker</a>
-*   <a href="https://docs.conda.io/en/latest/miniconda.html" target="_blank">Python 3 and pip</a>
-*   <a href="https://www.scala-sbt.org/download.html?_ga=2.42231906.690987621.1558478883-2004067584.1558478883" target="_blank">Scala</a>
-*   <a href="https://maven.apache.org/install.html" target="_blank">Maven</a>
+* [Docker](https://docs.docker.com/install/#supported-platforms)
+* [Python 3 and pip](https://docs.conda.io/en/latest/miniconda.html)
+* [Scala](https://www.scala-sbt.org/download.html?_ga=2.42231906.690987621.1558478883-2004067584.1558478883)
+* [Maven](https://maven.apache.org/install.html)
 
 ## Recipe creation
 
@@ -40,7 +40,7 @@ A Docker image allows a developer to package up an application with all the part
 The built Docker image will be pushed to Azure Container Registry using credentials supplied to you during the recipe creation workflow.
 > Note: Only source files written in **Python**, **R**, and **Tensorflow** require Azure Container Registry credentials.
 
-To obtain your Azure Container Registry credentials, log into <a href="https://platform.adobe.com" target="_blank">Adobe Experience Platform</a>. On the left navigation column, navigate to **Workflows**. Select **Import Recipe from Source File**, and **Launch** a new import procedure. See the screen shot below for reference.
+To obtain your Azure Container Registry credentials, log into [Adobe Experience Platform](https://platform.adobe.com). On the left navigation column, navigate to **Workflows**. Select **Import Recipe from Source File**, and **Launch** a new import procedure. See the screen shot below for reference.
 
 ![](./images/workflow_ss.png)
 
@@ -63,7 +63,7 @@ For source files written in Scala or PySpark, a binary file will be generated. B
 
 ### Package the source files
 
-Start by obtaining the sample codebase found in the <a href="https://github.com/adobe/experience-platform-dsw-reference" target="_blank">Experience Platform Data Science Workspace Reference</a> repository. Depending on which programming language the sample source files are written in, building their respective archive file differs in procedure.
+Start by obtaining the sample codebase found in the [Experience Platform Data Science Workspace Reference](https://github.com/adobe/experience-platform-dsw-reference) repository. Depending on which programming language the sample source files are written in, building their respective archive file differs in procedure.
 
 - [Build Python Docker image](#build-python-docker-image)
 - [Build R Docker image](#build-r-docker-image)
@@ -74,29 +74,28 @@ Start by obtaining the sample codebase found in the <a href="https://github.com/
 
 If you have not done so, clone the github repository onto your local system with the following command:
 
-```shell
+```BASH
 git clone https://github.com/adobe/experience-platform-dsw-reference.git
 ```
 
-Navigate to the directory `experience-platform-dsw-reference/recipes/python/retail`. Here, you will find the scripts `login.sh` and `build.sh` which you will use to log in to Docker and to build the python Docker image. If you have your [Docker credentials](#docker-based-model-authoring) ready, enter the following commands in order:
+Navigate to the directory `experience-platform-dsw-reference/recipes/python/retail`. Here, you will find the scripts `login.sh` and `build.sh` which you will use to log in to docker and to build the python docker image. If you have your [docker credentials](#docker-based-model-authoring) ready, enter the following commands in order:
 
 ```BASH
-# for logging in to Docker
+# for logging in to docker
 ./login.sh
  
-# for building Docker image
+# for building docker image
 ./build.sh
 ```
-Note that when executing the login script, you will need to provide the Docker host, username, and password. When building, you are required to provide the Docker host and a version tag for the build.
+Note that when executing the login script, you will need to provide the docker host, username, and password. When building, you are required to provide the docker host and a version tag for the build.
 
-Once the build script is complete, you are given a Docker source file URL in your console output. For this specific example, it will look something like:
+Once the build script is complete, you are given a docker source file URL in your console output. For this specific example, it will look something like:
 
 ```BASH
 # URL format: 
 {DOCKER_HOST}/ml-retailsales-python:{VERSION_TAG}
 ```
-
-Copy this URL and move on to the [next steps](#next-steps).
+Copy this URL, you will need it for [the next step](#next-steps).
 
 #### Build R Docker image
 
@@ -106,25 +105,24 @@ If you have not done so, clone the github repository onto your local system with
 git clone https://github.com/adobe/experience-platform-dsw-reference.git
 ```
 
-Navigate to the directory `experience-platform-dsw-reference/recipes/R/Retail - GradientBoosting` inside your cloned repository. Here, you'll find the files `login.sh` and `build.sh` which you will use to log in to Docker and to build the R Docker image. If you have your [Docker credentials](#docker-based-model-authoring) ready, enter the following commands in order:
+Navigate to the directory `experience-platform-dsw-reference/recipes/R/Retail - GradientBoosting` inside your cloned repository. Here, you'll find the files `login.sh` and `build.sh` which you will use to log in to docker and to build the R docker image. If you have your [docker credentials](#docker-based-model-authoring) ready, enter the following commands in order:
 
 ```BASH
-# for logging in to Docker
+# for logging in to docker
 ./login.sh
  
-# for build Docker image
+# for build docker image
 ./build.sh
 ```
-Note that when executing the login script, you will need to provide the Docker host, username, and password. When building, you are required to provide the Docker host and a version tag for the build.
+Note that when executing the login script, you will need to provide the docker host, username, and password. When building, you are required to provide the docker host and a version tag for the build.
 
-Once the build script is complete, you are given a Docker source file URL in your console output. For this specific example, it will look something like:
+Once the build script is complete, you are given a docker source file URL in your console output. For this specific example, it will look something like:
 
 ```BASH
 # URL format: 
 {DOCKER_HOST}/ml-retail-r:{VERSION_TAG}
 ```
-
-Copy this URL and move on to the [next steps](#next-steps).
+Copy this URL, you will need it for [the next step](#next-steps).
 
 #### Build PySpark binaries
 
