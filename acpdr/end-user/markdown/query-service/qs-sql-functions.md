@@ -1,6 +1,6 @@
-# Adobe-defined functions
+# Adobe-Defined Functions
 
-Adobe-defined functions (ADFs) are prebuilt functions in Query Service that help perform common business logic on ExperienceEvent data. These include functions for Sessionization and Attribution like those found in Adobe Analytics.
+Adobe-defined functions (ADFs) are pre-built functions in Query Service to help perform common business logic on ExperienceEvent data. These include functions for Sessionization and Attribution like those found in Adobe Analytics.
 
 ## Window functions
 
@@ -14,13 +14,13 @@ Syntax: `OVER ([partition] [order] [frame])`
 
 | Parameter | Description | 
 | --- | --- |
-| [partition] | A subgroup of the rows based on a column or available field. Example, `PARTITION BY endUserIds._experience.mcid.id` |
-| [order] | A column or available field used to order the subset or rows. Example, `ORDER BY timestamp` |
-| [frame] | A subgroup of the rows in a partition. Example, `ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW` |
+| [partition] | A subgroup of the rows based on a column or available field. Example, 'PARTITION BY endUserIds._experience.mcid.id' |
+| [order] | A column or available field used to order the subset or rows. Example, 'ORDER BY timestamp' |
+| [frame] | A subgroup of the rows in a partition. Example, 'ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW' |
 
 ### Sessionization
 
-When you are working with ExperienceEvent data from a website, mobile application, interactive voice response system, or any other customer interaction channel it helps if events can be grouped around a related period of activity. Typically, you have a specific intent driving your activity like researching a product, paying a bill, checking account balance, filling out an application, and so on. This grouping helps associate the events to uncover more context about the customer experience.
+When you are working with ExperienceEvent data from a website, mobile application, interactive voice response system, or any other customer interaction channel it helps if events can be grouped around a related period of activity. Typcially, the customer has a specific intent driving their activity like researching a product, paying a bill, checking account balance, filling out an application, etc and this grouping helps associate the events to uncover more context about the customer experience.
 
 Specification:
 
@@ -34,8 +34,8 @@ Syntax: `SESS_TIMEOUT(timestamp, expirationInSeconds) OVER ([partition] [order] 
 | Returned Object Parameters |  Description  | 
 | ---------------------- | ------------- |
 | `timestamp_diff`       | Time in seconds between current record and prior record |
-| `num`                  | A unqiue session number, starting at 1, for the key defined in the `PARTITION BY` of the window function.   |
-| `is_new`               | A boolean used to identify whether a record is the first of a session    |
+| `num`                  | A unqiue session number, starting at 1, for the key defined in the PARTITION BY of the window function.   |
+| `is_new`               | A boolean used to identify if a record is the first of a session    |
 | `depth`                | Depth of the current record within the session  |
 
 Example:
@@ -169,17 +169,17 @@ ORDER BY endUserIds._experience.mcid.id, timestamp ASC
 
 ### Previous/next touch
 
-Understanding how customers navigate within an experience is important. It can be used to understand the customer's depth of engagement, confirm the intended steps of an experience are working as designed, and identify potential pain points impacting the customer. The following ADFs support establishing pathing views from their Previous and Next relationships. You'll be able to create Previous Page and Next Page, or step through multiple events to create Pathing. 
+Understanding how customers navigate within an experience is important. It can be used to understand the customer's depth of engagement, confirm the intended steps of an experience are working as designed, and identify potential pain points impacting the customer. The following ADFs support establishing pathing views from their Previous and Next relationships. You'll be able to create Previous Page and Next Page, or step through mulitple events to create Pathing. 
 
 **Previous touch**
 
-Determines the previous value of a particular field a defined number of steps away within the window. Notice in the example that the `WINDOW` Function is configured with a frame of `ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW` setting the ADF to look at the current row and all before it.
+Determines the previous value of a particular field a defined number of steps away within the window. Notice in the example that the WINDOW Function is configured with a frame of `ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW` setting the ADF to look at the current row and all before it.
 
 Syntax: `PREVIOUS(key, [shift, [ignoreNulls]]) OVER ([partition] [order] [frame])`
 
 | Parameter | Description | 
 | --- | --- |
-| `key` | The column or field from the event. |
+| `key` | The column or field from the event |
 | `shift` | (optional) The number of events away from the current event. Default is 1. |
 | `ingnoreNulls` | Boolean to indicated if null `key` values should be ignored. Default is `false`. |
 
@@ -217,7 +217,7 @@ ORDER BY endUserIds._experience.mcid.id, _experience.analytics.session.num, time
 
 **Next touch**
 
-Determines the next value of a particular field a defined number of steps away within the window. Notice in the example that the `WINDOW` Function is configured with a frame of `ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING` setting the ADF to look at the current row and all after it.
+Determines the next value of a particular field a defined number of steps away within the window. Notice in the example that the WINDOW Function is configured with a frame of `ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING` setting the ADF to look at the current row and all after it.
 
 Syntax: `NEXT(key, [shift, [ignoreNulls]]) OVER ([partition] [order] [frame])`
 
@@ -262,7 +262,7 @@ LIMIT 10
 
 ### Time-between
 
-Time-between allows you to explore latent customer behavior within a period before or after an event occurs. Look at the events within 7 days after a campaign or other type of event across all your customers.
+Time-between allows you to explore latent customer behavior within a period before or after an event occurred. Look at the events within 7 days after a campaign or other type of event across all your customers.
 
 **Time-between previous match**
 
@@ -272,8 +272,8 @@ Syntax: `TIME_BETWEEN_PREVIOUS_MATCH(timestamp, eventDefintion, [timeUnit]) OVER
 
 | Parameter | Description | 
 | --- | --- |
-| `timestamp` | Timestamp field found in the dataset populated on all events. |
-| `eventDefintion` | Expression to qualify the previous event. |
+| `timestamp` | Timestamp field found in the dataset populated on all events |
+| `eventDefintion` | Expression to qualify the previous event |
 | `timeUnit` | Unit of output: days, hours, minutes, and seconds. Default is seconds.  |
 
 Output: Returns a number representing the unit of time since the previous matching event was seen or remains null if no matching event was found.
@@ -318,17 +318,17 @@ LIMIT 10
 
 **Time-between next match**
 
-Provides a new dimension, which measures the time before a particular event occurs.
+Provides a new dimension, that measures the time before which a particular event occured.
 
 Syntax: `TIME_BETWEEN_NEXT_MATCH(timestamp, eventDefintion, [timeUnit]) OVER ([partition] [order] [frame])`
 
 | Parameter | Description | 
 | --- | --- |
-| `timestamp` | Timestamp field found in the dataset populated on all events. |
-| `eventDefintion` | Expression to qualify the next event. |
+| `timestamp` | Timestamp field found in the dataset populated on all events |
+| `eventDefintion` | Expression to qualify the next event |
 | `timeUnit` | Unit of output: days, hours, minutes, and seconds. Default is seconds.  |
 
-Output: Returns a negative number representing the unit of time behind the next matching event or remains null if a matching event is not found.
+Output: Returns a negative number representing the unit of time behind the next matching event or remains null if a matching event was not found.
 
 Example:
 
