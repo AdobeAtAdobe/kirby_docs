@@ -1,9 +1,9 @@
 # Sample ETL Transformations 
 
-This article demonstrates the following example transformations that an ETL developer can encounter:
+This article demonstrates the following example transformations that an extract, transform, load (ETL) developer can encounter:
 
 - [Flat CSV to hierarchy](#flat-csv-to-hierarchy):  
-   Convert a CSV file containing CRM data into hierarchical XDM Profile data. 
+   Convert a CSV file containing CRM data into heirarchical [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md) data. 
 - [Dataframe to XDM schema](#dataframe-to-xdm-schema):   
    Express an XDM schema as a parquet dataframe.
 - [Identities to Identity Map](#identities-to-identity-map):  
@@ -172,7 +172,7 @@ The hierarchy of a dataframe (such as a Parquet file) must match that of the XDM
 
 The structure of the following example dataframe has been mapped to a schema that implements the XDM Profile class, and contains the most common fields associated with schemas of that type.
 
-```shell
+```python
 [
     StructField("person", StructType(
         [
@@ -249,7 +249,7 @@ When constructing a dataframe for use in Adobe Experience Platform, it is import
 
 ### Array of Identities
 
-```shell
+```json
 [
   {
     "xdm:id": "someone1@example.com",
