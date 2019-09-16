@@ -1,8 +1,6 @@
-# Batch Data Ingestion Developer Guide
+# Batch ingestion developer guide
 
-## Overview
-
-This documentation will help you quickly get started with the Adobe Experience Platform Batch Data Ingestion APIs. Specifically, this documentation will show you how to do the following:
+This document provides a comprehensive overview of using [batch ingestion APIs][6]. Specifically, this documentation will show you how to do the following:
 
 - [Ingest JSON files](#how-to-ingest-json-files)
 - [Ingest Parquet files](#how-to-ingest-parquet-files)
@@ -11,6 +9,8 @@ This documentation will help you quickly get started with the Adobe Experience P
 - [Cancel a batch](#cancelling-a-batch)
 - [Delete a batch](#deleting-a-batch)
 - [Replay a batch](#replaying-a-batch)
+
+The appendix to this document provides information for [formatting data to be used for ingestion](#data-transformation-for-batch-ingestion), including sample CSV and JSON data files.
 
 ## Prerequisites
 
@@ -120,6 +120,8 @@ Where:
 ### Upload files
 
 Now that you have created a batch, you can use the `batchId` from before to upload files to the batch. You can upload multiple files to the batch.
+
+> **Note:** See the appendix section for an [example of a properly-formatted JSON data file](#data-transformation-for-batch-ingestion).
 
 #### Request
 
@@ -610,6 +612,8 @@ Where:
 
 Now that you have created a batch, you can use the `batchId` from before to upload files to the batch. You can upload multiple files to the batch.
 
+> **Note:** See the appendix section for an [example of a properly-formatted CSV data file](#data-transformation-for-batch-ingestion).
+
 #### Request
 
 ```shell
@@ -849,10 +853,16 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID
 200 OK
 ```
 
-## Related Links
+## Appendix
 
-- [Batch Ingestion APIs][6]
+### Data transformation for batch ingestion
 
+In order to ingest a data file into Experience Platform, the hierarchical structure of the file must comply with the [Experience Data Model (XDM)](../schema_registry/xdm_system/xdm_system_in_experience_platform.md) schema associated with the dataset being uploaded to.
+
+Information on how to map a CSV file to comply with an XDM schema can be found in the [sample transformations](../../integration_guides/etl_integration_guide/etl_transformation.md) document, along with an example of a properly formatted JSON data file. Sample files provided in the document can be found here:
+
+* [CRM_profiles.csv](https://github.com/adobe/experience-platform-etl-reference/blob/master/example_files/CRM_profiles.csv)
+* [CRM_profiles.json](https://github.com/adobe/experience-platform-etl-reference/blob/master/example_files/CRM_profiles.json)
 
 [1]: ../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md 
 
