@@ -3,7 +3,7 @@
 
 ## Define a SELECT query
 
-The following syntax defines a `SELECT` query supported by XDW Query Service:
+The following syntax defines a `SELECT` query supported by Query Service:
 
 ```
 [ WITH with_query [, ...] ]
@@ -51,7 +51,7 @@ TABLE [ ONLY ] table_name [ * ]
 
 ## JOINS
 
-`SELECT` query using joins has the following syntax:
+A `SELECT` query using joins has the following syntax:
 
 ```
 SELECT statement
@@ -72,32 +72,37 @@ SELECT statement 2
 ```
 ## CREATE TABLE AS SELECT
 
-The following syntax defines a `CREATE TABLE AS SELECT (CTAS)` query supported by XDW Query Service:
+The following syntax defines a `CREATE TABLE AS SELECT` (CTAS) query supported by Query Service:
 
 ```
-CREATE TABLE table_name AS (select_query)
+CREATE TABLE table_name [ WITH (schema='target_schema_title') ] AS (select_query)
 ```
 
-where select_query is a SELECT statement, syntax of which is defined above in this document.
+where `target_schema_title` is the title of XDM schema. Use this clause only if you wish to use an existing XDM schema for the new dataset created by CTAS query.
+
+and `select_query` is a `SELECT` statement, the syntax of which is defined above in this document.
+
+
 
 Example:
 ```
 CREATE TABLE Chairs AS (SELECT color, count(*) AS no_of_chairs FROM Inventory i WHERE i.type=="chair" GROUP BY i.color)
+CREATE TABLE Chairs WITH (schema='target schema title') AS (SELECT color, count(*) AS no_of_chairs FROM Inventory i WHERE i.type=="chair" GROUP BY i.color)
 ```
 Please note that for a given CTAS query:
 
-1. the SELECT statement MUST have alias for the aggregate functions such as COUNT, SUM, MIN, etc. 
-2. the SELECT statement can be provided with or without parentheses().
+1. The `SELECT` statement must have an alias for the aggregate functions such as `COUNT`, `SUM`, `MIN`, and so on. 
+2. The `SELECT` statement can be provided with or without parentheses ().
 
 ## INSERT INTO
 
-The following syntax defines a `INSERT INTO` query supported by XDW Query Service:
+The following syntax defines an `INSERT INTO` query supported by Query Service:
 
 ```
 INSERT INTO table_name select_query
 ```
 
-where select_query is a SELECT statement, syntax of which is defined above in this document.
+where `select_query` is a `SELECT` statement, the syntax of which is defined above in this document.
 
 Example:
 ```
@@ -105,13 +110,13 @@ INSERT INTO Customers SELECT SupplierName, City, Country FROM OnlineCustomers;
 ```
 Please note that for a given INSERT INTO query:
 
-1. the SELECT statement MUST NOT be enclosed in parentheses().
-2. Schema of the result of SELECT statement must conform to that of the table defined in the INSERT INTO.
+1. The `SELECT` statement MUST NOT be enclosed in parentheses ().
+2. The schema of the result of the `SELECT` statement must conform to that of the table defined in the `INSERT INTO` statement.
 
 ## Spark SQL commands 
 
 ### DROP TABLE
-Drop a table and delete the directory associated with the table from the file system if this is not an EXTERNAL table. If the table to drop does not exist, an exception is thrown.
+Drop a table and delete the directory associated with the table from the file system if this is not an EXTERNAL table. If the table to drop does not exist, an exception occurs.
 
 ```
 DROP [TEMP] TABLE [IF EXISTS] [db_name.]table_name
@@ -122,13 +127,13 @@ Parameters
 - `TEMP`: Temporary table 
 
 ### SET
-Set a property, return the value of an existing property, or list all existing properties. If a value is provided for an existing property key, the old value will be overridden.
+Set a property, return the value of an existing property, or list all existing properties. If a value is provided for an existing property key, the old value is overridden.
 
 ```
 SET property_key [ To | =] property_value
 ```
 
-To return the value for any setting, use `SHOW [setting name]`
+To return the value for any setting, use `SHOW [setting name]`.
 
 ## PostgreSQL commands
 
@@ -151,7 +156,7 @@ Parameters
 - `name`: the name of an open cursor to close.
 
 ### COMMIT
-No action will be taken in Query Service as response to Commit transaction statement.
+No action is taken in Query Service as a response to the commit transaction statement.
 
 ```
 COMMIT [ WORK | TRANSACTION ]
@@ -161,16 +166,16 @@ Parameters
 - `TRANSACTION`: Optional key words. They have no effect.
 
 ### DEALLOCATE
-DEALLOCATE is used to deallocate a previously prepared SQL statement. If you do not explicitly deallocate a prepared statement, it is deallocated when the session ends.
+Use `DEALLOCATE` to deallocate a previously prepared SQL statement. If you do not explicitly deallocate a prepared statement, it is deallocated when the session ends.
 
 ```
 DEALLOCATE [ PREPARE ] { name | ALL }
 ```
 
 Parameters
-- `Prepare`: This key word is ignored
+- `Prepare`: This keyword is ignored.
 - `name`: The name of the prepared statement to deallocate.
-- `ALL`: Deallocate all prepared statements
+- `ALL`: Deallocate all prepared statements.
 
 ### DECLARE
 
@@ -182,12 +187,12 @@ DECLARE name CURSOR [ WITH  HOLD ] FOR query
 Parameters
 - `name`: The name of the cursor to be created.
 - `WITH HOLD`: Specifies that the cursor can continue to be used after the transaction that created it successfully commits.
-- `query`: A `SELECT` or `VALUES` command which will provide the rows to be returned by the cursor. 
+- `query`: A `SELECT` or `VALUES` command which provides the rows to be returned by the cursor. 
 
 ### EXECUTE
-`EXECUTE` is used to execute a previously prepared statement. Since prepared statements only exist for the duration of a session, the prepared statement must have been created by a `PREPARE` statement executed earlier in the current session.
+`EXECUTE` is used to execute a previously prepared statement. Because prepared statements only exist for the duration of a session, the prepared statement must have been created by a `PREPARE` statement executed earlier in the current session.
 
-If the `PREPARE` statement that created the statement specified some parameters, a compatible set of parameters must be passed to the `EXECUTE` statement, or else an error is raised. Note that (unlike functions) prepared statements are not overloaded based on the type or number of their parameters; the name of a prepared statement must be unique within a database session.
+If the `PREPARE` statement that created the statement specified some parameters, a compatible set of parameters must be passed to the `EXECUTE` statement, or else an error is raised. Note that prepared statements (unlike functions) are not overloaded based on the type or number of their parameters. The name of a prepared statement must be unique within a database session.
 
 ```
 EXECUTE name [ ( parameter [, ...] ) ]
@@ -195,14 +200,14 @@ EXECUTE name [ ( parameter [, ...] ) ]
 
 Parameters
 - `name`: The name of the prepared statement to execute.
-- `parameter`: The actual value of a parameter to the prepared statement. This must be an expression yielding a value that is compatible with the data type of this parameter, as was determined when the prepared statement was created. 
+- `parameter`: The actual value of a parameter to the prepared statement. This must be an expression yielding a value that is compatible with the data type of this parameter, as determined when the prepared statement was created. 
 
 ### EXPLAIN
-This command displays the execution plan that the PostgreSQL planner generates for the supplied statement. The execution plan shows how the table(s) referenced by the statement will be scanned — by plain sequential scan, index scan, etc. — and if multiple tables are referenced, what join algorithms will be used to bring together the required rows from each input table.
+This command displays the execution plan that the PostgreSQL planner generates for the supplied statement. The execution plan shows how the tables referenced by the statement will be scanned — by plain sequential scan, index scan, and so on — and if multiple tables are referenced, what join algorithms are used to bring together the required rows from each input table.
 
-The most critical part of the display is the estimated statement execution cost, which is the planner's guess at how long it will take to run the statement (measured in cost units that are arbitrary, but conventionally mean disk page fetches). Actually two numbers are shown: the start-up cost before the first row can be returned, and the total cost to return all the rows. For most queries the total cost is what matters, but in contexts such as a subquery in EXISTS, the planner will choose the smallest start-up cost instead of the smallest total cost (since the executor will stop after getting one row, anyway). Also, if you limit the number of rows to return with a LIMIT clause, the planner makes an appropriate interpolation between the endpoint costs to estimate which plan is really the cheapest.
+The most critical part of the display is the estimated statement execution cost, which is the planner's guess at how long it will take to run the statement (measured in cost units that are arbitrary, but conventionally mean disk page fetches). Actually, two numbers are shown: the start-up cost before the first row can be returned, and the total cost to return all the rows. For most queries, the total cost is what matters, but in contexts such as a subquery in EXISTS, the planner chooses the smallest start-up cost instead of the smallest total cost (because the executor stops after getting one row, anyway). Also, if you limit the number of rows to return with a `LIMIT` clause, the planner makes an appropriate interpolation between the endpoint costs to estimate which plan is really the cheapest.
 
-The ANALYZE option causes the statement to be actually executed, not only planned. Then actual run time statistics are added to the display, including the total elapsed time expended within each plan node (in milliseconds) and the total number of rows it actually returned. This is useful for seeing whether the planner's estimates are close to reality.
+The `ANALYZE` option causes the statement to be executed, not only planned. Then, actual run time statistics are added to the display, including the total elapsed time expended within each plan node (in milliseconds) and the total number of rows it returned. This is useful for seeing whether the planner's estimates are close to reality.
 
 ```
 EXPLAIN [ ( option [, ...] ) ] statement
@@ -216,9 +221,9 @@ where option can be one of:
 Parameters
 - `ANALYZE`: Carry out the command and show actual run times and other statistics. This parameter defaults to `FALSE`.
 - `FORMAT`: Specify the output format, which can be TEXT, XML, JSON, or YAML. Non-text output contains the same information as the text output format, but is easier for programs to parse. This parameter defaults to `TEXT`.
-- `statement`: Any `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `VALUES`, `EXECUTE`, `DECLARE`, `CREATE TABLE AS`, or `CREATE MATERIALIZED VIEW AS` statement, whose execution plan you wish to see.
+- `statement`: Any `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `VALUES`, `EXECUTE`, `DECLARE`, `CREATE TABLE AS`, or `CREATE MATERIALIZED VIEW AS` statement, whose execution plan you want to see.
 
-> **Important:** Keep in mind that the statement is actually executed when the ANALYZE option is used. Although EXPLAIN will discard any output that a SELECT would return, other side effects of the statement will happen as usual. 
+> **Important:** Keep in mind that the statement is actually executed when the `ANALYZE` option is used. Although `EXPLAIN` discards any output that a `SELECT` returns, other side effects of the statement happen as usual. 
 
 ### Example:
 To show the plan for a simple query on a table with a single `integer` column and 10000 rows:
@@ -249,18 +254,18 @@ Parameters
 ### PREPARE
 `PREPARE` creates a prepared statement. A prepared statement is a server-side object that can be used to optimize performance. When the `PREPARE` statement is executed, the specified statement is parsed, analyzed, and rewritten. When an `EXECUTE` command is subsequently issued, the prepared statement is planned and executed. This division of labor avoids repetitive parse analysis work, while allowing the execution plan to depend on the specific parameter values supplied.
 
-Prepared statements can take parameters: values that are substituted into the statement when it is executed. When creating the prepared statement, refer to parameters by position, using $1, $2, etc. A corresponding list of parameter data types can optionally be specified. When a parameter's data type is not specified or is declared as unknown, the type is inferred from the context in which the parameter is first referenced (if possible). When executing the statement, specify the actual values for these parameters in the `EXECUTE` statement.
+Prepared statements can take parameters, values that are substituted into the statement when it is executed. When creating the prepared statement, refer to parameters by position, using $1, $2, and so on. A corresponding list of parameter data types can optionally be specified. When a parameter's data type is not specified or is declared as unknown, the type is inferred from the context in which the parameter is first referenced, if possible. When executing the statement, specify the actual values for these parameters in the `EXECUTE` statement.
 
-Prepared statements only last for the duration of the current database session. When the session ends, the prepared statement is forgotten, so it must be recreated before being used again. This also means that a single prepared statement cannot be used by multiple simultaneous database clients; however, each client can create their own prepared statement to use. Prepared statements can be manually cleaned up using the `DEALLOCATE` command.
+Prepared statements only last for the duration of the current database session. When the session ends, the prepared statement is forgotten, so it must be re-created before being used again. This also means that a single prepared statement cannot be used by multiple simultaneous database clients. However, each client can create their own prepared statement to use. Prepared statements can be manually cleaned up using the `DEALLOCATE` command.
 
-Prepared statements potentially have the largest performance advantage when a single session is being used to execute a large number of similar statements. The performance difference will be particularly significant if the statements are complex to plan or rewrite, e.g. if the query involves a join of many tables or requires the application of several rules. If the statement is relatively simple to plan and rewrite but relatively expensive to execute, the performance advantage of prepared statements will be less noticeable.
+Prepared statements potentially have the largest performance advantage when a single session is being used to execute a large number of similar statements. The performance difference is particularly significant if the statements are complex to plan or rewrite, for example if the query involves a join of many tables or requires the application of several rules. If the statement is relatively simple to plan and rewrite but relatively expensive to execute, the performance advantage of prepared statements is less noticeable.
 
 ```
 PREPARE name [ ( data_type [, ...] ) ] AS SELECT
 ```
 Parameters
 - `name`: An arbitrary name given to this particular prepared statement. It must be unique within a single session and is subsequently used to execute or deallocate a previously prepared statement.
-- `data-type`: The data type of a parameter to the prepared statement. If the data type of a particular parameter is unspecified or is specified as unknown, it will be inferred from the context in which the parameter is first referenced. To refer to the parameters in the prepared statement itself, use $1, $2, etc.
+- `data-type`: The data type of a parameter to the prepared statement. If the data type of a particular parameter is unspecified or is specified as unknown, it is inferred from the context in which the parameter is first referenced. To refer to the parameters in the prepared statement itself, use $1, $2, and so on.
 
 
 ### ROLLBACK
@@ -303,7 +308,7 @@ SELECT * INTO films_recent FROM films WHERE date_prod >= '2002-01-01';
 ```
 
 ### SHOW
-`SHOW` will display the current setting of run-time parameters. These variables can be set using the SET statement, by editing the postgresql.conf configuration file, through the `PGOPTIONS` environmental variable (when using libpq or a libpq-based application), or through command-line flags when starting the postgres server.
+`SHOW` displays the current setting of run-time parameters. These variables can be set using the `SET` statement, by editing the postgresql.conf configuration file, through the `PGOPTIONS` environmental variable (when using libpq or a libpq-based application), or through command-line flags when starting the postgres server.
 
 ```
 SHOW name
@@ -330,7 +335,7 @@ SHOW DateStyle;
 ```
 
 ### START TRANSACTION
-This command is just parsed and sent the completed command back to client. This is the same as the `BEGIN` command.
+This command is parsed and sends the completed command back to client. This is the same as the `BEGIN` command.
 
 ```
 START TRANSACTION [ transaction_mode [, ...] ]
