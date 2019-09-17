@@ -1,110 +1,116 @@
 # Identity Service overview
 
-Delivering relevant digital experiences requires having a complete understanding of your customer. This is made more difficult when your customer data is fragmented across disparate systems, causing each individual customer to appear to have multiple "identities". Adobe Experience Platform Identity Service helps you to gain a better view of your customer and their behavior by bridging identities across devices and systems, allowing you to deliver impactful, personal digital experiences in real-time.
+Delivering relevant digital experiences requires resolving all identities of each of your end users, giving you the power to react to your consumers based on unlimited aspects of their profile or behavior. Identity Service solves the fundamental challenge posed by the disconnected identities of your customers caused by the fragmented nature of their data as it exists across each of the disparate systems at play in your organization's ecosystem. It does this by bridging identities across devices and across the various systems used by your consumers to engage with your brand. In this way, Identity Service facilitates a complete understanding of your customers and their behavior so you can deliver impactful digital experiences in real-time.
 
-This document provides a high level overview of Identity Service and will help you understand the role of identities within Experience Platform, including:
-* [Understanding Identity Service](#understanding-identity-service): See the big picture of Identity Service and its role within Experience Platform.  
-* [Identity namespaces and identity graphs](#identity-namespaces-and-identity-graphs): Learn how Experience Platform reconciles online and offline customer activity into useful data.
-* [Supplying identity data to Identity Service](#supplying-identity-data-to-identity-service): Learn how data provided to Experience Platform is processed prior to being used by Identity Service.
-* [Data governance](#data-governance): Learn how Data Governance keeps your customers' personally identifiable information (PII) secure.
- 
+This document describes the function and use of Identity Service on Adobe Experience Platform.
+
+In specific, this document will help orient you if you have questions like:
+
+* What is Identity Service, and what are the related components?
+* How might unified profiles work for me, and what role does Identity Service play in that?
+* What is an identity graph, and what options do I have for finding related identities?
+* How do I provide identity data, and how does Identity Service manage my private identity graph?
+* How do I use Identity Service to work with my identity graph directly, as an integration?
+
+---
+
 ## Understanding Identity Service
 
-Each day, customers interact with your business and establish a continuously growing relationship with your brand. A typical customer may be active in any number of systems within your organization's data infrastructure, such as your eCommerce, loyalty, and help-desk systems. That same customer may also engage anonymously on any number of devices. Identity Service allows you to piece together a complete picture of your customer, aggregating related data that might otherwise be siloed across disparate systems.
+Each day, you receive countless visits from consumers seeking a relationship with your brand. A typical consumer may have data and activity in any number of the systems at play in your organization's infrastructure, such as your eCommerce, loyalty and help-desk systems. That same consumer may also engage anonymously on any number of devices. Identity Service provides the power to piece together the complete picture of your consumers, facilitating the aggregation of related data otherwise existing in silos across disparate systems.
 
-Consider an everyday example of a consumer's relationship with your brand:
+Consider an every day example of a consumer's relationship with your brand.
 
-Mary has an account on your eCommerce site where she has completed a few orders in the past. She typically uses her personal laptop to shop, where she logs in each time. However, during one of her visits she uses her tablet to shop for sandals, but does not place an order and does not log in. 
+> Mary has an account on your eCommerce site where she has completed a few orders in the past. She typically uses her personal laptop to shop, where she logs in each time. She visits your site on her tablet and shops for sandals, but doesn't place an order and doesn't log in. 
+> 
+> At this point, Mary's activity appears as two separate profiles: Mary's eCommerce login and her device, perhaps identified by device ID. 
+> 
+> When Mary subscribes to your newsletter on her tablet and enters her email address, send the updated record data using Streaming Ingestion, updating the profile data and adding the new identity: the email address. Identity Service now relates Mary's device activity with her eCommerce account history.
+> 
+> By the next click on her tablet, your targeted content could reflect Mary's full profile and history, rather than just a tablet used by a window shopper. 
 
-At this point, Mary's activity appears as two separate profiles: her eCommerce login and her tablet device, perhaps identified by device ID. 
+By uploading all identity data, Identity Service builds and maintains relationships between identities found to be related, facilitating the unified profile. For more on this, visit the [Unified Profile overview](../unified_profile_architectural_overview/unified_profile_architectural_overview.md). Identity Service can also be used in your integrations. To learn more, start with the [Identity Service API overview](identity_service_api.md).
 
-Mary later resumes her tablet session and provides her email address while subscribing to your newsletter. Upon doing so, streaming ingestion adds a new identity as record data within her profile. As a result, Identity Service now relates Mary's tablet device activity with her eCommerce account history.
-
-By the next click on her tablet, your targeted content could reflect Mary's full profile and history, rather than just a tablet used by an unknown shopper. 
-
-
-The identity relationships that Identity Service defines and maintains are leveraged by Real-time Customer Profile to build a complete picture of a customer and their interactions with your brand. For more information, see the [Real-time Customer Profile overview](../unified_profile_architectural_overview/unified_profile_architectural_overview.md). 
+![Identity stitching on Platform](identity-service-stitching.png)
 
 ### Identities
 
-An identity is data that is unique to an entity, typically an individual person. An identity such as a login ID, ECID, or loyalty ID is referred to as a **known identity**. 
+An identity is data that can be used to identify an individual, where an individual could be a person or organization. An identity such as a login ID, ECID, and loyalty ID, is referred to as a known identity. Personally identifiable information (PII) is information that can identify a person directly. PII is profile data such as email address and phone number, and is the data which would be used to match a person across systems.
 
-PII such as email address and phone number, serves to directly identify a customer. As a result, PII is used to match a customer's multiple identities across systems. 
+Unknown, or anonymous identities single out a device without identifying the actual person. Included in this category are a visitor's IP address, ECID, or AMO cookie ID. Much behavioral data could be obtained as performed on a device using unknown identities, but associating identities across devices or mediums is limited until your users supply PII during their journey.
 
-**Unknown or anonymous identities** single out a device without identifying the actual person using it. This category includes information such as a visitor's IP address and cookie ID. While behavioral data can be gathered from a device using unknown identities, associating these identities across devices or mediums is limited until your customer supplies PII during their journey.
+Some examples could be:
 
-As shown in the image below, known and anonymous identities are both important components of [identity graphs](#identity-graphs), which are discussed later in this document.
-![Identity stitching on Platform](identity-service-stitching.png)
-
-Examples of Identity Service implementations include:
-
-* A telecom company may rely on the "phone number" value, where a phone number would refer to the same individual of interest in both offline and online data sets.
-* A retail company may use "email address" in offline data sets and ECID in online datasets due to the high percentage of anonymous visitors.
-* A bank may prefer "account number" in offline data sets, such as branch transactions. They may depend on "login ID" in online data sets, because most visitors would be authenticated during their visit.
-* Your customers may also have unique proprietary IDs, such as GUID or other universally unique identifiers.
+* A Telecom company may rely on the "phone number" value, where a phone number would refer to the same individual of interest in both offline and online data sets
+* A retail company may use "email address" in offline data sets and ECID in online data sets, perhaps because of the high percentage of anonymous visitors
+* A bank may prefer "account number" in offline data sets, such as branch transactions. They may depend on "login ID" in online data sets, because most visitors would be authenticated during their visit
+* Companies like Adobe prefer the "GUID" value, a proprietary ID
 
 ### Identity data
 
-If you asked a person "What is your ID?" without any further context, it would be difficult for them to provide a useful answer. By the same logic, a string value representing an identity value, whether it is a system generated ID or an email address, is only complete when supplied with a qualifier that gives the string value context: the identity namespace.
+Consider this question:
 
-## Identity namespaces and identity graphs
- 
-You customers may interact with your brand through a combination of online and offline channels, resulting in the challenge of how to reconcile those fragmented interactions into a single customer identity. 
+> What is your ID?
 
-Experience Platform addresses this challenge through two concepts: [identity namespaces](#identity-namespaces) and [identity graphs](#identity-graphs).
+It would be impossible to interpret any value provided in response to that question without context. The string value representing an identity value, whether it is a system generated ID or an email address, is only complete when supplied with a qualifier that gives the string value context; the identity namespace.
 
 ### Identity namespaces
 
-When your customer is interacting with your brand across multiple channels including web, mobile application, call center, or a storefront it can be difficult to understand and serve them if you cannot observe and track their activity across channels.
+Identity namespaces provide the context in which a given ID can be used to look up or refer to an individual and serves to compartmentalize the value provided as the identity value.
 
-Understanding your customer across multiple devices and channels starts by recognizing them in each channel. Adobe Experience Platform achieves this by using identity namespaces.
-An identity namespace is an identifier such as device ID or email ID used to provide the context from which data originates. Identity namespaces are used to look up or link individual identities, and provide context for identity values to prevent data collisions. For example, ID "123456" may refer to one person in your eCommerce system, and a different person in your help desk system. For more information, see the [identity namespace overview](../identity_namespace_overview/identity_namespace_overview.md).
+Identity namespaces also prevent collision of identities that belong to different namespaces. For example, ID "123456" may refer to one person in your eCommerce system, and someone altogether different in your help desk system. For more information, see the [Identity Namespace overview](../identity_namespace_overview/identity_namespace_overview.md).
 
-<!-- Alex to open separate ticket to review this section (Niqui's original content) with PM -->
 ### Identity graphs
 
-An identity graph is a map of relationships between different identity namespaces, providing you with a visual representation of how your customer interacts with your brand across different channels. 
+An identity graph is a map of relationships between identities that updates with customer activity in near real time. Identity Service manages an identity graph visible by only your organization and built based on your data, referred to as the private graph. Identity Service augments your private graph when a record of ingested data contains more than one identity, adding a relationship between the identities found.
 
-All customer identity graphs are collectively managed and updated by Identity Service in near real-time, in response to customer activity. 
+As an example of the potential types of factors to consider when supplying and labeling identity data: Using phone numbers such as "work phone" may result in more relationships than you intend in the identity graph. You may find many employees refer to the same number for work, and that "home" and "mobile" better serve to keep relationships as precise as possible.
 
-Identity Service manages an identity graph visible by only your organization and built based on your data, referred to as the private graph. Identity Service augments your private graph when an ingested data record contains more than one identity, adding a relationship between the identities found.
+<!-- Update this section with reference to Co-op doc when it's avail -->
 
-As an example of the potential types of factors to consider when supplying and labeling identity data, using phone numbers such as "work phone" may result in more relationships than you intend in the identity graph. You may find many employees refer to the same number for work, and that "home" and "mobile" better serve to keep relationships as precise as possible.
+---
 
 ## Supplying identity data to Identity Service
 
-This section covers how data provided to Adobe Experience Platform is processed prior to being used by Identity Service to build an identity graph for each customer.
+This section discusses the ways to format and send identity data to Platform for Identity Service to process and build your private identity graph.
 
 ### Decide on identity fields
 
-Depending on your enterprise data collection strategy, the data fields you label as identities determine which data is included in your identity map. To get the maximum benefit of Adobe Experience Platform and the most comprehensive customer identities possible, you should upload both online and offline data. 
-* Online data is data that describes online presence and behavior, such as usernames and email addresses.
-* Offline data refers to data that is not directly related to online presence, such as IDs from CRM systems. This type of data makes your identities more robust and supports data cohesion across your disparate systems.
+Depending on your enterprise data collection strategy, you will decide which fields you want to mark as identity, or which data to include in your identity map. To get the maximum benefit of Platform and the most complete identities, you should upload both online and offline data. Online data is data such as a username or perhaps email address, and describes online presence and behavior. Offline data refers to data such as from your CRM or the ID from a loyalty program and makes your identities more robust and provides cohesion of the data across your disparate systems.
 
-### Create additional identity namespaces
+### Create needed identity namespaces
 
-While Experience Platform offers a variety of standard namespaces, you may need to create additional namespaces to properly categorize your identities. For more information, see the section on [viewing and creating namespaces for your organization](../identity_namespace_overview/identity_namespace_overview.md#view-and-create-namespaces-for-your-organization) in the identity namespace overview.
+To properly categorize your identities, you may need to create additional namespaces. For information on viewing and creating namespaces, view the section [View and create namespaces for your organization](../identity_namespace_overview/identity_namespace_overview.md#view-and-create-namespaces-for-your-organization) in the identity namespace overview.
 
-> **Note:** Identity namespaces are a qualifier for identities. As a result, once a namespace has been created, it cannot be deleted.
+> **Note:** Namespaces are a qualifier for identities. As such, once a namespace has been created, it cannot be deleted.
 
-### Include identity data in Experience Data Model (XDM)
+### Include identity data in XDM
 
-As the standardized framework by which Platform organizes customer data, Experience Data Model (XDM) allows data to be shared and understood across Experience Platform and other services interacting with Platform. For more information see the [XDM System overview](../schema_registry/xdm_system/xdm_system_in_experience_platform.md).
+Both consumer record and time series schemas provide the means to include identity data. As data is ingested, data fragments containing more than one identifier create new relationships in the identity graph between those identities.
 
-Both record and time series schemas provide the means to include identity data. As data is ingested, the identity graph will create new relationships between data fragments from different namespaces if they are found to share common identity data.
+There are two ways to include identities in XDM data. You may use either or both simultaneously.
 
-### Marking XDM fields as identity
+* Mark XDM fields as identity - Label an XDM field such that values are interpreted as identities in Identity Service automatically.
+* Identity map - An `identitymap` is a standard XDM mixin that is a collection of identities related to an individual, included in the Record and Time Series schemas.
 
-Any field of type `string` in schemas that implement either record or time series XDM classes can be labeled as an identity field. As a result, all data ingested into that field would be considered identity data.  
+#### Marking XDM fields as identity
 
-Identity fields also allow for the linking of identities if they share common PII data.
-For example, by labeling phone number fields as identity fields, Identity Service automatically graphs relationships with the other individuals found to be using the same phone number.
+Any string typed field in schemas implementing either record or time series XDM classes can be labeled as an identity field, and is the recommended approach for sending identity data to Identity Service. After doing so, any value provided for that attribute would be considered an identity and the identity graph would be enhanced with the relationships between it and the other identities in the data. 
 
->Note: The namespace of resulting identities is provided at the time the field is labeled. 
+By using identity fields, identities can be linked as they are found to share PII values organically. For instance, by labeling phone number fields as identity, Identity Service automatically graphs relationships with the other individuals found using the same phone number.
 
-<!--- ### Identity maps
+An XDM schema field can be labeled as identity using the Experience Platform UI or the Identity Service API. The namespace of resulting identities is provided at the time the field is labeled.
 
-Identities can be represented as a map of XDM data ingested into Adobe Experience Platform. Below is an example of the `identityMap` construct, providing a collection of known identities, each keyed by a namespace. Each identity has a unique `id`, and a `primary` boolean indicating whether the identity in question is the primary identity of the schema. 
+To learn how to label an identity field via API, see [Defining descriptors in the API](../schema_registry/schema_registry_developer_guide.md#defining-descriptors-in-the-api).
+
+Using the UI, the tools to mark a field as identity are located on the right side rail when viewing the schema. You will be presented with an option to mark the field as "Primary Identity" as well as a dropdown list of "Identity Type" (namespaces) options available to your organization.
+
+![](schema-label-identity.png)
+
+#### Identity maps
+
+Identities can be provided as a map in XDM data ingested into Platform. Using this method, provide a collection of identity constructs representing known identities, keyed on the namespace.
+
+The following demonstrates an `identityMap` construct, providing multiple values for the "Email" namespace, as well as values for other namespaces, specifying "ECID" as the primary identity.
 
 ```
 {
@@ -141,20 +147,33 @@ Identities can be represented as a map of XDM data ingested into Adobe Experienc
 }
 ```
 
-For more information on schemas and XDM System, see [XDM System in Adobe Experience Platform](../schema_registry/xdm_system/xdm_system_in_experience_platform.md). --->
+To gain a deeper understanding of XDM and schemas, visit [XDM System in Adobe Experience Platform](../schema_registry/xdm_system/xdm_system_in_experience_platform.md).
 
-### Configure a dataset for Identity Service
+### Configure your dataset for Identity Service
 
-During the streaming ingestion process, Identity Service automatically extracts identity data from record and time series data. However, before data can be ingested, it must be enabled for Identity Service. See the tutorial on  [configuring a Dataset for Real-time Customer Profile and Identity Service using APIs](../../tutorials/unified_profile_dataset_tutorial/unified_profile_dataset_api_tutorial.md) for more information.
+Identity Service ingests identity data from record or time series data sent using streaming ingestion automatically, without configuration. A dataset, however, must be enabled for Identity Service before it will consume ingested data. On the Platform UI, both Unified Profile and Identity Service are enabled on a dataset using the same control - the "Unified Profile" switcher - from the right rail of the dataset's detail page. 
 
-### Ingest data to Identity Service
+![](enable-ds-identity-service.png)
 
-Identity Service consumes XDM compliant data sent to Experience Platform either by [batch ingestion](../ingest_architectural_overview/ingest_architectural_overview.md) or [streaming ingestion](../streaming_ingest/streaming_ingest_overview.md).
+For information on how to do this, visit [Configuring a Dataset for Unified Profile and Identity Service using APIs](../../tutorials/unified_profile_dataset_tutorial/unified_profile_dataset_api_tutorial.md).
 
-## Data governance
+### Upload your data to Adobe Experience Platform
 
-Adobe Experience Platform was built with privacy in mind and includes a data governance framework to protect your customer PII data. Identity data under the "email" or "phone" namespace is encrypted by default, but in order to ensure sensitive data is encrypted before it is persisted, data usage labels can be applied to data as it is ingested or once it arrives in Platform. For more information, please read the [Data Governance overview](../data_governance/dule_overview.md).
+To get the most complete consumer identity, aim to upload profile and behavioral data from all of the systems where relevant data is stored, and from all systems used by your consumers to interact with your brand. 
 
-## Next Steps
+Identity Service consumes XDM compliant data sent to Platform by way of Batch or Streaming Ingestion.
 
-Now that you understand the key concepts of Identity Service and its role within Experience Platform, you can begin to learn how to work with your identity graph using the [Identity Service API](identity_services_api.md).
+#### Batch ingestion
+
+Batches of data can be uploaded to datasets in Platform using [Batch Ingestion](../ingest_architectural_overview/ingest_architectural_overview.md).
+
+#### Streaming ingestion
+
+Use Platform's [Streaming Ingestion](../streaming_ingest/getting_started_with_platform_streaming_ingestion.md) to upload data, allowing you to react to changes to your consumers' data and to their interactions with your brand near real-time. 
+
+
+## Data handling
+
+Identity Service was built with privacy in mind. Using DULE labeling, you can ensure your customers' sensitive PII is always encrypted prior to being persisted. This is accomplished by applying the `I1` label to the schema field. For more information on DULE, visit the [Data Usage Labeling and Enforcement (DULE) User Guide](../../../../../end-user/markdown/dule_overview/dule_overview.md).
+
+Identity data under either the "email" or "phone" namespace is always encrypted by default.
