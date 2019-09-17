@@ -1,0 +1,1094 @@
+swagger: '2.0'
+info:
+  description: >-
+    
+    Real-time Customer Profile Edge Service maintains routing and replication information for profile projections.
+    
+
+    Related documentation:
+
+      * [Real-time Customer Profile overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
+      * [Configure edge destinations and projections using APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_edge_tutorial.md)
+
+
+    Notes:
+       * PLATFORM Gateway URL: https://<span>platform.adobe.io/
+      * Base path for this API: /data/core/ups/config
+      * Example of a complete path: https://<span>platform.adobe.io/data/core/ups/config/projections
+      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+
+  version: 0.0.1-SNAPSHOT
+  title: Edge Profile Projection Configuration API
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
+tags:
+  - name: Projections
+    description: >-
+      Edge projection configurations determine what data should be projected to each edge.
+  - name: Destinations
+    description: >-
+      Edge projection destinations define where to route a projection that has been created or changed.
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  '/projections/{projectionid}':
+    get:
+      tags:
+        - Projections
+      summary: Lookup an edge projection configuration by ID. The latest definition is returned.
+      description: ''
+      operationId: getProjectionConfiguration
+      produces:
+        - application/vnd.adobe.platform.projectionConfig+json; version=1
+      parameters:
+        - name: projectionid
+          in: path
+          required: true
+          type: string
+          pattern: '[0-9a-zA-Z\-]+'
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          pattern: '[a-zA-Z0-9_.\-]+@AdobeOrg'
+          x-example: xxx@AdobeOrg
+        - name: Authorization
+          in: header
+          description: IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-gw-ims-authorization
+          in: header
+          description: Gateway IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-user-token
+          in: header
+          description: User access token.
+          required: false
+          type: string
+          x-example: Bearer <token>
+        - name: x-request-id
+          in: header
+          description: Optional header that may be used for debugging purposes when investigating issues with a client flow. The same ID can be used to identify a single request to the service from a flow. A new ID should be created for each request.
+          required: false
+          type: string
+          x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
+      responses:
+        '200':
+          description: The edge projection configuration is returned.
+          schema:
+            $ref: '#/definitions/ProjectionConfig'
+        '400':
+          description: The request is malformed.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '403':
+          description: The requester is not authorized to access the resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '404':
+          description: The edge projection configuration has not yet been created.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '422':
+          description: Client sent a correct request that contained invalid values for one or more parameters.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+    put:
+      tags:
+        - Projections
+      summary: Create or update an edge projection configuration by ID. Overwrites the entire configuration.
+      description: 'The API response is immediate, but the actual changes to the projections on the edges take place asynchronously. There is no guarantee whatsoever that changes to the definition of the projection are reflected instantly on the edges – in fact, it''s best to assume that there is a noticeable amount of time between the update of the definition of the projection and the update of the actual projection on any edge.'
+      operationId: updateProjectionConfiguration
+      consumes:
+        - application/vnd.adobe.platform.projectionConfig+json; version=1
+      produces:
+        - application/vnd.adobe.platform.projectionConfig+json; version=1
+      parameters:
+        - name: projectionid
+          in: path
+          required: true
+          type: string
+          pattern: '[0-9a-zA-Z\-]+'
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/InputProjectionConfig'
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          pattern: '[a-zA-Z0-9_.\-]+@AdobeOrg'
+          x-example: xxx@AdobeOrg
+        - name: Authorization
+          in: header
+          description: IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-gw-ims-authorization
+          in: header
+          description: Gateway IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-user-token
+          in: header
+          description: User access token.
+          required: false
+          type: string
+          x-example: Bearer <token>
+        - name: x-request-id
+          in: header
+          description: Optional header that may be used for debugging purposes when investigating issues with a client flow. The same ID can be used to identify a single request to the service from a flow. A new ID should be created for each request.
+          required: false
+          type: string
+          x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
+      responses:
+        '200':
+          description: Update was successful.
+          schema:
+            $ref: '#/definitions/ProjectionConfig'
+        '400':
+          description: The request is malformed.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '403':
+          description: The requester is not authorized to access the resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '404':
+          description: Projection config not found.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '422':
+          description: Client sent a correct request that contained invalid values for one or more parameters.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+    delete:
+      tags:
+        - Projections
+      summary: Delete an edge projection configuration by ID.
+      description: 'API response is immediate, but the actual changes to the projections on the edges take place asynchronously. Eventually, the result is that the profile data for the given customer will be wiped from all edges.'
+      operationId: deleteProjectionConfiguration
+      parameters:
+        - name: projectionid
+          in: path
+          required: true
+          type: string
+          pattern: '[0-9a-zA-Z\-]+'
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          pattern: '[a-zA-Z0-9_.\-]+@AdobeOrg'
+          x-example: xxx@AdobeOrg
+        - name: Authorization
+          in: header
+          description: IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-gw-ims-authorization
+          in: header
+          description: Gateway IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-user-token
+          in: header
+          description: User access token.
+          required: false
+          type: string
+          x-example: Bearer <token>
+        - name: x-request-id
+          in: header
+          description: Optional header that may be used for debugging purposes when investigating issues with a client flow. The same ID can be used to identify a single request to the service from a flow. A new ID should be created for each request.
+          required: false
+          type: string
+          x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
+      responses:
+        '204':
+          description: The edge projection configuration is successfully deleted.
+        '400':
+          description: The request is malformed.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '403':
+          description: The requester is not authorized to access the resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '404':
+          description: The edge projection configuration has not yet been created.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '422':
+          description: Client sent a correct request that contained invalid values for one or more parameters.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+  /projections:
+    get:
+      tags:
+        - Projections
+      summary: Retrieve a list of edge projection configurations. The latest definitions are returned.
+      description: ''
+      operationId: listProjectionConfigurations
+      produces:
+        - application/vnd.adobe.platform.projectionConfigList+json; version=1
+      parameters:
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          pattern: '[a-zA-Z0-9_.\-]+@AdobeOrg'
+          x-example: xxx@AdobeOrg
+        - name: schemaName
+          in: query
+          description: XDM schema name
+          required: false
+          type: string
+          x-example: Profile
+        - name: name
+          in: query
+          description: projection name
+          required: false
+          type: string
+          x-example: mobile_profile
+        - name: Authorization
+          in: header
+          description: IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-gw-ims-authorization
+          in: header
+          description: Gateway IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-user-token
+          in: header
+          description: User access token.
+          required: false
+          type: string
+          x-example: Bearer <token>
+        - name: x-request-id
+          in: header
+          description: Optional header that may be used for debugging purposes when investigating issues with a client flow. The same ID can be used to identify a single request to the service from a flow. A new ID should be created for each request.
+          required: false
+          type: string
+          x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
+      responses:
+        '200':
+          description: The edge projection configuration is returned.
+          schema:
+            $ref: '#/definitions/ProjectionConfigurationList'
+        '400':
+          description: The request is malformed.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '403':
+          description: The requester is not authorized to access the resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '422':
+          description: Client sent a correct request that contained invalid values for one or more parameters.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+    post:
+      tags:
+        - Projections
+      summary: Create a new edge projection configuration.
+      description: 'The API response is immediate, but the actual changes to the projections on the edges take place asynchronously. There is no guarantee whatsoever that changes to the definition of the projection are reflected instantly on the edges – in fact, it''s best to assume that there is a noticeable amount of time between the update of the definition of the projection and the update of the actual projection on any edge.'
+      operationId: createProjectionConfiguration
+      consumes:
+        - application/vnd.adobe.platform.projectionConfig+json; version=1
+      produces:
+        - application/vnd.adobe.platform.projectionConfig+json; version=1
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/InputProjectionConfig'
+          x-examples:
+            properties: 'person.gender,addresses.city,phoneNumbers.number'
+        - name: schemaName
+          in: query
+          description: XDM schema name
+          required: true
+          type: string
+          x-example: Profile
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          pattern: '[a-zA-Z0-9_.\-]+@AdobeOrg'
+          x-example: xxx@AdobeOrg
+        - name: Authorization
+          in: header
+          description: IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-gw-ims-authorization
+          in: header
+          description: Gateway IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-user-token
+          in: header
+          description: User access token.
+          required: false
+          type: string
+          x-example: Bearer <token>
+        - name: x-request-id
+          in: header
+          description: Optional header that may be used for debugging purposes when investigating issues with a client flow. The same ID can be used to identify a single request to the service from a flow. A new ID should be created for each request.
+          required: false
+          type: string
+          x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
+      responses:
+        '201':
+          description: Creation was successful.
+          schema:
+            $ref: '#/definitions/ProjectionConfig'
+        '400':
+          description: The request is malformed.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '403':
+          description: The requester is not authorized to access the resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '409':
+          description: Projection config already exists.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '422':
+          description: Client sent a correct request that contained invalid values for one or more parameters.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+  '/destinations/{destinationId}':
+    get:
+      tags:
+        - Destinations
+      summary: Lookup an edge projection destination by ID. The latest definition is returned.
+      description: ''
+      operationId: getProjectionDestination
+      produces:
+        - application/vnd.adobe.platform.projectionDestination+json; version=1
+      parameters:
+        - name: destinationId
+          in: path
+          required: true
+          type: string
+          pattern: '[0-9a-zA-Z\-]+'
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          pattern: '[a-zA-Z0-9_.\-]+@AdobeOrg'
+          x-example: xxx@AdobeOrg
+        - name: Authorization
+          in: header
+          description: IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-gw-ims-authorization
+          in: header
+          description: Gateway IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-user-token
+          in: header
+          description: User access token.
+          required: false
+          type: string
+          x-example: Bearer <token>
+        - name: x-request-id
+          in: header
+          description: Optional header that may be used for debugging purposes when investigating issues with a client flow. The same ID can be used to identify a single request to the service from a flow. A new ID should be created for each request.
+          required: false
+          type: string
+          x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
+      responses:
+        '200':
+          description: The projection destination is returned.
+          schema:
+            $ref: '#/definitions/ProjectionDestinationRepresentation'
+        '400':
+          description: The request is malformed.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '403':
+          description: The requester is not authorized to access the resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '404':
+          description: The projection destination has not yet been created.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '422':
+          description: Client sent a correct request that contained invalid values for one or more parameters.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+    put:
+      tags:
+        - Destinations
+      summary: Create or update an edge projection destination by ID. Overwrites the entire configuration.
+      description: 'The API response is immediate, but the actual changes to the projections on the edges take place asynchronously. There is no guarantee whatsoever that changes to the definition of the projection are reflected instantly on the edges – in fact, it''s best to assume that there is a noticeable amount of time between the update of the definition of the projection and the update of the actual projection on any edge.'
+      operationId: putProjectionDestination
+      consumes:
+        - application/vnd.adobe.platform.projectionDestination+json; version=1
+      produces:
+        - application/vnd.adobe.platform.projectionDestination+json; version=1
+      parameters:
+        - name: destinationId
+          in: path
+          required: true
+          type: string
+          pattern: '[0-9a-zA-Z\-]+'
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/InputProjectionDestination'
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          pattern: '[a-zA-Z0-9_.\-]+@AdobeOrg'
+          x-example: xxx@AdobeOrg
+        - name: Authorization
+          in: header
+          description: IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-gw-ims-authorization
+          in: header
+          description: Gateway IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-user-token
+          in: header
+          description: User access token.
+          required: false
+          type: string
+          x-example: Bearer <token>
+        - name: x-request-id
+          in: header
+          description: Optional header that may be used for debugging purposes when investigating issues with a client flow. The same ID can be used to identify a single request to the service from a flow. A new ID should be created for each request.
+          required: false
+          type: string
+          x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
+      responses:
+        '200':
+          description: Update was successful.
+          schema:
+            $ref: '#/definitions/ProjectionDestinationRepresentation'
+        '400':
+          description: The request is malformed.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '403':
+          description: The requester is not authorized to access the resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '404':
+          description: Projection destination not found.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '422':
+          description: Client sent a correct request that contained invalid values for one or more parameters.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+    delete:
+      tags:
+        - Destinations
+      summary: Delete an edge projection destination by ID.
+      description: 'API response is immediate, but the actual changes to the projections on the edges take place asynchronously. Eventually, the result is that the profile data for the given customer will be wiped from all edges.'
+      operationId: deleteProjectionDestination
+      parameters:
+        - name: destinationId
+          in: path
+          required: true
+          type: string
+          pattern: '[0-9a-zA-Z\-]+'
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          pattern: '[a-zA-Z0-9_.\-]+@AdobeOrg'
+          x-example: xxx@AdobeOrg
+        - name: Authorization
+          in: header
+          description: IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-gw-ims-authorization
+          in: header
+          description: Gateway IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-user-token
+          in: header
+          description: User access token.
+          required: false
+          type: string
+          x-example: Bearer <token>
+        - name: x-request-id
+          in: header
+          description: Optional header that may be used for debugging purposes when investigating issues with a client flow. The same ID can be used to identify a single request to the service from a flow. A new ID should be created for each request.
+          required: false
+          type: string
+          x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
+      responses:
+        '204':
+          description: The edge projection destination is successfully deleted.
+        '400':
+          description: The request is malformed.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '403':
+          description: The requester is not authorized to access the resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '404':
+          description: The edge projection destination has not yet been created.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '409':
+          description: The projection destination is still referenced by a projection configuration
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '422':
+          description: Client sent a correct request that contained invalid values for one or more parameters.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+  /destinations:
+    get:
+      tags:
+        - Destinations
+      summary: Retrieve a list of edge projection destinations. The latest definitions are returned.
+      description: ''
+      operationId: listProjectionDestinations
+      produces:
+        - application/vnd.adobe.platform.projectionDestinationList+json; version=1
+      parameters:
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          pattern: '[a-zA-Z0-9_.\-]+@AdobeOrg'
+          x-example: xxx@AdobeOrg
+        - name: Authorization
+          in: header
+          description: IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-gw-ims-authorization
+          in: header
+          description: Gateway IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-user-token
+          in: header
+          description: User access token.
+          required: false
+          type: string
+          x-example: Bearer <token>
+        - name: x-request-id
+          in: header
+          description: Optional header that may be used for debugging purposes when investigating issues with a client flow. The same ID can be used to identify a single request to the service from a flow. A new ID should be created for each request.
+          required: false
+          type: string
+          x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
+      responses:
+        '200':
+          description: The projection destination is returned.
+          schema:
+            $ref: '#/definitions/ProjectionDestinationRepresentation'
+        '400':
+          description: The request is malformed.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '403':
+          description: The requester is not authorized to access the resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '404':
+          description: The projection destination has not yet been created.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '422':
+          description: Client sent a correct request that contained invalid values for one or more parameters.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+    post:
+      tags:
+        - Destinations
+      summary: Create a new edge projection destination.
+      description: 'The API response is immediate, but the actual changes to the projections on the edges take place asynchronously. There is no guarantee whatsoever that changes to the definition of the projection are reflected instantly on the edges – in fact, it''s best to assume that there is a noticeable amount of time between the update of the definition of the projection and the update of the actual projection on any edge.'
+      operationId: createProjectionDestination
+      consumes:
+        - application/vnd.adobe.platform.projectionDestination+json; version=1
+      produces:
+        - application/vnd.adobe.platform.projectionDestination+json; version=1
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/InputProjectionDestination'
+          x-examples:
+            type: EDGE
+        - name: x-gw-ims-org-id
+          in: header
+          description: IMS Organization ID
+          required: true
+          type: string
+          pattern: '[a-zA-Z0-9_.\-]+@AdobeOrg'
+          x-example: xxx@AdobeOrg
+        - name: Authorization
+          in: header
+          description: IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-gw-ims-authorization
+          in: header
+          description: Gateway IMS service token.
+          required: true
+          type: string
+          x-example: Bearer <token>
+        - name: x-user-token
+          in: header
+          description: User access token.
+          required: false
+          type: string
+          x-example: Bearer <token>
+        - name: x-request-id
+          in: header
+          description: Optional header that may be used for debugging purposes when investigating issues with a client flow. The same ID can be used to identify a single request to the service from a flow. A new ID should be created for each request.
+          required: false
+          type: string
+          x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
+      responses:
+        '201':
+          description: Creation was successful.
+          schema:
+            $ref: '#/definitions/ProjectionDestinationRepresentation'
+        '400':
+          description: The request is malformed.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '401':
+          description: The request has not been applied because it lacks valid authentication credentials for the target resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '403':
+          description: The requester is not authorized to access the resource.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '405':
+          description: Client sent a request using a HTTP method that the server doesn't support.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '406':
+          description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '409':
+          description: Projection destination already exists.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '422':
+          description: Client sent a correct request that contained invalid values for one or more parameters.
+          schema:
+            $ref: '#/definitions/ProblemDetail'
+        '500':
+          description: This is an indicator of a server-side error.
+        '502':
+          description: This is an indicator that the back-end service did not send a valid response.
+        '503':
+          description: This is an indicator of a potential server overload.
+        '504':
+          description: This is an indicator that the back-end service did not complete a response within an allowed time period.
+definitions:
+  HalLink:
+    type: object
+    properties:
+      href:
+        type: string
+      templated:
+        type: boolean
+      type:
+        type: string
+      deprecation:
+        type: string
+      profile:
+        type: string
+      title:
+        type: string
+      hreflang:
+        type: string
+      name:
+        type: string
+  ProjectionConfig:
+    type: object
+    required:
+      - destinationId
+      - selector
+    properties:
+      selector:
+        type: string
+        example: 'person.gender,addresses.city,phoneNumbers.number'
+        description: 'A property selector under the extended data model that are to be replicated to the edges, i.e. the mask to apply on top of the data in Real-time Customer Profile.'
+      version:
+        type: integer
+        format: int32
+        example: 1
+        description: The current version number of the projection configuration. Must be bigger than 1.
+      id:
+        type: string
+        example: 111-222-333-444
+        description: The ID of the profile projection configuration
+      schemaName:
+        type: string
+        example: profile
+        description: The xdm schema associated with the profile projection configuration
+      name:
+        type: string
+        example: default
+        description: 'The projection name, identifying a customer projection configuration within an xdm schema'
+      destinationId:
+        type: string
+        example: 1111-2222-3333-4444
+        description: The ID of the projection destination containing routing metadata for the projection destination
+        default: 123-123-123-123
+      _links:
+        type: object
+        readOnly: true
+        properties:
+          destination:
+            $ref: '#/definitions/HalLink'
+          self:
+            $ref: '#/definitions/HalLink'
+      _embedded:
+        type: object
+        readOnly: true
+        properties:
+          destination:
+            $ref: '#/definitions/ProjectionDestinationRepresentation'
+    description: 'Projections are an edge "view" of the full profile data managed by Real-time Customer Profile. Edge projections are materialized by applying a mask on top of the complete Profile data. Each customer can manage the edge projections by maintaining a projection configuration using the Edge Projection Configuration API. There is one single projection configuration per customer. <br/>A projection configuration contains:<ul><li>A selector of properties under the extended data model that are to be replicated to the edges (the mask to apply on top of the data in Profile).</li><li>A time-to-live (TTL) value representing the default maximum time an idle profile projection is stored on the edge before being deleted. Expressed in seconds</li></ul>'
+  ProjectionDestinationRepresentation:
+    type: object
+    discriminator: type
+  ProblemDetail:
+    type: object
+    properties:
+      status:
+        type: integer
+        format: int32
+        example: 4xx
+        description: The HTTP status code generated by the server for this occurrence of the problem.
+      title:
+        type: string
+        example: Client error
+        description: 'A short, human-readable summary of the problem type.'
+      type:
+        type: string
+        example: 'https://mcloud.io/client-error'
+        description: A URI reference (RFC3986) that identifies the problem type.
+    description: 'An error object containing a problem detail, as defined by <a href="https://tools.ietf.org/html/rfc7807">RFC 7807 Problem Details for HTTP APIs</a>. The returned content-type is the <i>application/problem+json</i> media type. When present, this response contains machine-readable details pertaining to the error. Problem details include a <i>type</i>, which is a URI.'
+  InputProjectionConfig:
+    type: object
+    required:
+      - destinationId
+      - selector
+    properties:
+      name:
+        type: string
+        example: default
+        description: 'The projection name, identifying a customer projection configuration within a xdm schema'
+      selector:
+        type: string
+        example: 'person.gender,addresses.city,phoneNumbers.number'
+        description: 'A property selector under the extended data model that are to be replicated to the edges, i.e. the mask to apply on top of the data in Real-time Customer Profile.'
+      currentVersion:
+        type: integer
+        format: int32
+        example: 1
+        description: An integer representing the current version of the projection configuration. It is used for updates. It must be bigger than 1.
+        minimum: 1
+        default: 1
+      destinationId:
+        type: string
+        example: 1111-2222-3333-4444
+        description: The ID of the projection destination containing routing metadata for the projection destination
+        default: 123-123-123-123
+    description: 'Projections are an edge "view" of the full profile data managed by Real-time Customer Profile. Edge projections are materialized by applying a mask on top of the complete Profile data. Each customer can manage the edge projections by maintaining a projection configuration using the Edge Projection Configuration API. There is one single projection configuration per customer. <br/>A projection configuration contains:<ul><li>A selector of properties under the extended data model that are to be replicated to the edges (the mask to apply on top of the data in Profile).</li><li>A time-to-live (TTL) value representing the default maximum time an idle profile projection is stored on the edge before being deleted. Expressed in seconds</li></ul>'
+  ProjectionConfigurationList:
+    type: object
+    properties:
+      _embedded:
+        type: object
+        readOnly: true
+        properties:
+          projectionConfigs:
+            type: array
+            items:
+              $ref: '#/definitions/ProjectionConfig'
+      _links:
+        type: object
+        readOnly: true
+        properties:
+          self:
+            $ref: '#/definitions/HalLink'
+    description: A list of projection configurations.
+  InputProjectionDestination:
+    type: object
+    discriminator: type
+    description: A projection destination stores metadata regarding the target locations where projections get pushed by the Projection Service.
+parameters:
+  authorization:
+    name: Authorization
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
+    For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  x-gw-ims-org-id:
+    name: x-gw-ims-org-id
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  x-api-key:
+    name: x-api-key
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
+    to obtain this value, visit the documentation covering making API calls in the 
+    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    required: true
+    type: string
+    in: header
+  json-header:
+    name: Content-Type
+    description: 'application/json'
+    required: true
+    type: string
+    in: header
+  multipart-header:
+    name: Content-Type
+    description: 'multipart/form-data'
+    required: true
+    type: string
+    in: header
