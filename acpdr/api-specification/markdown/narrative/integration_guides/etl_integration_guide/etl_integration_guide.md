@@ -690,7 +690,7 @@ When snapshot profiles are used, the ETL tool will have to pick the last batch o
 
 ## Batch Replay and Data Reprocessing
 
-Batch replay and data reprocessing may be required in cases where a client discovers that for the past 'n' days, data being ETL processed has not occurred as expected or source data itself may not have been correct. 
+Bath replay and data reprocessing may be required in cases where a client discovers that for the past 'n' days, data being ETL processed has not occurred as expected or source data itself may not have been correct. 
 
 To do this, the client's data administrators will use the Platform UI to remove the batches containing corrupt data. Then, the ETL will likely need to be re-run, thus repopulating with correct data. If the source itself had corrupt data, the data engineer/administrator will need to correct the source batches and re-ingest the data (either into Adobe Experience Platform or via ETL connectors).
 
