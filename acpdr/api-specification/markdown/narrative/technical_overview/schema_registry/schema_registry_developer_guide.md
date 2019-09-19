@@ -1,4 +1,4 @@
-# Schema Registry API developer guide
+# Schema Registry developer guide
 
 The Schema Registry is used to access the Schema Library within Adobe Experience Platform, providing a user interface and RESTful API from which all available library resources are accessible.
 

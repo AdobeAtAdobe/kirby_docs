@@ -1,6 +1,6 @@
-# XDM System & Experience Data Model (XDM) troubleshooting guide
+# XDM System troubleshooting guide
 
-This document provides answers to frequently asked questions about XDM System and Experience Data Model (XDM), as well as a troubleshooting guide for common errors. For questions and troubleshooting related to other services in Adobe Experience Platform, please refer to the [Experience Platform troubleshooting guide](../../platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md).
+This document provides answers to frequently asked questions about Experience Data Model (XDM) System, as well as a troubleshooting guide for common errors. For questions and troubleshooting related to other services in Adobe Experience Platform, please refer to the [Experience Platform troubleshooting guide](../../platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md).
 
 **Experience Data Model (XDM)** is an open-source specification that defines standardized schemas for customer experience management. The methodology on which Experience Platform is built, **XDM System**, operationalizes Experience Data Model schemas for use by Platform services. The **Schema Registry** provides a user interface and a RESTful API to access the **Schema Library** within Experience Platform. See the [XDM documentation](https://www.adobe.io/apis/experienceplatform/home/xdm.html) for more information.
 

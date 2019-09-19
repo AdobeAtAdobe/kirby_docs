@@ -1,4 +1,4 @@
-# Define a relationship between two schemas using the Schema Registry API
+# Define a relationship between two schemas
 
 The ability to understand the relationships between your customers and their interactions with your brand across various channels is an important part of Adobe Experience Platform. Defining these relationships within the structure of your Experience Data Model (XDM) schemas allows you to gain complex insights into your customer data.
 
