@@ -1,6 +1,6 @@
 # What is Query Service?
 
-Query Service gives you the ability to use standard SQL to query data in Adobe Experience Platform, supporting many different use cases. It is a serverless tool that allows you to join any datasets in Experience Data Lake and capture the query results as a new dataset for use in reporting, Data Science Workspace, or for ingestion into Profile Service. 
+Query Service gives you the ability to use standard SQL to query data in Adobe Experience Platform to support many different use cases. It is a serverless tool which allows you to join any datasets in Experience Data Lake and capture the query results as a new dataset for use in reporting, Data Science Workspace, or for ingestion into Profile Service. 
 
 You can use Query Service to build data analysis ecosystems, creating a picture of consumers across their various interaction channels. These channels might include:
 
