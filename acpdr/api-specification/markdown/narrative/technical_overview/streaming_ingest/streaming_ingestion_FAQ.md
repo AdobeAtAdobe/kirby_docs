@@ -1,98 +1,68 @@
-# Streaming ingestion troubleshooting guide
-This document provides answers to frequently asked questions about streaming ingestion on Adobe Experience Platform. For questions and troubleshooting related to other Platform services, including those that are encountered across all Platform APIs, please refer to the [Experience Platform troubleshooting guide][Trouble Shooting Guide].
+# Frequently asked questions about streaming ingestion
+This document provides answers to frequently asked questions about Streaming Ingestion on Adobe Experience Platform.
 
-Adobe Experience Platform Data Ingestion provides RESTful APIs that you can use to ingest data into Experience Platform. The ingested data is used to update individual customer profiles in near real-time, allowing you to deliver personalized, relevant experiences across multiple channels. See the [streaming ingestion developer guide][Getting Started With Streaming Ingestion] for more information.
+Streaming Ingestion APIs allow client and server-side devices to send data to Adobe Experience Platform in real-time via RESTful interfaces. These APIs allow sub-second refresh of Real-time Customer Profiles allowing you to deliver hyper relevant experiences to customers. See the [Getting Started with Streaming Ingestion][Getting Started With Streaming Ingestion] guide for more information. 
 
-### FAQ
-- **Streaming issues**
-   - [How can I authenticate sent data?](#how-can-i-authenticate-sent-data)
-   - [What is the latency for streaming data to Real-time Customer Profile?](#what-is-the-latency-for-streaming-data-to-real-time-customer-profile)
-   - [How do I know that the payload I'm sending is formatted properly?](#how-do-i-know-that-the-payload-im-sending-is-formatted-properly)
-   - [Can I validate a request payload before sending it to Platform?](#can-i-validate-a-request-payload-before-sending-it-to-platform)
-   - [What happens when synchronous validation is requested on an edge that does not support it?](#what-happens-when-synchronous-validation-is-requested-on-an-edge-that-does-not-support-it)
-   - [Can I include multiple messages in the same API request?](#can-i-include-multiple-messages-in-the-same-api-request)
+<!--- link to Peter Nolan's trouble shooting doc when ready PR-587 
+Didn't find what you are looking for? Check out the [Trouble Shooting Guide][Trouble Shooting Guide] for more help. --->
 
-- **Response handling and data management**
-   - [How do I know if the data I'm sending is being received?](#how-do-i-know-if-the-data-im-sending-is-being-received)
-   - [Why is my streaming data not available in Data Lake?](#why-is-my-streaming-data-not-available-in-data-lake)
-   - [How do I parse the response returned for the API request?](#how-do-i-parse-the-response-returned-for-the-api-request)
-   - [Why are my sent messages not being received by Real-time Customer Profile?](#why-are-my-sent-messages-not-being-received-by-real-time-customer-profile)
+This document covers the following questions: 
+- [Can I send data in an authenticated way?](#can-i-send-data-in-an-authenticated-way)
+- [What is the latency for Real-time Customer Profile to see the messages I'm sending using Streaming Ingestion?](#what-is-the-latency-for-real-time-customer-profile-to-see-the-messages-im-sending-using-streaming-ingestion)
+- [How do I know that the payload I'm sending is formatted properly?](#how-do-i-know-that-the-payload-im-sending-is-formatted-properly)
+- [How do I know if the data I'm sending is being received?](#how-do-i-know-if-the-data-im-sending-is-being-received)
+- [Is there a way to know if the JSON payload is valid before sending it to Adobe?](#is-there-a-way-to-know-if-the-json-payload-is-valid-before-sending-it-to-adobe)
+- [Why is my streaming data not available in Experience Data Lake?](#why-is-my-streaming-data-not-available-in-experience-data-lake)
+- [How do I parse the response returned for the HTTP request?](#how-do-i-parse-the-response-returned-for-the-http-request)
+- [Why are my sent messages not being received by Real-time Customer Profile? ](#why-are-my-sent-messages-not-being-received-by-real-time-customer-profile)
+- [What happens when synchronous validation is requested on an edge that does not support it?](#what-happens-when-synchronous-validation-is-requested-on-an-edge-that-does-not-support-it)
+<!-- - [Can I include multiple messages in the same HTTP request?](#can-i-include-multiple-messages-in-the-same-http-request?) -->
 
-## FAQ
+## Can I send data in an authenticated way?
+Yes, Experience Platform supports secured data collection. For more information on how to send authenticated data to Platform, please see the [Authenticated Data Collection][Authenticated Data Collection] documentation.
 
-The following is a list of answers to frequently asked questions about streaming ingestion.
-
-## How can I authenticate sent data?
-Experience Platform supports secured data collection. When authenticated data collection is enabled, clients must send a JSON based web token (JWT) along with the ID of their IMS Organization in the request header. For more information on how to send authenticated data to Platform, please see the documentation on [authenticated data collection][Authenticated Data Collection].
-
-## What is the latency for streaming data to Real-time Customer Profile?
-Streamed events are generally reflected in Real-time Customer Profile in under 60 seconds. Actual latencies can vary due to data volume, message size, and bandwidth limitations.
+## What is the latency for Real-time Customer Profile to see the messages I'm sending using Streaming Ingestion?
+Streaming to Real-time Customer Profile will typically take under 60 seconds. Actual latencies might vary due to data volumes, message size, and public internet behavior.
 
 ## How do I know that the payload I'm sending is formatted properly?
-Streaming ingestion supports two modes of validation: synchronous and asynchronous.
+Streaming Ingestion APIs support two modes of validation: synchronous and asynchronous. Synchronous validation should be used during your development process. Synchronous validation will drop records that fail XDM validation and provide immediate feedback on why they failed (for example: "Invalid XDM Message Format").  
 
-**Synchronous validation** should be used during your development process. Records that fail Experience Data Model (XDM) validation are dropped and return an error message as to why they failed (for example: "Invalid XDM Message Format").
+Asynchronous validation should be used in production. Streaming Validation service detects messages that fail asynchronous validation, and sends the malformed data to the data lake where it can be retrieved later for futher analysis and replay. 
 
-**Asynchronous validation** should be used in production. Streaming validation detects messages that fail asynchronous validation, and sends the malformed data to the data lake where it can be retrieved later for further analysis. 
-
-For more information on synchronous and asynchronous validation, see the [streaming validation overview][Streaming Validation]. For steps on how to view batches that fail validation, please refer to the guide on [retrieving failed batches][Retrieving Failed Batches].
-
-## Can I validate a request payload before sending it to Platform?
-Request payloads can only be evaluated after they have been sent to Platform. When performing synchronous validation, valid payloads return populated JSON objects while invalid payloads return error messages. During asynchronous validation, the service detects and sends any malformed data to the data lake where it can later be retrieved for analysis. See the guide on [retrieving failed batches][Retrieving Failed Batches] for more information.
-
-## What happens when synchronous validation is requested on an edge that does not support it?
-A 501 error response is returned when synchronous validation is not supported for the requested location. Please see the [streaming validation developer guide][Streaming Validation] for more information on synchronous validation.
-
-## Can I include multiple messages in the same API request?
-Yes, you can group multiple messages within a request and stream them to Platform in a single payload. When used correctly, grouping multiple messages within a single request is an excellent way to optimize data being sent to Experience Platform. Please read the tutorial on [sending multiple messages in a request][Streaming Multiple Messages] for more information. 
+For more information on synchronous and asynchronous validation, see the [streaming validation][Streaming Validation] overview. For steps on how to view batches that fail validation, please refer to the guide on [retrieving failed batches][Retrieving Failed Batches].
 
 ## How do I know if the data I'm sending is being received?
-The status of batches, whether successful or not, appear within the dataset they were sent to. You can verify if data has been successfully ingested by checking dataset activity using the [Experience Platform user interface][platform-ui]. Under the **Datasets** tab, select the dataset you are streaming to from the displayed list. The *Dataset Activity* tab opens, showing all batches sent during a selected time period. For more information about using Experience Platform to monitor data streams, see the guide on [monitoring streaming data flows][Monitoring Streaming Data Flows].
+You can check if your data has been received by using the appropriate Streaming Ingestion APIs to retrieve (GET) the data in question. For detailed steps on retrieving Streaming Ingestion data, please see the [Getting started with Streaming Ingestion][Getting Started With Streaming Ingestion] guide.
 
-If your data failed to ingest and you want to recover it from Platform, the batch ID values displayed on the **Dataset Activity** tab are required for retrieving dataset files using the [Data Access Service API][Data Access Service API]. See the guide on [retrieving failed batches][Retrieving Failed Batches] for more information.
+## Is there a way to know if the JSON payload is valid before sending it to Adobe?
+You cannot check if the JSON payload is valid without first sending the payload to Adobe. If synchronous validation is requested, you will either recieve an error message indicating it is invalid or a populated JSON object indicating it is valid. If operating in asynchronous validation mode, Streaming Validation service will detect and send malformed data to the data lake where it can later be retrieved for analysis. See [retrieving failed batches][Retrieving Failed Batches] for more information.
 
-## Why is my streaming data not available in Data Lake?
-There are a variety of reasons why batch ingestion may fail to reach Data Lake, such as invalid formatting, missing data, or system errors. To determine why your batch failed, you must retrieve the batch using the [Data Ingestion Service API][Data Ingestion Service] and view its details. For detailed steps on retrieving a failed batch, see the guide on [retrieving failed batches][Retrieving Failed Batches].
+<!--
+### Can I include multiple messages in the same HTTP request?
+-->
 
-## How do I parse the response returned for the API request?
-You can parse through a response by first checking the server response code to determine whether your request was accepted. If a successful response code is returned, you can then review the `responses` array object to determine the status of the ingestion task. A successful single message API request returns status code 200 and a successful, or partially successful, batched message API request returns status code 207. For detailed information on parsing API responses, please see the [Data Ingestion Service API][Data Ingestion Service] documentation.
+## Why is my streaming data not available in Experience Data Lake?
+There are a variety of reasons why batch ingestion may fail to reach Experience Data Lake, such as invalid formatting, missing data, or server errors. To determine why your batch failed, you must retrieve the batch using the [Data Ingestion API][Data Ingestion Service] and view its details. For detailed steps on retrieving a failed batch, see the [Retrieving failed batches][Retrieving Failed Batches] guide.
 
-This JSON code shows the response object for an API request with two messages - one successful and one failed. Messages that successfully stream return an `xactionId`. Messages that fail to stream, return a `statusCode` and a response message with more information.
-
-```JSON
-{
-    "inletId": "9b0cb233972f3b0092992284c7353f5eead496218e8441a79b25e9421ea127f5",
-    "batchId": "1565638336649:1750:244",
-    "receivedTimeMs": 1565638336705,
-    "responses": [
-        {
-            "xactionId": "1565650704337:2124:92:3"
-        },
-        {
-            "statusCode": 400,
-            "message": "inletId: [9b0cb233972f3b0092992284c7353f5eead496218e8441a79b25e9421ea127f5] imsOrgId: [{IMS_ORG}] Message has unknown xdm format"
-        }
-    ]
-}
-```
+## How do I parse the response returned for the HTTP request?
+You can parse through a response by checking the status code and data inside of the returned object. Please see our [Data Ingestion Service][Data Ingestion Service] for more information on parsing HTTP responses.
 
 ## Why are my sent messages not being received by Real-time Customer Profile? 
-Messages are rejected by Real-time Customer Profile primarily due to incorrect identity information, such as the following:
-- The identity namespace is invalid. There are two types of identity namespaces: default and custom. When using custom namespaces, please make sure the namespace has been registered within Identity Service.
-- The identity value provided is invalid. 
+Messages can be rejected by Real-time Customer Profile for any of the following reasons:
+1. The identity namespace is invalid. There are two types of identity namespaces: default and custom. When using custom namespaces, please make sure the namespace has been registered with the Identity Service.
+2. The identity value provided is invalid. 
 
-See the [identity namespace overview][identity-namespace] for more information on using default and custom namespaces.
+See the [Identity Namespace overview][identity-namespace] for more information on using default and custom namespaces. You can also go to **Monitoring** under **Data Management** in the left-nav menu on Platform and click **Streaming End-to-End** for more information on why a message did not make it to Profile. 
 
-You can use the [Experience Platform UI][platform-ui] to see more information on why a message failed ingestion. Under the **Monitoring** tab, click **Streaming End-to-End** to see message batches streamed during a selected time period.
+## What happens when synchronous validation is requested on an edge that does not support it?
+A 501 error response is returned when synchronous validation is not possible. This means that synchronous validation is not supported for this location. Please see the [streaming validation][Streaming Validation] developer guide for more information on synchronous validation.
 
-[Trouble Shooting Guide]: ../platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md
+
+<!-- [Trouble Shooting Guide]: (../aep_faq_and_troubleshooting/aep_faq_and_troubleshooting.md) --->
 [Authenticated Data Collection]: authenticated_data_collection.md
 [Getting Started With Streaming Ingestion]: getting_started_with_platform_streaming_ingestion.md 
-[Monitoring Streaming Data Flows]: e2e-monitor-streaming-data-flows.md
 [Streaming Validation]: streaming_validation.md
 [Retrieving Failed Batches]: retrieving_failed_batches.md
-[Streaming Multiple Messages]: ../../tutorials/sending_multiple_messages_in_an_http_request/sending_multiple_messages_in_an_http_request.md
-[platform-ui]: https://platform.adobe.com
-[Data Access Service API]: ../../../../../../acpdr/swagger-specs/data-access-api.yaml
-[Data Ingestion Service]: ../../../../../../acpdr/swagger-specs/ingest-api.yaml
+[Platform UI]: https://platform.adobe.com
+[Data Ingestion Service]: https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/ingest-api.yaml
 [identity-namespace]: ../identity_namespace_overview/identity_namespace_overview.md
