@@ -2,7 +2,7 @@
 
 Observability Insights is a RESTful API that allows you to expose key observability metrics in Adobe Experience Platform. These metrics provide insights into Platform usage statistics, health-checks for Platform services, historical trends, and performance indicators for various Platform functionalities. 
 
-This document demonstrates an example call to the Observability Insights API, and provides a list of exposed metrics that are compatible with the service. For a complete list of Observability endpoints, please refer to the [Observability Insights API reference](../../../../../../acdpr/swagger-specs/observability-insights.yaml).
+This document demonstrates an example call to the Observability Insights API, and provides a list of exposed metrics that are compatible with the service. For a complete list of Observability endpoints, please refer to the [Observability Insights API reference](../../../../../../acpdr/swagger-specs/observability-insights.yaml).
 
 To successfully make calls to Platform APIs, you must first complete the [Authentication to Adobe Experience Platform tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
