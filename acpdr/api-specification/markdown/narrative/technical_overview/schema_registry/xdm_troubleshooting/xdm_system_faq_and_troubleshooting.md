@@ -1,6 +1,8 @@
-# XDM System troubleshooting guide
+# XDM System & Experience Data Model (XDM) troubleshooting guide
 
-This document provides answers to frequently asked questions about Experience Data Model (XDM) System, as well as a troubleshooting guide for common errors. For questions and troubleshooting related to other services in Adobe Experience Platform, please refer to the [Experience Platform troubleshooting guide](../../platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md).
+This document provides answers to frequently asked questions about XDM System and Experience Data Model (XDM), as well as a troubleshooting guide for common errors. 
+
+<!-- For questions and troubleshooting related to other services in Adobe Experience Platform, please refer to the Experience Platform troubleshooting guide. -->
 
 **Experience Data Model (XDM)** is an open-source specification that defines standardized schemas for customer experience management. The methodology on which Experience Platform is built, **XDM System**, operationalizes Experience Data Model schemas for use by Platform services. The **Schema Registry** provides a user interface and a RESTful API to access the **Schema Library** within Experience Platform. See the [XDM documentation](https://www.adobe.io/apis/experienceplatform/home/xdm.html) for more information.
 
@@ -26,14 +28,10 @@ This document provides answers to frequently asked questions about Experience Da
 - [Object not found](#object-not-found)
 - [Title must be unique](#title-must-be-unique)
 - [Custom fields must use a top level field](#custom-fields-must-use-a-top-level-field)
-- [Real-time Customer Profile errors](#real-time-customer-profile-errors)
-    - [To enable profile datasets the schema should be valid](#to-enable-profile-datasets-the-schema-should-be-valid)
-    - [There must be an reference identity descriptor](#there-must-be-an-reference-identity-descriptor)
-    - [The namespaces of the reference identity descriptor field and destination schema must match](#the-namespaces-of-the-reference-identity-descriptor-field-and-destination-schema-must-match)
+- [To enable profile datasets the schema should be valid](#to-enable-profile-datasets-the-schema-should-be-valid)
 - [Accept header errors](#accept-header-errors)
     - [Accept header parameter is required](#accept-header-parameter-is-required)
     - [Unknown Accept media supplied](#unknown-accept-media-supplied)
-    - [Unknown Accept format available](#unknown-accept-format-available)
     - [Version must be supplied in the Accept header](#version-must-be-supplied-in-the-accept-header)
     - [Version must not be supplied in the Accept header](#version-must-not-be-supplied-in-the-accept-header)
 
@@ -95,15 +93,15 @@ Primary identities are optional, since schemas may have 0 or 1 of them. However,
 
 ## How do I enable a schema for use in Real-time Customer Profile?
 
-Schemas are enabled for use in [Real-time Customer Profile](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md) through the addition of a "union" tag, located in the `meta:immutableTags` attribute of the schema. Enabling a schema for use with Profile can be done using the API or the user interface.
+Schemas are enabled for use in [Real-time Customer Profile](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md) (UPS) through the addition of a "union" tag, located in the `meta:immutableTags` attribute of the schema. Enabling a schema for use with Profile can be done using the API or the user interface.
 
-### Enabling an existing schema for Profile using the API
+### Enabling an existing schema for UPS using the API
 
 Make a PATCH request to update the schema and add the `meta:immutableTags` attribute as an array containing the value "union". If the update is successful, the response will show the updated schema which now contains the union tag.
 
-For more information on using the API to enable a schema for use in Real-time Customer Profile, see the [Real-time Customer Profile](../schema_registry_developer_guide.md#unified-profile) section of the Schema Registry developer guide. 
+For more information on using the API to enable a schema for use in UPS, see the [Real-time Customer Profile](../schema_registry_developer_guide.md#unified-profile) section of the Schema Registry developer guide. 
 
-### Enabling an existing schema for Profile using the UI
+### Enabling an existing schema for UPS using the UI
 
 In Experience Platform, click on **Schemas** in the left-navigation, and select the name of the schema you wish to enable from the list of schemas. Then, on the right-hand side of the editor under **Schema Properties**, click on **Unified Profile** to toggle it on.
 
@@ -124,15 +122,16 @@ Experience Platform accepts datafiles in either Parquet or JSON format. The cont
 
 The following is a list of error messages that you may encounter when working with the Schema Registry API. 
 
+<!-- For general troubleshooting of errors common to all Experience Platform APIs, please see the Experience Platform troubleshooting guide. -->
+
 ## Object not found
 
-```json
+```
 {
     "type": "/placeholder/type/uri",
     "status": 404,
     "title": "NotFoundError",
-    "detail": "Object https://ns.adobe.com/incorrectTenantId/schemas/ee067e31b08514d21e2b82577813409d 
-      with version 1 not found"
+    "detail": "Object https://ns.adobe.com/incorrectTenantId/schemas/ee067e31b08514d21e2b82577813409d with version 1 not found"
 }
 ```
 
@@ -142,14 +141,12 @@ For more information on constructing lookup paths in the API, see the [container
 
 ## Title must be unique
 
-```json
+```
 {
     "type": "/placeholder/type/uri",
     "status": 400,
     "title": "BadRequestError",
-    "detail": "Title must be unique. An object 
-      https://ns.adobe.com/{TENANT_ID}/schemas/26f6833e55db1dd8308aa07a64f2042d 
-      already exists with the same title."
+    "detail": "Title must be unique. An object https://ns.adobe.com/{TENANT_ID}/schemas/26f6833e55db1dd8308aa07a64f2042d already exists with the same title."
 }
 ```
 
@@ -157,26 +154,20 @@ This error message displays when you attempt to create a resource with a title t
 
 ## Custom fields must use a top level field
 
-```json
+```
 {
     "type": "/placeholder/type/uri",
     "status": 400,
     "title": "BadRequestError",
-    "detail": "For custom fields, you must use a top level field named _{TENANT_ID}
-       and all the other fields must be defined under it"
+    "detail": "For custom fields, you must use a top level field named _{TENANT_ID} and all the other fields must be defined under it"
 }
 ```
 
 This error message displays when you attempt to create a new mixin with improperly namespaced fields. Mixins that are defined by your IMS organization must namespace their fields with a `TENANT_ID` in order to avoid conflicts with other industry and vendor resources. Detailed examples of proper data structures for mixins can be found in the [Create a mixin](../schema_registry_developer_guide.md#create-a-mixin) section in the Schema Registry API developer guide.
 
+## To enable profile datasets the schema should be valid
 
-## Real-time Customer Profile errors
-
-The following error messages are associated with operations involved in enabling schemas for Real-time Customer Profile. See the [Real-time Customer Profile](../schema_registry_developer_guide.md#real-time-customer-profile) section in the Schema Registry API developer guide for more information.
-
-### To enable profile datasets the schema should be valid
-
-```json
+```
 {
     "type": "/placeholder/type/uri",
     "status": 400,
@@ -185,42 +176,7 @@ The following error messages are associated with operations involved in enabling
 }
 ```
 
-This error message displays when you attempt to enable a profile dataset for a schema that has not been enabled for Real-time Customer Profile. Ensure that the schema contains a union tag before enabling the dataset.
-
-### There must be an reference identity descriptor
-
-```json
-{
-    "type": "/placeholder/type/uri",
-    "status": 400,
-    "title": "BadRequestError",
-    "detail": "For a schema to be able to participate in union, if any of its 
-      property is associated with a xdm:descriptorOneToOne descriptor, there must 
-      be a xdm:descriptorReferenceIdentity descriptor for that property"
-}
-```
-
-This error message displays when you attempt to enable a schema for Profile and one of its properties contains a relationship descriptor without a reference identity descriptor. Add a reference identity descriptor to the schema field in question to resolve this error.
-
-### The namespaces of the reference identity descriptor field and destination schema must match
-
-```json
-{
-    "type": "/placeholder/type/uri",
-    "status": 400,
-    "title": "BadRequestError",
-    "detail": "If both schemas from an already defined xdm:descriptorOneToOne 
-      descriptor are promoted to union, and if there is a primary identity on one of 
-      the schemas from the xdm:descriptorOneToOne descriptor, the 
-      xdm:identityNamespace of the sourceSchema's descriptorReferenceIdentity and the 
-      xdm:namespace field of the xdm:descriptorIdentity for the destinationSchema must 
-      match"
-}
-```
-
-In order to enable schemas that contain relationship descriptors for use in Profile, the namespace of the source field and the primary namespace of the target field must be the same. This error message displays when you attempt to enable a schema that contains an unmatched namespace for its reference identity descriptor. Ensure that the `xdm:namespace` value of the destination schema's identity field matches that of the `xdm:identityNamespace` property in the source field's reference identity descriptor to resolve this issue.
-
-For a list of supported identity namespace codes, see the section on [standard namespaces](../../identity_namespace_overview/identity_namespace_overview.md) in the identity namespace overview.
+This error message displays when you attempt to enable a profile dataset for a schema that has not been enabled for Real-time Customer Profile (UPS). Ensure that the schema contains a union tag before enabling the dataset. See the [Real-time Customer Profile](../schema_registry_developer_guide.md#unified-profile) section in the Schema Registry API developer guide for more information.
 
 ## Accept header errors
 
@@ -228,7 +184,7 @@ Most GET requests in the Schema Registry API require an Accept header in order f
 
 ### Accept header parameter is required
 
-```json
+```
 {
     "type": "/placeholder/type/uri",
     "status": 406,
@@ -241,7 +197,7 @@ This error message displays when an Accept header is missing from an API request
 
 ### Unknown Accept media supplied
 
-```json
+```
 {
     "type": "/placeholder/type/uri",
     "status": 406,
@@ -254,7 +210,7 @@ This error message displays when an Accept header is invalid. Ensure that you ha
 
 ### Unknown Accept format available
 
-```json
+```
 {
     "type": "/placeholder/type/uri",
     "status": 406,
@@ -267,19 +223,18 @@ This error message displays when the Accept header has been provided incorrectly
 
 ### Version must be supplied in the Accept header
 
-```json
+```
 {
     "type": "/placeholder/type/uri",
     "status": 400,
     "title": "BadRequestError",
-    "detail": "version must be supplied in the accept header. Example: 
-      application/vnd.adobe.xed-full-notext+json; version=1"
+    "detail": "version must be supplied in the accept header. Example: application/vnd.adobe.xed-full-notext+json; version=1"
 }
 ```
 
 This error message displays when a version number has not been included in the Accept header. Certain elements like schemas require a version to be specified when looking up individual instances. An Accept header containing a version number will look similar to the following: 
 
-```plaintext
+```
 application/vnd.adobe.xed+json; version=1
 ```
 
@@ -287,13 +242,12 @@ For a list of supported Accept headers, see the [Accept header](https://www.adob
 
 ### Version must not be supplied in the Accept header
 
-```json
+```
 {
     "type": "/placeholder/type/uri",
     "status": 400,
     "title": "BadRequestError",
-    "detail": "version must not be supplied in the accept header. Example: 
-      application/vnd.adobe.xed-full+json"
+    "detail": "version must not be supplied in the accept header. Example: application/vnd.adobe.xed-full+json"
 }
 ```
 
