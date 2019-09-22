@@ -1,4 +1,4 @@
-# Unified Profile - Supported PQL queries
+# Supported PQL queries
 
 ## Overview
 
