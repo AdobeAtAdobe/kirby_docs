@@ -2,7 +2,8 @@
 
 1. Create a trended report of events by day over a specific date range.
 
-    The timestamp column found in the ExperienceEvent dataset is in UTC. Use the function `from_utc_timestamp()` to transform the value to another timezone. This example tranforms it into `EDT` and then uses the `date_format()` to isolate the day from the timestamp. The date range is declared in the WHERE clause using separate `_ACP_YEAR`, `_ACP_MONTH`, and `_ACP_DAY` columns. (In the near future, date ranges will use a single date column and you will be able to use standard SQL data range comparisons.)
+    The timestamp column found in the ExperienceEvent dataset is in UTC. Use the function `from_utc_timestamp()` to transform the value to another timezone. This example tranforms it into EDT and then uses the `date_format()` to isolate the day from the timestamp. The date range is declared in the `WHERE` clause using separate `_ACP_YEAR`, `_ACP_MONTH`, and `_ACP_DAY` columns. (In the near future, date ranges will use a single date column and you will be able to use standard SQL data range comparisons.)
+    
   ```sql
   SELECT 
     date_format( from_utc_timestamp(timestamp, 'EDT') , 'yyyy-MM-dd') as Day,
