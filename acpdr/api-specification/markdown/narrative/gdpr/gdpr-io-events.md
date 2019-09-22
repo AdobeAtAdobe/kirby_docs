@@ -1,5 +1,7 @@
 # Subscribe to Privacy Service event notifications
 
+> **Note:** The functionalities described in this document are currently in beta and will be publicly available as part of the July 25, 2019 release.
+
 Adobe Experience Platform Privacy Service event notifications are messages that leverage Adobe I/O Events sent to a configured webhook to facilitate efficient job request automation. They reduce or eliminate the need to poll the API in order to check if a job is complete or if a certain milestone within a workflow has been reached.
 
 There are currently four types of notifications related to the GDPR job request lifecycle:
