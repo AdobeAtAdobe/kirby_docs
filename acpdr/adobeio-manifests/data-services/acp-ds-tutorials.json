@@ -1,197 +1,219 @@
 { 
-	"name": "adobe_experience_platform_tutorials",
-	"version": "1.0.0",
-	"description": "Adobe Experience Platform Tutorials",
-	"author": "Wendy Braun",
-	"view_type": "mdbook",
-	"meta_keywords": "Tutorials, Adobe Experience Platform, Experience Platform, Platform, Connector, Data Access, Dataset, Data set, Creating a dataset, Creating a Connector, Data Ingestion, ingest data",
-	"meta_description": "Adobe Experience Platform tutorials",
-	"publish_date": "19/03/2018",
-	"show_edit_github_banner": false,
-	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
-	"pages": [
-		{
-			"importedFileName": "authenticate_to_acp_tutorial",
-			"pages": [],
-			"path": "api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md",
-			"title": "Authenticate and access Adobe Experience Platform APIs",
-			"description": "Follow this step-by-step guide to gain access to an Adobe Experience Platform developer account in order to make calls to Experience Platform APIs."
-		},
-		{
-			"importedFileName": "schema_editor_tutorial",
-			"pages": [],
-			"path": "api-specification/markdown/narrative/tutorials/schema_editor_tutorial/schema_editor_tutorial.md",
-			"title": "Create a schema using the Schema Editor",
-			"description": "Interact with the Schema Registry via the Schema Editor user interface to create a schema, classes, and mixins."
-		},
-		{
-			"importedFileName": "schema_registry_api_tutorial",
-			"pages": [],
-			"path": "api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md",
-			"title": "Create a schema using the Schema Registry API",
-			"description": "Use the Schema Registry API to create a schema, including assigning a class and defining mixins."
-		},
-		{
-			"importedFileName": "creating_a_dataset_tutorial",
-			"pages": [],
-			"path": "api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md",
-			"title": "Create a dataset using APIs",
-			"description": "Create a dataset based on a pre-configured schema using Catalog and Data Ingestion APIs."
-		},
-		{
-			"importedFileName": "creating_a_connector_ui_tutorial",
-			"pages": [],
-			"path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/using_data_connector_ui_tutorial.md",
-			"title": "Create a connector in the UI",
-			"description": "Set-up, configure, and monitor data connectors using the user interface within Adobe Experience Platform."
+  "name": "adobe_experience_platform_tutorials",
+  "version": "1.0.0",
+  "description": "Adobe Experience Platform Tutorials",
+  "author": "Wendy Braun",
+  "view_type": "mdbook",
+  "meta_keywords": "Tutorials, Adobe Experience Platform, Experience Platform, Platform, Connector, Data Access, Dataset, Data set, Creating a dataset, Creating a Connector, Data Ingestion, ingest data",
+  "meta_description": "Adobe Experience Platform tutorials",
+  "publish_date": "19/03/2018",
+  "show_edit_github_banner": false,
+  "base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
+  "pages": [
+    {
+      "importedFileName": "authenticate_to_acp_tutorial",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md",
+      "title": "Authenticate and access Adobe Experience Platform APIs",
+      "description": "Follow this step-by-step guide to gain access to an Adobe Experience Platform developer account in order to make calls to Experience Platform APIs."
+    },
+    {
+      "importedFileName": "schema_editor_tutorial",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/schema_editor_tutorial/schema_editor_tutorial.md",
+      "title": "Create a schema using the Schema Editor",
+      "description": "Interact with the Schema Registry via the Schema Editor user interface to create a schema, classes, and mixins."
+    },
+    {
+      "importedFileName": "schema_registry_api_tutorial",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md",
+      "title": "Create a schema using the Schema Registry API",
+      "description": "Use the Schema Registry API to create a schema, including assigning a class and defining mixins."
+    },
+    {
+      "importedFileName": "relationship_descriptor_tutorial",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/relationship_descriptor_tutorial.md",
+      "title": "Define a relationship between two schemas",
+      "description": "Follow step-by-step instructions for defining a one-to-one relationship between two schemas using the Schema Registry API."
+    },
+    {
+      "importedFileName": "creating_a_dataset_tutorial",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md",
+      "title": "Create a dataset using APIs",
+      "description": "Create a dataset based on a pre-configured schema using Catalog and Data Ingestion APIs."
+    },
+    {
+      "importedFileName": "creating_a_connector_ui_tutorial",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/using_data_connector_ui_tutorial.md",
+      "title": "Create a connector in the UI",
+      "description": "Set-up, configure, and monitor data connectors using the user interface within Adobe Experience Platform."
     }, 
-		{
-			"importedFileName": "creating_a_connector_tutorial",
-			"pages": [
-				{
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md",
-					"title": "Amazon S3 connector"
-				},
-				{
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md",
-					"title": "Azure Blob connector"
-				},
-				{
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md",
-					"title": "Microsoft Dynamics connector"
-				},
-				{
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_salesforce_connector_tutorial.md",
-					"title": "Salesforce connector"
-				}
-			],
-			"path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/creating_a_connector_tutorial.md",
-			"title": "Create a connector using APIs",
-			"description": "Learn to create different types of data connectors, including Salesforce, Microsoft Dynamics, Azure Blob, and Amazon S3."
-		},
-		{
-			"importedFileName": "dule_working_with_labels",
-			"pages": [],
-			"path": "api-specification/markdown/narrative/tutorials/dule/dule_working_with_labels.md",
-			"title": "Add DULE labels in the UI",
-			"description": "Work with Data Usage Labeling and Enforcement (DULE) labels and apply them at the connection, dataset, and field-level using the user interface."
-		},
-		{
-			"importedFileName": "dule_working_with_policies",
-			"pages": [],
-			"path": "api-specification/markdown/narrative/tutorials/dule/dule_working_with_policies.md",
-			"title": "Create and evaluate DULE Policies using Policy Service API",
-			"description": "Use the Data Usage Labeling and Enforcement (DULE) Policy Service API to create and evaluate data usage policies."
-		},
-		{
-			"importedFileName": "data_ingestion_tutorial",
-			"pages": [],
-			"path": "api-specification/markdown/narrative/tutorials/data_ingestion_tutorial/data_ingestion_tutorial.md",
-			"title": "Ingest data using the UI",
-			"description": "Create a dataset based on a schema and ingest data using the Experience Platform UI."
-		},
-		{
-			"importedFileName": "data_access_tutorial",
-			"pages": [],
-			"path": "api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md",
-			"title": "Query dataset data using Data Access API",
-			"description": "Locate, access, and download data stored within a dataset using the Data Access API."
-	  },
-		{
-			"importedFileName": "configuring_up_tutorial",
-			"path": "api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_up_tutorial.md",
-			"title": "Configure Real-Time Customer Profiles using APIs",
-			"description": "Follow this tutorial to configure Real-time Customer Profiles for your organization using Experience Platform APIs.",
-			"pages": [
-				{
-					"importedFileName": "unified_profile_dataset_api_tutorial",
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/unified_profile_dataset_tutorial/unified_profile_dataset_api_tutorial.md",
-					"title": "Configure a dataset for Customer Profile and Identity Service using APIs",
-					"description": "Create, configure, and work with datasets enabled for use with Profile and Identity services."
-				},
-				{
-					"importedFileName": "adding_data_to_unified_profile",
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/adding_data_to_unified_profile/adding_data_to_unified_profile.md",
-					"title": "Add data to Customer Profile",
-					"description": "Configure schemas for use with Profile Service and learn to ingest data via batch or streaming ingestion."
-				},
-				{
-					"importedFileName": "consuming_unified_profile_data",
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/consuming_unified_profile_data/consuming_unified_profile_data.md",
-					"title": "Access Customer Profile data using APIs",
-					"description": "Learn multiple ways to access Profile Service data on Experience Platform, including accessing data by identity and accessing an exported segment."
-				},
-				{
-					"importedFileName": "configuring_merge_policies_tutorial",
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md",
-					"title": "Configure merge policies",
-					"description": "Follow steps to create new merge policies for your organization, as well as how to access and update existing merge policies."
-				},
-				{
-					"importedFileName": "configuring_edge_tutorial",
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_edge_tutorial.md",
-					"title": "Configure edge destinations and projections using APIs",
-					"description": "Configure Edge Service by creating projection configurations and the destinations they route to, as used by Projection Service."
-				}
-			]
-		},
-		{
-			"importedFileName": "creating_a_segment_tutorial",
-			"pages": [],
-			"path": "api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md",
-			"title": "Create a segment using APIs",
-			"description": "Create segments using Real-time Customer Profiles."
-		},
-		{
-			"importedFileName": "managing_decisioning_entities_tutorial",
-			"pages": [],
-			"path": "api-specification/markdown/narrative/tutorials/decisioning_tutorial/decisioning_entities_api_tutorial.md",
+    {
+      "importedFileName": "creating_a_connector_tutorial",
+      "pages": [
+        {
+          "pages": [],
+          "path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md",
+          "title": "Amazon S3 connector"
+        },
+        {
+          "pages": [],
+          "path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md",
+          "title": "Azure Blob connector"
+        },
+        {
+          "pages": [],
+          "path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md",
+          "title": "Microsoft Dynamics connector"
+        },
+        {
+          "pages": [],
+          "path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_salesforce_connector_tutorial.md",
+          "title": "Salesforce connector"
+        }
+      ],
+      "path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/creating_a_connector_tutorial.md",
+      "title": "Create a connector using APIs",
+      "description": "Learn to create different types of data connectors, including Salesforce, Microsoft Dynamics, Azure Blob, and Amazon S3."
+    },
+    {
+      "importedFileName": "dule_working_with_labels",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/dule/dule_working_with_labels.md",
+      "title": "Add DULE labels in the UI",
+      "description": "Work with Data Usage Labeling and Enforcement (DULE) labels and apply them at the connection, dataset, and field-level using the user interface."
+    },
+    {
+      "importedFileName": "create_a_dule_policy_tutorial",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/dule/create_a_dule_policy_tutorial.md",
+      "title": "Create and evaluate DULE policies using Policy Service API",
+      "description": "Create and evaluate Data Usage Labeling and Enforcement (DULE) policies using the Policy Service API."
+    },
+    {
+      "importedFileName": "data_governance_and_segmentation",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/dule/data_governance_and_segmentation.md",
+      "title": "Enforce data governance for an audience segment using APIs",
+      "description": "Enforce data usage compliance for Real-time Customer Profile audience segments using APIs."
+    },
+    {
+      "importedFileName": "data_ingestion_tutorial",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/data_ingestion_tutorial/data_ingestion_tutorial.md",
+      "title": "Ingest data using the UI",
+      "description": "Create a dataset based on a schema and ingest data using the Experience Platform UI."
+    },
+    {
+      "importedFileName": "sending_multiple_messages_in_an_http_request",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/sending_multiple_messages_in_an_http_request/sending_multiple_messages_in_an_http_request.md",
+      "title": "Sending multiple messages in a single HTTP request",
+      "description": "Send multiple messages to Experience Platform within a single HTTP request using the streaming ingestion API."
+    },
+    {
+      "importedFileName": "data_access_tutorial",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/data_access_tutorial/data_access_tutorial.md",
+      "title": "Query dataset data using Data Access API",
+      "description": "Locate, access, and download data stored within a dataset using the Data Access API."
+    },
+    {
+      "importedFileName": "configuring_up_tutorial",
+      "path": "api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_up_tutorial.md",
+      "title": "Configure Real-Time Customer Profiles using APIs",
+      "description": "Follow this tutorial to configure Real-time Customer Profiles for your organization using Experience Platform APIs.",
+      "pages": [
+        {
+          "importedFileName": "unified_profile_dataset_api_tutorial",
+          "pages": [],
+          "path": "api-specification/markdown/narrative/tutorials/unified_profile_dataset_tutorial/unified_profile_dataset_api_tutorial.md",
+          "title": "Configure a dataset for Customer Profile and Identity Service using APIs",
+          "description": "Create, configure, and work with datasets enabled for use with Profile and Identity services."
+        },
+        {
+          "importedFileName": "adding_data_to_unified_profile",
+          "pages": [],
+          "path": "api-specification/markdown/narrative/tutorials/adding_data_to_unified_profile/adding_data_to_unified_profile.md",
+          "title": "Add data to Customer Profile",
+          "description": "Configure schemas for use with Profile Service and learn to ingest data via batch or streaming ingestion."
+        },
+        {
+          "importedFileName": "consuming_unified_profile_data",
+          "pages": [],
+          "path": "api-specification/markdown/narrative/tutorials/consuming_unified_profile_data/consuming_unified_profile_data.md",
+          "title": "Access Real-time Customer Profile data using the Profile API",
+          "description": "Learn multiple ways to access Profile Service data on Experience Platform, including accessing data by identity and accessing an exported segment."
+        },
+        {
+          "importedFileName": "configuring_merge_policies_tutorial",
+          "pages": [],
+          "path": "api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md",
+          "title": "Configure merge policies",
+          "description": "Follow steps to create new merge policies for your organization, as well as how to access and update existing merge policies."
+        },
+        {
+          "importedFileName": "configuring_edge_tutorial",
+          "pages": [],
+          "path": "api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_edge_tutorial.md",
+          "title": "Configure edge destinations and projections using APIs",
+          "description": "Configure Edge Service by creating projection configurations and the destinations they route to, as used by Projection Service."
+        }
+      ]
+    },
+    {
+      "importedFileName": "creating_a_segment_tutorial",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md",
+      "title": "Create a segment using the Real-time Customer Profile API",
+      "description": "Create segments using Real-time Customer Profiles."
+    },
+    {
+      "importedFileName": "managing_decisioning_entities_tutorial",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/decisioning_tutorial/decisioning_entities_api_tutorial.md",
 			"title": "Manage Decisioning objects and rules using APIs",
 			"description": "Create and manage business objects supporting Decisioning Service features."
-		},
-		{
-			"importedFileName": "using_decisioning_runtime_tutorial",
-			"pages": [],
-			"path": "api-specification/markdown/narrative/tutorials/decisioning_tutorial/decisioning_runtime_api_tutorial.md",
-			"title": "Work with the Decisioning Service runtime using APIs",
+    },
+    {
+      "importedFileName": "using_decisioning_runtime_tutorial",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/decisioning_tutorial/decisioning_runtime_api_tutorial.md",
+      "title": "Work with the Decisioning Service runtime using APIs",
 			"description": "Make decisioning requests to obtain the next best offer."
     },
     {
-			"importedFileName": "privacy_service_api_tutorial",
-			"pages": [],
-			"path": "api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md",
-			"title": "Privacy Service API tutorial",
-			"description": "Create and manage data access and delete requests that comply with privacy regulations using APIs"
+      "importedFileName": "privacy_service_api_tutorial",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md",
+      "title": "Privacy Service API tutorial",
+      "description": "Create and manage data access and delete requests that comply with privacy regulations using APIs"
     },
     {
-			"importedFileName": "privacy_service_ui_tutorial",
-			"pages": [],
-			"path": "api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md",
-			"title": "Privacy Service UI tutorial",
-			"description": "Create and manage data access and delete requests that comply with privacy regulations using the UI"
-		}
-	],
-	"app2app_map": {
-		"end-user/markdown/segmentation_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-		"api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
-		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/":"/apis/experienceplatform/home/services/allservices.html",
-		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
-		"api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html",
-		"acpdr/swagger-specs/": "/apis/experienceplatform/home/api-reference.html",
-		"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
-		"end-user/markdown/dule_overview/": "/apis/experienceplatform/home/dule/duleservices.html",
-		"api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-		"api-specification/markdown/narrative/technical_overview/streaming_ingest/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
-		"api-specification/markdown/narrative/technical_overview/decisioning-overview/":"/apis/experienceplatform/home/services/decisioning-service.html"
-	}
+      "importedFileName": "privacy_service_ui_tutorial",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md",
+      "title": "Privacy Service UI tutorial",
+      "description": "Create and manage data access and delete requests that comply with privacy regulations using the UI"
+    }
+  ],
+  "app2app_map": {
+    "end-user/markdown/segmentation_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+    "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+    "api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
+    "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/":"/apis/experienceplatform/home/services/allservices.html",
+    "api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
+    "api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html",
+    "acpdr/swagger-specs/": "/apis/experienceplatform/home/api-reference.html",
+    "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
+    "api-specification/markdown/narrative/technical_overview/data_governance/": "/apis/experienceplatform/home/dule/duleservices.html",
+    "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+    "api-specification/markdown/narrative/technical_overview/streaming_ingest/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
+    "api-specification/markdown/narrative/technical_overview/decisioning-overview/":"/apis/experienceplatform/home/services/decisioning-service.html",
+    "api-specification/markdown/narrative/gdpr/":"/apis/experienceplatform/gdpr/docs/alldocs.html"
+  }
 }
