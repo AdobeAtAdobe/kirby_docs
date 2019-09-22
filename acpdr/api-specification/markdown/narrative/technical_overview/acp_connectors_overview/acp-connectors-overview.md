@@ -9,9 +9,7 @@ Adobe Experience Platform provides connectors to ingest all of your diverse data
 Tutorials:
 * [Azure Blob connector](../../tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md) ingests your data from Microsoft Azure Blob cloud storage to Adobe Experience Platform. 
 
-
 * [Amazon S3 connector](../../tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md) ingests your data from Amazon S3 cloud storage to Adobe Experience Platform.  
-
 
 * [Microsoft Dynamics connector](../../tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md) lets you set up Microsoft Dynamics CRM data to ingest into the Platform on a defined schedule. The Microsoft Dynamics connector also supports backfill data ingestion.
 
@@ -27,6 +25,13 @@ Tutorials:
 To know if data is ingested, enable the Preview button in the top right corner of the connector wizard. 
 
 You can also use Catalog APIs to see if dataset files are being created for the current batch, or make a batch query with *datasetViewId* filter from Catalog services to see if batches are getting created properly.
+
+## Adobe Solution Connectors
+Adobe Experience Platform provides connectors to ingest all of your diverese data from various Adobe Services:
+
+* [Analytics data connector](analytics_data_connector.md) streams data collected by Adobe Analytics to Experience Platform in real time.
+
+* [Audience Manager connector](audience_manager_connector.md) ingests your data from Adobe Audience Manager to Experience Platform. 
 
 ## Other APIs used for Platform Connectors
 Beyond the Create Account and Create Dataset APIs, a few other helper APIs are listed below. Please see the [Partner Connectors RESTful API Resource](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/partner-connectors-api.yaml) for further information on Platform Connector APIs.
