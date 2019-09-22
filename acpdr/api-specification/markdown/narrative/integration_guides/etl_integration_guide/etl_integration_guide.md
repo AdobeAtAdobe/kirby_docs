@@ -690,7 +690,7 @@ When snapshot profiles are used, the ETL tool will have to pick the last batch o
 
 ## Batch Replay and Data Reprocessing
 
-Batch replay and data reprocessing may be required in cases where a client discovers that for the past 'n' days, data being ETL processed has not occurred as expected or source data itself may not have been correct. 
+Bath replay and data reprocessing may be required in cases where a client discovers that for the past 'n' days, data being ETL processed has not occurred as expected or source data itself may not have been correct. 
 
 To do this, the client's data administrators will use the Platform UI to remove the batches containing corrupt data. Then, the ETL will likely need to be re-run, thus repopulating with correct data. If the source itself had corrupt data, the data engineer/administrator will need to correct the source batches and re-ingest the data (either into Adobe Experience Platform or via ETL connectors).
 
@@ -723,4 +723,4 @@ Date|Action|Description
 2019-01-19|Removed "fields" property from datasets|Datasets previously included a "fields" property that contained a copy of the schema. This capability should no longer be used. If the "fields" property is found, it should be ignored and the "observedSchema" or "schemaRef" used instead.
 2019-03-15| "schemaRef" property added to datasets|The "schemaRef" property of a dataset contains a URI referencing the XDM schema upon which the dataset is based and represents all potential fields that could be used by the dataset.|
 2019-03-15| All end-user identifiers map to "identityMap" property | The "identityMap" is an encapsulation of all unique identifiers of a subject, such as CRM ID, ECID, or loyalty program ID. This map is used by [Unified Identity Service](../../technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md) to resolve all known and anonymous identities of a subject, forming a single identity graph for each end-user.|
-2019-05-30|EOL and Remove "schema" property from datasets|The dataset "schema" property provided a reference link to the schema using the deprecated `/xdms` endpoint in the Catalog API. This has been replaced by a "schemaRef" that provides the "id", "version", and "contentType" of the schema as referenced in the new Schema Registry API.
+2019-05-30|EOL and Remove "schema" property from datasets|The dataset "schema" property provided a reference link to the schema using the deprecated `/xdms` endpoint in the Catalog API. This has been replaced by a "schemaRef" that provides the "id", "version", and "contentType" of the schema as referenced in the new Schema Registry API..
