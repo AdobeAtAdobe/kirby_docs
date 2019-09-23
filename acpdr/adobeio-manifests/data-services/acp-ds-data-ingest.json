@@ -1,120 +1,108 @@
 {
-  "name":"data-ingestion_services",
-  "version":"1.0.0",
-  "description":"Data Ingestion Services",
-  "author":"Klaasjan Tukker",
-  "view_type":"mdbook",
-  "meta_keywords":"Adobe Experience Platform, Platform, Experience, Services, AEP, Data Services, Data Ingestion, Streaming, Bulk Ingestion, Batch Ingestion",
-  "meta_description":"Adobe Experience Platform Data Ingestion Services",
-  "publish_date":"11/09/2018",
-  "show_edit_github_banner":false,
-  "base_path":"https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
-  "pages":[
-    {
-      "pages":[
-        {
-          "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/batch_data_ingestion_troubleshooting_guide.md",
-          "title":"Batch ingestion troubleshooting guide"
-        },
-        {
-          "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/batch_data_ingestion_developer_guide.md",
-          "title":"Batch ingestion developer guide"
-        }
-      ],
-      "path":"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md",
-      "title":"Batch ingestion"
-    },
-    {
-      "pages":[
-        {
-          "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/analytics_data_connector.md",
-          "title":"Analytics data connector"
-        },
-        {
-          "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/analytics_mapping_fields.md",
-          "title":"Analytics mapping fields"
-        },
-        {
-          "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/audience_manager_connector.md",
-          "title":"Audience Manager connector"
-        },
-        {
-          "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/audience_manager_mapping_fields.md",
-          "title":"Audience Manager mapping fields"
-        },
-        {
-          "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/adobe-solution-connectors.md",
-          "title":"Adobe solution connectors"
-        },
-        {
-          "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/connector-api-error-codes.md",
-          "title":"Connector troubleshooting guide"
-        }
-      ],
-      "path":"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md",
-      "title":"Data connectors"
-    },
-    {
-      "pages":[
-        {
-          "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md",
-          "title":"Getting started with streaming ingestion"
-        },
-        {
-          "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/authenticated_data_collection.md",
-          "title":"Authenticated data collection"
-        },
-        {
-          "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/retrieving_failed_batches.md",
-          "title":"Retrieving failed batches"
-        },
-        {
-          "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_to_datasets_in_adobe_experience_platform.md",
-          "title":"Streaming to datasets"
-        },
-        {
-          "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_validation.md",
-          "title":"Streaming validation"
-        },
-        {
-          "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/e2e-monitor-streaming-data-flows.md",
-          "title":"Monitoring streaming data flows"
-        },
-        {
-          "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_ingestion_FAQ.md",
-          "title":"Streaming ingestion troubleshooting guide"
-        }
-      ],
-      "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_ingest_overview.md",
-      "title":"Streaming ingestion"
+    "name": "data-ingestion_services",
+    "version": "1.0.0",
+    "description": "Data Ingestion Services",
+    "author": "Klaasjan Tukker",
+    "view_type": "mdbook",
+    "meta_keywords": "Adobe Experience Platform, Platform, Experience, Services, AEP, Data Services, Data Ingestion, Streaming, Bulk Ingestion, Batch Ingestion",
+    "meta_description": "Adobe Experience Platform Data Ingestion Services",
+    "publish_date": "11/09/2018",
+    "show_edit_github_banner": false,
+    "base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
+    "pages": [
+      {
+        "pages": [ 
+            {
+                "pages": [ ],
+                "path": "api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/batch_data_ingestion_troubleshooting_guide.md",
+                "title": "Batch ingestion troubleshooting guide"
+            },
+            {
+                "pages": [ ],
+                "path": "api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/batch_data_ingestion_developer_guide.md",
+                "title": "Batch ingestion developer guide"
+            }
+        ],
+        "path": "api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md",
+        "title": "Batch ingestion"
+      },
+      {
+        "pages": [ 
+            {
+                "pages": [],
+                "path": "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/analytics_data_connector.md",
+                "title": "Analytics data connector"
+            },
+            {
+                "pages": [],
+                "path": "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/analytics_mapping_fields.md",
+                "title": "Analytics mapping fields"
+            },
+            {
+              "pages": [],
+              "path": "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/adobe-solution-connectors.md",
+              "title": "Adobe solution connectors"
+            },
+            {
+              "pages": [],
+                "path": "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/connector-api-error-codes.md",
+                "title": "Connector troubleshooting guide"
+            }
+        ],
+        "path": "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md",
+        "title": "Data connectors"
+      },
+      {
+        "pages": [
+          {
+            "pages": [ ],
+            "path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md",
+            "title": "Getting started with streaming ingestion"
+          },
+          {
+            "page": [ ],
+            "path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/authenticated_data_collection.md",
+            "title": "Authenticated data collection"
+          },
+          {
+            "pages": [ ],
+            "path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/retrieving_failed_batches.md",
+            "title": "Retrieving failed batches"
+          },
+          {
+            "pages": [ ],
+            "path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_to_datasets_in_adobe_experience_platform.md",
+            "title": "Streaming to datasets"
+          },
+          {
+              "pages": [ ],
+              "path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_validation.md",
+              "title": "Streaming validation"
+          },
+          {
+            "pages": [ ],
+            "path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/e2e-monitor-streaming-data-flows.md",
+            "title": "Monitoring streaming data flows"
+          },
+          {
+            "pages": [ ],
+            "path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_ingestion_FAQ.md",
+            "title": "Streaming ingestion FAQ"
+          }
+        ],
+        "path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_ingest_overview.md",
+        "title": "Streaming ingestion"
+      }
+    ],
+	"app2app_map": {
+		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
+    "acpdr/swagger-specs/": "/apis/experienceplatform/home/api-reference.html",
+    "api-specification/markdown/narrative/technical_overview/schema_registry": "/apis/experienceplatform/home/xdm/xdmservices.html",
+		"api-specification/markdown/narrative/technical_overview/schema_registry/schema_composition/": "/apis/experienceplatform/home/xdm/xdmservices.html",
+		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+		"api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+		"api-specification/markdown/narrative/technical_overview/identity_namespace_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/": "/apis/experienceplatform/home/services/allservices.html",
+        "api-specification/markdown/narrative/technical_overview/streaming_ingest": "/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
     }
-  ],
-  "app2app_map":{
-    "api-specification/markdown/narrative/tutorials/":"/apis/experienceplatform/home/tutorials/alltutorials.html",
-    "acpdr/swagger-specs/":"/apis/experienceplatform/home/api-reference.html",
-    "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/":"apis/experienceplatform/home/services/troubleshooting.html",
-    "api-specification/markdown/narrative/technical_overview/schema_registry":"/apis/experienceplatform/home/xdm/xdmservices.html",
-    "api-specification/markdown/narrative/technical_overview/schema_registry/schema_composition/":"/apis/experienceplatform/home/xdm/xdmservices.html",
-    "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-    "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-    "api-specification/markdown/narrative/technical_overview/identity_namespace_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-    "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/":"/apis/experienceplatform/home/services/allservices.html",
-    "api-specification/markdown/narrative/technical_overview/streaming_ingest/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
-    "api-specification/markdown/narrative/integration_guides/etl_integration_guide/":"/apis/experienceplatform/home/services/allservices.html"
   }
-}
