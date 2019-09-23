@@ -1,117 +1,128 @@
-# Identity Service FAQ and troubleshooting guide
+# Identity Service - FAQ and recommendations
 
-This document provides answers to frequently asked questions about Adobe Experience Platform Identity Service, as well as a troubleshooting guide for common errors. For questions and troubleshooting regarding Platform APIs in general, see the [Adobe Experience Platform API troubleshooting guide](../platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md).
+## Overview
 
-Data that identifies a single customer is often fragmented across the various devices and systems that they use to engage with your brand. **Identity Service** gathers these fragmented identities together, facilitating a complete understanding of customer behavior so you can deliver impactful digital experiences in real-time. For more information, see the [Identity Service overview](identity_services_architectural_overview.md).
+This document is intended to centralize both frequently asked questions, troubleshooting tips, and recommendations as they relate to working with Identity Service. In specific:
 
-### FAQ
-- Identity data
-    - [What is identity data?](#what-is-identity-data)
-    - [What is the benefit of supplying identity data?](#what-is-the-benefit-of-supplying-identity-data)
-    - [What are known and anonymous identities?](#what-are-known-and-anonymous-identities)
-    - [What is a Private Identity Graph?](#what-is-a-private-identity-graph)
-- Identity data fields
-    - [How do I create multiple identity fields within an XDM schema?](#how-do-i-create-multiple-identity-fields-within-an-xdm-schema)
-    - [Are there contexts where some fields should not be labeled as identities?](#are-there-contexts-where-some-fields-should-not-be-labeled-as-identities)
-    - [Why are my identity fields not linking the way I expect?](#why-are-my-identity-fields-not-linking-the-way-i-expect)
-- Identity namespaces
-    - [What is an identity namespace?](#what-is-an-identity-namespace)
-    - [How do I associate an identity with an identity namespace?](#how-do-i-associate-an-identity-with-an-identity-namespace)
-    - [What are the standard identity namespaces provided by Experience Platform?](#what-are-the-standard-identity-namespaces-provided-by-experience-platform)
-    - [Where can I find the list of identity namespaces available for my organization?](#where-can-i-find-the-list-of-identity-namespaces-available-for-my-organization)
-    - [How do I create a custom namespace for my organization?](#how-do-i-create-a-custom-namespace-for-my-organization)
-    - [What are composite identities and XIDs?](#what-are-composite-identities-and-xids)
-- Personally identifiable information (PII)
-    - [How does Identity Service handle personally identifiable information (PII)?](#how-does-identity-service-handle-personally-identifiable-information-pii)
-    - [Should I encrypt all PII before sending to Platform?](#should-i-encrypt-all-pii-before-sending-to-platform)
-    - [Are there any considerations when hashing PII-based identities?](#are-there-any-considerations-when-hashing-pii-based-identities)
+[FAQ](#faq)  
+[Recommendations](#recommendations)  
+[Troubleshooting](#troubleshooting)  
+[Error codes](#missing-expected-identity-links)  
 
-### Troubleshooting
-- Identity Service error messages
-    - [Missing required query parameter](#missing-required-query-parameter)
-    - [Timestamp should be within last 180 days](#timestamp-should-be-within-last-180-days)
-    - [There is a limit of 1000 XIDs in a single call](#there-is-a-limit-of-1000-xids-in-a-single-call)
-    - [There is a limit for 1000 compositeXids in a single call](#there-is-a-limit-for-1000-compositexids-in-a-single-call)
-    - [The graph-type specified is invalid](#the-graph-type-specified-is-invalid)
-    - [Service token does not have valid scope](#service-token-does-not-have-valid-scope)
-    - [Gateway service token is not valid](#gateway-service-token-is-not-valid)
-    - [Authorization service token is not valid](#authorization-service-token-is-not-valid)
-    - [User token does not have valid product context](#user-token-does-not-have-valid-product-context)
-    - [Internal error when getting native XID from identity and namespace code](#internal-error-when-getting-native-xid-from-identity-and-namespace-code)
-    - [The IMS Org is not provisioned for Identity Service usage](#the-ims-org-is-not-provisioned-for-identity-service-usage)
-    - [Internal Server Error](#internal-server-error)
-- Batch Ingestion error codes
-    - [Unknown XDM schema](#unknown-xdm-schema)
-    - [There were 0 valid identities in the first 100 rows of the processed batch](#there-were-0-valid-identities-in-the-first-100-rows-of-the-processed-batch)
-    - [Skipped records as they had only 1 identity per XDM record](#skipped-records-as-they-had-only-1-identity-per-xdm-record)
-    - [Namespace Code is not registered for this IMS Org](#namespace-code-is-not-registered-for-this-ims-org)
-    - [Skipping batch ingestion as IMS Org is not provisioned for Private Identity Graph](#skipping-batch-ingestion-as-ims-org-is-not-provisioned-for-private-identity-graph)
-    - [Internal Error](#internal-error)
+---
 
 ## FAQ
 
-The following is a list of answers to frequently asked questions about Identity Service.
+[What is identity data?](#what-is-identity-data)  
+[What is an identity namespace?](#what-is-an-identity-namespace)  
+[How do I send multiple IDs within XDM?](#how-do-i-send-multiple-ids-within-xdm)  
+[How do I associate an identity to an identity namespace?](#how-do-i-associate-an-identity-to-an-identity-namespace)  
+[How can I find the list of identity namespaces available for my use?](#how-can-i-find-the-list-of-identity-namespaces-available-for-my-use)  
+[How can I create a custom namespace for my enterprise?](#how-can-i-create-a-custom-namespace-for-my-enterprise)  
+[What is Private Identity Graph?](#what-is-private-identity-graph)  
+[Should I encrypt all Personally Identifiable Information (PII) before sending?](#should-i-encrypt-all-personally-identifiable-information-pii-before-sending)  
+[Are there any considerations when hashing PII based Identities?](#are-there-any-considerations-when-hashing-pii-based-identities)  
+[What is the benefit of supplying identity data?](#what-is-the-benefit-of-supplying-identity-data)  
+[How does Identity Service handle PII?](#how-does-identity-service-handle-pii)  
+[What are known and anonymous identities?](#what-are-known-and-anonymous-identities)  
+[Are there any identity namespaces I can use out of the box?](#are-there-any-identity-namespaces-i-can-use-out-of-the-box)  
+[When should I create a custom identity namespace?](#when-should-i-create-a-custom-identity-namespace)  
 
-## What is identity data?
 
-Identity data is any data that can be used to identify an individual person. Depending on the context of how the data is used within your organization, identity data can include usernames, email addresses, and IDs from CRM systems. Identity data is not limited to registered users of your website or service, as anonymous users can also be identified by their device or cookie ID.
 
-## What is the benefit of labeling data fields as identities?
+### What is identity data?
 
-Labeling certain data fields as identities in your record and time series data allows you to map identity relationships within the natural structure of your data and reconcile duplicate data cross channels. See the [Identity Service overview](identity_services_architectural_overview.md) for more information.
+Data that can be used to identify a user is referred to as identity data. This could include identifiers for a logged in user, such as a username, email address, or an ID from a CRM system. Users engaging anonymously could also be identified, such as by their device or cookie ID. 
 
-## What are known and anonymous identities?
+### What is an identity namespace?
 
-A **known identity** refers to an identity value that can be used on its own or with other information to identify, contact, or locate an individual person. Examples of known identities may include email addresses, phone numbers, and CRM IDs.
+Identity namespaces serve several functions on Adobe Experience Platform.
 
-An **anonymous identity** refers to an identity value that cannot be used on its own or with other information to identify, contact, or locate an individual person (such as a cookie ID).
+* A profile identity is the unique value that a system uses to refer to a person. The identity namespace is what distinguishes the system in which that value identifies that profile. An example of this could be a Loyalty ID, where the namespace would reflect your rewards system and distinguishes that identifier from that same person who might be identified by a numeric ID in your eCommerce system.
+* The identity namespace indicates the type of identity. For example, when trying to access your GDPR data a customer has to indicate the type of identity they are accessing by, for instance email or phone.
+* Namespacing identities helps avoid conflict. For example, both your rewards system and your CRM could have a profile with the ID of 12345, with no assurance both systems are referring to the same person. The namespace resolves ambiguity.
 
-## What is a Private Identity Graph?
+Namespaces must be created in Identity Service prior to being used. For more information, see [Identity Namespace Architectural Overview](../identity_namespace_overview/identity_namespace_overview.md).
 
-A Private Identity Graph is a private map of relationships between stitched and linked identities, visible only to your organization. 
+### How do I send multiple IDs within XDM?
 
-When more than one identity is included in any data ingested from a streaming endpoint or sent to a dataset enabled for Identity Service, those identities are linked in the Private Identity Graph. Identity Service leverages this graph to glean identities for a given consumer or entity, allowing for identity stitching and profile merging.
+__Label XDM fields as identity__
 
-## How do I create multiple identity fields within an XDM schema?
+Any string typed field in schemas implementing either record or time series XDM classes can be labeled as an identity field. After doing so, any value provided for that attribute would be considered an identity and the identity graph would be enhanced with the relationships between it and the other identities in the data. To label a field as identity is to add a descriptor to the XDM schema field, which can be done using the Experience Platform UI or the Identity Service API.
 
-[Experience Data Model (XDM)](../schema_registry/xdm_system/xdm_system_in_experience_platform.md) schemas support multiple identity fields. Any data field of type `string` within a schema that implements the XDM Profile or XDM ExperienceEvent class can be labeled as an identity field. Once labeled, any data contained in these fields is added to the profile's identity map.
+For more information, see how to label a field as identity in the [Identity Service overview](identity_namespace_overview#marking-xdm-fields-as-identity).
 
-For steps on how to label an XDM field as an identity field using the user interface, see the [Identity section](../../tutorials/schema_editor_tutorial/schema_editor_tutorial.md#set-a-schema-field-as-an-identity-field) in the Schema Editor tutorial. If you are using the API, see the [Identity descriptor section](../../tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md#define-identity-descriptor) in the Schema Registry API tutorial.
+__List known identities in identity map__
 
-## Are there contexts where some fields should not be labeled as identities?
+XDM schemas include an identity map which is used to list an entity's identities. An identity specifies the value used to reference an entity in one of your systems, and the namespace for that system. For example an identity could be an email address, where the namespace would name the help-desk system in which that email address is the person's identifier. 
 
-Identity fields should be reserved for values that are unique to each individual. For example, consider a dataset for a customer loyalty program. The "loyalty level" field (gold, silver, bronze) would not be a useful identity field, whereas the loyalty ID&mdash;a unique value&mdash;would be.
+For more information, see how to construct an identity map in the [Identity Service Overview](identity_services_architectural_overview.md#identity-maps). For recommendations, see [below](#recommendations).
 
-Fields like ZIP codes and IP addresses should not be labeled as identities for individuals, as these values can apply to more than one individual person. These types of fields should only be labeled as identities for household-level marketing strategies.
+### How do I associate an identity to an identity namespace?
 
-## Why are my identity fields not linking the way I expect?
+#### Identity field
 
-Using the [`/cluster/members` endpoint](identity_services_api.md#get-all-identities-in-a-cluster) in the Identity Service API, you can view the associated identities for one or more identity fields. If the response does not return the linked identities you expect, ensure that you are providing the appropriate identity information in your XDM data. See the section on [providing XDM data to Identity Service](identity_services_architectural_overview.md#supplying-identity-data-to-identity-service) in the Identity Service overview for more information.
+Identities created from values of identity fields take on the namespace of the descriptor labeling that field as an identity field. 
 
-## What is an identity namespace?
+For more information, see how to label a field as identity in the [Identity Service overview](identity_namespace_overview#marking-xdm-fields-as-identity).
 
-An identity namespace gives context for how identity fields relate to a customer's identity. For example, identity fields under the "Email" namespace should conform to a standard email format (name<span>@emailprovider.com) whereas fields using the "Phone" namespace should conform to a standard phone number (such as 987-555-1234 in North America).
+#### Identity map in XDM data
 
-Namespaces distinguish similar identity values between different CRM systems. For example, consider a profile that contains a numerical Loyalty ID associated with your company's rewards program. A namespace of "Loyalty" would separate this value from a similar numeric ID for your eCommerce system that also appears in the same profile.
+Any identity supplied in the identity map of a Profile or ExperienceEvent consists of an ID value and namespace. For example, an individual could be represented as "someone<i></i>@somewhere.com" in your CRM, and as ID "123456" in your rewards system. Those would be associated to their system of origination by the namespace. 
 
-See the [identity namespace overview](../identity_namespace_overview/identity_namespace_overview.md) for more information.
+For more information, see how to construct an identity map in the [Identity Service overview](identity_services_architectural_overview.md#identity-maps). For recommendations, see [below](#recommendations).
 
-## How do I associate an identity with an identity namespace?
+### How can I find the list of identity namespaces available for my use?
 
-Identity fields must be associated with an existing identity namespace when they are created. Any new namespaces must be [created using the API](#how-do-i-create-a-custom-namespace-for-my-organization) before associating them with identity fields.
+Using the API, you are able to list namespaces available for your organization. Learn how to list available Namespaces [here](../identity_namespace_overview/identity_namespace_overview.md#list-available-namespaces).
 
-For step-by-step instructions for defining a namespace when creating an identity descriptor using the API, please see the section on [creating a descriptor](../schema_registry/schema_registry_developer_guide.md#create-descriptor) in the Schema Registry developer guide. For marking a schema field as an identity in the UI, follow the steps in the [Schema Editor tutorial](../../tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md).
+### How can I create a custom namespace for my enterprise?
 
-## What are the standard identity namespaces provided by Experience Platform?
+Identity Service comes with several namespaces you can use to group your identifiers out of the box. If you require a custom namespace, see [Identity Namespace overview](../identity_namespace_overview/identity_namespace_overview.md).
 
-The following standard namespaces are provided for use by all organizations within Experience Platform:
+### What is Private Identity Graph?
+
+When more than one identifier is included in any data sent to a streaming endpoint or dataset enabled for Identity Service, those identities are linked in the identity graph private to your organization. Identity Service provides services for gleaning identities for a given consumer or entity, allowing identity stitching and profile merging.
+
+The private identity graph helps large enterprises by reconciling the many identifiers generated in different channels and recognizes them collectively as a single consumer to provide a complete and accurate profile of the enterprise's consumers as 'People' to analyze and target.
+
+### Should I encrypt all Personally Identifiable Information (PII) before sending?
+
+To ensure your customers' PII is always encrypted, use DULE based labeling and Adobe will take care of the rest. Any PII data needs to have the `I1` DULE labeled applied at the schema field level. Internally, before storing it in the identity graph, Adobe converts any `I1` labeled data via salting and encrypting to a hashed ID value that is safe and secure at all times.
+
+For more information on DULE, visit the [Data Usage Labeling and Enforcement (DULE) User Guide](../../../../../end-user/markdown/dule_overview/dule_overview.md).
+
+### Are there any considerations when hashing PII based identities?
+
+If you are sending in hashed PII values, like email or phone, you must use the same encryption technique across various datasets. This ensures that the same value across datasets generates the same hashed values and are able to be matched and linked in the identity graph. If for whatever reason they are different, Adobe does not detect a link and fails to deliver unified segmentation across datasets.
+
+### What is the benefit of supplying identity data?
+
+There are basically two purposes for including identity data in your record and time series data: 
+
+* Provide known ID relationships or mappings - Identities provided in the identity map of record and time series data are mapped in your private identity graph, as well as the values to any fields marked as identity fields. For instance, if a record in data sent to Experience Platform contains a value for MCID, email address, phone number, loyalty number, login ID, those values are all mapped as identifying a singular person or entity in the identity graph. Where the `identities` map requires explicitly listing all known identities, labeling XDM fields allows the identities to be discovered more organically, within the natural structure of your data.
+* Reconcile on ID - Every ID is considered as a reconciliation key and hence extends identity graph with the new relationship without duplicating an existing node. If a record set contains "ECID1" and "EmailId1" from one source and "EmailId1" and "CRM1" as an identity pair from another source, identity graph will link "ECID1" — "EmailId1" — "CRM1". In this example, reconciliation happened on "EmailId1".
+
+### How does Identity Service handle PII?
+
+Identity Service creates a strong one way cryptographic hash of PII prior to persisting values. In specific, identity data in the "Phone" and "Email" namespaces will automatically be SHA-256 hashed. "Email" values are transformed to lower case prior to hashing.
+
+### What are known and anonymous identities?
+
+A known identity refers to identity that can be used on its own or with other information to identify, contact, or locate a single person, or to identify an individual in context. Some examples might be email address or loyalty card number from a customer’s CRM system.
+
+An anonymous identity refers to identity that cannot be used on its own or with other information to identify, contact, or locate a single person. An example of this might be a cookie ID.
+
+### Are there any identity namespaces I can use out of the box?
+
+The following namespaces are provided for use by all organizations. These are referred to as the standard namespaces.
 
 |Display Name|ID|Code|Description|
 |------------|---|---|-----------|
 |CORE|0|CORE|legacy name: "Adobe AudienceManager"|
 |ECID|4|ECID|alias: "Adobe Marketing Cloud ID", "Adobe Experience Cloud ID", "Adobe Experience Platform ID"|
 |Email|6|Email||
-|Email (SHA256, lowercased)|11|Emails|Standard namespace for pre-hashed email. Values provided in this namespace are converted to lowercase before hashing with SHA-256.|
+|Email (SHA256, lowercased)|11|Emails|Standard namespace for pre-hashed email. Values provided in this namespace must be lower-cased before hashing with SHA-256.|
 |Phone|7|Phone||
 |Windows AID|8|WAID||
 |AdCloud|411|AdCloud|alias: Ad Cloud|
@@ -119,34 +130,27 @@ The following standard namespaces are provided for use by all organizations with
 |Google Ad ID|20914|GAID|GAID|
 |Apple IDFA|20915|IDFA|ID for Advertisers|
 
-## Where can I find the list of identity namespaces available for my organization?
+### When should I create a custom identity namespace?
 
-Using the [Identity Service API](../../../../../../acpdr/swagger-specs/id-service-api.yaml), you can list all available identity namespaces for your organization by making a GET request to the `/idnamespace/identities` endpoint. See the section on [listing available namespaces](identity_services_api.md#listing-available-namespaces) in the Identity Service API overview for more information.
+See recommendations around creating custom namespaces below.
 
-## How do I create a custom namespace for my organization?
+---
 
-Using the [Identity Service API](../../../../../../acpdr/swagger-specs/id-service-api.yaml), you can create a custom identity namespace for your organization by making a POST request to the `/idnamespace/identities` endpoint. See the section on [creating a custom namespace](identity_services_api.md#creating-a-custom-namespace) in the Identity Service API overview for more information.
+## Recommendations
 
-## What are composite identities and XIDs?
+[What not to label as identity and why](#what-not-to-label-as-identity-and-why)  
+[When to create a custom identity namespace](#when-to-create-a-custom-identity-namespace)  
+[Marking XDM schema fields as identity versus the Identity map](#marking-xdm-schema-fields-as-identity-versus-the-identity-map)  
 
-Identities are referenced in API calls either by their composite identity or XID. A **composite identity** is a representation of an identity that contains an ID value and a namespace. An **XID** is a single-value identifier that represents the same construct as a composite identity (an ID and a namespace), and is automatically assigned to new identities when persisted by Identity Service. See the [Identity Service API overview](identity_services_api.md) for more information.
+### What not to label as identity and why
 
-## How does Identity Service handle personally identifiable information (PII)?
+Fields like zip code, IP address should not be labeled as identity as they will end up representing a lot of people in the same bucket as opposed to individuals. They should be used more for household or individual strategies. These include attributes such as email, username, or home address.
 
-Identity Service creates a strong, one-way cryptographic hash of PII prior to persisting values. Identity data in the "Phone" and "Email" namespaces are automatically hashed using SHA-256, with "Email" values automatically converted to lowercase prior to hashing.
+### When to create a custom identity namespace
 
-## Should I encrypt all PII before sending to Platform?
+Though there are several standard identity namespaces provided for use by default, you may find you need different namespaces to properly suit the various sources of data within your own ecosystem. 
 
-You do not need to manually encrypt PII data before ingesting it into Platform. By applying the `I1` data usage label to all applicable data fields, Platform automatically converts these fields into hashed ID values upon ingestion.
-
-For steps on how to apply and manage data usage labels, see the [data usage labels tutorial](../../tutorials/dule/dule_working_with_labels.md).
-
-## Are there any considerations when hashing PII-based identities?
-
-If you are sending hashed PII values to Identity Service, you must use the same encryption method across your datasets. This ensures that the same identity value across datasets generates the same hashed values and are able to be properly matched and linked in the identity graph.
-
-<!-- Documentation does not show any methods of editing the identityMap directly, and this table never overtly recommends using identityMap anyway. This should probably be removed unless PM thinks otherwise. -->
-<!-- ## When should I use the Identity map rather than labeling individual XDM schema fields?
+### Marking XDM schema fields as identity versus the Identity map
 
 The following table describes when the recommended approach for including identity data in your XDM would be identity map and when an identity field is the better method.
 
@@ -159,238 +163,81 @@ Developer|Recommended|Supported
 ETL|Recommended|Avoid - While this is supported, data should be formatted naturally when using an ETL, favoring identity fields over `identityMap`.
 Internal solutions|Preferred|Common
 
---- -->
+---
 
 ## Troubleshooting
 
-The following section provides troubleshooting suggestions for specific error codes and unexpected behavior you may encounter while working with the Identity Service API.
+The following provides some tips for dealing with unexpected results while working with Identity Service API operations.
 
-## Identity Service error messages
+### Missing expected identity links
 
-The following is a list of error messages you may encounter when using the Identity Service API.
+To view related identities for a particular identity, use Identity Service's [cluster API](identity_services_api.md#cluster-members-api). <!-- TODO: Add UI doc link when it's available-->If you do not see the linked identities you expect, first ensure identity information is provided appropriately in your XDM data. For more on providing identities, see information on [providing XDM data to Identity Service](identity_services_architectural_overview#providing-xdm-data-to-identity-service).
 
-### Missing required query parameter
+---
 
-```json
-{
-    "title": "InvalidInput",
-    "status": 400,
-    "detail": "Missing required query parameter - namespace"
-}
-```
+## Error codes
 
-This error displays when a required query parameter was not included in the request path. The `detail` of the error message provides the name of the missing parameter. Variations of this error message include:
-  * Missing required query parameter &ndash; nsId
-  * Missing required query parameter &ndash; id
-  * Missing required query parameter &ndash; xid or (nsid,id)
-  * Missing required query parameter &ndash; targetNs
-  * Missing required query parameter &ndash; xids or compositeXids
+The REST API operations supporting Identity Service, and all of Experience Platform, return HTTP status codes as defined by [HTTP/1.1 Status Code Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html). 
 
-Check that you are properly including the indicated parameter in the request path before trying again.
-
-### Timestamp should be within last 180 days
-
-```json
-{
-    "title": "InvalidInput",
-    "status": 400,
-    "detail": "Timestamp should be within last 180 days"
-}
-```
-
-Identity Service purges data older than 180 days. This error message displays when you attempt to access data older than this.
-
-### There is a limit of 1000 XIDs in a single call
-
-```json
-{
-    "title": "InvalidInput",
-    "status": 400,
-    "detail": "There is a limit of 1000 XIDs in a single call"
-}
-```
-
-This error message displays when you attempt to retrieve identity information for more than the maximum number of [XIDs](#what-are-composite-identities-and-xids) permitted in a single API call. Reduce the number of XIDs in your request to below the displayed limit to resolve this issue.
+[Identity Service error codes](#identity-service-error-codes)  
+[Batch Ingestion error codes](#batch-ingestion-error-codes)  
 
 
-### There is a limit for 1000 compositeXids in a single call
+### Identity Service error codes
 
-```json
-{
-    "title": "InvalidInput",
-    "status": 400,
-    "detail": "There is a limit for 1000 compositeXids in a single call"
-}
-```
+The following lists error codes you might encounter when working with Identity Service API.
 
-This error message displays when you attempt to retrieve identity information for more than the maximum number of [composite identities](#what-are-composite-identities-and-xids) permitted in a single API call. Reduce the number of composite identities in your request to below the displayed limit to resolve this issue.
+**HTTP status code 400 (InvalidInput)**
 
-### The graph-type specified is invalid
+* **Missing required query parameter** - When your API call is missing a parameter, this message will include that parameter name. An example message is "Missing required query parameter: nsId", in which case `nsId` is missing. Keep in mind that namespace can be supplied via the namespace ID (`nsId`) or the namespace code (`ns`). The variations include:
+  * Missing required query parameter: nsId
+  * Missing required query parameter: id
+  * Missing required query parameter: xid or (nsid,id)
+  * Missing required query parameter: targetNs
+  * Missing required query parameter: xids or compositeXids
+* **Timestamp should be within last 180 days** - Identity Service purges data older than 180 days and attempts to access data older than this will result in an error.
+* **There is a limit of 1000 XIDs in a single call** - This message results if you attempt to retrieve identity information for more than the maximum number of identities by XID in a single batch.
+* **There is a limit for 1000 compositeXids in a single call** - This message results if you attempt to retrieve identity information for more than the maximum number of identities by composite XID (ID value and namespace) in a single batch. 
+* **Missing required header 'x-gw-ims-org-id'** - All Platform APIs require the IMS Organization ID. For information on how to obtain this, see See [__Authenticating and Accessing Adobe Experience Platform APIs__](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+* **Invalid graph type specified** - This message indicates that a graph type used is not among the valid values. To understand what graph types are supported, see the [Identity Service overview](identity_services_architectural_overview#identity-graphs).
 
-```json
-{
-    "title": "InvalidInput",
-    "status": 400,
-    "detail": "The graph-type abc specified is invalid. Please provide a valid graph-type"
-}
-```
+**HTTP status code 401 (UnauthorizedAccess)**
 
-This error message displays when a `graph-type` query parameter is given an invalid value in the request path. See the section on [identity graphs](identity_services_architectural_overview.md#identity-graphs) in the Identity Service overview to learn which graph-types are supported.
+* **Service token doesn't have valid scope. Either acp.core.identity or acp.foundation is required** - This error indicates the caller IMS Organization has not been provisioned with the proper permissions for Identity Service. To learn how to enable your organization for Identity Service, start [here](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+* **Gateway service token is not valid** - In the case of this error, your access token is invalid. Access tokens expire every 24 hours, and could be a possible reason for this error. Try generating a new access token by following the instructions [here](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+* **Authorization service token is not valid** - In the case of this error, your access token is invalid. Access tokens expire every 24 hours, and could be a possible reason for this error. Try generating a new access token by following the instructions [here](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+* **User token doesn't have valid product context. Product Context 'acp' is required** - The access token you use must have been generated from an Experience Platform integration, generated using the instructions [here](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
 
-### Service token does not have valid scope
+**HTTP status code 403 (AccountNotProvisioned)**
 
-```json
-{
-    "title": "UnauthorizedAccess",
-    "status": 401,
-    "detail": "Service token does not have valid scope. Either acp.core.identity or acp.foundation is required"
-}
-```
-This error message displays when your IMS Organization has not been provisioned with the proper permissions for Identity Service. Contact your system administrator to resolve this issue.
+* **The IMS Org. {YOUR_IMS_ORG_ID} is not provisioned for Identity service usage** - This error indicates the caller IMS Organization has not been provisioned with the proper permissions for Identity Service. To learn how to enable your organization for Identity Service, start [here](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
 
-### Gateway service token is not valid
+**HTTP status code 500 (InternalError)**
 
-```json
-{
-    "title": "UnauthorizedAccess",
-    "status": 401,
-    "detail": "Gateway service token is not valid"
-}
-```
+* **Internal Server Error. There was a problem processing your request** - This error indicates an unexpected exception occurred in the execution of a Platform service call. It is advised that your automated calls to the Platform services be written to retry service calls a few times at a timed interval.
 
-In the case of this error, your access token is invalid. Access tokens expire every 24 hours and must be regenerated to continue using Platform APIs. See the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for instructions on generating new access tokens.
-
-### Authorization service token is not valid
-
-```json
-{
-    "title": "UnauthorizedAccess",
-    "status": 401,
-    "detail": "Authorization service token is not valid"
-}
-```
-
-In the case of this error, your access token is invalid. Access tokens expire every 24 hours and must be regenerated to continue using Platform APIs. See the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for instructions on generating new access tokens.
-
-### User token does not have valid product context
-
-```json
-{
-    "title": "UnauthorizedAccess",
-    "status": 401,
-    "detail": "User token does not have valid product context"
-}
-```
-This error message displays when your access token has not been generated from an Experience Platform integration. See the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) for instructions on generating new access tokens for an Experience Platform integration.
-
-### Internal error when getting native XID from identity and namespace code
-
-```json
-{
-    "title": "UnauthorizedAccess",
-    "status": 401,
-    "detail": "Invalid IMS Token/IMS Org | Internal error - when tried to get native XID from identity and namespace code"
-}
-```
-
-When Identity Service persists an identity, the identity's ID and associated namespace ID are assigned a unique identifier called an XID. This message displays when an error occurs during the process of finding the XID for a given ID value and namespace.
-
-### The IMS Org is not provisioned for Identity Service usage
-
-```json
-{
-    "title": "AccountNotProvisioned",
-    "status": 403,
-    "detail": "The IMS Org. {IMS_ORG_NAME} is not provisioned for Identity Service usage"
-}
-```
-
-This error message displays when your IMS Organization has not been provisioned with the proper permissions for Identity Service. Contact your system administrator to resolve this issue.
-
-### Internal Server Error
-
-```json
-{
-    "title": "InternalError",
-    "status": 500,
-    "detail": "Internal Server Error. There was a problem processing your request"
-}
-```
-
-This error displays when an unexpected exception occurs in the execution of a Platform service call. Best practice is to program your automated calls to retry their requests a few times at a timed interval when receiving this error. If the problem persists, contact your system administrator.
-
-## Batch Ingestion error codes
+### Batch Ingestion error codes
 
 Identity Service ingests identity data from record and time series data that is uploaded to Platform using Batch Ingestion. As batch ingestion is an asynchronous process, you must view the details for a batch to view errors. Errors will accumulate as the batch progresses until the batch is complete.
 
-The following is a list of error messages related to Identity Service you may encounter when using the [Data Ingestion API](../../../../../../acpdr/swagger-specs/ingest-api.yaml).
+The following are errors that may occur during batch ingestion related to Identity Service.
 
-### Unknown XDM schema
+**Error code: InvalidInput**
 
-```json
-{
-    "title": "InvalidInput",
-    "status": 400,
-    "detail": "Unknown XDM schema"
-}
-```
+* **Unknown XDM Schema** - Identity Service only consumes identities for record or time series data (typically inheriting from the Profile or ExperienceEvent class, respectively). Any data not adhering to one of these will trigger this error.
+* **There were 0 valid identities in the first 100 rows of the processed batch** - This error occurs when the first 100 rows of a batch presented no identities. This error does not indicate conclusively that no identities were found in subsequent records, however.
+* **Skipped {X number of} records as they had only 1 identity per xdm record** - Identity Service only links identities where a single record presented two or more identities. This message indicates the number of records ingested where only one identity could be found and resulted in no change to the identity graph. This error occurs once in a batch ingestion, where the count is indicated within the message.
+* **Namespace Code {ERRONEOUS_CODE} is not registered for this IMS Org** - This error indicates a record that presented an identity where the namespace (the value for which will replace `{ERRONEOUS_CODE}`) did not exist or was inaccessible to your organization.
+ 
+**Error code: UnauthorizedAccess**
 
-Identity Service only consumes identities for record or time series data that conforms to the Profile or ExperienceEvent classes, respectively. Attempting to ingest data for Identity Service that does not adhere to either class will trigger this error.
+* **Invalid IMS Token/IMS Org|Internal error - when tried to get native XID from identity and namespace code** - When Identity Service persists an identity, it generates and assigns a unique ID, called the XID. This error indicates there was an error during the process of finding the XID for a given ID value and namespace.
 
-### There were 0 valid identities in the first 100 rows of the processed batch
+**Error code: AccountNotProvisioned** 
 
-```json
-{
-    "title": "InvalidInput",
-    "status": 400,
-    "detail": "There were 0 valid identities in the first 100 rows of the processed batch"
-}
-```
-This error displays when the first 100 rows of a batch presented no identities. This error does not indicate conclusively that no identities were found in subsequent records, however.
+* **Skipping batch ingestion as IMS Org is not provisioned for Private Identity Graph** - This error indicates the caller IMS Organization has not been provisioned with the proper permissions for Identity Service. To learn how to enable your organization for Identity Service, start [here](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
 
-### Skipped records as they had only 1 identity per XDM record
+**Error code: InternalError**
 
-```json
-{
-    "title": "InvalidInput",
-    "status": 400,
-    "detail": "Skipped {NUMBER_OF_RECORDS} records as they had only 1 identity per XDM record"
-}
-```
-
-Identity Service only links identities when single records present two or more identity values. This error message occurs once for each ingested batch, and displays the number of records where only one identity could be found and resulted in no change to the identity graph.
-
-### Namespace Code is not registered for this IMS Org
-
-```json
-{
-    "title": "InvalidInput",
-    "status": 400,
-    "detail": "Namespace Code {ERRONEOUS_CODE} is not registered for this IMS Org"
-}
-```
-
-This error displays when an ingested record presents an identity whose associated namespace does not exist or is inaccessible by your IMS Organization.
-
-### Skipping batch ingestion as IMS Org is not provisioned for Private Identity Graph
-
-```json
-{
-    "title": "AccountNotProvisioned",
-    "status": 403,
-    "detail": "Skipping batch ingestion as IMS Org is not provisioned for Private Identity Graph"
-}
-```
-When ingesting batch data, this error message displays when your IMS Organization has not been provisioned with the proper permissions for Identity Service. Contact your system administrator to resolve this issue.
-
-### Internal Error
-
-```json
-{
-    "title": "InternalError",
-    "status": 500,
-    "detail": "Internal Error. There was a problem during the ingestion"
-}
-```
-
-This error displays when an unexpected exception occurs during a batch ingestion. Best practice is to program your automated calls to retry their requests a few times at a timed interval when receiving this error. If the problem persists, contact your system administrator.
+* **Internal Error. There was a problem during the ingestion** - 
+This error indicates an unexpected exception occurred during a batch ingestion.  It is advised that your automated calls to the Platform services be written to retry service calls a few times at a timed interval.
