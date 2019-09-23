@@ -13,10 +13,9 @@ This document will go over the most common connector API error codes encountered
 
 ## Header related errors and trouble shooting 
 The following are examples of 4XX error messages that you may encounter when working with Connector APIs.
-
-- [Missing Header](#missing-header)
-- [Oauth token is not valid](#oauth-token-is-not-valid)
-- [API Key is required or invalid](#api-key-is-required-or-invalid)
+ - [Missing Header](#missing-header)
+ - [Oauth token is not valid](#oauth-token-is-not-valid)
+ - [API Key is required or invalid](#api-key-is-required-or-invalid)
 
 ### Missing Header 
 ```
@@ -26,7 +25,7 @@ The following are examples of 4XX error messages that you may encounter when wor
   "message": "Missing Header"
 }
 ```
-This _400 - Bad Request_ error message displays when your API call is missing a header. For example, you may be missing the `x-gw-ims-org-id`. You may want to check that you have included all required headers with the correct values. Please see the [Connector Service API Resource][connector-api] for more information on the structure  
+This _400 - Bad Request_ error message displays when your API call is missing a header. For example, you may be missing the `x-gw-ims-org-id`. You may want to check that you have included all required headers with the correct values. Please see the [Connector Service API Resource][connector-api] for more information on the structure.
 
 ### Oauth token is not valid
 ```
@@ -35,7 +34,7 @@ This _400 - Bad Request_ error message displays when your API call is missing a 
   "message": "Oauth token is not valid"
 }
 ```
-This _401 - Unauthorized_ error message displays when the provided access token in the `Authorization` haeader is not valid. First, check that the token has been entered correctly. If the error still persists, [generate a new token](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in the Adobe I/O Console.
+This _401 - Unauthorized_ error message displays when the provided access token in the `Authorization` header is not valid. First, check that the token has been entered correctly. If the error still persists, [generate a new token](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in the Adobe I/O Console.
 
 ### API Key is required or invalid 
 ```
@@ -129,7 +128,7 @@ Below is a list of API specific errors that can appear
     "error": "Error while connecting to Amazon S3. Please check your credentials"
 }
 </pre>
-<p>In this example we are connecting to the Amazon S3 connector. A similar error message will be displayed when connecting to other connectors (ex: Azure Blob, Dynamics, Salesforce, etc;).</p>
+<p>In this example we are connecting to the Amazon S3 connector. A similar error message is displayed when connecting to other connectors, such as Azure Blob, Dynamics, and Salesforce.</p>
 </td>
 </tr>
 
@@ -574,7 +573,7 @@ Below is a list of API specific errors that can appear
 <pre class="JSON language-JSON hljs">
 {
     "code": "Bad Request",
-    "error": "Invalid key 'fileType'. Please provide a valid file >type. <br>Supported file types are delimited, parquet, and json."
+    "error": "Invalid key 'fileType'. Please provide a valid file type. <br>Supported file types are delimited, parquet, and json."
 }
 </pre>
 </td>
@@ -647,7 +646,7 @@ Below is a list of API specific errors that can appear
     "error": "Error while fetching preview data for type: azure-blob-inbound"
 }
 </pre>
-<p>This error can also occur when fetching preview data for other connectors. ex: "Error while fetching preview data for type: S3"</p>
+<p>This error can also occur when fetching preview data for other connectors. For example, "Error while fetching preview data for type: S3"</p>
 </td>
 </tr>
 
