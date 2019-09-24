@@ -1,76 +1,124 @@
-# Query Editor
+# Query Editor user guide
 
-Adobe Experience Platform Query Service includes a browser-based Query Editor, which makes writing, validating, and running queries easier. Query Editor is a good way to develop queries for analysis and data exploration purposes. 
+Query Editor is an interactive tool provided by Adobe Experience Platform Query Service, which allows you to write, validate, and run queries for customer experience data within the Experience Platform user interface. Query Editor supports developing queries for analysis and data exploration, and allows you to run interactive queries for development purposes as well as non-interactive queries to populate datasets in Experience Platform.
 
+Within this document you will find information on the following topics:
+  - [Query authoring using Query Editor](#query-authoring-using-query-editor)
+    - [Accessing Query Editor](#accessing-query-editor)
+    - [Writing queries](#writing-queries)
+    - [Writing tools in Query Editor](#writing-tools-in-query-editor)
+    - [Error detection](#error-detection)
+    - [Query details](#query-details)
+    - [Saving queries](#saving-queries)
+    - [How to find previous queries](#how-to-find-previous-queries)
+  - [Executing queries using Query Editor](#executing-queries-using-query-editor)
+    - [Console](#console)
+    - [Query results](#query-results)
 
-## Using Query Editor
+For more information about the concepts and features of Query Service, see the [Query Service overview][query-service-overview]. To learn more about how to navigate the Query Service user interface on Platform, see the [Query Service UI overview][query-service-ui].
 
-Query Service gives you the ability to run interactive queries for development purposes, and the ability to run queries non-interactively to populate datasets in Experience Platform. Query Editor is an interactive tool for developing queries. 
+## Getting started
 
-### Accessing Query Editor
-
-To start writing queries, click on **Create Query** in the top right of the screen. This link is available from any of the pages in the Query Service workspace. 
-
-  ![Image](graphics/create.png)
-  
-### Writing Queries
-
-Query Editor is organized to make writing queries as easy as possible. Key parts of the Editor are highlighted below. It is recommended that you develop your queries with limits on the rows returned to minimize query development time. Then, after you have validated your query output, remove the limits and run the query with `Create Table tablename as SELECT` to generate a dataset with the output. 
-
- ![Image](graphics/editor.png)
-
-#### Key Features of the Query Editor
-
-* **Automatic syntax highlighting:** Makes reading and organizing SQL easy.
-
-![Image](graphics/syntaxhighlight.png)
-
-* **SQL key word auto-complete:** Start typing your query and Query Editor provides suggestions for the SQL you are typing. Simply arrow down to your desired term and press **Enter**.
-
-![Image](graphics/syntaxauto.png)
-
-* **Table and field auto-complete:** Start typing the table name you want to select from, and then arrow down to the one you are looking for and press **Enter**. After you have a table in the query, autocomplete will work for fields in that table. 
-
-![Image](graphics/tablesauto.png)
-
-### Error Detection
-
-Query Editor validates your query as you write it. It provides generic SQL validation, as well as specific execution validation. This happens automatically. If your query has a red underline, as in the image below, then it has an error.
-
-![Image](graphics/syntaxhighlight.png)
-
-You can view an informative error message by hovering over the SQL code. This should help you troubleshoot your code.
-
-![Image](graphics/lintingerror.png)
-
-### Console
-
-The console gives you information on the status and operation of Query Service. It tells you if the connection to Query Service is operational, if it is running a query, and if there are any errors in executing a query. 
-
-> **Note:** The console only shows errors that resulted from executing a query. It does not show query validation errors before a query is executed.)
-
-![Image](graphics/console.png)
-
-### Query Results
-
-After a query has completed, the results are displayed in the Results tab, which can be found next to Console. This view shows the tabular output of your query, up to 50,000 rows. This view is intended to allow you to validate your query. If you want to generate a dataset out of your query, remove limits and run the query with `Create Table tablename as SELECT` to generate a dataset with the output.
-
-## How Query Editor Works
-
-Query Editor provides flexible execution of queries. To use it effectively, it is helpful to understand how it works. 
+Query Editor provides flexible execution of queries by connecting to Query Service, and queries will only run while this connection is active.
 
 ### Connecting to Query Service
 
-Query Editor takes a few seconds to initialize and connect to Query Service when it is opened. Console tells you when it is connected, as shown below. If you paste in a query and attempt to run it before it has connected, it will delay execution until the connection is complete. 
+Query Editor takes a few seconds to initialize and connect to Query Service when it is opened. Console tells you when it is connected, as shown below. If you attempt to run a query before the editor has connected, it delays execution until the connection is complete. 
 
 ![Image](graphics/initializing.png)
 
-### Executing Queries
+### How queries are run from Query Editor
 
-Queries executed from the Query Editor run interactively. This means that if you close the browser or navigate away, the query is canceled. This is also true for `CREATE TABLE as SELECT` queries. You need to leave your browser window open until the query completes successfully. 
+Queries executed from Query Editor run interactively. This means that if you close the browser or navigate away, the query is canceled. This is also true for queries made to generate datasets from query outputs. 
 
-## How to Find Prior Query Executions
+## Query authoring using Query Editor
 
-All queries executed from the Query Editor are captured in the Log table. You can use the search functionality in the Log to find queries ([see instructions here](qs-ui.md)). 
+Using Query Editor, you can write, execute, and save queries for customer experience data. All queries executed in Query Editor, or saved, are available to all users in your organization with access to Query Service.
 
-> **Note:** Queries that are not executed are not saved by the Log, so if you want Query Service to remember your query, be sure to run it in the Query Editor. 
+### Accessing Query Editor
+
+In the Experience Platform UI, click **Queries** in the left navigation menu to open the Query Service workspace. Next, click **Create Query** at the top right of the screen to start writing queries. This link is available from any of the pages in the Query Service workspace. 
+
+ ![Image](graphics/create.png)
+  
+### Writing queries
+
+Query Editor is organized to make writing queries as easy as possible. The screenshot below shows how the editor appears in the UI, with the **Play** button and SQL entry field highlighted.
+
+ ![Image](graphics/editor.png)
+
+To minimize your development time, it is recommended that you develop your queries with limits on the rows returned. For example, `SELECT fields FROM table WHERE conditions LIMIT number_of_rows`. After you have verified that your query produces the expected output, remove the limits and run the query with `CREATE TABLE tablename AS SELECT` to generate a dataset with the output. 
+
+### Writing tools in Query Editor
+
+* **Automatic syntax highlighting:** Makes reading and organizing SQL easier.
+
+![Image](graphics/syntaxhighlight.png)
+
+* **SQL key word auto-complete:** Start typing your query then use the arrow keys to navigate to the desired term and press **Enter**.
+
+![Image](graphics/syntaxauto.png)
+
+* **Table and field auto-complete:** Start typing the table name you want to `SELECT` from, then use the arrow keys to navigate to the table you are looking for, and press **Enter**. Once a table is selected, autocomplete will recognize fields in that table. 
+
+![Image](graphics/tablesauto.png)
+
+### Error detection
+
+Query Editor automatically validates a query as you write it, providing generic SQL validation and specific execution validation. If a red underline appears below the query (as shown in the image below), it represents an error within the query.
+
+![Image](graphics/syntaxerrhighlight.png)
+
+When errors are detected, you can view the specific error messages by hovering over the SQL code.
+
+![Image](graphics/lintingerror.png)
+
+### Query details
+
+While you are viewing a query in Query Editor, the *Query Details* panel provides tools to manage the selected query.
+
+![Image](graphics/querydetails.png)
+
+This panel allows you to generate an output dataset directly from the UI, delete or name the displayed query, and view the SQL code in an easy to copy format on the *SQL Query* tab. This panel also shows useful metadata such as the last time the query was modified and who modified it, if applicable.
+
+To generate a dataset, click **Output Dataset**. The *Output Dataset* dialog appears. Enter a name and description, then click **Run Query**. The new dataset is displayed in the *Datasets* tab on the Query Service user interface on Platform.
+
+### Saving queries
+
+Query Editor provides a save function that allows you to save a query and work on it later. To save a query, click **Save** in the top right corner of Query Editor. Before a query can be saved, a name must be provided for the query using the *Query Details* panel.
+
+### How to find previous queries
+
+All queries executed from Query Editor are captured in the Log table. You can use the search functionality in the *Log* tab to find query executions. Saved queries are listed in the *Browse* tab. 
+
+See the [Query Service UI overview][query-service-ui] for more information. 
+
+> **Note:** Queries that are not executed are not saved by the Log. In order for the query to be available in Query Service, it must be run or saved in Query Editor.
+
+## Executing queries using Query Editor
+
+To run a query in Query Editor, you can enter SQL in the editor or load a previous query from the *Log* or *Browse* tab, and click **Play**. The status of query execution is displayed in the *Console* tab below, and output data is shown in the *Results* tab.
+
+### Console
+
+The console provides information on the status and operation of Query Service. The console displays the connection status to Query Service, query operations being executed, and any error messages that result from those queries.
+
+![Image](graphics/console.png)
+
+> **Note:** The console only shows errors that resulted from executing a query. It does not show query validation errors before a query is executed.
+
+### Query results
+
+After a query has completed, the results are displayed in the *Results* tab, next to the *Console* tab. This view shows the tabular output of your query, displaying up to 100 rows. This view allows you to verify that your query produces the expected output. To generate a dataset with your query, remove limits on rows returned, and run the query with `CREATE TABLE tablename AS SELECT` to generate a dataset with the output. See the [generating datasets tutorial][query-service-create-datasets] for instructions on how to generate a dataset from query results in Query Editor.
+
+![Image](graphics/queryresults.png)
+
+## Next steps
+
+Now that you know what features are available in Query Editor and how to navigate the application, you can start authoring your own queries directly in Platform. For more information about running SQL queries against datasets in Data Lake, see the guide on [running queries][query-service-running-queries]. For sample SQL queries for working with Adobe Analytics and Adobe Target data, see the [sample queries reference][query-service-sample-queries].
+
+[query-service-overview]: qs-intro.md
+[query-service-ui]: qs-ui.md
+[query-service-running-queries]: qs-queries.md
+[query-service-sample-queries]: qs-sample-queries.md
+[query-service-create-datasets]: qs-create-datasets.md
