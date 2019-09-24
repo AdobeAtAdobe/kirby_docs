@@ -1,145 +1,103 @@
 {
-	"name": "data_services_api_swagger",
-	"version": "2.0.0",
-	"description": "Adobe Experience Platform API Reference",
-	"author": "Wendy Braun",
-	"view_type": "swaggerbook",
-	"meta_keywords": "Adobe, Adobe Experience Platform, Experience, Platform, API, Swagger, API Reference, developer, schema, catalog, ingestion, data",
-	"meta_description": "Swagger API reference documentation for Adobe Experience Platform services.",
-	"publish_date": "24/09/2018",
-	"show_edit_github_banner": false,
-	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master",
-	"pages": [
-		{
-			"pages": [],
-			"path": "acpdr/swagger-specs/schema-registry.yaml",
-			"title": "Schema Registry API"
-		},
-		{
-			"pages": [],
-			"path": "acpdr/swagger-specs/catalog.yaml",
-			"title": "Catalog Service API"
-		},
-		{
-			"pages": [],
-			"path": "acpdr/swagger-specs/partner-connectors-api.yaml",
-			"title": "Connectors Service API"
-		},
-		{
-			"pages": [],
-			"path": "acpdr/swagger-specs/ingest-api.yaml",
-			"title": "Data Ingestion Service API"
-		},
-		{
-			"pages": [],
-			"path": "acpdr/swagger-specs/data-access-api.yaml",
-			"title": "Data Access Service API"
-		},
-		{
-			"pages": [],
-			"path": "acpdr/swagger-specs/dule-policy-service.yaml",
-			"title": "DULE Policy Service API"
-		},
-		{
-			"pages": [],
-			"path": "acpdr/swagger-specs/mapping-service-api.yaml",
-			"title": "Mapping Service API"
-		},
-		{
-			"pages": [],
-			"path": "acpdr/swagger-specs/observability-insights.yaml",
-			"title": "Observability Insights API"
-		},
-		{
-			"path": "acpdr/swagger-specs/unified-profile-service-apis.yaml",
-			"title": "Unified Profile Service APIs",
-			"pages": [
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-config-api.yaml",
-					"title": "Unified Profile Configuration API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-access.yaml",
-					"title": "Unified Profile Access API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-export-api.yaml",
-					"title": "Unified Profile Export API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-segment-definitions-api.yaml",
-					"title": "Unified Profile Segment Definitions API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-segment-jobs-api.yaml",
-					"title": "Unified Profile Segment Jobs API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-preview-api.yaml",
-					"title": "Unified Profile Preview API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/edge-profile-projection-config.yaml",
-					"title": "Edge Profile Projection Configuration API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-event-types-api.yaml",
-					"title": "Profile Event Types API"
-				},
-				{
-					"pages": [],
-					"path": "acpdr/swagger-specs/profile-event-type-macros-api.yaml",
-					"title": "Profile Event Type Macros API"
-				}
-			]
-		},
-		{
-			"pages": [],
-			"path": "acpdr/swagger-specs/id-service-api.yaml",
-			"title": "Identity Service API"
-		},
-		{
-			"pages": [],
-			"path": "acpdr/swagger-specs/qs-api.yaml",
-			"title": "Query Service API"
-		},
-		{
-			"pages": [],
-			"path": "acpdr/swagger-specs/decisioning-repository.yaml",
-			"title": "XDM Core Object Repository API"
-		},
-		{
-			"pages": [],
-			"path": "acpdr/swagger-specs/decisioning-ode.yaml",
-			"title": "Offer Decision Service API"
-		},
-		{
-			"pages": [],
-			"path": "acpdr/swagger-specs/sensei-ml-api.yaml",
-			"title": "Sensei Unified Machine Learning API"
-		}
-	],
-	"app2app_map": {
-		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html",
-		"api-specification/markdown/narrative/technical_overview/identity_namespace_overview/": "/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html",
-		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
-		"api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
-		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
-		"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/": "/apis/cloudplatform/dataservices/data-science-workspace/dsw-overview.html",
-		"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/": "/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
-		"api-specification/markdown/narrative/technical_overview/observability_insights/": "apis/experienceplatform/home/services/observability.html",
-		"api-specification/markdown/narrative/gdpr/": "/apis/experienceplatform/gdpr/docs/alldocs.html",
-		"end-user/markdown/query-service/": "/apis/cloudplatform/dataservices/query-service/query-service.html",
-		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
-		"api-specification/markdown/narrative/technical_overview/decisioning-overview/":"/apis/experienceplatform/home/services/decisioning-service.html"
-	}
-
+  "name": "data_services_api_swagger",
+  "version": "2.0.0",
+  "description": "Adobe Experience Platform API Reference",
+  "author": "Wendy Braun",
+  "view_type": "swaggerbook",
+  "meta_keywords": "Adobe, Adobe Experience Platform, Experience, Platform, API, Swagger, API Reference, developer, schema, catalog, ingestion, data",
+  "meta_description": "Swagger API reference documentation for Adobe Experience Platform services.",
+  "publish_date": "24/09/2018",
+  "show_edit_github_banner": false,
+  "base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master",
+  "pages": [
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/schema-registry.yaml",
+      "title": "Schema Registry API"
+    },
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/catalog.yaml",
+      "title": "Catalog Service API"
+    },
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/partner-connectors-api.yaml",
+      "title": "Connectors Service API"
+    },
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/ingest-api.yaml",
+      "title": "Data Ingestion Service API"
+    },
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/data-access-api.yaml",
+      "title": "Data Access Service API"
+    },
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/dule-policy-service.yaml",
+      "title": "DULE Policy Service API"
+    },
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/privacy-service.yaml",
+      "title": "Privacy Service API"
+    },
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/mapping-service-api.yaml",
+      "title": "Mapping Service API"
+    },
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/observability-insights.yaml",
+      "title": "Observability Insights API"
+    },
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/real-time-customer-profile.yaml",
+      "title": "Real-time Customer Profile API"
+    },
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/id-service-api.yaml",
+      "title": "Identity Service API"
+    },
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/qs-api.yaml",
+      "title": "Query Service API"
+    },
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/decisioning-repository.yaml",
+      "title": "XDM Core Object Repository API"
+    },
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/decisioning-ode.yaml",
+      "title": "Offer Decision Service API"
+    },
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/sensei-ml-api.yaml",
+      "title": "Sensei Machine Learning API"
+    }
+  ],
+  "app2app_map": {
+    "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html",
+    "api-specification/markdown/narrative/technical_overview/identity_namespace_overview/": "/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html",
+    "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
+    "api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/": "/apis/cloudplatform/dataservices/services/allservices.html",
+    "api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
+    "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/": "/apis/cloudplatform/dataservices/data-science-workspace/dsw-overview.html",
+    "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/": "/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
+    "api-specification/markdown/narrative/technical_overview/observability_insights/": "apis/experienceplatform/home/services/observability.html",
+    "api-specification/markdown/narrative/gdpr/": "/apis/experienceplatform/gdpr/docs/alldocs.html",
+    "end-user/markdown/query-service/": "/apis/cloudplatform/dataservices/query-service/query-service.html",
+    "api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
+    "api-specification/markdown/narrative/technical_overview/decisioning-overview/":"/apis/experienceplatform/home/services/decisioning-service.html"
+  }
 }
