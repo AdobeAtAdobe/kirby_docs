@@ -27,11 +27,13 @@ To know if data is ingested, enable the Preview button in the top right corner o
 You can also use Catalog APIs to see if dataset files are being created for the current batch, or make a batch query with *datasetViewId* filter from Catalog services to see if batches are getting created properly.
 
 ## Adobe Solution Connectors
-Adobe Experience Platform provides connectors to ingest all of your diverese data from various Adobe Services:
+Adobe Experience Platform provides connectors to ingest all of your diverse data from various Adobe Services:
 
 * [Analytics data connector](analytics_data_connector.md) streams data collected by Adobe Analytics to Experience Platform in real time.
 
 * [Audience Manager connector](audience_manager_connector.md) ingests your data from Adobe Audience Manager to Experience Platform. 
+
+For information on how to enable or disable solution data within Platform, please see the [connectors troubleshooting guide](connector-api-error-codes.md)
 
 ## Other APIs used for Platform Connectors
 Beyond the Create Account and Create Dataset APIs, a few other helper APIs are listed below. Please see the [Partner Connectors RESTful API Resource](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/partner-connectors-api.yaml) for further information on Platform Connector APIs.

@@ -50,11 +50,6 @@
         },
         {
           "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/adobe-solution-connectors.md",
-          "title":"Adobe solution connectors"
-        },
-        {
-          "pages":[],
           "path":"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/connector-api-error-codes.md",
           "title":"Connector troubleshooting guide"
         }
