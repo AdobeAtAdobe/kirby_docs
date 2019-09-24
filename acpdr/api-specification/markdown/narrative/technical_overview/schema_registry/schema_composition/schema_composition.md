@@ -17,6 +17,7 @@ This document covers the following topics:
 * [Standard fields for use in schemas](#xdm-fields)
 * [Schema composition example](#composition-example)
 * [Union schemas](#union)
+* [Mapping datafiles to XDM schemas](#mapping-datafiles-to-xdm-schemas)
 
 ## Understanding schemas
 
@@ -179,6 +180,10 @@ While Experience Platform allows you to compose schemas for particular use cases
 By enabling a schema for use with Real-time Customer Profile, it will be included in the union for that class type. Profile delivers robust, centralized profiles of customer attributes as well as a timestamped account of every event that customer has had across any system integrated with Platform. Profile uses the union view to represent this data and provide a holistic view of each individual customer.
 
 For more information on working with Profile, see the [Real-time Customer Profile overview](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md).
+
+## Mapping datafiles to XDM schemas
+
+All datafiles that are ingested into Experience Platform must conform to the structure of an XDM schema. For more information on how to format datafiles to comply with XDM hierarchies (including sample files), see the document on [sample ETL transformations](../../../integration_guides/etl_integration_guide/etl_transformation.md). For general information about ingesting datafiles into Experience Platform, see the [batch ingestion overview](../../ingest_architectural_overview/ingest_architectural_overview.md).
 
 ## Next steps
 
