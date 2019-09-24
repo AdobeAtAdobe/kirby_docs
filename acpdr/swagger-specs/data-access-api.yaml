@@ -1,12 +1,10 @@
 swagger: "2.0"
 info:
   version: "1.0.0"
-  title: "Data Access Service API"
+  title: "Data Access API"
   description: >-
 
-    Data Access Service facilitates data access and egress on Adobe Experience Platform.
-
-    This includes, but not limited to, the following operations:
+    Data Access facilitates the access and egress of data within Adobe Experience Platform. This includes, but not limited to, the following operations:
       * Access and download dataset files under a batch
       * Retrieve header information regarding files
       * Parallel / resumable downloads using HTTP range headers
@@ -24,7 +22,7 @@ info:
       * PLATFORM Gateway URL: https://<span>platform.adobe.io/
       * Base path for this API: /data/foundation/export
       * Example of a complete path: https://<span>platform.adobe.io/data/foundation/export/batches/{batchId}/files
-      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
 
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 
@@ -38,8 +36,6 @@ tags:
   description: "Retrieve headers containing metadata for a file specified by ID."
 - name: "Preview"
   description: "Retrieve the first 100 rows of CSV or Parquet files."
-- name: "Health Detailed"
-  description: "Retrieve health status for all dependent services."
 
 paths:
   '/batches/{batchId}/files':
@@ -246,24 +242,6 @@ paths:
         500:
           description: "Internal Server Error"
 
-  /health-detailed:
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-    get:
-      operationId: "get-health-detailed"
-      tags:
-      - Health Detailed
-      summary: "Perform health check on dependent services."
-      description: "Returns health status for all dependent services"
-      responses:
-        200:
-          description: "OK"
-          schema:
-            $ref: "#/definitions/health-detailed"
-        500:
-          description: "Internal Server Error"
 parameters:
   authorization:
     name: Authorization
@@ -362,24 +340,6 @@ definitions:
         $ref: "#/definitions/files.links.next"
       page:
         $ref: "#/definitions/files.links.page"
-
-  health-detailed:
-    type: "object"
-    properties:
-      status:
-        type: "boolean"
-      dependencies:
-        type: "array"
-        items:
-          $ref: "#/definitions/health-detailed.dependencies.item"
-
-  health-detailed.dependencies.item:
-    type: "object"
-    properties:
-      service:
-        type: "string"
-      status:
-        type: "boolean"
 
   dataSetFiles:
     type: "object"
