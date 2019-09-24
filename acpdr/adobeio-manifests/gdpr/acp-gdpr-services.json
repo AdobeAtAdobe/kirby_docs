@@ -29,8 +29,8 @@
         },
         {
           "pages": [],
-          "path": "api-specification/markdown/narrative/gdpr/gdpr-io-events.md",
-          "title": "Subscribe to Privacy Service event notifications"
+          "path": "api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy-events.md",
+          "title": "Subscribe to Privacy Events"
         },
         {
           "pages": [],
