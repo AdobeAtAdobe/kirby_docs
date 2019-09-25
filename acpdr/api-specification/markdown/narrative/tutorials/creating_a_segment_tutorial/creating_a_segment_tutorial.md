@@ -1,23 +1,23 @@
-# Create segments using APIs
+# Create a segment using the Real-time Customer Profile API
 
-This document provides a tutorial for using the Segmentation Service API to create segments in Adobe Experience Platform. For information on how to build segments using the user interface, please see the [Segment Builder documentation](../../../../../end-user/markdown/segmentation_overview/segmentation.md).
+This document provides a tutorial for creating and exporting an audience segment using the [Real-time Customer Profile API](../../../../../../acpdr/swagger-specs/real-time-customer-profile.yaml). For information on how to build segments using the user interface, please see the [Segment Builder documentation](../../../../../end-user/markdown/segmentation_overview/segmentation.md).
 
 The tutorial covers the following steps:
 
 1. [Develop a segment definition](#develop-a-segment-definition) 
 1. [Estimate and preview an audience](#estimate-and-preview-an-audience)
 1. [Segment your user base](#segment-your-user-base)
-1. [Export a segment](#export-a-segment)
+1. [Export the segment](#export-the-segment)
 
 ## Getting started
 
-This tutorial requires a working understanding of the various Adobe Experience Platform services involved in segmentation. Before beginning this tutorial, please review the documentation for the following services:
+This tutorial requires a working understanding of the various Adobe Experience Platform services involved in creating audience segments. Before beginning this tutorial, please review the documentation for the following services:
 
 - [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, real-time consumer profile based on aggregated data from multiple sources.
-- [Segment Builder](../../../../../end-user/markdown/segmentation_overview/segmentation.md): A workspace for building audience segments from your Real-time Customer Profile data.
+- [Adobe Experience Platform Segmentation Service](../../../../../end-user/markdown/segmentation_overview/segmentation.md): Allows you to build audience segments from your Real-time Customer Profile data.
 - [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
 
-This tutorial also requires you to have completed the [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+This tutorial also requires you to have completed the [authentication tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
 * Authorization: Bearer `{ACCESS_TOKEN}`
 * x-api-key: `{API_KEY}`
@@ -31,7 +31,7 @@ All POST, PUT, and PATCH requests require an additional header:
 
 The first step in segmentation is to define a segment, represented in a construct called a **segment definition**. A segment definition is an object that encapsulates a query written in Profile Query Language (PQL). This object is also called a **PQL predicate**. PQL predicates define the rules for the segment based on conditions related to any record or time series data you supply to Real-time Customer Profile. See the [list of supported PQL queries](../../technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md) for available options.
 
-You can create a new segment definition using the [Profile Segment Definitions API](../../../../../../acpdr/swagger-specs/profile-segment-definitions-api.yaml). The following example outlines how to format a definition request, including what information is required in order for a segment to be defined successfully.
+You can create a new segment definition by making a POST request to the `/segment/definitions` endpoint in the Real-time Customer Profile API. The following example outlines how to format a definition request, including what information is required in order for a segment to be defined successfully.
 
 #### API format
 
@@ -74,7 +74,7 @@ curl -X POST \
       * `pql/text`: A textual representation of a segment definition, according to the published PQL grammar.  For example, `workAddress.stateProvince = homeAddress.stateProvince`.
       * `pql/json`: A segment definition in JSON format. For more information regarding JSON-formatted queries, see the [JSON section](../../technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md#json-formatted-queries) in the [Supported PQL queries guide](../../technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md).
   * `value`: An expression that conforms to the type indicated in `format` to select records from "MyProfile".
-* `mergePolicyId`: The identifier of the merge policy to use for the exported data. See the [merge policies API tutorial](../../tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md) for more information.
+* `mergePolicyId`: The identifier of the merge policy to use for the exported data. See the [merge policy configuration tutorial](../../tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md) for more information.
 * `description`: A human readable description of the definition.
 
 #### Response
@@ -124,7 +124,7 @@ Estimates generally run over 10-15 seconds, beginning with a rough estimate and 
 
 ### Create a preview job
 
-Using the [Profile Preview API](../../../../../../acpdr/swagger-specs/profile-preview-api.yaml), you can create (POST) a new preview job.
+You can create a new preview job by making a POST request to the `/preview` endpoint.
  
 #### API format
 
@@ -175,7 +175,7 @@ A successful response returns the details of the newly created preview job, incl
 
 Estimate and preview processes are run asynchronously as different queries can take different lengths of time to complete. Once a query has been initiated, you can use API calls to retrieve (GET) the current state of the estimate or preview as it progresses.
 
-Using the [Profile Preview API](../../../../../../acpdr/swagger-specs/profile-preview-api.yaml), you can lookup a preview job's current state by its ID. If the state is "RESULT_READY", you can view the results. Depending on whether you want to view an estimate or a preview, each have their own endpoint in the API. Examples for both are provided below.
+Using the Real-time Customer Profile API, you can lookup a preview job's current state by its ID. If the state is "RESULT_READY", you can view the results. Depending on whether you want to view an estimate or a preview, each have their own endpoint in the API. Examples for both are provided below.
 
 **View an estimate**
 
@@ -298,13 +298,13 @@ A successful response returns the details of the preview.
 
 ## Segment your user base
 
-Once you have developed, tested, and saved your segment definition, you can create a segment job to build an audience using the [Profile Segment Jobs API](../../../../../../acpdr/swagger-specs/profile-segment-jobs-api.yaml).
+Once you have developed, tested, and saved your segment definition, you can create a segment job to build an audience  using the Real-time Customer Profile API.
 
 ### Create a segment job
 
 A segment job is an asynchronous process that creates a new audience segment. It references a segment definition, as well as any merge policies controlling how Real-time Customer Profile merges overlapping attributes across your profile fragments. When a segment job successfully completes, you can gather various information about your segment, such as any errors that may have occurred and the ultimate size of your audience.
 
-You can create a segment job by using a POST request to the Profile Segment Jobs API.
+You can create a new segment job by making a POST request to the `/segment/jobs` endpoint in the Profile API.
 
 #### API format
 
@@ -491,16 +491,14 @@ A successful response returns the details of the segmentation job, and will prov
 
 Repeat the above API call to continue retrieving the segment job until the `status` reaches "SUCCEEDED", indicating that you can export the segment to a dataset.
 
-## Export a segment
+## Export the segment
 
-After a segmentation job has successfully completed, you can export your audience to a dataset where it can be accessed and acted upon. 
-
-The [Profile Export API](../../../../../../acpdr/swagger-specs/profile-export-api.yaml) is used to isolate an audience built by a segment job for access. Once a segment job has completed running (its `status` attribute has reached "SUCCEEDED"), the Profile Export API can be used to generate XDM Profiles for each member of the audience in your chosen dataset. 
+After a segmentation job has successfully completed (its `status` attribute has reached "SUCCEEDED"), you can export your audience to a dataset where it can be accessed and acted upon. 
 
 The following steps are required to export your audience:
 
 1. [Create a target dataset](#create-a-target-dataset) - Create the dataset to hold audience members.
-1. [Generate audience profiles in a dataset](#generate-xdm-profiles-for-audience-members) - Populate the dataset with XDM Profiles based on the results of a segment job.
+1. [Generate audience profiles in the dataset](#generate-xdm-profiles-for-audience-members) - Populate the dataset with XDM Profiles based on the results of a segment job.
 1. [Monitor export progress](#monitor-export-progress) - Check the current progress of the export process. 
 1. [Read audience data](#read-audience-data) - Retrieve the resulting XDM Profiles representing the members of your audience.
 
@@ -508,7 +506,7 @@ The following steps are required to export your audience:
 
 An audience must be exported to a dataset that is enabled for persisting in the union view schema, but not enabled for Real-time Customer Profile itself.
 
-The following section demonstrates how to create such a dataset using the [Catalog API](../../../../../../acpdr/swagger-specs/catalog.yaml). If you already have a compatible dataset and know its ID, you can proceed to the next step on [generating audience profiles](#generate-xdm-profiles-for-audience-members).
+The following section demonstrates how to create such a dataset using the [Catalog Service API](../../../../../../acpdr/swagger-specs/catalog.yaml). If you already have a compatible dataset and know its ID, you can proceed to the next step on [generating audience profiles](#generate-xdm-profiles-for-audience-members).
 
 #### API format
 
@@ -542,8 +540,8 @@ curl -X POST \
 ```
 
 * `name`: A descriptive name for the dataset.
-* `schemaRef > id`: The ID of the union view schema that the dataset will be associated with.
-* `fileDescription > persisted`: When set to true, this enables the dataset to persist in the union view schema.
+* `schemaRef > id`: The ID of the union view that the dataset will be associated with.
+* `fileDescription > persisted`: When set to true, this enables the dataset to persist in the union view.
 
 #### Response
 
@@ -557,12 +555,12 @@ A successful response returns an array containing the read-only, system generate
 
 ### Generate XDM Profiles for audience members
 
-Once you have a union-persisting dataset, you can create an export job to persist the audience members to the dataset by providing the `datasetId` and the segments to export in a POST request to the [Profile Export API](../../../../../../acpdr/swagger-specs/profile-export-api.yaml).
+Once you have a union-persisting dataset, you can create an export job to persist the audience members to the dataset by providing the `datasetId` and the segments to export in a POST request to the `/export/jobs` endpoint in the Real-time Customer Profile API.
 
 #### API format
 
 ```http
-POST /jobs
+POST /export/jobs
 ```
 
 #### Request
@@ -583,9 +581,12 @@ curl -X POST \
       "version": 1
     },
     "filter": {
-      "segments": [{
-        "segmentId": "4edc8488-2c35-4f6d-b4c6-9075c68d2df4"
-      }],
+      "segments": [
+        {
+          "segmentId": "4edc8488-2c35-4f6d-b4c6-9075c68d2df4",
+          "segmentNs": "ups"
+        }
+      ],
       "fromIngestTimestamp": "2018-10-25T13:22:04-07:00"
     },
     "additionalFields" : {
@@ -605,18 +606,19 @@ curl -X POST \
   }'
 ```
 
-* `fields` - Limits the data populated within the members in the dataset. This parameter is also available when creating a segment, as discussed in the [Segment your user base](#segment-your-user-base) section earlier in this document. Therefore, the fields in the segment may have already been filtered. Omitting this value will result in all fields being included in the exported data.
-* `filter`: Specifies one or more of the following filters to apply to the segment before export:
-  * `segments`: Specifies the segments to export. Omitting this value will result in all data from all segments being exported. Accepts an array of segment objects, each containing a `segmentId` attribute populated with the ID of the segment to export.
-  * `fromIngestTimestamp`: Limits exported events to only include those ingested after this timestamp. This is not the event time itself but the ingestion time for the events. The timestamp must be provided in [RFC 3339](https://tools.ietf.org/html/rfc3339) format.
-* `mergePolicy`: Specifies the merge policy to govern the exported data. Include this parameter when there are multiple segments being exported. Omitting this value will cause the Export Service to use the merge policy provided by the segment.
+* `fields` - *(Optional)* Limits the data fields to be included in the export to only those provided in this parameter. The same parameter is also available when creating a segment, as discussed in the [Segment your user base](#segment-your-user-base) section earlier in this document. Therefore, the fields in the segment may have already been filtered. Omitting this value will result in all fields being included in the exported data.
+* `mergePolicy`: *(Optional)* Specifies the merge policy to govern the exported data. Include this parameter when there are multiple segments being exported. Omitting this value will cause the Export Service to use the merge policy provided by the segment.
   * `id`: The ID of the merge policy.
   * `version`: The specific version of the merge policy to use. Omitting this value will default to the most recent version.
-* `additionalFields > eventList`: Controls the time series fields exported for child or associated objects by providing one or more of the following settings:
+* `filter`: *(Optional)* Specifies one or more of the following filters to apply to the segment before export:
+  * `segments`: Specifies the segments to export. Omitting this value will result in all data from all segments being exported. Accepts an array of segment objects, each containing a `segmentId` attribute populated with the ID of the segment to export. If applicable, the listed objects can also include the namespace of the segment under a `segmentNs`attribute.
+  * `fromIngestTimestamp`: Limits exported profiles to only include those that have been updated after this timestamp. The timestamp must be provided in [RFC 3339](https://tools.ietf.org/html/rfc3339) format.
+* `additionalFields > eventList`: *(Optional)* Controls the time series event fields exported for child or associated objects by providing one or more of the following settings:
   * `fields`: Control the fields to export.
   * `filter`: Specifies criteria that limits the results included from associated objects. Expects a minimum value required for export, typically a date.
-* `destination > datasetId`: (**Required**) Indicates the dataset which will persist the XDM Profiles meeting the conditions of the related segment definition.
-* `schema > name`: (**Required**) The name of the schema associated with the exported dataset.
+      * `fromIngestTimestamp`: Filters time series events to those that have been ingested after the provided timestamp. This is not the event time itself but the ingestion time for the events.
+* `destination > datasetId`: (**Required**) The ID of the dataset which will persist the audience members meeting the conditions of the related segment definition.
+* `schema > name`: (**Required**) The name of the schema associated with the dataset being exported to.
 
 #### Response
 
@@ -661,12 +663,12 @@ A successful response returns a dataset populated with profiles that qualified f
 
 ### Monitor export progress
 
-As the export job processes, monitor its status by making GET requests to the Profile Export API until the job's `status` reaches "SUCCEEDED".
+As the export job processes, monitor its status by making GET requests to the `/export/jobs/{exportJobId}` endpoint until the job's `status` reaches "SUCCEEDED".
 
 #### API format
 
 ```http
-GET /jobs/{exportJobId}
+GET /export/jobs/{exportJobId}
 ```
 
 * `{exportJobId}`: The ID of the export job you want to access.
@@ -739,6 +741,10 @@ curl -X POST \
 
 ### Read audience data
 
-Once the export successfully completes, you can use the [Data Access API](../../../../../../acpdr/swagger-specs/data-access-api.yaml) to access the data using the `batchId` associated with the export. Note that, depending on the size of the segment, the data may be in chunks and the batch may consist of several files.
+Once the export successfully completes, you can use the [Data Access API](../../../../../../acpdr/swagger-specs/data-access-api.yaml) to access the data using the `batchId` associated with the export. Depending on the size of the segment, the data may be in chunks and the batch may consist of several files.
 
 For more information on using the Data Access API to access and download batch files, see the [Data Access tutorial](../../tutorials/data_access_tutorial/data_access_tutorial.md).
+
+## Next steps
+
+By following this tutorial, you have successfully created an audience segment from your profile store and persisted it to a dataset. See the [Data Access tutorial](../../tutorials/data_access_tutorial/data_access_tutorial.md) for steps on how to access and download the segment.
