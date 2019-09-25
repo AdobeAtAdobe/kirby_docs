@@ -35,7 +35,7 @@ All requests that use a payload (POST, PUT, PATCH) require an additional header:
 
 It is expected that you have already created the two schemas that will be defined in the relationship. This tutorial creates a relationship between members of an organization's current loyalty program (defined in a "Loyalty Members" schema) with members of a previous loyalty program (defined in a "Legacy Loyalty Members" schema).
 
-Schema relationships are represented by a **source schema** having a field that refers to the primary identity field of a **destination schema**. In the steps that follow, "Loyalty Members" will be the source schema, while "Legacy Loyalty Members" will act as the destination schema.
+Schema relationships are represented by a **source schema** having a field that refers to another field within a **destination schema**. In the steps that follow, "Loyalty Members" will be the source schema, while "Legacy Loyalty Members" will act as the destination schema.
 
 In order to define a relationship between two schemas, you must first acquire the `$id` values for both schemas. If you know the display names (`title`) of the schemas, you can find their `$id` values by making a GET request to the `/tenant/schemas` endpoint in the Schema Registry API.
 
