@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   description: >-
-    Real-time Customer Profile enables you to drive coordinated, consistent, and relvant experiences for your customers no matter where or when they interact with your brand. Profile provides a holistic view of each individual customer that combines data from multiple channels, including online, offline, CRM, and third-party data.
+    Real-time Customer Profile enables you to drive coordinated, consistent, and relevant experiences for your customers no matter where or when they interact with your brand. Profile provides a holistic view of each individual customer that combines data from multiple channels, including online, offline, CRM, and third-party data.
     
     
     The Real-time Customer Profile API allows you to programatically integrate Profile's various functionalities into your service, providing RESTful endpoints for merge policy configuration, segmentation, edge projections, and more.
@@ -17,11 +17,19 @@ info:
       * [Work with merge policies using APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md)
       * [Create segments using APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md)
 
-    Notes:
+    Visualize API calls with Postman (a free, third-party software):
+      * [Real-time Customer Profile API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Real-time%20Customer%20Profile%20API.postman_collection.json)
+      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
+      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
+
+    API paths:
       * PLATFORM Gateway URL: https://<span>platform.adobe.io/
       * Base path for this API: /data/core/ups
       * Example of a complete path: https://<span>platform.adobe.io/data/core/ups/config/mergePolicies
-      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+      
+    Required headers:
+      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
 
   version: '1.0'
   title: Real-time Customer Profile API
@@ -558,12 +566,17 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - name: limit
           in: query
-          description: Page size
+          description: Limit the number of export jobs returned in the list.
           required: false
           type: integer
         - name: offset
           in: query
-          description: Page offset
+          description: Offset the page of results returned (ordered by created time of resource)
+          required: false
+          type: string
+        - name: status
+          in: query
+          description: Filter the export jobs returned by job status. Possible values are "NEW", "SUCCEEDED", and "FAILED".
           required: false
           type: string
       responses:
@@ -597,7 +610,7 @@ paths:
           type: string
         - in: body
           name: body
-          description: '<ul><li><strong>fields</strong> - [Optional] Column filters (comma-separated list of columns in dot notation). If not provided, all fields are exported. </li><li><strong>mergePolicy</strong> - [Optional] Takes the ID and version of an existing merge policy as nested parameters. If not provided, it takes the same value as the segmentId or snapshotName</li><li><strong>filter</strong> - [Optional]<ul><li><strong>segments</strong> - Array of segments, identified either by segmentId or snapshotName.</li><li><strong>fromIngestTimestamp</strong> - Filters the resulting profiles to those that have been updated after the provided timestamp. Value is provided in RFC 3339 format.</li></ul></li><li><strong>additionalFields</strong> - [Optional] Additional profile fields that need to be exported.<ul><li><strong>eventList</strong> - Used if ExperienceEvents need to be exported with profiles.<ul><li><strong>fields</strong> - Comma-separated list of ExperienceEvent fields to be included in the export. If not provided, all ExperienceEvent fields are exported.</li><li><strong>filter</strong> - Filters ExperienceEvents based on the parameters below. If not provided, all events corresponding to the resulting profiles will be exported.<ul><li><strong>fromIngestTimestamp</strong> - Filters ExperienceEvents to those that have been updated after the provided timestamp. Value is provided in RFC 3339 format.</li></ul></li></ul></li></ul></li><li><strong>destination</strong> - [Required] The ID of the dataset where the exported data will be stored.</li><li><strong>schema</strong> - [Required] The name of the schema associated with the profile data.</li></ul>'
+          description: '<ul><li><strong>fields</strong> - [Optional] Column filters (comma-separated list of columns in dot notation). Limits the data fields to be included in the export to only those provided in this parameter. The same parameter is also available when creating a segment, therefore the fields in the segment may have already been filtered. Omitting this value will result in all fields being included in the exported data.</li><li><strong>mergePolicy</strong> - [Optional] Specifies the merge policy to govern the exported data. Include this parameter when there are multiple segments being exported. Omitting this value will cause the Export Service to use the merge policy provided by the segmentId or snapshotName<ul><li><strong>id</strong> - The ID of the merge policy.</li><li><strong>version</strong> - The specific version of the merge policy to use. Omitting this value will default to the most recent version.</li></ul></li><li><strong>filter</strong> - [Optional] Specifies one or more of the following filters to apply to the segment before export<ul><li><strong>segments</strong> - [Optional] Specifies the segments to export. Omitting this value will result in all data from all segments being exported. Accepts an array of segment objects, each containing the following fields:<ul><li><strong>segmentId</strong> - <strong>[Required if specifying segments]</strong> Segment ID for profiles to be exported.</li><li><strong>segmentNs</strong> - [Optional] Segment namespace for the given segmentId.</li><li><strong>status</strong> - [Optional] An array of strings providing a status filter for the `segmentID`. By default, `status` will have the value `["realized", "existing"]` which represents all profiles that fall into the segment at the current time. Possible values include: `"realized"`, `"existing"`, and `"exited"`.</li></ul></li><li><strong>segmentQualificationTime</strong> - [Optional] Filter based on segment qualification time. The start time and/or end time can be provided.<ul><li><strong>startTime</strong> - [Optional] Segment qualification start time for a segment ID for a given status. It not provided, there will be no filter on the start time for a segment ID qualification. The timestamp must be provided in [RFC 3339](https://tools.ietf.org/html/rfc3339) format.</li><li><strong>endTime</strong> - [Optional] Segment qualification end time for a segment ID for a given status. It not provided, there will be no filter on the end time for a segment ID qualification. The timestamp must be provided in [RFC 3339](https://tools.ietf.org/html/rfc3339) format.</li></ul></li><li><strong>fromIngestTimestamp</strong> - [Optional] Filters the resulting profiles to those that have been updated after the provided timestamp. Value is provided in RFC 3339 format. Supports `greater_than` operand.</li></ul></li><li><strong>emptyProfiles</strong> - [Optional] Boolean; if true, includes empty profiles in the exported data; if false, only profiles with profile fragments in the store are exported.</ul></li><li><strong>additionalFields</strong> - [Optional] Additional profile fields that need to be exported.<ul><li><strong>eventList</strong> - Used if ExperienceEvents need to be exported with profiles.<ul><li><strong>fields</strong> - Comma-separated list of ExperienceEvent fields to be included in the export. If not provided, all ExperienceEvent fields are exported.</li><li><strong>filter</strong> - Filters ExperienceEvents based on the parameters below. If not provided, all events corresponding to the resulting profiles will be exported.<ul><li><strong>fromIngestTimestamp</strong> - Filters ExperienceEvents to those that have been updated after the provided timestamp. This is not the event time itself but the ingestion time for the events. Value is provided in RFC 3339 format.</li></ul></li></ul></li></ul></li><li><strong>destination</strong> - <strong>[Required]</strong> Destination information for the exported data.<ul><li><strong>datasetId</strong> - <strong>[Required]</strong> The ID of the dataset where data is to be exported.</li><li><strong>segmentPerBatch</strong> [Optional] A Boolean value that, if not provided, defaults to false. A value of false exports all segment IDs into a single batch ID. A value of true exports one segment ID into one batch ID.</li></ul></li><li><strong>schema > name</strong> - <strong>[Required]</strong> The name of the schema associated with the dataset where data is to be exported.</li></ul>'
           required: true
           schema:
             $ref: '#/definitions/ScanJobEntityRequest'
@@ -3081,7 +3094,7 @@ definitions:
     properties:
       segments:
         type: array
-        description: Array of filter values for an export job.
+        description: Array of filter values for Export Job.
         items:
           type: object
           properties:
@@ -3092,13 +3105,35 @@ definitions:
             segmentNs:
               type: string
               example: ups
-              description: Segment Namespace (default "ups" if not provided).
+              description: Segment Namespace(default "ups" if not provided).
+            status:
+              type: array
+              items:
+                type: string
+                example: realized
+              description: Status filter for segmentIds, default- ["realized","existing"].
           description: Segment values for filter.
+      segmentQualificationTime:
+        type: object
+        description: Timestamp filter(in RFC3339 format) for exporting when profiles entered or exited a segment.
+        properties:
+          startTime:
+            type: string
+            example: '2018-01-01T00:00:00Z'
+            description: Qualification start time filter.
+          endTime:
+            type: string
+            example: '2018-02-01T00:00:00Z'
+            description: Qualification end time filter.
       fromIngestTimestamp:
         type: string
         example: '2018-01-01T00:00:00Z'
         description: Filters profiles and experience events updated after the given timestamp; RFC_3339 format
-    description: Array of filter values for a job to export profiles.
+      emptyProfiles:
+        type: boolean
+        example: true
+        description: Boolean; if true, includes empty profiles in the exported data; if false, only profiles with profile fragments in the store are exported.
+    description: Array of filter values for Export Job to export Profiles.
   MergePolicyObject:
     type: object
     properties:
@@ -3117,23 +3152,49 @@ definitions:
       id:
         type: number
         example: 100
-        description: ID of the export job
+        description: Id of the export job
       jobType:
         type: string
         example: BATCH
         description: 'Job type: batch or streaming.'
       destination:
-        description: Destination for export job results.
+        description: Destination for Export Job results.
         type: object
         properties:
           datasetId:
             type: string
             example: 5b7c86968f7b6501e21ba9df
-            description: Dataset ID of the destination.
+            description: Dataset Id of the destination.
+          segmentPerBatch:
+            type: boolean
+            example: false
+            description: false, exports all segment Ids into a single batch Id; true, exports one segment Id in one batch Id
           batchId:
             type: string
             example: da5cfb4de32c4b93a09f7e37fa53ad52
-            description: Batch ID of the destination.
+            description: Batch Id of the destination.
+          batches:
+            type: object
+            properties:
+              segmentId:
+                type: string
+                example: 52c26d0d-45f2-47a2-ab30-ed06abc981ff
+                description: Segment Id provided in filter in export job request payload
+              segmentNs:
+                type: string
+                example: ups
+                description: Segment Namespace
+              status:
+                type: array
+                items:
+                  type: string
+                  example: realized
+                description: Status filter for segmentIds, default- ["realized","existing"].
+              batchId:
+                type: string
+                example: da5cfb4de32c4b93a09f7e37fa53ad52
+                description: batch id for a particular segment id export
+            description: The object for multi-segment export feature and will only be returned when segmentPerBatch is marked as true. If segmentPerBatch is marked as false, batchId is returned in first level "batchId" field under "destination" object.
       fields:
         type: string
         example: 'identities.id,personalEmail.address'
@@ -3148,11 +3209,11 @@ definitions:
             description: Schema name.
       imsOrgId:
         type: string
-        example: "{IMS_ORG}"
+        example: 1BD6382559DF0C130A49422D@AdobeOrg
         description: ImsOrgId provided.
       status:
         type: string
-        example: FAILED
+        example: SUCCEEDED
         description: NEW/PROCESSING/SUCCEEDED/FAILED.
       filter:
         $ref: '#/definitions/Filter'
@@ -3163,7 +3224,7 @@ definitions:
       profileInstanceId:
         type: string
         example: ups
-        description: Profile Instance ID provided.
+        description: Profile Instance Id provided.
       errors:
         type: array
         description: Errors in case of failure
@@ -3175,7 +3236,7 @@ definitions:
               example: '0100000003'
             msg:
               type: string
-              example: Error in export job
+              example: Error in Export Job
             callStack:
               type: string
               example: com.adobe.aep.unifiedprofile.common.logging.Logger
@@ -3190,17 +3251,17 @@ definitions:
           aCPDatasetWriteTime:
             $ref: '#/definitions/FeedbackMetrics'
       computeGatewayJobId:
-        description: Compute Gateway job ID for Export and Push Job
+        description: Compute Gateway job Id for Export and Push Job
         type: object
         properties:
           exportJob:
             type: string
             example: f3058161-7349-4ca9-807d-212cee2c2e94
-            description: Compute Gateway job ID for export job
+            description: Compute Gateway job Id for Export Job
           pushJob:
             type: string
             example: feaeca05-d137-4605-aa4e-21d19d801fc6
-            description: Compute Gateway job ID for Push Job
+            description: Compute Gateway job Id for Push Job
       creationTime:
         type: integer
         format: int64
@@ -3214,8 +3275,8 @@ definitions:
       requestId:
         type: string
         example: d995479c-8a08-4240-903b-af469c67be1f
-        description: Tracing ID for the job.
-    description: The information after submitting an export job (for example, job ID).
+        description: Tracing Id for the job.
+    description: The information after submitting a export job eg. job id.
   ScanJobEntityRequest:
     type: object
     properties:
@@ -3269,19 +3330,19 @@ definitions:
           pageOffset:
             type: string
             example: '1540974701302_96'
-            description: The offset of the page. By default is the creation time and job ID for the last record on this page.
+            description: The offset of the page. By default is the creation time and job id for the last record on this page.
           pageSize:
             type: integer
             format: int32
             example: 10
             description: The total number of records of this page.
       link:
-        description: The HREF links.
+        description: The href links.
         type: object
         properties:
           next:
             type: string
-            description: The HREF link to the next page of the records. Empty if no more records.
+            description: The href link to the next page of the records. Empty if no more records.
   ExportMessageResponse:
     type: object
     properties:
