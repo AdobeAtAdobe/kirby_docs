@@ -98,7 +98,7 @@ Now, we can right click on the `Retail-Training-<your-alias>` dataset and select
 from data_access_sdk_python.reader import DataSetReader
 from datetime import date
 reader = DataSetReader()
-df = reader.load(data_set_id="xxxxxxxx", ims_org="xxxxxxxx@AdobeOrg")
+df = reader.load(data_set_id="xxxxxxxx", ims_org="xxxxxxxx@AdobeOrg",batch_id="xxxxxxxx")
 df.head()
 ```
 
