@@ -298,4 +298,4 @@ A successful response returns the details of the preview.
 
 ## Next Steps
 
-Once you have developed, tested, and saved your segment definition, you can create a segment job to build an audience using the Real-time Customer Profile API. See the tutorial on [evaluating and accessing segments](../segmentation/export_segment.md) for detailed steps on how to accomplish this.
+Once you have developed, tested, and saved your segment definition, you can create a segment job to build an audience using the Real-time Customer Profile API. See the tutorial on [evaluating and accessing segment results](../segmentation/evaluate_segment.md) for detailed steps on how to accomplish this.
