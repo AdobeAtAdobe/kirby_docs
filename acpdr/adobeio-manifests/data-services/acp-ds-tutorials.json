@@ -173,6 +173,13 @@
       "description": "Create segments using Real-time Customer Profiles."
     },
     {
+      "importedFileName": "evaluate_segment",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/segmentation/evaluate_segment.md",
+      "title": "Evaluate and access segment results",
+      "description": "Evaluate and access segment results using the Real-time Customer Profile API."
+    },
+    {
       "importedFileName": "managing_decisioning_entities_tutorial",
       "pages": [],
       "path": "api-specification/markdown/narrative/tutorials/decisioning_tutorial/decisioning_entities_api_tutorial.md",

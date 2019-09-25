@@ -2,8 +2,6 @@
 
 This document provides a tutorial for accessing Real-time Customer Profile data using the [Real-time Customer Profile API](../../../../../../acpdr/swagger-specs/real-time-customer-profile.yaml). The tutorial covers steps for the following operations:
 
-- [List Real-time Customer Profile data fields](#list-real-time-customer-profile-data-fields)
-- [Summarize a data field](#summarize-an-xdm-field)
 - Access profile data by:
     - [Identity](#access-profile-data-by-identity)
     - [List of identities](#access-profile-data-by-list-of-identities) 
@@ -29,7 +27,7 @@ This tutorial also requires you to have completed the
 
 Additional headers may be required to complete specific requests. The correct headers are shown in each of the examples within this document. Please pay special attention to the sample requests in order to ensure that all required headers are included.
 
-## List Real-time Customer Profile data fields
+<!-- ## List Real-time Customer Profile data fields
 
 All Real-time Customer Profile data is stored in data fields that conform to Profile-enabled XDM schemas. The names of these XDM data fields are often required when interacting with Profile APIs, such as when indicating specific data fields to retrieve, or when building segment rules.
 
@@ -343,7 +341,7 @@ A successful response returns the summary data for the XDM field. Notice the lac
     "summaryType": "STRING",
     "fieldName": "pf.homeAddress.countryCode"
 }
-```
+``` -->
 
 ## Access Profile data by identity
 
