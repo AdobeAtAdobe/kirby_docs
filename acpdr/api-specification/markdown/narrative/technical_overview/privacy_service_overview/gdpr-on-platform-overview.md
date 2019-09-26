@@ -72,9 +72,9 @@ Request payload:
 {
   "companyContexts": [{
     "namespace": "imsOrgID",
-    "value": orgId
+    "value": "orgId"
   }],
-  "users":
+  "users": {
     "key": "David Smith", // user id on controller side submitting GDPR request
     "action": ["access"], // type of GDPR request - access or delete
     "userIDs": [  // list of namespaces to lookup in platform or other solutions
@@ -88,14 +88,14 @@ Request payload:
       "value": "example@email.com",
       "type": "unregistered"
     }]
-  }],
-  "include":["AdobeCloudPlatform", "profileService"]
+  },
+  "include":["aepDataLake", "profileService"]
 } 
 ```
 
 * Parameter type `unregistered` is required for the data lake because the namespace applied for the dataset in Step 2 is not registered with the identity. For more information regarding the type parameter, refer to [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md#namespace-qualifiers).
 * The parameter type should be `standard` for the profile to process based on standard namespaces.
 * The parameter type should be `custom` for the profile to process based on custom namespaces.
-* The `include` field is optional in the request format. The central service sends the GDPR request to all registered products if no inclusion is specified. If an inclusion is specified, specify `AdobeCloudPlatform` and `profileService` in the list of include parameters for the GDPR request to be processed in Data Lake and Unified Profile respectively. 
+* The `include` field is optional in the request format. The central service sends the GDPR request to all registered products if no inclusion is specified. If an inclusion is specified, specify `aepDataLake` and `profileService` in the list of include parameters for the GDPR request to be processed in Data Lake and Unified Profile respectively. 
 
 Refer to the [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service UI](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md) documentation for information about how to track the status (submitted, processing, completed, error, expired) of GDPR requests.
