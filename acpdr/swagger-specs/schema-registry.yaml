@@ -2,7 +2,25 @@ swagger: '2.0'
 info:
   version: '1.0'
   title: Schema Registry API
-  description: <p>The Schema Registry API is used to access the Schema Library within Adobe Experience Platform. The registry provides a user interface and RESTful API from which all available library resources are accessible.</p><p><strong>Related Documentation:</strong><br/><ul><li><a href="https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md">XDM System in Adobe Experience Platform</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/schema_composition/schema_composition.md">Basics of Schema Composition</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/schema_registry_developer_guide.md">Schema Registry API Developer Guide</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md">Schema Registry API Tutorial</a></li></ul></p><p><strong>Notes:</strong><br/><ul><li>PLATFORM Gateway URL:<span> https://platform.adobe.io</li><li>Base path for this API:<span> /data/foundation/schemaregistry</li><li>Example of a complete path for making a call to "/stats":<span> https://platform.adobe.io/data/foundation/schemaregistry/stats</ul></p>
+  description: >- 
+    The Schema Registry API is used to access the Schema Library within Adobe Experience Platform. The registry provides a user interface and RESTful API from which all available library resources are accessible.
+  
+  
+    Related documentation:
+      * <a href="https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md">XDM System in Adobe Experience Platform</a>
+      * <a href="https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/schema_composition/schema_composition.md">Basics of schema composition</a>
+      * <a href="https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/schema_registry_developer_guide.md">Schema Registry API developer guide</a>
+      * <a href="https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md">Create a schema using the Schema Registry API</a>
+      
+    API paths:
+      * PLATFORM Gateway URL: https://<span>platform.adobe.io
+      * Base path for this API: /data/foundation/schemaregistry
+      * Example of a complete path for making a call to "/stats": https://<span>platform.adobe.io/data/foundation/schemaregistry/stats
+    
+    Required headers:
+      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these, see the <a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md">authentication tutorial</a>.
+      * All GET requests to the Schema Registry require an `Accept` header to determine what data is returned by the system. See the <a href="https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/schema_registry_developer_guide.md#accept-header">section on Accept headers</a> in the Schema Registry developer guide for more information.
+      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
 
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 
