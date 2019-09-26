@@ -1,50 +1,6 @@
-# Data connectors troubleshooting guide
+# Connector API Error Codes and Troubleshooting Guide
 
-This document provides answers to frequently asked questions about data connectors for Adobe Experience Platform, as well as a troubleshooting guide for common API errors encountered while setting up a connector and the steps to resolve them.
-
-### FAQ
-- **Adobe Solution Connectors**
-    - [How do I turn on or off Adobe Solution data in Platform?](#how-do-i-turn-adobe-solution-data-on-or-off-in-adobe-experience-platform)
-
-### Errors and troubleshooting
-
-- [REST API errors](#rest-api-errors)
-- [Header related errors and trouble shooting](#header-errors-and-troubleshooting)
-- [500-level errors](#5xx-error-messages)
-- [Additional common API errors](#additional-common-api-errors)
-
-## FAQ
-
-The following is a list of answers to frequently asked questions about data connectors within Adobe Experience Platform.
-
-## How do I turn Adobe Solution data on or off in Adobe Experience Platform?
-
-In order to turn data on or off for most Adobe Solutions, such as **Adobe Analytics**, **Adobe Audience Manager**, **Adobe Advertising Cloud**, and **Adobe Target**, you will be required to contact Adobe Customer Care. Please follow the steps below for [contacting Adobe Customer Care](#contact-adobe-customer-care) and please have your IMS Organization information available. 
-
-> **Note:** **Adobe Target** data is automatically turned on after set up and will require you to contact Adobe Customer Care in order to have it turned off.
-
-> **Note:** When calling Adobe Customer Care regarding **Adobe Analytics**, please have the following information available in addition to your IMS Organization:
-> * Report Suite ID
-> * Login Company
-> * Backfill Period
-
-For **Adobe Campaign** data, you can use the Adobe Campaign UI to turn on or off any data collected by Campaign on Platform. Please see the [Adobe Campaign documentation][Adobecampaign] for more information. 
-
-### Contact Adobe Customer Care
-
-_Prerequisite:_ A valid Adobe account. 
-
-1. Open [Adobe Customer Care][Adobecustomercare] in your web browser.
-2. Click the icon in the bottom right corner of the screen to open a Customer Care chat window.
-![](images/adobe-customer-care.png)
-3. If you have not already done so, sign in using your Adobe account email address and password. Customer Care will connect you to the correct team for your account.
-4. Inform Customer Care that you want to enable or disable solution data for a product on Adobe Experience Platform. Provide them with the following information:
-    - Your IMS Organization
-    - The product or service for which you want to enable or disable solution data.
-    - Any additional information required based on the product or service for which you are turning on or off solution data.
-
-
-## Errors and troubleshooting
+This document will go over the most common connector API error codes encountered while setting up a connector and the steps to resolve them.
 
 ## REST API errors
 | HTTP Status Code | Description | Possible Cause | 
@@ -55,11 +11,12 @@ _Prerequisite:_ A valid Adobe account.
 | 500 | Internal Server Error | Internal system failure. | 
 | 504 | Gateway Timeout | Hang in connection, servers are currently busy. |  
 
-## Header errors and troubleshooting 
+## Header related errors and trouble shooting 
 The following are examples of 4XX error messages that you may encounter when working with Connector APIs.
- - [Missing Header](#missing-header)
- - [Oauth token is not valid](#oauth-token-is-not-valid)
- - [API Key is required or invalid](#api-key-is-required-or-invalid)
+
+- [Missing Header](#missing-header)
+- [Oauth token is not valid](#oauth-token-is-not-valid)
+- [API Key is required or invalid](#api-key-is-required-or-invalid)
 
 ### Missing Header 
 ```
@@ -69,7 +26,7 @@ The following are examples of 4XX error messages that you may encounter when wor
   "message": "Missing Header"
 }
 ```
-This _400 - Bad Request_ error message displays when your API call is missing a header. For example, you may be missing the `x-gw-ims-org-id`. You may want to check that you have included all required headers with the correct values. Please see the [Connector Service API Resource][connector-api] for more information on the structure.
+This _400 - Bad Request_ error message displays when your API call is missing a header. For example, you may be missing the `x-gw-ims-org-id`. You may want to check that you have included all required headers with the correct values. Please see the [Connector Service API Resource][connector-api] for more information on the structure  
 
 ### Oauth token is not valid
 ```
@@ -78,7 +35,7 @@ This _400 - Bad Request_ error message displays when your API call is missing a 
   "message": "Oauth token is not valid"
 }
 ```
-This _401 - Unauthorized_ error message displays when the provided access token in the `Authorization` header is not valid. First, check that the token has been entered correctly. If the error still persists, [generate a new token](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in the Adobe I/O Console.
+This _401 - Unauthorized_ error message displays when the provided access token in the `Authorization` haeader is not valid. First, check that the token has been entered correctly. If the error still persists, [generate a new token](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in the Adobe I/O Console.
 
 ### API Key is required or invalid 
 ```
@@ -97,11 +54,11 @@ This _403 - Forbidden_ error message displays when you are missing an API key he
 ```
 In this example, the provided `x-api-key` value is invalid. Ensure that the have entered the correct key before trying again. This applies to missing Oauth tokens and invalid profiles (wrong `x-gw-ims-org-id` header) as well.
 
-## 5XX error messages
-500-level errors indicate that an error or unresolvable request occurred on the server side. To resolve your issue, try resending your API request again after a few minutes have passed. If you are still receiving a 5XX error response, please contact your administrator for help. 
+## 5XX Error Messages
+5XX errors indicate that an error or unresolvable request occurred on the server side. To resolve your issue, try resending your API request again after a few minutes have passed. If you are still receiving a 5XX error response, please contact your administrator for help. 
 
-## Additional common API errors 
-Below is a list of additional API errors that can appear:
+## API Specific 
+Below is a list of API specific errors that can appear
 
 <table >
 <tr>
@@ -172,7 +129,7 @@ Below is a list of additional API errors that can appear:
     "error": "Error while connecting to Amazon S3. Please check your credentials"
 }
 </pre>
-<p>In this example we are connecting to the Amazon S3 connector. A similar error message is displayed when connecting to other connectors, such as Azure Blob, Dynamics, and Salesforce.</p>
+<p>In this example we are connecting to the Amazon S3 connector. A similar error message will be displayed when connecting to other connectors (ex: Azure Blob, Dynamics, Salesforce, etc;).</p>
 </td>
 </tr>
 
@@ -617,7 +574,7 @@ Below is a list of additional API errors that can appear:
 <pre class="JSON language-JSON hljs">
 {
     "code": "Bad Request",
-    "error": "Invalid key 'fileType'. Please provide a valid file type. <br>Supported file types are delimited, parquet, and json."
+    "error": "Invalid key 'fileType'. Please provide a valid file >type. <br>Supported file types are delimited, parquet, and json."
 }
 </pre>
 </td>
@@ -690,7 +647,7 @@ Below is a list of additional API errors that can appear:
     "error": "Error while fetching preview data for type: azure-blob-inbound"
 }
 </pre>
-<p>This error can also occur when fetching preview data for other connectors. For example, "Error while fetching preview data for type: S3"</p>
+<p>This error can also occur when fetching preview data for other connectors. ex: "Error while fetching preview data for type: S3"</p>
 </td>
 </tr>
 
@@ -726,5 +683,3 @@ Below is a list of additional API errors that can appear:
 </table>
 
 [connector-api]: https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/partner-connectors-api.yaml
-[Adobecustomercare]: https://helpx.adobe.com/contact.html
-[Adobecampaign]: https://docs.adobe.com/content/help/en/campaign-standard/using/campaign-standard-home.html
