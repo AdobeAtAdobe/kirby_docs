@@ -1,6 +1,29 @@
 swagger: '2.0'
 info:
-  description: <p>Delivering relevant digital experiences requires having a complete understanding of your customer. This is made more difficult when your customer data is fragmented across disparate systems, causing each individual customer to appear to have multiple "identities". Adobe Experience Platform Identity Service provides a RESTful API to help you to gain a better view of your customers and their behavior. By bridging identities across devices and systems, you are better able to deliver impactful, personal digital experiences in real-time.</p><p><strong>Related Documentation:</strong><br/><ul><li><a href="https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md">Identity Service overview</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_api.md">Identity Service API overview</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_namespace_overview/identity_namespace_overview.md">Identity namespace overview</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_faq.md">Identity Service FAQ and troubleshooting guide</a></li></ul></p><p><strong>API paths:</strong><br/><ul><li>PLATFORM Gateway URL:<span> https://platform-{REGION}.adobe.io<ul><li>Information on <code>{REGION}</code> values can be found in the <a href="https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_api.md">Identity Service API Overview</a>.</ul></li><li>Base path for this API:<span> /data/core/</li><li>Example of a complete path:<span> https://platform-va7.adobe.io/data/core/identity/cluster/members</li></ul></p><p><strong>Required headers:</strong><br/><ul><li>All service calls require the headers <code>Authorization</code>, <code>x-gw-ims-org-id</code>, and <code>x-api-key</code>. For more information on how to obtain these values, please see the <a href='https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md'>Adobe Experience Platform authentication tutorial</a>.</li><li>All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header <code>Content-Type</code> with a value of <code>application/json</code>.
+  description: >-
+    Identity Service provides API based access to customer identity graphs which resolves a known or anonymous identity to all 
+    other known and anonymous identities of an individual. Identity Service solves the fundamental challenge posed by the
+    disconnected identities of your customers caused by the fragmented nature of their data as it exists across each
+    of the disparate systems at play in your organization's ecosystem. This seamless unified view of your customers allows 
+    for a vast improvement in the accuracy and reach of your digital marketing campaigns.
+
+
+    Some common terminology used in this API document:
+      Term | Definition
+      --- | ---
+      __Identity__ |  An identity on Experience Platform is the fully qualified identifier (the ID plus the relevant namespace OR the XID) for a given profile.
+      __Identity Namespace__ |  The namespace of an identity relates it to its system of origin. The ID value plus the namespace fully qualify an identity.
+      __Cluster__ | Given an identity, a "cluster" represents that identity and all identities linked to it in the identity graph. These related IDs are considered to be part of the same "cluster".
+      __Mapping__ | Mapping allows you to provide a fully qualified identity and will return the linked identity from another namespace.
+
+    For more information, see [Identity Service Overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md).
+
+
+    __Notes__:
+      * PLATFORM Gateway URL: https://platform.adobe.io/
+      * Base path for this API: /data/core
+      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how 
+      to obtain these, visit the documentation covering making API calls in the [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html)
 
   title: Identity Service
 
