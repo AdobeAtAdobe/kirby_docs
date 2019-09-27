@@ -1,5 +1,6 @@
-# How are fields mapped from Adobe Audience Manager to XDM?
-The tables below contain the mappings between the fields in Audience Manager data (Realtime, Onboarded, and Profile data) and their corresponding XDM fields. 
+# Adobe Audience Manager field mapping
+
+The tables below contain the mappings between the fields in Adobe Audience Manager data (Realtime, Onboarded, and Profile data) and their corresponding XDM fields. 
 
 Please see the [XDM field dictionary][xdm-field-dictionary] for more information on each XDM Field.
 
