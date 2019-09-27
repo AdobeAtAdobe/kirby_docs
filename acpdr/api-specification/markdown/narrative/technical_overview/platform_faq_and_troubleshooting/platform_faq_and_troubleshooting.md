@@ -10,7 +10,6 @@ This document provides answers to frequently asked questions about Adobe Experie
 - [How do I get an access token?](#how-do-i-get-an-access-token)
 - [How do I use query parameters?](#how-do-i-use-query-parameters)
 - [Can I use Postman to make calls to Platform APIs?](#can-i-use-postman-to-make-calls-to-platform-apis)
-- [What are the system requirements for Platform?](#what-are-the-system-requirements-for-platform)
 
 ### Errors and troubleshooting
 - [API status codes](#api-status-codes)
@@ -34,7 +33,7 @@ The following is a list of answers to frequently asked questions about Adobe Exp
 
 Experience Platform offers multiple RESTful APIs that use HTTP requests to access Platform resources. These Service APIs each expose multiple endpoints, and allow you to perform operations to list (GET), lookup (GET), edit (PUT and/or PATCH), and delete (DELETE) resources.
 
-For more information on specific endpoints and operations available for each service, please see the [API Reference documentation](https://www.adobe.io/apis/experienceplatform/home/api-reference.html).
+For more information on specific endpoints and operations available for each service, please see the [API Reference documentation](../../../../../../acdpr/swagger-specs).
 
 ## How do I format an API request?
 
@@ -97,7 +96,7 @@ The response illustrates what you would expect to receive following a successful
 }
 ```
 
-For more information on specific endpoints in Platform APIs, including required headers and request bodies, please see the [API Reference documentation](https://www.adobe.io/apis/experienceplatform/home/api-reference.html).
+For more information on specific endpoints in Platform APIs, including required headers and request bodies, please see the [API Reference documentation](../../../../../../acdpr/swagger-specs).
 
 ## What is my IMS organization?
 
@@ -119,6 +118,10 @@ Access tokens are required in the Authorization header of all API calls. They ca
 
 For details on generating access tokens, see the [Generate access token](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md#generate-access-token) section in the authentication tutorial.
 
+## Can I use Postman to make calls to Platform APIs?
+
+[Postman](https://www.getpostman.com/) is a useful tool for visualizing calls to RESTful APIs. This [Medium post](https://medium.com/adobetech/using-postman-for-jwt-authentication-on-adobe-i-o-7573428ffe7f) describes how you can set up Postman to automatically perform authentication and use it to consume Experience Platform APIs.
+
 ## How do I use query parameters?
 
 Some Platform API endpoints accept query parameters to locate specific information and filter the results returned in the response. Query parameters are appended to request paths with a question mark (`?`) symbol, followed by one or more query parameters using the format `paramName=paramValue`. When combining multiple parameters in a single call, you must use an ampersand (`&`) to separate individual parameters.
@@ -135,21 +138,6 @@ GET /batches?createdAfter=1559775880000&orderBy=desc:created
 
 For detailed information on which query parameters are available for a specific service or endpoint, please review the service-specific documentation.
 
-## Can I use Postman to make calls to Platform APIs?
-
-[Postman](https://www.getpostman.com/) is a useful tool for visualizing calls to RESTful APIs. This [Medium post](https://medium.com/adobetech/using-postman-for-jwt-authentication-on-adobe-i-o-7573428ffe7f) describes how you can set up Postman to automatically perform authentication and use it to consume Experience Platform APIs.
-
-## What are the system requirements for Platform?
-
-Depending on whether you are using the the UI or API, the following system requirements apply:
-
-**For UI based operations:**
-- A modern, standard web browser. While the latest version of Chrome is recommended, current and previous major releases of Firefox, Internet Explorer, and Safari are also supported.
-    - Each time a new major version is released, Platform starts supporting the most recent version while support for the third most recent version is dropped.
-- All browsers must have cookies and JavaScript enabled.
-
-**For API and developer interactions:**
-- A development environment to develop for REST, streaming, and Webhook integrations.
 
 ## Errors and troubleshooting
 
@@ -169,13 +157,13 @@ Status Code | Description | Possible Causes
 
 ## Request header errors
 
-All API calls in Platform require specific request headers. To see which headers are required for individual services, please see the [API Reference documentation](https://www.adobe.io/apis/experienceplatform/home/api-reference.html). To find the values for the required authentication headers, see the [Authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+All API calls in Platform require specific request headers. To see which headers are required for individual services, please see the [API Reference documentation](../../../../../../acdpr/swagger-specs). To find the values for the required authentication headers, see the [Authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
 
 If any of these headers are missing or invalid when making an API call, the following errors may occur.
 
 ### OAuth token is missing
 
-```json
+```
 {
     "error_code": "403010",
     "message": "Oauth token is missing."
@@ -186,7 +174,7 @@ This error message displays when an `Authorization` header is missing from an AP
 
 ### OAuth token is not valid
 
-```json
+```
 {
     "error_code": "401013",
     "message": "Oauth token is not valid"
@@ -197,7 +185,7 @@ This error message displays when the provided access token in the `Authorization
 
 ### API key is required
 
-```json
+```
 {
     "error_code": "403000",
     "message": "Api Key is required"
@@ -208,7 +196,7 @@ This error message displays when an API key header (`x-api-key`) is missing from
 
 ### API key is invalid
 
-```json
+```
 {
     "error_code": "403003",
     "message": "Api Key is invalid"
@@ -223,7 +211,7 @@ If you do not know your API key, you can find it in the [Adobe I/O Console](http
 
 ### Missing header
 
-```json
+```
 {
     "error_code": "400003",
     "message": "Missing header"
@@ -234,7 +222,7 @@ This error message displays when an IMS org header (`x-gw-ims-org-id`) is missin
 
 ### Profile is not valid
 
-```json
+```
 {
     "error_code": "403025",
     "message": "Profile is not valid"
@@ -247,7 +235,7 @@ If you do not know your organization ID, you can find it in the [Adobe I/O Conso
 
 ### Valid content-type not specified
 
-```json
+```
 {
     "type": "/placeholder/type/uri",
     "status": 400,
@@ -265,11 +253,11 @@ The following is a list of troubleshooting guides and API reference documentatio
 
 Service | API Reference | Troubleshooting
 --- | --- | ---
-Catalog | [Catalog Service API](../../../../../acpdr/swagger-specs/catalog.yaml)
-Data Ingestion | [Data Ingestion API](../../../../../acpdr/swagger-specs/ingest-api.yaml) | [Batch Data Ingestion troubleshooting guide](../ingest_architectural_overview/batch_data_ingestion_troubleshooting_guide.md)
-Data Science Workspace | [Sensei Machine Learning API](../../../../../acpdr/swagger-specs/sensei-ml-api.yaml)
-Data Usage Labeling and Enforcement (DULE) | [DULE Policy Service API](../../../../../acpdr/swagger-specs/dule-policy-service.yaml)
-Experience Data Model (XDM) | [Schema Registry API](../../../../../acpdr/swagger-specs/schema-registry.yaml) | [XDM System FAQ and troubleshooting guide](../schema_registry/xdm_troubleshooting/xdm_system_faq_and_troubleshooting.md)
-Identity Service | [Identity Service API](../../../../../acpdr/swagger-specs/id-service-api.yaml) | [Identity Service FAQ and recommendations](../identity_services_architectural_overview/identity_services_faq.md)
-Query Service | [Query Service API](../../../../../acpdr/swagger-specs/qs-api.yaml) | [Query Service errors and troubleshooting](../../../../../end-user/markdown/query-service/qs-errors-troubleshooting.md)
-Real-time Customer Profile | [Real-time Customer Profile API](../../../../../acpdr/swagger-specs/real-time-customer-profile.yaml)
+Catalog | [Catalog Service API](../../../../../swagger-specs/catalog.yaml)
+Data Ingestion | [Data Ingestion API](../../../../../swagger-specs/ingest-api.yaml) | [Batch Data Ingestion troubleshooting guide](../ingest_architectural_overview/batch_data_ingestion_troubleshooting_guide.md)
+Data Science Workspace | [Sensei Machine Learning API](../../../../../swagger-specs/sensei-ml-api.yaml)
+Data Usage Labeling and Enforcement (DULE) | [DULE Policy Service API](../../../../../swagger-specs/dule-policy-service.yaml)
+Experience Data Model (XDM) | [Schema Registry API](../../../../../swagger-specs/schema-registry.yaml) | [XDM System FAQ and troubleshooting guide](../schema_registry/xdm_troubleshooting/xdm_system_faq_and_troubleshooting.md)
+Identity Service | [Identity Service API](../../../../../swagger-specs/id-service-api.yaml) | [Identity Service FAQ and recommendations](../identity_services_architectural_overview/identity_services_faq.md)
+Query Service | [Query Service API](../../../../../swagger-specs/qs-api.yaml) | [Query Service errors and troubleshooting](../../../../../end-user/markdown/query-service/qs-errors-troubleshooting.md)
+Real-time Customer Profile | [Real-time Customer Profile APIs](../../../../../swagger-specs/unified-profile-service-apis.yaml)
