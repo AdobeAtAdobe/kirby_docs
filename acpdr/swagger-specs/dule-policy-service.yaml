@@ -2,7 +2,34 @@ swagger: '2.0'
 info:
   version: '1.0'
   title: DULE Policy Service
-  description: <p>The Data Usage Labeling and Enforcement (DULE) framework simplifies and streamlines the process of categorizing data and creating data usage policies. Once data labels have been applied and data usage policies are in place, marketing actions can be evaluated to ensure the correct use of data.</p><p>The Policy Service API is used to manage and evaluate policies on marketing actions in the presence of data usage labels.</p><p><strong>Related Documentation:</strong><br/><ul><li><a href="https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html">Data Governance overview</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!api-specification/markdown/narrative/technical_overview/data_governance/dule_supported_labels.md">Supported data usage labels</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/dule/dule_working_with_labels.md">Working with data usage labels</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/technical_overview/data_governance/dule_policy_service_developer_guide.md">DULE Policy Service developer guide</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/dule/create_a_dule_policy_tutorial.md">Create and evaluate a DULE policy</a></li></ul></p><p><strong>Notes:</strong><br/><ul><li>PLATFORM Gateway URL:<span> https://platform.adobe.io</li><li>Base path for this API:<span> /data/foundation/dulepolicy</li><li>Example of a complete path for making a call to "/policies/core":<span> https://platform.adobe.io/data/foundation/dulepolicy/policies/core</ul></p>
+  description: >-
+    The Data Usage Labeling and Enforcement (DULE) framework simplifies and streamlines the process of categorizing data and creating data usage policies. Once data labels have been applied and data usage policies are in place, marketing actions can be evaluated to ensure the correct use of data.
+    
+    The Policy Service API is used to manage and evaluate policies on marketing actions in the presence of data usage labels.
+
+
+    Related documentation:
+      * [Data Governance overview](https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html)
+      * [Supported data usage labels](https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!api-specification/markdown/narrative/technical_overview/data_governance/dule_supported_labels.md)
+      * [Working with Data Usage Labels](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/dule/dule_working_with_labels.md)
+      * [DULE Policy Service developer guide](https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!api-specification/markdown/narrative/technical_overview/data_governance/dule_policy_service_developer_guide.md)
+      * [Create and evaluate a DULE policy](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/dule/create_a_dule_policy_tutorial.md)
+
+    Visualize API calls with Postman (a free, third-party software):
+      * [DULE Policy Service API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/DULE%20Policy%20Service.postman_collection.json)
+      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
+      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
+
+    API paths:
+      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
+      * Base path for this API: /data/foundation/dulepolicy
+      * Example of a complete path: https://<span>platform.adobe.io/data/foundation/dulepolicy/policies/core
+
+    Required headers:
+      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
+  
+  
 
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 basePath: /data/foundation/catalog

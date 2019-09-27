@@ -3,24 +3,31 @@ info:
   version: "1.0"
   title: Partner Connectors API
   description: >-
-    Partner Connectors provide RESTful API to ingest data into Adobe Experience Platform by connecting it to 3rd party storage and CRM systems.
+    Partner Connectors provides a RESTful API for ingesting data into Adobe Experience Platform by allowing you to connect to 3rd party storage and CRM systems.
 
 
     Related documentation:
-      * [Connectors Service Overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md)
+      * [Data connectors overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md)
       * Connector tutorials:
-        * [Amazon-s3](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md)
-        * [Azure-Blob](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md)
+        * [Amazon S3](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md)
+        * [Azure Blob](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md)
         * [Microsoft Dynamics](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md)
         * [Salesforce](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_salesforce_connector_tutorial.md)
-           
+    
+    Visualize API calls with Postman (a free, third-party software):
+      * [Partner Connectors API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Partner%20Connectors%20API.postman_collection.json)
+      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
+      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
 
-    Notes:
+    API paths:
       * PLATFORM Gateway URL: https://<span>platform.adobe.io/
       * Base path for this API: /data/foundation/connectors
       * Example of a complete path: https://<span>platform.adobe.io/data/foundation/connectors/account
-      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these, please see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+
+    Required headers:
+      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
       * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
+
 tags:
 - name: "Account"
   description: "Authenticate your storage systems and CRM services to allow your data to be ingested from various sources (such as cloud-based storage, and CRM data) into Experience Platform."
