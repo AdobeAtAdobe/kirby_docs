@@ -1,0 +1,90 @@
+{
+  "name": "gdpr_documentation",
+  "version": "1.0.0",
+  "description": "GDPR Documentation",
+  "author": "Emily Walpole",
+  "view_type": "mdbook",
+  "meta_keywords": "Adobe, GDPR, General, Data, Protection, Regulation, Documentation",
+  "meta_description": "General Data Protection Regulation API Documentation",
+  "publish_date": "24/04/2018",
+  "show_edit_github_banner": false,
+  "base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
+  "pages": [
+    {
+      "pages": [],
+      "path": "api-specification/markdown/narrative/gdpr/gdpr-whitepaper.md",
+      "title": "Adobe Experience Cloud and GDPR"
+    },
+    {
+      "pages": [
+        {
+          "pages": [],
+          "path": "api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md",
+          "title": "Privacy Service API tutorial"
+        },
+        {
+          "pages": [],
+          "path": "api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md",
+          "title": "Privacy Service UI tutorial"
+        },
+        {
+          "pages": [],
+          "path": "api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy-events.md",
+          "title": "Subscribe to Privacy Events"
+        },
+        {
+          "pages": [],
+          "path": "api-specification/markdown/narrative/gdpr/privacy-service-release-notes.md",
+          "title": "Privacy Service release notes"
+        }
+      ],
+      "path": "api-specification/markdown/narrative/technical_overview/privacy_service_overview/privacy_service_overview.md",
+      "title": "Privacy Service overview"
+    },
+    {
+      "pages": [],
+      "path": "api-specification/markdown/narrative/gdpr/use-cases/adobe-privacy-library.md",
+      "title": "The Adobe Privacy JavaScript Library and GDPR"
+    },
+    {
+      "pages": [],
+      "path": "api-specification/markdown/narrative/gdpr/gdpr-faq.md",
+      "title": "GDPR FAQ"
+    },
+    {
+      "pages": [],
+      "path": "api-specification/markdown/narrative/gdpr/gdpr-positioning.md",
+      "title": "Adobe Experience Cloud GDPR positioning"
+    },
+    {
+      "pages": [],
+      "path": "api-specification/markdown/narrative/gdpr/gdpr-terminology.md",
+      "title": "GDPR terminology"
+    },
+    {
+      "pages": [],
+      "path": "api-specification/markdown/narrative/gdpr/gathering-your-ids.md",
+      "title": "Gathering your IDs"
+    },
+    {
+      "pages": [],
+      "path": "api-specification/markdown/narrative/gdpr/use-cases/mobile-sdk.md",
+      "title": "Adobe Experience Platform Mobile SDK"
+    },
+    {
+      "pages": [],
+      "path": "api-specification/markdown/narrative/gdpr/gdpr-cautions.md",
+      "title": "Adobe GDPR cautions"
+    },
+    {
+      "pages": [],
+      "path": "api-specification/markdown/narrative/gdpr/solutions/index.md",
+      "title": "GDPR and Experience Cloud solutions"
+    }
+  ],
+  "app2app_map": {
+    "acpdr/swagger-specs/":"/apis/experiencecloud/gdpr/api-reference.html",
+    "api-specification/markdown/narrative/tutorials/":"/apis/experienceplatform/home/tutorials/alltutorials.html",
+    "api-specification/markdown/narrative/technical_overview/privacy_service_overview/":"/apis/experienceplatform/home/services/privacy-service.html"
+  }
+}
