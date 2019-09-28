@@ -1,4 +1,4 @@
-# Unified Profile - Profile Query Language (PQL)
+# Profile Query Language (PQL)
 
 ## Overview
 
