@@ -1,6 +1,6 @@
-# Adobe Analytics data connector
+# Analytics Data Connector
 
-The Adobe Analytics data connector streams data collected by Adobe Analytics to Adobe Experience Platform in real time. The connector also converts SCDS-formated Analytics data into Experience Data Model (XDM) for consumption by Platform.
+The Analytics Data Connector streams data collected by Analytics to Adobe Experience Platform in real time. The connector also converts SCDS-formated Analytics data into Experience Data Model (XDM) for consumption by Platform.
 
 ## What is Experience Data Model (XDM)?
 

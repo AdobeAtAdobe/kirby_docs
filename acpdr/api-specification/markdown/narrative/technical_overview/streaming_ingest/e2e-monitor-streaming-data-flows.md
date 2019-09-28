@@ -4,18 +4,18 @@ This document will help familiarize you with using [Adobe Experience Platform][p
 ## Navigating 
 1. Login to [Experience Platform][platform]. 
 2. Select the **Monitoring** section on the side navigation menu located on the left. 
-3. Select **Streaming End-to-End** at the top of the page. You will then see a screen similar to image below.
+3. select **Streaming End-to-End** at the top of the page. You will then see a screen similar to image below.
 
 ![](images/aep-streaming-end-to-end.png)
 
 ## Streaming end-to-end
 The "Streaming End-to-End" page is divided into two parts: a graph displaying the rate of messages being streamed and a detailed view of the incoming streamed data.
 
-The first part of the page displays the rate of messages being streamed into Platform for your entire organization. This view defaults to showing you the trend for the last seven days, but you can increase or decrease the range to help locate the batches you are interested in. 
+The first part of the page displays the rate of messages being streamed into the Platform for your entire organization. This view defaults to showing you the trend for the last seven days, but you can increase or decrease the range to help locate the batches you are interested in. 
 
 The second part of the page provides you a detailed view into how the streamed data is getting persisted into the Data Lake. As part of ingestion process, streamed data gets discretized into batches of roughly 15 minutes each affording the view below. 
 
-Batches can be of two types, successful or failed. Successful batches contain records which were persisted successfully into the Data Lake. Failed batches, as the name implies, contain records which encountered failures on the ingestion path to Platform. 
+Batches can be of two types, successful or failed. Successful batches contain records which were persisted successfully into the Data Lake. Failed batches, as the name implies, contain records which encountered failures on the ingestion path to the platform. 
 
 ### Successful batches 
 Successful batches contain records which were persisted successfully into the Data Lake.   
