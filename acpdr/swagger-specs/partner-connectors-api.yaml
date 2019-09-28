@@ -1,55 +1,37 @@
 swagger: '2.0'
 info:
-  version: "1.0"
-  title: Partner Connectors API
+  version: 1.0.0
+  title: Partner Connectors RESTful API Resource
   description: >-
-    Partner Connectors provides a RESTful API for ingesting data into Adobe Experience Platform by allowing you to connect to 3rd party storage and CRM systems.
-
+    Partner Connectors provide REST API to ingest data into Adobe Experience Platform.
 
     Related documentation:
-      * [Data connectors overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md)
-      * Connector tutorials:
-        * [Amazon S3](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md)
-        * [Azure Blob](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md)
+      * [Connectors Service Overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md)
+      * Tutorial -
+        * [Amazon-s3](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md) 
+        * [Azure-Blob](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md)
         * [Microsoft Dynamics](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md)
         * [Salesforce](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_salesforce_connector_tutorial.md)
-    
-    Visualize API calls with Postman (a free, third-party software):
-      * [Partner Connectors API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Partner%20Connectors%20API.postman_collection.json)
-      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
-      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
+           
 
-    API paths:
-      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
+    Notes:
+      * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/foundation/connectors
-      * Example of a complete path: https://<span>platform.adobe.io/data/foundation/connectors/account
-
-    Required headers:
-      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
-      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
-
 tags:
 - name: "Account"
-  description: "Authenticate your storage systems and CRM services to allow your data to be ingested from various sources (such as cloud-based storage, and CRM data) into Experience Platform."
 - name: "Schedule"
-  description: Schedule ingestion from your authenticated connector into Data Lake at a given start date and frequency. Frequency can be set for every month, day, day of the week, hour, or minute.
 - name: "Dataset"
-  description: Creates a dataset for a connection to ingest data into and persist within Platform.
 - name: "Get Objects"
-  description: Returns a list object files or tables at the source location.
 - name: "Schema and Preview"
-  description: Returns a list of schema fields or a data preview for a given object.
-- name: "Custom Schema"
-  description: Create a custom schema by fields or objectName.
-host: platform.adobe.io
+- name: "Health Check"
+host: platform-int.adobe.io
 basePath: /data/foundation/connectors
-
 paths:
   /account:
     post:
       tags:
       - "Account"
-      summary: "Create an account and establish a connection for the given set of credentials."
+      summary: "Creates an account and establishes a connection for the given set of credentials"
       description: ""
       operationId: "createAccount"
       consumes:
@@ -57,30 +39,27 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: Authorization
-        in: header
-        required: true
-        type: string
-        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "x-gw-ims-org-id"
         in: "header"
-        description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        description: "IMS Organization id"
         required: true
         type: "string"
       - name: "x-api-key"
         in: "header"
-        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        description: "The API key belonging to the calling client"
         required: true
         type: "string"
       - in: "body"
         name: "body"
         required: true
         schema:
+          type: object
           $ref: "#/definitions/Credentials"
       responses:
         200:
           description: "OK"
           schema:
+            type: object
             $ref: '#/definitions/accountResponse'
           examples:
             application/json:
@@ -98,7 +77,7 @@ paths:
     get:
       tags:
       - "Account"
-      summary: "Test the validity of the account associated with the accountId."
+      summary: "Tests the validity of the account associated with the accountId"
       description: ""
       operationId: "testCredentialsGet"
       consumes:
@@ -106,24 +85,19 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: Authorization
-        in: header
-        required: true
-        type: string
-        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "x-gw-ims-org-id"
         in: "header"
-        description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        description: "IMS Organization id"
         required: true
         type: "string"
       - name: "x-api-key"
         in: "header"
-        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        description: "The API key belonging to the calling client"
         required: true
         type: "string"
       - name: "accountId"
         in: "path"
-        description: "Account ID"
+        description: "Account Id"
         required: true
         type: "string"
       responses:
@@ -138,7 +112,7 @@ paths:
     put:
       tags:
       - "Account"
-      summary: "Update the credentials associated with the accountId."
+      summary: "Updates the credentials associated with the accountId"
       description: ""
       operationId: "putAccount"
       consumes:
@@ -146,30 +120,26 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: Authorization
-        in: header
-        required: true
-        type: string
-        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "x-gw-ims-org-id"
         in: "header"
-        description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        description: "IMS Organization id"
         required: true
         type: "string"
       - name: "x-api-key"
         in: "header"
-        description: "The API key belonging to the calling client."
+        description: "The API key belonging to the calling client"
         required: true
         type: "string"
       - name: "accountId"
         in: "path"
-        description: "Account ID"
+        description: "Account Id"
         required: true
         type: "string"
       - in: "body"
         name: "body"
         required: true
         schema:
+          type: object
           $ref: "#/definitions/Credentials"
       responses:
         200:
@@ -191,7 +161,7 @@ paths:
     get:
       tags:
       - "Get Objects"
-      summary: "Retrieve a list of objects, files, or tables at the source location."
+      summary: "Lists objects - files or tables at the source location"
       description: ""
       operationId: "getObjects"
       consumes:
@@ -199,24 +169,19 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: Authorization
-        in: header
-        required: true
-        type: string
-        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "x-gw-ims-org-id"
         in: "header"
-        description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        description: "IMS Organization id"
         required: true
         type: "string"
       - name: "x-api-key"
         in: "header"
-        description: "The API key belonging to the calling client."
+        description: "The API key belonging to the calling client"
         required: true
         type: "string"
       - name: "connectionId"
         in: "path"
-        description: "Connection ID"
+        description: "Connection id"
         required: true
         type: "string"
       - name: "object"
@@ -253,7 +218,7 @@ paths:
     get:
       tags:
       - "Schema and Preview"
-      summary: "Retrieve a list of fields from the data."
+      summary: "Lists the fields of the data"
       description: ""
       operationId: "getSchema"
       consumes:
@@ -261,24 +226,19 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: Authorization
-        in: header
-        required: true
-        type: string
-        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "x-gw-ims-org-id"
         in: "header"
-        description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        description: "IMS Organization id"
         required: true
         type: "string"
       - name: "x-api-key"
         in: "header"
-        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        description: "The API key belonging to the calling client"
         required: true
         type: "string"
       - name: "connectionId"
         in: "path"
-        description: "Connection ID"
+        description: "Connection id"
         required: true
         type: "string"
       - name: "object"
@@ -299,6 +259,7 @@ paths:
         200:
           description: "OK"
           schema:
+            type: object
             $ref: '#/definitions/fieldResponse'
           examples:
             application/json:
@@ -332,7 +293,7 @@ paths:
     get:
       tags:
       - "Schema and Preview"
-      summary: "Preview data for the given object."
+      summary: "Preview data for the given object"
       description: ""
       operationId: "previewData"
       consumes:
@@ -340,24 +301,19 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: Authorization
-        in: header
-        required: true
-        type: string
-        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "x-gw-ims-org-id"
         in: "header"
-        description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        description: "IMS Organization id"
         required: true
         type: "string"
       - name: "x-api-key"
         in: "header"
-        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        description: "The API key belonging to the calling client"
         required: true
         type: "string"
       - name: "connectionId"
         in: "path"
-        description: "Connection ID"
+        description: "Connection id"
         required: true
         type: "string"
       - name: "object"
@@ -378,6 +334,7 @@ paths:
         200:
           description: "OK"
           schema:
+            type: object
             $ref: '#/definitions/rowResponse'
           examples:
             application/json:
@@ -408,7 +365,7 @@ paths:
     post:
       tags:
       - "Dataset"
-      summary: "Create a dataset for a connection to ingest data into Platform."
+      summary: "Creates AEP dataset for data ingestion"
       description: ""
       operationId: "createDataSet"
       consumes:
@@ -416,35 +373,32 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: Authorization
-        in: header
-        required: true
-        type: string
-        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "x-gw-ims-org-id"
-        description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        description: "IMS Organization id"
         in: "header"
         required: true
         type: "string"
       - name: "x-api-key"
         in: "header"
-        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        description: "The API key belonging to the calling client"
         required: true
         type: "string"
       - name: "connectionId"
         in: "path"
-        description: "Connection ID"
+        description: "Connection Id"
         required: true
         type: "string"
       - in: "body"
         name: "body"
         required: true
         schema:
+          type: object
           $ref: "#/definitions/DataSetConnectionRequest"
       responses:
         200:
           description: "OK"
           schema:
+            type: object
             $ref: '#/definitions/datasetResponse'
           examples:
             application/json:
@@ -469,7 +423,7 @@ paths:
     put:
       tags:
       - "Schedule"
-      summary: "Schedule ingestion at the given frequency."
+      summary: "Schedule ingestion at the given frequency"
       description: ""
       operationId: "schedule"
       consumes:
@@ -477,24 +431,19 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: Authorization
-        in: header
-        required: true
-        type: string
-        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "x-gw-ims-org-id"
         in: "header"
-        description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        description: "IMS Organization id"
         required: true
         type: "string"
       - name: "x-api-key"
         in: "header"
-        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        description: "The API key belonging to the calling client"
         required: true
         type: "string"
       - name: "connectionId"
         in: "path"
-        description: "Connection ID"
+        description: "Connection id"
         required: true
         type: "string"
       - in: "body"
@@ -502,6 +451,7 @@ paths:
         description: ""
         required: true
         schema:
+          type: object
           $ref: "#/definitions/Schedule"
       responses:
         200:
@@ -521,7 +471,7 @@ paths:
       post:
         tags:
         - "Custom Schema"
-        summary: "Posts custom schema via fields or objectName."
+        summary: "Posts custom schema via fields or objectName"
         description: ""
         operationId: "postSchemaToSchemaRegistry"
         consumes:
@@ -529,24 +479,19 @@ paths:
         produces:
         - "application/json"
         parameters:
-        - name: Authorization
-          in: header
-          required: true
-          type: string
-          description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         - name: "x-gw-ims-org-id"
           in: "header"
-          description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+          description: "IMS Organization id"
           required: true
           type: "string"
         - name: "x-api-key"
           in: "header"
-          description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+          description: "The API key belonging to the calling client"
           required: true
           type: "string"
         - name: "connectionId"
           in: "path"
-          description: "Catalog Connection ID"
+          description: "Catalog Connection id"
           required: true
           type: "string"
         - in: "body"
@@ -554,11 +499,13 @@ paths:
           description: "Fields takes preference over objectName in case both are provided."
           required: true
           schema:
+            type: object
             $ref: "#/definitions/PostCustomSchemaRequest"
         responses:
           200:
             description: "OK"
             schema:
+              type: object
               $ref: '#/definitions/PostCustomSchemaResponse'
             examples:
               application/json:
@@ -576,7 +523,76 @@ paths:
             description: "Unauthorized"
           422:
             description: "Unprocessable entity"
-
+  /health:
+    get:
+      tags:
+      - "Health Check"
+      summary: "Checks the health of the service"
+      description: ""
+      operationId: "getStatus"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "x-api-key"
+        in: "header"
+        description: "The API key belonging to the calling client"
+        required: true
+        type: "string"
+      responses:
+          200:
+            description: "OK"
+          503:
+            description: "Not Healthy"
+  /health-detailed:
+      get:
+        tags:
+        - "Health Check"
+        summary: "Checks the detailed health of the service"
+        description: ""
+        operationId: "getStatusDetailed"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+              - name: "x-api-key"
+                in: "header"
+                description: "The API key belonging to the calling client"
+                required: true
+                type: "string"
+        responses:
+          200:
+            description: "OK"
+            schema:
+              type: object
+              $ref: '#/definitions/healthResponse'
+            examples:
+              application/json:
+                {
+                  "status": true,
+                  "dependencies": [
+                      {
+                          "service": "catalog",
+                          "status": true
+                      },
+                      {
+                          "service": "discovery",
+                          "status": true
+                      },
+                      {
+                          "service": "connectors-dotnet",
+                          "status": true
+                      },
+                      {
+                          "service": "ims",
+                          "status": true
+                      }
+                  ]
+              }
+          503:
+            description: "Not Healthy"
 definitions:
   Resource:
     type: "object"
@@ -592,6 +608,8 @@ definitions:
   AmazonS3Settings:
     allOf:
     - $ref: "#/definitions/ConnectionSettings"
+    - type: "object"
+      $ref: "#/definitions/Credentials"
   ConnectionSettings:
     type: "object"
   Credentials:
@@ -601,6 +619,7 @@ definitions:
     - "type"
     properties:
       params:
+        description: "the parameters of a connection"
         $ref: "#/definitions/S3credentials"
       type:
         type: "string"
@@ -617,13 +636,15 @@ definitions:
     properties:
       accountId:
         type: string
-        description: account ID
+        description: account Id
       connectionId:
         type: string
-        description: connection ID
+        description: connection Id
   AzureBlobSettings:
     allOf:
     - $ref: "#/definitions/ConnectionSettings"
+    - type: "object"
+      $ref: "#/definitions/AzureCredentials"
   AzureCredentials:
     type: "object"
     required:
@@ -680,6 +701,8 @@ definitions:
           example: "user1234"
           description: "username"
         password:
+          example: "pass1234"
+          description: "password"
           $ref: "#/definitions/AccountParameter"
         organizationName:
           type: "string"
@@ -704,6 +727,8 @@ definitions:
           example: "user1234"
           description: "username"
         password:
+          example: "pass1234"
+          description: "password"
           $ref: "#/definitions/AccountParameter"
         organizationName:
           type: "string"
@@ -756,7 +781,7 @@ definitions:
     properties:
       id:
         type: string
-        description: field ID
+        description: field id
       name:
         type: string
         description: field name
@@ -834,8 +859,12 @@ definitions:
           example: "user1234"
           description: "username"
         password:
+          example: "pass1234"
+          description: "password"
           $ref: "#/definitions/AccountParameter"
         securityToken:
+          example: "yHsififncfa23rdw"
+          description: "securityToken"
           $ref: "#/definitions/AccountParameter"
         serviceUrl:
           type: "string"
@@ -974,6 +1003,7 @@ definitions:
               description: "Recursively selects folders if set to true"
               example: "true"
       schemaRef:
+        type: "object"
         $ref: "#/definitions/SchemaRef"
       saveStrategy:
         type: "string"
@@ -986,6 +1016,7 @@ definitions:
         type: "string"
         description: "Can be provided with save strategy append or delta to specify past date to begin ingestion. Cannot be provided with null or empty frequency. Value has to be in format YYYY-MM-DD hh:mm:ss with current or past date only"
       schemaMetadata:
+        type: "object"
         $ref: "#/definitions/SchemaMetaData"
   DateField:
     allOf:
@@ -1205,7 +1236,7 @@ definitions:
     properties:
       id:
         type: "string"
-        description: "ID of schema in schema registry"
+        description: "id of schema in schema registry"
       contentType:
         type: "string"
         description: "contentType+version of schema in schema registry"
