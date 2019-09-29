@@ -1,4 +1,4 @@
-# Streaming validation
+# Streaming Validation
 
 Streaming Ingestion APIs support two modes of validation - synchronous and asynchronous.
 
