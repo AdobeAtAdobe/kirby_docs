@@ -1,8 +1,7 @@
-# Data connectors guide
+# Using the Data Connector UI
+This document will help you setup, configure, and monitor a Salesforce and/or Microsoft Dyamics connector using the user inter face within [Adobe Experience Platform](https://platform.adobe.com). 
 
-This document will help you set up, configure, and monitor a Salesforce and/or Microsoft Dynamics connector using the user interface within [Adobe Experience Platform](https://platform.adobe.com). 
-
-This tutorial requires you to have an Adobe ID and access to the Adobe Experience Platform UI. 
+This tutorial requires you to have an Adobe ID and access to Adobe Experience Platform. 
 
 ## Create a new connector
 1. Log-in to [Adobe Experience Platform](https://platform.adobe.com/connection/create). 
