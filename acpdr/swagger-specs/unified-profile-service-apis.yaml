@@ -1,0 +1,38 @@
+swagger: '2.0'
+info:
+  title: Unified Profile Service APIs
+  version: beta
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
+  description: >-
+    Unified Profile APIs provide mechanisms for ingesting, deleting and accessing profiles, 
+    and for working with profile segments from creating, previewing, and estimating segments 
+    to exporting segment audiences to datasets that can be used throughout Adobe Experience Platform.
+
+
+    **Terminology**
+
+      Term | Definition
+      --- | ---
+      **Audience** | The collection of profiles that meet the segment definition criteria
+      **Predicate** | A Predicate is the object encapsulation of a query written in PQL. Also referred to as __Segment Definition__
+      **Profile** | An object following the standard XDM Profile schema representing the profile data of a user
+      **Segmentation** | Dividing a large group of customers, prospects, or consumers (Profiles) into smaller groups that share similar traits and will respond similarly to marketing strategies
+      **Segment** | Also **Definition**. The rule set defining how to subdivide a customer base, such as 'Men over 50'. Once conceptualized, segments are then defined in terms of the conditions that must be met to qualify for a segment
+
+    
+    **The Unified Profile APIs**
+
+      Name | Description
+      --- | ---
+      **[Profile Configuration API](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/profile-config-api.yaml)** | Work with Merge Policies which control the way Unified Profile Service merges Profile fragments across datasets
+      **[Profile Access API](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/profile-access.yaml)** | Get a Unified Profile, or paginated list of ExperienceEvents for a given ID and Namespace
+      **[Profile Export API](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/profile-export-api.yaml)** | Export audience members to a dataset which can be used throughout Adobe Experience Platform
+      **[Profile Preview API](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/profile-preview-api.yaml)** | Sessionless summary view of the audience membership of a given PQL Predicate Expression
+      **[Profile Segment Definitions API](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/profile-segment-definitions-api.yaml)** | Build a query that describes a subset of your user base, based on attributes of Profiles or time series events
+      **[Profile Segment Jobs API](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/profile-segment-jobs-api.yaml)** | Apply an existing Segment Definition to your user base and build a dataset representing members of your segment accessible to all Adobe Experience Platform capabilities
+
+externalDocs:
+  description: Find out more about Unified Profile
+  url: https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md
+host: platform.adobe.io
+paths:
