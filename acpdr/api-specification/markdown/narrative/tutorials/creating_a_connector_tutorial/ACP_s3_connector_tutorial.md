@@ -219,7 +219,7 @@ curl -X POST \
 
 * `name`: The name of the dataset you want to create. Ensure that you provide a unique and identifiable name for the dataset to identify it clearly when monitoring your data ingestion.
 * `tags > connectors-objectName`: The path to the file or folder in S3 to be ingested.
-* `tags > connectors-sourceFormat`: The file format of the source file to be ingested. Accepted values are `parquet`, `json`, or `csv`. If this value is omitted, the default value of `parquet` is used.
+* `tags > connectors-sourceFormat`: The file format of the source file to be ingested. Accepted values are `parquet`, `json`, or `cvs`. If this value is omitted, the default value of `parquet` is used.
 * `schemaRef > id`: The unique identifier of an XDM schema which defines the structure of that dataset.
 * `schemaRef > contentType`: The content-type and version of the schema. See the appendix section at the end of this document for a [list of supported values](#supported-contenttype-values).
 
@@ -292,7 +292,7 @@ curl -X POST \
 
 * `name`: The name of the dataset you want to create. Ensure that you provide a unique and identifiable name for the dataset to identify it clearly when monitoring your data ingestion.
 * `tags > connectors-objectName`: The path to the file or folder in S3 to be ingested.
-* `tags > connectors-sourceFormat`: The file format of the source file to be ingested. Accepted values are `parquet`, `json`, or `csv`. If this value is omitted, the default value of `parquet` is used.
+* `tags > connectors-sourceFormat`: The file format of the source file to be ingested. Accepted values are `parquet`, `json`, or `cvs`. If this value is omitted, the default value of `parquet` is used.
 * `tags > connectors-recursiveIngestion`: When set to "true", this tag enables the connector associated with this dataset for recursive ingestion. When omitted, the value defaults to "false".
 * `schemaRef > id`: The unique identifier of an XDM schema which defines the structure of that dataset.
 * `schemaRef > contentType`: The content-type and major version of the schema. See the appendix section at the end of this document for a [list of supported values](#supported-contenttype-values).
@@ -375,7 +375,7 @@ curl -X POST \
 
 * `name`: The name of the dataset you want to create. Ensure that you provide a unique and identifiable name for the dataset to identify it clearly when monitoring your data ingestion.
 * `tags > connectors-objectName`: The path to the file or folder in S3 to be ingested.
-* `tags > connectors-sourceFormat`: The file format of the source file to be ingested. Accepted values are `parquet`, `json`, or `csv`. If this value is omitted, the default value of `parquet` is used.
+* `tags > connectors-sourceFormat`: The file format of the source file to be ingested. Accepted values are `parquet`, `json`, or `cvs`. If this value is omitted, the default value of `parquet` is used.
 * `schemaRef > id`: The unique identifier of an XDM schema which defines the structure of that dataset.
 * `schemaRef > contentType`: The content-type and version of the schema. See the appendix section at the end of this document for a [list of supported values](#supported-contenttype-values).
 * `saveStrategy`: The method by which the connection saves data as it is being ingested. The following options are accepted as values:
