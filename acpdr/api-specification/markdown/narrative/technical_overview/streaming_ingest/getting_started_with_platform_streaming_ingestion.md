@@ -1,5 +1,6 @@
-# Getting Started with Adobe Experience Platform Streaming Ingestion APIs
-This documentation will help you quickly get started with the Adobe Experience Platform Streaming Ingestion APIs. Specifically, this documentation will help you:
+# Streaming ingestion API developer guide
+
+This developer guide will help begin using streaming ingestion APIs, part of the Adobe Experience Platform Data Ingestion Service APIs. Specifically, this documentation will help you:
 
 - [Create a data inlet](#create-a-data-inlet)
 - [Stream an XDM Profile object to Adobe Experience Platform](#stream-an-xdm-profile-object-to-adobe-experience-platform)
