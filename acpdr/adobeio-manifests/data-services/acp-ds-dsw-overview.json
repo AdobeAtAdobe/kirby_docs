@@ -8,7 +8,7 @@
 	"meta_description": "Manifest file for DSW Overview",
 	"publish_date": "19/09/2018",
 	"show_edit_github_banner": false,
-	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/staging/acpdr",
+	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
 	"pages": [
 		{
 			"path": "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_overview.md",
@@ -16,14 +16,19 @@
 			"description": "The Data Science Workspace offers predefined machine learning models you can use in your own solutions as well as the capability to create your own models."
 		},
 		{
+			"path": "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/sensei/sensei_dev_guide.md",
+			"title": "Sensei Machine Learning Framework developer guide",
+			"description": ""
+		},
+		{
+			"path": "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/jupyterlab/jupyterlab_overview.md",
+			"title": "JupyterLab user guide",
+			"description": ""
+		},
+		{
 			"path": "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_walkthrough/dsw_walkthrough.md",
 			"title": "Data Science Workspace Walkthrough",
 			"description": "This document will outline the end-to-end workflow a data scientist would go through to solve a problem using machine learning."
-        },
-		{
-			"path":"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/jupyterlab/jupyterlab_overview.md",
-			"title":"JupyterLab user guide",
-			"description":"JupyterLab user guide."
 		},
 		{
 			"path": "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/predict_the_future_with_dsw/predict_the_future_with_dsw.md",
