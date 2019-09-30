@@ -11,11 +11,6 @@
   "base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
   "pages": [
     {
-      "pages": [],
-      "path": "api-specification/markdown/narrative/gdpr/gdpr-whitepaper.md",
-      "title": "Adobe Experience Cloud and GDPR"
-    },
-    {
       "pages": [
         {
           "pages": [],
@@ -40,6 +35,11 @@
       ],
       "path": "api-specification/markdown/narrative/technical_overview/privacy_service_overview/privacy_service_overview.md",
       "title": "Privacy Service overview"
+    },
+    {
+      "pages": [],
+      "path": "api-specification/markdown/narrative/gdpr/gdpr-whitepaper.md",
+      "title": "Adobe Experience Cloud and GDPR"
     },
     {
       "pages": [],
