@@ -2,24 +2,34 @@ swagger: '2.0'
 info:
   title: Data Ingestion API
   description: >-
-    Data Ingestion allows you to ingest data into Adobe Experience Platform as batch files.
-    Data being ingested can be the profile data from a flat file in a CRM system (such as a parquet file),
-    or data that conforms to a known schema in the Experience Data Model (XDM) registry.
+    Data Ingestion allows you to bring your data into Adobe Experience Platform through batch ingestion and streaming ingestion. Batch ingestion lets you import data in batch, from any number of datasources. Streaming ingestion lets users send data to Platform in real time from client and server-side devices.
 
-    Notes:
-      * Base path for Batch Ingestion APIs: https://platform.adobe.io/data/foundation/import
-      * Base path for Streaming Ingestion APIs:
-        * Data Inlet Management: https://platform.adobe.io/data/core/edge
-        * Data Collection: https://dcs.adobedc.net/
-      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'.
 
     Related documentation:
-      * [Batch Ingestion Overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md)
-      * [Streaming Ingestion Overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_ingest_overview.md)
-      * Tutorial - [Creating and Populating a Dataset and Ingesting Data From a File](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
-      * Tutorial - [Getting Started with Streaming Ingestion](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md)
+      * [Batch ingestion overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/ingest_architectural_overview.md)
+      * [Streaming ingestion overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_ingest_overview.md)
+      * [Create and populate a dataset using APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
+      * [Getting started with streaming ingestion APIs](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md)
 
-  version: v2
+    Visualize API calls with Postman (a free, third-party software):
+      * [Data Ingestion Service API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Data%20Ingestion%20API.postman_collection.json)
+      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
+      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
+
+
+    API paths:
+      * Base path for batch ingestion APIs: https://<span>platform.adobe.io/data/foundation/import
+      * Base path for streaming ingestion APIs:
+        * Data inlet management: https://<span>platform.adobe.io/data/core/edge
+        * Data collection: https://<span>dcs.adobedc.net/
+      * Example of a complete path for batch ingestion: https://<span>platform.adobe.io/data/foundation/import/batches
+     
+    Required headers:
+      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
+  
+
+  version: "1.0"
   termsOfService: 'https://www.adobe.com/legal/terms.html'
 basePath: /data/foundation/import
 host: platform.adobe.io
@@ -30,14 +40,17 @@ produces:
 
 tags:
 - name: "Batch Ingestion"
+  description: "Batch ingestion is used to ingest data into Experience Platform as batch files. For example, data being ingested can be the profile data from a flat file in a CRM sytem (for example: parquet, or JSON) or data that conforms to a known Experience Data Model (XDM) schema within the Schema Registry."
 - name: "Streaming Ingestion"
+  description: "Streaming ingestion allows you to send data from client and server-side devices to Experience Platform in real-time. It drives Real-time Customer Profile creating personalized experiences."
 - name: "Data Inlets"
+  description: "Data Inlets are used in conjunction with streaming API calls to ingest record and time=series data for Real-time Customer Profile."
 paths:
   '/inlet':
     get:
       tags:
         - "Data Inlets"
-      summary: Get or Query inlets
+      summary: Get or Query inlets.
       operationId: getInletsUsingGET
       produces:
         - application/json
@@ -46,7 +59,7 @@ paths:
           in: header
           required: true
           type: string
-          description: "Your specific bearer token value provided after authentication."
+          description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         - in: "header"
           name: "Cache-Control"
           required: true
@@ -97,12 +110,12 @@ paths:
           in: header
           required: true
           type: string
-          description: "Your specific API key value found in your unique Adobe Experience Platform integration."
+          description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         - name: x-gw-ims-org-id
           in: header
           required: true
           type: string
-          description: "The IMS organization ID that you used in your request"
+          description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       responses:
         '200':
           description: OK
@@ -118,7 +131,7 @@ paths:
     post:
       tags:
         - "Data Inlets"
-      summary: Create inlet
+      summary: Create inlet.
       operationId: createInletUsingPOST
       consumes:
         - application/json
@@ -129,7 +142,7 @@ paths:
           in: header
           required: true
           type: string
-          description: "Your specific bearer token value provided after authentication."
+          description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         - in: "header"
           name: "Cache-Control"
           required: true
@@ -152,12 +165,12 @@ paths:
           in: header
           required: true
           type: string
-          description: "Your specific API key value found in your unique Adobe Experience Platform integration."
+          description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         - name: x-gw-ims-org-id
           in: header
           required: true
           type: string
-          description: "The IMS organization ID that you used in your request"
+          description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       responses:
         '200':
           description: OK
@@ -178,7 +191,7 @@ paths:
     get:
       tags:
         - "Data Inlets"
-      summary: Get inlet by id
+      summary: Get inlet by ID.
       operationId: getInletUsingGET
       produces:
         - application/json
@@ -187,7 +200,7 @@ paths:
           in: header
           required: true
           type: string
-          description: "Your specific bearer token value provided after authentication."
+          description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         - in: "header"
           name: "Cache-Control"
           required: true
@@ -209,12 +222,12 @@ paths:
           in: header
           required: true
           type: string
-          description: "Your specific API key value found in your unique Adobe Experience Platform integration."
+          description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         - name: x-gw-ims-org-id
           in: header
           required: true
           type: string
-          description: "The IMS organization ID that you used in your request"
+          description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       responses:
         '200':
           description: OK
@@ -232,7 +245,7 @@ paths:
     put:
       tags:
         - "Data Inlets"
-      summary: Update inlet
+      summary: Update inlet by ID.
       operationId: updateInletUsingPUT
       consumes:
         - application/json
@@ -243,7 +256,7 @@ paths:
           in: header
           required: true
           type: string
-          description: "Your specific bearer token value provided after authentication."
+          description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         - in: "header"
           name: "Cache-Control"
           required: true
@@ -271,19 +284,19 @@ paths:
           in: header
           required: true
           type: string
-          description: "Your specific API key value found in your unique Adobe Experience Platform integration."
+          description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         - name: x-gw-ims-org-id
           in: header
           required: true
           type: string
-          description: "The IMS organization ID that you used in your request"
+          description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       responses:
         '200':
           description: OK
           schema:
             $ref: '#/definitions/Inlet'
         '400':
-          description: "Malformed Inlet Body or inlet to be updated not found."
+          description: "Malformed inlet Body or inlet to be updated not found."
         '401':
           description: "Unauthorized - Need to provide a valid bearer token."
         '403':
@@ -294,7 +307,7 @@ paths:
     delete:
       tags:
         - "Data Inlets"
-      summary: Delete inlet by id
+      summary: Delete inlet by ID.
       operationId: deleteInletUsingDELETE
       produces:
         - application/json
@@ -303,7 +316,7 @@ paths:
           in: "header"
           required: true
           type: string
-          description: "Your specific bearer token value provided after authentication."
+          description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         - in: "header"
           name: "Cache-Control"
           required: true
@@ -325,12 +338,12 @@ paths:
           in: header
           required: true
           type: string
-          description: "Your specific API key value found in your unique Adobe Experience Platform integration."
+          description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         - name: x-gw-ims-org-id
           in: header
           required: true
           type: string
-          description: "The IMS organization ID that you used in your request"
+          description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       responses:
         '200':
           description: OK
@@ -351,8 +364,8 @@ paths:
         - Bearer: []
       tags:
       - "Streaming Ingestion"
-      summary: "Publishes messages to Adobe Experience Platform using the Inlet ID"
-      description: "This API is used by any mobile application, web application or a service to stream data into ACP. Data Collection service uses embedded inlet-id to retrieve associated metadata to process data and land it on a designated Pipeline topic for the downstream systems to consume"
+      summary: "Publish messages to Adobe Experience Platform using the inlet ID."
+      description: "This API is used by any mobile application, web application or a service to stream data into ACP. Data Collection service uses embedded inlet-id to retrieve associated metadata to process data and land it on a designated Pipeline topic for the downstream systems to consume."
       operationId: "publishDCSMessageWithInletId"
       consumes:
       - "application/json"
@@ -427,7 +440,7 @@ paths:
         - Bearer: []
       tags:
       - "Streaming Ingestion"
-      summary: "Publishes messages to Adobe Experience Platform using the Inlet ID"
+      summary: "Publish messages to Experience Platform using the inlet ID."
       description: "This API is used by any mobile application, web application or a service to stream data into ACP. Data Collection service uses embedded inlet-id to retrieve associated metadata to process data and land it on a designated Pipeline topic for the downstream systems to consume"
       operationId: "publishDCSBatchMessageWithInletId"
       consumes:
@@ -497,7 +510,7 @@ paths:
       - Bearer: []
       tags:
       - "Batch Ingestion"
-      summary: "Registers a new batch in Adobe Data Catalog"
+      summary: "Register a new batch in Adobe Data Catalog."
       description: "Creates a new batch in Data Catalog as a first step to bulk data ingestion. The data is uploaded to this batch after which the batch is marked ready for triggering data registration in Catalog"
       operationId: "createBatch"
       consumes:
@@ -509,12 +522,12 @@ paths:
         in: "header"
         required: true
         type: string
-        description: "Your specific bearer token value provided after authentication."
+        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "x-api-key"
         in: "header"
         required: true
         type: string
-        description: "Your specific API key value found in your unique Adobe Experience Platform integration."
+        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - in: "body"
         name: "body"
         description: "Ingest object that contains information needed to create batch"
@@ -547,7 +560,7 @@ paths:
       - Bearer: []
       tags:
       - "Batch Ingestion"
-      summary: "Upload file to a dataset in a batch"
+      summary: "Upload file to a dataset in a batch."
       description: "For a batch initialized by the bulk ingestion api, this endpoint lets you upload files under
       datasets. Note that this puts the entire request stream as the file bytes under the path denoted by filePath
       in the URL and is idempotent. Subsequent calls to this endpoint will replace the file existent on the referenced
@@ -564,12 +577,12 @@ paths:
         in: "header"
         required: true
         type: string
-        description: "Your specific bearer token value provided after authentication."
+        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "x-api-key"
         in: "header"
         required: true
         type: string
-        description: "Your specific API key value found in your unique Adobe Experience Platform integration."
+        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "content-type"
         in: "header"
         required: true
@@ -619,7 +632,7 @@ paths:
       - Bearer: []
       tags:
       - "Batch Ingestion"
-      summary: "Upload file part to a resumable file being uploaded to a batch dataset"
+      summary: "Upload file part to a resumable file being uploaded to a batch dataset."
       description: "Files larger than 512MB are uploaded in parts and this PATCH endpoint provides you a way
       to upload a part of your large file that was initialized via the POST endpoint above"
       operationId: "uploadFilePart"
@@ -630,12 +643,12 @@ paths:
         in: "header"
         required: true
         type: string
-        description: "Your specific bearer token value provided after authentication."
+        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "x-api-key"
         in: "header"
         required: true
         type: string
-        description: "Your specific API key value found in your unique Adobe Experience Platform integration."
+        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "content-type"
         in: "header"
         required: true
@@ -701,7 +714,7 @@ paths:
       - Bearer: []
       tags:
       - "Batch Ingestion"
-      summary: "Operate on the identified file"
+      summary: "Operate on the identified file."
       description: "Used to signal intialization and completion of the file that's uploaded in parts"
       operationId: "completeFileUpload"
       consumes:
@@ -711,12 +724,12 @@ paths:
         in: "header"
         required: true
         type: string
-        description: "Your specific bearer token value provided after authentication."
+        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "x-api-key"
         in: "header"
         required: true
         type: string
-        description: "Your specific API key value found in your unique Adobe Experience Platform integration."
+        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "batchId"
         in: "path"
         required: true
@@ -766,7 +779,7 @@ paths:
       - Bearer: []
       tags:
       - "Batch Ingestion"
-      summary: "Get the status of the chunked file uploaded so far"
+      summary: "Get the status of the chunked file uploaded so far."
       description: "Files larger than 512MB are uploaded in parts and this HEAD endpoint provides you a way
       get the byte range information received by the server so far."
       operationId: "getChunkedFileStatus"
@@ -775,12 +788,12 @@ paths:
         in: "header"
         required: true
         type: string
-        description: "Your specific bearer token value provided after authentication."
+        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "x-api-key"
         in: "header"
         required: true
         type: string
-        description: "Your specific API key value found in your unique Adobe Experience Platform integration."
+        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "x-gw-ims-org-id"
         in: "header"
         required: true
@@ -829,7 +842,7 @@ paths:
       - Bearer: []
       tags:
       - "Batch Ingestion"
-      summary: "Generates preview for a batch"
+      summary: "Generate a preview for a batch."
       description: "Generates data preview for the files uploaded to the batch so far. The preview could be generated
       for all the batch datasets collectively or per selected datasets"
       operationId: "getPreview"
@@ -840,12 +853,12 @@ paths:
         in: "header"
         required: true
         type: string
-        description: "Your specific bearer token value provided after authentication."
+        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "x-api-key"
         in: "header"
         required: true
         type: string
-        description: "Your specific API key value found in your unique Adobe Experience Platform integration."
+        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "batchId"
         in: "path"
         required: true
@@ -929,7 +942,7 @@ paths:
       - Bearer: []
       tags:
       - "Batch Ingestion"
-      summary: "Complete batch"
+      summary: "Complete batch."
       description: "Complete the batch to trigger the downstream data promotion workflow"
       operationId: "completeBatch"
       produces:
@@ -939,12 +952,12 @@ paths:
         in: "header"
         required: true
         type: string
-        description: "Your specific bearer token value provided after authentication."
+        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "x-api-key"
         in: "header"
         required: true
         type: string
-        description: "Your specific API key value found in your unique Adobe Experience Platform integration."
+        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       - name: "batchId"
         in: "path"
         required: true
@@ -1474,8 +1487,8 @@ definitions:
                   javaEnabled: true
                 },
                 colorDepth: 32,
-		            viewportHeight: 799,
-		            viewportWidth: 414
+                viewportHeight: 799,
+                viewportWidth: 414
               },
               productListItems: [
                 {
