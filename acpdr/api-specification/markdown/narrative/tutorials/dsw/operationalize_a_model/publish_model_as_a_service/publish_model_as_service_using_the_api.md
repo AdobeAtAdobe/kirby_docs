@@ -21,7 +21,7 @@ From the tutorial you should now have the following information:
 
 ## Key Terms
 
-Some common terminology used in this tutorial:
+Some common teriminology used in this tutorial:
 
 Term | Definition
 --- | ---
@@ -88,7 +88,7 @@ curl -X POST
 * `trainingExperimentRunId` : A particular training Experiment Run to be used for publishing the ML Service.
 * `scoringDataSetId` : Identification referring to the specific data set to be used for scheduled scoring Experiment Runs.
 * `scoringTimeframe` : An Integer value representing minutes for filtering data to be used for scoring Experiment Runs. For example, a value of `"10080"` means data from the past 10080 minutes or 168 hours will be used for each scheduled scoring Experiment Run. Note that a value of `"0"` will not filter data, all data within the dataset is used for scoring.
-* `scoringSchedule` : Contains details regarding scheduled scoring Experiment Runs.
+* `scoringSchedule` : Contains details regarding scheduled scoring Experient Runs.
 * `startTime` : definition.
 * `endTime` : definition.
 * `cron` : definition.
@@ -125,7 +125,7 @@ Depending on your specific use case and requirements, creating a ML Service with
 * [You do not require scheduled training, but require scheduled scoring.](#ml-service-with-scheduled-experiment-for-scoring)
 * [You require scheduled Experiment Runs for both training and scoring.](#ml-service-with-scheduled-experiments-for-training-and-scoring)
 
-Note that a ML Service can be created using a ML Instance without scheduling any training or scoring Experiments. Such ML Service will create ordinary Experiment entities and a single Experiment Run for training and scoring.
+Note that a ML Service can be created using a ML Instance without scheduling any training or scoring Experiments. Such ML Service will create oridinary Experiment entities and a single Experiment Run for training and scoring.
 
 ### ML Service with scheduled Experiment for scoring
 
@@ -168,12 +168,12 @@ curl -X POST
 
 | JSON key | Description |
 | --- | --- |
-| **`mlInstanceId`** | Existing ML Instance identification, representing the ML Instance used to create the ML Service. |
+| **`mlInstanceId`** | Existing ML Instance identification, representing the ML Instance used to create the ML Serice. |
 | **`trainingDataSetId`** | Identification referring to the specific data set to be used for training Experiment. |
 | **`trainingTimeframe`** | An Integer value representing minutes for filtering data to be used for training Experiment. For example, a value of `"10080"` means data from the past 10080 minutes or 168 hours will be used for the training Experiment Run. Note that a value of `"0"` will not filter data, all data within the dataset is used for training. |
 | **`scoringDataSetId`** | Identification referring to the specific data set to be used for scheduled scoring Experiment Runs. |
 |**`scoringTimeframe`** | An Integer value representing minutes for filtering data to be used for scoring Experiment Runs. For example, a value of `"10080"` means data from the past 10080 minutes or 168 hours will be used for each scheduled scoring Experiment Run. Note that a value of `"0"` will not filter data, all data within the dataset is used for scoring. |
-| **`scoringSchedule`** | Contains details regarding scheduled scoring Experiment Runs. |
+| **`scoringSchedule`** | Contains details regarding scheduled scoring Experient Runs. |
 
 #### Response <!-- omit in toc -->
 
@@ -245,13 +245,13 @@ curl -X POST "https://platform-int.adobe.io/data/sensei/mlServices"
 
 | JSON key | Description |
 | --- | --- |
-| **`mlInstanceId`** | Existing ML Instance identification, representing the ML Instance used to create the ML Service. |
+| **`mlInstanceId`** | Existing ML Instance identification, representing the ML Instance used to create the ML Serice. |
 | **`trainingDataSetId`** | Identification referring to the specific data set to be used for training Experiment. |
 | **`trainingTimeframe`** | An Integer value representing minutes for filtering data to be used for training Experiment. For example, a value of `"10080"` means data from the past 10080 minutes or 168 hours will be used for the training Experiment Run. Note that a value of `"0"` will not filter data, all data within the dataset is used for training. |
 | **`scoringDataSetId`** | Identification referring to the specific data set to be used for scheduled scoring Experiment Runs. |
 |**`scoringTimeframe`** | An Integer value representing minutes for filtering data to be used for scoring Experiment Runs. For example, a value of `"10080"` means data from the past 10080 minutes or 168 hours will be used for each scheduled scoring Experiment Run. Note that a value of `"0"` will not filter data, all data within the dataset is used for scoring. |
-| **`trainingSchedule`** | Contains details regarding scheduled training Experiment Runs. |
-| **`scoringSchedule`** | Contains details regarding scheduled scoring Experiment Runs. |
+| **`trainingSchedule`** | Contains details regarding scheduled training Experient Runs. |
+| **`scoringSchedule`** | Contains details regarding scheduled scoring Experient Runs. |
 
 #### Response <!-- omit in toc -->
 
