@@ -13,8 +13,6 @@ In order to complete this tutorial, you must have access to Experience Platform.
 
 This tutorial requires an existing Service. If you do not have an accessible Service to work with, you can create one by following the [Publish your Model as a Service in the UI](../publish_model_as_a_service/publish_model_as_service_ui.md) tutorial.
 
-[//]: # (If you prefer to schedule automated training or scoring runs by using the Sensei Machine Learning APIs, refer to the API tutorial.)
-
 ## Configure scheduled scoring
 
 Model scoring can be configured to be an automated process on a scheduled basis. Once a Service is created, you can follow the steps below to configure and apply a scoring schedule:
@@ -28,13 +26,17 @@ Model scoring can be configured to be an automated process on a scheduled basis.
 3.  Configure the frequency, start date, end date, input dataset, and output dataset for the scoring schedule. Once you are satisfied with the configurations, click **Create** to update the Service's scoring schedule.
 ![](../publish_model_as_a_service/images/ui/14_configure_scoring_schedule.png)
 
+4.  Your updated scoring schedule is shown in the Service's *Overview* page.
+![](../publish_model_as_a_service/images/ui/service_with_scoring_schedule.png)
+
+
 ## Configure scheduled training
 
 Configuring scheduled training runs on a Service ensures that the machine learning Model is updated to the most recent data patterns. Whenever a scheduled training run completes, the resulting trained Model is used to power the Service until the next scheduled training run. 
 
 Once a Service is created, you can follow the steps below to configure and apply a training schedule:
 
-1.  In Adobe Experience Platform, click the **Services** tav located in the left navigation column to access the *Service Gallery*. Find the Service you wish to schedule training runs on and click **Open** to view its *Overview* page.
+1.  In Adobe Experience Platform, click the **Services** tab located in the left navigation column to access the *Service Gallery*. Find the Service you wish to schedule training runs on and click **Open** to view its *Overview* page.
 ![](../publish_model_as_a_service/images/ui/click_to_open.png)
 
 2.  The Overview page displays the Service's training information. Click the **Update Schedule** link to configure a training schedule.
@@ -42,6 +44,9 @@ Once a Service is created, you can follow the steps below to configure and apply
 
 3.  Configure the frequency, start date, end date, and input dataset used for the training schedule. Once you are satisfied with the configurations, click **Create** to update the Service's training schedule.
 ![](../publish_model_as_a_service/images/ui/12_configure_training_schedule.png)
+
+4.  Your updated training schedule is shown in the Service's *Overview* page.
+![](../publish_model_as_a_service/images/ui/service_with_training_schedule.png)
 
 ## Next steps
 
