@@ -1,6 +1,4 @@
-# Streaming Ingestion Overview
-
-## Overview
+# Streaming ingestion overview
 
 Streaming Ingestion for Adobe Experience Platform provides users a method to send data from client and server-side devices to Experience Platform in real-time.
 
