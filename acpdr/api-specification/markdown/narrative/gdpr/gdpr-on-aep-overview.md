@@ -123,4 +123,4 @@ Request payload:
 
 ## Step 4: Track the status of the GDPR request
 
-Refer to the [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service UI](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md) documentation for information about how to track the status (submitted, processing, completed, error, expired) of GDPR requests.
+Refer to the [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service UI](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md) documentation for information about how to track the status (submitted, processing, completed, error, expired) of GDPR requests.GDPR requests.
