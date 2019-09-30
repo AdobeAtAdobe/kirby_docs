@@ -1,0 +1,1237 @@
+swagger: '2.0'
+info:
+  version: "1.0"
+  title: Partner Connectors API
+  description: >-
+    Partner Connectors provides a RESTful API for ingesting data into Adobe Experience Platform by allowing you to connect to 3rd party storage and CRM systems.
+
+
+    Related documentation:
+      * [Data connectors overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md)
+      * Connector tutorials:
+        * [Amazon S3](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md)
+        * [Azure Blob](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md)
+        * [Microsoft Dynamics](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md)
+        * [Salesforce](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_salesforce_connector_tutorial.md)
+    
+    Visualize API calls with Postman (a free, third-party software):
+      * [Partner Connectors API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Partner%20Connectors%20API.postman_collection.json)
+      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
+      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
+
+    API paths:
+      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
+      * Base path for this API: /data/foundation/connectors
+      * Example of a complete path: https://<span>platform.adobe.io/data/foundation/connectors/account
+
+    Required headers:
+      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
+
+tags:
+- name: "Account"
+  description: "Authenticate your storage systems and CRM services to allow your data to be ingested from various sources (such as cloud-based storage, and CRM data) into Experience Platform."
+- name: "Schedule"
+  description: Schedule ingestion from your authenticated connector into Data Lake at a given start date and frequency. Frequency can be set for every month, day, day of the week, hour, or minute.
+- name: "Dataset"
+  description: Creates a dataset for a connection to ingest data into and persist within Platform.
+- name: "Get Objects"
+  description: Returns a list object files or tables at the source location.
+- name: "Schema and Preview"
+  description: Returns a list of schema fields or a data preview for a given object.
+- name: "Custom Schema"
+  description: Create a custom schema by fields or objectName.
+host: platform.adobe.io
+basePath: /data/foundation/connectors
+
+paths:
+  /account:
+    post:
+      tags:
+      - "Account"
+      summary: "Create an account and establish a connection for the given set of credentials."
+      description: ""
+      operationId: "createAccount"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        type: string
+        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+      - name: "x-gw-ims-org-id"
+        in: "header"
+        description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        required: true
+        type: "string"
+      - name: "x-api-key"
+        in: "header"
+        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Credentials"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: '#/definitions/accountResponse'
+          examples:
+            application/json:
+              {
+                "accountId" : "develop-b44788899b3144389db88bef",
+                "connectionId" : "develop-b8fffc95f72f43768af57f56"
+              }
+        400:
+          description: "Bad Request"
+        401:
+          description: "Unauthorized"
+        422:
+          description: "Unprocessable Entity"
+  /account/{accountId}:
+    get:
+      tags:
+      - "Account"
+      summary: "Test the validity of the account associated with the accountId."
+      description: ""
+      operationId: "testCredentialsGet"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        type: string
+        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+      - name: "x-gw-ims-org-id"
+        in: "header"
+        description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        required: true
+        type: "string"
+      - name: "x-api-key"
+        in: "header"
+        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        required: true
+        type: "string"
+      - name: "accountId"
+        in: "path"
+        description: "Account ID"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Bad Request"
+        401:
+          description: "Unauthorized"
+        422:
+          description: "Unprocessable Entity"
+    put:
+      tags:
+      - "Account"
+      summary: "Update the credentials associated with the accountId."
+      description: ""
+      operationId: "putAccount"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        type: string
+        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+      - name: "x-gw-ims-org-id"
+        in: "header"
+        description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        required: true
+        type: "string"
+      - name: "x-api-key"
+        in: "header"
+        description: "The API key belonging to the calling client."
+        required: true
+        type: "string"
+      - name: "accountId"
+        in: "path"
+        description: "Account ID"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Credentials"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: array
+            items:
+              type: string
+          examples:
+            application/json:
+              "[ @/account/accountId ]"
+        400:
+          description: "Bad Request"
+        401:
+          description: "Unauthorized"
+        422:
+          description: "Unprocessable Entity"
+  /connections/{connectionId}/objects:
+    get:
+      tags:
+      - "Get Objects"
+      summary: "Retrieve a list of objects, files, or tables at the source location."
+      description: ""
+      operationId: "getObjects"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        type: string
+        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+      - name: "x-gw-ims-org-id"
+        in: "header"
+        description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        required: true
+        type: "string"
+      - name: "x-api-key"
+        in: "header"
+        description: "The API key belonging to the calling client."
+        required: true
+        type: "string"
+      - name: "connectionId"
+        in: "path"
+        description: "Connection ID"
+        required: true
+        type: "string"
+      - name: "object"
+        in: "query"
+        description: >
+          Required for file type connectors. Path to location or folder
+            Example S3: s3://<bucket-name\>/<path\>
+            Example Azure Blob: /<test-container\>/<folder\>/<file\>
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "The connection's objects"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/objectResponse'
+          examples:
+            application/json:
+              [
+                {
+                  "logicalName": "test/expEventParquet/ExperienceEvent.parquet", "displayName": "ExperienceEvent.parquet",
+                    "meta": {
+                          "type": "File",
+                          "isLeaf": "true"
+                          }
+                }
+              ]
+        404:
+          description: "Connection not found"
+        401:
+          description: "Unauthorized"
+  /connections/{connectionId}/fields:
+    get:
+      tags:
+      - "Schema and Preview"
+      summary: "Retrieve a list of fields from the data."
+      description: ""
+      operationId: "getSchema"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        type: string
+        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+      - name: "x-gw-ims-org-id"
+        in: "header"
+        description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        required: true
+        type: "string"
+      - name: "x-api-key"
+        in: "header"
+        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        required: true
+        type: "string"
+      - name: "connectionId"
+        in: "path"
+        description: "Connection ID"
+        required: true
+        type: "string"
+      - name: "object"
+        in: "query"
+        description: >
+          Fields of data [entity or file path]
+            Example S3: s3://<bucket name\>/<path\>
+            Example Azure Blob: /<test-container\>/<folder\>/<file\>
+            Example for relational connectors: <table-name\>
+        required: true
+        type: "string"
+      - in: "query"
+        name: fileType
+        description: Type of File [required in case of file type connectors]
+        type: string
+        enum: [delimited, parquet, json]
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: '#/definitions/fieldResponse'
+          examples:
+            application/json:
+              {
+              "type": "object",
+              "properties": {
+                  "application": {
+                      "type": "object",
+                      "title": "application",
+                      "description": "application",
+                      "properties": {
+                          "name": {
+                              "type": "string",
+                              "title": "name",
+                              "description": "name"
+                          }
+                      }
+                  },
+                  "id": {
+                      "type": "string",
+                      "title": "id",
+                      "description": "id"
+                        }
+                  }
+              }
+        404:
+          description: "Connection not found"
+        401:
+          description: "Unauthorized"
+  /connections/{connectionId}/rows:
+    get:
+      tags:
+      - "Schema and Preview"
+      summary: "Preview data for the given object."
+      description: ""
+      operationId: "previewData"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        type: string
+        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+      - name: "x-gw-ims-org-id"
+        in: "header"
+        description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        required: true
+        type: "string"
+      - name: "x-api-key"
+        in: "header"
+        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        required: true
+        type: "string"
+      - name: "connectionId"
+        in: "path"
+        description: "Connection ID"
+        required: true
+        type: "string"
+      - name: "object"
+        in: "query"
+        description: >
+          Data preview of entity or file path
+            Example S3: s3://<bucket name\>/<path\>
+            Example Azure Blob: /<test-container\>/<folder\>/<file\>
+            Example for relational connectors: <table-name\>
+        required: true
+        type: "string"
+      - in: "query"
+        name: fileType
+        description: Type of File [required field in case of file type connectors]
+        type: string
+        enum: [delimited, parquet, json]
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: '#/definitions/rowResponse'
+          examples:
+            application/json:
+              {
+                "format": "tabular",
+                "fields": [
+                            {
+                              "id": "1",
+                              "name": "locationContext_geo_city"
+                            }
+                          ],
+                "data": [
+                            {
+                              "1": "",
+                              "2": "Ardella",
+                              "3": "",
+                              "4": "Morin",
+                              "5": "1",
+                              "6": ""
+                             }
+                        ]
+              }
+        404:
+          description: "Connection/object not found"
+        401:
+          description: "Unauthorized"
+  /connections/{connectionId}/datasets:
+    post:
+      tags:
+      - "Dataset"
+      summary: "Create a dataset for a connection to ingest data into Platform."
+      description: ""
+      operationId: "createDataSet"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        type: string
+        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+      - name: "x-gw-ims-org-id"
+        description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        in: "header"
+        required: true
+        type: "string"
+      - name: "x-api-key"
+        in: "header"
+        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        required: true
+        type: "string"
+      - name: "connectionId"
+        in: "path"
+        description: "Connection ID"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/DataSetConnectionRequest"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: '#/definitions/datasetResponse'
+          examples:
+            application/json:
+              {
+                "success": [
+                    {
+                        "name": "dataset name",
+                        "id": "dataset id"
+                    }
+                ],
+                "error": []
+              }
+        207:
+          description: "Partial Success"
+        400:
+          description: "Bad Request"
+        401:
+          description: "Unauthorized"
+        422:
+          description: "Unprocessable Entity"
+  /connections/{connectionId}/schedule:
+    put:
+      tags:
+      - "Schedule"
+      summary: "Schedule ingestion at the given frequency."
+      description: ""
+      operationId: "schedule"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        type: string
+        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+      - name: "x-gw-ims-org-id"
+        in: "header"
+        description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        required: true
+        type: "string"
+      - name: "x-api-key"
+        in: "header"
+        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        required: true
+        type: "string"
+      - name: "connectionId"
+        in: "path"
+        description: "Connection ID"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/Schedule"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: array
+            items:
+              type: string
+          examples:
+            application/json:
+              "[ @/connections/connectionId ]"
+        404:
+          description: "Connection not found"
+        401:
+          description: "Unauthorized"
+  /connections/{connectionId}/schemas:
+      post:
+        tags:
+        - "Custom Schema"
+        summary: "Posts custom schema via fields or objectName."
+        description: ""
+        operationId: "postSchemaToSchemaRegistry"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        - name: "x-gw-ims-org-id"
+          in: "header"
+          description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+          required: true
+          type: "string"
+        - name: "x-api-key"
+          in: "header"
+          description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+          required: true
+          type: "string"
+        - name: "connectionId"
+          in: "path"
+          description: "Catalog Connection ID"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Fields takes preference over objectName in case both are provided."
+          required: true
+          schema:
+            $ref: "#/definitions/PostCustomSchemaRequest"
+        responses:
+          200:
+            description: "OK"
+            schema:
+              $ref: '#/definitions/PostCustomSchemaResponse'
+            examples:
+              application/json:
+                {
+                    "title": "schema title",
+                    "schemaRef": {
+                        "id": "schema id",
+                        "contentType": "schema content type with version"
+                    },
+                    "namespace": "namespace"
+                }
+          400:
+            description: "Bad Request"
+          401:
+            description: "Unauthorized"
+          422:
+            description: "Unprocessable entity"
+
+definitions:
+  Resource:
+    type: "object"
+  AccountParameter:
+    type: "object"
+    properties:
+      value:
+        type: "string"
+        example: "<awsSecretAccessKey>"
+      isSecret:
+        type: "boolean"
+        example: true
+  AmazonS3Settings:
+    allOf:
+    - $ref: "#/definitions/ConnectionSettings"
+  ConnectionSettings:
+    type: "object"
+  Credentials:
+    type: "object"
+    required:
+    - "params"
+    - "type"
+    properties:
+      params:
+        $ref: "#/definitions/S3credentials"
+      type:
+        type: "string"
+        example: "amazon-s3"
+        description: "connector type"
+        enum: &CONNECTORS
+        - "amazon-s3"
+        - "azure-blob-inbound"
+        - "salesforce"
+        - "dynamics-online"
+        - "dynamics-onprem"
+  accountResponse:
+    type: "object"
+    properties:
+      accountId:
+        type: string
+        description: account ID
+      connectionId:
+        type: string
+        description: connection ID
+  AzureBlobSettings:
+    allOf:
+    - $ref: "#/definitions/ConnectionSettings"
+  AzureCredentials:
+    type: "object"
+    required:
+    - "params"
+    - "type"
+    properties:
+      params:
+        description: "the parameters of a connection"
+        type: "object"
+        properties:
+          connectionString:
+            type: "object"
+            properties:
+              value:
+                type: "string"
+                example: "<connection string as retrieved from Azure portal>"
+              isSecret:
+                type: "boolean"
+                example: "true"
+      type:
+        type: "string"
+        example: "azure-blob-inbound"
+        description: "connector type"
+        enum:
+        - "amazon-s3"
+        - "azure-blob-inbound"
+        - "salesforce"
+        - "dynamics-online"
+        - "dynamics-onprem"
+  data:
+    type: object
+  datasetResponse:
+    type: object
+    properties:
+      success:
+        type: array
+        items:
+            $ref: "#/definitions/success"
+      error:
+        type: array
+        items:
+          type: string
+  Dynamics Online credentials:
+    allOf:
+    - $ref: "#/definitions/ConnectionSettings"
+    - type: "object"
+      required:
+      - "organizationUri"
+      - "password"
+      - "username"
+      properties:
+        username:
+          type: "string"
+          example: "user1234"
+          description: "username"
+        password:
+          $ref: "#/definitions/AccountParameter"
+        organizationName:
+          type: "string"
+          example: "org1234"
+          description: "organizationName"
+        organizationUri:
+          type: "string"
+          example: "https://mcdpadobe.dynamics.com/Organization.svc"
+          description: "organizationUri"
+  Dynamics Onprem credentials:
+    allOf:
+    - $ref: "#/definitions/ConnectionSettings"
+    - type: "object"
+      required:
+      - "hostName"
+      - "organizationName"
+      - "password"
+      - "username"
+      properties:
+        username:
+          type: "string"
+          example: "user1234"
+          description: "username"
+        password:
+          $ref: "#/definitions/AccountParameter"
+        organizationName:
+          type: "string"
+          example: "org1234"
+          description: "organizationName"
+        homeRealm:
+          type: "string"
+          example: "https://adfs.contoso.com/adfs/services/trust/mex"
+          description: "homeRealm"
+        port:
+          type: "string"
+          example: "1234"
+          description: "port"
+        hostName:
+          type: "string"
+          example: "dynamics365.organization.adobemc.com"
+          description: "hostName"
+  fieldResponse:
+    type: object
+    properties:
+      type:
+        type: string
+      properties:
+        type: object
+        properties:
+          fieldname1:
+            type: object
+            properties:
+              type:
+                type: string
+              title:
+                type: string
+              description:
+                type: string
+              properties:
+                type: object
+                properties:
+                  name:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      title:
+                        type: string
+                      description:
+                        type: string
+
+  fields:
+    type: object
+    properties:
+      id:
+        type: string
+        description: field ID
+      name:
+        type: string
+        description: field name
+  GenericSettings:
+    allOf:
+    - $ref: "#/definitions/ConnectionSettings"
+    - type: "object"
+  healthResponse:
+    type: object
+    properties:
+      status:
+        type: boolean
+      dependencies:
+        type: array
+        items:
+          type: object
+          properties:
+            service:
+              type: string
+            status:
+              type: boolean
+  objectResponse:
+    type: "object"
+    properties:
+      logicalName:
+        type: string
+        description: object path
+      displayName:
+        type: string
+        description: object name
+      meta:
+        type: "object"
+        properties:
+          type:
+            type: string
+            description: object type
+          isLeaf:
+            type: boolean
+  rowResponse:
+    type: object
+    properties:
+      format:
+       type: string
+       description: data format
+      fields:
+        type: array
+        description: data fields
+        items:
+          $ref: "#/definitions/fields"
+      data:
+        type: array
+        description: actual data
+        items:
+          $ref: "#/definitions/data"
+  S3SecretKeyParameter:
+    type: "object"
+    properties:
+      secret:
+        type: "boolean"
+      value:
+        type: "string"
+      isSecret:
+        type: "boolean"
+  Salesforce credentials:
+    allOf:
+    - $ref: "#/definitions/ConnectionSettings"
+    - type: "object"
+      required:
+      - "password"
+      - "securityToken"
+      - "username"
+      properties:
+        username:
+          type: "string"
+          example: "user1234"
+          description: "username"
+        password:
+          $ref: "#/definitions/AccountParameter"
+        securityToken:
+          $ref: "#/definitions/AccountParameter"
+        serviceUrl:
+          type: "string"
+          example: "login.salesforce.com"
+          description: "serviceUrl"
+  S3credentials:
+    allOf:
+    - $ref: "#/definitions/ConnectionSettings"
+    - type: "object"
+      required:
+      - "s3SecretKey"
+      - "s3AccessKey"
+      properties:
+        s3AccessKey:
+          type: "string"
+          example: "<awsAccessKey>"
+          description: "access key"
+        s3SecretKey:
+          type: "string"
+          description: "secret key"
+          example: "<awsSecretAccessKey>"
+  success:
+    type: object
+    properties:
+      name:
+        type: string
+        description: ""
+      id:
+        type: string
+        description: ""
+  ArrayField:
+    allOf:
+    - $ref: "#/definitions/Field"
+    - type: "object"
+      properties:
+        name:
+          type: "string"
+        meta:
+          $ref: "#/definitions/Metadata"
+        subType:
+          $ref: "#/definitions/Field"
+  BasicField:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      meta:
+        $ref: "#/definitions/Metadata"
+  BinaryField:
+    allOf:
+    - $ref: "#/definitions/Field"
+    - type: "object"
+      properties:
+        name:
+          type: "string"
+        meta:
+          $ref: "#/definitions/Metadata"
+  BooleanField:
+    allOf:
+    - $ref: "#/definitions/Field"
+    - type: "object"
+      properties:
+        name:
+          type: "string"
+        meta:
+          $ref: "#/definitions/Metadata"
+  ByteField:
+    allOf:
+    - $ref: "#/definitions/Field"
+    - type: "object"
+      properties:
+        name:
+          type: "string"
+        meta:
+          $ref: "#/definitions/Metadata"
+  DataSetConnectionRequest:
+    type: "object"
+    properties:
+      params:
+        $ref: "#/definitions/DataSetConnectionRequestParams"
+  DataSetConnectionRequestParams:
+    type: "object"
+    properties:
+      _idPrefix:
+        type: "string"
+      datasets:
+        type: "array"
+        items:
+          $ref: "#/definitions/DataSetModel"
+  DataSetModel:
+    type: "object"
+    required:
+    - "name"
+    - "schemaRef"
+    properties:
+      name:
+        type: "string"
+        description: "Name of the dataset as stored in catalog"
+        example: "<DataSetName>"
+      tags:
+        type: "object"
+        required:
+        - "connectors-objectName"
+        properties:
+          connectors-objectName:
+            type: "array"
+            items:
+              type: "string"
+              description: "Path of object in case of file-type connectors, table name in case of relational connectors. Cannot be null or empty"
+              example: "<object-path> or <table-name>"
+          connectors-sourceFormat:
+            type: "array"
+            items:
+              type: "string"
+              description: "Format of source file. Default value is parquet"
+              enum:
+              - "parquet"
+              - "json"
+              - "csv"
+          connectors-objectDateTimeRegex:
+            type: "array"
+            items:
+              type: "string"
+              description: "Enables selection of folders or files (chosen through connectors-isFolderRegex tag) on the basis of provided regex for file type connectors."
+              example: "<SupportedRegex>"
+          connectors-isFolderRegex:
+            type: "array"
+            items:
+              type: "boolean"
+              description: "Applies regex to selection of folders if true and files if false"
+              example: "true"
+          connectors-recursiveIngestion:
+            type: "array"
+            items:
+              type: "boolean"
+              description: "Recursively selects folders if set to true"
+              example: "true"
+      schemaRef:
+        $ref: "#/definitions/SchemaRef"
+      saveStrategy:
+        type: "string"
+        description: "Provide save strategy for the dataset"
+        enum:
+        - "overwrite"
+        - "append"
+        - "delta"
+      backfillDate:
+        type: "string"
+        description: "Can be provided with save strategy append or delta to specify past date to begin ingestion. Cannot be provided with null or empty frequency. Value has to be in format YYYY-MM-DD hh:mm:ss with current or past date only"
+      schemaMetadata:
+        $ref: "#/definitions/SchemaMetaData"
+  DateField:
+    allOf:
+    - $ref: "#/definitions/Field"
+    - type: "object"
+      properties:
+        name:
+          type: "string"
+        meta:
+          $ref: "#/definitions/Metadata"
+  DeltaMetadataField:
+    type: "object"
+    properties:
+      format:
+        type: "string"
+      timezone:
+        type: "string"
+  DoubleField:
+    allOf:
+    - $ref: "#/definitions/Field"
+    - type: "object"
+      properties:
+        name:
+          type: "string"
+        meta:
+          $ref: "#/definitions/Metadata"
+  Field:
+    type: "object"
+    discriminator: "type"
+  FloatField:
+    allOf:
+    - $ref: "#/definitions/Field"
+    - type: "object"
+      properties:
+        name:
+          type: "string"
+        meta:
+          $ref: "#/definitions/Metadata"
+  IngestFrequency:
+    type: "object"
+    description: "Parameter cannot be null or empty for relational connectors. Empty frequency corresponds to one time ingestion"
+    properties:
+      month:
+        type: "string"
+        example: "*"
+      day:
+        type: "string"
+        example: "*"
+      dayOfWeek:
+        type: "string"
+        example: "*"
+      hour:
+        type: "string"
+        example: "*"
+      minute:
+        type: "string"
+        example: "*/15"
+      timezone:
+        type: "string"
+        example: "UTC"
+  IntegerField:
+    allOf:
+    - $ref: "#/definitions/Field"
+    - type: "object"
+      properties:
+        name:
+          type: "string"
+        meta:
+          $ref: "#/definitions/Metadata"
+  LongField:
+    allOf:
+    - $ref: "#/definitions/Field"
+    - type: "object"
+      properties:
+        name:
+          type: "string"
+        meta:
+          $ref: "#/definitions/Metadata"
+  MapField:
+    allOf:
+    - $ref: "#/definitions/Field"
+    - type: "object"
+      properties:
+        name:
+          type: "string"
+        meta:
+          $ref: "#/definitions/Metadata"
+        keyType:
+          $ref: "#/definitions/BasicField"
+        valueType:
+          $ref: "#/definitions/Field"
+  Metadata:
+    type: "object"
+    properties:
+      isPrimary:
+        type: "boolean"
+      originalType:
+        type: "string"
+      delta:
+        $ref: "#/definitions/DeltaMetadataField"
+  NumberField:
+    allOf:
+    - $ref: "#/definitions/Field"
+    - type: "object"
+      properties:
+        name:
+          type: "string"
+        meta:
+          $ref: "#/definitions/Metadata"
+        precision:
+          type: "integer"
+          format: "int32"
+        scale:
+          type: "integer"
+          format: "int32"
+  ObjectField:
+    allOf:
+    - $ref: "#/definitions/Field"
+    - type: "object"
+      properties:
+        name:
+          type: "string"
+        meta:
+          $ref: "#/definitions/Metadata"
+        subFields:
+          type: "array"
+          items:
+            $ref: "#/definitions/Field"
+  StringField:
+    allOf:
+    - $ref: "#/definitions/Field"
+    - type: "object"
+      properties:
+        name:
+          type: "string"
+        meta:
+          $ref: "#/definitions/Metadata"
+  Connection:
+    type: "object"
+    properties:
+      orgContext:
+        $ref: "#/definitions/OrgContext"
+      orgId:
+        type: "string"
+      _id:
+        type: "string"
+      imsOrg:
+        type: "string"
+      connector:
+        type: "string"
+        enum:
+        - "Salesforce"
+        - "DynamicsOnline"
+        - "DynamicsOnprem"
+        - "Generic"
+        - "ExactTarget"
+        - "Google_DCM"
+        - "S3_PUSH"
+        - "SalesforceOutbound"
+        - "DynamicsOnlineOutbound"
+        - "DynamicsOnpremOutbound"
+        - "MySqlInbound"
+        - "SftpInbound"
+        - "S3Connector"
+      name:
+        type: "string"
+      accountId:
+        type: "string"
+      ingestStart:
+        type: "string"
+        format: "date-time"
+      frequency:
+        $ref: "#/definitions/IngestFrequency"
+  Schedule:
+    type: "object"
+    properties:
+      ingestStart:
+        type: "string"
+        format: "date-time"
+        description: "Parameter to specify start time of ingestion. Current UTC time is taken as default in case parameter is not provided"
+      frequency:
+        $ref: "#/definitions/IngestFrequency"
+  OrgContext:
+    type: "object"
+    properties:
+      orgName:
+        type: "string"
+      shortOrgId:
+        type: "string"
+      orgId:
+        type: "string"
+  PostCustomSchemaRequest:
+    type: "object"
+    properties:
+      objectName:
+        type: "string"
+        description: "Name of the table"
+      fields:
+        description: "Fields payload as returned by GET /fields API of connectors"
+        type: array
+        items:
+          $ref: "#/definitions/objectResponse"
+  PostCustomSchemaResponse:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+      schemaRef:
+        $ref: "#/definitions/SchemaRef"
+      namespace:
+        type: "string"
+  SchemaRef:
+    type: "object"
+    required:
+    - "id"
+    - "contentType"
+    properties:
+      id:
+        type: "string"
+        description: "ID of schema in schema registry"
+      contentType:
+        type: "string"
+        description: "contentType+version of schema in schema registry"
+  SchemaMetaData:
+    type: "object"
+    description: "Provided for relational connectors with schemaRef when save strategy append/delta is given"
+    required:
+    - "delta"
+    properties:
+      delta:
+        type: array
+        items:
+          $ref: "#/definitions/DeltaMetaData"
+  DeltaMetaData:
+      type: "object"
+      required:
+      - "path"
+      properties:
+        path:
+          type: "string"
+          description: "path of field in schema"
+          example: "/properties/_<namespace>/properties/<field-name>"
+        format:
+          type: "string"
+          description: "time format"
+          example: "YYYY-MM-DDThh:mm:ssZ"
+        timezone:
+          type: "string"
+          example: "UTC"
