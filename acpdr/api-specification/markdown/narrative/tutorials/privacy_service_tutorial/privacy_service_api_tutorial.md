@@ -24,14 +24,18 @@ All POST, PUT, and PATCH requests require an additional header:
 
 ## Create a job request
 
+The first step in creating a new job request is to gather your customer data. As the data controller, you need to collect information about the data subjects whose data you want to access, delete, or opt out of sale. Once you have the required data, it must be provided in the payload of a POST request to the root endpoint (`/`) of the [Privacy Service API](../../../../../acpdr/swagger-specs/privacy-service.yaml).
+
 The Privacy Service API supports two kinds of job requests for private customer data:
 
-* **Access and/or delete:** Access (read) or delete private customer data.
-* **Opt out of sale:** Mark private customer data as not to be sold.
+* [Access and/or delete](#create-an-access/delete-job): Access (read) or delete private customer data.
+* [Opt out of sale](#create-an-opt-out-of-sale-job): Mark private customer data as not to be sold.
 
-> **Note:** While access and delete requests can be combined as a single "action", opt-out requests must be made separately. Further details are provided later in this section.
+> **Important:** While access and delete requests can be combined as a single API call, opt-out requests must be made separately.
 
-Regardless of the type of job, the first step in creating a new job request is to gather your customer data. As the data controller, you need to collect information about the data subjects whose data you want to access, delete, or opt out of sale. Once you have the required data, provide it in the payload of a POST request to the root endpoint (`/`) of the [Privacy Service API](../../../../../acpdr/swagger-specs/privacy-service.yaml).
+### Create an access/delete job
+
+This section demonstrates how to make an access/delete job request using the API.
 
 #### API format
 
@@ -109,8 +113,7 @@ curl -X POST \
         * `value`: The value of the identifier.
 * `users`: An array containing a collection of at least one user whose information you would like to access or delete. A maximum of 1000 user IDs can be provided in a single request. Each user object contains the following information:
     * `key`: An identifier that is used to qualify the separate job IDs in the response data. It is best practice to choose a unique, easily identifiable string for this value so it can easily be referenced or looked up later.
-    * `action`: An array that lists desired actions to take on the data. Depending on the actions you want to take, this array must include one or more of the following: `access`, `delete`, and `opt-out-of-sale`. 
-        * While `access` and `delete` requests can be combined, `opt-out-of-sale` requests must be made separately.
+    * `action`: An array that lists desired actions to take on the data. Depending on the actions you want to take, this array must include `access`, `delete`, or both. 
         * When combining `access` and `delete` requests, the service creates separate job IDs for the associated `key`; one for each action.
     * `userIDs`: A collection of identifiers for a particular user. The number of identities a single user can have is limited to 9. Each identifier contains the following three values:
         * `namespace`: The namespace of the ID. For example, `email`.
@@ -169,7 +172,140 @@ A successful response returns the details of the newly created jobs.
 }
 ```
 
-* `jobId`: A read-only, unique system-generated ID for a job. This value is used to lookup a specific job in the next step. 
+* `jobId`: A read-only, unique system-generated ID for a job. This value is used to lookup a specific job in the next step.
+
+Once you have successfully submitted the job request, you can proceed to the next step of [checking the job's status](#check-the-status-of-a-job).
+
+### Create an opt out of sale job
+
+This section demonstrates how to make an opt out of sale job request using the API.
+
+#### API format
+
+```http
+POST /
+```
+
+#### Request
+
+The following request creates a new job request, configured by the attributes supplied in the payload as described below.
+
+```shell
+curl -X POST \
+  https://platform.adobe.io/data/privacy/gdpr/ \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '{
+    "companyContexts": [
+      {
+        "namespace": "imsOrgID",
+        "value": "{IMS_ORG}"
+      }
+    ],
+    "users": [
+      {
+        "key": "DavidSmith",
+        "action": ["opt-out-of-sale"],
+        "userIDs": [
+          {
+            "namespace": "email",
+            "value": "dsmith@acme.com",
+            "type": "standard"
+          },
+          {
+            "namespace": "ECID",
+            "type": "standard",
+            "value":  "443636576799758681021090721276",
+            "isDeletedClientSide": false
+          }
+        ]
+      },
+      {
+        "key": "user12345",
+        "action": ["opt-out-of-sale"],
+        "userIDs": [
+          {
+            "namespace": "email",
+            "value": "ajones@acme.com",
+            "type": "standard"
+          },
+          {
+            "namespace": "loyaltyAccount",
+            "value": "12AD45FE30R29",
+            "type": "integrationCode"
+          }
+        ]
+      }
+    ],
+    "include": ["Analytics", "AudienceManager"],
+    "expandIds": false,
+    "priority": "normal",
+    "analyticsDeleteMethod": "anonymize",
+    "regulation": "ccpa"
+}'
+```
+
+* `companyContexts`: An array containing authentication information for your organization.
+    * The following identifiers are accepted:
+        * `imsOrgId`: **(Required)** The ID of your IMS Organization.
+        * A product-specific company qualifier (for example, `Campaign`), which identifies an integration with an Adobe Solution belonging to your organization. Potential values include account names, client codes, tenant IDs, or other solution identifiers.
+    * Each listed identifier includes the following attributes:
+        * `namespace`: The namespace of an identifier.
+        * `value`: The value of the identifier.
+* `users`: An array containing a collection of at least one user whose information you would like to access or delete. A maximum of 1000 user IDs can be provided in a single request. Each user object contains the following information:
+    * `key`: An identifier that is used to qualify the separate job IDs in the response data. It is best practice to choose a unique, easily identifiable string for this value so it can easily be referenced or looked up later.
+    * `action`: An array that lists desired actions to take on the data. Since this is an opt out of sale request, the array must only contain "opt-out-of-sale".
+    * `userIDs`: A collection of identifiers for a particular user. The number of identities a single user can have is limited to 9. Each identifier contains the following three values:
+        * `namespace`: The namespace of the ID. For example, `email`.
+        * `value`: The value of the identifier. For example, `1234@example.com`.
+        * `type`: The qualifier for the ID namespace being used. A list of [accepted namespace qualifiers](#namespace-qualifiers) is provided later in this tutorial.
+* `include`: An array of Adobe products to include in your processing. If this value is missing or otherwise empty, the request will be rejected. Only include products that your organization has an integration with. A list of [accepted product values](#product-values) is provided later in this tutorial.
+* `expandIDs`: *(Optional)*: When set to `true`, this value represents an optimization for processing the IDs in the solutions (currently only supported by Analytics). If omitted, this value defaults to `false`.
+* `priority`: *(Optional)*: Sets the priority for processing requests based on customer need. Accepted values are `normal` and `low`.
+* `analyticsDeleteMethod`: *(Optional)*: Specifies how Analytics should handle the customer data. Two possible values are accepted for this attribute:
+    * `anonymize`: All data referenced by the given collection of user IDs is made anonymous. If `analyticsDeleteMethod` is omitted, this is the default behavior.
+    * `purge`: All data is removed completely.
+
+#### Response
+
+A successful response returns the details of the newly created jobs.
+
+```json
+{
+    "jobs": [
+        {
+            "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076bd9vjs0",
+            "customer": {
+                "user": {
+                    "key": "DavidSmith",
+                    "action": [
+                        "opt-out-of-sale"
+                    ]
+                }
+            }
+        },
+        {
+            "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076bes0ewj2",
+            "customer": {
+                "user": {
+                    "key": "user12345",
+                    "action": [
+                        "opt-out-of-sale"
+                    ]
+                }
+            }
+        }
+    ],
+    "requestStatus": 1,
+    "totalRecords": 2
+}
+```
+
+* `jobId`: A read-only, unique system-generated ID for a job. This value is used to lookup a specific job in the next step.
+
+Once you have successfully submitted the job request, you can proceed to the next step of checking the job's status.
 
 ## Check the status of a job
 
