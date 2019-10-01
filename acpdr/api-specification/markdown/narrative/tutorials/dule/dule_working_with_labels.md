@@ -6,7 +6,7 @@ Labels can be applied at any time, providing flexibility in how you choose to go
 
 Data usage labels are inherited down from connections to datasets, and from datasets to fields. This means that data usage labels applied at the connection level are propagated to all datasets and fields created from that connection, while labels applied at the dataset level are propagated to all fields within the dataset. Labels can also be applied directly to individual fields (column headers) in a dataset, without propagation.
 
-Before beginning this tutorial, read the [Data Governance overview](../../technical_overview/data_governance/dule_overview.md) for a more robust introduction to the DULE framework.
+Before beginning this tutorial, read the [DULE User Guide](../../../../../end-user/markdown/dule_overview/dule_overview.md) for a more robust introduction to the DULE framework.
 
 ## Tutorial
 
