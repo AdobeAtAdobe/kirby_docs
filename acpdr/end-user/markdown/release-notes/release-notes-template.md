@@ -294,7 +294,7 @@ For product documentation, see [Identity Service Overview](https://www.adobe.io/
 * Fix
 * Fix
 
-For product documentation, see [Data Usage Labeling and Enforcement (DULE) User Guide](https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!api-specification/markdown/narrative/technical_overview/data_governance/dule_overview.md).
+For product documentation, see [Data Usage Labeling and Enforcement (DULE) User Guide](https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!end-user/markdown/dule_overview/dule_overview.md).
 
 ## Privacy {#privacy}
 
