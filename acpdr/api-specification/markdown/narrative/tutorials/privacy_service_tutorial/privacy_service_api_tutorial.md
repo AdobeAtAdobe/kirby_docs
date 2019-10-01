@@ -55,10 +55,6 @@ curl -X POST \
       {
         "namespace": "imsOrgID",
         "value": "{IMS_ORG}"
-      },
-      {
-        "namespace": "Campaign",
-        "value": "acme-stg-us1"
       }
     ],
     "users": [
@@ -94,23 +90,13 @@ curl -X POST \
             "type": "integrationCode"
           }
         ]
-      },
-      {
-        "key": "JaneDoe",
-        "action": ["opt-out-of-sale"],
-        "userIDs": [
-          {
-            "namespace": "email",
-            "value": "jdoe@acme.com",
-            "type": "standard"
-          }
-        ]
       }
     ],
     "include": ["Analytics", "AudienceManager"],
     "expandIds": false,
     "priority": "normal",
     "analyticsDeleteMethod": "anonymize",
+    "regulation": "ccpa"
 }'
 ```
 
@@ -173,17 +159,6 @@ A successful response returns the details of the newly created jobs.
                     "key": "user12345",
                     "action": [
                         "delete"
-                    ]
-                }
-            }
-        }
-        {
-            "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076bf3p5w2",
-            "customer": {
-                "user": {
-                    "key": "JaneDoe",
-                    "action": [
-                        "opt-out-of-sale"
                     ]
                 }
             }
