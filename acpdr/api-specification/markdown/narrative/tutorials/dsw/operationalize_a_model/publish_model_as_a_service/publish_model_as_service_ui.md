@@ -25,7 +25,7 @@ If you prefer to publish a Model by using Sensei Machine Learning APIs, refer to
 ![](./images/ui/3_configure_service.png)
 4.  All successful training runs for to the Model are listed. The new Service will inherit training and scoring configurations from the selected training run. 
 ![](./images/ui/4_select_training_run.png)
-5.  Click **Finish** to create the Service and redirect to the **Services** page showing all available Services, including the newly created Service.
+1.  Click **Finish** to create the Service and redirect to the **Service Gallery** to show all available Services, including the newly created Service.
 ![](./images/ui/service_gallery.png)
 
 ## Score using a Service
@@ -38,6 +38,8 @@ If you prefer to publish a Model by using Sensei Machine Learning APIs, refer to
 ![](./images/ui/7_scoring_output.png)
 4. When a Service is created, it inherits default scoring configurations. You can review these configurations and adjust them as needed by double-clicking on the values. Once you are satisfied with the configurations, click **Finish** to begin the scoring run.
 ![](./images/ui/8_scoring_configure.png)
+5.  On the Service's *Overview* page, details of the new scoring job and its progress is shown. Once the job completes, the **Most Recent** scoring job will be updated.
+![](./images/ui/score_pending.png)
 
 ## Next steps
 
