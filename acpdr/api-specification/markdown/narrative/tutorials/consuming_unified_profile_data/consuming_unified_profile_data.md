@@ -1,27 +1,24 @@
-# Access Real-time Customer Profile data using APIs
+# Access Real-time Customer Profile data using the Profile API
 
-This document provides a tutorial for accessing Real-time Customer Profile data using Adobe Experience Platform APIs. The tutorial covers steps for the following:
+This document provides a tutorial for accessing Real-time Customer Profile data using the [Real-time Customer Profile API](../../../../../../acpdr/swagger-specs/real-time-customer-profile.yaml). The tutorial covers steps for the following operations:
 
-- [List Real-time Customer Profile data fields](#list-real-time-customer-profile-data-fields)
-- [Summarize a data field](#summarize-an-xdm-field)
 - Access profile data by:
-    - [Identity](#Access-profile-data-by-identity)
-    - [List of identities](#Access-profile-data-by-list-of-identities) 
+    - [Identity](#access-profile-data-by-identity)
+    - [List of identities](#access-profile-data-by-list-of-identities) 
 - Access time series events by:
-    - [Identity](#Access-time-series-events-for-a-profile-by-identity)
-    - [List of identities](#Access-time-series-events-for-multiple-profiles-by-identities)
-- [Access an exported segment](#Access-an-exported-segment) 
+    - [Identity](#access-time-series-events-for-a-profile-by-identity)
+    - [List of identities](#access-time-series-events-for-multiple-profiles-by-identities)
+- [Access an exported segment](#access-an-exported-segment)
+- [Ensure your requests are GDPR-compliant](#ensure-your-requests-are-gdpr-compliant)
 
 ## Getting started
 
-This tutorial requires a working understanding of the Experience Platform services involved in managing Real-time Customer Profile data. Before beginning this tutorial, please review the documentation for the following services:
+This tutorial requires a working understanding of the Adobe Experience Platform services involved in managing Real-time Customer Profile data. Before beginning this tutorial, please review the documentation for the following services:
 
-- [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, real-time consumer profile based on aggregated data from multiple sources.
+- [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified consumer profile based on aggregated data from multiple sources, updated in real-time.
 - [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
 
-## Tutorial
-
-You are required to have completed the
+This tutorial also requires you to have completed the
 [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
 * Authorization: Bearer `{ACCESS_TOKEN}`
@@ -30,11 +27,11 @@ You are required to have completed the
 
 Additional headers may be required to complete specific requests. The correct headers are shown in each of the examples within this document. Please pay special attention to the sample requests in order to ensure that all required headers are included.
 
-## List Real-time Customer Profile data fields
+<!-- ## List Real-time Customer Profile data fields
 
 All Real-time Customer Profile data is stored in data fields that conform to Profile-enabled XDM schemas. The names of these XDM data fields are often required when interacting with Profile APIs, such as when indicating specific data fields to retrieve, or when building segment rules.
 
-Using the [Profile Preview API](../../../../../../acdpr/swagger-specs/profile-preview-api.yaml), you can list all fields for a given schema for which data has been supplied during any ingest.
+By making a GET request to the `/observedschemanonull` endpoint in the Profile API, you can list all fields for a given schema for which data has been supplied during any ingest.
 
 #### API format
 
@@ -146,13 +143,14 @@ Real-time Customer Profile provides summaries for data fields that contain conti
 
 If the field being summarized has no values that occur more than 5%, a failure response will be returned as these fields do not convey useful information.
 
-Below are some example use cases for the summary endpoint in the [Profile Preview API](../../../../../../acdpr/swagger-specs/profile-preview-api.yaml).
+Below are some example use cases for the summary endpoint in the Profile API.
 
 ### Longitude example
 
 The following API call retrieves summary data on the distribution of your consumer base by longitude:
 
 #### API format
+
 ```http
 GET /preview/data/summary/{SCHEMA_FIELD}
 ```
@@ -343,37 +341,19 @@ A successful response returns the summary data for the XDM field. Notice the lac
     "summaryType": "STRING",
     "fieldName": "pf.homeAddress.countryCode"
 }
-```
+``` -->
 
 ## Access Profile data by identity
 
-Using the [Profile Access API](../../../../../../acdpr/swagger-specs/profile-access.yaml), you can access an entity by an identity, which consists of an ID value (`entityId`) and the identity namespace (`entityIdNS`).
+You can access a Profile entity by making a GET request to the `/access/entities` endpoint and providing the entity's identity as a series of request parameters. This identity consists of an ID value (`entityId`) and the identity namespace (`entityIdNS`).
 
 #### API format
 
 ```http
-GET /access?{REQUEST_PARAMETERS}
+GET /access/entities?{REQUEST_PARAMETERS}
 ```
 
-* `{REQUEST_PARAMETERS}`: Parameters included in the request path to specify the data to access, separated by ampersands (`&`). A complete list of valid parameters is provided below.
-
-**Request parameters**
-
-The following parameters are used in the request path. They serve to identify the profile entity you want to access, and filter the data returned in the response. Required parameters are labeled, while the rest are optional.
-
-|Parameter|Description|Example|
-|---|---|---|
-|`schema.name`</br>**(REQUIRED)**|The XDM schema of the entity to retrieve|_xdm.context.profile|
-|`relatedSchema.name`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the schema for the profile entity that the time series events are related to.|_xdm.context.profile|
-|`entityId`</br>**(REQUIRED)**|The ID of the entity. If the value of this parameter is not an XID, an identity namespace parameter must also be provided (see `entityIdNS` below).|5558525235|
-|`entityIdNS`|If `entityId` is not provided as an XID, this field must specify the identity namespace.|phone|
-|`relatedEntityId`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the related profile entity's identity namespace. This value follows the same rules as `entityId`.|69935279872410346619186588147492736556|
-|`relatedEntityIdNS`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the identity namespace for the entity specified in `relatedEntityId`. |CRMID|
-|`fields`|Filters the data returned in the API response. Use this field to specify which schema field values to include in data retrieved.|personalEmail,person.name,person.gender|
-|`mergePolicyId`|Identifies the Merge Policy by which to govern the data returned. If one is not specified in the service call, your organization's default for that schema will be used. If no default Merge Policy has been configured, the default is no profile merge and no identity stitching.|5aa6885fcf70a301dabdfa4a|
-|`startTime`|Specifies the start time to filter time series events (in milliseconds).|1539838505|
-|`endTime`|Specifies the end time to filter time series events (in milliseconds).|1539838510|
-|`limit`|Specifies the maximum number of objects to return. <br>(*Default: 1000*)|100|
+* `{REQUEST_PARAMETERS}`: Parameters included in the request path to specify the data to access, separated by ampersands (`&`). A complete list of valid parameters is provided in the [request parameters](#request-parameters) section of the appendix.
 
 #### Request
 
@@ -456,16 +436,16 @@ curl -X GET \
 }
 ```
 
-> **Note:** If a related graph links more than 50 identities, this service will return an HTTP status code of 422 and the message "Too many related identities". If you receive this error, consider adding more request parameters to narrow down your search.
+> **Note:** If a related graph links more than 50 identities, this service will return HTTP status 422 and the message "Too many related identities". If you receive this error, consider adding more request parameters to narrow down your search.
 
 ## Access profile data by list of identities
 
-You can use the [Profile Access API](../../../../../../acdpr/swagger-specs/profile-access.yaml) to access multiple profile entities by their identities. These identities consist of an ID value (`entityId`) and an identity namespace (`entityIdNS`).
+You can access multiple profile entities by their identities by making a POST request to the `/access/entities` endpoint and providing the identities in the payload. These identities consist of an ID value (`entityId`) and an identity namespace (`entityIdNS`).
 
 #### API format
 
 ```http
-POST /entities
+POST /access/entities
 ```
 
 #### Request
@@ -655,35 +635,14 @@ A successful response returns the requested fields of entities specified in the 
 
 ## Access time series events for a profile by identity
 
-You can use the [Profile Access API](../../../../../../acdpr/swagger-specs/profile-access.yaml) to access time series events by the identity of their associated profile entity. This identity consists of an ID value (`entityId`) and an identity namespace (`entityIdNS`).
-
-
+You can access time series events by the identity of their associated profile entity by making a GET request to the `/access/entities` endpoint. This identity consists of an ID value (`entityId`) and an identity namespace (`entityIdNS`).
 
 #### API format
 
 ```http
-GET /entities?{REQUEST_PARAMETERS}
+GET /access/entities?{REQUEST_PARAMETERS}
 ```
-* `{REQUEST_PARAMETERS}`: Parameters included in the request path to specify the data to access. Examples are listed below.
-
-**Request parameters**
-
-The following parameters are used in the request path. They serve to identify the profile entity whose time series events you wish to access, and filter the data returned in the response. Required parameters are labeled, while the rest are optional.
-
-|Parameter|Description|Example|
-|---|---|---|
-|`schema.name`</br>**(REQUIRED)**|The XDM schema of the entity to retrieve|_xdm.context.experienceevent|
-|`relatedSchema.name`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the schema for the profile entity that the time series events are related to.|_xdm.context.profile|
-|`entityId`</br>**(REQUIRED)**|The ID of the entity. If the value of this parameter is not an XID, an identity namespace parameter must also be provided (see `entityIdNS` below).|5558525235|
-|`entityIdNS`|If `entityId` is not provided as an XID, this field must specify the identity namespace.|phone|
-|`relatedEntityId`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the related profile entity's identity namespace. This value follows the same rules as `entityId`.|69935279872410346619186588147492736556|
-|`relatedEntityIdNS`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the identity namespace for the entity specified in `relatedEntityId`. |CRMID|
-|`fields`|Filters the data returned in the API response. Use this field to specify which schema field values to include in data retrieved.|personalEmail,person.name,person.gender|
-|`mergePolicyId`|Identifies the Merge Policy by which to govern the data returned. If one is not specified in the service call, your organization's default for that schema will be used. If no default Merge Policy has been configured, the default is no profile merge and no identity stitching.|5aa6885fcf70a301dabdfa4a|
-|`orderBy`|Specifies the field by which to order results. For example, `orderBy=timestamp` or `orderBy=+timestamp` to sort by timestamp in ascending order, or `orderBy=-timestamp`, to sort in descending order. Omitting this value results in the default sorting of `timestamp` in ascending order.|
-|`timeFilter.startTime`|Specify the start time to filter time-series objects (in milliseconds).|1539838505|
-|`timeFilter.endTime`|Specify the end time to filter time-series objects (in milliseconds).|1539838510|
-|`limit`|Numeric value specifying the maximum number of objects to return. <br>**Default: 1000**|100|
+* `{REQUEST_PARAMETERS}`: Parameters included in the request path to specify the data to access. A complete list of valid parameters is provided in the [request parameters](#request-parameters) section of the appendix.
 
 #### Request
 
@@ -824,14 +783,14 @@ A successful response returns the next page of results. This example demonstrate
 
 ## Access time series events for multiple profiles by identities
 
-Using the [Profile Access API](../../../../../../acdpr/swagger-specs/profile-access.yaml), you can access time series events by a collection of identities from multiple associated profiles, where an identity consists of an ID value (`entityId`) and the identity namespace (`entityIdNS`).
+You can access time series events from multiple associated profiles by making a POST request to the `/access/entities` endpoint and providing the profiles' identities in the payload. These identities each consist of an ID value (`entityId`) and an identity namespace (`entityIdNS`).
 
 #### API format
 
 Unlike previous examples, this API call does not use any request parameters. All parameters are supplied in the request payload instead.
 
 ```http
-GET /entities
+POST /access/entities
 ```
 
 **Payload parameters**
@@ -1100,6 +1059,49 @@ Results are paginated when retrieving time series events. If there are subsequen
 
 ## Access an exported segment
 
-You can access Profile data using criteria (or rules) by using the Segmentation Service. The [Profile Segment Definition API](../../../../../../acdpr/swagger-specs/profile-segment-definitions-api.yaml) creates segment definitions, which are tested using the [Profile Preview API](../../../../../../acdpr/swagger-specs/profile-preview-api.yaml). These segments are then applied against your profile store using the [Profile Segment Jobs API](../../../../../../acdpr/swagger-specs/profile-segment-jobs-api.yaml). For more details on creating segments, see the [create a segment tutorial](../creating_a_segment_tutorial/creating_a_segment_tutorial.md).
+You can access Profile data using criteria (or rules) by using the Segmentation Service. The Real-time Customer Profile API provides endpoints that allow you to create and test segment definitions, generate audience segments from those definitions, and export segments to persist in datasets. See the tutorial on [creating a segment using the Profile API](../creating_a_segment_tutorial/creating_a_segment_tutorial.md) for more information.
 
-Once a segment has been created and exported, you can use the [Data Access API](../../../../../../acdpr/swagger-specs/data-access-api.yaml) to access the data using the returned `batchId` from when the segment was exported. For detailed steps on locating batch files and accessing their contents, see the [Data Access API tutorial](../data_access_tutorial/data_access_tutorial.md).
+Once a segment has been created and exported, you can use the [Data Access API](../../../../../../acpdr/swagger-specs/data-access-api.yaml) to access the data using the returned `batchId` from when the segment was exported. For detailed steps on locating batch files and accessing their contents, see the [Data Access API tutorial](../data_access_tutorial/data_access_tutorial.md).
+
+## Ensure your requests are GDPR-compliant
+
+Adobe Experience Platform Privacy Service allows you to ensure your data access requests are compliant with the European Union [General Data Protection Regulation (GDPR)](https://eugdpr.org/) by automating GDPR `access` and `delete` requests across Platform components. 
+
+For general information on how GDPR applies to Experience Platform, see the [GDPR on Experience Platform overview](../../gdpr/gdpr-on-platform-overview.md). For definitions to some of the GDPR terminology used below, visit the [GDPR terminology](../../gdpr/gdpr-terminology.md) glossary.
+
+The following workflow outlines how Privacy Service interacts with Platform components to ensure GDPR compliance:
+
+1. As part of good data hygiene, the data controller should curate and appropriately label all personal data that is ingested into Experience Platform. See the [Data Governance user guide](../../technical_overview/data_governance/dule_overview.md) for more information on working with data labels.
+1. When a data subject requests to access or delete their data, the data controller collects identities from the data subject, verifies that data, and submits it to Privacy Service.
+1. Privacy Service sends the request to Pipeline and confirms that it was accepted by returning a "processing" status.
+1. Privacy Service sends the request to Real-time Customer Profile.
+1. Profile either deletes all data for the given identity and all related identities, or gathers all uploaded file data associated with the identity.
+1. Profile sends the response back to Privacy Service, indicating the action and a status message of "complete" or "error".
+1. Privacy Service stores the response sent from Profile.
+
+## Next steps
+
+By following this tutorial, you have successfully accessed Real-time Customer Profile data fields, profiles, time-series events, and exported audience segments. To learn how to access other data resources stored in Platform, see the [Data Access API overview](../../technical_overview/data_access_architectural_overview/data_access_architectural_overview.md).
+
+## Appendix
+
+The following section provides supplemental information regarding accessing Profile data using the API.
+
+### Request parameters
+
+The following parameters are used in the request path for calls to the `/access/entities` endpoint. They serve to identify the profile entity you wish to access and filter the data returned in the response. Required parameters are labeled, while the rest are optional.
+
+|Parameter|Description|Example|
+|---|---|---|
+|`schema.name`</br>**(REQUIRED)**|The XDM schema of the entity to retrieve|_xdm.context.experienceevent|
+|`relatedSchema.name`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the schema for the profile entity that the time series events are related to.|_xdm.context.profile|
+|`entityId`</br>**(REQUIRED)**|The ID of the entity. If the value of this parameter is not an XID, an identity namespace parameter must also be provided (see `entityIdNS` below).|5558525235|
+|`entityIdNS`|If `entityId` is not provided as an XID, this field must specify the identity namespace.|phone|
+|`relatedEntityId`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the related profile entity's identity namespace. This value follows the same rules as `entityId`.|69935279872410346619186588147492736556|
+|`relatedEntityIdNS`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the identity namespace for the entity specified in `relatedEntityId`. |CRMID|
+|`fields`|Filters the data returned in the API response. Use this field to specify which schema field values to include in data retrieved.|personalEmail,person.name,person.gender|
+|`mergePolicyId`|Identifies the Merge Policy by which to govern the data returned. If one is not specified in the service call, your organization's default for that schema will be used. If no default Merge Policy has been configured, the default is no profile merge and no identity stitching.|5aa6885fcf70a301dabdfa4a|
+|`orderBy`|Specifies the field by which to order results. For example, `orderBy=timestamp` or `orderBy=+timestamp` to sort by timestamp in ascending order, or `orderBy=-timestamp`, to sort in descending order. Omitting this value results in the default sorting of `timestamp` in ascending order.|
+|`timeFilter.startTime`|Specify the start time to filter time-series objects (in milliseconds).|1539838505|
+|`timeFilter.endTime`|Specify the end time to filter time-series objects (in milliseconds).|1539838510|
+|`limit`|Numeric value specifying the maximum number of objects to return. <br>**Default: 1000**|100|
