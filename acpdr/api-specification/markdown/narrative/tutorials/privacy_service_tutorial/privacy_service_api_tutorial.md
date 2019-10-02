@@ -49,7 +49,7 @@ The following request creates a new job request, configured by the attributes su
 
 ```shell
 curl -X POST \
-  https://platform.adobe.io/data/privacy/gdpr/ \
+  https://platform.adobe.io/data/core/privacy/jobs \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
@@ -176,137 +176,6 @@ A successful response returns the details of the newly created jobs.
 
 Once you have successfully submitted the job request, you can proceed to the next step of [checking the job's status](#check-the-status-of-a-job).
 
-### Create an opt out of sale job
-
-This section demonstrates how to make an opt out of sale job request using the API.
-
-#### API format
-
-```http
-POST /
-```
-
-#### Request
-
-The following request creates a new job request, configured by the attributes supplied in the payload as described below.
-
-```shell
-curl -X POST \
-  https://platform.adobe.io/data/privacy/gdpr/ \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'Content-Type: application/json' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -d '{
-    "companyContexts": [
-      {
-        "namespace": "imsOrgID",
-        "value": "{IMS_ORG}"
-      }
-    ],
-    "users": [
-      {
-        "key": "DavidSmith",
-        "action": ["opt-out-of-sale"],
-        "userIDs": [
-          {
-            "namespace": "email",
-            "value": "dsmith@acme.com",
-            "type": "standard"
-          },
-          {
-            "namespace": "ECID",
-            "type": "standard",
-            "value":  "443636576799758681021090721276",
-            "isDeletedClientSide": false
-          }
-        ]
-      },
-      {
-        "key": "user12345",
-        "action": ["opt-out-of-sale"],
-        "userIDs": [
-          {
-            "namespace": "email",
-            "value": "ajones@acme.com",
-            "type": "standard"
-          },
-          {
-            "namespace": "loyaltyAccount",
-            "value": "12AD45FE30R29",
-            "type": "integrationCode"
-          }
-        ]
-      }
-    ],
-    "include": ["Analytics", "AudienceManager"],
-    "expandIds": false,
-    "priority": "normal",
-    "analyticsDeleteMethod": "anonymize",
-    "regulation": "ccpa"
-}'
-```
-
-* `companyContexts`: An array containing authentication information for your organization.
-    * The following identifiers are accepted:
-        * `imsOrgId`: **(Required)** The ID of your IMS Organization.
-        * A product-specific company qualifier (for example, `Campaign`), which identifies an integration with an Adobe Solution belonging to your organization. Potential values include account names, client codes, tenant IDs, or other solution identifiers.
-    * Each listed identifier includes the following attributes:
-        * `namespace`: The namespace of an identifier.
-        * `value`: The value of the identifier.
-* `users`: An array containing a collection of at least one user whose information you would like to access or delete. A maximum of 1000 user IDs can be provided in a single request. Each user object contains the following information:
-    * `key`: An identifier that is used to qualify the separate job IDs in the response data. It is best practice to choose a unique, easily identifiable string for this value so it can easily be referenced or looked up later.
-    * `action`: An array that lists desired actions to take on the data. Since this is an opt out of sale request, the array must only contain "opt-out-of-sale".
-    * `userIDs`: A collection of identifiers for a particular user. The number of identities a single user can have is limited to 9. Each identifier contains the following three values:
-        * `namespace`: The namespace of the ID. For example, `email`.
-        * `value`: The value of the identifier. For example, `1234@example.com`.
-        * `type`: The qualifier for the ID namespace being used. A list of [accepted namespace qualifiers](#namespace-qualifiers) is provided later in this tutorial.
-* `include`: An array of Adobe products to include in your processing. If this value is missing or otherwise empty, the request will be rejected. Only include products that your organization has an integration with. A list of [accepted product values](#product-values) is provided later in this tutorial.
-* `expandIDs`: *(Optional)*: When set to `true`, this value represents an optimization for processing the IDs in the solutions (currently only supported by Analytics). If omitted, this value defaults to `false`.
-* `priority`: *(Optional)*: Sets the priority for processing requests based on customer need. Accepted values are `normal` and `low`.
-* `analyticsDeleteMethod`: *(Optional)*: Specifies how Analytics should handle the customer data. Two possible values are accepted for this attribute:
-    * `anonymize`: All data referenced by the given collection of user IDs is made anonymous. If `analyticsDeleteMethod` is omitted, this is the default behavior.
-    * `purge`: All data is removed completely.
-
-#### Response
-
-A successful response returns the details of the newly created jobs.
-
-```json
-{
-    "jobs": [
-        {
-            "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076bd9vjs0",
-            "customer": {
-                "user": {
-                    "key": "DavidSmith",
-                    "action": [
-                        "opt-out-of-sale"
-                    ]
-                }
-            }
-        },
-        {
-            "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076bes0ewj2",
-            "customer": {
-                "user": {
-                    "key": "user12345",
-                    "action": [
-                        "opt-out-of-sale"
-                    ]
-                }
-            }
-        }
-    ],
-    "requestStatus": 1,
-    "totalRecords": 2
-}
-```
-
-* `jobId`: A read-only, unique system-generated ID for a job. This value is used to lookup a specific job in the next step.
-
-Once you have successfully submitted the job request, you can proceed to the next step of checking the job's status.
-
 ## Check the status of a job
 
 Using one of the `jobId` values returned in the previous step, you can retrieve information about that job, such as its current processing status.
@@ -325,7 +194,7 @@ The following request retrieves the details of the job whose `jobId` is provided
 
 ```shell
 curl -X GET \
-  https://platform.adobe.io/data/privacy/gdpr/6fc09b53-c24f-4a6c-9ca2-c6076b0842b6 \
+  https://platform.adobe.io/data/core/privacy/jobs/6fc09b53-c24f-4a6c-9ca2-c6076b0842b6 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -337,89 +206,52 @@ A successful response returns the details of the specified job.
 
 ```json
 {
-    "jobs": [
+    "jobId": "527ef92d-6cd9-45cc-9bf1-477cfa1e2ca2",
+    "requestId": "15700479082313109RX-899",
+    "userKey": "David Smith",
+    "action": "access",
+    "status": "error",
+    "submittedBy": "02b38adf-6573-401e-b4cc-6b08dbc0e61c@techacct.adobe.com",
+    "createdDate": "10/02/2019 08:25 PM GMT",
+    "lastModifiedDate": "10/02/2019 08:25 PM GMT",
+    "userIds": [
         {
-            "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076b0842b6",
-            "requestId": "979",
-            "ticketNumber": "29304",
-            "customer": {
-                "user": {
-                    "key": "DavidSmith",
-                    "action": [
-                        "access"
-                    ],
-                    "userIDs": [
-                        {
-                            "namespace": "email",
-                            "value": "dsmith@acme.com",
-                            "type": "standard",
-                            "namespaceId": 6,
-                            "isDeletedClientSide": false
-                        }
-                    ]
-                },
-                "companyContexts": [
-                    {
-                        "namespace": "imsOrgID",
-                        "value": "{IMS_ORG}"
-                    }
-                ]
-            },
-            "emailId": "submitter@email.com",
-            "productResponses": [
-                {
-                    "product": "Analytics",
-                    "retryCount": 0,
-                    "productStatusResponse": {
-                        "statusCode": 1,
-                        "statusMessage": "complete",
-                        "solutionMessage": {
-                            "message": "success",
-                            "product": "analytics",
-                            "results": {
-                                "userContexts": [],
-                                "receiptData": {}
-                            },
-                            "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076b0842b6",
-                            "status": "complete",
-                            "action": null
-                        }
-                    },
-                    "processedDate": "06/11/2019 2:00 AM"
-                },
-                {
-                    "product": "AudienceManager",
-                    "retryCount": 0,
-                    "productStatusResponse": {
-                        "statusCode": 1,
-                        "statusMessage": "complete",
-                        "solutionMessage": {
-                            "message": "success",
-                            "product": "audienceManager",
-                            "results": {
-                                "userContexts": [],
-                                "receiptData": {}
-                            },
-                            "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076b0842b6",
-                            "status": "complete",
-                            "action": null
-                        }
-                    },
-                    "processedDate": "06/11/2019 2:03 AM"
-                }
-            ],
-            "lastUpdatedBy": "GDPRCentralService",
-            "timeRequested": "05/14/2018 8:39 PM",
-            "submittedBy": "{USER_ID}",
-            "gdprStatusResponse": {
-                "statusCode": 1,
-                "statusMessage": "complete",
-                "solutionMessage": null
-            },
-            "downloadURL": "https://va7gdprprodblob.blob.core.windows.net/va7gdprprodblobpublic/6fc09b53-c24f-4a6c-9ca2-c6076b0842b6.zip"
+            "namespace": "email",
+            "value": "dsmith@acme.com",
+            "type": "standard",
+            "namespaceId": 6,
+            "isDeletedClientSide": false
+        },
+        {
+            "namespace": "ECID",
+            "value": "1123A4D5690B32A",
+            "type": "standard",
+            "namespaceId": 4,
+            "isDeletedClientSide": false
         }
     ],
-    "totalRecords": 1
+    "productResponses": [
+        {
+            "product": "Analytics",
+            "retryCount": 0,
+            "processedDate": "10/02/2019 08:25 PM GMT",
+            "productStatusResponse": {
+                "status": "submitted",
+                "message": "processing"
+            }
+        },
+        {
+            "product": "AudienceManager",
+            "retryCount": 0,
+            "processedDate": "10/02/2019 08:25 PM GMT",
+            "productStatusResponse": {
+                "status": "submitted",
+                "message": "processing"
+            }
+        }
+    ],
+    "downloadURL": "http://...",
+    "regulation": "ccpa"
 }
 ```
 
@@ -436,7 +268,6 @@ The following table lists the different possible job statuses and their correspo
 | 2 | Processing | Solutions have acknowledged the job and are currently processing. |
 | 3 | Submitted | Job is submitted to every applicable solution. |
 | 4 | Error | Something failed in the processing of the job - more specific information may be obtained by retrieving individual job details. |
-| 5 | Expired | Final response is not received from the solutions before the specified time. |
 
 > **Note:** A submitted job might remain in a processing state if it has a dependent child job that is still processing.
 
@@ -446,14 +277,15 @@ You can view a list of all available job requests within your organization by ma
 
 #### API format
 
-This request format uses a `data=true` query parameter on the root (`/`) endpoint, therefore it begins with a question mark (`?`) as shown below. The response is paginated, allowing you to use other query parameters (`page` and `size`) to filter the response. You can separate multiple parameters using ampersands (`&`).
+This request format uses a `regulation` query parameter on the root (`/`) endpoint, therefore it begins with a question mark (`?`) as shown below. The response is paginated, allowing you to use other query parameters (`page` and `size`) to filter the response. You can separate multiple parameters using ampersands (`&`).
 
 ```http
-GET ?data=true
-GET ?data=true&page={PAGE}
-GET ?data=true&size={SIZE}
-GET ?data=true&page={PAGE}&size={SIZE}
+GET ?regulation={REGULATION}
+GET ?regulation={REGULATION}&page={PAGE}
+GET ?regulation={REGULATION}&size={SIZE}
+GET ?regulation={REGULATION}&page={PAGE}&size={SIZE}
 ```
+* `{REGULATION}`: The regulation type to query for, includes choices ['gdpr','ccpa'].
 * `{PAGE}`: The page of data to be displayed, using 0-based numbering. The default is `0`.
 * `{SIZE}`: The number of results to display on each page. The default is `1` and the maximum is `100`. Exceeding the maximum causes the API to return a 400-code error.
 
@@ -463,7 +295,7 @@ The following request retrieves a paginated list of all jobs within an IMS Organ
 
 ```shell
 curl -X GET \
-  https://platform.adobe.io/data/privacy/gdpr?data=true&page=2&size=50 \
+  https://platform.adobe.io/data/core/privacy/jobs?regulation=gdpr&page=2&size=50 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
