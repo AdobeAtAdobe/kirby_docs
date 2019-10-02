@@ -1,8 +1,10 @@
 # Privacy Service API tutorial
 
+> **Note:** The functionalities described in this document are currently in beta and will be publicly available as part of the July 25, 2019 release.
+
 Adobe Experience Platform Privacy Service provides a RESTful API and user interface that allow you to manage (access and delete) the personal data of your customers (data subjects) across Adobe Experience Cloud solutions. Privacy Service also provides a central audit and logging mechanism that allows you to access the status and results of jobs involving Experience Cloud solutions.
 
-This tutorial covers how to use the Privacy Service API. For details on how to use the UI, see the [Privacy Service UI tutorial](privacy_service_ui_tutorial.md). For a comprehensive list of all available endpoints in the Privacy Service API, please see the [API reference](../../../../../../acpdr/swagger-specs/privacy-service.yaml).
+This tutorial covers how to use the Privacy Service API. For details on how to use the UI, see the [Privacy Service UI tutorial](privacy_service_ui_tutorial.md). For a comprehensive list of all available endpoints in the Privacy Service API, please see the [API reference](../../../../../acdpr/swagger-specs/gdpr-api.yaml).
 
 Steps for performing the following tasks are covered in this tutorial:
 
@@ -10,9 +12,10 @@ Steps for performing the following tasks are covered in this tutorial:
 * [Check the status of a job](#check-the-status-of-a-job)
 * [View all job requests](#view-all-job-requests) within your organization
 
-## Getting started
+## Prerequisites
 
-You are required to have completed the [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+You are required to have completed the
+[Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
 * Authorization: Bearer `{ACCESS_TOKEN}`
 * x-api-key: `{API_KEY}`
@@ -22,20 +25,13 @@ All POST, PUT, and PATCH requests require an additional header:
 
 * Content-Type: application/json
 
+<!-- (This should go in a more general overview doc)
+Across Adobe Experience Cloud there are many products that support your digital marketing needs. Each solution handles data and user identities in unique ways, according to their business goals. However, they also must support to the overall Experience Cloud goals for security and compliance. Platform GDPR Service has been developed to do exactly this: coordinate privacy and compliance requests across various solutions in Experience Cloud, beginning with GDPR access and deletion requests. 
+-->
+
 ## Create a job request
 
-The first step in creating a new job request is to gather your customer data. As the data controller, you need to collect information about the data subjects whose data you want to access, delete, or opt out of sale. Once you have the required data, it must be provided in the payload of a POST request to the root endpoint (`/`) of the [Privacy Service API](../../../../../acpdr/swagger-specs/privacy-service.yaml).
-
-The Privacy Service API supports two kinds of job requests for private customer data:
-
-* [Access and/or delete](#create-an-access/delete-job): Access (read) or delete private customer data.
-* [Opt out of sale](#create-an-opt-out-of-sale-job): Mark private customer data as not to be sold.
-
-> **Important:** While access and delete requests can be combined as a single API call, opt-out requests must be made separately.
-
-### Create an access/delete job
-
-This section demonstrates how to make an access/delete job request using the API.
+The first step in creating a new job request is to gather your customer data. As the data controller, you need to collect information about the data subjects whose data you want to access or delete. Once you have the required data, provide it in the payload of a POST request to the root endpoint (`/`) of the [Privacy Service API](../../../../../acdpr/swagger-specs/gdpr-api.yaml).
 
 #### API format
 
@@ -59,6 +55,10 @@ curl -X POST \
       {
         "namespace": "imsOrgID",
         "value": "{IMS_ORG}"
+      },
+      {
+        "namespace": "Campaign",
+        "value": "acme-stg-us1"
       }
     ],
     "users": [
@@ -100,7 +100,7 @@ curl -X POST \
     "expandIds": false,
     "priority": "normal",
     "analyticsDeleteMethod": "anonymize",
-    "regulation": "ccpa"
+    "ticketId": "GDPR-29304"
 }'
 ```
 
@@ -113,18 +113,23 @@ curl -X POST \
         * `value`: The value of the identifier.
 * `users`: An array containing a collection of at least one user whose information you would like to access or delete. A maximum of 1000 user IDs can be provided in a single request. Each user object contains the following information:
     * `key`: An identifier that is used to qualify the separate job IDs in the response data. It is best practice to choose a unique, easily identifiable string for this value so it can easily be referenced or looked up later.
-    * `action`: An array that lists desired actions to take on the data. Depending on the actions you want to take, this array must include `access`, `delete`, or both. 
-        * When combining `access` and `delete` requests, the service creates separate job IDs for the associated `key`; one for each action.
+    * `action`: A collection of desired actions to take on the data. Must include one or both of `access` or `delete`, depending on the actions you want to take. If both options are provided, the service will create two separate job IDs for the associated `key`; one for each action.
     * `userIDs`: A collection of identifiers for a particular user. The number of identities a single user can have is limited to 9. Each identifier contains the following three values:
         * `namespace`: The namespace of the ID. For example, `email`.
         * `value`: The value of the identifier. For example, `1234@example.com`.
         * `type`: The qualifier for the ID namespace being used. A list of [accepted namespace qualifiers](#namespace-qualifiers) is provided later in this tutorial.
-* `include`: An array of Adobe products to include in your processing. If this value is missing or otherwise empty, the request will be rejected. Only include products that your organization has an integration with. A list of [accepted product values](#product-values) is provided later in this tutorial.
+* `include`: An array of Adobe products to include in your processing. This value is missing or otherwise empty, the request will be rejected. Only include products that your organization has an integration with. A list of [accepted product values](#product-values) is provided later in this tutorial.
 * `expandIDs`: *(Optional)*: When set to `true`, this value represents an optimization for processing the IDs in the solutions (currently only supported by Analytics). If omitted, this value defaults to `false`.
 * `priority`: *(Optional)*: Sets the priority for processing requests based on customer need. Accepted values are `normal` and `low`.
 * `analyticsDeleteMethod`: *(Optional)*: Specifies how Analytics should handle the customer data. Two possible values are accepted for this attribute:
     * `anonymize`: All data referenced by the given collection of user IDs is made anonymous. If `analyticsDeleteMethod` is omitted, this is the default behavior.
     * `purge`: All data is removed completely.
+* `ticketId`: Links the jobs created by this request to any internal tracking ID used by your organization.
+
+<!-- (Is this a key only found in the response? Shouldn't be included here if so, especially if it's something specifically *not* to be included in the request payload)
+One key not detailed in the example above:
+* The key **isDeletedClientSide** is a Boolean (true/false) value that is handed in from the Adobe Privacy JS library, indicating the client-side cookie has been deleted. This flag resides at the userID level, as part of the `namespace`, `value` and `type` triumvirate, and should not be added to the request manually as it indicates additional processing work is not needed by some solutions 
+-->
 
 #### Response
 
@@ -172,140 +177,7 @@ A successful response returns the details of the newly created jobs.
 }
 ```
 
-* `jobId`: A read-only, unique system-generated ID for a job. This value is used to lookup a specific job in the next step.
-
-Once you have successfully submitted the job request, you can proceed to the next step of [checking the job's status](#check-the-status-of-a-job).
-
-### Create an opt out of sale job
-
-This section demonstrates how to make an opt out of sale job request using the API.
-
-#### API format
-
-```http
-POST /
-```
-
-#### Request
-
-The following request creates a new job request, configured by the attributes supplied in the payload as described below.
-
-```shell
-curl -X POST \
-  https://platform.adobe.io/data/privacy/gdpr/ \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'Content-Type: application/json' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -d '{
-    "companyContexts": [
-      {
-        "namespace": "imsOrgID",
-        "value": "{IMS_ORG}"
-      }
-    ],
-    "users": [
-      {
-        "key": "DavidSmith",
-        "action": ["opt-out-of-sale"],
-        "userIDs": [
-          {
-            "namespace": "email",
-            "value": "dsmith@acme.com",
-            "type": "standard"
-          },
-          {
-            "namespace": "ECID",
-            "type": "standard",
-            "value":  "443636576799758681021090721276",
-            "isDeletedClientSide": false
-          }
-        ]
-      },
-      {
-        "key": "user12345",
-        "action": ["opt-out-of-sale"],
-        "userIDs": [
-          {
-            "namespace": "email",
-            "value": "ajones@acme.com",
-            "type": "standard"
-          },
-          {
-            "namespace": "loyaltyAccount",
-            "value": "12AD45FE30R29",
-            "type": "integrationCode"
-          }
-        ]
-      }
-    ],
-    "include": ["Analytics", "AudienceManager"],
-    "expandIds": false,
-    "priority": "normal",
-    "analyticsDeleteMethod": "anonymize",
-    "regulation": "ccpa"
-}'
-```
-
-* `companyContexts`: An array containing authentication information for your organization.
-    * The following identifiers are accepted:
-        * `imsOrgId`: **(Required)** The ID of your IMS Organization.
-        * A product-specific company qualifier (for example, `Campaign`), which identifies an integration with an Adobe Solution belonging to your organization. Potential values include account names, client codes, tenant IDs, or other solution identifiers.
-    * Each listed identifier includes the following attributes:
-        * `namespace`: The namespace of an identifier.
-        * `value`: The value of the identifier.
-* `users`: An array containing a collection of at least one user whose information you would like to access or delete. A maximum of 1000 user IDs can be provided in a single request. Each user object contains the following information:
-    * `key`: An identifier that is used to qualify the separate job IDs in the response data. It is best practice to choose a unique, easily identifiable string for this value so it can easily be referenced or looked up later.
-    * `action`: An array that lists desired actions to take on the data. Since this is an opt out of sale request, the array must only contain "opt-out-of-sale".
-    * `userIDs`: A collection of identifiers for a particular user. The number of identities a single user can have is limited to 9. Each identifier contains the following three values:
-        * `namespace`: The namespace of the ID. For example, `email`.
-        * `value`: The value of the identifier. For example, `1234@example.com`.
-        * `type`: The qualifier for the ID namespace being used. A list of [accepted namespace qualifiers](#namespace-qualifiers) is provided later in this tutorial.
-* `include`: An array of Adobe products to include in your processing. If this value is missing or otherwise empty, the request will be rejected. Only include products that your organization has an integration with. A list of [accepted product values](#product-values) is provided later in this tutorial.
-* `expandIDs`: *(Optional)*: When set to `true`, this value represents an optimization for processing the IDs in the solutions (currently only supported by Analytics). If omitted, this value defaults to `false`.
-* `priority`: *(Optional)*: Sets the priority for processing requests based on customer need. Accepted values are `normal` and `low`.
-* `analyticsDeleteMethod`: *(Optional)*: Specifies how Analytics should handle the customer data. Two possible values are accepted for this attribute:
-    * `anonymize`: All data referenced by the given collection of user IDs is made anonymous. If `analyticsDeleteMethod` is omitted, this is the default behavior.
-    * `purge`: All data is removed completely.
-
-#### Response
-
-A successful response returns the details of the newly created jobs.
-
-```json
-{
-    "jobs": [
-        {
-            "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076bd9vjs0",
-            "customer": {
-                "user": {
-                    "key": "DavidSmith",
-                    "action": [
-                        "opt-out-of-sale"
-                    ]
-                }
-            }
-        },
-        {
-            "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076bes0ewj2",
-            "customer": {
-                "user": {
-                    "key": "user12345",
-                    "action": [
-                        "opt-out-of-sale"
-                    ]
-                }
-            }
-        }
-    ],
-    "requestStatus": 1,
-    "totalRecords": 2
-}
-```
-
-* `jobId`: A read-only, unique system-generated ID for a job. This value is used to lookup a specific job in the next step.
-
-Once you have successfully submitted the job request, you can proceed to the next step of checking the job's status.
+* `jobId`: A read-only, unique system-generated ID for a job. This value is used to lookup a specific job in the next step. 
 
 ## Check the status of a job
 
@@ -341,7 +213,7 @@ A successful response returns the details of the specified job.
         {
             "jobId": "6fc09b53-c24f-4a6c-9ca2-c6076b0842b6",
             "requestId": "979",
-            "ticketNumber": "29304",
+            "ticketNumber": "GDPR-29304",
             "customer": {
                 "user": {
                     "key": "DavidSmith",
@@ -455,7 +327,7 @@ GET ?data=true&size={SIZE}
 GET ?data=true&page={PAGE}&size={SIZE}
 ```
 * `{PAGE}`: The page of data to be displayed, using 0-based numbering. The default is `0`.
-* `{SIZE}`: The number of results to display on each page. The default is `1` and the maximum is `100`. Exceeding the maximum causes the API to return a 400-code error.
+* `{SIZE}`: The number of results to display on each page. The default is `1` and the maximum is `100`. Exceeding the maximum will cause the API to return a 400-code error.
 
 #### Request
 
@@ -482,9 +354,7 @@ To fetch the next set of results in a paginated response, you must make another 
 You now know how to create and monitor privacy job requests using the Privacy Service API. For information on how to perform the same tasks using the user interface, see the [Privacy Service UI tutorial](privacy_service_ui_tutorial.md).
 
 
-## Appendix
-
-The following sections provide additional reference information related to the Privacy Service API.
+## Reference
 
 ### Namespace Qualifiers
 
@@ -492,12 +362,13 @@ When specifying a `namespace` value in the Privacy Service API, a **namespace qu
 
 | Qualifier | Definition |
 | --------- | ---------- |
-| standard | One of the standard namespaces defined globally, not tied to an individual organization data set (for example, email, phone number, etc.). Namespace ID is provided. |
+| standard | One of the standard namespaces defined globally, not tied to an individual organization data set (e.g. email, phone number, etc.). Namespace ID is provided. |
 | custom | A unique namespace created in the context of an organization, not shared across the Experience Cloud. The value represents the friendly name ("name" field) to be searched for. Namespace ID is provided. |
 | integrationCode | Integration code - similar to "custom", but specifically defined as the integration code of a datasource to be searched for. Namespace ID is provided. |
 | namespaceId | Indicates the value is the actual ID of the namespace that was created or mapped through the namespace service. |
 | unregistered | A freeform string that is not defined in the namespace service and is taken "as is". Any solution that handles these kinds of namespaces checks against them and handle if appropriate for the company context and data set. No namespace ID is provided. |
 | analytics | A custom namespace that is mapped internally in Analytics, not in the namespace service. This is passed in directly as specified by the original request, without a namespace ID |
+| dpsc | A custom field type for DPS mappings, which support a set of three standard namespaces. |
 | target | A custom namespace understood internally by Target, not in the namespace service. This is passed in directly as specified by the original request, without a namespace ID |
 
 ### Product values
@@ -510,7 +381,8 @@ Adobe Advertizing Cloud | "AdCloud"
 Adobe Analytics | "Analytics"
 Adobe Audience Manager | "AudienceManager"
 Adobe Campaign | "Campaign"
-Adobe Experience Platform | "aepDataLake"
+Adobe Experience Platform | "AdobeCloudPlatform"
 Adobe Target | "Target"
 Customer Record Service | "CRS"
+Digital Publishing Suite Classic | "DPSC"
 Real-time Customer Profile | "ProfileService"
