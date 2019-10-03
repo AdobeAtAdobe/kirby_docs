@@ -30,7 +30,6 @@ info:
   
 
   version: "1.0"
-  termsOfService: 'https://www.adobe.com/legal/terms.html'
 basePath: /data/foundation/import
 host: platform.adobe.io
 consumes:

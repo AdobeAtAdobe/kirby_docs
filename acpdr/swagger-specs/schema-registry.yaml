@@ -27,7 +27,6 @@ info:
       * All GET requests to the Schema Registry require an `Accept` header to determine what data is returned by the system. See the <a href="https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/schema_registry_developer_guide.md#accept-header">section on Accept headers</a> in the Schema Registry developer guide for more information.
       * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
 
-  termsOfService: 'https://www.adobe.com/legal/terms.html'
 
 host: platform.adobe.io
 tags:

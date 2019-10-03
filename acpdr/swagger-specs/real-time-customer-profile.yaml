@@ -33,7 +33,6 @@ info:
 
   version: '1.0'
   title: Real-time Customer Profile API
-  termsOfService: 'https://www.adobe.com/legal/terms.html'
 host: platform.adobe.io
 basePath: /data/core/ups
 tags:

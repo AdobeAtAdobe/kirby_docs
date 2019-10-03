@@ -2,7 +2,6 @@ swagger: '2.0'
 info:
   title: Sensei Machine Learning API
   version: "1.0"
-  termsOfService: 'https://www.adobe.com/legal/terms.html'
   description: >-
     Sensei Machine Learning API provides a mechanism for data scientists to organize and manage ML services from algorithm onboarding through experimentation and to service deployment.
     
