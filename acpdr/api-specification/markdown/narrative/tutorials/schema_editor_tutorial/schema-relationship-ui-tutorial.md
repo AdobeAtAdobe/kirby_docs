@@ -58,7 +58,7 @@ The canvas reappears with "Loyalty Relationship" appearing in the _Mixins_ secti
 
 ![](images/loyalty-add-field.png)
 
-A new field appears in the canvas under the "_tenantId" namespace. Under _Field Properties_, provide a field name and display name for the field, and set its type to "String".
+A new field appears in the canvas under the "\_tenantId" namespace. Under _Field Properties_, provide a field name and display name for the field, and set its type to "String".
 
 ![](images/relationship-field-details.png)
 
