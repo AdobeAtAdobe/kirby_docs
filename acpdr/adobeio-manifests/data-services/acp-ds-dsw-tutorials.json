@@ -83,6 +83,12 @@
       "title": "Optimize your Model using the Sensei Model Insights Framework"
     },
     {
+        "importedFileName": "profile-scoring-insights",
+        "page": [],
+        "path": "api-specification/markdown/narrative/tutorials/dsw/train_evaluate_score_a_model/profile-insights/profile-scoring-insights.md",
+        "title": "Enrich Real-time Customer Profile using machine learning insights"
+    },
+    {
       "importedFileName": "publish_model_as_service_ui",
       "page": [],
       "path": "api-specification/markdown/narrative/tutorials/dsw/operationalize_a_model/publish_model_as_a_service/publish_model_as_service_ui.md",
