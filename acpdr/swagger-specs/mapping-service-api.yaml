@@ -3,23 +3,15 @@ info:
   version: 1.0.0
   title: Mapping Service API Resource
   description: >-
-    Mapping Service allows data to land in CSV or other simpler formats and map this data to existing Experience Data Model (XDM) schemas before landing in Adobe Experience Platform.
+    Mapping Service allows data to land in CSV or other simpler formats and map this data to exisiting XDM schema before landing into Platform.
 
 
-    Visualize API calls with Postman (a free, third-party software):
-      * [Mapping Service API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Mapping%20Service%20API%20Resource.postman_collection.json)
-      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
-      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
-
-    API paths:
-      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
+    Notes:
+      * PLATFORM Gateway URL: https://platform.adobe.io
       * Base path for this API: /data/foundation/connectors
-      * Example of a complete path: https://<span>platform.adobe.io/data/foundation/connectors/xdmBatchConversions
-
-    Required headers:
-      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
-      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
-
+      * Example of a complete path for making calls to "/xdmBatchConversion":
+        https://platform.adobe.io/data/foundation/connectors/xdmBatchConversions
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
 tags:
 - name: Data Conversion
   description: Data Conversion Rest Controller
