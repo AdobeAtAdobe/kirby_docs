@@ -47,8 +47,12 @@
 					"pages": [],
 					"path": "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md",
 					"title": "Supported PQL Queries"
+				},
+				{
+					"pages": [],
+					"path": "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/time-to-live-parameter.md",
+					"title": "Time-to-live (TTL) parameter"
 				}
-
 			],
 			"path": "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md",
 			"title": "Real-time Customer Profile" 
@@ -56,15 +60,14 @@
 		{
 			"pages": [	
 				{
-				"pages": [],
-				"path": "end-user/markdown/segmentation_overview/segment-builder-guide.md",
-				"title": "Segment Builder guide"
+					"pages": [],
+					"path": "end-user/markdown/segmentation_overview/segment-builder-guide.md",
+					"title": "Segment Builder guide"
 				}
 			],
 			"path": "end-user/markdown/segmentation_overview/segmentation.md",
 			"title": "Segmentation Service overview"
 		}
-		
 	],
 	"app2app_map": {
 		"acpdr/swagger-specs/": "/apis/experienceplatform/home/api-reference.html",
@@ -74,7 +77,7 @@
 		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "/apis/cloudplatform/dataservices/data-ingestion/data-ingestion-services.html",
 		"api-specification/markdown/narrative/technical_overview/schema_registry/": "/apis/experienceplatform/home/xdm/xdmservices.html",
 		"api-specification/markdown/narrative/technical_overview/streaming_ingest/": "/apis/experienceplatform/home/data-ingestion.html",
-    "api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
-    "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/":"/apis/experienceplatform/home/services/troubleshooting.html"
+		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
+		"api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/":"/apis/experienceplatform/home/services/troubleshooting.html"
 	}
 }
