@@ -68,7 +68,7 @@ The following criteria must be met for a field to be labeled as identity:
 * Identities are only recognized in record and time series data
 * Only PII fields should be marked as identity. Choosing a field representing more generic data would result in less precise relationships and potentially errors accessing related identities from the identity graph
 
-For instructions on how to use the Schema Registry API to label a field as identity, visit [Create a descriptor](technical_overview/schema_registry/schema_registry_developer_guide.md#create-descriptor).
+For instructions on how to use the Schema Registry API to label a field as identity, visit [Create a descriptor](../schema_registry/schema_registry_developer_guide.md#create-descriptor).
 
 ## Get all identities in a cluster
 
