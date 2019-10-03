@@ -70,6 +70,7 @@
     "api-specification/markdown/narrative/tutorials/":"/apis/experienceplatform/home/tutorials/alltutorials.html",
     "acpdr/swagger-specs/":"/apis/experienceplatform/home/api-reference.html",
     "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+    "api-specification/markdown/narrative/technical_overview/identity_namespace_overview": "apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
     "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
     "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md":"/apis/experienceplatform/home/services/allservices.html",
     "end-user/markdown/query-service/qs-intro.md":"/apis/experienceplatform/home/services/query-service/query-service.html",
