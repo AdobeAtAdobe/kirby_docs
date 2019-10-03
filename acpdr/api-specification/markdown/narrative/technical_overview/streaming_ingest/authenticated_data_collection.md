@@ -4,14 +4,6 @@
 
 Authenticated Data Collection allows Adobe Experience Platform services, such as Unified Profile and Identity, to differentiate between records coming from trusted sources and un-trusted sources. Clients that want to send Personally Identifiable Information (PII) can do so by sending IMS Access Tokens as part of the POST request - if the IMS Token is valid, the records are marked as collected from valid sources.
 
-### Authentication Process
-
-The following steps are taken to enforce authentication for data collection.
-
-First, the access token that is sent as part of the POST request is exchanged with [IMS][ims-auth] to retrieve that account's details. 
-
-Afterwards, the system checks if the account belongs to the IMS Organization that the data is being written to, and then checks to see if that account has the appropriate Adobe Experience Platform entitlements to publish data to that streaming connection. 
-
 ### Creating a Data Inlet
 
 Creating a new data inlet which enforces authorization has a very similar process to creating one which doesn't enforce authorization. 
@@ -176,5 +168,3 @@ Following this guide, you should be able to do the following actions:
 - Use Authenticated and Unauthenticated Data Inlets
 
 With this knowledge, you should be able to use authenticated data inlets to securely send sensitive information to Adobe Experience Platform's Streaming Ingestion APIs.
-
-[ims-auth]: https://www.adobe.io/authentication/auth-methods.html#!AdobeDocs/adobeio-auth/master/AuthenticationOverview/AuthenticationGuide.md
