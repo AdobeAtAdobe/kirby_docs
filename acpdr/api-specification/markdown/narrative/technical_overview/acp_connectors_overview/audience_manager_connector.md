@@ -1,5 +1,6 @@
-# Audience Manager Connector
-The Audience Manager Data Connector streams first party data collected in Audience Manager to Adobe Experience Platform. The Audience Manager Connector ingests three categories of data to Platform:
+# Adobe Audience Manager data connector
+
+The Adobe Audience Manager data connector streams first party data collected in Adobe Audience Manager to Adobe Experience Platform. The Audience Manager connector ingests three categories of data to Platform:
 
 - **Realtime data:** Data captured in real time on Audience Manager's data collection server. This data is used in Audience Manager to populate rule based traits and will surface in Platform in the shortest latency time. 
 - **Onboarded (inbound) data:** These are the files uploaded by a user into an Amazon S3 location hosted by Audience Manager. Audience Manager uses this data to populate onboarded traits using the inbound file method and will have some latency. 

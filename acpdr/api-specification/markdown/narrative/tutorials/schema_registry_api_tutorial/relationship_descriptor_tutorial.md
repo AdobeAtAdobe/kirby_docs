@@ -5,9 +5,9 @@ The ability to understand the relationships between your customers and their int
 This document provides a tutorial for defining a one-to-one relationship between two schemas defined by your organization using the [Schema Registry API](../../../../../../acpdr/swagger-specs/schema-registry.yaml). The tutorial covers the following steps:
 
 1. [Define a source and destination schema](#define-a-source-and-destination-schema)
-1. [Define a primary identity field for the destination schema](#define-a-primary-identity-field-for-the-destination-schema)
-1. [Define a reference field for the source schema](#define-a-reference-field-for-the-source-schema)
-1. [Create reference identity descriptors](#create-reference-identity-descriptors) for both schemas
+1. [Define reference fields for both schemas](#define-reference-fields-for-both-schemas)
+1. _(Optional)_ [Define primary identity fields](#define-primary-identity-fields-for-both-schemas) for both schemas
+1. _(Optional)_ [Create reference identity descriptors](#create-reference-identity-descriptors) for both schemas
 1. [Create a relationship descriptor](#create-a-relationship-descriptor)
 
 ## Getting started
@@ -35,7 +35,7 @@ All requests that use a payload (POST, PUT, PATCH) require an additional header:
 
 It is expected that you have already created the two schemas that will be defined in the relationship. This tutorial creates a relationship between members of an organization's current loyalty program (defined in a "Loyalty Members" schema) with members of a previous loyalty program (defined in a "Legacy Loyalty Members" schema).
 
-Schema relationships are represented by a **source schema** having a field that refers to the primary identity field of a **destination schema**. In the steps that follow, "Loyalty Members" will be the source schema, while "Legacy Loyalty Members" will act as the destination schema.
+Schema relationships are represented by a **source schema** having a field that refers to another field within a **destination schema**. In the steps that follow, "Loyalty Members" will be the source schema, while "Legacy Loyalty Members" will act as the destination schema.
 
 In order to define a relationship between two schemas, you must first acquire the `$id` values for both schemas. If you know the display names (`title`) of the schemas, you can find their `$id` values by making a GET request to the `/tenant/schemas` endpoint in the Schema Registry API.
 
@@ -99,72 +99,13 @@ A successful response returns a list of schemas defined by your organization, in
 
 Record the `$id` values of the two schemas you want to define a relationship between. These values will be used in later steps.
 
-## Define a primary identity field for the destination schema
+## Define reference fields for both schemas
 
-Within the Schema Registry, relationship descriptors work similarly to foreign keys in SQL tables: a field in the source schema acts as a reference to the **primary identity** field of the destination schema.
+Within the Schema Registry, relationship descriptors work similarly to foreign keys in SQL tables: a field in the source schema acts as a reference to a field of a destination schema. When defining a relationship, each schema must have a dedicated field to be used as a reference to the other schema.
 
-> **Note:** If your destination schema already has a primary identity field defined, you can skip to the next step of [defining a reference field](#define-a-reference-field).
+> **Important:** If the schemas are to be enabled for use in [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md), the reference field for the destination schema must be its **primary identity**. This is explained in more detail later in this tutorial.
 
-You can mark a field in the destination schema as a primary identity field by creating an identity descriptor. This is done by making a POST request to the `/tenant/descriptors` endpoint.
-
-#### API format
-
-```http
-POST /tenant/descriptors
-```
-
-#### Request
-
-The following request creates a new identity descriptor that defines the `legacyId` field of the "Legacy Loyalty Members" schema as a primary identity field.
-
-```shell
-curl -X POST \
-  https://platform.adobe.io/data/foundation/schemaregistry/tenant/descriptors \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "@type": "xdm:descriptorIdentity",
-    "xdm:sourceSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/a9f1dec864882e2f74689ef924b126f2",
-    "xdm:sourceVersion": 1,
-    "xdm:sourceProperty": "/_{TENANT_ID}/legacyId",
-    "xdm:namespace": "Email",
-    "xdm:property": "xdm:code",
-    "xdm:isPrimary": true
-  }'
-```
-* `@type`: The type of descriptor to be created. The `@type` value for identity descriptors is `xdm:descriptorIdentity`.
-* `xdm:sourceSchema`: The `$id` value of the destination schema, obtained in the [previous step](#define-a-source-and-destination-schema).
-* `xdm:sourceVersion`: The version number of the schema.
-* `sourceProperty`: The path to the specific field that will serve as the schema's primary identity.
-  * This path should begin with a "/" and not end with one, while also excluding any "properties" namespaces. The request above uses "/\_{TENANT_ID}/legacyId" instead of "/properties/\_{TENANT_ID}/properties/legacyId", for example.
-* `xdm:namespace`: The identity namespace for the identity field. `legacyId` is an email address in this example, therefore the "Email" namespace is used. See the [identity namespace overview](../../technical_overview/identity_namespace_overview/identity_namespace_overview.md) for a list of available namespace values.
-* `xdm:isPrimary`: A boolean property determining whether the identity field will be the primary identity for the schema. Since this request defines a primary identity, the value is set to true.
-
-#### Response
-
-A successful response returns the details of the newly created identity descriptor.
-
-```json
-{
-    "@type": "xdm:descriptorIdentity",
-    "xdm:sourceSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/a9f1dec864882e2f74689ef924b126f2",
-    "xdm:sourceVersion": 1,
-    "xdm:sourceProperty": "/_{TENANT_ID}/legacyId",
-    "xdm:namespace": "Email",
-    "xdm:property": "xdm:code",
-    "xdm:isPrimary": true,
-    "meta:containerId": "tenant",
-    "@id": "e3cfa302d06dc27080e6b54663511a02dd61316f"
-}
-```
-
-## Define a reference field for the source schema
-
-The source schema in a relationship must have a dedicated field to be used as a reference to the primary identity of the destination schema.
-
-If your source schema does not have a field for this purpose, you may need to create a mixin with the new field and add it to the schema. This new field must have a `type` value of "string". See the section on [defining a new mixin](./schema_registry_api_tutorial#define-a-new-mixin) in the Schema Registry API tutorial for more information.
+If either schema does not have a field for this purpose, you may need to create a mixin with the new field and add it to the schema. This new field must have a `type` value of "string". See the section on [defining a new mixin](./schema_registry_api_tutorial#define-a-new-mixin) in the Schema Registry API tutorial for more information.
 
 For the purposes of this tutorial, the "Loyalty Members" schema is given a new mixin that adds a new field, `legacyId`, under its `TENANT_ID` namespace.
 
@@ -386,9 +327,72 @@ A successful response returns the details of the updated schema, which now inclu
 }
 ```
 
+## Define primary identity fields for both schemas
+
+> **Note:** This step is only required for schemas that will be enabled for use in [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md). If you do not want either schema to participate in a union, you can skip to the final step of [creating a relationship descriptor](#create-a-relationship-descriptor). If your schemas already have primary identities defined, skip to the next section on [creating reference identity descriptors](#create-reference-identity-descriptors).
+
+In order for schemas to be enabled for use in Real-time Customer Profile, they must have a primary identity defined. In addition, a relationship's destination schema must use its primary identity as its reference field.
+
+For the purposes of this tutorial, the source schema already has a primary identity defined, but the destination schema does not. You can mark a schema field as a primary identity field by creating an identity descriptor. This is done by making a POST request to the `/tenant/descriptors` endpoint.
+
+#### API format
+
+```http
+POST /tenant/descriptors
+```
+
+#### Request
+
+The following request creates a new identity descriptor that defines the `legacyId` field of the "Legacy Loyalty Members" destination schema as a primary identity field.
+
+```shell
+curl -X POST \
+  https://platform.adobe.io/data/foundation/schemaregistry/tenant/descriptors \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "@type": "xdm:descriptorIdentity",
+    "xdm:sourceSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/a9f1dec864882e2f74689ef924b126f2",
+    "xdm:sourceVersion": 1,
+    "xdm:sourceProperty": "/_{TENANT_ID}/legacyId",
+    "xdm:namespace": "Email",
+    "xdm:property": "xdm:code",
+    "xdm:isPrimary": true
+  }'
+```
+* `@type`: The type of descriptor to be created. The `@type` value for identity descriptors is `xdm:descriptorIdentity`.
+* `xdm:sourceSchema`: The `$id` value of the destination schema, obtained in the [previous step](#define-a-source-and-destination-schema).
+* `xdm:sourceVersion`: The version number of the schema.
+* `sourceProperty`: The path to the specific field that will serve as the schema's primary identity.
+  * This path should begin with a "/" and not end with one, while also excluding any "properties" namespaces. The request above uses "/\_{TENANT_ID}/legacyId" instead of "/properties/\_{TENANT_ID}/properties/legacyId", for example.
+* `xdm:namespace`: The identity namespace for the identity field. `legacyId` is an email address in this example, therefore the "Email" namespace is used. See the [identity namespace overview](../../technical_overview/identity_namespace_overview/identity_namespace_overview.md) for a list of available namespace values.
+* `xdm:isPrimary`: A boolean property determining whether the identity field will be the primary identity for the schema. Since this request defines a primary identity, the value is set to true.
+
+#### Response
+
+A successful response returns the details of the newly created identity descriptor.
+
+```json
+{
+    "@type": "xdm:descriptorIdentity",
+    "xdm:sourceSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/a9f1dec864882e2f74689ef924b126f2",
+    "xdm:sourceVersion": 1,
+    "xdm:sourceProperty": "/_{TENANT_ID}/legacyId",
+    "xdm:namespace": "Email",
+    "xdm:property": "xdm:code",
+    "xdm:isPrimary": true,
+    "meta:containerId": "tenant",
+    "@id": "e3cfa302d06dc27080e6b54663511a02dd61316f"
+}
+```
+
 ## Create reference identity descriptors
 
-Fields that are used to reference other schemas in a relationship must have a reference identity descriptor applied to them. The following sections describe the steps for creating reference descriptors in both the source and destination schema.
+> **Note:** This step is only required for schemas that will be enabled for use in [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md). If you do not want either schema to participate in a union, you can skip to the final step of [creating a relationship descriptor](#create-a-relationship-descriptor).
+
+Fields in union-enabled schemas must have a reference identity descriptor applied to them if they are being used to reference other schemas in a relationship. The following sections describe the steps for creating reference descriptors in both the source and destination schema.
 
 ### Create a reference descriptor for the source schema
 
@@ -494,7 +498,7 @@ A successful response returns the details of the newly created reference descrip
 
 ## Create a relationship descriptor
 
-Once you have created reference descriptors for the source and destination schemas, you can create a relationship descriptor that establishes a one-to-one relationship between the two schemas. This is done by making a POST request to the `/tenant/descriptors` endpoint.
+Relationship descriptors establish a one-to-one relationship between a source schema and a destination schema. You can create a new relationship descriptor by making a POST request to the `/tenant/descriptors` endpoint.
 
 #### API format
 
@@ -551,4 +555,4 @@ A successful response returns the details of the newly created relationship desc
 
 ## Next steps
 
-By following this tutorial, you have successfully created a one-to-one relationship between two schemas. For more information on working with descriptors using the Schema Registry API, see the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md).
+By following this tutorial, you have successfully created a one-to-one relationship between two schemas. For more information on working with descriptors using the Schema Registry API, see the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md). For steps on how to define schema relationships in the UI, see the tutorial on [defining schema relationships using the Schema Editor](../schema_editor_tutorial/schema-relationship-ui-tutorial.md).

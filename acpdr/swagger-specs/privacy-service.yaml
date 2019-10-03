@@ -1,18 +1,28 @@
 swagger: '2.0'
 info:
   description: >-
-    Adobe Experience Platform Privacy Service provides a common, centralized facilitation of access/delete requests for private data. The service includes a UI for selecting and creating requests, a business layer that processesses incoming and outgoing traffic, a data store for audit and logging information, and temporary storage for data retrieval while requests are pending or waiting to be viewed.
+    Adobe Experience Platform Privacy Service provides a common, centralized facilitation of access/delete requests and opt-out-of-sale requests for private data. The service includes a UI for selecting and creating requests, a business layer that processes incoming and outgoing traffic, a data store for audit and logging information, and temporary storage for data retrieval while requests are pending or waiting to be viewed.
 
 
     Related documentation:
-      * [GDPR on Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/gdpr/gdpr-on-platform-overview.md)
+      * [Privacy Service overview](https://www.adobe.io/apis/experienceplatform/home/services/privacy-service.html#!api-specification/markdown/narrative/technical_overview/privacy_service_overview/privacy_service_overview.md)
       * [Privacy Service API tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md)
+      * [GDPR on Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/services/privacy-service.html#!api-specification/markdown/narrative/technical_overview/privacy_service_overview/gdpr-on-platform-overview.md)
 
-    Notes:
+    Visualize API calls with Postman (a free, third-party software):
+      * [Privacy Service API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Privacy%20Service%20API.postman_collection.json)
+      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
+      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
+
+    API paths:
       * PLATFORM Gateway URL: https://<span>platform.adobe.io/
       * Base path for this API: /data/privacy/gdpr
       * Example of a complete path: https://<span>platform.adobe.io/data/privacy/gdpr/ping
-      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+    
+    Required headers:
+      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
+  
 
   version: '1.0'
   title: Privacy Service API
@@ -244,7 +254,7 @@ paths:
         - Ping
       summary: Retrieve the processing status of access or delete requests by status code.
       description: The message is read from the properties
-      operationId: health-check
+      operationId: getProcessingStatus
       parameters:
         - name: status
           in: query
@@ -696,6 +706,11 @@ definitions:
           $ref: '#/definitions/A%20model%20for%20Users'
         maxItems: 2147483647
         minItems: 1
+      include:
+        type: array
+        uniqueItems: true
+        items:
+          type: string
       exclude:
         type: array
         uniqueItems: true
