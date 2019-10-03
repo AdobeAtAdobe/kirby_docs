@@ -11,9 +11,9 @@ This document provides a step-by-step tutorial to enrich Real-time Customer Prof
 
 This tutorial requires a working understanding of the various aspects of Adobe Experience Platform involved in ingesting Profile data and creating segments. Before beginning this tutorial, please review the documentation for the following services:
 
-*   [Real-time Customer Profile](../../../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, real-time consumer profile based on aggregated data from multiple sources.
-*   [Identity Service](../../../../technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md): Enables Real-time Customer Profile by bridging identities from disparate data sources being ingested into Platform.
-*   [Experience Data Model (XDM)](../../../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
+*   <a href="https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md" target="_blank">Real-time Customer Profile</a>: Provides a unified, real-time consumer profile based on aggregated data from multiple sources.
+*   <a href="https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md" target="_blank">Identity Service</a>: Enables Real-time Customer Profile by bridging identities from disparate data sources being ingested into Platform.
+*   <a href="https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md" target="_blank">Experience Data Model (XDM)</a>: The standardized framework by which Platform organizes customer experience data.
 
 ## Configure an output schema and dataset
 
