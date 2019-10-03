@@ -2547,3 +2547,5 @@ The response object shows the details of the schema, including all fields nested
     }
 }
 ```
+
+<button style="position: fixed; bottom: 30px; float: right; right: 15%; left: 85%; max-width: 80px; width: 100%; font-size: 12px; border-color: rgba(85, 85, 85, 0.2); background-color: white; padding: .5px; border-radius: 4px; opacity: 0.3; height: 50px" onmouseover="this.style.opacity='1'"><a href="#schema-registry-api-developer-guide">Back to top</a></button>
