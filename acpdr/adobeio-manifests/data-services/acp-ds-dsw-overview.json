@@ -26,6 +26,11 @@
 			"description": ""
 		},
 		{
+			"path": "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/model_authoring_sdk/model_authoring_sdk_guide.md",
+			"title": "Model Authoring SDK developer guide",
+			"description": ""
+		},
+		{
 			"path": "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_walkthrough/dsw_walkthrough.md",
 			"title": "Data Science Workspace Walkthrough",
 			"description": "This document will outline the end-to-end workflow a data scientist would go through to solve a problem using machine learning."
