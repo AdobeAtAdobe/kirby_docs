@@ -1,0 +1,1140 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: DULE Policy Service
+  description: <p>The Data Usage Labeling and Enforcement (DULE) framework simplifies and streamlines the process of categorizing data and creating data usage policies. Once data labels have been applied and data usage policies are in place, marketing actions can be evaluated to ensure the correct use of data.</p><p>The Policy Service API is used to manage and evaluate policies on marketing actions in the presence of data usage labels.</p><p><strong>Related Documentation:</strong><br/><ul><li><a href="https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html">DULE User Guide</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!end-user/markdown/dule_overview/dule_supported_labels.md">Supported Data Usage Labels</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/dule/dule_working_with_labels.md">Working with Data Usage Labels</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/dule/dule_working_with_policies.md">Working with Data Usage Policies</a></li></ul></p><p><strong>Notes:</strong><br/><ul><li>PLATFORM Gateway URL:<span> https://platform.adobe.io</li><li>Base path for this API:<span> /data/foundation/dulepolicy</li><li>Example of a complete path for making a call to "/policies/core":<span> https://platform.adobe.io/data/foundation/dulepolicy/policies/core</ul></p>
+
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
+basePath: /data/foundation/catalog
+host: platform.adobe.io
+tags:
+  - name: "Policies"
+    description: "Data usage policies are rules that describe the kinds of marketing actions that are allowed or not allowed to be performed on data within Adobe Experience Platform."
+  - name: "Marketing Actions"
+    description: "Marketing actions, in the context of Data Governance, are actions that an Experience Platform data consumer takes, for which there is a need to check for violations of data usage policies."
+  - name: "Health"
+    description: "Health check for DULE Policy Service"
+  - name: "Health Detailed"
+    description: "Health check with dependencies for DULE Policy Service"
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /health:
+    parameters:
+      - $ref: '#/parameters/x-api-key'
+    get:
+      security: []
+      summary: Basic health check
+      operationId: healthCheck
+      tags:
+        - Health
+      responses:
+        '200':
+          description: Service is functioning
+          schema:
+            $ref: '#/definitions/HealthCheckStatus'
+  /health-detailed:
+    parameters:
+      - $ref: '#/parameters/x-api-key'
+    get:
+      security: []
+      summary: Detailed health check with status of dependent services
+      operationId: healthCheckDetailed
+      tags:
+        - Health Detailed
+      responses:
+        '200':
+          description: Service dependencies are all healthy
+          schema:
+            $ref: '#/definitions/HealthDetailedStatus'
+  /policies/core:
+    parameters:
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/propertyQuery'
+      - $ref: '#/parameters/orderbyQuery'
+      - $ref: '#/parameters/startQuery'
+      - $ref: '#/parameters/limitQuery'
+      - $ref: '#/parameters/duleLabelsQuery'
+      - $ref: '#/parameters/marketingActionQuery'
+    get:
+      summary: List all core policies.
+      operationId: listCorePolicies
+      tags:
+        - Policies
+      responses:
+        '200':
+          description: Returns all core policies
+          schema:
+            $ref: '#/definitions/PoliciesPage'
+  '/policies/core/{policyId}':
+    parameters:
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/authorization'
+      - name: policyId
+        in: path
+        required: true
+        description: The "id" of the policy
+        type: string
+    get:
+      summary: View a specific core policy by its "id".
+      operationId: getCorePolicyById
+      tags:
+        - Policies
+      responses:
+        '200':
+          description: Returns the details of the specified policy
+          schema:
+            $ref: '#/definitions/PolicyResponse'
+        '400':
+          description: A bad request; see response body for details
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: No policy was found for the given id
+          schema:
+            $ref: '#/definitions/Error'
+  /policies/custom:
+    parameters:
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+    get:
+      summary: List all custom policies.
+      operationId: listCustomPolicies
+      tags:
+        - Policies
+      parameters:
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/propertyQuery'
+        - $ref: '#/parameters/orderbyQuery'
+        - $ref: '#/parameters/startQuery'
+        - $ref: '#/parameters/limitQuery'
+        - $ref: '#/parameters/duleLabelsQuery'
+        - $ref: '#/parameters/marketingActionQuery'
+      responses:
+        '200':
+          description: Returns a list of custom policies
+          schema:
+            $ref: '#/definitions/PoliciesPage'
+    post:
+      summary: Create a new custom policy.
+      operationId: createCustomPolicy
+      tags:
+        - Policies
+      parameters:
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/contentType'
+        - name: policy
+          description: The custom policy to be created.
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/PolicyRequest'
+      responses:
+        '201':
+          description: Returns details of newly created policy
+          schema:
+            $ref: '#/definitions/PolicyResponse'
+  '/policies/custom/{policyId}':
+    parameters:
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/authorization'
+      - name: policyId
+        in: path
+        required: true
+        description: The "id" of the policy.
+        type: string
+    get:
+      summary: View a specific custom policy by its "id".
+      operationId: getCustomPolicyById
+      tags:
+        - Policies
+      responses:
+        '200':
+          description: Returns details of the specific policy
+          schema:
+            $ref: '#/definitions/PolicyResponse'
+        '400':
+          description: A bad request; see response body for details
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: No policy was found for the given id
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Update a custom policy.
+      operationId: updateCustomPolicy
+      tags:
+        - Policies
+      parameters:
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/contentType'
+        - name: policy
+          description: 'The updated policy information, in its entirety.'
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/PolicyRequest'
+      responses:
+        '200':
+          description: Returns details of updated policy
+          schema:
+            $ref: '#/definitions/PolicyResponse'
+        '404':
+          description: No policy found for the given id
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      summary: Update a portion of a custom policy.
+      operationId: patchCustomPolicy
+      tags:
+        - Policies
+      parameters:
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/contentType'
+        - name: policyPatchInstructions
+          description: Use JSON Patch to update a portion of a policy.
+          required: true
+          in: body
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PatchDocument'
+      responses:
+        '200':
+          description: Returns details of updated policy
+          schema:
+            $ref: '#/definitions/PolicyResponse'
+        '404':
+          description: No policy found for the given id
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Delete a custom policy.
+      operationId: deleteCustomPolicy
+      tags:
+        - Policies
+      responses:
+        '200':
+          description: Returns an empty response body and HTTP Status 200 (OK)
+        '404':
+          description: No policy found for the given id
+          schema:
+            $ref: '#/definitions/Error'
+        '409':
+          description: Policy cannot be deleted in its current state
+          schema:
+            $ref: '#/definitions/Error'
+  /marketingActions/core:
+    parameters:
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+    get:
+      summary: List all core marketing actions.
+      operationId: listCoreMarketingActions
+      tags:
+        - Marketing Actions
+      parameters:
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/propertyQuery'
+        - $ref: '#/parameters/orderbyQuery'
+        - $ref: '#/parameters/startQuery'
+        - $ref: '#/parameters/limitQuery'
+      responses:
+        '200':
+          description: Returns all core marketing actions
+          schema:
+            $ref: '#/definitions/MarketingActionsPage'
+  '/marketingActions/core/{marketingActionName}':
+    parameters:
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/authorization'
+      - name: marketingActionName
+        in: path
+        required: true
+        description: The "name" of the marketing action.
+        type: string
+    get:
+      summary: View a specific core marketing action by "name".
+      operationId: getCoreMarketingActionByName
+      tags:
+        - Marketing Actions
+      responses:
+        '200':
+          description: Details of the specific marketing action
+          schema:
+            $ref: '#/definitions/MarketingActionResponse'
+        '400':
+          description: A bad request; see response body for details
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: No marketing action was found for the given name
+          schema:
+            $ref: '#/definitions/Error'
+  '/marketingActions/core/{marketingActionName}/constraints':
+    parameters:
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/authorization'
+      - name: marketingActionName
+        in: path
+        required: true
+        description: The name of the marketing action
+        type: string
+    get:
+      summary: View policies violated by the presence of DULE labels.
+      description: >-
+        Returns a set of constraints that would govern an attempt to perform the
+        given marketing action on a DULE-labeled source of data.  The source
+        data can be specified in one of two different ways -- either by directly
+        specifying the set of DULE labels that would be present on that data, or
+        by specifying the dataSetId of a dataSet from which those labels can be
+        collected.  In the case of a dataSetId, a set of fields may also be
+        specified to indicate that only those fields from that dataSet would be
+        used.  The returned constraints take the form of a set of policies that
+        would be violated by attempting the marketing action.
+      operationId: getCoreMarketingActionConstraints
+      tags:
+        - Marketing Actions
+      parameters:
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/authorization'
+        - name: marketingActionName
+          in: path
+          required: true
+          description: The name of the marketing action
+          type: string
+        - $ref: '#/parameters/duleLabelsConstraintsQuery'
+        - $ref: '#/parameters/includeDraftConstraintsQuery'
+      responses:
+        '200':
+          description: >-
+            Constraints on attempting to perform this marketing action on data
+            bearing the given set of DULE labels, including the set of policies
+            that would be violated.
+          schema:
+            $ref: '#/definitions/MarketingActionConstraints'
+        '400':
+          description: A bad request; see response body for details
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: No marketing action was found for the given name
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: View policies violated if marketing action attempted on certain entities.
+      description: >-
+        Returns a set of constraints that would govern an attempt to perform the given marketing action on a DULE-labeled source of data. The source data is specified by the "entityType" and "entityId" of the elements in the request body. In the case of a dataset entity, a set of fields may also be specified in the "entityMeta" to indicate that only those fields from that dataset would be used. The returned constraints take the form of a set of policies that would be violated by attempting the marketing action.
+      operationId: postCoreMarketingActionConstraints
+      tags:
+        - Marketing Actions
+      parameters:
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/authorization'
+        - name: marketingActionName
+          in: path
+          required: true
+          description: The name of the marketing action
+          type: string
+        - $ref: '#/parameters/contentType'
+        - name: entityList
+          description: The list of entities (such as multiple dataset IDs) for which to retrieve labels.
+          required: true
+          in: body
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/EntityLabelRequest'
+        - $ref: '#/parameters/includeDraftConstraintsQuery'
+      responses:
+        '200':
+          description: >-
+            Constraints on attempting to perform this marketing action on data
+            bearing the given set of DULE labels, including the set of policies
+            that would be violated.
+          schema:
+            $ref: '#/definitions/MarketingActionConstraints'
+        '400':
+          description: A bad request; see response body for details
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: No marketing action was found for the given name
+          schema:
+            $ref: '#/definitions/Error'
+  /marketingActions/custom:
+    parameters:
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+    get:
+      summary: List all custom marketing actions.
+      operationId: listCustomMarketingActions
+      tags:
+        - Marketing Actions
+      parameters:
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/propertyQuery'
+        - $ref: '#/parameters/orderbyQuery'
+        - $ref: '#/parameters/startQuery'
+        - $ref: '#/parameters/limitQuery'
+      responses:
+        '200':
+          description: Returns a list of marketing actions
+          schema:
+            $ref: '#/definitions/MarketingActionsPage'
+  '/marketingActions/custom/{marketingActionName}':
+    parameters:
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/authorization'
+      - name: marketingActionName
+        in: path
+        required: true
+        description: The name of the marketing action
+        type: string
+    get:
+      summary: View a specific custom marketing action by its "name"
+      operationId: getCustomMarketingActionByName
+      tags:
+        - Marketing Actions
+      responses:
+        '200':
+          description: Returns details of specific marketing action
+          schema:
+            $ref: '#/definitions/MarketingActionResponse'
+        '400':
+          description: A bad request; see response body for details
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: No marketing action was found for the given name
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Create or update a custom marketing action.
+      operationId: createOrUpdateCustomMarketingAction
+      tags:
+        - Marketing Actions
+      parameters:
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/contentType'
+        - name: marketingActionName
+          in: path
+          required: true
+          description: The name of the marketing action
+          type: string
+        - name: marketingAction
+          description: Details for the new or updated marketing action.
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/MarketingActionRequest'
+      responses:
+        '200':
+          description: Returns updated details for existing marketing action
+          schema:
+            $ref: '#/definitions/MarketingActionResponse'
+        '201':
+          description: Returns details of newly created marketing action
+          schema:
+            $ref: '#/definitions/MarketingActionResponse'
+        '400':
+          description: >-
+            Error in the request, such as name in payload not matching the name
+            in the path
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Delete a custom marketing action.
+      operationId: deleteCustomMarketingAction
+      tags:
+        - Marketing Actions
+      responses:
+        '200':
+          description: Returns empty response body and HTTP Status 200 (OK)
+        '404':
+          description: No marketing action found for the given name
+          schema:
+            $ref: '#/definitions/Error'
+  '/marketingActions/custom/{marketingActionName}/constraints':
+    get:
+      summary: View policies violated by the presence of DULE labels.
+      description: >-
+        Returns a set of constraints that would govern an attempt to perform the
+        given marketing action on a DULE-labeled source of data.  The source
+        data can be specified in one of two different ways -- either by directly
+        specifying the set of DULE labels that would be present on that data, or
+        by specifying the dataSetId of a dataSet from which those labels can be
+        collected.  In the case of a dataSetId, a set of fields may also be
+        specified to indicate that only those fields from that dataSet would be
+        used.  The returned constraints take the form of a set of policies that
+        would be violated by attempting the marketing action.
+      operationId: getCustomMarketingActionConstraints
+      tags:
+        - Marketing Actions
+      parameters:
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/authorization'
+        - name: marketingActionName
+          in: path
+          required: true
+          description: The name of the marketing action
+          type: string
+        - $ref: '#/parameters/duleLabelsConstraintsQuery'
+        - $ref: '#/parameters/includeDraftConstraintsQuery'
+      responses:
+        '200':
+          description: >-
+            Constraints on attempting to perform this marketing action on data
+            bearing the given set of DULE labels, including the set of policies
+            that would be violated.
+          schema:
+            $ref: '#/definitions/MarketingActionConstraints'
+        '400':
+          description: A bad request; see response body for details
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: No marketing action was found for the given name
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: View policies violated if marketing action attempted on certain entities.
+      description: >-
+        Returns a set of constraints that would govern an attempt to perform the given marketing action on a DULE-labeled source of data. The source data is specified by the "entityType" and "entityId" of the elements in the request body. In the case of a dataset entity, a set of fields may also be specified in the "entityMeta" to indicate that only those fields from that dataset would be used. The returned constraints take the form of a set of policies that would be violated by attempting the marketing action.
+      operationId: postCustomMarketingActionConstraints
+      tags:
+        - Marketing Actions
+      parameters:
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/authorization'
+        - name: marketingActionName
+          in: path
+          required: true
+          description: The name of the marketing action
+          type: string
+        - $ref: '#/parameters/contentType'
+        - name: entityList
+          description: The list of entities (such as multiple dataset IDs) for which to retrieve labels.
+          required: true
+          in: body
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/EntityLabelRequest'
+        - $ref: '#/parameters/includeDraftConstraintsQuery'
+      responses:
+        '200':
+          description: >-
+            Constraints on attempting to perform this marketing action on data
+            bearing the given set of DULE labels, including the set of policies
+            that would be violated.
+          schema:
+            $ref: '#/definitions/MarketingActionConstraints'
+        '400':
+          description: A bad request; see response body for details
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: No marketing action was found for the given name
+          schema:
+            $ref: '#/definitions/Error'
+parameters:
+  x-api-key:
+    name: x-api-key
+    description: The API key belonging to the calling client.
+    required: true
+    type: string
+    in: header
+  x-gw-ims-org-id:
+    name: x-gw-ims-org-id
+    description: The IMS organization of the client making the request.
+    required: true
+    type: string
+    in: header
+  authorization:
+    name: Authorization
+    description: The access token provided after authorization in the format "Bearer {ACCESS_TOKEN}".
+    required: true
+    type: string
+    in: header
+  contentType:
+    name: Content-Type
+    description: Type of content being sent in the body of the request (eg. application/json).
+    type: string
+    required: true
+    in: header
+  propertyQuery:
+    name: property
+    description: >-
+      Filter responses based on a property and optional existence or relational values. 
+      Only the 'name' property is supported for core resources. For custom resources, additional
+      supported property values include 'status', 'created', 'createdClient',
+      'createdUser', 'updated', 'updatedClient', and 'updatedUser'. 
+    required: false
+    type: string
+    in: query
+  orderbyQuery:
+    name: orderby
+    description: >-
+      A comma-separated list of properties by which the returned list of
+      resources will be sorted.
+    required: false
+    type: array
+    items:
+      type: string
+    in: query
+  startQuery:
+    name: start
+    description: >-
+      Requests items whose 'orderby' property value are *strictly greater than*
+      the supplied 'start' value.  This value should be obtained from a
+      previous call's '_page.next' property.  Should be omitted for  a first page
+      of results. 
+    type: string
+    in: query
+  limitQuery:
+    name: limit
+    description: >-
+      A positive integer, providing a hint as to the maximum number of resources
+      to return in one page of results.  This number is a hint only, and may not be strictly honored.
+    required: false
+    type: integer
+    in: query
+  duleLabelsQuery:
+    name: duleLabels
+    description: >-
+      A comma-separated list of DULE labels.  Return only those policies whose
+      `deny` expression references any of the labels in this list.
+    required: false
+    type: array
+    collectionFormat: csv
+    items:
+      type: string
+    in: query
+  marketingActionQuery:
+    name: marketingAction
+    description: >-
+      Restrict returned policies to those that reference the given marketing
+      action.
+    required: false
+    type: string
+    in: query
+  duleLabelsConstraintsQuery:
+    name: duleLabels
+    description: >-
+      A comma-separated list of DULE labels whose presence on data should be
+      tested for violation of policies.
+    required: false
+    type: array
+    collectionFormat: csv
+    items:
+      type: string
+    in: query
+  dataSetIdConstraintsQuery:
+    name: dataSetId
+    description: >-
+      The ID of a dataSet to check if it can be used for the given marketing
+      action.  DULE labels from this dataSet are collected, and then checked
+      against the set of policies for violations.  Use of this query parameter
+      is mutually exclusive with using the `duleLabels` parameter.
+    required: false
+    type: string
+    in: query
+  fieldsConstraintsQuery:
+    name: fields
+    description: >-
+      A comma-separated list of field names within the dataSet specified by
+      dataSetId.  Indicates that the caller wishes to consider only these fields
+      from the dataSet, and thus any fields not included in this list will not
+      have their DULE labels included.  All dataSet- and connection-level DULE
+      labels are still included.  Use of this query parameter must be
+      accompanied by the `dataSetId` parameter.
+    required: false
+    type: array
+    collectionFormat: csv
+    items:
+      type: string
+    in: query
+  includeDraftConstraintsQuery:
+    name: includeDraft
+    description: >-
+      If true, include checking for policy violations among policies with
+      `DRAFT` status as well as `ENABLED` status.  Otherwise, check only among
+      `ENABLED` policies.
+    required: false
+    type: boolean
+    default: false
+    in: query
+definitions:
+  HealthCheckStatus:
+    required:
+      - status
+    properties:
+      status:
+        type: boolean
+  HealthDetailedStatus:
+    required:
+      - status
+      - dependencies
+    properties:
+      status:
+        description: true if all dependent services report healthy
+        type: boolean
+      dependencies:
+        description: List of dependent services and their associated statuses
+        type: array
+        items:
+          $ref: '#/definitions/DependentServiceStatus'
+  DependentServiceStatus:
+    required:
+      - service
+      - status
+    properties:
+      service:
+        description: Name of the dependent service
+        type: string
+        example: Catalog
+      status:
+        description: >-
+          true if the dependent service appears healthy to the DULE Policy
+          Service
+        type: boolean
+      duration:
+        description: Time in milliseconds it took for the dependent service to respond
+        type: integer
+        format: int64
+        example: 47
+  PagingProperties:
+    required:
+      - _page
+      - _links
+    properties:
+      _page:
+        type: object
+        required:
+          - count
+        properties:
+          property:
+            type: string
+          orderBy:
+            type: string
+          start:
+            type: string
+          count:
+            type: integer
+          next:
+            type: string
+      _links:
+        type: object
+        required:
+          - page
+        properties:
+          next:
+            type: object
+            required:
+              - href
+            properties:
+              href:
+                type: string
+                format: uri
+          page:
+            type: object
+            required:
+              - href
+            properties:
+              href:
+                type: string
+                format: uri
+              templated:
+                type: boolean
+  ServiceProperties:
+    required:
+      - _links
+    properties:
+      imsOrg:
+        description: >-
+          If a custom resource, the imsOrg which maintains this resource.  If
+          built-in, then the string `core`.
+        type: string
+        example: {IMS_ORG}
+      created:
+        description: Timestamp in milliseconds when this resource was originally created
+        type: integer
+        format: int64
+        example: 1529696681413
+      createdClient:
+        description: ClientId of the client that originally created this resource
+        type: string
+        example: acp_ui_service
+      createdUser:
+        description: User Id of the user that originally created this resource
+        type: string
+        example: data_steward@company.com
+      updated:
+        description: Timestamp when this resource was last updated
+        type: integer
+        format: int64
+        example: 1529697651972
+      updatedClient:
+        description: ClientId of the client that last updated this resource
+        type: string
+        example: acp_ui_service
+      updatedUser:
+        description: User Id of the user that last updated this resource
+        type: string
+        example: data_steward@company.com
+      _links:
+        description: >-
+          The URI reference that clients may use to obtain this resource.
+          Typically this incorporates the name or id property of the resource.
+        type: object
+        required:
+          - self
+        properties:
+          self:
+            type: object
+            required:
+              - href
+            properties:
+              href:
+                type: string
+                format: uri
+                example: ./76131228-7654-11e8-adc0-fa7ae01bbebc
+  PolicyExpression:
+    description: >-
+      A boolean expression to be evaluated over the presence of DULE labels.
+      Note that a PolicyExpression MUST consist of EITHER a label, OR an
+      operator and operands.  Each operand in turn is itself a
+      PolicyExpression.  It is an error to specify both a label and an
+      operator/operand combination (in spite of what the the Swagger
+      UI-generated example may display).  See the section on Policy Expressions
+      at the top of this page for full description and example.
+    properties:
+      label:
+        description: A DULE label whose presence is to be evaluated
+        type: string
+        example: C1
+      operator:
+        description: Logical AND or OR to evaluate over the operands
+        type: string
+        example: AND
+        enum:
+          - AND
+          - OR
+      operands:
+        description: The operands to the logical AND or OR operator
+        type: array
+        example:
+          - label: C1
+          - label: C3
+        items:
+          $ref: '#/definitions/PolicyExpression'
+  PolicyRequest:
+    required:
+      - name
+      - status
+      - marketingActionRefs
+      - deny
+    properties:
+      name:
+        description: Name of the policy
+        type: string
+        example: Email Policy
+      status:
+        description: The status of the policy
+        type: string
+        enum:
+          - DRAFT
+          - ENABLED
+          - DISABLED
+      marketingActionRefs:
+        description: List of marketing action URI references to which this policy applies
+        type: array
+        example:
+          - ../marketingActions/core/emailMarketing
+        items:
+          type: string
+          format: uri
+      description:
+        description: >-
+          A verbal description of what this policy enforces; the reasoning
+          behind the denial of these marketing actions in the presence of the
+          DULE labels
+        type: string
+        example: Conditions under which we won't send marketing-based email
+      deny:
+        $ref: '#/definitions/PolicyExpression'
+  PolicyResponse:
+    allOf:
+      - $ref: '#/definitions/PolicyRequest'
+      - type: object
+        required:
+          - id
+        properties:
+          id:
+            description: >-
+              The unique id for this policy resources, as assigned by the
+              Service.
+            type: string
+            example: 76131228-7654-11e8-adc0-fa7ae01bbebc
+      - $ref: '#/definitions/ServiceProperties'
+  PoliciesPage:
+    allOf:
+      - $ref: '#/definitions/PagingProperties'
+      - type: object
+        required:
+          - children
+        properties:
+          children:
+            type: array
+            items:
+              $ref: '#/definitions/PolicyResponse'
+  MarketingActionRequest:
+    required:
+      - name
+    properties:
+      name:
+        description: Name for uniquely identifying this marketing action
+        type: string
+        example: crossSiteTargeting
+      description:
+        description: Verbal description of this marketing action
+        type: string
+        example: Perform targeting on information obtained across multiple web sites
+  MarketingActionResponse:
+    allOf:
+      - $ref: '#/definitions/MarketingActionRequest'
+      - $ref: '#/definitions/ServiceProperties'
+  DuleLabelsList:
+    required:
+      - labels
+    properties:
+      labels:
+        description: >-
+          List of DULE labels either specified in request, or discovered from
+          the requested entities
+        type: array
+        items:
+          type: string
+        example:
+          - C1
+          - I2
+  FieldsLabels:
+    allOf:
+      - type: object
+        required:
+          - path
+        properties:
+          path:
+            description: The path describing this field
+            type: string
+      - $ref: '#/definitions/DuleLabelsList'
+  MarketingActionsPage:
+    allOf:
+      - $ref: '#/definitions/PagingProperties'
+      - type: object
+        required:
+          - children
+        properties:
+          children:
+            type: array
+            items:
+              $ref: '#/definitions/MarketingActionResponse'
+  DataSetLabels:
+    required:
+      - connection
+      - dataSet
+      - fields
+    properties:
+      connection:
+        $ref: '#/definitions/DuleLabelsList'
+      dataSet:
+        $ref: '#/definitions/DuleLabelsList'
+      fields:
+        type: array
+        items:
+          $ref: '#/definitions/FieldsLabels'
+  DiscoveredLabels:
+    allOf:
+      - $ref: '#/definitions/EntityTypeAndId'
+      - type: object
+        properties:
+          dataSetLabels:
+            $ref: '#/definitions/DataSetLabels'
+  MarketingActionConstraints:
+    required:
+      - timestamp
+      - clientId
+      - userId
+      - imsOrg
+      - marketingActionRef
+      - duleLabels
+      - violatedPolicies
+    properties:
+      timestamp:
+        description: The timestamp when this constraints response was generated
+        type: integer
+        format: int64
+        example: 1529699072556
+      clientId:
+        description: ClientID of the client that requested these constraints
+        type: string
+        example: "{CLIENT_ID}"
+      userId:
+        description: User Id of the user that requested these constraints
+        type: string
+        example: "{USER_ID}"
+      imsOrg:
+        description: The imsOrg on the request that generated these constraints
+        type: string
+        example: "{IMS_ORG}"
+      marketingActionRef:
+        description: Marketing action reference to which these constraints apply
+        type: string
+        format: uri
+        example: ../../marketingActions/emailMarketing
+      duleLabels:
+        description: >-
+          List of DULE labels either specified in request, or discovered from
+          requested dataSetId and optional fields
+        type: array
+        example:
+          - C3
+          - C7
+        items:
+          type: string
+      dataSetId:
+        description: 'DEPRECATED'
+        type: string
+      fields:
+        description: 'DEPRECATED'
+        type: array
+        items:
+          type: string
+      discoveredLabels:
+        description: Found in constraints POST responses only. The list of DULE labels discovered for the entity. 
+        type: array
+        items:
+          $ref: '#/definitions/DiscoveredLabels'
+      violatedPolicies:
+        description: >-
+          The list of policies that would be violated by attempting the given
+          marketing action in the presence of the given set of DULE labels
+        type: array
+        items:
+          $ref: '#/definitions/PolicyResponse'
+      marketingActionRefs:
+        description: List of marketing action URI references to which this policy applies
+        type: array
+        example:
+          - ../marketingActions/core/emailMarketing
+        items:
+          type: string
+          format: uri
+      description:
+        description: >-
+          A verbal description of what this policy enforces; the reasoning
+          behind the denial of these marketing actions in the presence of the
+          DULE labels
+        type: string
+        example: Conditions under which we won't send marketing-based email
+  EntityTypeAndId:
+    required:
+      - entityType
+      - entityId
+    properties:
+      entityType:
+        description: >-
+          The type of entity on which to discover labels. Currently only "dataSet"
+          is supported
+        type: string
+        enum:
+          - dataSet
+      entityId:
+        description: The id of the entity on which to discover labels.
+        type: string
+  EntityLabelRequest:
+    allOf:
+      - $ref: '#/definitions/EntityTypeAndId'
+      - type: object
+        properties:
+          entityMeta:
+            type: object
+            properties:
+              fields:
+                type: array
+                items:
+                  type: string
+  PatchDocument:
+    description: A JSONPatch document as defined by RFC 6902
+    required:
+      - op
+      - path
+    properties:
+      op:
+        type: string
+        description: The operation to be performed
+        enum:
+          - add
+          - remove
+          - replace
+          - move
+          - copy
+          - test
+      path:
+        type: string
+        description: A JSON-Pointer
+      value:
+        type: object
+        description: The value to be used within the operations.
+      from:
+        type: string
+        description: A string containing a JSON Pointer value.
+  Error:
+    required:
+      - type
+      - status
+      - title
+      - detail
+    properties:
+      type:
+        type: string
+        example: /placeholder/type/uri
+      status:
+        type: integer
+        format: int32
+        example: 400
+      title:
+        type: string
+        example: Error Title
+      detail:
+        type: string
+        example: Error Message Detail
