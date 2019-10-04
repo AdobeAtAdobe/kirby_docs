@@ -5,12 +5,12 @@ Adobe Experience Platform allows you to delete customer data as it becomes less 
 This overview will help you understand the role and use of TTL within the context of Experience Events. The following topics are covered:
 
 * [Understanding TTL](#understanding-ttl): Understand the big picture about TTL and its role within Experience Platform.
-* [Getting started with the Catalog Service API](#getting-started-with-the-schema-registry-api): Learn how to use the Schema Registry API
+* [Getting started with the Catalog Service API](#getting-started-with-the-catalog-service-api): Learn how to use the Schema Registry API
 * [Configure TTL](#configure-ttl-at-the-dataset-level): Familiarize yourself with TTL in dataset tags.
 
 ## Understanding TTL
 
-Data in Adobe Experience Platform is grouped into two types: record and time-series. While record data is comprised of attributes, time series data represents a snapshot of the system when a direct or indirect action was taken. See the section on [data behaviors](../schema_registry/xdm_system/xdm_system_in_experience_platform#data-behaviors-in-xdm-system) in the Experience Data Model (XDM) System overview for more information.
+Data in Adobe Experience Platform is grouped into two types: record and time-series. While record data is comprised of attributes, time series data represents a snapshot of the system when a direct or indirect action was taken. See the section on [data behaviors](../schema_registry/xdm_system/xdm_system_in_experience_platform#data-behaviors-in-xdm-system.md) in the Experience Data Model (XDM) System overview for more information.
 
 Experience Events use record and time series data to represent immutable records of the various interactions customers can have with your brand in sequence, storing them within [Real-time Customer Profile](unified_profile_architectural_overview.md). While data ingestion allows you to capture recent customer activities, the TTL parameter allows you to discard data as its value deteriorates relative to recently ingested customer data. 
 
