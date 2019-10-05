@@ -116,4 +116,14 @@ See the [Decisioning Service overview](../../decisioning-overview/decisioning-se
 
 Now that you better understand the role of schemas throughout Experience Platform, you are ready to start composing your own. 
 
-To learn design principles and best practices for composing schemas to be used with Experience Platform, begin by reading the [basics of schema composition](../schema_composition/schema_composition.md). For step-by-step instructions on how to create a schema, see the tutorials on creating a schema [using the API](../../../tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md) or [using the user interface](../../../tutorials/schema_editor_tutorial/schema_editor_tutorial.md).
+To learn design principles and best practices for composing schemas to be used with Experience Platform, begin by reading the [basics of schema composition](../schema_composition/schema_composition.md). For step-by-step instructions on how to create a schema, see the tutorials on creating a schema [using the API](../../../tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md) or [using the user interface](../../../tutorials/schema_editor_tutorial/schema_editor_tutorial.md)._profile_data.md) tutorial contains a walk through of how to perform Unified Profile entity lookups using the API.
+
+Another common way of accessing UPS data is through segmentation. Specifically, Segment Builder is a workspace within Experience Platform for building segments from Unified Profiles. Using fields contained within the union view of the XDM Profile class (such as "age", "region", "gender"), segmentation allows you to query profiles and create an audience based on the segment definition. These audiences, or subsets, of customers are based on shared characteristics and allow you to target them with different messaging, offers, or solutions.  
+
+More information about segmentation is available in the [Segment Builder overview](../../../../../../end-user/markdown/segmentation_overview/segmentation.md).
+
+## Next steps
+
+Now that you better understand the role of schemas throughout Experience Platform, you are ready to start composing your own. 
+
+To learn design principles and best practices for composing schemas to be used with Experience Platform, begin by reading the [basics of schema composition](../schema_composition/schema_composition.md).
