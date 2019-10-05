@@ -81,7 +81,7 @@ gulp.task('clone-staging-documents', done => {
 })
 
 gulp.task('checkout-master', done => {
-  git.checkout('master',{maxBuffer: Infinity}, function (err) {
+  git.checkout('master', function (err) {
     if (err){
         console.log('checking out master error',err);
         throw err;
@@ -95,7 +95,7 @@ gulp.task('checkout-master', done => {
 });
 
 gulp.task('checkout-staging', done =>{
-  git.checkout('staging', {args:'-b',maxBuffer: Infinity}, function (err) {
+  git.checkout('staging', {args:'-b'}, function (err) {
       if (err){
           console.log('checking out staging error',err);
           git.checkout('staging', function (err) {
