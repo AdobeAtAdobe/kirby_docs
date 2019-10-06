@@ -112,14 +112,14 @@ Request payload:
       "type": "unregistered"
     }]
   }],
-  "include":["aepDataLake", "profileService"]
+  "include":["AdobeCloudPlatform", "profileService"]
 } 
 ```
 
 * Parameter type `unregistered` is required for the data lake because the namespace applied for the dataset in Step 2 is not registered with the identity. For more information regarding the type parameter, refer to [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md#namespace-qualifiers).
 * The parameter type should be `standard` for the profile to process based on standard namespaces.
 * The parameter type should be `custom` for the profile to process based on custom namespaces.
-* The `include` field is optional in the request format. The central service sends the GDPR request to all registered products if no inclusion is specified. If an inclusion is specified, specify `aepDataLake` and `profileService` in the list of include parameters for the GDPR request to be processed in Data Lake and Unified Profile respectively. 
+* The `include` field is optional in the request format. The central service sends the GDPR request to all registered products if no inclusion is specified. If an inclusion is specified, specify `AdobeCloudPlatform` and `profileService` in the list of include parameters for the GDPR request to be processed in Data Lake and Unified Profile respectively. 
 
 ## Step 4: Track the status of the GDPR request
 
