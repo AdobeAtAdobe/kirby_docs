@@ -2,8 +2,28 @@ swagger: "2.0"
 info:
   version: "1.0.0"
   title: "XDM Core Object Repository API"
-  description: <p>Experience Data Model (XDM) Core Object Repository is an event-driven repository for XDM instances, fully integrated with Adobe Experience Platform. XDM Core Object Repository is part of Decisioning Service, which provides the ability to programmatically and intelligently select the ‘Next Best Experience’ from a set of available options for a given individual, deliver them to any channel or application, and perform reporting and analysis on those experiences. Decisioning Service is controlled by a number of interrelated business objects. The XDM Core Object Repository API allows you to access and manage those business objects within the repository. </p><p><strong>Related Documentation:</strong><ul><li><a href="https://www.adobe.io/apis/experienceplatform/home/services/decisioning-service.html#!api-specification/markdown/narrative/technical_overview/decisioning-overview/decisioning-service-overview.md">Decisioning Service Overview</a></li><li><a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/decisioning_tutorial/decisioning_entities_api_tutorial.md">Manage Decisioning Service entities using APIs tutorial</a></li></ul></p><p><strong>Notes:</strong><br/><ul><li>Platform Gateway URL:<span> https://platform.adobe.io</li><li>Base path for this API:<span> /data/core/xcore</li><li>Example of a complete path for making a call to Home ("/"):<span> https://platform.adobe.io/data/core/xcore/</ul></p>
-  termsOfService: 'https://www.adobe.com/legal/terms.html'
+  description: >-
+    Experience Data Model (XDM) Core Object Repository is an event-driven repository for XDM instances, fully integrated with Adobe Experience Platform. XDM Core Object Repository is part of Decisioning Service, which provides the ability to programmatically and intelligently select the ‘Next Best Experience’ from a set of available options for a given individual, deliver them to any channel or application, and perform reporting and analysis on those experiences. Decisioning Service is controlled by a number of interrelated business objects. The XDM Core Object Repository API allows you to access and manage those business objects within the repository. 
+
+
+    Related documentation:
+      * [Decisioning Service overview](https://www.adobe.io/apis/experienceplatform/home/services/decisioning-service.html#!api-specification/markdown/narrative/technical_overview/decisioning-overview/decisioning-service-overview.md)
+      * [Managing Decisioning Service entities using APIs tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/decisioning_tutorial/decisioning_entities_api_tutorial.md)
+
+    Visualize API calls with Postman (a free, third-party software):
+      * [XDM Core Object Repository API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/XDM%20Core%20Object%20Repository%20API.postman_collection.json)
+      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
+      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
+
+    API paths:
+      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
+      * Base path for this API: /data/core/xcore
+      * Example of a complete path: https://<span>platform.adobe.io/data/core/xcore
+
+    Required headers:
+      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
+
 basePath: /data/core/xcore
 host: platform.adobe.io
 tags:
