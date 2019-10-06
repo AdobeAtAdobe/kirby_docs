@@ -613,7 +613,7 @@ product {
     "Analytics",
     "AudienceManager",
     "AdCloud",
-    "AdobeCloudPlatform",
+    "aepDataLake",
     "CRS",
     "DPSC",
     "Campaign",
