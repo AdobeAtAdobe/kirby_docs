@@ -1,57 +1,52 @@
 swagger: '2.0'
 info:
   title: Sensei Machine Learning API
-  version: "1.0"
+  version: beta
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
   description: >-
-    Sensei Machine Learning API provides a mechanism for data scientists to organize and manage ML services from algorithm onboarding through experimentation and to service deployment.
+    Sensei Machine Learning API provides a mechanism for data scientists to organize and manage ML
+    services from algorithm onboarding through experimentation and to service
+    deployment.
     
     
-    Related documentation:
-      * [Data Science Workspace overview](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html)
-      * [Data Science Workspace terminology](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html#!api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_overview.md#terminology)
-    
-    Visualize API calls with Postman (a free, third-party software):
-      * [Sensei Machine Learning API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Sensei%20Machine%20Learning%20API.postman_collection.json)
-      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
-      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
-  
-    
-    API paths: 
-      * PLATFORM Gateway URL: https://<span>platform.adobe.io/ 
+    **Notes:** 
+      * PLATFORM Gateway URL: https://platform.adobe.io/ 
       * Base path for this API: /data/sensei
-      * Example of a complete path: https://<span>platform.adobe.io/data/sensei/engines
-    
-    Required headers:
-      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
-      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
+      * Useful [terminology](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html#!api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_overview.md#terminology)
+      * Tutorial on API calls: [How to access Adobe Experience Platform APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md)
 
+    For more information about Sensei, try the [architectural overview](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html).
 
-
+externalDocs:
+  description: Find out more about Sensei
+  url: 'https://www.adobe.io/apis/cloudplatform/sensei.html'
 host: platform.adobe.io
 basePath: /data/sensei
 tags:
-  - name: Engines
+  - name: Engine
     description: >-
-      Engines act as an umbrella entity holding all machine learning instances. This is
-      tied to a Docker image, Java archive, or EGG file which contains machine 
-      learning logic to train and score a Model.
-  - name: MLInstances
+      This entity acts as an umbrella entity holding all machine learning instances. This is
+      tied to a docker image, Java archive, or EGG file which contains machine 
+      learning logic to train and score a model.
+  - name: MLInstance
     description: >-
-      MLInstances represent the combination of a specific Engine with particular set 
+      The entity representing the combination of a specific engine with particular set 
       of configurations. An instance is often use-case specific for a customer or client.
-  - name: MLServices
+  - name: MLService
     description: >-
-      TMLServices represent an MLInstance which has been published as a service.
-  - name: Experiments
+      The entity representing an MLInstance which has been published as a service.
+  - name: Experiment
     description: >-
-      A data scientist conducts multiple experiments to arrive at a high-performing Model while training. This can include changing datasets, features, learning parameters, and hardware.
-  - name: Models
+      A data scientist conducts multiple experiments to arrive at a high
+      performing model while training. This can include changing datasets,
+      features, learning parameters, and hardware.
+  - name: Model
     description: >-
-      Allows machine learning Model management and registration (Model artifact that is created by the training process).
-  - name: Insights
+      This endpoint allows machine learning model management and registration (model artifact that is created by the training process).
+  - name: Insight
     description: >-
-      Insights contain metrics which are used to empower a 
-      data scientist to evaluate and choose optimal ML Models by displaying 
+      The entity containing insights and metrics which are used to empower a 
+      data scientist to evaluate and choose optimal ML models by displaying 
       relevant evaluation metrics.
 paths:
   /engines:
@@ -59,8 +54,8 @@ paths:
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
     get:
       tags:
-        - Engines
-      summary: Retrieve a list of all engines.
+        - Engine
+      summary: Get a list of all Engines
       description: >-
         Lists all engines providing mechanisms for pagination, filtering, and
         sorting.
@@ -99,8 +94,8 @@ paths:
           $ref: '#/responses/504'
     post:
       tags:
-        - Engines
-      summary: Create a new Engine.
+        - Engine
+      summary: Add a new Engine
       description: Creates a new Engine
       operationId: createEngine
       consumes:
@@ -120,56 +115,56 @@ paths:
           name: defaultArtifact
           type: file
           description: >-
-            The binary Engine artifact (e.g. JAR, EGG) used for all operations
+            The binary engine artifact (e.g. JAR, EGG) used for all operations
             by default
           x-content-type: application/octet-stream
         - in: formData
           name: preprocessOverrideArtifact
           type: file
           description: >-
-            The binary Engine artifact (e.g. JAR, EGG) used for the 'preprocess'
+            The binary engine artifact (e.g. JAR, EGG) used for the 'preprocess'
             operation
           x-content-type: application/octet-stream
         - in: formData
           name: featurePipelineOverrideArtifact
           type: file
           description: >-
-            The binary Engine artifact (e.g. JAR, EGG) used for the 'preprocess'
+            The binary engine artifact (e.g. JAR, EGG) used for the 'preprocess'
             operation
           x-content-type: application/octet-stream
         - in: formData
           name: trainOverrideArtifact
           type: file
           description: >-
-            The binary Engine artifact (e.g. JAR, EGG) used for the 'train'
+            The binary engine artifact (e.g. JAR, EGG) used for the 'train'
             operation
           x-content-type: application/octet-stream
         - in: formData
           name: batchScoreOverrideArtifact
           type: file
           description: >-
-            The binary Engine artifact (e.g. JAR, EGG) used for the 'batchScore'
+            The binary engine artifact (e.g. JAR, EGG) used for the 'batchScore'
             operation
           x-content-type: application/octet-stream
         - in: formData
           name: validateOverrideArtifact
           type: file
           description: >-
-            The binary Engine artifact (e.g. JAR, EGG) used for the 'validate'
+            The binary engine artifact (e.g. JAR, EGG) used for the 'validate'
             operation
           x-content-type: application/octet-stream
         - in: formData
           name: evaluateOverrideArtifact
           type: file
           description: >-
-            The binary Engine artifact (e.g. JAR, EGG) used for the 'evaluate'
+            The binary engine artifact (e.g. JAR, EGG) used for the 'evaluate'
             operation
           x-content-type: application/octet-stream
         - in: formData
           name: publishOverrideArtifact
           type: file
           description: >-
-            The binary Engine artifact (e.g. JAR, EGG) used for the 'publish'
+            The binary engine artifact (e.g. JAR, EGG) used for the 'publish'
             operation
           x-content-type: application/octet-stream
       responses:
@@ -210,10 +205,10 @@ paths:
 
     get:
       tags:
-        - Engines
-      summary: Get Docker registry information.
+        - Engine
+      summary: Get Docker Registry information
       description: >-
-        Get Docker registry information
+        Get Docker Registry information for use in .
       operationId: retrieveDockerRegistryInfo
       produces:
         - application/vnd.adobe.platform.sensei+json;profile=enginesDockerRegistryInfo.v1.json
@@ -247,9 +242,9 @@ paths:
       - $ref: '#/parameters/engineIdPathParam'
     get:
       tags:
-        - Engines
-      summary: Lookup an Engine by ID.
-      description: Retrieves a specific Engine
+        - Engine
+      summary: Returns Engine by id
+      description: Retrieves a specific engine
       operationId: retrieveEngine
       produces:
         - application/vnd.adobe.platform.sensei+json;profile=engine.v1.json
@@ -278,9 +273,9 @@ paths:
           $ref: '#/responses/504'
     put:
       tags:
-        - Engines
-      summary: Update an Engine by ID.
-      description: Updates a specific Engine
+        - Engine
+      summary: Update an Engine by id
+      description: Updates a specific engine
       operationId: updateEngine
       consumes:
         - application/vnd.adobe.platform.sensei+json;profile=engine.v1.json
@@ -297,11 +292,6 @@ paths:
           schema:
             $ref: '#/definitions/Engine'
         - $ref: '#/parameters/ifMatchHeaderParam'
-        - in: header
-          name: Content-Type
-          description: 'application/vnd.adobe.platform.sensei+json;profile=engine.v1.json'
-          required: true
-          type: string
       responses:
         '200':
           description: Engine object
@@ -327,9 +317,9 @@ paths:
           $ref: '#/responses/504'
     delete:
       tags:
-        - Engines
-      summary: Delete an existing Engine by ID.
-      description: Deletes a specific Engine
+        - Engine
+      summary: Delete an existing Engine
+      description: Deletes a specific engine
       operationId: deleteEngine
       produces:
         - >-
@@ -365,8 +355,8 @@ paths:
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
     get:
       tags:
-        - MLInstances
-      summary: Retrieve a list of MLInstances matching given criteria.
+        - MLInstance
+      summary: Get List of MLInstances matching given criteria
       description: MLInstances may be searched by name or tags.
       operationId: retrieveMLInstances
       produces:
@@ -400,8 +390,8 @@ paths:
           $ref: '#/responses/504'
     post:
       tags:
-        - MLInstances
-      summary: Add a new MLInstance.
+        - MLInstance
+      summary: Add a new ML Instance
       description: Creates a new MLInstance of an Engine
       operationId: createMLInstance
       consumes:
@@ -417,11 +407,6 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/MLInstance'
-        - in: header
-          name: Content-Type
-          description: 'application/vnd.adobe.platform.sensei+json;profile=mlInstance.v1.json'
-          required: true
-          type: string
       responses:
         '201':
           description: Creation successful
@@ -453,9 +438,9 @@ paths:
           $ref: '#/responses/504'
     delete:
       tags:
-        - MLInstances
-      summary: Delete MLinstances by engineId.
-      description: Deletes all MLinstances for provided engineId.
+        - MLInstance
+      summary: Delete ML instances for engineId
+      description: Deletes all ML instances for provided engineId
       operationId: deleteMLInstances
       produces:
         - >-
@@ -464,7 +449,7 @@ paths:
         - in: query
           name: engineId
           type: string
-          description: The engineId for which MLinstances should be deleted
+          description: The engineId for which ML instances should be deleted
           required: true
       responses:
         '200':
@@ -491,8 +476,8 @@ paths:
       - $ref: '#/parameters/mlInstanceIdPathParam'
     get:
       tags:
-        - MLInstances
-      summary: Lookup a MLInstance by ID.
+        - MLInstance
+      summary: Returns MLInstance by id
       operationId: retrieveMLInstance
       produces:
         - application/vnd.adobe.platform.sensei+json;profile=mlInstance.v1.json
@@ -521,8 +506,8 @@ paths:
           $ref: '#/responses/504'
     put:
       tags:
-        - MLInstances
-      summary: Update a MLInstance by ID.
+        - MLInstance
+      summary: Update a ML Instance by id
       operationId: updateMLInstance
       consumes:
         - application/vnd.adobe.platform.sensei+json;profile=mlInstance.v1.json
@@ -536,11 +521,6 @@ paths:
           schema:
             $ref: '#/definitions/MLInstance'
         - $ref: '#/parameters/ifMatchHeaderParam'
-        - in: header
-          name: Content-Type
-          description: 'application/vnd.adobe.platform.sensei+json;profile=mlInstance.v1.json'
-          required: true
-          type: string
       responses:
         '200':
           description: MLInstance object
@@ -566,8 +546,8 @@ paths:
           $ref: '#/responses/504'
     delete:
       tags:
-        - MLInstances
-      summary: Delete an existing MLInstance by ID.
+        - MLInstance
+      summary: Delete an existing MLInstance
       operationId: deleteMLInstance
       produces:
         - >-
@@ -602,8 +582,8 @@ paths:
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
     get:
       tags:
-        - Experiments
-      summary: Retrieve all experiments for a MLInstance.
+        - Experiment
+      summary: Get All Experiments for an ML Instance
       description: ''
       operationId: retrieveExperiments
       produces:
@@ -637,8 +617,8 @@ paths:
           $ref: '#/responses/504'
     post:
       tags:
-        - Experiments
-      summary: Create an experiment. 
+        - Experiment
+      summary: Create Experiment
       description: ''
       operationId: createExperiment
       consumes:
@@ -653,11 +633,6 @@ paths:
           schema:
             $ref: '#/definitions/Experiment'
         - $ref: '#/parameters/authHeaderParam'
-        - in: header
-          name: Content-Type
-          description: 'application/vnd.adobe.platform.sensei+json;profile=mlInstance.v1.json'
-          required: true
-          type: string
       responses:
         '201':
           description: Creation successful
@@ -689,9 +664,9 @@ paths:
           $ref: '#/responses/504'
     delete:
       tags:
-        - Experiments
-      summary: Delete experiments by mlInstanceId.
-      description: Deletes all experiments for provided mlInstance
+        - Experiment
+      summary: Delete experiments for mlInstanceId
+      description: Deletes all Experiments for provided mlInstance
       operationId: deleteExperiments
       produces:
         - >-
@@ -700,7 +675,7 @@ paths:
         - in: query
           name: mlInstanceId
           type: string
-          description: The mlInstanceId for which experiments should be deleted
+          description: The mlInstanceId for which Experiments should be deleted
           required: true
       responses:
         '200':
@@ -727,8 +702,8 @@ paths:
       - $ref: '#/parameters/experimentIdPathParam'
     get:
       tags:
-        - Experiments
-      summary: Lookup an experiment by ID.
+        - Experiment
+      summary: Read an Experiment using Experiment ID
       description: ''
       operationId: retrieveExperiment
       produces:
@@ -758,8 +733,8 @@ paths:
           $ref: '#/responses/504'
     put:
       tags:
-        - Experiments
-      summary: Update an experiment by ID.
+        - Experiment
+      summary: Update an Experiment using Experiment ID
       operationId: updateExperiment
       consumes:
         - application/vnd.adobe.platform.sensei+json;profile=experiment.v1.json
@@ -773,14 +748,9 @@ paths:
           schema:
             $ref: '#/definitions/Experiment'
         - $ref: '#/parameters/ifMatchHeaderParam'
-        - in: header
-          name: Content-Type
-          description: 'application/vnd.adobe.platform.sensei+json;profile=mlInstance.v1.json'
-          required: true
-          type: string
       responses:
         '200':
-          description: Returns the experiment object
+          description: Returns the Experiment object
           schema:
             $ref: '#/definitions/Experiment'
         '400':
@@ -803,8 +773,8 @@ paths:
           $ref: '#/responses/504'
     delete:
       tags:
-        - Experiments
-      summary: Delete an experiment by ID.
+        - Experiment
+      summary: Delete an Experiment using Experiment ID
       description: ''
       operationId: deleteExperiment
       produces:
@@ -841,8 +811,8 @@ paths:
       - $ref: '#/parameters/experimentIdPathParam'
     get:
       tags:
-        - Experiments
-      summary: Retrieve a list of all runs for an experiment by ID.
+        - Experiment
+      summary: Get List of all Experiment Runs
       description: ''
       operationId: retrieveExperimentRuns
       produces:
@@ -855,7 +825,7 @@ paths:
         - $ref: '#/parameters/propertyQueryParam'
       responses:
         '200':
-          description: List of engines
+          description: List of Engines
           schema:
             $ref: '#/definitions/ExperimentRunListing'
         '400':
@@ -876,8 +846,8 @@ paths:
           $ref: '#/responses/504'
     post:
       tags:
-        - Experiments
-      summary: Run an experiment with parameter values.
+        - Experiment
+      summary: Run an experiment with parameter values
       description: ''
       operationId: createExperimentRun
       consumes:
@@ -894,11 +864,6 @@ paths:
           schema:
             $ref: '#/definitions/ExperimentRun'
         - $ref: '#/parameters/authHeaderParam'
-        - in: header
-          name: Content-Type
-          description: 'application/vnd.adobe.platform.sensei+json;profile=mlInstance.v1.json'
-          required: true
-          type: string
       responses:
         '201':
           description: Creation successful
@@ -939,8 +904,8 @@ paths:
       - $ref: '#/parameters/experimentRunIdPathParam'
     get:
       tags:
-        - Experiments
-      summary: Retrieve the details of an experiment run by ID.
+        - Experiment
+      summary: Get the Run status and info
       description: ''
       operationId: retrieveExperimentRun
       produces:
@@ -948,7 +913,7 @@ paths:
           application/vnd.adobe.platform.sensei+json;profile=experimentRun.v1.json
       responses:
         '200':
-          description: Returns the run status and info
+          description: Returns the Run status and info
           schema:
             $ref: '#/definitions/ExperimentRun'
         '400':
@@ -978,8 +943,8 @@ paths:
       - $ref: '#/parameters/experimentRunIdPathParam'
     get:
       tags:
-        - Experiments
-      summary: Retrieve the status of an experiment run by ID.
+        - Experiment
+      summary: Get the Run status and info
       description: ''
       operationId: retrieveExperimentRunStatus
       produces:
@@ -987,7 +952,7 @@ paths:
           application/vnd.adobe.platform.sensei+json;profile=experimentRunStatus.v1.json
       responses:
         '200':
-          description: Returns the run status and info
+          description: Returns the Run status and info
           schema:
             $ref: '#/definitions/RunStatus'
         '400':
@@ -1015,10 +980,10 @@ paths:
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
     get:
       tags:
-        - Models
-      summary: Retrieve a list of all Models.
+        - Model
+      summary: Get List of all Models
       description: >-
-        List all Models providing mechanisms for pagination, filtering, and
+        List all models providing mechanisms for pagination, filtering, and
         sorting.
       operationId: retrieveModels
       produces:
@@ -1054,9 +1019,9 @@ paths:
           $ref: '#/responses/504'
     post:
       tags:
-        - Models
-      summary: Register a generated Model.
-      description: Creates a Model for a particular Engine and MLinstance
+        - Model
+      summary: Registers a generated Model
+      description: Creates a model for a particular engine and mlinstance
       operationId: createModel
       consumes:
         - multipart/form-data
@@ -1066,7 +1031,7 @@ paths:
         - in: formData
           name: modelArtifact
           type: file
-          description: The artifact containing the Model
+          description: The artifact containing the model
           x-content-type: application/octet-stream
         - in: formData
           name: model
@@ -1110,9 +1075,9 @@ paths:
       - $ref: '#/parameters/modelIdPathParam'
     get:
       tags:
-        - Models
-      summary: Lookup a Model by ID.
-      description: Retrieves a specific Model
+        - Model
+      summary: Returns a Model by Id
+      description: Retrieves a specific model
       operationId: retrieveModel
       produces:
         - application/vnd.adobe.platform.sensei+json;profile=model.v1.json
@@ -1141,9 +1106,9 @@ paths:
           $ref: '#/responses/504'
     put:
       tags:
-        - Models
-      summary: Update a Model by ID.
-      description: Update an existing Model
+        - Model
+      summary: Update a Model by Id
+      description: Update an existing model
       operationId: updateModel
       consumes:
         - application/vnd.adobe.platform.sensei+json;profile=model.v1.json
@@ -1157,11 +1122,6 @@ paths:
           schema:
             $ref: '#/definitions/Model'
         - $ref: '#/parameters/ifMatchHeaderParam'
-        - in: header
-          name: Content-Type
-          description: 'application/vnd.adobe.platform.sensei+json;profile=mlInstance.v1.json'
-          required: true
-          type: string
       responses:
         '200':
           description: Returns the updated Model object
@@ -1187,9 +1147,9 @@ paths:
           $ref: '#/responses/504'
     delete:
       tags:
-        - Models
-      summary: Delete a Model by ID.
-      description: Deletes a specific Model
+        - Model
+      summary: Deletes a Model by Id
+      description: Deletes a specific model
       operationId: deleteModel
       produces:
         - >-
@@ -1225,8 +1185,8 @@ paths:
       - $ref: '#/parameters/modelIdPathParam'
     get:
       tags:
-        - Models
-      summary: Lookup a binary Model artifact by ID.
+        - Model
+      summary: Returns a binary model artifact by model Id
       description: ''
       operationId: retrieveModelArtifact
       produces:
@@ -1263,8 +1223,8 @@ paths:
       - $ref: '#/parameters/modelIdPathParam'
     get:
       tags:
-        - Models
-      summary: Retrieve a list of transcodings for a model by ID.
+        - Model
+      summary: Get List of all Model Transcodings
       description: ''
       operationId: retrieveModelTranscodings
       produces:
@@ -1300,8 +1260,8 @@ paths:
           $ref: '#/responses/504'
     post:
       tags:
-        - Models
-      summary: Create a new transcoding for a Model by ID.
+        - Model
+      summary: Creates a model transcoding
       description: ''
       operationId: createModelTranscoding
       consumes:
@@ -1313,15 +1273,10 @@ paths:
       parameters:
         - in: body
           name: model
-          description: Model transcoding to be created
+          description: Model Transcoding to be created
           required: true
           schema:
             $ref: '#/definitions/ModelTranscoding'
-        - in: header
-          name: Content-Type
-          description: 'application/vnd.adobe.platform.sensei+json;profile=mlInstance.v1.json'
-          required: true
-          type: string
       responses:
         '201':
           description: Creation successful
@@ -1360,8 +1315,8 @@ paths:
       - $ref: '#/parameters/modelTranscodingIdPathParam'
     get:
       tags:
-        - Models
-      summary: Lookup a Model transcoding by ID.
+        - Model
+      summary: Returns a Model Transcoding by Id
       description: ''
       operationId: retrieveModelTranscoding
       produces:
@@ -1397,8 +1352,8 @@ paths:
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
     get:
       tags:
-        - Insights
-      summary: Retrieve a list of insights.
+        - Insight
+      summary: Get a list of insights
       description: Lists all insights for all experiment runs
       operationId: retrieveInsights
       produces:
@@ -1411,7 +1366,7 @@ paths:
         - $ref: '#/parameters/propertyQueryParam'
       responses:
         '200':
-          description: List of insights
+          description: List of Insights
           schema:
             $ref: '#/definitions/InsightListing'
         '400':
@@ -1432,9 +1387,9 @@ paths:
           $ref: '#/responses/504'
     post:
       tags:
-        - Insights
-      summary: Add a new Model insight.
-      description: Creates a new Model insight
+        - Insight
+      summary: Add a new model insight
+      description: Creates a new model insight
       operationId: createInsights
       consumes:
         - application/vnd.adobe.platform.sensei+json;profile=insight.v1.json
@@ -1447,11 +1402,6 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/Insight'
-        - in: header
-          name: Content-Type
-          description: 'application/vnd.adobe.platform.sensei+json;profile=mlInstance.v1.json'
-          required: true
-          type: string
       responses:
         '201':
           description: Creation successful
@@ -1489,8 +1439,8 @@ paths:
       - $ref: '#/parameters/insightIdPathParam'
     get:
       tags:
-        - Insights
-      summary: Lookup an insight by ID.
+        - Insight
+      summary: Returns Insight by id
       description: Retrieves a specific insight
       operationId: retrieveInsight
       produces:
@@ -1526,15 +1476,15 @@ paths:
       - $ref: '#/parameters/algorithmQueryParam'
     get:
       tags:
-        - Insights
-      summary: Retrieve a list of default metrics for algorithms.
+        - Insight
+      summary: Get a list of default metrics for algorithms
       description: Lists all default metrics available for algorithms
       operationId: retrieveMetrics
       produces:
         - application/vnd.adobe.platform.sensei+json;profile=defaultMetricsListing.v1.json
       responses:
         '200':
-          description: List of metrics
+          description: List of Metrics
           schema:
             $ref: '#/definitions/DefaultMetricsListing'
         '400':
@@ -1560,8 +1510,8 @@ paths:
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
     get:
       tags:
-        - MLServices
-      summary: Retrieve a list of MLServices matching given criteria.
+        - MLService
+      summary: Get List of MLServices matching given criteria
       description: MLServices may be searched by name or tags.
       operationId: retrieveMLServices
       produces:
@@ -1594,8 +1544,8 @@ paths:
           $ref: '#/responses/504'
     post:
       tags:
-        - MLServices
-      summary: Add a new MLService.
+        - MLService
+      summary: Add a new ML Service
       description: Creates a new MLService of an MLInstance
       operationId: createMLService
       consumes:
@@ -1643,9 +1593,9 @@ paths:
           $ref: '#/responses/504'
     delete:
       tags:
-        - MLServices
-      summary: Delete MLServices by mlInstanceId.
-      description: Deletes all MLServices for provided mlInstanceId
+        - MLService
+      summary: Delete ML services for mlInstanceId
+      description: Deletes all ML services for provided mlInstanceId
       operationId: deleteMLServices
       produces:
         - >-
@@ -1654,7 +1604,7 @@ paths:
         - in: query
           name: mlInstanceId
           type: string
-          description: The mlInstanceId for which MLServices should be deleted
+          description: The mlInstanceId for which ML services should be deleted
           required: true
       responses:
         '200':
@@ -1681,8 +1631,8 @@ paths:
       - $ref: '#/parameters/mlServiceIdPathParam'
     get:
       tags:
-        - MLServices
-      summary: Lookup MLService by ID.
+        - MLService
+      summary: Returns MLService by id
       operationId: retrieveMLService
       produces:
         - >-
@@ -1712,8 +1662,8 @@ paths:
           $ref: '#/responses/504'
     put:
       tags:
-        - MLServices
-      summary: Update a MLService by ID.
+        - MLService
+      summary: Update a ML Service by id
       operationId: updateMLService
       consumes:
         - application/vnd.adobe.platform.sensei+json;profile=mlService.v1.json
@@ -1752,8 +1702,8 @@ paths:
           $ref: '#/responses/504'
     delete:
       tags:
-        - MLServices
-      summary: Delete an existing MLService by ID.
+        - MLService
+      summary: Delete an existing MLService
       operationId: deleteMLService
       produces:
         - >-
@@ -1787,7 +1737,7 @@ parameters:
     name: x-api-key
     in: header
     description: >-
-      The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+      Your specific API key value found in your unique Adobe Experience Platform integration.
     required: true
     type: string
   startQueryParam:
@@ -1828,7 +1778,7 @@ parameters:
     in: query
     description: >-
       Property matching expression for filtering paginated results. Indicates
-      the comparison expression that items must match in order to be returned.
+      the comparision expression that items must match in order to be returned.
     required: false
     type: array
     collectionFormat: csv
@@ -1873,13 +1823,13 @@ parameters:
   modelIdPathParam:
     name: modelId
     in: path
-    description: The identifier of the trained or published Model
+    description: The identifier of the trained or published model
     required: true
     type: string
   modelTranscodingIdPathParam:
     name: modelTranscodingId
     in: path
-    description: The identifier of the transcoded Model artifact
+    description: The identifier of the transcoded model artifact
     required: true
     type: string
   mlServiceIdPathParam:
@@ -1897,7 +1847,7 @@ parameters:
   gwImsOrgIdHeaderParam:
     name: x-gw-ims-org-id
     in: header
-    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    description: IMS org id of the caller
     required: true
     type: string
   ifMatchHeaderParam:
@@ -1908,7 +1858,7 @@ parameters:
   authHeaderParam:
     name: Authorization
     in: header
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    description: The access token provided after authorization in the format “Bearer {ACCESS_TOKEN}”
     required: true
     type: string
 responses:
@@ -2326,6 +2276,78 @@ definitions:
         enum:
           - ContainerTaskSpec
           - SparkTaskSpec
+  ContainerTaskSpec:
+    allOf:
+      - $ref: '#/definitions/TaskSpec'
+      - type: object
+        required:
+          - cpus
+          - diskSizeInGB
+          - gpus
+          - instances
+          - memoryInMB
+        properties:
+          cmd:
+            type: string
+          memoryInMB:
+            type: integer
+            format: int32
+          instances:
+            type: integer
+            format: int32
+          gpus:
+            type: integer
+            format: int32
+          cpus:
+            type: number
+            format: float
+          diskSizeInGB:
+            type: number
+            format: float
+            description: >-
+              used to attach a disk of mentioned size to container.This acts as
+              working space for code
+  SparkTaskSpec:
+    allOf:
+      - $ref: '#/definitions/TaskSpec'
+      - type: object
+        required:
+          - className
+          - driverCores
+          - driverMemoryInMB
+          - executorCores
+          - executorMemoryInMB
+          - name
+          - numExecutors
+          - sparkConf
+        properties:
+          name:
+            type: string
+          sparkConf:
+            type: object
+            additionalProperties:
+              type: string
+          className:
+            type: string
+          args:
+            type: array
+            items:
+              type: string
+          driverMemoryInMB:
+            type: integer
+            format: int32
+          executorMemoryInMB:
+            type: integer
+            format: int32
+          driverCores:
+            type: integer
+            format: int32
+          executorCores:
+            type: integer
+            format: int32
+          numExecutors:
+            type: integer
+            format: int32
   MLInstanceTaskParameter:
     type: object
     description: A parameter passed to an MLInstanceTask
@@ -2412,6 +2434,7 @@ definitions:
             additionalProperties:
               type: string
           template:
+            type: object
             $ref: '#/definitions/ExperimentTemplate'
           _links:
             type: object
