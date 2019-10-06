@@ -1,67 +1,84 @@
 {
-	"name": "adobe_experience_platform_xdm_system",
-	"version": "1.0.0",
-	"description": "Adobe Experience Platform XDM System",
-	"author": "Wendy Braun",
-	"view_type": "mdbook",
-	"meta_keywords": "Adobe Experience Platform, Services, Experience Platform, Data Services, XDM, Experience Data Model, Schema Registry, Schema, XDM System",
-	"meta_description": "Driven by Adobe, Experience Data Model (XDM) is an effort to standardize customer experience data and define schemas for customer experience management. XDM System operationalizes Experience Data Model schemas to support the interoperability of data across Experience Platform components.",
-	"publish_date": "12/03/2019",
-	"show_edit_github_banner": false,
-	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
-	"pages": [
-				{
-					"pages": [],
-					"path": "api-specification/markdown/narrative/technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md",
-					"title": "XDM System in Adobe Experience Platform",
-					"description": "Experience Platform uses schema-based workflows to support the interoperability and standardization of data across Platform components such as Catalog, Unified Profile Service, Query Service, and Data Science Workspace."
-				},
-				{
-					"pages": [
-						{
-							"pages": [],
-							"path": "api-specification/markdown/narrative/technical_overview/schema_registry/schema_composition/xdm_field_dictionary.md",
-							"title": "XDM field dictionary",
-							"description": "Experience Data Model (XDM) defines a set of resources with specific definitions and consistent behaviors to support standardization across Adobe Experience Platform."
-						}
-					],
-					"path": "api-specification/markdown/narrative/technical_overview/schema_registry/schema_composition/schema_composition.md",
-					"title": "Basics of schema composition",
-					"description": "An introduction to schemas and the building blocks, principles, and best practices for composing schemas to be used with Adobe Experience Platform."},
-				{
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/schema_editor_tutorial/schema_editor_tutorial.md",
-					"title": "Schema Editor tutorial",
-					"description": "Learn how to compose a schema and interact with the Schema Registry using the Schema Editor in Experience Platform."
-				},
-				{
-					"pages": [],
-					"path": "api-specification/markdown/narrative/technical_overview/schema_registry/schema_registry_developer_guide.md",
-					"title": "Schema Registry developer guide",
-					"description": "The Schema Registry provides a RESTful API to perform operations against all Schema Library resources within Experience Platform."
-				},
-				{
-					"pages": [],
-					"path": "api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md",
-					"title": "Schema Registry API tutorial",
-					"description": "Follow step-by-step instructions to compose a schema using the Schema Registry API, including assigning a class and defining mixins."
-				},
-				{
-					"pages": [],
-					"path": "api-specification/markdown/narrative/technical_overview/schema_registry/xdm_troubleshooting/xdm_system_faq_and_troubleshooting.md",
-					"title": "XDM System troubleshooting guide",
-					"description": "Find answers to frequently asked questions about XDM System and Experience Data Model (XDM), including troubleshooting for common errors."
-				}
-	],
-	"app2app_map": {
-		"api-specification/markdown/narrative/tutorials/":"/apis/experienceplatform/home/tutorials/alltutorials.html", 
-		"acpdr/swagger-specs/":"/apis/experienceplatform/home/api-reference.html",
-		"api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md":"/apis/experienceplatform/home/services/allservices.html",
-		"end-user/markdown/query-service/qs-intro.md":"/apis/experienceplatform/home/services/query-service/query-service.html",
-		"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_overview.md":"/apis/experienceplatform/home/data-science-workspace/dsw-overview.html",
-		"end-user/markdown/segmentation_overview/segmentation.md":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/batch_data_ingestion_developer_guide.md":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
-	}
+  "name":"adobe_experience_platform_xdm_system",
+  "version":"1.0.0",
+  "description":"Adobe Experience Platform XDM System",
+  "author":"Wendy Braun",
+  "view_type":"mdbook",
+  "meta_keywords":"Adobe Experience Platform, Services, Experience Platform, Data Services, XDM, Experience Data Model, Schema Registry, Schema, XDM System",
+  "meta_description":"Driven by Adobe, Experience Data Model (XDM) is an effort to standardize customer experience data and define schemas for customer experience management. XDM System operationalizes Experience Data Model schemas to support the interoperability of data across Experience Platform components.",
+  "publish_date":"12/03/2019",
+  "show_edit_github_banner":false,
+  "base_path":"https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
+  "pages":[
+    {
+      "pages":[],
+      "path":"api-specification/markdown/narrative/technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md",
+      "title":"XDM System overview",
+      "description":"Experience Platform uses schema-based workflows to support the interoperability and standardization of data across Platform components such as Catalog, Unified Profile Service, Query Service, and Data Science Workspace."
+    },
+    {
+      "pages":[
+        {
+          "pages":[],
+          "path":"api-specification/markdown/narrative/technical_overview/schema_registry/schema_composition/xdm_field_dictionary.md",
+          "title":"XDM field dictionary",
+          "description":"Experience Data Model (XDM) defines a set of resources with specific definitions and consistent behaviors to support standardization across Adobe Experience Platform."
+        }
+      ],
+      "path":"api-specification/markdown/narrative/technical_overview/schema_registry/schema_composition/schema_composition.md",
+      "title":"Basics of schema composition",
+      "description":"An introduction to schemas and the building blocks, principles, and best practices for composing schemas to be used with Adobe Experience Platform."
+    },
+    {
+      "pages":[],
+      "path":"api-specification/markdown/narrative/technical_overview/schema_registry/schema_registry_developer_guide.md",
+      "title":"Schema Registry developer guide",
+      "description":"The Schema Registry provides a RESTful API to perform operations against all Schema Library resources within Experience Platform."
+    },
+    {
+      "pages":[],
+      "path":"api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md",
+      "title":"Create a schema using the Schema Registry API",
+      "description":"Follow step-by-step instructions to compose a schema using the Schema Registry API, including assigning a class and defining mixins."
+    },
+    {
+      "pages":[],
+      "path":"api-specification/markdown/narrative/tutorials/schema_editor_tutorial/schema_editor_tutorial.md",
+      "title":"Create a schema using the Schema Editor",
+      "description":"Learn how to compose a schema and interact with the Schema Registry using the Schema Editor in Experience Platform."
+    },
+    {
+      "pages":[],
+      "path":"api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/relationship_descriptor_tutorial.md",
+      "title":"Define a relationship between two schemas using the Schema Registry API",
+      "description":"Follow step-by-step instructions for defining a one-to-one relationship between two schemas using the Schema Registry API."
+    },
+    {
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/schema_editor_tutorial/schema-relationship-ui-tutorial.md",
+      "title": "Define a relationship between two schemas using the Schema Editor",
+      "description": "Follow step-by-step instructions for defining a one-to-one relationship between two schemas using the Schema Editor."
+    },
+    {
+      "pages":[],
+      "path":"api-specification/markdown/narrative/technical_overview/schema_registry/xdm_troubleshooting/xdm_system_faq_and_troubleshooting.md",
+      "title":"XDM System troubleshooting guide",
+      "description":"Find answers to frequently asked questions about XDM System and Experience Data Model (XDM), including troubleshooting for common errors."
+    }
+  ],
+  "app2app_map":{
+    "api-specification/markdown/narrative/tutorials/":"/apis/experienceplatform/home/tutorials/alltutorials.html",
+    "acpdr/swagger-specs/":"/apis/experienceplatform/home/api-reference.html",
+    "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+    "api-specification/markdown/narrative/technical_overview/identity_namespace_overview": "apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+    "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+    "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md":"/apis/experienceplatform/home/services/allservices.html",
+    "end-user/markdown/query-service/qs-intro.md":"/apis/experienceplatform/home/services/query-service/query-service.html",
+    "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_overview.md":"/apis/experienceplatform/home/data-science-workspace/dsw-overview.html",
+    "end-user/markdown/segmentation_overview/segmentation.md":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+    "api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/batch_data_ingestion_developer_guide.md":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
+    "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/":"/apis/experienceplatform/home/services/troubleshooting.html",
+    "api-specification/markdown/narrative/integration_guides/etl_integration_guide/":"/apis/experienceplatform/home/services/allservices.html",
+    "api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
+  }
 }
