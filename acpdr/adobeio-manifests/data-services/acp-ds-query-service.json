@@ -1,0 +1,169 @@
+{
+	"name": "experience_platform_query_service",
+	"version": "1.0.0",
+	"description": "Adobe Experience Platform Query Service",
+	"author": "Emily Walpole",
+	"view_type": "mdbook",
+	"meta_keywords": "experience platform, query service",
+	"meta_description": "",
+	"publish_date": "17/6/2019",
+	"show_edit_github_banner": false,
+    "base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
+	"pages": [
+		{
+			"pages": [],
+			"path": "end-user/markdown/query-service/qs-intro.md",
+			"title": "What is Query Service?"
+		},
+    {
+			"pages": [],
+			"path": "end-user/markdown/query-service/qs-quickstart.md",
+			"title": "Quick start guide"
+		},
+    {
+			"pages": [],
+			"path": "end-user/markdown/query-service/qs-ui.md",
+			"title": "Using the platform UI for Query Service"
+		},   
+	{
+			"pages": [],
+			"path": "end-user/markdown/query-service/qs-editor.md",
+			"title": "Query Editor"
+		},  	 
+    {
+			"pages": [],
+			"path": "end-user/markdown/query-service/qs-queries.md",
+			"title": "Running queries"
+		},
+		{
+			"pages": 
+			[
+				{
+						"pages": [],
+						"path": "end-user/markdown/query-service/qs-queries-datasetsvtables.md",
+						"title": "Datasets vs tables and schema"
+				},
+				{
+						"pages": [],
+						"path": "end-user/markdown/query-service/qs-queries-writingqueries.md",
+						"title": "General guidance for writing queries"
+				},
+				{
+						"pages": [],
+						"path": "end-user/markdown/query-service/qs-queries-experienceevent.md",
+						"title": "ExperienceEvent queries"
+				},
+				{
+						"pages": [],
+						"path": "end-user/markdown/query-service/qs-queries-joiningdatasets.md",
+						"title": "Joining datasets"
+				},
+				{
+						"pages": [],
+						"path": "end-user/markdown/query-service/qs-queries-adobefunctions.md",
+						"title": "Using Adobe functions"
+				}
+			]
+		},
+	{		
+
+			"pages": [],
+			"path": "end-user/markdown/query-service/qs-create-datasets.md",
+			"title": "Generating datasets from query results"
+		},
+    {
+			"pages": [],
+			"path": "end-user/markdown/query-service/qs-sql-ref.md",
+			"title": "SQL reference"
+		},
+		{
+			"pages": 
+      		[
+		        {
+		          "pages": [],
+		          "path": "end-user/markdown/query-service/qs-sql-syntax.md",
+		          "title": "SQL syntax"
+				    },
+		        {
+		          "pages": [],
+		          "path": "end-user/markdown/query-service/qs-sql-functions.md",
+		          "title": "Adobe-defined functions"
+					},
+				{
+				  "pages": [],
+				  "path": "end-user/markdown/query-service/qs-sql-spark-functions.md",
+				  "title": "Built-in Spark functions"
+					},
+		        {
+		          "pages": [],
+		          "path": "end-user/markdown/query-service/qs-sql-metadata.md",
+		          "title": "SQL metadata"
+				    }
+		      ]
+					
+		},
+	{
+			"pages": [],
+			"path": "end-user/markdown/query-service/qs-sample-queries.md",
+			"title": "Sample queries"
+		},   
+		{
+			"pages": 
+			[
+				{
+					"pages": [],
+					"path": "end-user/markdown/query-service/qs-sample-aa-queries.md",
+					"title": "Adobe Analytics"
+				},
+				{
+					"pages": [],
+					"path": "end-user/markdown/query-service/qs-sample-target-queries.md",
+					"title": "Adobe Target"
+				}
+			]
+		},
+		{
+			"pages": [],
+			"path": "end-user/markdown/query-service/qs-clients.md",
+			"title": "Connect clients to Query Service"
+		},   
+		{
+			"pages": 
+			[
+				{
+					"pages": [],
+					"path": "end-user/markdown/query-service/qs-clients-psql.md",
+					"title": "Connect PSQL"
+				},
+				{
+					"pages": [],
+					"path": "end-user/markdown/query-service/qs-clients-tableau.md",
+					"title": "Connect Tableau"
+				},
+				{
+					"pages": [],
+					"path": "end-user/markdown/query-service/qs-clients-powerbi.md",
+					"title": "Connect Power BI (PC)"
+				},
+				{
+					"pages": [],
+					"path": "end-user/markdown/query-service/qs-clients-postico.md",
+					"title": "Connect Postico (Mac)"
+				}
+			]
+		},
+    {
+			"pages": [],
+			"path": "end-user/markdown/query-service/qs-errors-troubleshooting.md",
+			"title": "Errors and troubleshooting"
+		},
+    {
+			"pages": [],
+			"path": "end-user/markdown/query-service/solutionref/analytics-field-map.md",
+			"title": "Adobe Analytics field mapping to ExperienceEvent XDM"
+		}
+	],
+	"app2app_map": {
+		"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
+	}
+}
