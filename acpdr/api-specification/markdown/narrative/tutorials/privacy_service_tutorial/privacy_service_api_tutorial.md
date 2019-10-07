@@ -49,7 +49,7 @@ The following request creates a new job request, configured by the attributes su
 
 ```shell
 curl -X POST \
-  https://platform.adobe.io/data/core/privacy/jobs \
+  https://platform.adobe.io/data/privacy/gdpr \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
@@ -99,8 +99,7 @@ curl -X POST \
     "include": ["Analytics", "AudienceManager"],
     "expandIds": false,
     "priority": "normal",
-    "analyticsDeleteMethod": "anonymize",
-    "regulation": "ccpa"
+    "analyticsDeleteMethod": "anonymize"
 }'
 ```
 
@@ -194,7 +193,7 @@ The following request retrieves the details of the job whose `jobId` is provided
 
 ```shell
 curl -X GET \
-  https://platform.adobe.io/data/core/privacy/jobs/6fc09b53-c24f-4a6c-9ca2-c6076b0842b6 \
+  https://platform.adobe.io/data/privacy/gdpr/6fc09b53-c24f-4a6c-9ca2-c6076b0842b6 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -250,8 +249,7 @@ A successful response returns the details of the specified job.
             }
         }
     ],
-    "downloadURL": "http://...",
-    "regulation": "ccpa"
+    "downloadURL": "http://..."
 }
 ```
 
@@ -277,13 +275,13 @@ You can view a list of all available job requests within your organization by ma
 
 #### API format
 
-This request format uses a `regulation` query parameter on the root (`/`) endpoint, therefore it begins with a question mark (`?`) as shown below. The response is paginated, allowing you to use other query parameters (`page` and `size`) to filter the response. You can separate multiple parameters using ampersands (`&`).
+This request format uses a `data=true` query parameter on the root (`/`) endpoint, therefore it begins with a question mark (`?`) as shown below. The response is paginated, allowing you to use other query parameters (`page` and `size`) to filter the response. You can separate multiple parameters using ampersands (`&`).
 
 ```http
-GET ?regulation={REGULATION}
-GET ?regulation={REGULATION}&page={PAGE}
-GET ?regulation={REGULATION}&size={SIZE}
-GET ?regulation={REGULATION}&page={PAGE}&size={SIZE}
+GET ?data=true
+GET ?data=true&page={PAGE}
+GET ?data=true&size={SIZE}
+GET ?data=true&page={PAGE}&size={SIZE}
 ```
 * `{REGULATION}`: The regulation type to query for, includes choices ['gdpr','ccpa'].
 * `{PAGE}`: The page of data to be displayed, using 0-based numbering. The default is `0`.
@@ -295,7 +293,7 @@ The following request retrieves a paginated list of all jobs within an IMS Organ
 
 ```shell
 curl -X GET \
-  https://platform.adobe.io/data/core/privacy/jobs?regulation=gdpr&page=2&size=50 \
+  https://platform.adobe.io/data/privacy/gdpr?data=true&page=2&size=50 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
