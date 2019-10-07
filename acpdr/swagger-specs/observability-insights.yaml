@@ -1,7 +1,28 @@
 swagger: "2.0"
 info:
   title: "Observability Insights"
-  description: <p>The Observability Insights Service is used to collect and expose metrics data from various components of Observability. It listens to events broadcasting on the data pipeline and collects metrics on resources and statistics on data ingestion.</p><p><strong>Related Documentation:</strong><br/><ul><li><a href="https://www.adobe.io/apis/experienceplatform/home/services/observability.html">Observability Insights API Overview</a></li></ul></p><p><strong>Notes:</strong><br/><ul><li>PLATFORM Gateway URL:<span> https://platform.adobe.io</li><li>Base path for this API:<span> /data/infrastructure/observability/insights</li><li>Example of a complete path for making a call to "/metrics":<span> https://platform.adobe.io/data/infrastructure/observability/insights/metrics</ul></p>
+
+  description: >-
+    The Observability Insights Service is used to collect and expose metrics data from various components of Observability. It listens to events broadcasting on the data pipeline and collects metrics on resources and statistics on data ingestion.
+
+
+    Related documentation:
+      * [Observability Insights developer guide](https://www.adobe.io/apis/experienceplatform/home/services/observability.html)
+
+    Visualize API calls with Postman (a free, third-party software):
+      * [Observability Insights Service API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Observability%20Insights.postman_collection.json)
+      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
+      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
+
+    API paths:
+      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
+      * Base path for this API: /data/infrastructure/observability/insights
+      * Example of a complete path: https://<span>platform.adobe.io/data/infrastructure/observability/insights/metrics
+
+    Required headers:
+      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
+  
     
   version: "1.0.0"
 host: "platform.adobe.io"
