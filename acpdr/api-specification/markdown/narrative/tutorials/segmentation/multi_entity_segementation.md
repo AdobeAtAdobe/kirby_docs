@@ -1,15 +1,13 @@
 # Multi-entity segmentation
 
+Multi-entity segmentation is the ability to extend Profile data with additional data based on products, stores, or other non-profile classes. Once connected, data from additional classes becomes available as if they were native to the Profile schema.
+
 This document provides a tutorial for multi-entity segmentation. Specifically, this document will cover the following details:
 
-- An overview of multi-entity segmentation
+- Getting started with multi-entity segmentation
 - How to define XDM relationships
 - How to create segments that use XDM relationships
 - How to evaluate and access segment results for multi-entity segments
-
-## Overview
-
-Multi-entity segmentation is the ability to create segments using multiple XDM classes. In doing so, users can extend already existing schemas and access additional fields as if they were native to the Profile schema.
 
 For more information about multi-entity segmentation, please read the [segmentation overview][segmentation-overview].
 
