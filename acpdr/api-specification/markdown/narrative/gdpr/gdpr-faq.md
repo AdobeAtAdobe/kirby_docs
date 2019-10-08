@@ -4,17 +4,17 @@ The following is a list of answers to frequently asked questions about the Gener
 
 Definitions for the various GDPR-related terms used in this document can be found in the [GDPR terminology](gdpr-terminology.md) article.
 
-* [Who does the GDPR affect?](#who-does-the-gdpr-affect)
-* [What are the penalties for non-compliance?](#what-are-the-penalties-for-non-compliance)
-* [What constitutes personal data?](#what-constitutes-personal-data)
-* [What is the difference between a data processor and a data controller?](#what-is-the-difference-between-a-data-processor-and-a-data-controller)
-* [What is the difference between explicit and unambiguous data subject consent?](#what-is-the-difference-between-explicit-and-unambiguous-data-subject-consent)
-* [Can data subjects under the age of 16 give consent?](#can-data-subjects-under-the-age-of-16-give-consent)
-* [What is the difference between a regulation and a directive?](#what-is-the-difference-between-a-regulation-and-a-directive)
-* [Does my business need to appoint a data protection officer (DPO)?](#does-my-business-need-to-appoint-a-data-protection-officer)
-* [How does GDPR affect policy surrounding data breaches?](#how-does-gdpr-affect-policy-surrounding-data-breaches)
-* [How do I get information about the status of my GDPR request or job?](#how-do-i-get-information-about-the-status-of-my-gdpr-request-or-job)
-* [How do I download the results of my completed GDPR jobs?](#how-do-i-download-the-results-of-my-completed-gdpr-jobs)
+* [Who does the GDPR affect?](#who-does-the-gdpr-affect-)
+* [What are the penalties for non-compliance?](#what-are-the-penalties-for-non-compliance-)
+* [What constitutes personal data?](#what-constitutes-personal-data-)
+* [What is the difference between a data processor and a data controller?](#what-is-the-difference-between-a-data-processor-and-a-data-controller-)
+* [What is the difference between explicit and unambiguous data subject consent?](#what-is-the-difference-between-explicit-and-unambiguous-data-subject-consent-)
+* [Can data subjects under the age of 16 give consent?](#can-data-subjects-under-the-age-of-16-give-consent-)
+* [What is the difference between a regulation and a directive?](#what-is-the-difference-between-a-regulation-and-a-directive-)
+* [Does my business need to appoint a data protection officer (DPO)?](#does-my-business-need-to-appoint-a-data-protection-officer--dpo--)
+* [How does GDPR affect policy surrounding data breaches?](#how-does-gdpr-affect-policy-surrounding-data-breaches-)
+* [How do I get information about the status of my GDPR request or job?](#how-do-i-get-information-about-the-status-of-my-gdpr-request-or-job-)
+* [How do I download the results of my completed GDPR jobs?](#how-do-i-download-the-results-of-my-completed-gdpr-jobs-)
 
 
 ## Who does the GDPR affect?
@@ -51,9 +51,9 @@ A **regulation** is a binding legislative act and must be applied in its entiret
 
 It is important to note that the GDPR is a regulation, in contrast the the previous legislation (the Data Protection Directive), which is a directive.
 
-## Does my business need to appoint a data protection officer?
+## Does my business need to appoint a data protection officer (DPO)?
 
-An organization must appoint a data protection officer (DPO) in the following cases:
+An organization must appoint a data protection officer in the following cases:
 * The organization is a public authority
 * The organization engages in large-scale systematic monitoring
 * The organization engages in large-scale processing of sensitive personal data.
