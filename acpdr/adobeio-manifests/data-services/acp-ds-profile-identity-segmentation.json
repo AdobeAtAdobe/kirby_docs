@@ -62,13 +62,13 @@
 				{
 					"pages": [],
 					"path": "end-user/markdown/segmentation_overview/segment-builder-guide.md",
-					"title": "Segment Builder guide"
-                }, 
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/segmentation/multi_entity_segmentation.md",
-                    "title": "Multi-entity segmentation"
-                }
+					"title": "Segment Builder user guide"
+				}, 
+				{
+					"pages": [],
+					"path": "api-specification/markdown/narrative/tutorials/segmentation/multi_entity_segmentation.md",
+					"title": "Multi-entity segmentation"
+				}
 			],
 			"path": "end-user/markdown/segmentation_overview/segmentation.md",
 			"title": "Segmentation Service overview"
@@ -82,9 +82,9 @@
 		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "/apis/cloudplatform/dataservices/data-ingestion/data-ingestion-services.html",
 		"api-specification/markdown/narrative/technical_overview/schema_registry/": "/apis/experienceplatform/home/xdm/xdmservices.html",
 		"api-specification/markdown/narrative/technical_overview/streaming_ingest/": "/apis/experienceplatform/home/data-ingestion.html",
-        "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-        "api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
-        "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/":"/apis/experienceplatform/home/services/troubleshooting.html",
-        "end-user/markdown/segmentation_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html"
+		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
+		"api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/":"/apis/experienceplatform/home/services/troubleshooting.html",
+		"end-user/markdown/segmentation_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html"
 	}
 }
