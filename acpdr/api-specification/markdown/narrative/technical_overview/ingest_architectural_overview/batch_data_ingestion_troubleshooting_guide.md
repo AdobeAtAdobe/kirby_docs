@@ -1,4 +1,4 @@
-# Batch ingestion troubleshooting guide
+# Batch Data Ingestion Troubleshooting Guide
 
 This documentation will help answer frequently asked questions regarding Adobe Experience Platform Batch Data Ingestion APIs. Specifically, this documentation will answer the following questions:
 
