@@ -1,61 +1,63 @@
 swagger: '2.0'
 info:
-  version: "1.0"
+  version: 1.0.0
   title: Query Service API
   description: >- 
-    Experience Query Service gives you the ability to use standard SQL to query data on Adobe Experience Platform to support many different use cases. It is a serverless tool which allows you to join any datasets in Experience Data Lake and capture the query results as a new dataset for use in reporting, Data Science Workspace, or for ingestion into Real-time Customer Profile.
+    Experience Query Service gives you the ability to use standard SQL to query data on Adobe Experience Platform
+    to support many different use cases. It is a serverless tool which allows you to join any datasets
+    in Experience Data Lake and capture the query results as a new dataset for use in reporting, Data 
+    Science Workspace, or for ingestion into Unified Profile Service.
+
+    When trying out these APIs, get your token from IMS stage and prefix them with 'Bearer'.
+
+    For more information on Experience Query Service, start with [the introduction](https://www.adobe.io/apis/experienceplatform/home/services/query-service/query-service.html#!end-user/markdown/query-service/qs-intro.md).
 
 
-    Related Documentation:
-      * [Query Service overview](https://www.adobe.io/apis/experienceplatform/home/services/query-service/query-service.html#!end-user/markdown/query-service/qs-intro.md)
-
-    Visualize API calls with Postman (a free, third-party software):
-      * [Query Service API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Query%20Service%20API.postman_collection.json)
-      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
-      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
-
-    API paths:
-      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
+    Notes:
+      * PLATFORM Gateway URL: https://platform.adobe.io/
       * Base path for this API: /data/foundation/query
-      * Example of a complete path: https://<span>platform.adobe.io/data/foundation/query/queries
-    
-    Required headers:
-      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
-      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
-  
+      * All requests with a payload in the request body (i.e., POST, PUT, and PATCH calls) must include the header 'Content-Type: application/json'
+
+  termsOfService: 'https://www.adobe.com/legal/terms.html'
 host: platform.adobe.io
 basePath: /data/foundation/query
 
 tags:
   - name: "Queries"
-    description: Queries let you use standard SQL to query data in Adobe Experience Platform. For example, you can join any number of datasets in Experience Data Lake and capture the results as a new dataset.  
   - name: "Connections"
-    description: Retrieves connection parameters for the interactive interface.
   - name: "Schedules"
-    description: Schedules let you perform SQL functions from a start date to an end date.
   - name: "Query-Templates"
-    description: Query templates let you create, store and execute any of the query as adhoc or schedule service.
 
+schemes:
+  - https
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
 consumes:
   - application/json
 produces:
   - application/json
 
 paths:
+
   /connection_parameters:
     get:
       operationId: "get_connection_parameters"
       tags:
         - "Connections"
-      summary: Requests connection parameters for the interactive interface.
+      security:
+        - Bearer: []
+      summary: Requests connection parameters for the interactive interface
       produces:
         - application/json
       parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-request-id'
-      - $ref: '#/parameters/User-Agent'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-request-id'
+        - $ref: '#/parameters/User-Agent'
+
       responses:
         200:
           description: "Connection Parameters Response for interactive interface"
@@ -73,11 +75,12 @@ paths:
       operationId: "get_queries"
       tags:
         - "Queries"
-      summary: Retrieve a list of queries for this IMS Organization.
+      security:
+        - Bearer: []
+      summary: Fetches a list of queries for this IMS organization.
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-request-id'
@@ -106,7 +109,9 @@ paths:
       operationId: "create_query"
       tags:
         - "Queries"
-      summary: Create a new query.
+      security:
+        - Bearer: []
+      summary: Creates new query.
       consumes:
         - application/json
       produces:
@@ -116,14 +121,13 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/User-Agent'
-        - $ref: '#/parameters/json-header'
 
         - name: query
           in: body
           description: Query to be created.
           required: true
           schema:
-            $ref: '#/definitions/query_def'
+               $ref: '#/definitions/query_def'
 
       responses:
         202:
@@ -142,11 +146,12 @@ paths:
       operationId: "get_query"
       tags:
         - "Queries"
-      summary: Request query status by ID.
+      security:
+        - Bearer: []
+      summary: Requests query status.
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-request-id'
@@ -175,13 +180,14 @@ paths:
       operationId: "update_query"
       tags:
         - "Queries"
-      summary: Request cancellation or query soft delete.
+      security:
+        - Bearer: []
+      summary: Requests cancellation or query soft delete
       consumes:
         - application/json
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-request-id'
@@ -205,7 +211,6 @@ paths:
                 enum:
                   - cancel
                   - soft_delete
-        - $ref: '#/parameters/json-header'
 
       responses:
         202:
@@ -224,11 +229,12 @@ paths:
       operationId: "get_schedules_list"
       tags:
         - "Schedules"
-      summary: Retrieve a list of schedules for this IMS Organization.
+      security:
+        - Bearer: []
+      summary: Fetches a list of schedules for this IMS organization.
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-request-id'
@@ -254,13 +260,14 @@ paths:
       operationId: "create_schedule"
       tags:
         - "Schedules"
-      summary: Create a new scheduled query.
+      security:
+        - Bearer: []
+      summary: Creates new scheduled query.
       consumes:
         - application/json
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-request-id'
@@ -290,11 +297,12 @@ paths:
       operationId: "get_schedules"
       tags:
         - "Schedules"
-      summary: Request details of a schedule by ID.
+      security:
+        - Bearer: []
+      summary: Requests details of a particular schedule.
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-request-id'
@@ -322,13 +330,14 @@ paths:
       operationId: "patch_schedule"
       tags:
         - "Schedules"
-      summary: Patch an existing schedule.
+      security:
+        - Bearer: []
+      summary: Patch an existing schedule
       consumes:
         - application/json
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-request-id'
@@ -353,7 +362,7 @@ paths:
         202:
           description: "Request to patch accepted"
         400:
-          description: "Schedule already in the state request OR Schedule is in Inactive state. Please try after sometime."
+          description: "Schedule already in the state requeste OR Schedule is in Inactive state. Please try after sometime."
         401:
           description: "Unauthorized"
         404:
@@ -365,11 +374,12 @@ paths:
       operationId: "delete_schedules"
       tags:
         - "Schedules"
-      summary: Delete a schedule by ID.
+      security:
+        - Bearer: []
+      summary: Deletes a particular schedule.
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-request-id'
@@ -398,11 +408,12 @@ paths:
       operationId: "get_schedules_runs"
       tags:
         - "Schedules"
-      summary: Retrieve a list of all runs, past and currently running, for a particular query schedule.
+      security:
+        - Bearer: []
+      summary: Returns all runs, past and currently running, for a particular Query Schedule.
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-request-id'
@@ -434,13 +445,14 @@ paths:
       operationId: "trigger_schedule_run"
       tags:
         - "Schedules"
-      summary: Trigger an immediate run of a scheduled query.
+      security:
+        - Bearer: []
+      summary: Triggers an immediate run of a Scheduled Query.
       consumes:
         - application/json
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-request-id'
@@ -469,11 +481,12 @@ paths:
         operationId: "get_schedules_run_for_id"
         tags:
           - "Schedules"
-        summary: Lookup details of a query schedule run by ID.
+        security:
+          - Bearer: []
+        summary: Returns details of a particular run for a Query Schedule.
         produces:
           - application/json
         parameters:
-          - $ref: '#/parameters/authorization'
           - $ref: '#/parameters/x-gw-ims-org-id'
           - $ref: '#/parameters/x-api-key'
           - $ref: '#/parameters/x-request-id'
@@ -507,13 +520,14 @@ paths:
         operationId: "cancel_schedule_run"
         tags:
           - "Schedules"
-        summary: Trigger an immediate run of a scheduled query by ID.
+        security:
+          - Bearer: []
+        summary: Triggers an immediate run of a Scheduled Query.
         consumes:
           - application/json
         produces:
           - application/json
         parameters:
-          - $ref: '#/parameters/authorization'
           - $ref: '#/parameters/x-gw-ims-org-id'
           - $ref: '#/parameters/x-api-key'
           - $ref: '#/parameters/x-request-id'
@@ -558,15 +572,17 @@ paths:
       operationId: "get_query_templates"
       tags:
         - "Query-Templates"
-      summary: Retrieve a list of query templates for this IMS Organization.
+      security:
+        - Bearer: []
+      summary: Fetches a list of query templates for this IMS organization.
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/User-Agent'
+
         - $ref: '#/parameters/queries_orderby'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/start'
@@ -589,13 +605,14 @@ paths:
       operationId: "create_query_template"
       tags:
         - "Query-Templates"
-      summary: Create a new query template.
+      security:
+        - Bearer: []
+      summary: Creates new query template.
       consumes:
         - application/json
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-request-id'
@@ -623,11 +640,12 @@ paths:
       operationId: "get_query_template"
       tags:
         - "Query-Templates"
-      summary: Lookup a query template by ID.
+      security:
+        - Bearer: []
+      summary: Get query template.
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-request-id'
@@ -655,13 +673,14 @@ paths:
       operationId: "update_query_template"
       tags:
         - "Query-Templates"
-      summary: Update a query template by ID.
+      security:
+        - Bearer: []
+      summary: Updates query template.
       consumes:
         - application/json
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-request-id'
@@ -693,11 +712,12 @@ paths:
       operationId: "delete_query_template"
       tags:
         - "Query-Templates"
-      summary: Delete a query template by ID.
+      security:
+        - Bearer: []
+      summary: Delete query template.
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-request-id'
@@ -725,30 +745,6 @@ paths:
 
 
 parameters:
-  authorization:
-    name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-    required: true
-    type: string
-    in: header
-  x-gw-ims-org-id:
-    name: x-gw-ims-org-id
-    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-    required: true
-    type: string
-    in: header
-  x-api-key:
-    name: x-api-key
-    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-    required: true
-    type: string
-    in: header
-  json-header:
-    name: Content-Type
-    description: 'application/json'
-    required: true
-    type: string
-    in: header
   template_property:
     name: property
     description: "Comma-separated filters.\n\n\
@@ -879,6 +875,20 @@ parameters:
     in: query
     type: boolean
     required: false
+
+  x-gw-ims-org-id:
+    name: x-gw-ims-org-id
+    description: The owning IMS organization identifier.
+    required: true
+    type: string
+    in: header
+
+  x-api-key:
+    name: "x-api-key"
+    type: "string"
+    in: "header"
+    required: true
+    description: "API key"
 
   x-request-id:
     name: "x-request-id"
@@ -1084,7 +1094,7 @@ definitions:
           href:
             type: string
             description: "URI to call to try to cancel this query. Cancelling a query only works if the
-              query is in state SUBMITTED or IN_PROGRESS."
+              query is in state SUBMITTED or IN_PROGRESSS."
           method:
             type: string
             description: the HTTP method to use
@@ -1140,6 +1150,25 @@ definitions:
           method:
             type: string
             description: the HTTP method to use
+
+  email_notifications:
+    type: object
+    description: query, parameters, and configuration.
+
+    properties:
+      on_start:
+        type: array
+        items:
+          type: string
+      on_success:
+        type: array
+        items:
+          type: string
+      on_failure:
+        type: array
+        items:
+          type: string
+
   _page:
     type: object
     properties:
@@ -1286,7 +1315,7 @@ definitions:
        properties:
          href:
            type: string
-           description: "URI to call to return all runs, past and currently running, for a particular query schedule."
+           description: "URI to call to return all runs, past and currently running, for a particular Query Schedule."
          method:
            type: string
            description: the HTTP method to use
@@ -1295,7 +1324,7 @@ definitions:
        properties:
          href:
            type: string
-           description: "URI to call to trigger an immediate run of this scheduled query"
+           description: "URI to call to trigger an immediate run of this Scheduled Query"
          method:
            type: string
            description: the HTTP method to use
@@ -1571,4 +1600,4 @@ definitions:
         description: path to patch
       value:
         type: string
-        description: value of path
+description: value of path
