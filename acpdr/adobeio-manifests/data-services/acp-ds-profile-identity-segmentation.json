@@ -47,11 +47,6 @@
 					"pages": [],
 					"path": "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md",
 					"title": "Supported PQL Queries"
-				},
-				{
-					"pages": [],
-					"path": "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/time-to-live-parameter.md",
-					"title": "Time-to-live (TTL) parameter"
 				}
 			],
 			"path": "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md",
