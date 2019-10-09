@@ -97,6 +97,8 @@ FROM
 )
 ```
 
+>**Note**: Double quotes **cannot** be used with dot-notation field access. 
+
 ### Back quotes
 
 Use the back quote `` ` `` to escape reserved column names when using the dot-notation syntax. For example, `order` is a reserve in SQL and the back quote needs to be used to access `commerce.order`:
