@@ -1,121 +1,108 @@
 {
-  "name": "AEP_Data_Science_Workspace_Tutorials",
-  "version": "1.0.0",
-  "description": "AEP Data Services Data Science Workspace Tutorials",
-  "author": "Emily Walpole",
-  "view_type": "mdbook",
-  "meta_keywords": "AEP, Data Science, Workspace, Adobe, Tutorial",
-  "meta_description": "Manifest file for DSW Tutorials",
-  "publish_date": "17/09/2018",
-  "show_edit_github_banner": false,
-  "base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
-  "pages": [
-    {
-      "importedFileName": "access_and_explore_your_data_tutorial",
-      "pages": [],
-      "path": "api-specification/markdown/narrative/tutorials/dsw/prepare_your_data/access_and_explore_your_data_tutorial/access_and_explore_your_data_tutorial.md",
-      "title": "Access and explore your data"
-    },
-    {
-      "importedFileName": "query_service_in_jupyter_notebook",
-      "pages": [],
-      "path": "api-specification/markdown/narrative/tutorials/dsw/prepare_your_data/query_service_integration/query_service_in_jupyter_notebook.md",
-      "title": "Access your data using Query Service and Jupyter notebooks"
-    },
-    {
-      "importedFileName": "analyze_your_data_using_jupyter_notebooks",
-      "pages": [],
-      "path": "api-specification/markdown/narrative/tutorials/dsw/prepare_your_data/analyze_your_data_using_jupyter_notebooks/analyze_your_data_using_jupyter_notebooks.md",
-      "title": "Analyze your data using Jupyter notebooks"
-    },
-    {
-      "importedFileName": "create_a_recipe_using_jupyter_notebooks",
-      "pages": [],
-      "path": "api-specification/markdown/narrative/tutorials/dsw/author_a_model/create_a_recipe_using_jupyter_notebooks/create_a_recipe_using_jupyter_notebooks.md",
-      "title": "Create a Recipe using Jupyter notebooks"
-    },
-    {
-      "importedFileName": "package_source_files_into_recipe",
-      "pages": [],
-      "path": "api-specification/markdown/narrative/tutorials/dsw/author_a_model/package_source_files_into_recipe/package_source_files_into_recipe.md",
-      "title": "Package source files into a Recipe"
-    },
-    {
-      "importedFileName": "import_a_packaged_recipe_in_ui",
-      "pages": [],
-      "path": "api-specification/markdown/narrative/tutorials/dsw/author_a_model/import_a_packaged_recipe/import_a_packaged_recipe_in_ui.md",
-      "title": "Import a packaged Recipe in the UI"
-    },
-    {
-      "importedFileName": "import_a_packaged_recipe_using_api",
-      "page": [],
-      "path": "api-specification/markdown/narrative/tutorials/dsw/author_a_model/import_a_packaged_recipe/import_a_packaged_recipe_using_api.md",
-      "title": "Import a packaged Recipe using the API"
-    },
-    {
-      "importedFileName": "train_and_evaluate_a_model_ui",
-      "page": [],
-      "path": "api-specification/markdown/narrative/tutorials/dsw/train_evaluate_score_a_model/train_and_evaluate_a_model_tutorial/train_and_evaluate_a_model_ui.md",
-      "title": "Train and evaluate a Model in the UI"
-    },
-    {
-      "importedFileName": "train_and_evaluate_a_model_using_the_api",
-      "page": [],
-      "path": "api-specification/markdown/narrative/tutorials/dsw/train_evaluate_score_a_model/train_and_evaluate_a_model_tutorial/train_and_evaluate_a_model_using_the_api.md",
-      "title": "Train and evaluate a Model using the API"
-    },
-    {
-      "importedFileName": "score_a_model_in_the_ui",
-      "page": [],
-      "path": "api-specification/markdown/narrative/tutorials/dsw/train_evaluate_score_a_model/score_a_model/score_a_model_in_the_ui.md",
-      "title": "Score a Model in the UI"
-    },
-    {
-      "importedFileName": "score_a_model_using_the_api",
-      "page": [],
-      "path": "api-specification/markdown/narrative/tutorials/dsw/train_evaluate_score_a_model/score_a_model/score_a_model_using_the_api.md",
-      "title": "Score a Model using the API"
-    },
-    {
-      "importedFileName": "optimize_your_model_using_sensei_model_insights_framework",
-      "page": [],
-      "path": "api-specification/markdown/narrative/tutorials/dsw/train_evaluate_score_a_model/optimize_your_model_using_sensei_model_insights_framework/optimize_your_model_using_sensei_model_insights_framework.md",
-      "title": "Optimize your Model using the Sensei Model Insights Framework"
-    },
-    {
-        "importedFileName": "profile-scoring-insights",
-        "page": [],
-        "path": "api-specification/markdown/narrative/tutorials/dsw/train_evaluate_score_a_model/profile-insights/profile-scoring-insights.md",
-        "title": "Enrich Real-time Customer Profile using machine learning insights"
-    },
-    {
-      "importedFileName": "publish_model_as_service_ui",
-      "page": [],
-      "path": "api-specification/markdown/narrative/tutorials/dsw/operationalize_a_model/publish_model_as_a_service/publish_model_as_service_ui.md",
-      "title": "Publish a Model as a Service in the UI"
-    },
-    {
-      "importedFileName": "publish_model_as_service_using_the_api",
-      "page": [],
-      "path": "api-specification/markdown/narrative/tutorials/dsw/operationalize_a_model/publish_model_as_a_service/publish_model_as_service_using_the_api.md",
-      "title": "Publish a Model as a Service using the API"
-    },
-    {
-      "importedFileName": "schedule_models_ui.md",
-      "page": [],
-      "path": "api-specification/markdown/narrative/tutorials/dsw/operationalize_a_model/scheduling/schedule_models_ui.md",
-      "title": "Schedule automated training and scoring runs on a Service in the UI"
-    }
-  ],
-  "app2app_map": {
-    "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_prebuilt_recipes/":"/apis/experienceplatform/home/data-science-workspace/dsw-overview.html",
-    "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/":"/apis/experienceplatform/home/data-science-workspace.html",
-    "api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html",
-    "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/":"/apis/experienceplatform/home/services/allservices.html", 
-    "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation.html", 
-    "api-specification/markdown/narrative/technical_overview/streaming_ingest/": "/apis/experienceplatform/home/data-ingestion.html",
-    "api-specification/markdown/narrative/tutorials/dsw/":"/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html", 
-    "api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
-    "end-user/markdown/query-service/": "/apis/experienceplatform/home/services/query-service/query-service.html"
-  }
+	"name": "AEP_Data_Science_Workspace_Tutorials",
+	"version": "1.0.0",
+	"description": "AEP Data Services Data Science Workspace Tutorials",
+	"author": "Emily Walpole",
+	"view_type": "mdbook",
+	"meta_keywords": "AEP, Data Science, Workspace, Adobe, Tutorial",
+	"meta_description": "Manifest file for DSW Tutorials",
+	"publish_date": "17/09/2018",
+	"show_edit_github_banner": false,
+	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/staging/acpdr",
+	"pages": [
+		{
+			"importedFileName": "access_and_explore_your_data_tutorial",
+			"pages": [],
+			"path": "api-specification/markdown/narrative/tutorials/dsw/prepare_your_data/access_and_explore_your_data_tutorial/access_and_explore_your_data_tutorial.md",
+			"title": "Access and explore your data"
+		},
+		{
+			"importedFileName": "query_service_in_jupyter_notebook",
+			"pages": [],
+			"path": "api-specification/markdown/narrative/tutorials/dsw/prepare_your_data/query_service_integration/query_service_in_jupyter_notebook.md",
+			"title": "Access your data using Query Service and Jupyter notebooks"
+		},
+		{
+			"importedFileName": "analyze_your_data_using_jupyter_notebooks",
+			"pages": [],
+			"path": "api-specification/markdown/narrative/tutorials/dsw/prepare_your_data/analyze_your_data_using_jupyter_notebooks/analyze_your_data_using_jupyter_notebooks.md",
+			"title": "Analyze your data using Jupyter notebooks"
+		},
+		{
+			"importedFileName": "create_a_recipe_using_jupyter_notebooks",
+			"pages": [],
+			"path": "api-specification/markdown/narrative/tutorials/dsw/author_a_model/create_a_recipe_using_jupyter_notebooks/create_a_recipe_using_jupyter_notebooks.md",
+			"title": "Create a Recipe using Jupyter notebooks"
+		},
+		{
+			"importedFileName": "package_source_files_into_recipe",
+			"pages": [],
+			"path": "api-specification/markdown/narrative/tutorials/dsw/author_a_model/package_source_files_into_recipe/package_source_files_into_recipe.md",
+			"title": "Package source files into a Recipe"
+		},
+		{
+			"importedFileName": "import_a_packaged_recipe_in_ui",
+			"pages": [],
+			"path": "api-specification/markdown/narrative/tutorials/dsw/author_a_model/import_a_packaged_recipe/import_a_packaged_recipe_in_ui.md",
+			"title": "Import a packaged Recipe in the UI"
+		},
+		{
+			"importedFileName": "import_a_packaged_recipe_using_api",
+			"page": [],
+			"path": "api-specification/markdown/narrative/tutorials/dsw/author_a_model/import_a_packaged_recipe/import_a_packaged_recipe_using_api.md",
+			"title": "Import a packaged Recipe using the API"
+		},
+		{
+			"importedFileName": "train_and_evaluate_a_model_ui",
+			"page": [],
+			"path": "api-specification/markdown/narrative/tutorials/dsw/train_evaluate_score_a_model/train_and_evaluate_a_model_tutorial/train_and_evaluate_a_model_ui.md",
+			"title": "Train and evaluate a Model in the UI"
+		},
+		{
+			"importedFileName": "train_and_evaluate_a_model_using_the_api",
+			"page": [],
+			"path": "api-specification/markdown/narrative/tutorials/dsw/train_evaluate_score_a_model/train_and_evaluate_a_model_tutorial/train_and_evaluate_a_model_using_the_api.md",
+			"title": "Train and evaluate a Model using the API"
+		},
+		{
+			"importedFileName": "score_a_model_in_the_ui",
+			"page": [],
+			"path": "api-specification/markdown/narrative/tutorials/dsw/train_evaluate_score_a_model/score_a_model/score_a_model_in_the_ui.md",
+			"title": "Score a Model in the UI"
+		},
+		{
+			"importedFileName": "score_a_model_using_the_api",
+			"page": [],
+			"path": "api-specification/markdown/narrative/tutorials/dsw/train_evaluate_score_a_model/score_a_model/score_a_model_using_the_api.md",
+			"title": "Score a Model using the API"
+		},
+		{
+			"importedFileName": "optimize_your_model_using_sensei_model_insights_framework",
+			"page": [],
+			"path": "api-specification/markdown/narrative/tutorials/dsw/train_evaluate_score_a_model/optimize_your_model_using_sensei_model_insights_framework/optimize_your_model_using_sensei_model_insights_framework.md",
+			"title": "Optimize your Model using the Sensei Model Insights Framework"
+		},
+		{
+			"importedFileName": "publish_model_as_service_ui",
+			"page": [],
+			"path": "api-specification/markdown/narrative/tutorials/dsw/operationalize_a_model/publish_model_as_a_service/publish_model_as_service_ui.md",
+			"title": "Publish a Model as a Service in the UI"
+		},
+		{
+			"importedFileName": "publish_model_as_service_using_the_api",
+			"page": [],
+			"path": "api-specification/markdown/narrative/tutorials/dsw/operationalize_a_model/publish_model_as_a_service/publish_model_as_service_using_the_api.md",
+			"title": "Publish a Model as a Service using the API"
+		}
+	],
+	"app2app_map": {
+		"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/":"/apis/experienceplatform/home/data-science-workspace.html",
+		"api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html",
+		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/":"/apis/experienceplatform/home/services/allservices.html", 
+		"api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation.html", 
+		"api-specification/markdown/narrative/technical_overview/streaming_ingest/": "/apis/experienceplatform/home/data-ingestion.html",
+		"api-specification/markdown/narrative/tutorials/dsw/":"/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html", 
+		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
+		"end-user/markdown/query-service/": "/apis/experienceplatform/home/services/query-service/query-service.html"
+	}
 }
