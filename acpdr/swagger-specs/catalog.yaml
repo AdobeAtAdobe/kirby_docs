@@ -3,22 +3,33 @@ info:
   version: '1.0'
   title: Catalog Service API
   description: >-
-    Catalog Service is the system of record for data location, lineage, schema definition, 
-    and usage labeling for Adobe Experience Platform.
+    Catalog is the system of record for data location and lineage within Adobe Experience Platform. Catalog is not the actual files or directories containing data, rather it holds the metadata and description of those files and directories.
+    
+
+    Simply put, Catalog acts as a metadata store or "catalog" where you can find information about your data within Experience Platform.
+
+
+    You can use Catalog to answer questions such as, where is my data located? at what stage of processing is this data? what systems or processes have acted on my data? what errors occurred during processing? and, if successful, how much data was processed?
 
 
     Related documentation:
       * [Catalog Service overview](https://www.adobe.io/apis/experienceplatform/home/services/allservices.html#!api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md)
       * [Create a dataset using APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md)
 
+    Visualize API calls with Postman (a free, third-party software):
+      * [Catalog Service API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Catalog%20Service%20API.postman_collection.json)
+      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
+      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
 
-    Notes:
+    API paths:
       * PLATFORM Gateway URL: https://<span>platform.adobe.io/
       * Base path for this API: /data/foundation/catalog
       * Example of a complete path: https://<span>platform.adobe.io/data/foundation/catalog/batches
-      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these, please see the <a href='https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md'>authentication tutorial</a>.
-       * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
-  termsOfService: 'https://www.adobe.com/legal/terms.html'
+
+    Required headers:
+      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
+
 basePath: /data/foundation/catalog
 host: platform.adobe.io
 tags:
@@ -43,8 +54,6 @@ tags:
     description: Tags are used to attach information to an object and then be used later to retrieve the object. The choice of what tags are used and how they are applied depends on your organizational processes.
   - name: Transforms
     description: Transforms are used to house the instructions that translate data into a new form. As a customer maps their newly uploaded data to an Experience Data Model (XDM) schema, a transform is created to document links to the repository where the code resides, as well as a link to the vehicle (or engine) used to perform that work.
-  - name: Health
-    description: Healthcheck for Catalog Service.
   
 produces:
   - application/json
@@ -1058,52 +1067,6 @@ paths:
           description: Not found
         '500':
           description: Internal server error
-        default:
-          description: Unexpected error
-  /health:
-    get:
-      tags:
-        - Health
-      summary: Healthcheck report for Catalog Service.
-      operationId: get_catalog_healthcheck
-      produces:
-        - application/json
-      parameters:
-        - name: x-api-key
-          description: API key for request.
-          required: true
-          type: string
-          in: header
-      responses:
-        '200':
-          description: healthcheck response
-          schema:
-            $ref: '#/definitions/healthcheck'
-        '503':
-          description: service unavailable
-        default:
-          description: Unexpected error
-  /health-detailed:
-    get:
-      tags:
-        - Health
-      summary: Healthcheck report for Catalog Service with dependencies.
-      operationId: get_catalog_detailed_healthcheck
-      produces:
-        - application/json
-      parameters:
-        - name: x-api-key
-          description: API key for request.
-          required: true
-          type: string
-          in: header
-      responses:
-        '200':
-          description: healthcheck response
-          schema:
-            $ref: '#/definitions/health-detailed'
-        '503':
-          description: service unavailable
         default:
           description: Unexpected error
   '/largedocuments/{id}':
@@ -3305,6 +3268,10 @@ paths:
       responses:
         '200':
           description: ' @/dataSets/dataSetFileId '
+          schema:
+            type: array
+            items:
+              type: string
         '400':
           description: Bad request
         '403':
@@ -3332,6 +3299,10 @@ paths:
       responses:
         '200':
           description: '@/dataSets/dataSetFileId'
+          schema:
+            type: array
+            items:
+              type: string
         '400':
           description: Bad request
         '403':
@@ -4356,12 +4327,6 @@ parameters:
     required: false
     type: string
     in: header
-  descriptorId:
-    name: descriptorId
-    description: Descriptor ID of the descriptor object
-    required: true
-    type: string
-    in: path
   id:
     name: id
     description: Object ID
@@ -4388,11 +4353,6 @@ parameters:
     required: true
     in: path
     type: string
-  excludeExtension:
-    name: excludeExtension
-    description: Set to true to exclude extensions.
-    in: query
-    type: boolean
   extensionNS:
     name: extensionNS
     description: The extension namespace.
@@ -4431,12 +4391,6 @@ parameters:
     description: Set to 'xdm' to expand XDM schema.
     in: query
     type: string
-  xdmVersion:
-    name: xdmVersion
-    description: The version of the base XDM schemas that are being requested.
-    in: query
-    type: string
-    required: false
   descriptorType:
     name: descriptorType
     description: Type of the descriptor objects (relationship, schema, identity) being requested.
@@ -4838,6 +4792,32 @@ definitions:
           - "US-ASCII"
           - "UTF-8"
           - "ISO-8859-1"
+  containerFormat:
+    type: string
+    description: >-
+      (DEPRECATED) The Container format for all dataSetFiles associated with this
+      view.
+    enum:
+      - text
+      - sequence
+      - parquet
+  persisted:
+    type: boolean
+    description: >-
+      (DEPRECATED) Determines whether or not the view is persisted. If
+      this is false then the other fields in this object are redundant,
+      but may be used for identifying old data that was persisted
+      previously.
+  format:
+    type: string
+    description: The file format for all dataSetFiles associated with this view. Required for CSV upload workflows, but optional in all other cases.
+    enum:
+      - ''
+      - csv
+      - text
+      - parquet
+      - json
+      - sequencefile
   batchResponse:
     type: object
     properties:
@@ -5933,11 +5913,6 @@ definitions:
           type: array
           items:
             type: string
-      dataContributors:
-        type: array
-        description: Describes the processes that have contributed data to this dataset
-        items:
-          $ref: '#/definitions/contributors'
       statsCache:
         type: object
         description: >-
@@ -5995,7 +5970,7 @@ definitions:
       observableSchema:
         type: object
         description: >-
-          observableSchema stores a JSON Schema object that is a valid subset (including the null case) of the XDM model specified by `schema`.
+          observableSchema stores a JSON Schema object that is a valid subset (including the null case) of the XDM model specified by `schemaRef`.
       editableClientIds:
         type: array
         description: >-
@@ -6056,31 +6031,11 @@ definitions:
         description: Metadata describing the dataset files associated with this DataSetView.
         properties:
           persisted:
-            type: boolean
-            description: >-
-              Determines whether or not we are persisting the view to disk.  If
-              this is false then the other fields in this object are redundant,
-              but may be used for identifying old data that was persisted
-              previously.
+            $ref: '#/definitions/persisted'
           containerFormat:
-            type: string
-            description: >-
-              The Container format for all dataSetFiles associated with this
-              view.
-            enum:
-              - text
-              - sequence
-              - parquet
+            $ref: '#/definitions/containerFormat'
           format:
-            type: string
-            description: The file format for all dataSetFiles associated with this view.
-            enum:
-              - ''
-              - csv
-              - text
-              - parquet
-              - json
-              - sequencefile
+            $ref: '#/definitions/format'
           delimiters:
             type: array
             description: Characters used to separate fields.
@@ -6332,7 +6287,7 @@ definitions:
       observableSchema:
         type: object
         description: >-
-          observableSchema stores a JSON Schema object that is a valid subset (including the null case) of the XDM model specified by `schema`.
+          observableSchema stores a JSON Schema object that is a valid subset (including the null case) of the XDM model specified by `schemaRef`.
       status:
         type: string
         description: >-
@@ -6379,31 +6334,11 @@ definitions:
         description: Metadata describing the dataset files associated with this DataSetView.
         properties:
           persisted:
-            type: boolean
-            description: >-
-              Determines whether or not we are persisting the view to disk.  If
-              this is false then the other fields in this object are redundant,
-              but may be used for identifying old data that was persisted
-              previously.
+            $ref: '#/definitions/persisted'
           containerFormat:
-            type: string
-            description: >-
-              The Container format for all dataSetFiles associated with this
-              view.
-            enum:
-              - text
-              - sequence
-              - parquet
+            $ref: '#/definitions/containerFormat'
           format:
-            type: string
-            description: The file format for all dataSetFiles associated with this view.
-            enum:
-              - ''
-              - csv
-              - text
-              - parquet
-              - json
-              - sequencefile
+            $ref: '#/definitions/format'
           delimiters:
             type: array
             description: Characters used to separate fields.
@@ -6476,11 +6411,6 @@ definitions:
           type: array
           items:
             type: string
-      dataContributors:
-        type: array
-        description: Describes the processes that have contributed data to this dataset
-        items:
-          $ref: '#/definitions/contributors'
       statsCache:
         type: object
         description: >-
@@ -6645,7 +6575,7 @@ definitions:
       observableSchema:
         type: object
         description: >-
-          observableSchema stores a JSON Schema object that is a valid subset (including the null case) of the XDM model specified by `schema`.
+          observableSchema stores a JSON Schema object that is a valid subset (including the null case) of the XDM model specified by `schemaRef`.
       schemaMetadata:
         $ref: '#/definitions/schemaMetadata'
       status:
@@ -6721,31 +6651,11 @@ definitions:
           This attribute is immutable and cannot be updated using PUT or PATCH requests.
         properties:
           persisted:
-            type: boolean
-            description: >-
-              Determines whether or not we are persisting the view to disk.  If
-              this is false then the other fields in this object are redundant,
-              but may be used for identifying old data that was persisted
-              previously.
+            $ref: '#/definitions/persisted'
           containerFormat:
-            type: string
-            description: >-
-              The Container format for all dataSetFiles associated with this
-              view.
-            enum:
-              - text
-              - sequence
-              - parquet
+            $ref: '#/definitions/containerFormat'
           format:
-            type: string
-            description: The file format for all dataSetFiles associated with this view.
-            enum:
-              - ''
-              - csv
-              - text
-              - parquet
-              - json
-              - sequencefile
+            $ref: '#/definitions/format'
           delimiters:
             type: array
             description: Characters used to separate fields.
@@ -6827,7 +6737,7 @@ definitions:
       observableSchema:
         type: object
         description: >-
-          observableSchema stores a JSON Schema object that is a valid subset (including the null case) of the XDM model specified by `schema`.
+          observableSchema stores a JSON Schema object that is a valid subset (including the null case) of the XDM model specified by `schemaRef`.
       schemaMetadata:
         $ref: '#/definitions/schemaMetadata'
       status:
@@ -6903,31 +6813,11 @@ definitions:
           This attribute is immutable and cannot be updated using PUT or PATCH requests.
         properties:
           persisted:
-            type: boolean
-            description: >-
-              Determines whether or not we are persisting the view to disk.  If
-              this is false then the other fields in this object are redundant,
-              but may be used for identifying old data that was persisted
-              previously.
+            $ref: '#/definitions/persisted'
           containerFormat:
-            type: string
-            description: >-
-              The Container format for all dataSetFiles associated with this
-              view.
-            enum:
-              - text
-              - sequence
-              - parquet
+            $ref: '#/definitions/containerFormat'
           format:
-            type: string
-            description: The file format for all dataSetFiles associated with this view.
-            enum:
-              - ''
-              - csv
-              - text
-              - parquet
-              - json
-              - sequencefile
+            $ref: '#/definitions/format'
           delimiters:
             type: array
             description: Characters used to separate fields.
@@ -7011,7 +6901,7 @@ definitions:
       observableSchema:
         type: object
         description: >-
-          observableSchema stores a JSON Schema object that is a valid subset (including the null case) of the XDM model specified by `schema`.
+          observableSchema stores a JSON Schema object that is a valid subset (including the null case) of the XDM model specified by `schemaRef`.
       status:
         type: string
         description: >-
@@ -7084,31 +6974,11 @@ definitions:
         description: Metadata describing the dataset files associated with this DataSetView.
         properties:
           persisted:
-            type: boolean
-            description: >-
-              Determines whether or not we are persisting the view to disk.  If
-              this is false then the other fields in this object are redundant,
-              but may be used for identifying old data that was persisted
-              previously.
+            $ref: '#/definitions/persisted'
           containerFormat:
-            type: string
-            description: >-
-              The Container format for all dataset files associated with this
-              view.
-            enum:
-              - text
-              - sequence
-              - parquet
+            $ref: '#/definitions/containerFormat'
           format:
-            type: string
-            description: The file format for all dataset files associated with this view.
-            enum:
-              - ''
-              - csv
-              - text
-              - parquet
-              - json
-              - sequencefile
+            $ref: '#/definitions/format'
           delimiters:
             type: array
             description: Characters used to separate fields.
@@ -7179,9 +7049,6 @@ definitions:
         type: string
         description: The ID of the user who changed this object.
         readOnly: true
-      createdXdmSchemaVersion:
-        type: string
-        description: The XDM version used when the dataSet was created using schemaRef.
       schema:
         type: string
         description: This is the uri for the XDM model
@@ -7690,22 +7557,6 @@ definitions:
         type: object
         description: Contains metrics related to this dataset.
         additionalProperties: true
-  contributors:
-    type: object
-    properties:
-      contributor:
-        type: string
-        description: The friendly name of the process contributing data to a dataset
-      type:
-        type: string
-        description: >-
-          The enumerated category the process belongs to (if you don't
-          think  your process matches one of these types please contact
-          the team)
-        enum:
-          - connector
-          - bulk-ingest
-          - stream
   contacts:
     type: object
     properties:
