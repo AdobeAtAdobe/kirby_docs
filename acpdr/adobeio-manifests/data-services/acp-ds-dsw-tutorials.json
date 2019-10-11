@@ -35,6 +35,12 @@
       "title": "Create a Recipe using Jupyter notebooks"
     },
     {
+      "importedFileName": "create_feature_pipeline_sdk",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/dsw/author_a_model/create_a_feature_pipeline/create_feature_pipeline_sdk.md",
+      "title": "Create a Feature Pipeline with the Model Authoring SDK"
+      },
+    {
       "importedFileName": "package_source_files_into_recipe",
       "pages": [],
       "path": "api-specification/markdown/narrative/tutorials/dsw/author_a_model/package_source_files_into_recipe/package_source_files_into_recipe.md",
