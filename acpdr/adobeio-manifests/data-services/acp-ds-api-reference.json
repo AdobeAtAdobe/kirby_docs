@@ -84,6 +84,11 @@
       "pages": [],
       "path": "acpdr/swagger-specs/sensei-ml-api.yaml",
       "title": "Sensei Machine Learning API"
+    },
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/sandbox-api.yaml",
+      "title": "Sandbox API"
     }
   ],
   "app2app_map": {
