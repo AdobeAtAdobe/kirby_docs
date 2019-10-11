@@ -1,0 +1,95 @@
+swagger: "2.0"
+info: 
+  description: >-
+    Access Control in Adobe Experience Platform allows IMS Organization administration to assign roles and permissions for various Platform capabilities. The Access Control API provides a public endpoint to retrieve effective policies for a user on given resources within a specified sandbox. All other access control capabilities are provided through the [Adobe Admin Console](https://adminconsole.adobe.com).
+    
+    
+    API paths:
+      * PLATFORM Gateway URL: https://<span>platform.adobe.io
+      * Base path for this API: /data/foundation/access-control
+      * Example of a complete path for making a call to "/acl/effective-policies": https://<span>platform.adobe.io/data/foundation/access-control/acl/effective-policies
+  
+    Required headers:
+      * All service calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these, see the <a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md">authentication tutorial</a>.
+      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
+
+  version: "1.0"
+  title: "Access Control API"
+tags: 
+  - name: "Access Control Policies"
+produces:
+  - application/json
+paths:
+  /acl/effective-policies:
+    post:
+      tags:
+        - "Access Control Policies"
+      summary: "Retrieve the effective policies for a user on given resources within a sandbox."
+      description: ""
+      operationId: "getEffectiveAclPolicies"
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/json-header'  
+        - in: "body"
+          name: "body"
+          description: "List of resource urls. Example url : /resource-types/{resourceName} or /permissions/{highLevelPermissionName}"
+          required: true
+          schema:
+            type: "array"
+            items:
+              type: "string"
+              enum: 
+                - "/permissions/manage-dataset"
+                - "/resource-types/schema"
+                - "/permissions/manage-schemas"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "object"
+            example: "[ '/resource-types/schemas': [ 'write', 'delete', 'read' '], '/permissions/manage-schemas': [ '*' ] ]"
+            properties:
+              policies:
+                type: "object"
+                readOnly: true
+              additionalProperties:
+                type: "array"
+                uniqueItems: true
+                items:
+                  type: "string"
+                  enum: [
+                    "read",
+                    "write",
+                    "delete",
+                    "*"
+                  ]
+parameters:
+  authorization:
+    name: Authorization
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
+    For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
+  x-gw-ims-org-id:
+    name: x-gw-ims-org-id
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
+  x-api-key:
+    name: x-api-key
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
+  json-header:
+    name: Content-Type
+    description: 'application/json'
+    required: true
+    type: string
+    in: header
