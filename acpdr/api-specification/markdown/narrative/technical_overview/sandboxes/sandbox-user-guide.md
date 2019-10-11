@@ -1,6 +1,6 @@
 # Sandbox user guide
 
-Adobe Experience Platform provides virtual sandboxes that partition a single Platform instance into separate, isolated  virtual environments. This document provides steps for performing various tasks related to sandboxes within the [Experience Platform user interface](platform.adobe.com). For steps on performing different operations using the Sandbox API, see the [Sandbox API developer guide](sandbox_developer_guide.md). For a high-level overview of sandboxes in Experience Platform, please refer to the [overview documentation](sandboxes_overview.md).
+Adobe Experience Platform provides virtual sandboxes that partition a single Platform instance into separate, isolated  virtual environments. This document provides steps for performing various tasks related to sandboxes within the [Experience Platform user interface](https://platform.adobe.com). For steps on performing different operations using the Sandbox API, see the [sandbox developer guide](sandbox-developer-guide.md). For a high-level overview of sandboxes in Experience Platform, please refer to the [overview documentation](sandboxes-overview.md).
 
 The following tasks are covered:
 - [View sandboxes](#view-sandboxes)
@@ -47,4 +47,4 @@ Once you have finished creating the sandbox, refresh the page and the new sandbo
 
 ## Next steps
 
-This document demonstrated how to manage sandboxes within the Experience Platform UI. For information on how to manage sandboxes using the Sandbox API, see the [Sandbox API developer guide](sandbox_developer_guide).
+This document demonstrated how to manage sandboxes within the Experience Platform UI. For information on how to manage sandboxes using the Sandbox API, see the [sandbox developer guide](sandbox-developer-guide.md).

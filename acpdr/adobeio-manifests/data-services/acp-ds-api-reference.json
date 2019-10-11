@@ -87,6 +87,11 @@
     },
     {
       "pages": [],
+      "path": "acpdr/swagger-specs/access-control.yaml",
+      "title": "Access Control API"
+    },
+    {
+      "pages": [],
       "path": "acpdr/swagger-specs/sandbox-api.yaml",
       "title": "Sandbox API"
     }

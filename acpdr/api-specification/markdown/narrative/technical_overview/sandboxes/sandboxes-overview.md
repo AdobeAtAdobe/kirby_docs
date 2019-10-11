@@ -8,7 +8,7 @@ This document provides a high-level overview of sandboxes in Experience Platform
 
 * [Understanding sandboxes](#understanding-sandboxes)
 * [Access control for sandboxes](#access-control-for-sandboxes)
-* [Sandboxes in the Experience Platform UI](#managing-sandboxes-in-the-experience-platform-ui)
+* [Sandboxes in the Experience Platform UI](#sandboxes-in-the-experience-platform-ui)
 * [Sandboxes in Experience Platform APIs](#sandboxes-in-experience-platform-apis)
 
 ## Understanding sandboxes
@@ -39,7 +39,7 @@ In the [Experience Platform user interface](https://platform.adobe.com), users c
 
 ## Sandboxes in Experience Platform APIs
 
-When making calls to Experience Platform APIs, a sandbox name must be supplied under the header `x-sandbox-name`. For example, when making a call to the [Catalog Service API](../../../../../../acpdr/swagger-specs/schema-registry.yaml) to view all datasets within the Production sandbox, the sandbox's name ("prod") is provided as a header in the API request:
+When making calls to Experience Platform APIs, a sandbox name must be supplied under the header `x-sandbox-name`. For example, when making a call to the [Catalog Service API](../../../../../../acpdr/swagger-specs/catalog.yaml) to view all datasets within the Production sandbox, the sandbox's name ("prod") is provided as a header in the API request:
 
 ```shell
 curl -X GET \
@@ -54,10 +54,10 @@ If `x-sandbox-name` is not included in an API call, the system will use a defaul
 
 ### Sandbox API
 
-The Sandbox API allows you to manage sandboxes by using RESTful API operations. See the [Sandbox API developer guide](sandbox_developer_guide.md) for detailed information on how to use the API, including properly formatted requests and example responses.
+The Sandbox API allows you to manage sandboxes by using RESTful API operations. See the [sandbox developer guide](sandbox-developer-guide.md) for detailed information on how to use the API, including properly formatted requests and example responses.
 
 ## Next steps
 
-By reading this document, you have been introduced to the essential concepts about sandboxes in Experience Platform. For detailed steps on how to manage sandboxes, see the [user guide](sandbox-user-guid.md) for the UI or the [developer guide](sandbox_developer_guide.md) for the API.
+By reading this document, you have been introduced to the essential concepts about sandboxes in Experience Platform. For detailed steps on how to manage sandboxes, see the [user guide](sandbox-user-guide.md) for the UI or the [developer guide](sandbox-developer-guide.md) for the API.
 
 While sandboxes serve as a valuable tool for isolating Platform environments for your development team, you can also manage more granular access control by using the Adobe Admin Console. See the [access control overview](../access-control/access-control-overview.md) for more information.
