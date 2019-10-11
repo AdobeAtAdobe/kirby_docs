@@ -4,17 +4,17 @@ This developer guide will help begin using streaming ingestion APIs, part of the
 
 - [Create a data inlet](#create-a-data-inlet)
 - [Stream an XDM Profile object to Adobe Experience Platform](#stream-an-xdm-profile-object-to-adobe-experience-platform)
-    - [Compose an XDM Profile schema](#step-1-compose-an-xdm-profile-schema)
-    - [Set Primary Identity Descriptor for XDM Profile](#step-2-set-primary-identity-descriptor-for-xdm-profile)
-    - [Create a dataset for XDM profile records](#step-3-create-a-dataset-for-xdm-profile-records)
-    - [Call Streaming Ingestion APIs to create an XDM profile record](#step-4-call-streaming-ingestion-apis-to-create-an-xdm-profile-record)
-    - [Retrieve the newly created Customer Profile](#step-5-retrieve-the-newly-created-customer-profile)
+    - [Compose an XDM Profile schema](#compose-an-xdm-profile-schema)
+    - [Set Primary Identity Descriptor for XDM Profile](#set-primary-identity-descriptor-for-xdm-profile)
+    - [Create a dataset for XDM profile records](#create-a-dataset-for-xdm-profile-records)
+    - [Call Streaming Ingestion APIs to create an XDM profile record](#call-streaming-ingestion-apis-to-create-an-xdm-profile-record)
+    - [Retrieve the newly created Customer Profile](#retrieve-the-newly-created-customer-profile)
 - [Stream an XDM ExperienceEvent to Adobe Experience Platform](#stream-an-xdm-experienceevent-to-adobe-experience-platform)
-    - [Compose an XDM ExperienceEvent schema](#step-1-compose-an-xdm-experienceevent-schema)
-    - [Set Primary Identity Descriptor for XDM ExperienceEvent](#step-2-set-primary-identity-descriptor-for-xdm-experienceevent)
-    - [Create a dataset for XDM ExperienceEvents](#step-3-create-a-dataset-for-xdm-experienceevents)
-    - [Call Streaming Ingestion APIs to ingest an XDM ExperienceEvent](#step-4-call-streaming-ingestion-apis-to-ingest-an-xdm-experienceevent)
-    - [Retrieve the newly persisted XDM ExperienceEvent back from Unified Profile](#step-5-retrieve-the-newly-persisted-xdm-experienceevent-back-from-unified-profile)
+    - [Compose an XDM ExperienceEvent schema](#compose-an-xdm-experienceevent-schema)
+    - [Set Primary Identity Descriptor for XDM ExperienceEvent](#set-primary-identity-descriptor-for-xdm-experienceevent)
+    - [Create a dataset for XDM ExperienceEvents](#create-a-dataset-for-xdm-experienceevents)
+    - [Call Streaming Ingestion APIs to ingest an XDM ExperienceEvent](#call-streaming-ingestion-apis-to-ingest-an-xdm-experienceevent)
+    - [Retrieve the newly persisted XDM ExperienceEvent back from Unified Profile](#retrieve-the-newly-persisted-xdm-experienceevent-back-from-unified-profile)
 
 ## Getting started
 
@@ -24,13 +24,18 @@ After registering a data inlet, you, as the data producer, will have a unique UR
 
 To complete this tutorial, you will first need to obtain your **developer credentials** and an **authorization token**. Follow the tutorial for [authenticating to Adobe Experience Platform][1] in order to gather the necessary credentials to successfully make calls using Platform APIs.
 
+This tutorial also requires a working knowledge of various Adobe Experience Platform services. Before beginning this tutorial, please review the documentation for the following services:
+
+- [Experience Data Model (XDM)][xdm]: The standardized framework by which Platform organizes experience data.
+- [Real-time Customer Profile][rtcp]: Provides a unified, consumer profile in real-time based on aggregated data from multiple sources.
+
 ## Create a data inlet
 
 Using the API Key and Access Token generated during authentication, you can now create a data inlet. The following cURL command demonstrates the information that is required when creating a data inlet, such as a Name and Description for the inlet being created.
 
-If you want to create a data inlet with authenticated data collection, check out the [authenticated data collection][adc] guide.
+If you want to create a data inlet with authenticated data collection, please read the [authenticated data collection][adc] guide.
 
-### Request
+#### Request
 
 ```SHELL
 CURL -X POST "https://platform.adobe.io/data/core/edge/inlet" \
@@ -42,13 +47,13 @@ CURL -X POST "https://platform.adobe.io/data/core/edge/inlet" \
   -d '{JSON_PAYLOAD}'
 ```
 
-> **Note:** To find your API Key and IMS Org ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
+> **Note:** To find your API Key and IMS Organization ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
 
 Where:
 
 - `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
 - `{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
-- `{IMS_ORG}` :  Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
+- `{IMS_ORG}` :  Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.  
 - `{JSON_PAYLOAD}` : An example JSON payload format can be seen below:
 
 ```JSON
@@ -66,7 +71,7 @@ Where:
 - `dataType`: The type of data that is being streamed.
 
 
-### Response
+#### Response
 
 An example of a successful response can be seen below:
 
@@ -91,7 +96,7 @@ An example of a successful response can be seen below:
 Where:
 
 - `{DATA_INLET_ID}` : The ID of your newly created Data Inlet.   
-- `{IMS_ORG}`:  The IMS organization ID that you used in your request.    
+- `{IMS_ORG}`:  The IMS Organization ID that you used in your request.    
 - `{SOURCE_ID}`: The meaningful identifier or name of the source you sent in your request.    
 - `{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
 
@@ -99,7 +104,7 @@ Where:
 
 Once you've created your data inlet, you can verify its creation, in addition to checking on other inlets created.
 
-### Request
+#### Request
 
 ```SHELL
 curl -X GET https://platform.adobe.io/data/core/edge/inlet \
@@ -114,11 +119,11 @@ Where:
 
 - `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
 - `{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
-- `{IMS_ORG}` : Your IMS organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG}` : Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 
-### Response
+#### Response
 
-With the above call, you will receive a list of all the data inlets created.
+The above call will send a list of all the data inlets created.
 
 ```json
 {
@@ -143,19 +148,19 @@ With the above call, you will receive a list of all the data inlets created.
 ```
 
 - `{INLET_ID}` : The ID of your newly created data inlet.   
-- `{IMS_ORG}`: The IMS organization ID that you used in your request.  
+- `{IMS_ORG}`: The IMS Organization ID that you used in your request.  
 - `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 
 
 ## Stream an XDM Profile object to Adobe Experience Platform
 
-Once you've created a data inlet, you can use it to stream XDM records and create or update [Real-time Customer Profiles][customerprofiles].
+Once you've created a data inlet, you can use it to stream XDM records and create or update [Real-time Customer Profiles][rtcp].
 
-### Step 1: Compose an XDM Profile schema
+### Compose an XDM Profile schema
 
-This guide composes a schema using standard mixins provided by Platform to describe personal and work-related details. You will begin by calling the Schema Registry API to create a schema that implements XDM Profile, a standard class, and enables the schema for use with Unified Profile Service (UPS).
+This guide composes a schema using standard mixins provided by Platform to describe personal and work-related details. Begin by calling the Schema Registry API to create a schema that implements XDM Profile, a standard class, and enables the schema for use with Unified Profile Service (UPS).
 
-> **Note:** For more information about how to create schemas, check out the [Schema Registry API Developer Guide][schema-registry].
+> **Note:** For more information about how to create schemas, please read the [Schema Registry API Developer Guide][schema-registry].
 
 #### Request
 
@@ -173,7 +178,7 @@ Where:
 
 - `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
 - `{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
-- `{IMS_ORG}` : Your IMS organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG}` : Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 - `{JSON_PAYLOAD}`: An example of the JSON payload is shown below: 
 
 ```json
@@ -202,11 +207,9 @@ Where:
 
 - `{SCHEMA_NAME}`: The name you want to use for your schema. This name must be unique.
 - `{SCHEMA_DESCRIPTION}`: A meaningful description for the schema you're creating.
-- `meta:immutableTags`: In this example, the `union` tag is used to persist your data into [Real-time Customer Profile][customerprofiles].
+- `meta:immutableTags`: In this example, the `union` tag is used to persist your data into [Real-time Customer Profile][rtcp].
 
 #### Response
-
-With this call, you will get a response similar to the one below:
 
 ```json
 {
@@ -260,19 +263,19 @@ Where:
 - `{SCHEMA_DESCRIPTION}`: The description of the schema you created. 
 - `{IMS_ORG_ID}`: The ID of the IMS Organization that created the schema.
 - `{SCHEMA_REF_ID}`: The ID in the response should look something like this: `"https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}"`.
-- `{TENANT_ID}`: This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Org. For more information about the Tenant ID, check out the [schema registry guide][schema-registry].
+- `{TENANT_ID}`: This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Org. For more information about the Tenant ID, please read the [schema registry guide][schema-registry].
 - `{SCHEMA_ID}`: The ID of your newly created schema.
-- `{SCHEMA_VERSION}`: The version of the previously created schema. As digital experiences change, schemas will need to evolve. As a result, it is required to have the schema version. For more information about schema evolution, check out [the schema composition guide][xdminfo].
+- `{SCHEMA_VERSION}`: The version of the previously created schema. As digital experiences change, schemas will need to evolve. As a result, it is required to have the schema version. For more information about schema evolution, please read [the schema composition guide][xdminfo].
 
 Please take note of the `$id` as well as the `version` attributes, as both of these will be used when sending records to the Streaming Ingest APIs.
 
-### Step 2: Set Primary Identity Descriptor for XDM Profile
+### Set Primary Identity Descriptor for XDM Profile
 
-In this step we'll add an [Identity Descriptor][identity-descriptor] to the schema created above, promoting the work email address attribute as the primary identifier. Doing this will result in two changes:
+Next, add an [Identity Descriptor][identity-descriptor] to the schema created above, using the work email address attribute as the primary identifier. Doing this will result in two changes:
 
-1. Work email address will become a mandatory field, messages sent without this field will fail validation and not be ingested
+1. The work email address will become a mandatory field. This means messages sent without this field will fail validation and will not be ingested.
 
-2. It tells Unified Profile to use the work email address as an identifier to help stitch together information about that individual
+2. Real-time Customer Profile will use the work email address as an identifier to help stitch together more information about that individual.
 
 ### Request
 ```shell
@@ -289,7 +292,7 @@ Where:
 
 - `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
 - `{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
-- `{IMS_ORG}` : Your IMS organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG}` : Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 - `{JSON_PAYLOAD}`: An example of the JSON payload is shown below: 
 
 ```json
@@ -317,7 +320,7 @@ Where:
 
 ---
 
-### Step 3: Create a dataset for XDM profile records
+### Create a dataset for XDM profile records
 
 You need to create a dataset so that any XDM profile records you stream (that pass validation) will be persisted to it. 
 
@@ -327,7 +330,7 @@ There are **two** important things to note about this dataset:
    
 Other consumers that work with data in the data lake, such as Data Science Workspace and Query Service will safely ignore this attribute.
 
-2. This dataset will be enabled for **Unified Profile** and **Identity Service** by setting the appropriate tags.
+1. This dataset will be enabled for **Real-time Customer Profile** and **Identity Service** by setting the appropriate tags.
 
 #### Request
 
@@ -346,7 +349,7 @@ Where:
 
 - `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
 - `{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
-- `{IMS_ORG}` : Your IMS organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG}` : Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 - `{JSON_PAYLOAD}`: An example of the JSON payload is shown below: 
 
 ```json
@@ -374,9 +377,9 @@ Where:
 
 - `{DATASET_NAME}`: The name of the dataset you're creating.
 - `{DATASET_DESCRIPTION}`: A meaningful description for the dataset you're creating.
-- `{IMS_ORG_ID}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG_ID}`: Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 - `{SCHEMA_ID}`: The ID of the previously created schema. 
-- `{SCHEMA_VERSION}`: The version of the previously created schema. As digital experiences change, schemas will need to evolve. As a result, it is required to have the schema version. For more information about schema evolution, check out [the schema composition guide][xdminfo].
+- `{SCHEMA_VERSION}`: The version of the previously created schema. As digital experiences change, schemas will need to evolve. As a result, it is required to have the schema version. For more information about schema evolution, please read [the schema composition guide][xdminfo].
 - `{SCHEMA_REF_ID}`: The `$id` that you previously received when you composed the XDM schema. It should look something like this: `"https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}"`
 
 #### Response
@@ -389,9 +392,11 @@ An example of a successful response can be found below:
 ]
 ```
 
-### Step 4: Call Streaming Ingestion APIs to create an XDM profile record
+### Call Streaming Ingestion APIs to create an XDM profile record
 
 With the dataset in place, you can ingest XDM-formatted JSON records to create an XDM profile record within Platform.
+
+>**Note:** The following API call does **not** require any authentication headers.
 
 #### Request
 
@@ -408,7 +413,7 @@ Where:
 - `{JSON_PAYLOAD}`: An example of the JSON payload is shown below: 
 - `?synchronousValidation=true`: An optional query parameter intended for development purposes. Can be used for immediate feedback to determine if the request was successfully sent.
 
-> **Note:** You will have to replace the {IMS_ORG} with the one you used previously creating a data inlet. To find your IMS Org ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the Organization ID listed.
+> **Note:** You will have to replace the {IMS_ORG} with the one you used previously creating a data inlet. To find your IMS Organization ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the Organization ID listed.
 
 ```JSON
 {
@@ -453,11 +458,11 @@ Where:
 Where:
  
 - `schemaRef`: The $id value of the schema that describes the streamed record.
-- `imsOrgId`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
+- `imsOrgId`: Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.  
 - `source`: The source of the streamed record - this should be the **same** as the one specified earlier, when you created the data inlet.
-- `{IMS_ORG_ID}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG_ID}`: Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 - `{SCHEMA_ID}`: The ID of the schema you previously created.
-- `{SCHEMA_VERSION}`: The version of the previously created schema. As digital experiences change, schemas will need to evolve. As a result, it is required to have the schema version. For more information about schema evolution, check out [the schema composition guide][xdminfo].
+- `{SCHEMA_VERSION}`: The version of the previously created schema. As digital experiences change, schemas will need to evolve. As a result, it is required to have the schema version. For more information about schema evolution, please read [the schema composition guide][xdminfo].
 - `{DATASET_ID}`: The ID of the dataset you previously created.
 - `{SCHEMA_REF_ID}`: The `$id` that you previously received when you composed the XDM schema. It should look something like this: `"https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}"`
 
@@ -483,9 +488,9 @@ Where:
 - `receivedTimeMs`: receivedTimeMs is a timestamp (epoch in milliseconds) that shows what time the request was received.
 - `synchronousValidation`: You can add the query parameter `?synchronousValidation=true` for development purposes to check that the payload is actually being sent. If you have included the `synchronousValidation` parameter and the value returns `true` the payload was invalid and not sent.
 
-### Step 5: Retrieve the newly created Customer Profile
+### Retrieve the newly created Customer Profile
 
-To validate the XDM profile records you just sent, you can use the [Profile Access API][profileapi] to read it back.
+To validate the XDM profile records you just sent, you can use the [Real-time Customer Profile Access API][rtcp] to read it back.
 
 To query using email address, your request would need to look something like this:
 
@@ -501,7 +506,7 @@ Where:
 
 #### Request
 
-Now that you understand the role of entity ID and entity namespace codes let's read back the Consumer Profile created previously.
+Now that you understand the role of entity ID and entity namespace codes, you can review the Consumer Profile created previously with the following GET request.
 
 ```SHELL
 CURL -X GET 'https://platform.adobe.io/data/core/ups/access/entities?schema.name=_xdm.context.profile&entityId=janedoe%40example.com&entityIdNS=email'\
@@ -511,15 +516,15 @@ CURL -X GET 'https://platform.adobe.io/data/core/ups/access/entities?schema.name
   -H 'x-gw-ims-org-id: {IMS_ORG_ID}'
 ```
 
-> **Note:** To find your API Key and IMS Org ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
+> **Note:** To find your API Key and IMS Organization ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
 
 Where:
 
 - `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
 - `{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
-- `{IMS_ORG_ID}` : Your IMS organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG_ID}` : Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 
-For further information about this API call, check out the Profile Access API documentation [here][profileapi].
+For further information about this API call, please read the Profile Access API documentation [here][rtcp].
 
 #### Response
 
@@ -579,11 +584,11 @@ An example of a successful response can be seen below. As you can see, this is t
 
 ## Stream an XDM ExperienceEvent to Adobe Experience Platform
 
-Once you've confirmed your Profile can be properly accessed, you can use Adobe's Streaming Ingestion APIs to stream ExperienceEvents as they happen. Streamed ExperienceEvents will be instantaneously available on Adobe Experience Platform services, such as Unified Profile. 
+Once you've confirmed your Profile can be properly accessed, you can use Adobe's Streaming Ingestion APIs to stream ExperienceEvents as they happen. Streamed ExperienceEvents will be instantaneously available on Adobe Experience Platform services, such as Real-time Customer Profile. 
 
 The example below associates a new ExperienceEvent with the Consumer Profile you created above. It captures some details about the browser, the product items they viewed, and the web page they viewed it on.
 
-### Step 1: Compose an XDM ExperienceEvent schema
+### Compose an XDM ExperienceEvent schema
 
 To begin, you will need to create a new schema that implements the XDM ExperienceEvent class.
 
@@ -599,13 +604,13 @@ curl -X POST https://platform.adobe.io/data/foundation/schemaregistry/tenant/sch
   -d '{JSON_PAYLOAD}'
 ```
 
-> **Note:** To find your API Key and IMS Org ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
+> **Note:** To find your API Key and IMS Organization ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
 
 Where:
 
 - `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
 - `{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
-- `{IMS_ORG_ID}` : Your IMS organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG_ID}` : Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 - `{JSON_PAYLOAD}`: An example of the JSON Payload can be seen below:
 
 ```JSON
@@ -637,9 +642,9 @@ Where:
 
 - `{SCHEMA_NAME}`: The name you want to use for your schema. 
 - `{SCHEMA_DESCRIPTION}`: A meaningful description for the schema you're creating.
-- `meta:immutableTags`: In this example, the `union` tag is used to persist your data into [Real-time Customer Profile][customerprofiles].  
+- `meta:immutableTags`: In this example, the `union` tag is used to persist your data into [Real-time Customer Profile][rtcp].  
 
-> **Note:** In this example we are using the ExperienceEvent - Profile Snapshot Work Details mixin to grab the users work email address and use it as a Primary Identifier later on. Try using other mixins and Primary Identifiers once you've completed this tutorial. 
+> **Note:** This example uses the ExperienceEvent - Profile Snapshot Work Details mixin to grab the users work email address and use it as a Primary Identifier later on. Try using other mixins and Primary Identifiers once you've completed this tutorial. 
 
 #### Response
 
@@ -704,19 +709,19 @@ Where:
 - `{SCHEMA_NAME}`: The name of the schema you created.
 - `{SCHEMA_DESCRIPTION}`: The description of the schema you created. 
 - `{IMS_ORG_ID}`: The ID of the IMS Organization that created the schema.
-- `{TENANT_ID}`: This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Org. For more information about the Tenant ID, check out the [schema registry guide][schema-registry].
+- `{TENANT_ID}`: This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Organization. For more information about the Tenant ID, please read the [schema registry guide][schema-registry].
 - `{SCHEMA_REF_ID}`: The ID in the response should look something like this: `"https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}"`
 - `{SCHEMA_ID}`: The ID of your newly created schema.
-- `{SCHEMA_VERSION}`: The version of the previously created schema. As digital experiences change, schemas will need to evolve. As a result, it is required to have the schema version. For more information about schema evolution, check out [the schema composition guide][xdminfo].
+- `{SCHEMA_VERSION}`: The version of the previously created schema. As digital experiences change, schemas will need to evolve. As a result, it is required to have the schema version. For more information about schema evolution, please read [the schema composition guide][xdminfo].
 
 Please take note of the `$id` as well as the `version` attributes, as both of these will be used when sending records to the Streaming Ingest APIs.
 
-### Step 2: Set Primary Identity Descriptor for XDM ExperienceEvent 
-In this step we'll add an [Identity Descriptor][identity-descriptor] to the schema created above, promoting the work email address attribute as the primary identifier. Doing this will result in two changes:
+### Set Primary Identity Descriptor for XDM ExperienceEvent 
+Next, add an [Identity Descriptor][identity-descriptor] to the schema created above, using the work email address attribute as the primary identifier. Doing this will result in two changes:
 
-1. Work email address will become a mandatory field, messages sent without this field will fail validation and not be ingested
+1. The work email address will become a mandatory field. This means messages sent without this field will fail validation and will not be ingested.
 
-2. It tells Unified Profile to use the work email address as an identifier to help stitch together information about that individual
+2. Real-time Customer Profile will use the work email address as an identifier to help stitch together more information about that individual.
 
 ```shell
 CURL -X POST https://platform.adobe.io/data/foundation/schemaregistry/tenant/descriptors \
@@ -731,7 +736,7 @@ CURL -X POST https://platform.adobe.io/data/foundation/schemaregistry/tenant/des
 Where:
 - `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.
 - `{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.
-- `{IMS_ORG}` : Your IMS organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG}` : Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 - `{JSON_PAYLOAD}`: An example of the JSON payload is shown below:
 ```json
 {  
@@ -749,14 +754,14 @@ Where:
 - `{SCHEMA_REF_ID}`: The `$id` that you previously received when you composed the XDM ExperienceEvent schema. It should look something like this: `"https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}"`
 
 
-### Step 3: Create a dataset for XDM ExperienceEvents
+### Create a dataset for XDM ExperienceEvents
 
 Like before, you'll need to create a dataset so any ExperienceEvents streamed, assuming they pass XDM validation, will be persisted into the dataset.
 
 There are **two** important things to note about this dataset:
 
 1. This dataset will be **streaming enabled**, which will be signaled to Catalog by setting the **streamingIngestionEnabled** field to true. This signals to Platform Services, such as Identity and Profile, that they can read data sent to these datasets **instantaneously**, rather than waiting for it to be batched into the data lake. Other consumers that work with data in the data lake, such as Data Science Workspace and Query Service will safely ignore this attribute.
-2. This dataset will be enabled for **Unified Profile** and **Unified Identity** by setting the appropriate tags.
+2. This dataset will be enabled for **Real-time Customer Profile** and **Unified Identity** by setting the appropriate tags.
 
 #### Request
 
@@ -775,7 +780,7 @@ Where:
 
 - `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
 - `{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
-- `{IMS_ORG_ID}` : Your IMS organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG_ID}` : Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 - `{JSON_PAYLOAD}`: An example of the JSON Payload can be seen below:
 
 ```json
@@ -803,9 +808,9 @@ Where:
 
 - `{DATASET_NAME}`: The name of the dataset you're creating.
 - `{DATASET_DESCRIPTION}`: A meaningful description for the dataset you're creating.
-- `{TENANT_ID}`: This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Org. For more information about the Tenant ID, check out the [schema registry guide][schema-registry].
+- `{TENANT_ID}`: This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Org. For more information about the Tenant ID, please read the [schema registry guide][schema-registry].
 - `{SCHEMA_ID}`: The ID of the previously created schema. 
-- `{SCHEMA_VERSION}`: The version of the previously created schema. As digital experiences change, schemas will need to evolve. As a result, it is required to have the schema version. For more information about schema evolution, check out [the schema composition guide][xdminfo].
+- `{SCHEMA_VERSION}`: The version of the previously created schema. As digital experiences change, schemas will need to evolve. As a result, it is required to have the schema version. For more information about schema evolution, please read [the schema composition guide][xdminfo].
 - `{SCHEMA_REF_ID}`: The `$id` that you previously received when you composed the XDM schema. It should look something like this: `"https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}"`
 
 
@@ -820,9 +825,11 @@ An example of a successful response can be found below:
 ```
 
 
-### Step 4: Call Streaming Ingestion APIs to ingest an XDM ExperienceEvent
+### Call Streaming Ingestion APIs to ingest an XDM ExperienceEvent
 
 Now, you can send some XDM formatted JSON records to create an ExperienceEvent within Platform.
+
+>**Note:** The following API call does **not** require any authentication headers.
 
 #### Request
 
@@ -905,9 +912,9 @@ curl -X POST "https://dcs.adobedc.net/collection/{INLET_ID}?synchronousValidatio
 
 Where: 
 
-- `{IMS_ORG}`:  Your IMS organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG}`:  Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 - `{SCHEMA_ID}`: The ID of the previously created schema. 
-- `{SCHEMA_VERSION}`: The version of the previously created schema. As digital experiences change, schemas will need to evolve. As a result, it is required to have the schema version. For more information about schema evolution, check out [the schema composition guide][xdminfo].
+- `{SCHEMA_VERSION}`: The version of the previously created schema. As digital experiences change, schemas will need to evolve. As a result, it is required to have the schema version. For more information about schema evolution, please read [the schema composition guide][xdminfo].
 - `{DATASET_ID}`: The ID of the previously created dataset.
 - `{SCHEMA_REF_ID}`: The `$id` that you previously received when you composed the XDM schema. It should look something like this: `"https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}"` 
 
@@ -933,7 +940,7 @@ Where:
 
 
 
-### Step 5: Retrieve the newly persisted XDM ExperienceEvent back from Unified Profile
+### Retrieve the newly persisted XDM ExperienceEvent back from Unified Profile
 
 Now, you can use the Profile Access APIs to read the ExperienceEvent you just sent back.
 
@@ -952,9 +959,9 @@ Where:
 
 - `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
 - `{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
-- `{IMS_ORG_ID}` : Your IMS organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG_ID}` : Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 
-> **Note:** To find your API Key and IMS org ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
+> **Note:** To find your API Key and IMS Organization ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
 
 #### Response
 
@@ -1043,7 +1050,7 @@ Now that you are able to get your data into Adobe Experience Platform, you can s
 
 [3]: https://console.adobe.io/
 
-[apispecs]: streaming_endpoint_registration/streaming_endpoint_registration.md
+[apispecs]: ./streaming_endpoint_registration/streaming_endpoint_registration.md
 
 [standardnamespace]: ../identity_services_architectural_overview/identity_services_faq.md
 
@@ -1054,17 +1061,14 @@ Now that you are able to get your data into Adobe Experience Platform, you can s
 
 [identityapi]: ../identity_services_architectural_overview/identity_services_architectural_overview.md
 
+[xdm]: ../schema_registry/xdm_system/xdm_system_in_experience_platform.md
+[rtcp]: ../unified_profile_architectural_overview/unified_profile_architectural_overview.md
 
 [xdminfo]: ../schema_registry/schema_composition/schema_composition.md
 
 [schema-registry]: ../schema_registry/schema_registry_developer_guide.md
 
-[profileapi]: ../unified_profile_architectural_overview/unified_profile_architectural_overview.md
-
-
-[customerprofiles]: ../unified_profile_architectural_overview/unified_profile_architectural_overview.md
-
-[adc]: authenticated_data_collection.md
+[adc]: ./authenticated_data_collection.md
 
 [identity-descriptor]: ../schema_registry/schema_registry_developer_guide.md#descriptors
 
