@@ -1,0 +1,67 @@
+{
+  "name":"adobe_experience_platform_permissions_and_sandboxes",
+  "version":"1.0.0",
+  "description":"Adobe Experience Platform Permissions and Sandboxes",
+  "author":"Wendy Braun",
+  "view_type":"mdbook",
+  "meta_keywords":"Adobe Experience Platform, Services, Experience Platform, Data Services, Permissions, Sandboxes, Administrator, Admin Console",
+  "meta_description":"",
+  "publish_date":"10/11/2019",
+  "show_edit_github_banner":false,
+  "base_path":"https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
+  "pages":[
+    {
+      "path":"api-specification/markdown/narrative/technical_overview/access-control/access-control-overview.md",
+      "title":"Access control overview",
+      "description":"Access control for Experience Platform links users with access permissions and sandboxes through the Adobe Admin Console.",
+      "pages":[
+        {
+          "pages":[],
+          "path":"api-specification/markdown/narrative/technical_overview/access-control/access-control-developer-guide.md",
+          "title":"Access control developer guide",
+          "description":"Learn how to use the Access Control API to retrieve active permissions and policies for the current user."
+        },
+        {
+          "pages":[],
+          "path":"api-specification/markdown/narrative/technical_overview/access-control/access-control-user-guide.md",
+          "title":"Access control user guide",
+          "description":"Learn how to perform various access control tasks for Platform using the Admin Console."
+        }
+      ]
+    },
+    {
+      "path":"api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md",
+      "title":"Sandboxes overview",
+      "description":"Adobe Experience Platform provides sandboxes which partition a single Platform instance into separate virtual environments to help develop and evolve digital experience applications.",
+      "pages":[
+        {
+          "pages":[],
+          "path":"api-specification/markdown/narrative/technical_overview/sandboxes/sandbox-developer-guide.md",
+          "title":"Sandbox developer guide",
+          "description":"Learn how to use the Sandbox API to manage sandboxes in Experience Platform."
+        },
+        {
+          "pages":[],
+          "path":"api-specification/markdown/narrative/technical_overview/sandboxes/sandbox-user-guide.md",
+          "title":"Sandbox user guide",
+          "description":"Learn how to perform various tasks related to sandboxes within the Experience Platform user interface."
+        }
+      ]
+    }
+  ],
+  "app2app_map":{
+    "api-specification/markdown/narrative/tutorials/":"/apis/experienceplatform/home/tutorials/alltutorials.html",
+    "acpdr/swagger-specs/":"/apis/experienceplatform/home/api-reference.html",
+    "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+    "api-specification/markdown/narrative/technical_overview/identity_namespace_overview": "apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+    "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+    "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md":"/apis/experienceplatform/home/services/allservices.html",
+    "end-user/markdown/query-service/qs-intro.md":"/apis/experienceplatform/home/services/query-service/query-service.html",
+    "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_overview.md":"/apis/experienceplatform/home/data-science-workspace/dsw-overview.html",
+    "end-user/markdown/segmentation_overview/segmentation.md":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+    "api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/batch_data_ingestion_developer_guide.md":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
+    "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/":"/apis/experienceplatform/home/services/troubleshooting.html",
+    "api-specification/markdown/narrative/integration_guides/etl_integration_guide/":"/apis/experienceplatform/home/services/allservices.html",
+    "api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
+  }
+}
