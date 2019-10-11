@@ -6,7 +6,7 @@ Adobe Experience Platform allows you to build and create custom Feature Pipeline
 This document describes the various classes found in a Feature Pipeline, and provides a step-by-step tutorial for creating a custom Feature Pipeline using the [Model Authoring SDK](../../../../technical_overview/data_science_workspace_overview/model_authoring_sdk/model_authoring_sdk_guide.md) in PySpark and Spark.
 
 The tutorial covers the following steps:
-1.  [Implement your Feature Pipeline classes](#implement-your-feature-pipeline)
+1.  [Implement your Feature Pipeline classes](#implement-your-feature-pipeline-classes)
     1.  [Define variables in a configuration file](#define-variables-in-the-configuration-json-file)
     2.  [Prepare the input data with DataLoader](#prepare-the-input-data-with-dataloader)
     3.  [Transform a dataset with DatasetTransformer](#transform-a-dataset-with-datasettransformer)
@@ -541,10 +541,10 @@ Successfully building your Feature Pipeline will generate a `.jar` artifact in t
 
 ## Create a Feature Pipeline Engine using the API
 
-Now that you have authored your Feature Pipeline and built the binary artifact, you can [create a Feature Pipeline Engine using the Sensei Machine Learning API](/api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/sensei/sensei_dev_guide.md#create-a-feature-pipeline-engine-using-binary-artifacts). Successfully creating a Feature Pipeline Engine will provide you with an Engine ID as part of the response body, make sure to save this value before continuing to the next steps.
+Now that you have authored your Feature Pipeline and built the binary artifact, you can [create a Feature Pipeline Engine using the Sensei Machine Learning API](../../../../technical_overview/data_science_workspace_overview/sensei/sensei_dev_guide.md#create-a-feature-pipeline-engine-using-binary-artifacts). Successfully creating a Feature Pipeline Engine will provide you with an Engine ID as part of the response body, make sure to save this value before continuing to the next steps.
 
 ## Next steps
 
 [//]: # (Next steps section should refer to tutorials on how to score data using the Feature Pipeline Engine. Update this document once those tutorials are available)
 
-By reading this document, you have authored a Feature Pipeline using the Model Authoring SDK, built a binary artifact, and used the artifact to create a Feature Pipeline Engine through an API call. You are now ready to [create a Feature Pipeline Model](/api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/sensei/sensei_dev_guide.md#create-an-mlinstance) using your newly created Engine and start transforming datasets and extracting data features at scale.
+By reading this document, you have authored a Feature Pipeline using the Model Authoring SDK, built a binary artifact, and used the artifact to create a Feature Pipeline Engine through an API call. You are now ready to [create a Feature Pipeline Model](../../../../technical_overview/data_science_workspace_overview/sensei/sensei_dev_guide.md#create-an-mlinstance) using your newly created Engine and start transforming datasets and extracting data features at scale.

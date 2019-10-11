@@ -115,6 +115,8 @@
   ],
   "app2app_map": {
     "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_prebuilt_recipes/":"/apis/experienceplatform/home/data-science-workspace/dsw-overview.html",
+    "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/model_authoring_sdk/":"/apis/experienceplatform/home/data-science-workspace/dsw-overview.html",
+    "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/sensei/":"/apis/experienceplatform/home/data-science-workspace/dsw-overview.html",
     "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/":"/apis/experienceplatform/home/data-science-workspace.html",
     "api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html",
     "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/":"/apis/experienceplatform/home/services/allservices.html", 
