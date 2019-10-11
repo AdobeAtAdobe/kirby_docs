@@ -266,7 +266,7 @@ The following example shows what the `segmentMembership` attribute looks like fo
 * `validUntil`: The timestamp for when the segment assertion should no longer be assumed to be valid and should either be ignored or revalidated.
 * `status`: The status of segment participation as part of the current request. Must be equal to one of the following known values:
     * `existing`: Entity continues to be in the segment.
-    * `entering`: Entity is entering the segment.
+    * `realized`: Entity is entering the segment.
     * `exited`: Entity is exiting the segment.
 
 ## Access segment results
