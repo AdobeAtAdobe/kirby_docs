@@ -98,6 +98,6 @@ The _Users_ tab for the product profile reappears, where the added user is now l
 
 ![](images/user-added.png)
 
- ## Next steps
+## Next steps
 
 Repeat the above steps to continue adding users as necessary. Now that you have learned how to control access to Platform features through the Admin Console, see the appendix section in the [access control overview](access-control-overview.md) to learn more about each individual permission and the Platform functionalities they grant access to.  
