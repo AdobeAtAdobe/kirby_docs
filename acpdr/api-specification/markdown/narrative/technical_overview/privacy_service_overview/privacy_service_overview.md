@@ -18,9 +18,7 @@ For more information on how to set up your organization's data operations to be 
 
 The [California Consumer Privacy Act](https://www.caprivacy.org/about) (CCPA) enhances privacy rights and consumer protection for residents of California, United States, and is set to become effective on January 1, 2020.
 
-The CCPA provides new data privacy rights to California residents such as the right to access and delete their personal data, to know whether their personal data is sold or disclosed (and to whom), and to refuse the sale of their personal data.
-
-In anticipation of the CCPA, Privacy Service will support requests to opt out from the selling of personal data. 
+The CCPA provides new data privacy rights to California residents, including the right to access and delete their personal data and to know whether their personal data is sold or disclosed (and to whom). In anticipation of the CCPA, the November 2019 release of Privacy Service will support CCPA access and delete requests.
 
 ## How to use Privacy Service to manage privacy job requests
 
