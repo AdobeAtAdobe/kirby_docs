@@ -238,32 +238,25 @@ The following example shows what the `segmentMembership` attribute looks like fo
   "segmentMembership": {
     "UPS": {
       "04a81716-43d6-4e7a-a49c-f1d8b3129ba9": {
-        "version": "15",
         "timestamp": "2018-04-26T15:52:25+00:00",
-        "validUntil": "2019-04-26T15:52:25+00:00",
         "status": "existing"
       },
       "53cba6b2-a23b-454a-8069-fc41308f1c0f": {
-        "version": "3",
         "lastQualificationTime": "2018-04-26T15:52:25+00:00",
-        "validUntil": "2018-04-27T15:52:25+00:00",
         "status": "realized"
       }
     },
     "Email": {
       "abcd@adobe.com": {
-        "version": "1",
         "lastQualificationTime": "2017-09-26T15:52:25+00:00",
-        "validUntil": "2017-12-26T15:52:25+00:00",
         "status": "exited"
       }
     }
   }
 }
 ```
-* `version`: The version of the segment definition used in this segment assertion.
+
 * `lastQualificationTime`: The timestamp when the assertion of segment membership was made and the profile entered or exited the segment.
-* `validUntil`: The timestamp for when the segment assertion should no longer be assumed to be valid and should either be ignored or revalidated.
 * `status`: The status of segment participation as part of the current request. Must be equal to one of the following known values:
     * `existing`: Entity continues to be in the segment.
     * `realized`: Entity is entering the segment.
