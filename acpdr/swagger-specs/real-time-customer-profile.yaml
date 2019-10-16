@@ -2804,11 +2804,11 @@ definitions:
       code:
         type: string
         example: 0080000018
-        description: Batch segmentation job error code
+        description: batch segmentation job error code
       msg:
         type: string
         example: 'com.microsoft.azure.documentdb.DocumentClientException: Message: {"Errors":["Request rate is large"]}'
-        description: Batch segmentation job error message
+        description: batch segmentation job error message
       callStack:
         type: string
         description: Call stack
@@ -2826,11 +2826,11 @@ definitions:
         description: Segment job request ID
       imsOrgId:
         type: string
-        example: 1BD6382559DF0C130A49422D@AdobeOrg
+        example: {IMG_ORG}
         description: IMS Org ID
       profileInstanceId:
         type: string
-        example: 1BD6382559DF0C130A49422D@AdobeOrg
+        example: {PROFILE_INSTANCE}
         description: Profile instance ID
       status:
         type: string
@@ -2838,16 +2838,21 @@ definitions:
         description: Job status
         enum:
           - NEW
+          - QUEUED
           - PROCESSING
           - CANCELLING
           - CANCELLED
           - FAILED
           - SUCCEEDED
+      batchId:
+        type: string
+        example: 65e18145-a5e8-4993-94f3-c70fadaa1fef
+        description: 'ID of the batch.'
       computeJobId:
         type: integer
         format: int64
         example: 1
-        description: Compute job ID
+        description: Compute job id
       computeGatewayJobId:
         type: string
         example: c3505859-d256-45d0-a6f3-c25f8f8508f5
@@ -2880,6 +2885,16 @@ definitions:
             $ref: '#/definitions/FeedbackMetrics'
           profileSegmentationTime:
             $ref: '#/definitions/FeedbackMetrics'
+          totalProfile:
+            type: integer
+            format: int64
+            example: 1233456789000
+            description: 'Total number of scanned profiles'
+          segmentedProfileCounter:
+            type: object
+            description: A map from segment IDs to the number of merged profiles in those segments.
+            additionalProperties:
+              type: number
         description: Segment job request metrics
       requestId:
         type: string
@@ -2893,7 +2908,7 @@ definitions:
         type: object
         description: Useful links to get the job status or cancel a submitted job.
         additionalProperties:
-          type: number
+          type: string
   Expression:
     type: object
     properties:
