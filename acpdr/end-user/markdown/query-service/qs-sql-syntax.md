@@ -113,8 +113,6 @@ Please note that for a given INSERT INTO query:
 1. The `SELECT` statement MUST NOT be enclosed in parentheses ().
 2. The schema of the result of the `SELECT` statement must conform to that of the table defined in the `INSERT INTO` statement.
 
-## Spark SQL commands 
-
 ### DROP TABLE
 Drop a table and delete the directory associated with the table from the file system if this is not an EXTERNAL table. If the table to drop does not exist, an exception occurs.
 
@@ -125,6 +123,40 @@ DROP [TEMP] TABLE [IF EXISTS] [db_name.]table_name
 Parameters
 -  `IF EXISTS`: If the table does not exist, nothing happens
 - `TEMP`: Temporary table 
+
+## CREATE VIEW
+
+The following syntax defines a `CREATE VIEW` query supported by Query Service:
+
+```
+CREATE [ OR REPLACE ] VIEW view_name AS select_query
+```
+
+Where `view_name` is the name of view to be created
+and `select_query` is a `SELECT` statement, the syntax of which is defined above in this document.
+
+Example:
+```
+CREATE VIEW V1 AS SELECT color, type FROM Inventory
+CREATE OR REPLACE VIEW V1 AS SELECT model, version FROM Inventory
+```
+
+### DROP VIEW
+The following syntax defines a `DROP VIEW` query supported by Query Service:
+
+```
+DROP VIEW [IF EXISTS] view_name
+```
+
+Where `view_name` is the name of view to be deleted
+
+Example:
+```
+DROP VIEW v1
+DROP VIEW IF EXISTS v1
+```
+
+## Spark SQL commands 
 
 ### SET
 Set a property, return the value of an existing property, or list all existing properties. If a value is provided for an existing property key, the old value is overridden.
