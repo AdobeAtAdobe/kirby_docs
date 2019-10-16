@@ -19,6 +19,25 @@ This tutorial uses **ngrok**, a software product which exposes local servers to 
 
 ## Create a local server
 
+Your Node.js server must return a `challenge` parameter sent by a request to the root (`/`) endpoint. Set up your `index.js` file with the following JavaScript to accomplish this:
+
+```js
+var express = require('express')
+var app = express()
+
+app.set('port', (process.env.PORT || 3000))
+app.use(express.static(__dirname + '/public'))
+
+app.get('/', function(request, response) {
+  response.send(request.originalUrl.split('?challenge=')[1]);
+})
+
+app.listen(app.get('port'), function() {
+  console.log("Node app is running at localhost:" + app.get('port'))
+})
+
+```
+
 Using the command line, navigate to the root directory of your Node.js server. Then, type the following commands:
 
 1. `npm install`
@@ -42,21 +61,17 @@ Take note of the `Forwarding` URL (`https://e142b577.ngrok.io`), as this will be
 
 ## Create a new integration using Adobe I/O Console
 
-Navigate to https://console.adobe.io and click **View Integrations**.
+Sign in to [Adobe I/O Console](https://console.adobe.io) and click the **Integrations** tab. The _Integrations_ window appears. From here, click **New integration**.
 
 ![View Integrations in Adobe I/O Console](images/view-integrations.png)
-
-The *Integrations* page appears. From here, click **New Integration**.
-
-![New Integration](images/new-integration.png)
 
 The *Create a new integration* window appears. Select **Receive near-real time events**, then click **Continue**.
 
 ![Create new integration](images/create-new-integration.png)
 
-The next screen provides options to create integrations with different events, products, and services available to your organization based on your subscriptions, entitlements, and permissions. For this integration, select **GDPR Events**, then click **Continue**.
+The next screen provides options to create integrations with different events, products, and services available to your organization based on your subscriptions, entitlements, and permissions. For this integration, select **Privacy Service Events**, then click **Continue**.
 
-![Select GDPR Events](images/gdpr-events-integration.png)
+![Select GDPR Events](images/privacy-events-integration.png)
 
 The *Integration Details* form appears, requiring you to provide a name and description for the integration, as well as a public key certificate.
 
@@ -84,7 +99,9 @@ Once the Event Registration form is completed, click **Create integration** and 
 
 ## View event data
 
-Once you have created your I/O integration and privacy jobs have been processed, you can view any received notifications from the **Integrations** tab in I/O Console. Navigate to your event registration and click **View**.
+Once you have created your I/O integration and privacy jobs have been processed, you can view any received notifications for that integration. From the **Integrations** tab in I/O Console, navigate to your integration and click **View**.
+
+![View Integration](images/view-integration-button.png)
 
 ![View Event Registration](images/view-event-registration.png)
 
