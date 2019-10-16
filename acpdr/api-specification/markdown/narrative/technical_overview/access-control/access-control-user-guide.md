@@ -80,7 +80,7 @@ The _Permissions_ tab for the product profile reappears, and shows that the sele
 
 ## Manage users for a product profile
 
-To assign or remove users from a product profile, open the profile's details page an navigate to the _Users_ tab. From here, click **Add User**.
+To assign or remove users from a product profile, open the profile's details page and navigate to the _Users_ tab. From here, click **Add User**.
 
 ![](images/add-users-button.png)
 
