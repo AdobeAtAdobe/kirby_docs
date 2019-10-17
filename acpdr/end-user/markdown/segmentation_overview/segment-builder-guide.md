@@ -44,7 +44,8 @@ The **Events** tab contains ExperienceEvent data elements. The sections of this 
   
 ![](images/events-tab.png)  
 
-### The Segments tab
+### The Segments tab 
+<!---> Will need to update this once the UI changes so they are all merged to Audience.<--->
 
 The **Segments** tab lists all previously created segments.
 
@@ -60,6 +61,20 @@ By default, only the populated schema fields from your data store are shown. To 
 
 > **Note:** Custom schema fields defined by your organization may take up to 24 hours to appear in the rule builder canvas and become available for use in building rules. More information on the rule builder canvas can be found in the next section.
 
+### The Audiences tab
+
+The **Audience** tab lists all segments imported from external sources, such as Adobe Audience Manager.
+
+Within the Audiences tab, it will display all the available sources as a group of **folders**.
+
+![](images/audience-folder.png)
+
+Within these folders, a list of the available audiences can be seen.
+
+Any type of Audience can be searched for by typing its name in the search bar. The search results begin to populate as entire words are entered. For example, to find an Audience named `Run 3 Segment folder`, start typing "Segment" in the search field. After typing in the word "Segment", results will begin to appear, as seen below.
+
+![](images/audience-find-field.png)
+
 ## Rule builder canvas
 
 A segment definition is a collection of rules used to describe key characteristics or behavior of a target audience. These rules are created using the *rule builder canvas*, located in the center of Segment Builder, as seen here:
@@ -72,9 +87,19 @@ To add a new rule to your segment definition, drag a tile from the left-hand rai
   * Experience Events
   * Segments
 
+### Adding segments
+
 You can also drag a segment from the segments tab onto the rule builder canvas to reuse its component in the new segment definition. Doing this adds the segment's attributes and events to the *Attributes* and *Events* sections of the new segment, respectively. 
 
 ![](images/segments-tab-reusing-segment.png)
+
+### Adding audiences
+
+You can also drag an audience from the audience tab onto the rule builder canvas to reference its audience membership in the new segment definition. This will allow you to include or exclude audience membership as an attribute in the new segment rule.
+
+![](images/adding-audience-to-segment.png)
+
+>**Note:** Since only audience membership is referenced, the rules used to define the audience are **not** included or referenced, and therefore, cannot be modified.
 
 ## Segment properties 
 

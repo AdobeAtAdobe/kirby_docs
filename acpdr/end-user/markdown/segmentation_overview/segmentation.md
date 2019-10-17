@@ -202,12 +202,18 @@ As seen in the table below, event data is rendered using keywords which help ref
 |----------------|---------------|
 |Include/exclude|Describes the behavior of the event through the inclusion or omission of data.|
 |Any/all|Helps determine the number of qualifying segments.|
-|"Apply time rule" toggle button|Encorporates date data.|
-|Equals, does not equal, starts with, does not start with, ends with, does not end with, contains, does not contain, exists, does not exist|Encorporates string data.|
+|"Apply time rule" toggle button|Incorporates date data.|
+|Equals, does not equal, starts with, does not start with, ends with, does not end with, contains, does not contain, exists, does not exist|Incorporates string data.|
 
 ### Segments
 
 Existing segment definitions can also be used as components of a new segment definition, adding their attribute and event-based rules to the new segment.
+
+### Audiences
+
+External audiences can also be used as components of a new segment definition, adding their attribute rules to the new segment.
+
+Currently, only Adobe Audience Manager is supported as an audience. Additional sources will be enabled in the future.
 
 ### Other data types
 
