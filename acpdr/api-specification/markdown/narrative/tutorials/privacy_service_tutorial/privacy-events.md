@@ -35,7 +35,6 @@ app.get('/', function(request, response) {
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'))
 })
-
 ```
 
 Using the command line, navigate to the root directory of your Node.js server. Then, type the following commands:
@@ -77,19 +76,19 @@ The *Integration Details* form appears, requiring you to provide a name and desc
 
 ![Integration details](images/integration-details.png)
 
-If you do not have a public key, you can generate one by using the following terminal command:
+If you do not have a public certificate, you can generate one by using the following terminal command:
 
 ```shell
 openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout private.key -out certificate_pub
 ```
 
-Once you have generated a key, drag and drop the file into the **Public keys certificates** box, or click **Select a File** to browse your file directory and select the key directly.
+Once you have generated a certificate, drag and drop the file into the **Public keys certificates** box, or click **Select a File** to browse your file directory and select the certificate directly.
 
 After adding your certificate, the *Event Registration* option appears. Click **Add Event Registration**.
 
 ![Add Event Registration](images/add-event-registration.png)
 
-The dialog expands to show additional controls. Here you can select your desired event types and register your webhook. Enter a name for the event registration, the webhook URL (the `Forwarding` address returned when you initially [created the webhook](#create-a-webhook-using-ngrok)), as well as a brief description. Finally, select the event types you wish to subscribe to, then click **Save** to complete the I/O integration.
+The dialog expands to show additional controls. Here you can select your desired event types and register your webhook. Enter a name for the event registration, the webhook URL (the `Forwarding` address returned when you initially [created the webhook](#create-a-webhook-using-ngrok)), as well as a brief description. Finally, select the event types you wish to subscribe to, then click **Save**.
 
 ![Event Registration form](images/event-registration-form.png)
 
@@ -102,6 +101,8 @@ Once the Event Registration form is completed, click **Create integration** and 
 Once you have created your I/O integration and privacy jobs have been processed, you can view any received notifications for that integration. From the **Integrations** tab in I/O Console, navigate to your integration and click **View**.
 
 ![View Integration](images/view-integration-button.png)
+
+The details page for the integration appears. Click **Events** to view the event registrations for the integration. Locate the Privacy Events registration and click **View**.
 
 ![View Event Registration](images/view-event-registration.png)
 
