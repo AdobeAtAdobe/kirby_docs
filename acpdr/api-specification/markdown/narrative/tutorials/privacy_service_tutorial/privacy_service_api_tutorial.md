@@ -12,7 +12,7 @@ Steps for performing the following tasks are covered in this tutorial:
 
 ## Getting started
 
-You are required to have completed the [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+You are required to have completed the [authentication tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
 * Authorization: Bearer `{ACCESS_TOKEN}`
 * x-api-key: `{API_KEY}`
@@ -29,9 +29,6 @@ The first step in creating a new job request is to gather your customer data. As
 The Privacy Service API supports two kinds of job requests for private customer data:
 
 * [Access and/or delete](#create-an-access/delete-job): Access (read) or delete private customer data.
-* [Opt out of sale](#create-an-opt-out-of-sale-job): Mark private customer data as not to be sold.
-
-> **Important:** While access and delete requests can be combined as a single API call, opt-out requests must be made separately.
 
 ### Create an access/delete job
 
@@ -49,7 +46,7 @@ The following request creates a new job request, configured by the attributes su
 
 ```shell
 curl -X POST \
-  https://platform.adobe.io/data/privacy/gdpr \
+  https://platform.adobe.io/data/core/privacy/jobs \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
@@ -99,7 +96,8 @@ curl -X POST \
     "include": ["Analytics", "AudienceManager"],
     "expandIds": false,
     "priority": "normal",
-    "analyticsDeleteMethod": "anonymize"
+    "analyticsDeleteMethod": "anonymize",
+    "regulation": "ccpa"
 }'
 ```
 
@@ -124,6 +122,7 @@ curl -X POST \
 * `analyticsDeleteMethod`: *(Optional)*: Specifies how Analytics should handle the customer data. Two possible values are accepted for this attribute:
     * `anonymize`: All data referenced by the given collection of user IDs is made anonymous. If `analyticsDeleteMethod` is omitted, this is the default behavior.
     * `purge`: All data is removed completely.
+* `regulation`: **(Required)** The regulation for the request (must be either "gdpr" or "ccpa").
 
 #### Response
 
@@ -193,7 +192,7 @@ The following request retrieves the details of the job whose `jobId` is provided
 
 ```shell
 curl -X GET \
-  https://platform.adobe.io/data/privacy/gdpr/6fc09b53-c24f-4a6c-9ca2-c6076b0842b6 \
+  https://platform.adobe.io/data/core/privacy/jobs/6fc09b53-c24f-4a6c-9ca2-c6076b0842b6 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -249,7 +248,8 @@ A successful response returns the details of the specified job.
             }
         }
     ],
-    "downloadURL": "http://..."
+    "downloadURL": "http://...",
+    "regulation": "ccpa"
 }
 ```
 
@@ -275,13 +275,13 @@ You can view a list of all available job requests within your organization by ma
 
 #### API format
 
-This request format uses a `data=true` query parameter on the root (`/`) endpoint, therefore it begins with a question mark (`?`) as shown below. The response is paginated, allowing you to use other query parameters (`page` and `size`) to filter the response. You can separate multiple parameters using ampersands (`&`).
+This request format uses a `regulation` query parameter on the root (`/`) endpoint, therefore it begins with a question mark (`?`) as shown below. The response is paginated, allowing you to use other query parameters (`page` and `size`) to filter the response. You can separate multiple parameters using ampersands (`&`).
 
 ```http
-GET ?data=true
-GET ?data=true&page={PAGE}
-GET ?data=true&size={SIZE}
-GET ?data=true&page={PAGE}&size={SIZE}
+GET ?regulation={REGULATION}
+GET ?regulation={REGULATION}&page={PAGE}
+GET ?regulation={REGULATION}&size={SIZE}
+GET ?regulation={REGULATION}&page={PAGE}&size={SIZE}
 ```
 * `{REGULATION}`: The regulation type to query for, includes choices ['gdpr','ccpa'].
 * `{PAGE}`: The page of data to be displayed, using 0-based numbering. The default is `0`.
@@ -293,7 +293,7 @@ The following request retrieves a paginated list of all jobs within an IMS Organ
 
 ```shell
 curl -X GET \
-  https://platform.adobe.io/data/privacy/gdpr?data=true&page=2&size=50 \
+  https://platform.adobe.io/data/core/privacy/jobs?regulation=gdpr&page=2&size=50 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
@@ -301,7 +301,7 @@ curl -X GET \
 
 #### Response
 
-The above request returns a list of 50 jobs starting on the third page of results. Each job is returned with details, including its `jobId`. A successful response returns the details of a list of 50 jobs, starting on the second page of results.
+A successful response returns a list of jobs, with each job containing details such as its `jobId`. In this example, the response would contain a list of 50 jobs, starting on the third page of results. 
 
 ### Accessing subsequent pages
 
