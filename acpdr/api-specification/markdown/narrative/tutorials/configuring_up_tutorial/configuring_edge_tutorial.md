@@ -1,12 +1,12 @@
 # Configure edge destinations and projections using APIs
 
-This document provides a tutorial for configuring edge destinations and projections using the [Real-time Customer Profile API](../../../../../../acpdr/real-time-customer-profile.yaml). The tutorial covers the following actions:
+This tutorial provides step-by-step instructions for working with edge destinations and projections using the [Real-time Customer Profile API](../../../../../../acpdr/real-time-customer-profile.yaml), including:
 
 * [Listing existing destinations](#list-destinations)  
 * [Creating a destination](#create-a-destination)  
 * [Listing projection configurations](#list-projection-configurations)  
 * [Creating a projection configuration](#create-a-projection-configuration)
-    * [Configuring the `selector` parameter](#selector)
+    * [Configuring selector parameters](#selector)
 
 ## Getting started
 
