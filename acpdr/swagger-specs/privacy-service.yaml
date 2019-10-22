@@ -16,8 +16,8 @@ info:
 
     API paths:
       * PLATFORM Gateway URL: https://<span>platform.adobe.io/
-      * Base path for this API: /data/privacy/gdpr
-      * Example of a complete path: https://<span>platform.adobe.io/data/privacy/gdpr/ping
+      * Base path for this API: /data/core/privacy/jobs
+      * Example of a complete path: https://<span>platform.adobe.io/data/core/privacy/jobs/ping
     
     Required headers:
       * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
@@ -692,6 +692,7 @@ definitions:
     required:
       - companyContexts
       - users
+      - regulation
     properties:
       companyContexts:
         type: array
@@ -717,12 +718,15 @@ definitions:
           type: string
       expandIds:
         type: boolean
-      analyticsDeleteMethod:
-        type: string
-        enum: [anonymize,purge]
       priority:
         type: string
         enum: [low,normal]
+      analyticsDeleteMethod:
+        type: string
+        enum: [anonymize,purge]
+      regulation:
+        type: string
+        enum: [ccpa,gdpr]
   A GDPR Response model:
     type: object
     properties:
