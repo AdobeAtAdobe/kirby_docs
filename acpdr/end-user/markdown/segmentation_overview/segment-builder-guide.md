@@ -67,13 +67,17 @@ The **Audience** tab lists all segments imported from external sources, such as 
 
 Within the Audiences tab, it will display all the available sources as a group of **folders**.
 
-![](images/audience-folder.png)
+![](images/audience-folder-structure.png)
 
 Within these folders, a list of the available audiences can be seen.
 
-Any type of Audience can be searched for by typing its name in the search bar. The search results begin to populate as entire words are entered. For example, to find an Audience named `Run 3 Segment folder`, start typing "Segment" in the search field. After typing in the word "Segment", results will begin to appear, as seen below.
+![](images/audience-folder-hierarchy.png)
 
-![](images/audience-find-field.png)
+Additionally, you can see the full folder hierarchy by clicking the highlighted button.
+
+Any type of Audience can be searched for by typing its name in the search bar. The search results begin to populate as entire words are entered. For example, to find an Audience named `Sample Audience 5`, start typing "Audience" in the search field. After typing in the word "Audience", results will begin to appear, as seen below.
+
+![](images/new-audience-find-field.png)
 
 ## Rule builder canvas
 
