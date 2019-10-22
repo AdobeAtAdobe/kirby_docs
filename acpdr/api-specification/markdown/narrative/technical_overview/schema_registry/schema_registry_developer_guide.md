@@ -235,7 +235,7 @@ You can view a list of all resources (schemas, classes, mixins, or data types) w
 The most common query parameters include:
 * `limit` - Limit the number of resources returned. Example: `limit=5` will return a list of five resources.
 * `orderby` - Sort results by a specific property. Example: `orderby=title` will sort results by title in ascending order (A-Z). Adding a `-` before title (`orderby=-title`) will sort items by title in descending order (Z-A). 
-* `property` - Filter results on any top-level attributes. Example: `property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile` returns only mixins that are compatible with the XDM Profile class.
+* `property` - Filter results on any top-level attributes. Example: `property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile` returns only mixins that are compatible with the XDM Individual Profile class.
 
 When combining multiple query parameters, they must be separated by ampersands (`&`).
 
@@ -283,7 +283,7 @@ The request above used the `application/vnd.adobe.xed-id+json` Accept header, th
         "version": "1"
     },
     {
-        "title": "XDM Profile",
+        "title": "XDM Individual Profile",
         "$id": "https://ns.adobe.com/xdm/context/profile",
         "meta:altId": "_xdm.context.profile",
         "version": "1"
@@ -632,7 +632,7 @@ Performing a GET request to list all data types in the tenant container would no
 
 Mixins are a set of fields used to describe a particular concept, such as "address" or "profile preferences". There are numerous standard mixins available, or you can define your own when you wish to capture information that is unique to your organization. Each mixin contains a `meta:intendedToExtend` field which lists the classes the mixin is compatible with. 
 
-You may find it helpful to review all available mixins to familiarize yourself with the fields included in each. You can list (GET) all mixins compatible with a particular class by performing a request against each of the "global" and "tenant" containers, returning only those mixins where the "meta:intendedToExtend" field matches the class you're using. The examples below will return all mixins that can be used with the XDM Profile class: 
+You may find it helpful to review all available mixins to familiarize yourself with the fields included in each. You can list (GET) all mixins compatible with a particular class by performing a request against each of the "global" and "tenant" containers, returning only those mixins where the "meta:intendedToExtend" field matches the class you're using. The examples below will return all mixins that can be used with the XDM Individual Profile class: 
 
 ```http
 GET /global/mixins?property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile
@@ -1505,7 +1505,7 @@ By enabling a schema for use with Profile, you are indicating that the data the 
 
 ### Union view
 
-Union views are system-generated, read-only schemas that aggregate the fields of all Profile-enabled schemas which share the same class (XDM ExperienceEvent or XDM Profile). See the section on unions in the [basics of schema composition](schema_composition/schema_composition.md#union) for more information.
+Union views are system-generated, read-only schemas that aggregate the fields of all Profile-enabled schemas which share the same class (XDM ExperienceEvent or XDM Individual Profile). See the section on unions in the [basics of schema composition](schema_composition/schema_composition.md#union) for more information.
 
 The Schema Registry automatically includes three mixins within the union schema: `identityMap`, `timeSeriesEvents`, and `segmentMembership`.
 
@@ -1627,7 +1627,7 @@ A successful response returns HTTP status 200 (OK) and a `results` array in the 
 {
     "results": [
         {
-            "title": "XDM Profile",
+            "title": "XDM Individual Profile",
             "$id": "https://ns.adobe.com/xdm/context/profile__union",
             "meta:altId": "_xdm.context.profile__union",
             "version": "1"
@@ -1736,7 +1736,7 @@ GET /tenant/schemas?property=meta:immutableTags==union&property=meta:class=={CLA
 
 #### Request
 
-The following request looks up all schemas that are part of the XDM Profile class union.
+The following request looks up all schemas that are part of the XDM Individual Profile class union.
 
 ```SHELL
 curl -X GET \

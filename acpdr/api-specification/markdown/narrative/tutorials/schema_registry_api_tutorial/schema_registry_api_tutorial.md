@@ -38,7 +38,7 @@ A schema can be thought of as the blueprint for the data you wish to ingest into
 
 The schema composition process begins with the selection of a class. The class defines key behavioral aspects of the data (record vs time series), as well as the minimum fields that are required to describe the data that will be ingested.
 
-The schema you are making in this tutorial uses the XDM Profile class. XDM Profile is an standard class provided by Adobe for defining record behavior. More information on behavior can be found in [Basics of schema composition](../../technical_overview/schema_registry/schema_composition/schema_composition.md).
+The schema you are making in this tutorial uses the XDM Individual Profile class. XDM Individual Profile is an standard class provided by Adobe for defining record behavior. More information on behavior can be found in [Basics of schema composition](../../technical_overview/schema_registry/schema_composition/schema_composition.md).
 
 To assign a class, an API call is made to create (POST) a new schema in the tenant container. This call includes the class the schema will implement. Each schema may only implement one class.
 
@@ -50,7 +50,7 @@ POST /tenant/schemas
 
 #### Request
 
-The request must include an `allOf` attribute which references the `$id` of a class. This attribute defines the "base class" that the schema will implement. In this example, the base class is the XDM Profile class. The `$id` of the XDM Profile class is used as the value of the `$ref` field in the `allOf` array below.
+The request must include an `allOf` attribute which references the `$id` of a class. This attribute defines the "base class" that the schema will implement. In this example, the base class is the XDM Individual Profile class. The `$id` of the XDM Individual Profile class is used as the value of the `$ref` field in the `allOf` array below.
 
 ```SHELL
 curl -X POST \
@@ -252,7 +252,7 @@ The response shows the newly added mixin in the `meta:extends` array and contain
 
 You can now add another standard mixin by repeating the steps using another mixin. 
 
-> **Note:** It is worthwhile to review all available mixins to familiarize yourself with the fields included in each. You can list (GET) all mixins available for use with a particular class by performing a request against each of the "global" and "tenant" containers, returning only those mixins where the "meta:intendedToExtend" field matches the class you're using. In this case, it is the XDM Profile class, so the XDM Profile `$id` is used: 
+> **Note:** It is worthwhile to review all available mixins to familiarize yourself with the fields included in each. You can list (GET) all mixins available for use with a particular class by performing a request against each of the "global" and "tenant" containers, returning only those mixins where the "meta:intendedToExtend" field matches the class you're using. In this case, it is the XDM Individual Profile class, so the XDM Individual Profile `$id` is used: 
 
 ```http
 GET /global/mixins?property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile
@@ -1087,9 +1087,9 @@ The response shows that the operation was performed successfully, and the schema
 
 ### List schemas in a union
 
-You have now successfully added your schema to the XDM Profile union. In order to see a list of all schemas that are a part of the same union, you can perform a GET request using query parameters to filter the response. 
+You have now successfully added your schema to the XDM Individual Profile union. In order to see a list of all schemas that are a part of the same union, you can perform a GET request using query parameters to filter the response. 
 
-Using the `property` query parameter, you can specify that only schemas containing a `meta:immutableTags` field that have a `meta:class` equal to the `$id` of the XDM Profile class are returned.
+Using the `property` query parameter, you can specify that only schemas containing a `meta:immutableTags` field that have a `meta:class` equal to the `$id` of the XDM Individual Profile class are returned.
 
 #### API Format
 
@@ -1099,7 +1099,7 @@ GET /tenant/schemas?property=meta:immutableTags==union&property=meta:class=={CLA
 
 #### Request
 
-The example request below returns all schemas that are part of the XDM Profile union.
+The example request below returns all schemas that are part of the XDM Individual Profile union.
 
 ```SHELL
 curl -X GET \
@@ -1166,7 +1166,7 @@ The following information supplements the API tutorial.
 
 Throughout this tutorial, a schema is composed to describe the members of a retail loyalty program. 
 
-The schema implements the XDM Profile class and combines multiple mixins; bringing in information about the loyalty members using the standard "Person Details" and "Personal Details" mixins, as well as through a "Loyalty Details" mixin that is defined during the tutorial.
+The schema implements the XDM Individual Profile class and combines multiple mixins; bringing in information about the loyalty members using the standard "Person Details" and "Personal Details" mixins, as well as through a "Loyalty Details" mixin that is defined during the tutorial.
 
 The following shows the completed Loyalty Members schema in JSON format:
 

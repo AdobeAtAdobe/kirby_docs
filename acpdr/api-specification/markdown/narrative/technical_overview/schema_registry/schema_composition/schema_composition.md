@@ -102,13 +102,13 @@ Composing a schema begins by assigning a class. Classes define the behavioral as
 
 A class also determines which mixins will be eligible for use in the schema. This is discussed in more detail in the [mixin](#mixin) section that follows. 
 
-There are standard classes provided with every integration of Experience Platform, known as "Industry" classes. Industry classes are generally accepted industry standards that apply to a broad set of use cases. Examples of Industry classes include the XDM Profile and XDM ExperienceEvent classes provided by Adobe. 
+There are standard classes provided with every integration of Experience Platform, known as "Industry" classes. Industry classes are generally accepted industry standards that apply to a broad set of use cases. Examples of Industry classes include the XDM Individual Profile and XDM ExperienceEvent classes provided by Adobe. 
 
 Experience Platform also allows for "Vendor" classes, which are classes defined by Experience Platform partners and made available to all customers who use that vendor service or application within Platform. 
 
 There are also classes used to describe more specific use cases for individual organizations within Platform, called "Customer" classes. Customer classes are defined by an organization when there are no Industry or Vendor classes available to describe a unique use case. 
 
-For example, a schema representing members of a Loyalty program describes record data about an individual and therefore can be based on the XDM Profile class, a standard Industry class defined by Adobe.
+For example, a schema representing members of a Loyalty program describes record data about an individual and therefore can be based on the XDM Individual Profile class, a standard Industry class defined by Adobe.
 
 ### Mixin
 
@@ -167,13 +167,13 @@ For example, a schema describing purchases made at a retail store might be calle
 
 Another schema which tracks website traffic might be called "Web Visits". It also implements the XDM ExperienceEvent class, but this time combines the standard Web mixin.
 
-The diagram below shows these schemas and the fields contributed by each mixin. It also contains two schemas based on the XDM Profile class, including the "Loyalty Members" schema mentioned previously in this guide.
+The diagram below shows these schemas and the fields contributed by each mixin. It also contains two schemas based on the XDM Individual Profile class, including the "Loyalty Members" schema mentioned previously in this guide.
 
 ![](images/schema_composition.png)
 
 ### Union
 
-While Experience Platform allows you to compose schemas for particular use cases, it also allows you to see a "union" of schemas for a specific class type. The previous diagram shows two schemas based on the XDM ExperienceEvent class and two schemas based on XDM Profile class. The union, shown below, aggregates the fields of all schemas that share the same class (XDM ExperienceEvent and XDM Profile, respectively). 
+While Experience Platform allows you to compose schemas for particular use cases, it also allows you to see a "union" of schemas for a specific class type. The previous diagram shows two schemas based on the XDM ExperienceEvent class and two schemas based on XDM Individual Profile class. The union, shown below, aggregates the fields of all schemas that share the same class (XDM ExperienceEvent and XDM Individual Profile, respectively). 
 
 ![](images/union_schema.png)
 

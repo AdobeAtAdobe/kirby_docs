@@ -4,7 +4,7 @@ layout: default
 
 # Profile
 
-XDM Profiles are a singular representation of the attributes of identified and
+XDM Individual Profiles are a singular representation of the attributes of identified and
 partially identified persons. Profiles that are highly identified maybe used for
 personal communications or highly targeted engagements and can contain detailed
 personal information such as names, gender, date of birth, locations, and contact
@@ -17,8 +17,8 @@ become richer as the person interacting with brand becomes more engaged and
 ultimately signs-on to notifications, subscriptions, purchases and other
 connections with the brand that enrich and fill out the profile.
 
-XDM Profile can contain personal information, identification information, contact
-details and communication preferences. Over time XDM Profile will expand to cater
+XDM Individual Profile can contain personal information, identification information, contact
+details and communication preferences. Over time XDM Individual Profile will expand to cater
 for other Profile data such as preference, propensities and other attributes.
 
 

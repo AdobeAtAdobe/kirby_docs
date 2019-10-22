@@ -113,7 +113,7 @@ Multi-entity segmentation provides the flexibility needed to identify audiences 
 ### Use case: Price driven promotion
 To illustrate the value of this advanced segmentation feature, consider a data architect collaborating with a marketer. 
 
-In this example, the data architect is joining data for an individual (made up of schemas with XDM Profile and XDM ExperienceEvent as their base classes) to another class using a key. Once joined, the data architect or the marketer can use these new fields during segment definition as if they were native to the base class schema.
+In this example, the data architect is joining data for an individual (made up of schemas with XDM Individual Profile and XDM ExperienceEvent as their base classes) to another class using a key. Once joined, the data architect or the marketer can use these new fields during segment definition as if they were native to the base class schema.
 
 **The problem**
 

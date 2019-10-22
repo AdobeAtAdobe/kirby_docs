@@ -54,7 +54,7 @@ curl -X GET \
 
 #### Response
 
-A successful response returns a list of XDM fields. All fields prefixed with "pf" are profile fields (XDM Profile), where those prefixed with "tps" are time series fields (XDM ExperienceEvent).
+A successful response returns a list of XDM fields. All fields prefixed with "pf" are profile fields (XDM Individual Profile), where those prefixed with "tps" are time series fields (XDM ExperienceEvent).
 
 ```json
 {

@@ -9,13 +9,13 @@ XDM is defined by a standardized format: JSON Schema (see http://json-schema.org
 
 Adobe currently has defined two standard models: Profile and Touchpoint. These are illustrated below and can be found at [https://git.corp.adobe.com/jefhanso/xdm/tree/master/schemas/draft-04/xdm](https://git.corp.adobe.com/jefhanso/xdm/tree/master/schemas/draft-04/xdm).
 
-## Profile
-XDM Profiles are a singular representation of the attributes of identified and partially-identified persons. Profiles that are highly identified may be used for personal communications or highly targeted engagements and can contain detailed personal information such as names, gender, date of birth, locations, and contact information like phone numbers and email addresses. Profiles may range to the other end of the identification spectrum where only anonymous behavioral signals are being observed and the amount of identification is simple browser cookies. In this latter case, the sparse Profile data is useful to build more knowledge on the interests and preferences of the anonymous profile, and over time can become richer as the person interacting with the brand becomes more engaged and ultimately signs-on to notifications, subscriptions, purchases and other connections with the brand that enrich and fill out the profile.
+## Individual Profile
+XDM Individual Profiles are a singular representation of the attributes of identified and partially-identified persons. Profiles that are highly identified may be used for personal communications or highly targeted engagements and can contain detailed personal information such as names, gender, date of birth, locations, and contact information like phone numbers and email addresses. Profiles may range to the other end of the identification spectrum where only anonymous behavioral signals are being observed and the amount of identification is simple browser cookies. In this latter case, the sparse Profile data is useful to build more knowledge on the interests and preferences of the anonymous profile, and over time can become richer as the person interacting with the brand becomes more engaged and ultimately signs-on to notifications, subscriptions, purchases and other connections with the brand that enrich and fill out the profile.
 
-XDM Profile can contain personal information, identification information, contact details and communication preferences. Over time, XDM Profile will expand to cater for other Profile data such as preference, propensities and other attributes.
+XDM Individual Profile can contain personal information, identification information, contact details and communication preferences. Over time, XDM Individual Profile will expand to cater for other Profile data such as preference, propensities and other attributes.
 
 ![Profile](images/Profile.png)
-Figure 1: XDM Profile
+Figure 1: XDM Individual Profile
 
 ## Touchpoint
 The core touchpoint XDM is used to capture observations that are altering one or more related XDMs/entities. The touchpoint captures information about the observation taking place and when it is occurring. It is critical for time-domain analytics as it allows observation and analysis of changes that occur in windows of time and comparison with other windows of time to track trends.

@@ -6,7 +6,7 @@ The Adobe Audience Manager data connector streams first party data collected in 
 - **Onboarded (inbound) data:** These are the files uploaded by a user into an Amazon S3 location hosted by Audience Manager. Audience Manager uses this data to populate onboarded traits using the inbound file method and will have some latency. 
 - **Profile data:** Audience Manager uses realtime and onboarded data to derive customer profiles. These profiles are used to populate identity graphs and traits on segment realizations. 
 
-The Audience Manager connector maps these data categories to Experience Data Model (XDM) schema and sends them to Platform. Realtime data and Onboarded data are sent as XDM ExperienceEvent data, while Profile data is sent as XDM Profiles.
+The Audience Manager connector maps these data categories to Experience Data Model (XDM) schema and sends them to Platform. Realtime data and Onboarded data are sent as XDM ExperienceEvent data, while Profile data is sent as XDM Individual Profiles.
 
 ## What is Experience Data Model (XDM)?
 XDM is a publicly documented specification that provides a standardized framework by which Platform organizes customer experience data.
@@ -17,12 +17,12 @@ For more information about how XDM is used in Experience Platform, see the [XDM 
 
 ## XDM schemas examples
 
-Below are examples of the Audience Manager structure mapped to XDM ExperienceEvent and XDM Profile in Platform.
+Below are examples of the Audience Manager structure mapped to XDM ExperienceEvent and XDM Individual Profile in Platform.
 
 ### ExperienceEvent - for Realtime data and Onboarded data
 ![](images/aam-experience-events-for-dcs-and-onboarding-data.png)
 
-### XDM Profile - for Profile data
+### XDM Individual Profile - for Profile data
 ![](images/aam-profile-xdm-for-profile-data.png)
 
 ## How are fields mapped from Adobe Audience Manager to XDM?

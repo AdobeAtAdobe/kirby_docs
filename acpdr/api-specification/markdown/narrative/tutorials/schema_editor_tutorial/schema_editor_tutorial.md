@@ -72,13 +72,13 @@ The *Assign Class* dialog appears. This window displays a list of all available 
 
 Click on the class name to display the description of the class. You can also choose to **Preview Class Structure** to see the fields and metadata associated with the class.
 
-This tutorial uses the XDM Profile class. Click the radio button beside the class to select it, then click **Assign Class**.
+This tutorial uses the XDM Individual Profile class. Click the radio button beside the class to select it, then click **Assign Class**.
 
 ![Assign Class Dialog](images/assign_class.png "Select the class your schema will implement.")
 
-The canvas reappears. The *Class* section now contains the class you selected (XDM Profile) and the fields contributed by the XDM Profile class are now visible within the *Structure* section.
+The canvas reappears. The *Class* section now contains the class you selected (XDM Individual Profile) and the fields contributed by the XDM Individual Profile class are now visible within the *Structure* section.
 
-![XDM Profile Class Assigned](images/class_assigned_structure.png "The XDM Profile class now appears in the Schema Editor.")
+![XDM Individual Profile Class Assigned](images/class_assigned_structure.png "The XDM Individual Profile class now appears in the Schema Editor.")
 
 The fields appear in the format "fieldName | Data Type". Steps for defining schema fields in the UI are provided later in this tutorial.
 
@@ -94,7 +94,7 @@ To add a mixin, click **Add** in the *Mixins* sub-section.
 
 ![](images/add_mixin_button.png)
 
-The *Add Mixin* dialog appears. Mixins are only intended for use with specific classes, therefore the list of mixins shows only those compatible with the class you selected (in this case, the XDM Profile class).
+The *Add Mixin* dialog appears. Mixins are only intended for use with specific classes, therefore the list of mixins shows only those compatible with the class you selected (in this case, the XDM Individual Profile class).
 
 Selecting the radio button next to a mixin will give you the option to **Preview Mixin Structure**. Select the "Profile Person Details" mixin, then click **Add Mixin**.
 

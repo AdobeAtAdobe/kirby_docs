@@ -3,11 +3,11 @@
 This developer guide will help begin using streaming ingestion APIs, part of the Adobe Experience Platform Data Ingestion Service APIs. Specifically, this documentation will help you:
 
 - [Create a data inlet](#create-a-data-inlet)
-- [Stream an XDM Profile object to Adobe Experience Platform](#stream-an-xdm-profile-object-to-adobe-experience-platform)
-    - [Compose an XDM Profile schema](#compose-an-xdm-profile-schema)
-    - [Set Primary Identity Descriptor for XDM Profile](#set-primary-identity-descriptor-for-xdm-profile)
-    - [Create a dataset for XDM profile records](#create-a-dataset-for-xdm-profile-records)
-    - [Call Streaming Ingestion APIs to create an XDM profile record](#call-streaming-ingestion-apis-to-create-an-xdm-profile-record)
+- [Stream an XDM Individual Profile object to Adobe Experience Platform](#stream-an-xdm-individual-profile-object-to-adobe-experience-platform)
+    - [Compose an XDM Individual Profile schema](#compose-an-xdm-individual-profile-schema)
+    - [Set Primary Identity Descriptor for XDM Individual Profile](#set-primary-identity-descriptor-for-xdm-individual-profile)
+    - [Create a dataset for XDM Individual Profile records](#create-a-dataset-for-xdm-individual-profile-records)
+    - [Call Streaming Ingestion APIs to create an XDM Individual Profile record](#call-streaming-ingestion-apis-to-create-an-xdm-individual-profile-record)
     - [Retrieve the newly created Customer Profile](#retrieve-the-newly-created-customer-profile)
 - [Stream an XDM ExperienceEvent to Adobe Experience Platform](#stream-an-xdm-experienceevent-to-adobe-experience-platform)
     - [Compose an XDM ExperienceEvent schema](#compose-an-xdm-experienceevent-schema)
@@ -152,13 +152,13 @@ The above call will send a list of all the data inlets created.
 - `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 
 
-## Stream an XDM Profile object to Adobe Experience Platform
+## Stream an XDM Individual Profile object to Adobe Experience Platform
 
 Once you've created a data inlet, you can use it to stream XDM records and create or update [Real-time Customer Profiles][rtcp].
 
-### Compose an XDM Profile schema
+### Compose an XDM Individual Profile schema
 
-This guide composes a schema using standard mixins provided by Platform to describe personal and work-related details. Begin by calling the Schema Registry API to create a schema that implements XDM Profile, a standard class, and enables the schema for use with Unified Profile Service (UPS).
+This guide composes a schema using standard mixins provided by Platform to describe personal and work-related details. Begin by calling the Schema Registry API to create a schema that implements XDM Individual Profile, a standard class, and enables the schema for use with Unified Profile Service (UPS).
 
 > **Note:** For more information about how to create schemas, please read the [Schema Registry API Developer Guide][schema-registry].
 
@@ -269,7 +269,7 @@ Where:
 
 Please take note of the `$id` as well as the `version` attributes, as both of these will be used when sending records to the Streaming Ingest APIs.
 
-### Set Primary Identity Descriptor for XDM Profile
+### Set Primary Identity Descriptor for XDM Individual Profile
 
 Next, add an [Identity Descriptor][identity-descriptor] to the schema created above, using the work email address attribute as the primary identifier. Doing this will result in two changes:
 
@@ -320,9 +320,9 @@ Where:
 
 ---
 
-### Create a dataset for XDM profile records
+### Create a dataset for XDM Individual Profile records
 
-You need to create a dataset so that any XDM profile records you stream (that pass validation) will be persisted to it. 
+You need to create a dataset so that any XDM Individual Profile records you stream (that pass validation) will be persisted to it. 
 
 There are **two** important things to note about this dataset:
 
@@ -392,9 +392,9 @@ An example of a successful response can be found below:
 ]
 ```
 
-### Call Streaming Ingestion APIs to create an XDM profile record
+### Call Streaming Ingestion APIs to create an XDM Individual Profile record
 
-With the dataset in place, you can ingest XDM-formatted JSON records to create an XDM profile record within Platform.
+With the dataset in place, you can ingest XDM-formatted JSON records to create an XDM Individual Profile record within Platform.
 
 >**Note:** The following API call does **not** require any authentication headers.
 
@@ -490,7 +490,7 @@ Where:
 
 ### Retrieve the newly created Customer Profile
 
-To validate the XDM profile records you just sent, you can use the [Real-time Customer Profile Access API][rtcp] to read it back.
+To validate the XDM Individual Profile records you just sent, you can use the [Real-time Customer Profile Access API][rtcp] to read it back.
 
 To query using email address, your request would need to look something like this:
 
@@ -577,7 +577,7 @@ An example of a successful response can be seen below. As you can see, this is t
 
 ---
 
-- Try making more calls with different values for work email to create additional XDM profile records, and see if you can read them back
+- Try making more calls with different values for work email to create additional XDM Individual Profile records, and see if you can read them back
 - Also try changing other attributes like birthYear, gender, or name for a given Profile, and retrieve their updated values.
 
 ---

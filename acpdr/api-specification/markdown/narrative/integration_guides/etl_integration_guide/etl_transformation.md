@@ -170,7 +170,7 @@ The hierarchy of a dataframe (such as a Parquet file) must match that of the XDM
 
 ### Example dataframe
 
-The structure of the following example dataframe has been mapped to a schema that implements the XDM Profile class, and contains the most common fields associated with schemas of that type.
+The structure of the following example dataframe has been mapped to a schema that implements the XDM Individual Profile class, and contains the most common fields associated with schemas of that type.
 
 ```python
 [

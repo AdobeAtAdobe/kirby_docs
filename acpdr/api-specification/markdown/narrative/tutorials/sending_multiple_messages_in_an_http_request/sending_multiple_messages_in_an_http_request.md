@@ -12,7 +12,7 @@ This document provides a tutorial for sending multiple messages to Experience Pl
 ## Getting started
 This tutorial requires a working understanding of Adobe Experience Platform Data Ingestion. Before beginning this tutorial, please review the following documentation:
 * [Data Ingestion overview][data-ingestion-overview]: Covers the core concepts of Experience Platform Data Ingestion, including ingestion methods and data connectors.
-* [Getting started with streaming ingestion][getting-started-stream-ingest]: The work flow and building blocks of streaming ingestion, such as data inlets, datasets, XDM Profile, and XDM ExperienceEvents.
+* [Getting started with streaming ingestion][getting-started-stream-ingest]: The workflow and building blocks of streaming ingestion, such as data inlets, datasets, XDM Individual Profile, and XDM ExperienceEvent.
 * [Streaming to datasets in Data Lake][stream-to-dataset]: How to send an HTTP request with a single message.
 
 This tutorial also requires you to have completed the [Authentication to Adobe Experience Platform][authenticate-to-acp-tutorial] tutorial in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the value for the Authorization header required by all API calls in this tutorial. The header is shown in sample calls as follows:

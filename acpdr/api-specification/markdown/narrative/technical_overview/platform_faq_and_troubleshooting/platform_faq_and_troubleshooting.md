@@ -87,7 +87,7 @@ The response illustrates what you would expect to receive following a successful
             "version": "1"
         },
         {
-            "title": "XDM Profile",
+            "title": "XDM Individual Profile",
             "$id": "https://ns.adobe.com/xdm/context/profile",
             "meta:altId": "_xdm.context.profile",
             "version": "1"

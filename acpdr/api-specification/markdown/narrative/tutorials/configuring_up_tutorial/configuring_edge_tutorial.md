@@ -149,7 +149,7 @@ GET /config/projections?schemaName={SCHEMA_NAME}&name={PROJECTION_NAME}
 
 #### Request
 
-The following request lists all projection configurations associated with the XDM Profile schema.
+The following request lists all projection configurations associated with the XDM Individual Profile schema.
 
 ```shell
 curl -X GET \

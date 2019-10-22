@@ -74,7 +74,7 @@ When more than one identity is included in any data ingested from a streaming en
 
 ## How do I create multiple identity fields within an XDM schema?
 
-[Experience Data Model (XDM)](../schema_registry/xdm_system/xdm_system_in_experience_platform.md) schemas support multiple identity fields. Any data field of type `string` within a schema that implements the XDM Profile or XDM ExperienceEvent class can be labeled as an identity field. Once labeled, any data contained in these fields is added to the profile's identity map.
+[Experience Data Model (XDM)](../schema_registry/xdm_system/xdm_system_in_experience_platform.md) schemas support multiple identity fields. Any data field of type `string` within a schema that implements the XDM Individual Profile or XDM ExperienceEvent class can be labeled as an identity field. Once labeled, any data contained in these fields is added to the profile's identity map.
 
 For steps on how to label an XDM field as an identity field using the user interface, see the [Identity section](../../tutorials/schema_editor_tutorial/schema_editor_tutorial.md#set-a-schema-field-as-an-identity-field) in the Schema Editor tutorial. If you are using the API, see the [Identity descriptor section](../../tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md#define-identity-descriptor) in the Schema Registry API tutorial.
 

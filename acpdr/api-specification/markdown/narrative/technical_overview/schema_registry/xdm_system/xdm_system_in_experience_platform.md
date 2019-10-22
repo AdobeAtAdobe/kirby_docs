@@ -40,11 +40,11 @@ Data intended for use in Experience Platform is grouped into two behavior types:
 
 All XDM schemas describe data that can be categorized as record or time series. The data behavior of a schema is defined by the schema's **class**, which is assigned to a schema when it is first created. XDM classes describe the smallest number of properties a schema must contain in order to represent a particular data behavior.
 
-Although you are able to define your own classes within the Schema Registry, it is recommended that you use the preferred classes **XDM Profile** and **XDM ExperienceEvent** for record and time series data, respectively. These classes are outlined in more detail below.
+Although you are able to define your own classes within the Schema Registry, it is recommended that you use the preferred classes **XDM Individual Profile** and **XDM ExperienceEvent** for record and time series data, respectively. These classes are outlined in more detail below.
 
-### XDM Profile
+### XDM Individual Profile
 
-XDM Profile is a record-based class that forms a singular representation of the attributes of both identified and partially-identified subjects. Profiles that are highly identified may be used for personal communications or targeted engagements, and can contain detailed personal information such as name, gender, date of birth, location, and contact information including phone numbers and email addresses. 
+XDM Individual Profile is a record-based class that forms a singular representation of the attributes of both identified and partially-identified subjects. Profiles that are highly identified may be used for personal communications or targeted engagements, and can contain detailed personal information such as name, gender, date of birth, location, and contact information including phone numbers and email addresses. 
 
 Less-identified profiles may consist only of anonymous behavioral signals like browser cookies. In this case, the sparse profile data is used to build an information base into which the interests and preferences of the anonymous profile are collated and stored. These identifiers may become more detailed over time as the subject signs up for notifications, subscriptions, purchases, and so on. This increase in profile attributes may eventually result in an identified subject and allow for a higher degree of targeted engagement. 
 
@@ -86,19 +86,19 @@ To learn more about Query Service, please see the [Query Service introduction](.
 
 Real-time Customer Profile provides a centralized consumer profile for targeted and personalized experience management. Each profile contains data that is aggregated across all systems, as well as actionable timestamped accounts of events involving the individual that have taken place in any of the systems you use with Experience Platform.
 
-Real-time Customer Profile consumes schema-formatted data based on the XDM Profile or XDM ExperienceEvent classes, and responds to queries based on that data. Profile does not support the use of schemas based on other classes.
+Real-time Customer Profile consumes schema-formatted data based on the XDM Individual Profile or XDM ExperienceEvent classes, and responds to queries based on that data. Profile does not support the use of schemas based on other classes.
 
 Profile maintains an instance of each customer profile, merging data together to form a "single source of truth" for the individual. This unified data is represented using what is known as a "union view". A union view aggregates the fields of all schemas that implement the same class into a single schema.  When composing a schema using the UI or API, you can enable the schema for use with Real-time Customer Profile and tag it for inclusion in the union view. The tagged schema will then participate in the schema definition being fed to Profile.
 
-As XDM Profile and XDM ExperienceEvent data is ingested and managed by Catalog, it triggers Real-time Customer Profile to begin ingesting data that has been enabled for its use. The more interactions and details that are ingested, the more robust individual profiles become.
+As XDM Individual Profile and XDM ExperienceEvent data is ingested and managed by Catalog, it triggers Real-time Customer Profile to begin ingesting data that has been enabled for its use. The more interactions and details that are ingested, the more robust individual profiles become.
 
-XDM Profile data helps inform and empower actions across any channel or Adobe solution integration, and when paired with a rich history of behavioral and interaction data, this data is used to power machine learning. The Real-time Customer Profile API can also be used to enrich the functionality of third-party solutions, CRMs, and proprietary solutions.
+XDM Individual Profile data helps inform and empower actions across any channel or Adobe solution integration, and when paired with a rich history of behavioral and interaction data, this data is used to power machine learning. The Real-time Customer Profile API can also be used to enrich the functionality of third-party solutions, CRMs, and proprietary solutions.
 
 See the [Real-time Customer Profile overview](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md) for more information.
 
 ### Data Science Workspace
 
-Adobe Experience Platform Data Science Workspace uses machine learning and artificial intelligence to gain insights from data stored within Experience Platform. Data Science Workspace allows data scientists to build recipes based on XDM Profile and XDM ExperienceEvent data about customers and their activities, facilitating predictions such as buying propensity and recommended offers that the individual is likely to appreciate and use.
+Adobe Experience Platform Data Science Workspace uses machine learning and artificial intelligence to gain insights from data stored within Experience Platform. Data Science Workspace allows data scientists to build recipes based on XDM Individual Profile and XDM ExperienceEvent data about customers and their activities, facilitating predictions such as buying propensity and recommended offers that the individual is likely to appreciate and use.
 
 With Data Science Workspace, data scientists can easily create intelligent services APIs powered by machine learning. These services work with other Adobe solutions, including Adobe Target and Adobe Analytics Cloud, to help you automate personalized, targeted digital experiences.
 
@@ -108,7 +108,7 @@ For more information on using Experience Platform data to power insights, see th
 
 Decisioning Service provides the capability to configure personalized offer decisioning in Platform-integrated applications. Offers could be product recommendations, content components for a web experience, conversation scripts, and actions to take.
 
-Decisioning Service leverages Real-time Customer Profile data, and is therefore only compatible with datasets based on schemas implementing the XDM Profile or XDM ExperienceEvent class.
+Decisioning Service leverages Real-time Customer Profile data, and is therefore only compatible with datasets based on schemas implementing the XDM Individual Profile or XDM ExperienceEvent class.
 
 See the [Decisioning Service overview](../../decisioning-overview/decisioning-service-overview.md) for more information.
 

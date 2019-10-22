@@ -26,7 +26,7 @@ This tutorial also requires an understanding of at least one of the methods of d
 
 ## Enable an XDM schema for Real-time Customer Profile
 
-Data being uploaded to Experience Platform for use by Real-time Customer Profile must conform to an XDM schema that is enabled for Profile. In order for a schema to be enabled for Profile, it must implement either the XDM Profile or XDM ExperienceEvent class.
+Data being uploaded to Experience Platform for use by Real-time Customer Profile must conform to an XDM schema that is enabled for Profile. In order for a schema to be enabled for Profile, it must implement either the XDM Individual Profile or XDM ExperienceEvent class.
 
 You can enable a schema for use in Real-time Customer Profile using the Schema Registry API or the Schema Editor in the user interface. For detailed instructions on how to do this, please refer to one of the linked tutorial sections below:
  - [Enable an XDM schema using the Schema Registry API](../schema_registry_api_tutorial/schema_registry_api_tutorial.md#enable-schema-for-use-in-real-time-customer-profile)

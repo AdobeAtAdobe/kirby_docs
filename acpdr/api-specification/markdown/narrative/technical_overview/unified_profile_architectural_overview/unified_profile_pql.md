@@ -106,7 +106,7 @@ PQL expressions access record and time series data using XDM references.  For ex
 * `person.birthYear`
 * `homeAddress.countryCode`
 
-In PQL, there is always an implicit profile in context, so XDM profile references start with immediate profile properties. In other words, to refer to `profile.person`, you would use `person`. For `profile.homeAddress`, use `homeAddress`, etc.
+In PQL, there is always an implicit profile in context, so XDM Individual Profile references start with immediate profile properties. In other words, to refer to `profile.person`, you would use `person`. For `profile.homeAddress`, use `homeAddress`, etc.
 
 ##### xEvent
 
@@ -998,10 +998,10 @@ The following describes functions that are available for comparing values with a
   * `homeAddress.stateProvinceISO in ["CA", "OR"]`
     * `true` where `homeAddress.stateProvinceISO` = "OR"
     * `false` where `homeAddress.stateProvinceISO` = "or"
-  * `birthMonth in [3, 4, 6]` (note: birthMonth is referenced here as a hypothetical custom integer field of an XDM Profile)
+  * `birthMonth in [3, 4, 6]` (note: birthMonth is referenced here as a hypothetical custom integer field of an XDM Individual Profile)
     * `true` where `birthMonth` = March
     * `false` where `birthMonth` = May
-  * `"London" in citiesVisited` (note: citiesVisited is referenced here as a hypothetical custom string array field of an XDM Profile)
+  * `"London" in citiesVisited` (note: citiesVisited is referenced here as a hypothetical custom string array field of an XDM Individual Profile)
     * `true` where `person.citiesVisited` = ["London","Paris","New York"]
     * `false` where `person.citiesVisited` = ["london","paris","new york"]
   * `homeAddress.city in person.favoriteCities`  (note: favoriteCities is referenced here as a hypothetical custom string array field of an XDM Person)
@@ -1025,7 +1025,7 @@ The following describes functions that are available for comparing values with a
   * `homeAddress.stateProvinceISO notIn ["CA", "OR"]`
     * `true` where `homeAddress.stateProvinceISO` = "or"
     * `false` where `homeAddress.stateProvinceISO` = "OR"
-  * `birthMonth notIn [3, 4, 6]` (note: birthMonth is referenced here as a hypothetical custom integer field of an XDM Profile)
+  * `birthMonth notIn [3, 4, 6]` (note: birthMonth is referenced here as a hypothetical custom integer field of an XDM Individual Profile)
     * `true` where `birthMonth` = 5
     * `false` where `birthMonth` = 3
 
