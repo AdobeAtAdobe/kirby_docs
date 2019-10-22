@@ -1,6 +1,30 @@
 
 # SQL syntax
 
+Query Service provides the ability to use standard ANSI SQL for `SELECT` statements and other limited commands. This document shows SQL syntax supported by Query Service for the following commands:
+  - [Define a SELECT query](#define-a-select-query)
+  - [JOINS](#joins)
+  - [UNION, INTERSECT, and EXCEPT](#union-intersect-and-except)
+  - [CREATE TABLE AS SELECT](#create-table-as-select)
+  - [INSERT INTO](#insert-into)
+  - [Spark SQL commands](#spark-sql-commands)
+    - [DROP TABLE](#drop-table)
+    - [SET](#set)
+  - [PostgreSQL commands](#postgresql-commands)
+    - [BEGIN](#begin)
+    - [CLOSE](#close)
+    - [COMMIT](#commit)
+    - [DEALLOCATE](#deallocate)
+    - [DECLARE](#declare)
+    - [EXECUTE](#execute)
+    - [EXPLAIN](#explain)
+    - [FETCH](#fetch)
+    - [PREPARE](#prepare)
+    - [ROLLBACK](#rollback)
+    - [SELECT INTO](#select-into)
+    - [SHOW](#show)
+    - [START TRANSACTION](#start-transaction)
+
 ## Define a SELECT query
 
 The following syntax defines a `SELECT` query supported by Query Service:
@@ -48,6 +72,25 @@ and `with_query` is:
 TABLE [ ONLY ] table_name [ * ]
 ```
 
+### WHERE ILIKE clause
+The key word ILIKE can be used instead of LIKE to make matches on the WHERE clause of the SELECT query case-insensitive.
+```
+    [ WHERE condition { LIKE | ILIKE | NOT LIKE | NOT ILIKE } pattern ]
+```
+
+The logic of LIKE and ILIKE clauses are as follows:
+- ```WHERE condition LIKE pattern```, ```~~``` is equivalent to pattern
+- ```WHERE condition NOT LIKE pattern```, ```!~~``` is equivalent to pattern
+- ```WHERE condition ILIKE pattern```, ```~~*``` equivalent to pattern
+- ```WHERE condition NOT ILIKE pattern```, ```!~~*``` equivalent to pattern
+
+
+#### Example
+```
+SELECT * FROM Customers
+WHERE CustomerName ILIKE 'a%';
+```
+Returns customers with names beginning in "A" or "a".
 
 ## JOINS
 
@@ -83,8 +126,7 @@ where `target_schema_title` is the title of XDM schema. Use this clause only if 
 and `select_query` is a `SELECT` statement, the syntax of which is defined above in this document.
 
 
-
-Example:
+#### Example
 ```
 CREATE TABLE Chairs AS (SELECT color, count(*) AS no_of_chairs FROM Inventory i WHERE i.type=="chair" GROUP BY i.color)
 CREATE TABLE Chairs WITH (schema='target schema title') AS (SELECT color, count(*) AS no_of_chairs FROM Inventory i WHERE i.type=="chair" GROUP BY i.color)
@@ -104,7 +146,7 @@ INSERT INTO table_name select_query
 
 where `select_query` is a `SELECT` statement, the syntax of which is defined above in this document.
 
-Example:
+#### Example
 ```
 INSERT INTO Customers SELECT SupplierName, City, Country FROM OnlineCustomers;
 ```
@@ -120,7 +162,7 @@ Drop a table and delete the directory associated with the table from the file sy
 DROP [TEMP] TABLE [IF EXISTS] [db_name.]table_name
 ```
 
-Parameters
+#### Parameters
 -  `IF EXISTS`: If the table does not exist, nothing happens
 - `TEMP`: Temporary table 
 
@@ -168,14 +210,13 @@ SET property_key [ To | =] property_value
 To return the value for any setting, use `SHOW [setting name]`.
 
 ## PostgreSQL commands
-
 ### BEGIN
 This command is parsed and the completed command is sent back to the client. This is the same as the `START TRANSACTION` command.
 
 ```
 BEGIN [ TRANSACTION ]
 ```
-Parameters
+#### Parameters
 - `TRANSACTION`: Optional key words. Listens it, no action is taken on this.
 
 ### CLOSE
@@ -184,7 +225,7 @@ Parameters
 ```
 CLOSE { name }
 ```
-Parameters
+#### Parameters
 - `name`: the name of an open cursor to close.
 
 ### COMMIT
@@ -193,7 +234,7 @@ No action is taken in Query Service as a response to the commit transaction stat
 ```
 COMMIT [ WORK | TRANSACTION ]
 ```
-Parameters
+#### Parameters
 - `WORK`
 - `TRANSACTION`: Optional key words. They have no effect.
 
@@ -204,7 +245,7 @@ Use `DEALLOCATE` to deallocate a previously prepared SQL statement. If you do no
 DEALLOCATE [ PREPARE ] { name | ALL }
 ```
 
-Parameters
+#### Parameters
 - `Prepare`: This keyword is ignored.
 - `name`: The name of the prepared statement to deallocate.
 - `ALL`: Deallocate all prepared statements.
@@ -216,7 +257,7 @@ Parameters
 ```
 DECLARE name CURSOR [ WITH  HOLD ] FOR query
 ```
-Parameters
+#### Parameters
 - `name`: The name of the cursor to be created.
 - `WITH HOLD`: Specifies that the cursor can continue to be used after the transaction that created it successfully commits.
 - `query`: A `SELECT` or `VALUES` command which provides the rows to be returned by the cursor. 
@@ -230,7 +271,7 @@ If the `PREPARE` statement that created the statement specified some parameters,
 EXECUTE name [ ( parameter [, ...] ) ]
 ```
 
-Parameters
+#### Parameters
 - `name`: The name of the prepared statement to execute.
 - `parameter`: The actual value of a parameter to the prepared statement. This must be an expression yielding a value that is compatible with the data type of this parameter, as determined when the prepared statement was created. 
 
@@ -250,14 +291,15 @@ where option can be one of:
     TYPE VALIDATE
     FORMAT { TEXT | JSON }
 ```
-Parameters
+#### Parameters
 - `ANALYZE`: Carry out the command and show actual run times and other statistics. This parameter defaults to `FALSE`.
 - `FORMAT`: Specify the output format, which can be TEXT, XML, JSON, or YAML. Non-text output contains the same information as the text output format, but is easier for programs to parse. This parameter defaults to `TEXT`.
 - `statement`: Any `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `VALUES`, `EXECUTE`, `DECLARE`, `CREATE TABLE AS`, or `CREATE MATERIALIZED VIEW AS` statement, whose execution plan you want to see.
 
 > **Important:** Keep in mind that the statement is actually executed when the `ANALYZE` option is used. Although `EXPLAIN` discards any output that a `SELECT` returns, other side effects of the statement happen as usual. 
 
-### Example:
+#### Example
+
 To show the plan for a simple query on a table with a single `integer` column and 10000 rows:
 ```
 EXPLAIN SELECT * FROM foo;
@@ -279,7 +321,7 @@ A cursor has an associated position, which is used by `FETCH`. The cursor positi
 FETCH num_of_rows [ IN | FROM ] cursor_name
 ```
 
-Parameters
+#### Parameters
 - `num_of_rows`: A possibly-signed integer constant, determining the location or number of rows to fetch. 
 - `cursor_name`: An open cursor's name.
 
@@ -295,7 +337,7 @@ Prepared statements potentially have the largest performance advantage when a si
 ```
 PREPARE name [ ( data_type [, ...] ) ] AS SELECT
 ```
-Parameters
+#### Parameters
 - `name`: An arbitrary name given to this particular prepared statement. It must be unique within a single session and is subsequently used to execute or deallocate a previously prepared statement.
 - `data-type`: The data type of a parameter to the prepared statement. If the data type of a particular parameter is unspecified or is specified as unknown, it is inferred from the context in which the parameter is first referenced. To refer to the parameters in the prepared statement itself, use $1, $2, and so on.
 
@@ -305,7 +347,7 @@ Parameters
 ```
 ROLLBACK [ WORK ]
 ```
-Parameters
+#### Parameters
 - `WORK`
 
 ### SELECT INTO
@@ -328,12 +370,12 @@ SELECT [ ALL | DISTINCT [ ON ( expression [, ...] ) ] ]
     [ FOR { UPDATE | SHARE } [ OF table_name [, ...] ] [ NOWAIT ] [...] ]
 ```
 
-Parameters
+#### Parameters
 - `TEMPORARAY` or `TEMP`: If specified, the table is created as a temporary table.
 - `UNLOGGED:` if specified, the table is created as an unlogged table.
 - `new_table` The name (optionally schema-qualified) of the table to be created. 
 
-Example:
+#### Example
 Create a new table `films_recent` consisting of only recent entries from the table `films`:
 ```
 SELECT * INTO films_recent FROM films WHERE date_prod >= '2002-01-01';
@@ -346,7 +388,7 @@ SELECT * INTO films_recent FROM films WHERE date_prod >= '2002-01-01';
 SHOW name
 ```
 
-Parameters
+#### Parameters
 - `name`:
     - `SERVER_VERSION`: Shows the server's version number.
     - `SERVER_ENCODING`: Shows the server-side character set encoding. At present, this parameter can be shown but not set, because the encoding is determined at database creation time.
@@ -355,7 +397,7 @@ Parameters
     `IS_SUPERUSER`: True if the current role has superuser privileges.
 - `ALL`: Show the values of all configuration parameters with descriptions.
 
-Example
+#### Example
 
 Show the current setting of the parameter `DateStyle`
 ```
@@ -377,3 +419,6 @@ where transaction_mode is one of:
     ISOLATION LEVEL { SERIALIZABLE | REPEATABLE READ | READ COMMITTED | READ UNCOMMITTED }
     READ WRITE | READ ONLY
 ```
+
+
+<img src="https://i.imgur.com/aIgvaQu.png" alt="back-to-top" width="50" height="50" style="position: fixed; bottom: 30px; float: right; right: 10%; left: 90%; opacity: 0.4; padding-top: 0px; padding-bottom: 0px; border-style: hidden; border-radius: 50%;" onmouseover="this.style.opacity = 0.9;" onmouseout="this.style.opacity = 0.4;" onclick="document.documentElement.scrollTop = document.getElementsByClassName('udp-header')[0].offsetHeight; document.body.scrollTop = document.getElementsByClassName('udp-header')[0].offsetHeight;">
