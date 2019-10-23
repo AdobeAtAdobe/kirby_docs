@@ -37,6 +37,11 @@
 			],
 			"path": "api-specification/markdown/narrative/integration_guides/etl_integration_guide/etl_integration_guide.md",
 			"title": "ETL Integration Guide"
+		},
+		{
+			"pages": [],
+			"path": "api-specification/markdown/narrative/technical_overview/data-protection/data-protection.md",
+			"title": "Data protection in Experience Platform"
 		}
 	],
 	"app2app_map": {
