@@ -4,8 +4,9 @@ Adobe Experience Platform Data Science Workspace provides the tools and resource
 
 This document provides a step-by-step tutorial to enrich Real-time Customer Profile with machine learning insights, steps are broken into the following sections:
 
-1.  [Configure an output schema and dataset](#configure-an-output-schema-and-dataset)
-2.  [Create segments using the Segment Builder](#create-segments-using-the-segment-builder)
+1.  [Create an output schema and dataset](#create-an-output-schema-and-dataset)
+2.  [Configure an output schema and dataset](#configure-an-output-schema-and-dataset)
+3.  [Create segments using the Segment Builder](#create-segments-using-the-segment-builder)
 
 ## Getting started
 
@@ -14,6 +15,53 @@ This tutorial requires a working understanding of the various aspects of Adobe E
 *   <a href="https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md" target="_blank">Real-time Customer Profile</a>: Provides a unified, real-time consumer profile based on aggregated data from multiple sources.
 *   <a href="https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md" target="_blank">Identity Service</a>: Enables Real-time Customer Profile by bridging identities from disparate data sources being ingested into Platform.
 *   <a href="https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md" target="_blank">Experience Data Model (XDM)</a>: The standardized framework by which Platform organizes customer experience data.
+
+In addition to the above-mentioned documents, it is highly recommended that you also review the following guides on schemas and the Schema Editor:
+
+*   <a href="https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/schema_composition/schema_composition.md" target="_blank">Basics of schema composition</a>: Describes XDM schemas, building blocks, principles, and best practices for composing schemas to be used in Experience Platform.
+*   <a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/schema_editor_tutorial/schema_editor_tutorial.md" target="_blank">Schema Editor tutorial</a>: Provides detailed instructions for creating schemas using the Schema Editor within Experience Platform.
+
+## Create an output schema and dataset
+
+The first step towards enriching Real-time Customer Profile with scoring insights is knowing what real-world object (such as a person) your data defines. Having an understanding of your data enables you to describe and design a structure that is meaning to your data, much like designing a relational database.
+
+Composing a schema begins by assigning a class. Classes define the behavioral aspects of the data the schema will contain (record or time-series). This section provides basic instructions to create a schema using the schema builder. For a more in-depth tutorial, refer to the tutorial on <a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/schema_editor_tutorial/schema_editor_tutorial.md" target="_blank">creating a schema using the Schema Editor</a>.
+
+1.  On Adobe Experience Platform, click the **Schema** tab to access the schema browser. Click **Create Schema** access the *Schema Editor*, where you can interactively build and create schemas.
+    ![](./images/schema_browser.png)
+
+2.  Within the *Composition* window, click **Assign** to browse your available classes.
+    *   To assign an existing class, click and highlight the desired class and then click **Assign Class**.
+        ![](./images/existing_class.png)
+
+    *   To create a custom class, click **Create New Class** found near the center-top of the browser window. Provide a class name, description, and choose the class's behavior. Click **Assign Class** once you are finished.
+        ![](./images/create_new_class.png)
+
+    At this point, your schema's structure should contain some class fields and you are ready to assign mixins. A mixin is a group of one or more fields that describe a particular concept.
+
+3.  Within the *Composition* window, click **Add** in the *Mixins* sub-section.
+    *   To assign an existing mixin, click and highlight the desired mixin and then click **Add Mixin**. Unlike classes, multiple mixins can be assigned to a single schema as long as it is appropriate to do so.
+        ![](./images/existing_mixin.png)
+
+    *   To create a new mixin, click **Create New Mixin** found near the center-top of the browser window. Provide a name and description for the mixin then click **Assign Mixin** once you are finished.
+        ![](./images/create_new_mixin.png)
+
+    *   To add mixin fields, click the name of the mixin inside the *Composition* window. You will then be provided the option to add mixin fields by clicking **Add Field** within the *Structure* window. Ensure to provide mixin properties accordingly.
+        ![](./images/mixin_properties.png)
+
+4.  Once you are done building your schema, click the top level field of your schema within the *Structure* window to display the schema's properties in the right property window. Provide a name and a description, and click **Save** to create the schema.
+    ![](./images/save_schema.png)
+
+5.  Create an output dataset using your newly created schema by clicking **Datasets** from the left navigation column, then click **Create dataset**. On the next screen, choose **Create dataset from schema**.
+    ![](./images/dataset_overview.png)
+
+6.  Using the schema browser, find and select the newly created schema, then click **Next**.
+    ![](./images/choose_schema.png)
+
+7.  Provide a name and an optional description, then click **Finish** to create the dataset.
+    ![](./images/configure_dataset.png)
+
+Now that you have a created an output schema dataset, you are ready continue on to the next section to configure and enable them for Profile enrichment.
 
 ## Configure an output schema and dataset
 
