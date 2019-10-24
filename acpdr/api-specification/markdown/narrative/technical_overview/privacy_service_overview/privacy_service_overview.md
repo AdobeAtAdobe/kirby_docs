@@ -10,7 +10,7 @@ Privacy Service was developed in response to a fundamental shift in how business
 
 ### Privacy Service and GDPR
 
-The [General Data Protection Regulation](https://eugdpr.org/) (GDPR) introduced several new data privacy rights for members of the European Union, including the **Right to Access** and the **Right to be Forgotten**. This means that any EU citizen whose personal data has been collected by your business can request to access or delete their data at any time. Failure to comply to these requests within 72 hours can result in multi-million dollar fines for your organization. 
+The [General Data Protection Regulation](https://eugdpr.org/) (GDPR) introduced several new data privacy rights for members of the European Union, including the **Right to Access** and the **Right to be Forgotten**. This means that any EU citizen whose personal data has been collected by your business can request to access or delete their data at any time. Failure to comply to these requests within 30 days can result in multi-million dollar fines for your organization. 
 
 For more information on how to set up your organization's data operations to be GDPR compliant in Platform and other Experience Cloud solutions, see the [GDPR documentation](https://www.adobe.io/apis/experiencecloud/gdpr/docs.html). For details on how GDPR applies to Experience Platform specifically, see the [GDPR in Experience Platform overview](../../gdpr/gdpr-on-platform-overview.md).
 
