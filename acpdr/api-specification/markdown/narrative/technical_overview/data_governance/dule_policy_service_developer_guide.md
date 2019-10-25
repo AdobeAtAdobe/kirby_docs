@@ -23,31 +23,39 @@ Using the API requires you to have an Adobe ID and access to Adobe Experience Pl
 
 ## Getting started with DULE Policy Service
 
-Before beginning to work with the Policy Service, data on Experience Platform must have appropriate DULE labels applied. Complete step-by-step instructions for applying data usage labels at the connection-, dataset-, and field-level can be found in the [DULE labels tutorial](../../tutorials/dule/dule_working_with_labels.md). 
+Before beginning to work with the Policy Service, data on Experience Platform must have appropriate DULE labels applied. Complete step-by-step instructions for applying data usage labels at the connection-, dataset-, and field-level can be found in the [DULE labels user guide](../../tutorials/dule/dule_working_with_labels.md). 
 
-### Authentication
+This guide requires a working understanding of the following components of Adobe Experience Platform:
 
-Accessing the Policy Service API requires you to have access to Adobe Experience Platform. If you have not done so already, follow the tutorial for [authenticating and accessing Experience Platform APIs](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+* [Data Governance](dule_overview.md): The framework by which Experience Platform enforces data usage compliance.
+    * [DULE labels](../../tutorials/dule/dule_working_with_labels.md): Data usage labels are applied to Experience Data Model (XDM) data fields, specifying restrictions for how that data can be accessed.
+* [Experience Data Model (XDM) System](../schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Experience Platform organizes customer experience data.
+* [Real-time Customer Profile](../unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, real-time consumer profile based on aggregated data from multiple sources.
+* [Sandboxes](../sandboxes/sandboxes-overview.md): Experience Platform provides virtual sandboxes which partition a single Platform instance into separate virtual environments to help develop and evolve digital experience applications.
 
-Once complete, you should have the following values:
+The following sections provide additional information that you will need to know in order to successfully make calls to the Policy Service API.
 
-* `{ACCESS_TOKEN}`: Your specific Bearer token value provided after authentication.
-* `{IMS_ORG}`: Your IMS Org credentials found in your unique Adobe Experience Platform integration.
-* `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.
+### Reading sample API calls
 
-### Headers
+This guide provides example API calls to demonstrate how to format your requests. These include paths, required headers, and properly formatted request payloads. Sample JSON returned in API responses is also provided. For information on the conventions used in documentation for sample API calls, see the section on [how to read example API calls](../platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md#how-do-i-format-an-api-request) in the Experience Platform troubleshooting guide.
 
-Each of the API calls in this document requires you to send headers in your request. In general, each call requires three or four headers, depending on the type of request. All requests require the follow three headers, containing the values established during [authentication](#authentication):
+### Gather values for required headers
 
-* Authorization: Bearer `{ACCESS_TOKEN}`
-* x-api-key: `{API_KEY}`
-* x-gw-ims-org-id: `{IMS_ORG}`
+In order to make calls to Platform APIs, you must first complete the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
-Calls in which a payload (body) are sent will require a fourth header:
+- Authorization: Bearer `{ACCESS_TOKEN}`
+- x-api-key: `{API_KEY}`
+- x-gw-ims-org-id: `{IMS_ORG}`
 
-* Content-Type: application/json
+All resources in Experience Platform, including those belonging to Data Governance, are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
 
-The necessary headers for each operation are included in the sample CURL requests below.
+- x-sandbox-name: `{SANDBOX_NAME}`
+
+> **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../sandboxes/sandboxes-overview.md). 
+
+All requests that contain a payload (POST, PUT, PATCH) require an additional header:
+
+- Content-Type: application/json
 
 ### Core vs custom resources
 
@@ -85,7 +93,7 @@ To view a list of policies, a GET request can be made to `/policies/core` or `/p
 
 #### API format
 
-```SHELL
+```http
 GET /policies/core
 GET /policies/custom
 ```
@@ -98,6 +106,7 @@ curl -X GET \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -199,7 +208,7 @@ Each policy contains an `id` field that can be used to request the details of a 
 
 #### API format
 
-```SHELL
+```http
 GET /policies/core/{id}
 GET /policies/custom/{id}
 ```
@@ -212,6 +221,7 @@ curl -X GET \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -285,7 +295,7 @@ This expression is called a `PolicyExpression` and is an object containing _eith
 
 #### API format
 
-```SHELL
+```http
 POST /policies/custom
 ```
 
@@ -298,6 +308,7 @@ curl -X POST \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{
         "name": "Export Data to Third Party",
         "status": "DRAFT",
@@ -374,7 +385,7 @@ You may find that you need to update a data usage policy after it has been creat
 
 #### API format
 
-```SHELL
+```http
 PUT /policies/custom/{id}
 ```
 
@@ -389,6 +400,7 @@ curl -X PUT \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{
         "name": "Export Data to Third Party",
         "status": "DRAFT",
@@ -467,7 +479,7 @@ The Policy Service API currently supports "add", "replace", and "remove" PATCH o
 
 #### API format
 
-```SHELL
+```http
 PATCH /policies/custom/{id}
 ```
 
@@ -498,6 +510,7 @@ curl -X PATCH \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d ' [
           {
             "op": "replace",
@@ -566,7 +579,7 @@ If you need to remove a policy that you have created, you can do so by issuing a
 
 #### API format
 
-```SHELL
+```http
 DELETE /policies/custom/{id}
 ```
 
@@ -578,6 +591,7 @@ curl -X DELETE \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -598,7 +612,7 @@ To view a list of all marketing actions, a GET request can be made to `/marketin
 
 #### API format
 
-```SHELL
+```http
 GET /marketingActions/core
 GET /marketingActions/custom
 ```
@@ -613,6 +627,7 @@ curl -X GET \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -674,7 +689,7 @@ You can also perform a lookup (GET) request to view the details of a specific ma
 
 #### API format
 
-```SHELL
+```http
 GET /marketingActions/core/{marketingActionName}
 GET /marketingActions/custom/{marketingActionName}
 ```
@@ -687,6 +702,7 @@ curl -X GET \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -718,7 +734,7 @@ The Policy Service API allows you to define your own marketing actions, as well 
 
 #### API format
 
-```SHELL
+```http
 PUT /marketingActions/custom/{marketingActionName}
 ```
 
@@ -735,6 +751,7 @@ curl -X PUT \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{
         "name": "crossSiteTargeting",
         "description": "Perform targeting on information obtained across multiple web sites."
@@ -772,7 +789,7 @@ It is possible to delete marketing actions by sending a DELETE request to the `{
 
 #### API format
 
-```SHELL
+```http
 DELETE /marketingActions/custom/{marketingActionName}
 ```
 
@@ -784,6 +801,7 @@ curl -X DELETE \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -809,7 +827,7 @@ Evaluating policy violations based on the presence of DULE labels requires you t
 
 #### API format
 
-```SHELL
+```http
 GET /marketingActions/core/{marketingActionName}/constraints?duleLabels={value1},{value2}
 GET /marketingActions/custom/{marketingActionName}/constraints?duleLabels={value1},{value2}
 ```
@@ -822,6 +840,7 @@ curl -X GET \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 _**Important information for policy evaluation using DULE labels:**_
@@ -894,7 +913,7 @@ You can also evaluate policy violations by specifying the ID of one or more data
 
 #### API format
 
-```SHELL
+```http
 POST /marketingActions/core/{marketingActionName}/constraints
 POST /marketingActions/custom/{marketingActionName}/constraints
 ```
@@ -910,6 +929,7 @@ curl -X POST \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '[
         {
             "entityType": "dataSet",
@@ -1113,7 +1133,7 @@ _**Important information for policy evaluation using dataset fields:**_
 
 #### API format
 
-```SHELL
+```http
 POST /marketingActions/core/{marketingActionName}/constraints
 POST /marketingActions/custom/{marketingActionName}/constraints
 ```
@@ -1129,6 +1149,7 @@ curl -X POST \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '[
         {
             "entityType": "dataSet",
