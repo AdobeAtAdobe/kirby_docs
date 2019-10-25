@@ -50,6 +50,8 @@
 		"api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html",
 		"api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/":"/apis/experienceplatform/home/services/allservices.html",
-		"api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md":"/apis/experienceplatform/home/services/allservices.html"
+		"api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/data_access_architectural_overview.md":"/apis/experienceplatform/home/services/allservices.html",
+		"api-specification/markdown/narrative/technical_overview/sandboxes": "/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html",
+    "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting": "https://www.adobe.io/apis/experienceplatform/home/services/troubleshooting.html"
 	}
 }

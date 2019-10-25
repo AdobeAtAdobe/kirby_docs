@@ -33,36 +33,27 @@ Catalog provides a RESTful API through which you can perform basic CRUD operatio
 
 The following sections provide additional information that you will need to know or have on-hand in order to successfully make calls to the Catalog Service API.
 
-### Reading the API calls
+### Reading sample API calls
 
-Before making calls to the API, it is important to understand how to read the calls in this document. 
+This guide provides example API calls to demonstrate how to format your requests. These include paths, required headers, and properly formatted request payloads. Sample JSON returned in API responses is also provided. For information on the conventions used in documentation for sample API calls, see the section on [how to read example API calls](../platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md#how-do-i-format-an-api-request) in the Experience Platform troubleshooting guide.
 
-Each API call is shown in two different ways. First, the command is presented in its "API format", a template representation showing only the operation (GET, POST, PUT, PATCH, DELETE) and the endpoint being used (e.g. `/datasets`). Some templates also include examples or show the location of variables to help illustrate how a call should be formulated, such as `GET /datasets/{variable}`.
+### Gather values for required headers
 
-The calls are then shown as [curl](https://curl.haxx.se/docs/faq.html#What_is_cURL) commands in a "Request", which includes the necessary headers and full "base path" needed to successfully interact with the API.
+In order to make calls to Platform APIs, you must first complete the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
-The Catalog Service base path is: `https://platform.adobe.io/data/foundation/catalog`. 
+- Authorization: Bearer `{ACCESS_TOKEN}`
+- x-api-key: `{API_KEY}`
+- x-gw-ims-org-id: `{IMS_ORG}`
 
-The base path should be pre-pended to all endpoints. For example, the `/datasets` endpoint becomes: `https://platform.adobe.io/data/foundation/catalog/datasets`.
+All resources in Experience Platform, including those belonging to Data Governance, are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
 
-You will see the API format / Request pattern throughout this document, and should be sure to use the complete path shown in the sample Request when making your own calls to the Catalog API.
+- x-sandbox-name: `{SANDBOX_NAME}`
 
-### Authentication and request headers
+> **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../sandboxes/sandboxes-overview.md). 
 
-The calls in this document require specific request headers be sent with each call in order to successfully use the API. 
+All requests that contain a payload (POST, PUT, PATCH) require an additional header:
 
-The headers, and the values required, are:
-
-* Authorization: Bearer `{ACCESS_TOKEN}` - The token provided after [authentication](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md)
-* x-api-key: `{API_KEY}` - Your specific API key for your unique Platform integration (available via [Adobe Console](https://console.adobe.io))
-* x-gw-ims-org-id: `{IMS_ORG}` - The IMS Organization credentials for your unique Platform integration.
-
-You will also occasionally need the following headers:
-
-* Content-Type: Used to specify acceptable media types in the request body
-* Accept: Used to specify acceptable media types in the response body
-
-The correct headers are included in the Request example for each call.
+- Content-Type: application/json
 
 ### Best practices for API queries
 
@@ -93,7 +84,7 @@ For more information on using filters, see the section on [filtering data with q
 
 #### API format
 
-```
+```http
 GET /datasets
 GET /datasets?{filter}={value}&{filter2}={value}
 ```
@@ -102,12 +93,13 @@ GET /datasets?{filter}={value}&{filter2}={value}
 
 The sample request below includes two filters, separated by an ampersand (`&`). 
 
-```
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/foundation/catalog/datasets?limit=5&properties=name,description,files' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -149,19 +141,20 @@ Even though you are requesting a specific object, it is best practice to [filter
 
 #### API format
 
-```
+```http
 GET /datasets/{id}
 GET /datasets/{id}?properties={property1},{property2},{property3}
 ```
 
 #### Request
 
-```
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/foundation/catalog/datasets/5ba9452f7de80400007fc52a?properties=name,description,state,tags,transforms,files' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -202,7 +195,7 @@ The distinction between PUT and PATCH is an important one, as PUT will replace t
 
 #### API format
 
-```
+```http
 PATCH /datasets/{id}
 ```
 
@@ -210,13 +203,14 @@ PATCH /datasets/{id}
 
 Requests containing a payload require the header `Content-Type: application/json` be added, as shown in the sample below.
 
-```
+```shell
 curl -X PATCH \
   https://platform.adobe.io/data/foundation/catalog/datasets/5ba9452f7de80400007fc52a \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{
        "name":"Updated Dataset Name",
        "description":"Updated description for Sample Dataset"
@@ -241,7 +235,7 @@ Alternatively, Catalog supports `json-patch` as described in [RFC-6902](https://
 
 #### API format
 
-```
+```http
 PATCH /datasets/{id}
 ```
 
@@ -249,13 +243,14 @@ PATCH /datasets/{id}
 
 To use this method, the request must have the header `Content-Type: application/json-patch+json` and contain the fields to be updated in the payload, as shown below.
 
-```
+```shell
 curl -X PATCH \
   https://platform.adobe.io/data/foundation/catalog/datasets/5ba9452f7de80400007fc52a \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'Content-Type: application/json-patch+json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '[
         {"op":"add","path":"/name","value":"New Dataset Name"},
         {"op":"add","path":"/description","value":"New description for dataset"}
@@ -281,18 +276,19 @@ Catalog allows for the removal of objects using a DELETE request. Take extra car
 
 #### API format
 
-```
+```http
 DELETE /datasets/{id}
 ```
 
 #### Request
 
-```
+```shell
 curl -X DELETE \
   'https://platform.adobe.io/data/foundation/catalog/datasets/5ba9452f7de80400007fc52a' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -319,7 +315,7 @@ Despite requesting specific datasets, it is still best practice to [filter by pr
 
 #### API format
 
-```
+```http
 GET /datasets/{id1},{id2},{id3},{id4}
 GET /datasets/{id1},{id2},{id3},{id4}?properties={property1},{property2},{property3}
 ```
@@ -328,12 +324,13 @@ GET /datasets/{id1},{id2},{id3},{id4}?properties={property1},{property2},{proper
 
 The sample request includes a comma-separated list of dataset IDs as well as a comma-separated list of properties to be returned.
 
-```
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/foundation/catalog/datasets/5bde21511dd27b0000d24e95,5bda3a4228babc0000126377,5bceaa4c26c115000039b24b,5bb276b03a14440000971552,5ba9452f7de80400007fc52a?properties=name,description,files' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -379,18 +376,19 @@ This field can be expanded to show details by issuing a GET request to the datas
 
 #### API format
 
-```
+```http
 GET /datasets/{id}?expansion=transforms
 ```
 
 #### Request
 
-```
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/foundation/catalog/datasets/5ba9452f7de80400007fc52a?expansion=transforms' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 > **Note:** You can expand multiple fields in a single GET request by using a comma-delimited list, such as `expansion=transforms,files`.
@@ -462,7 +460,7 @@ Catalog provides a multi-request method that not only allows for multiple reques
 
 #### API format
 
-```
+```http
 POST /
 ```
 
@@ -476,13 +474,14 @@ There is also a special use case, such that when a PUT or POST is executed and o
 
 The request that follows creates (POST) a new dataset and then creates (POST) related views and transforms.
 
-```
+```shell
 curl -X POST \
   https://platform.adobe.io/data/foundation/catalog/ \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '[
     {
         "id": "firstObjectId",
@@ -515,6 +514,7 @@ curl -X POST \
     }
 ]'
 ```
+
 The request involves several important fields, outlined in more detail below:
 * `"id"`: User-supplied ID that is attached to the response object so that you can match up requests to responses. Catalog does not use this value except to pass it back in the response.
 * `"resource"`: The resource path relative to the root (Catalog). The protocol and domain should not be part of this value and it is expected to be prefixed with "/". When using PATCH and DELETE, include the object `{id}` in the resource path. Not to be confused with the user-supplied `"id"`, the resource path uses the `{id}` of the dataset itself (e.g. `"resource": "/datasets/1234567890"`).
@@ -567,7 +567,7 @@ Using an ampersand (`&`), you can combine multiple filters in a single request. 
 
 #### API format
 
-```
+```http
 GET /datasets?{filter}={value}&{filter2}={value}&{filter3}={value}
 ```
 
@@ -585,18 +585,19 @@ Catalog responses are automatically metered according to configured limits:
 
 #### API format
 
-```
+```http
 GET /datasets?limit=3
 ```
 
 #### Request
 
-```
+```shell
 curl -X GET \
   https://platform.adobe.io/data/foundation/catalog/datasets?limit=3 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -611,7 +612,7 @@ The `properties` parameter can be used to filter within a single object or a gro
 
 #### API format
 
-```
+```http
 GET /datasets?properties={property1},{property2},{property3}
 GET /datasets/{id}?properties={property1},{property2},{property3}
 GET /datasets/{id1},{id2},{id3},{id4}?properties={property1},{property2},{property3}
@@ -621,12 +622,13 @@ GET /datasets/{id1},{id2},{id3},{id4}?properties={property1},{property2},{proper
 
 The following request includes a comma-separated list of properties, as well as a `limit` to the number of datasets returned. If the request did not include a "limit" parameter, the response would contain a maximum of 20 objects.
 
-```
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/foundation/catalog/datasets?limit=4&properties=created,updated,name,schemaRef' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -678,17 +680,18 @@ If the `start` parameter is not paired with a `limit` parameter, the maximum num
 
 #### API format
 
-```
+```http
 GET /datasets?start={number}
 ```
 #### Request
 
-```
+```shell
 curl -X GET \
   https://platform.adobe.io/data/foundation/catalog/datasets?limit=2&start=4 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -772,12 +775,13 @@ This sample dataset contains `"tags"`:
 
 ```
 The following sample request could be made to filter by one tag having a specific value AND the second tag being present.
-```
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/foundation/catalog/datasets?tags=sampleTag:123456,secondTag:* \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -802,19 +806,20 @@ Some Catalog APIs have query parameters that allow for ranged queries, most ofte
 
 #### API format
 
-```
+```http
 GET /batches?createdAfter={UNIX Epoch Time}&createdBefore={UNIX Epoch Time}
 ```
 
 #### Request
 
 The following request returns batches created during the month of April 2019.
-```
+```shell
 curl -X GET \
   'https://platform.adobe.io/data/foundation/catalog/batches?createdAfter=1554076800000&createdBefore=1556668799000' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 ### Filter by sorting
@@ -825,7 +830,7 @@ Sort parameters can be joined together allowing you to order by one field and th
 
 #### API format
 
-```
+```http
 GET /datasets?orderBy=asc:created
 GET /datasets?orderBy=desc:created
 GET /datasets?orderBy=created,desc:updated
@@ -837,7 +842,7 @@ Certain Catalog APIs, such as `/datasets` allow filtering by property. Some simp
 
 #### API format
 
-```
+```http
 GET /datasets?property={VALUE}
 ```
 
@@ -864,12 +869,13 @@ GET /datasets?property={VALUE}
 
 The following request will return any datasets with a version number greater than 1.0.3.
 
-```
+```shell
 curl -X GET \
   https://platform.adobe.io/data/foundation/catalog/datasets?property=version>1.0.3 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 Any top-level object property can be used in the request, meaning that for the following sample object, you could filter by property for "name", "description", and "subItem", but NOT by "sampleKey".
 
