@@ -47,6 +47,8 @@
 		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
 		"acpdr/swagger-specs/":"/apis/cloudplatform/dataservices/api-reference.html",
 		"api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html",
-		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
+		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
+		"api-specification/markdown/narrative/technical_overview/sandboxes": "/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html",
+		"api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting": "https://www.adobe.io/apis/experienceplatform/home/services/troubleshooting.html"
 	}
 }
