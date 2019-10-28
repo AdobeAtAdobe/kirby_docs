@@ -85,6 +85,8 @@
   "app2app_map": {
     "acpdr/swagger-specs/":"/apis/experiencecloud/gdpr/api-reference.html",
     "api-specification/markdown/narrative/tutorials/":"/apis/experienceplatform/home/tutorials/alltutorials.html",
-    "api-specification/markdown/narrative/technical_overview/privacy_service_overview/":"/apis/experienceplatform/home/services/privacy-service.html"
+    "api-specification/markdown/narrative/technical_overview/privacy_service_overview/":"/apis/experienceplatform/home/services/privacy-service.html",
+    "api-specification/markdown/narrative/technical_overview/sandboxes": "/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html",
+    "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting": "https://www.adobe.io/apis/experienceplatform/home/services/troubleshooting.html"
   }
 }
