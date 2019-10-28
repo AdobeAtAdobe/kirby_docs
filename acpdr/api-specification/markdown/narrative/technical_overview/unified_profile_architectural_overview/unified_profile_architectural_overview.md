@@ -4,14 +4,13 @@ Adobe Experience Platform enables you to drive coordinated, consistent, and rele
 
 This overview will help you understand the role and use of Real-time Customer Profile in Experience Platform. The following topics are covered:
 
-*   [Understanding Real-time Customer Profile](#understanding-real-time-customer-profile): See the big picture about Profile and its role within Experience Platform.  
-*   [The union view](#the-union-view): Understand the components involved in unifying profile data to build the union view.
-
-*   [Real-time components](#real-time-components): Learn how real-time input is captured and used.
- 
-*   [Data governance](#data-governance): Learn how to use data labels and certain Profile access parameters. 
-*   [Sending data to Real-time Customer Profile](#sending-data-to-real-time-customer-profile): Learn the tools used to send your record and time series data to Profile.
-*   [Creating audience segments](#creating-audience-segments): Learn how to isolate sections of your customer base as audience segments, based on specified criteria.
+* [Understanding Real-time Customer Profile](#understanding-real-time-customer-profile): See the big picture about Profile and its role within Experience Platform.  
+* [The union view](#the-union-view): Understand the components involved in unifying profile data to build the union view.
+* [Real-time components](#real-time-components): Learn how real-time input is captured and used.
+* [Data governance](#data-governance): Learn how to use data labels and certain Profile access parameters. 
+* [Handling opt-out requests](#handling-opt-out-requests): Learn how Experience Platform captures opt-out requests from your customers, whose data is stored and used in Profile.
+* [Sending data to Real-time Customer Profile](#sending-data-to-real-time-customer-profile): Learn the tools used to send your record and time series data to Profile.
+* [Creating audience segments](#creating-audience-segments): Learn how to isolate sections of your customer base as audience segments, based on specified criteria.
 
 ## Understanding Real-time Customer Profile
 Real-time Customer Profile is a generic lookup entity store that merges data across various enterprise data assets and provides access to that data in the form of unified customer profiles and related time series events.
@@ -188,6 +187,76 @@ Excluded datasets are not be merged into the union view. By using this strategy,
 
 ### Field selection
 Real-time Customer Profile supports filtering responses by specific fields, meaning that rather than retrieving entire profiles, you are able to indicate which subset of fields to return. In this way, you are able to reduce your response to only the fields required for your purpose.
+
+## Handling opt-out requests
+
+Experience Platform allows your customers to send opt-out requests for the storage and use of their data in Real-time Customer Profile. In order to accept opt-out requests, one of the schemas featured in the union schema must contain opt-out XDM fields. There are two mixins that can provide these fields and they are described in more detail in the sections that follow.
+
+* [Profile Privacy](#profile-privacy): Used to capture different opt-out types (general or sales/sharing).
+* [Profile Preferences Details](#profile-preferences-details): Used to capture opt-out requests for specific XDM channels.
+
+Detailed steps on how to add a mixin to a schema are provided in the XDM documentation. If you are using the API, see the "Add a mixin" section in the [Schema Registry API tutorial](../../tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md#add-a-mixin). If you are using the user interface, see the "Add a mixin" section in the [Schema Editor tutorial](../../tutorials/schema_editor_tutorial/schema_editor_tutorial.md#add-a-mixin).
+
+### Profile Privacy
+
+The Profile Privacy mixin allows you to capture two kinds of opt-out requests from customers:
+
+1. General opt-out
+1. Sales/Sharing opt-out
+
+The example JSON below highlights the fields provided by the mixin:
+
+```json
+{
+  "xdm:optOutConsentLevel": {
+    "xdm:privacyOptOuts": [
+      {
+        "xdm:optOutType": "general_opt_out",
+        "xdm:optOutValue": "out",
+        "xdm:timestamp": "2019-01-01T15:52:25+00:00"
+      }
+    ]
+  }
+}
+```
+* `xdm:privacyOptOuts`: An array containing a list of opt-out objects.
+* `xdm:optOutType`: The type of opt-out. Has two possible values:
+    * `general_opt_out`
+    * `sales_sharing_opt_out`
+* `xdm:optOutValue`: The active state of the opt-out. Has four possible values:
+    * `not_provided`: Opt-out request not provided
+    * `pending`: Pending verification
+    * `out`: The customer has opted out for the opt-out type indicated by `xdm:optOutType`.
+    * `in`: The customer has opted in for the opt-out type indicated by `xdm:optOutType`.
+* `xdm:timestamp`: Timestamp at the received opt-out signal.
+
+See the [public GitHub repository](https://github.com/adobe/xdm/blob/master/schemas/context/profile-privacy.schema.json) for the full XDM schema for this mixin. 
+
+### Profile Preferences Details
+
+The Profile Preferences Details mixin provides several fields that represent preferences for customer profiles. One of these fields, `xdm:optInOut`, allows you to set opt-out values for individual XDM channels. The example JSON below highlights how `xdm:optInOut` can capture multiple opt-out signals:
+
+```json
+{
+  "xdm:optInOut": {
+    "https://ns.adobe.com/xdm/channels/email": "pending",
+    "https://ns.adobe.com/xdm/channels/phone": "out",
+    "https://ns.adobe.com/xdm/channels/sms": "in",
+    "https://ns.adobe.com/xdm/channels/fax": "not_provided",
+    "https://ns.adobe.com/xdm/channels/direct-mail": "not_provided",
+    "https://ns.adobe.com/xdm/channels/apns": "not_provided",
+    "xdm:globalOptout": false
+  }
+}
+```
+* `xdm:optInOut`: Each key must represent a valid and known URI for an XDM channel, and has four possible values:
+    * `not_provided`: Opt-out request not provided
+    * `pending`: Pending verification
+    * `out`: The customer has opted out for the XDM channel indicated by the key name.
+    * `in`: The customer has opted in for the XDM channel indicated by the key name.
+* `xdm:optInOut > xdm:globalOptout`: When set to true, this property sets a global opt-out override for the profile.
+
+See the [public GitHub repository](https://github.com/adobe/xdm/blob/master/schemas/context/profile-preferences-details.schema.json) for the full XDM schema for this mixin. 
 
 ## Sending data to Real-time Customer Profile
 
