@@ -29,6 +29,30 @@ This tutorial also requires a working knowledge of various Adobe Experience Plat
 - [Experience Data Model (XDM)][xdm]: The standardized framework by which Platform organizes experience data.
 - [Real-time Customer Profile][rtcp]: Provides a unified, consumer profile in real-time based on aggregated data from multiple sources.
 
+The following sections provide additional information that you will need to know in order to successfully make calls to the Schema Registry API.
+
+### Reading sample API calls
+
+This guide provides example API calls to demonstrate how to format your requests. These include paths, required headers, and properly formatted request payloads. Sample JSON returned in API responses is also provided. For information on the conventions used in documentation for sample API calls, see the section on [how to read example API calls](../platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md#how-do-i-format-an-api-request) in the Experience Platform troubleshooting guide.
+
+### Gather values for required headers
+
+In order to make calls to Platform APIs, you must first complete the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+
+- Authorization: Bearer `{ACCESS_TOKEN}`
+- x-api-key: `{API_KEY}`
+- x-gw-ims-org-id: `{IMS_ORG}`
+
+All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
+
+- x-sandbox-name: `{SANDBOX_NAME}`
+
+> **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../sandboxes/sandboxes-overview.md). 
+
+All requests that contain a payload (POST, PUT, PATCH) require an additional header:
+
+- Content-Type: application/json
+
 ## Create a data inlet
 
 Using the API Key and Access Token generated during authentication, you can now create a data inlet. The following cURL command demonstrates the information that is required when creating a data inlet, such as a Name and Description for the inlet being created.
@@ -44,6 +68,7 @@ CURL -X POST "https://platform.adobe.io/data/core/edge/inlet" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key: {API_KEY}" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -d '{JSON_PAYLOAD}'
 ```
 
@@ -112,7 +137,8 @@ curl -X GET https://platform.adobe.io/data/core/edge/inlet \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 Where:
@@ -171,6 +197,7 @@ CURL -X POST https://platform.adobe.io/data/foundation/schemaregistry/tenant/sch
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{JSON_PAYLOAD}
 ```
 
@@ -247,7 +274,7 @@ Where:
         "union"
     ],
     "meta:containerId": "tenant",
-    "imsOrg": "{IMS_ORG_ID}",
+    "imsOrg": "{IMS_ORG}",
     "meta:xdmType": "object",
     "meta:registryMetadata": {
         "repo:createDate": 1551376506996,
@@ -261,7 +288,7 @@ Where:
 Where:
 - `{SCHEMA_NAME}`: The name of the schema you created.
 - `{SCHEMA_DESCRIPTION}`: The description of the schema you created. 
-- `{IMS_ORG_ID}`: The ID of the IMS Organization that created the schema.
+- `{IMS_ORG}`: The ID of the IMS Organization that created the schema.
 - `{SCHEMA_REF_ID}`: The ID in the response should look something like this: `"https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}"`.
 - `{TENANT_ID}`: This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Org. For more information about the Tenant ID, please read the [schema registry guide][schema-registry].
 - `{SCHEMA_ID}`: The ID of your newly created schema.
@@ -286,6 +313,7 @@ CURL -X POST https://platform.adobe.io/data/foundation/schemaregistry/tenant/des
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{JSON_PAYLOAD}'
 ```
 Where:
@@ -342,6 +370,7 @@ CURL -X POST https://platform.adobe.io/data/foundation/catalog/datasets \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{JSON_PAYLOAD}'
 ```
 
@@ -377,7 +406,7 @@ Where:
 
 - `{DATASET_NAME}`: The name of the dataset you're creating.
 - `{DATASET_DESCRIPTION}`: A meaningful description for the dataset you're creating.
-- `{IMS_ORG_ID}`: Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG}`: Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 - `{SCHEMA_ID}`: The ID of the previously created schema. 
 - `{SCHEMA_VERSION}`: The version of the previously created schema. As digital experiences change, schemas will need to evolve. As a result, it is required to have the schema version. For more information about schema evolution, please read [the schema composition guide][xdminfo].
 - `{SCHEMA_REF_ID}`: The `$id` that you previously received when you composed the XDM schema. It should look something like this: `"https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}"`
@@ -422,7 +451,7 @@ Where:
             "id": "{SCHEMA_REF_ID}",
             "contentType": "application/vnd.adobe.xed-full+json;version={SCHEMA_VERSION}"
         },
-        "imsOrgId": "{IMS_ORG_ID}",
+        "imsOrgId": "{IMS_ORG}",
         "source": {
             "name": "GettingStarted"
         },
@@ -460,7 +489,7 @@ Where:
 - `schemaRef`: The $id value of the schema that describes the streamed record.
 - `imsOrgId`: Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.  
 - `source`: The source of the streamed record - this should be the **same** as the one specified earlier, when you created the data inlet.
-- `{IMS_ORG_ID}`: Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG}`: Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 - `{SCHEMA_ID}`: The ID of the schema you previously created.
 - `{SCHEMA_VERSION}`: The version of the previously created schema. As digital experiences change, schemas will need to evolve. As a result, it is required to have the schema version. For more information about schema evolution, please read [the schema composition guide][xdminfo].
 - `{DATASET_ID}`: The ID of the dataset you previously created.
@@ -513,7 +542,8 @@ CURL -X GET 'https://platform.adobe.io/data/core/ups/access/entities?schema.name
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'Cache-Control: no-cache' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG_ID}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 > **Note:** To find your API Key and IMS Organization ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
@@ -522,7 +552,7 @@ Where:
 
 - `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
 - `{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
-- `{IMS_ORG_ID}` : Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG}` : Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 
 For further information about this API call, please read the Profile Access API documentation [here][rtcp].
 
@@ -600,7 +630,8 @@ curl -X POST https://platform.adobe.io/data/foundation/schemaregistry/tenant/sch
   -H 'Cache-Control: no-cache' \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG_ID}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{JSON_PAYLOAD}'
 ```
 
@@ -610,7 +641,7 @@ Where:
 
 - `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
 - `{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
-- `{IMS_ORG_ID}` : Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG}` : Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 - `{JSON_PAYLOAD}`: An example of the JSON Payload can be seen below:
 
 ```JSON
@@ -693,7 +724,7 @@ An example of a successful response can be found below:
         "https://ns.adobe.com/experience/campaign/experienceevent-profile-work-details"
     ],
     "meta:containerId": "tenant",
-    "imsOrg": "{IMS_ORG_ID}",
+    "imsOrg": "{IMS_ORG}",
     "meta:xdmType": "object",
     "meta:registryMetadata": {
         "repo:createDate": 1551229957987,
@@ -708,7 +739,7 @@ Where:
 
 - `{SCHEMA_NAME}`: The name of the schema you created.
 - `{SCHEMA_DESCRIPTION}`: The description of the schema you created. 
-- `{IMS_ORG_ID}`: The ID of the IMS Organization that created the schema.
+- `{IMS_ORG}`: The ID of the IMS Organization that created the schema.
 - `{TENANT_ID}`: This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Organization. For more information about the Tenant ID, please read the [schema registry guide][schema-registry].
 - `{SCHEMA_REF_ID}`: The ID in the response should look something like this: `"https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}"`
 - `{SCHEMA_ID}`: The ID of your newly created schema.
@@ -731,6 +762,7 @@ CURL -X POST https://platform.adobe.io/data/foundation/schemaregistry/tenant/des
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{JSON_PAYLOAD}'
 ```
 Where:
@@ -772,7 +804,8 @@ curl -X POST https://platform.adobe.io/data/foundation/catalog/datasets \
   -H 'Cache-Control: no-cache' \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG_ID}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{JSON_PAYLOAD}'
 ```
 
@@ -780,7 +813,7 @@ Where:
 
 - `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
 - `{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
-- `{IMS_ORG_ID}` : Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG}` : Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 - `{JSON_PAYLOAD}`: An example of the JSON Payload can be seen below:
 
 ```json
@@ -948,18 +981,19 @@ Now, you can use the Profile Access APIs to read the ExperienceEvent you just se
 
 ```SHELL
 curl -X GET \
-  https://platform-stage.adobe.io/data/core/ups/access/entities?schema.name=_xdm.context.experienceevent&relatedSchema.name=_xdm.context.profile&relatedEntityId=janedoe@example.com&relatedEntityIdNS=email" \
+  https://platform-stage.adobe.io/data/core/ups/access/entities?schema.name=_xdm.context.experienceevent&relatedSchema.name=_xdm.context.profile&relatedEntityId=janedoe@example.com&relatedEntityIdNS=email \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "Cache-Control: no-cache" \
   -H "x-api-key: {API_KEY}" \
-  -H "x-gw-ims-org-id: {IMS_ORG_ID}"
+  -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}"
 
 ```
 Where:
 
 - `{ACCESS_TOKEN}` : Your specific bearer token value provided after authentication.   
 - `{API_KEY}` : Your specific API key value found in your unique Adobe Experience Platform integration.  
-- `{IMS_ORG_ID}` : Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
+- `{IMS_ORG}` : Your IMS Organization ID can be found under the integration details in the Adobe I/O Console.
 
 > **Note:** To find your API Key and IMS Organization ID, go to <https://console.adobe.io/integrations>, click on the Overview for the integration you want to use, and copy the API Key and Organization ID listed.
 
