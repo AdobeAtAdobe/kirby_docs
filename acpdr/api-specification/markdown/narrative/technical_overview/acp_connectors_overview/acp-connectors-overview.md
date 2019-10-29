@@ -46,7 +46,8 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
   -H 'authorization: Bearer {ACCESS_TOKEN}' \
   -H 'content-type: application/json' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' 
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' 
 ```
 ### Preview Object API
 This API lists the content of the file. (Currently only CSV files are supported for preview.)
@@ -55,7 +56,8 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
    -H 'authorization: Bearer {ACCESS_TOKEN}' \
    -H 'content-type: application/json' \
    -H 'x-api-key: {API_KEY}' \
-   -H 'x-gw-ims-org-id: {IMS_ORG}'
+   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+   -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 ### Schema Discovery API
 This API lists fields of a file. Currently only CSV files are supported
@@ -65,6 +67,7 @@ curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CO
 -H 'authorization: Bearer {ACCESS_TOKEN}' \
 -H 'content-type: application/json' \
 -H 'x-api-key: {API_KEY}' \
--H 'x-gw-ims-org-id: {IMS_ORG}'
+-H 'x-gw-ims-org-id: {IMS_ORG}' \
+-H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 

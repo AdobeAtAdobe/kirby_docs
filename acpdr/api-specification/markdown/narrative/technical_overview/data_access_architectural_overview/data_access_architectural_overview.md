@@ -23,22 +23,26 @@ The Data Access API supports a multitude of common use cases in order to streaml
 By using a batch identifier (batchID), the Data Access API can retrieve a list of files belonging to that particular batch.
 
 ##### API Format
-```
+
+```http
 GET /batches/{BATCH_ID}/files
 ```
 
 ##### Request
-```
+
+```shell
 curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/files \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 - `{BATCH_ID}`: The ID of the specified batch
 - `{ACCESS_TOKEN}`: Token provided after authentication 
 - `{API_KEY}`: Your specific API key for your unique Platform integration (available via [Adobe Console](https://console.adobe.io))
 - `{IMS_ORG}`: The IMS Organization credentials for your unique Platform integration
+- `{SANDBOX_NAME}`: The name of the sandbox the operation will take place in. See the [sandboxes overview](../sandboxes/sandboxes-overview.md) for more information.
 
 ##### Response
 ```JSON
@@ -92,22 +96,26 @@ By using a file identifier (`{FILE_ID}`), the Data Access API can be used to acc
 The response will contain a data array. Depending on whether the file pointed to by the ID is an individual file or a directory, the data array returned may contain a single entry or a list of files belonging to that directory. Each file element will include the details of the file.
 
 ##### API Format
-```
+
+```http
 GET /files/{FILE_ID}
 ```
 
 ##### Request
-```
+
+```shell
 curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID} \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 - `{FILE_ID}`: Equal to the `"dataSetFileId"`, the ID of the file to be accessed
 - `{ACCESS_TOKEN}`: Token provided after authentication 
 - `{API_KEY}`: Your specific API key for your unique Platform integration (available via [Adobe Console](https://console.adobe.io))
 - `{IMS_ORG}`: The IMS Organization credentials for your unique Platform integration
+- `{SANDBOX_NAME}`: The name of the sandbox the operation will take place in. See the [sandboxes overview](../sandboxes/sandboxes-overview.md) for more information.
 
 ##### Single File Response
 ```JSON
@@ -176,29 +184,32 @@ When a directory is returned, it contains an array of all files within the direc
 * `{FILE_ID}`: The file ID of an individual file in the specified batch
 * `"href"`: The url to access an individual file
 
-
-
 #### Access the contents of a file
 The Data Access API can also be used to access the contents of a file. This can then be used to download the contents to an external source.
 
 ##### API Format
-```
+
+```http
 GET /files/{dataSetFileId}?path={FILE_NAME}
 ```
 
 ##### Request
-```
+
+```shell
 curl -X GET https://platform.adobe.io/data/foundation/export/files/{FILE_ID}?path={FILE_NAME} \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 - `{FILE_ID}`: The ID of the file within a dataset
 - `{FILE_NAME}`: The full name of the file (e.g. profiles.csv)
 - `{ACCESS_TOKEN}`: Token provided after authentication 
 - `{API_KEY}`: Your specific API key for your unique Platform integration (available via [Adobe Console](https://console.adobe.io))
-- `{IMS_ORG}`: The IMS Organization credentials for your unique Platform integration
+- `{IMS_ORG}`: The IMS Organization credentials for your unique Platform 
+integration
+- `{SANDBOX_NAME}`: The name of the sandbox the operation will take place in. See the [sandboxes overview](../sandboxes/sandboxes-overview.md) for more information.
 
 ##### Response
 

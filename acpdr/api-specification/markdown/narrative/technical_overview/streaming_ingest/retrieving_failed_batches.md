@@ -51,13 +51,15 @@ curl -X GET "https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}
   -H "Cache-Control: no-cache" \
   -H "Content-Type: application/json" \
   -H "x-api-key: {API_KEY}" \
-  -H "x-gw-ims-org-id: {IMS_ORG}"
+  -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}
 ```
 
 - `{BATCH_ID}`: The ID of the batch that you're looking up.
 - `{ACCESS_TOKEN}`:  Your specific bearer token value provided after authentication.   
 - `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 - `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
+- `{SANDBOX_NAME}`: The name of the sandbox where the operation will take place. See the [sandboxes overview](../sandboxes/sandboxes-overview.md) for more information.
 
 ## Response
 
@@ -102,8 +104,8 @@ curl -X GET 'https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
-
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 Where:
