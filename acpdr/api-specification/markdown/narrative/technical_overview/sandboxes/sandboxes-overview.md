@@ -13,7 +13,7 @@ This document provides a high-level overview of sandboxes in Experience Platform
 
 ## Understanding sandboxes
 
-Sandboxes are virtual partitions within a single instance of Experience Platform, which allow for seamless and cost-effective integration with the development process of your digital experience applications. An Experience Platform instance supports one production sandbox and multiple non-production sandboxes, with each sandbox maintaining its own independent library of Platform resources (including schemas, datasets, profiles, and so on).  All content and actions taken within a sandbox are confined to only that sandbox and do not affect any other sandboxes.
+Sandboxes are virtual partitions within a single instance of Experience Platform, which allow for seamless integration with the development process of your digital experience applications. An Experience Platform instance supports one production sandbox and multiple non-production sandboxes, with each sandbox maintaining its own independent library of Platform resources (including schemas, datasets, profiles, and so on).  All content and actions taken within a sandbox are confined to only that sandbox and do not affect any other sandboxes.
 
 Non-production sandboxes allow you to test features, run experiments, and make custom configurations without impacting your production sandbox. In addition, non-production sandboxes have a reset feature that removes all customer-created resources from the sandbox. Non-production sandboxes cannot be converted to production sandboxes.
 
