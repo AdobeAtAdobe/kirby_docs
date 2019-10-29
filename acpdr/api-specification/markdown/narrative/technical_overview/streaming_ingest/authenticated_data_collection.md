@@ -12,6 +12,37 @@ First, the access token that is sent as part of the POST request is exchanged wi
 
 Afterwards, the system checks if the account belongs to the IMS Organization that the data is being written to, and then checks to see if that account has the appropriate Adobe Experience Platform entitlements to publish data to that streaming connection. 
 
+## Getting started with streaming ingestion APIs
+
+This tutorial requires a working knowledge of various Adobe Experience Platform services. Before beginning this tutorial, please review the documentation for the following services:
+
+- [Experience Data Model (XDM)](../schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes experience data.
+- [Real-time Customer Profile](../unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified consumer profile based on aggregated data from multiple sources.
+
+The following sections provide additional information that you will need to know in order to successfully make calls to streaming ingestion APIs.
+
+### Reading sample API calls
+
+This guide provides example API calls to demonstrate how to format your requests. These include paths, required headers, and properly formatted request payloads. Sample JSON returned in API responses is also provided. For information on the conventions used in documentation for sample API calls, see the section on [how to read example API calls](../platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md#how-do-i-format-an-api-request) in the Experience Platform troubleshooting guide.
+
+### Gather values for required headers
+
+In order to make calls to Platform APIs, you must first complete the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+
+- Authorization: Bearer `{ACCESS_TOKEN}`
+- x-api-key: `{API_KEY}`
+- x-gw-ims-org-id: `{IMS_ORG}`
+
+All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
+
+- x-sandbox-name: `{SANDBOX_NAME}`
+
+> **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../sandboxes/sandboxes-overview.md). 
+
+All requests that contain a payload (POST, PUT, PATCH) require an additional header:
+
+- Content-Type: application/json
+
 ### Creating a Data Inlet
 
 Creating a new data inlet which enforces authorization has a very similar process to creating one which doesn't enforce authorization. 
@@ -25,6 +56,7 @@ CURL -X POST "https://platform.adobe.io/data/core/edge/inlet" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key: {API_KEY}" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}"
   -d '{JSON_PAYLOAD}'
 ```
 

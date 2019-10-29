@@ -29,7 +29,7 @@ This tutorial also requires a working knowledge of various Adobe Experience Plat
 - [Experience Data Model (XDM)][xdm]: The standardized framework by which Platform organizes experience data.
 - [Real-time Customer Profile][rtcp]: Provides a unified, consumer profile in real-time based on aggregated data from multiple sources.
 
-The following sections provide additional information that you will need to know in order to successfully make calls to the Schema Registry API.
+The following sections provide additional information that you will need to know in order to successfully make calls to streaming ingestion APIs.
 
 ### Reading sample API calls
 
