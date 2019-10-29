@@ -44,6 +44,27 @@ The Data Ingestion API allows you to ingest data as batches (a unit of data that
 
 To upload a file larger than 512MB, the file will need to be divided into smaller chunks. Instructions to upload a large file can be found [here](#large-file-upload---create-file).
 
+### Reading sample API calls
+
+This guide provides example API calls to demonstrate how to format your requests. These include paths, required headers, and properly formatted request payloads. Sample JSON returned in API responses is also provided. For information on the conventions used in documentation for sample API calls, see the section on [how to read example API calls](../platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md#how-do-i-format-an-api-request) in the Experience Platform troubleshooting guide.
+
+### Gather values for required headers
+
+In order to make calls to Platform APIs, you must first complete the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+
+- Authorization: Bearer `{ACCESS_TOKEN}`
+- x-api-key: `{API_KEY}`
+- x-gw-ims-org-id: `{IMS_ORG}`
+
+All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
+
+- x-sandbox-name: `{SANDBOX_NAME}`
+
+> **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../sandboxes/sandboxes-overview.md). 
+
+All requests that contain a payload (POST, PUT, PATCH) require an additional header:
+
+- Content-Type: application/json
 
 ### Create a batch
 
@@ -57,19 +78,16 @@ POST /batches
 
 ```shell
 curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
-  -H "accept: application/json" \
+  -H "Content-Type: application/json" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key : {API_KEY}"
   -d '{ 
           "datasetId": "{DATASET_ID}" 
       }'
 ```
-
-`{IMS_ORG}`: Your IMS organization credentials found in your unique Adobe Experience Platform integration.  
-`{ACCESS_TOKEN}`: Token provided after authentication.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
-`{DATASET_ID}`: The ID of the dataset to upload the files into.
+`datasetId`: The ID of the dataset to upload the files into.
 
 #### Response
 
@@ -92,9 +110,8 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
     "updatedUser": "{USER_ID}"
 }
 ```
-`{BATCH_ID}`: The ID of the batch that was just created (used in subsequent requests).  
-`{IMS_ORG}`: Your IMS organization specified in the request.  
-`{DATASET_ID}`: The ID of the dataset to upload the files into.
+`id`: The ID of the batch that was just created (used in subsequent requests).  
+`relatedObjects > id`: The ID of the dataset to upload the files into.
 
 
 ## File upload
@@ -108,6 +125,9 @@ Once a batch is created, data can be uploaded to a preexisting dataset.  The fil
 ```http
 PUT /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
 ```
+`{BATCH_ID}`: The ID of the batch.  
+`{DATASET_ID}`: The ID of the dataset to upload files.  
+`{FILE_NAME}`: Name of file as it will be seen in the dataset.  
 
 #### Request
 
@@ -115,16 +135,11 @@ PUT /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
 curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.parquet" \
   -H "content-type: application/octet-stream" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key : {API_KEY}" \
   --data-binary "@{FILE_PATH_AND_NAME}.parquet"
 ```
-
-`{BATCH_ID}`: The ID of the batch.  
-`{DATASET_ID}`: The ID of the dataset to upload files.  
-`{FILE_NAME}`: Name of file as it will be seen in the dataset.  
-`{IMS_ORG}`: Your IMS organization credentials for your unique Adobe Experience Platform integration.  
-`{ACCESS_TOKEN}`: Token provided after authentication.  
 `{FILE_PATH_AND_NAME}`: The path and filename of the file to be uploaded into the dataset.  
 
 #### Response
@@ -138,20 +153,19 @@ To upload a large file, the file must be split into smaller chunks and uploaded 
 ```http
 POST /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}?action=initialize
 ```
+`{BATCH_ID}`: The ID of the batch.  
+`{DATASET_ID}`: The ID of the dataset ingesting the files. 
 
 #### Request
 
 ```SHELL
 curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/part1=a/part2=b/{FILE_NAME}.parquet?action=initialize" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key: {API_KEY}"
-```
-`{BATCH_ID}`: The ID of the batch.  
-`{DATASET_ID}`: The ID of the dataset ingesting the files.  
-`{IMS_ORG}`: Your IMS organization credentials found in your unique Adobe Experience Platform integration.  
-`{ACCESS_TOKEN}`: Token provided after authentication.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
+``` 
+
 
 #### Response
 ```JSON
@@ -159,11 +173,15 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID
 ```
 
 ### Large file upload - upload subsequent parts
+
 After the file has been created, all subsequent chunks can be uploaded by making repeated PATCH requests, one for each section of the file.
 
 ```http
 PATCH /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
 ```
+`{BATCH_ID}`: The ID of the batch.  
+`{DATASET_ID}`: The ID of the dataset to upload the files into.  
+`{FILE_NAME}`:Name of file as it will be seen in the dataset.  
 
 #### Request
 
@@ -171,19 +189,13 @@ PATCH /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
 curl -X PATCH "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/part1=a/part2=b/{FILE_NAME}.parquet" \
   -H "content-type: application/octet-stream" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key: {API_KEY}" \
   -H "Content-Range: bytes {CONTENT_RANGE}" \
   --data-binary "@{FILE_PATH_AND_NAME}.parquet"
-```
-
-`{BATCH_ID}`: The ID of the batch.  
-`{DATASET_ID}`: The ID of the dataset to upload the files into.  
-`{FILE_NAME}`:Name of file as it will be seen in the dataset.  
-`{IMS_ORG}`: Your IMS organization credentials found in your unique Adobe Experience Platform integration.  
-`{ACCESS_TOKEN}`: Token provided after authentication.  
+``` 
 `{FILE_PATH_AND_NAME}`: The path and filename of the file to be uploaded into the dataset.  
-`{CONTENT_RANGE}`: The range of bytes of the file being uploaded with this request. (for example: 0-82/164)  
 
 #### Response
 ```JSON
@@ -197,18 +209,15 @@ After all files have been uploaded to the batch, the batch can be signaled for c
 ```http
 POST /batches/{BATCH_ID}?actions=COMPLETE
 ```
+`{BATCH_ID}`: The ID of the batch to be uploaded into the dataset.  
 
 ```SHELL
 curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=COMPLETE" \
 -H "x-gw-ims-org-id: {IMS_ORG}" \
+-H "x-sandbox-name: {SANDBOX_NAME}" \
 -H "Authorization: Bearer {ACCESS_TOKEN}" \
 -H "x-api-key : {API_KEY}"
 ```
-
-`{BATCH_ID}`: The ID of the batch to be uploaded into the dataset.  
-`{IMS_ORG}`: Your IMS organization credentials found in your unique Adobe Experience Platform integration.  
-`{ACCESS_TOKEN}`: Token provided after authentication.  
-`{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 
 #### Response
 ```JSON
@@ -228,6 +237,7 @@ GET /batch/{BATCH_ID}
 curl GET "https://platform.adobe.io/data/foundation/catalog/batch/{BATCH_ID}" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "x-api-key: {API_KEY}"
 ```
 
