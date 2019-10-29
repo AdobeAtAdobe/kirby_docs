@@ -10,18 +10,36 @@ Adobe Experience Platform Identity Service manages the cross-device, cross-chann
 * [Creating a custom namespace](#creating-a-custom-namespace) - Create custom namespaces for classifying your identities.  
 * [Getting the native ID for an identity](#get-the-xid-for-an-identity) - A fully qualified identity consists of an ID value and a namespace. Upon persisting a new identity, Identity Service generates and associates a single ID, referred to as the XID or native ID, representing the composite identity properties. Identities can be referenced by XID in API calls, as well as identity maps in XDM data.  
 
-## Getting Started
+## Getting started
 
 This tutorial requires a working understanding of the following components of Adobe Experience Platform:
 
 * [Identity Service](../../technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md): Identity Service solves the fundamental challenge posed by the fragmentation of consumer profile data. It does this by bridging identities across devices and across the various systems whereby your consumers engage with your brand. 
 * [Experience Data Model (XDM)](../../technical_overview/schema_registry/schema_composition/schema_composition.md) provides the framework to refer to and manage the schemas that your data must conform to for use as entities on Platform. Some services covered by this overview require an understanding of XDM schema fields and how to refer to an individual field by name.
 
-This tutorial requires you to have completed the [Authentication to Adobe Experience Platform tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+The following sections provide additional information that you will need to know or have on-hand in order to successfully make calls to the Identity Service API.
 
-* Authorization: `Bearer {ACCESS_TOKEN}`
-* x-api-key: `{API_KEY}`
-* x-gw-ims-org-id: `{IMS_ORG}`
+### Reading sample API calls
+
+This guide provides example API calls to demonstrate how to format your requests. These include paths, required headers, and properly formatted request payloads. Sample JSON returned in API responses is also provided. For information on the conventions used in documentation for sample API calls, see the section on [how to read example API calls](../platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md#how-do-i-format-an-api-request) in the Experience Platform troubleshooting guide.
+
+### Gather values for required headers
+
+In order to make calls to Platform APIs, you must first complete the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+
+- Authorization: Bearer `{ACCESS_TOKEN}`
+- x-api-key: `{API_KEY}`
+- x-gw-ims-org-id: `{IMS_ORG}`
+
+All resources in Experience Platform, including those belonging to Data Governance, are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
+
+- x-sandbox-name: `{SANDBOX_NAME}`
+
+> **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../sandboxes/sandboxes-overview.md). 
+
+All requests that contain a payload (POST, PUT, PATCH) require an additional header:
+
+- Content-Type: application/json
 
 ### Region-based routing
 
@@ -96,7 +114,8 @@ curl -X GET \
   'https://platform-va7.adobe.io/data/core/identity/cluster/members?nsId=411&id=WTCpVgAAAFq14FMF' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 Option 2: Supply the identity as namespace (`ns`, by name) and ID value (`id`).
@@ -105,7 +124,8 @@ curl -X GET \
   'https://platform-va7.adobe.io/data/core/identity/cluster/members?ns=AMO&id=WTCpVgAAAFq14FMF' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 Option 3: Supply the identity as XID (`xid`). For more on how to obtain an identity's XID, see the section of this document covering [getting the XID for an identity](#get-the-xid-for-an-identity).
@@ -114,7 +134,8 @@ curl -X GET \
   'https://platform-va7.adobe.io/data/core/identity/cluster/members?xid=CJsDEAMaEAHmCKwPCQYNvzxD9JGDHZ8' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 ### Get associated identities for multiple identities
@@ -148,7 +169,8 @@ curl -X POST \
   -H 'content-type: application/json' \
   -H 'x-api-key: CALLERS_API_KEY/CLIENT_ID' \
   -H 'x-uis-cst-ctx: stub' \
-  -H 'x-gw-ims-org-id: B3349894589501FE0A494034@AdobeOrg' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"]
 }'
@@ -159,7 +181,8 @@ curl -X POST \
   -H 'authorization: CALLERS_IMS_SERVICE_TOKEN' \
   -H 'content-type: application/json' \
   -H 'x-api-key: CALLERS_API_KEY/CLIENT_ID' \
-  -H 'x-gw-ims-org-id: B3349894589501FE0A494034@AdobeOrg' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
     "graph-type": "Private Graph"
@@ -171,7 +194,8 @@ curl -X POST \
   -H 'authorization: CALLERS_IMS_SERVICE_TOKEN' \
   -H 'content-type: application/json' \
   -H 'x-api-key: CALLERS_API_KEY/CLIENT_ID' \
-  -H 'x-gw-ims-org-id: B3349894589501FE0A494034@AdobeOrg' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{
     "compositeXids": [{
             "nsid": 411,
@@ -308,7 +332,8 @@ curl -X GET \
   'https://platform-va7.adobe.io/data/core/identity/cluster/history?nsId=411&id=WTCpVgAAAFq14FMF' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 Option 2: Supply the identity as namespace (`ns`, by name) and ID value (`id`).
@@ -317,7 +342,8 @@ curl -X GET \
   'https://platform-va7.adobe.io/data/core/identity/cluster/history?ns=AMO&id=WTCpVgAAAFq14FMF' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 Option 3: Supply the identity as XID (`xid`). For more on how to obtain an identity's XID, see the section of this document covering [getting the XID for an identity](#get-the-xid-for-an-identity).
@@ -326,7 +352,8 @@ curl -X GET \
   'https://platform-va7.adobe.io/data/core/identity/cluster/history?xid=CJsDEAMaEAHmCKwPCQYNvzxD9JGDHZ8' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 ### Get the cluster history of a multiple identities
@@ -375,7 +402,8 @@ curl -X POST \
   -H 'authorization: CALLERS_IMS_SERVICE_TOKEN' \
   -H 'content-type: application/json' \
   -H 'x-api-key: CALLERS_API_KEY/CLIENT_ID' \
-  -H 'x-gw-ims-org-id: B3349894589501FE0A494034@AdobeOrg' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -H 'x-uis-cst-ctx: stub' \
   -d '{
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
@@ -388,7 +416,8 @@ curl -X POST \
   -H 'authorization: CALLERS_IMS_SERVICE_TOKEN' \
   -H 'content-type: application/json' \
   -H 'x-api-key: CALLERS_API_KEY/CLIENT_ID' \
-  -H 'x-gw-ims-org-id: B3349894589501FE0A494034@AdobeOrg' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{
     "xids": ["GYMBWaoXbMtZ1j4eAAACepuQGhs","b2NJK9a5X7x4LVE4rUqkMyM"],
     "graph-type": "Private Graph"
@@ -400,7 +429,8 @@ curl -X POST \
   -H 'authorization: CALLERS_IMS_SERVICE_TOKEN' \
   -H 'content-type: application/json' \
   -H 'x-api-key: CALLERS_API_KEY/CLIENT_ID' \
-  -H 'x-gw-ims-org-id: B3349894589501FE0A494034@AdobeOrg' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{
     "compositeXids": [{
             "nsid": 411,
@@ -487,7 +517,8 @@ curl -X GET \
   'https://platform-va7.adobe.io/data/core/identity/mapping?nsId=411&id=WTCpVgAAAFq14FMF' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 Option 2: Supply the identity as namespace (`ns`, by name) and ID value (`id`).
@@ -496,7 +527,8 @@ curl -X GET \
   'https://platform-va7.adobe.io/data/core/identity/mapping?ns=AMO&id=WTCpVgAAAFq14FMF' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 Option 3: Supply the identity as XID (`xid`). For more on how to obtain an identity's XID, see the section of this document covering [getting the XID for an identity](#get-the-xid-for-an-identity).
@@ -505,7 +537,8 @@ curl -X GET \
   'https://platform-va7.adobe.io/data/core/identity/mapping?xid=CJsDEAMaEAHmCKwPCQYNvzxD9JGDHZ8' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 ### Get identity mappings for multiple identities
@@ -644,7 +677,8 @@ curl -X GET \
   'https://platform-va7.adobe.io/data/core/idnamespace/identities' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 __Example response__
@@ -710,7 +744,8 @@ curl -X POST \
   -H 'authorization: CALLERS_IMS_SERVICE_TOKEN' \
   -H 'content-type: application/json' \
   -H 'x-api-key: CALLERS_API_KEY/CLIENT_ID' \
-  -H 'x-gw-ims-org-id: B3349894589501FE0A494034@AdobeOrg' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -H 'x-uis-cst-ctx: stub' \
   -d '{
   "description": "Test Namespace Details",
@@ -763,7 +798,8 @@ curl -X GET \
   'https://platform-va7.adobe.io/data/core/identity/identity?namespace=email&id=test@adobetest.com' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 __Example response__
