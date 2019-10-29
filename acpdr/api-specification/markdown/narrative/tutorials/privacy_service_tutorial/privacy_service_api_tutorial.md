@@ -40,10 +40,6 @@ All requests that contain a payload (POST, PUT, PATCH) require an additional hea
 
 The first step in creating a new job request is to gather your customer data. As the data controller, you need to collect information about the data subjects whose data you want to access, delete, or opt out of sale. Once you have the required data, it must be provided in the payload of a POST request to the root endpoint (`/`) of the [Privacy Service API](../../../../../acpdr/swagger-specs/privacy-service.yaml).
 
-The Privacy Service API supports two kinds of job requests for private customer data:
-
-* [Access and/or delete](#create-an-access/delete-job): Access (read) or delete private customer data.
-
 ### Create an access/delete job
 
 This section demonstrates how to make an access/delete job request using the API.
