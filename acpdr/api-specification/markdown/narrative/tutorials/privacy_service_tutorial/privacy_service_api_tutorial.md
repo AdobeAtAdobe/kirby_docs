@@ -14,10 +14,9 @@ Steps for performing the following tasks are covered in this tutorial:
 
 ## Getting started
 
-This tutorial requires a working understanding of Experience Data Model (XDM) and XDM System. Before beginning this tutorial, please review the following documentation:
+This tutorial requires a working understanding the following Experience Platform features:
 
 * [Privacy Service](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview): Provides a RESTful API and user interface that allow you to manage access and delete requests from your customers (data subjects) across Adobe Experience Cloud solutions.
-* [Sandboxes](../../technical_overview/sandboxes/sandboxes-overview.md): Experience Platform provides virtual sandboxes which partition a single Platform instance into separate virtual environments to help develop and evolve digital experience applications.
 
 The following sections provide additional information that you will need to know in order to successfully make calls to the Privacy Service API.
 
@@ -32,12 +31,6 @@ In order to make calls to Platform APIs, you must first complete the [authentica
 - Authorization: Bearer `{ACCESS_TOKEN}`
 - x-api-key: `{API_KEY}`
 - x-gw-ims-org-id: `{IMS_ORG}`
-
-All resources in Experience Platform, including those belonging to Privacy Service, are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
-
-* x-sandbox-name: `{SANDBOX_NAME}`
-
-> **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../../technical_overview/sandboxes/sandboxes-overview.md). 
 
 All requests that contain a payload (POST, PUT, PATCH) require an additional header:
 
@@ -72,7 +65,6 @@ curl -X POST \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{
     "companyContexts": [
       {
@@ -217,8 +209,7 @@ curl -X GET \
   https://platform.adobe.io/data/core/privacy/jobs/6fc09b53-c24f-4a6c-9ca2-c6076b0842b6 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: {SANDBOX_NAME}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
 #### Response
@@ -319,8 +310,7 @@ curl -X GET \
   https://platform.adobe.io/data/core/privacy/jobs?regulation=gdpr&page=2&size=50 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: {SANDBOX_NAME}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
 ```
 
 #### Response
