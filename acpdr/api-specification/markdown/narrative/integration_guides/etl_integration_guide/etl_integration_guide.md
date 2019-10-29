@@ -28,21 +28,37 @@ There are multiple Experience Platform components involved in ETL connector inte
 * **Adobe Identity Management System (IMS)** - Provides framework for authentication to Adobe services.
 * **IMS Organization** - A corporate entity that can own or license products and services and allow access to its members.
 * **IMS User** - Members of an IMS Organization. The Organization to User relationship is many to many.
+* **Sandbox** - A virtual partition a single Platform instance, to help develop and evolve digital experience applications.
 * **Data Discovery** - Records the metadata of ingested and transformed data in Experience Platform.
 * **Data Access** - Provides users with an interface to access their data in Experience Platform.
 * **Data Ingestion** – Pushes data to Experience Platform with Data Ingestion APIs.
 * **Schema Registry** - Defines and stores schema that describe the structure of data to be used in Experience Platform. 
 
+## Getting started with Experience Platform APIs
 
-## Authenticating to Adobe Experience Platform
+The following sections provide additional information that you will need to know or have on-hand in order to successfully make calls to Experience Platform APIs.
 
-Adobe is committed to privacy and security. All requests for services or content on behalf of end-users or service accounts must authenticate using OAuth or JSON Web Token (JWT).
+### Reading sample API calls
 
-* Your application must be registered through the Adobe I/O Console to use OAuth and JWT authentication. The I/O Console is where you can generate the API Key, a requirement for the authentication flow.
-* If your integration needs to access content or services on behalf of an end-user, the integration will need to pass the OAuth token granted by Adobe IMS for that end-user.
-* For service-to-service integrations, your application will use JWT. JWT encapsulates your client credentials and authenticates your integration with the identity of the service account to be used for the API invocations. The JWT is exchanged for the OAuth token that authorizes access and is used in the same manner as the direct end-user authentication flow. 
+This guide provides example API calls to demonstrate how to format your requests. These include paths, required headers, and properly formatted request payloads. Sample JSON returned in API responses is also provided. For information on the conventions used in documentation for sample API calls, see the section on [how to read example API calls](../../technical_overview/platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md#how-do-i-format-an-api-request) in the Experience Platform troubleshooting guide.
 
-The [Adobe I/O Authentication](https://www.adobe.io/apis/experienceplatform/console/authentication/gettingstarted.html) guide provides step-by-step instructions for authenticating to Experience Platform.
+### Gather values for required headers
+
+In order to make calls to Platform APIs, you must first complete the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+
+- Authorization: Bearer `{ACCESS_TOKEN}`
+- x-api-key: `{API_KEY}`
+- x-gw-ims-org-id: `{IMS_ORG}`
+
+All resources in Experience Platform, including those belonging to Data Governance, are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
+
+- x-sandbox-name: `{SANDBOX_NAME}`
+
+> **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../../technical_overview/sandboxes/sandboxes-overview.md). 
+
+All requests that contain a payload (POST, PUT, PATCH) require an additional header:
+
+- Content-Type: application/json
 
 ## General User Flow
 
@@ -78,19 +94,21 @@ Catalog responses are automatically metered according to configured limits, howe
 
 Query parameters are covered in more detail in the [filtering data with query parameters](../../technical_overview/catalog_architectural_overview/catalog_architectural_overview.md#filtering-data-with-query-parameters) section of the [Catalog Service Overview](../../technical_overview/catalog_architectural_overview/catalog_architectural_overview.md).
 
-#### API Format
-```SHELL
+#### API format
+
+```http
 GET /catalog/datasets
 GET /catalog/datasets?{filter1}={value1},{value2}&{filter2}={value3}
 ```
 
 #### Request
 
-```SHELL
+```shell
 curl -X GET "https://platform.adobe.io/data/foundation/catalog/datasets?limit=3&properties=name,description,schemaRef" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key: {API_KEY}" \
-  -H "x-gw-ims-org-id: {IMS_ORG}"
+  -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}"
 ```
 
 Please refer to the [Catalog Service Overview](../../technical_overview/catalog_architectural_overview/catalog_architectural_overview.md) for detailed examples of how to make calls to the [Catalog API](../../../../../../acpdr/swagger-specs/catalog.yaml).
@@ -154,6 +172,7 @@ curl -X GET \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -H 'Accept: application/vnd.adobe.xed-full+json; version=1' \
 ``` 
 
@@ -203,6 +222,7 @@ GET /catalog/{"schema" property without the "@"}
 ```
 curl -X GET "https://platform.adobe.io/data/foundation/catalog/xdms/context/person?expansion=xdm" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key: {API_KEY}"
 ```
@@ -263,7 +283,8 @@ GET /catalog/datasets?limit={value}&properties={value}
 curl -X GET "https://platform.adobe.io/data/foundation/catalog/datasets?limit=1&properties=files" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key: {API_KEY}" \
-  -H "x-gw-ims-org-id: {IMS_ORG}"
+  -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}"
 ```
 
 #### Response
@@ -293,6 +314,7 @@ GET /catalog/datasets/{DATASET_ID}/views/{VIEW_ID}/files
 curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets/5bf479a6a8c862000050e3c7/views/5bf479a654f52014cfffe7f1/files" \
   -H "Accept: application/json" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key : {API_KEY}"
 ```
@@ -359,6 +381,7 @@ GET /export/files/{Dataset File ID}
 ```shell
 curl -X GET "https://platform.adobe.io/data/foundation/export/files/ea40946ac03140ec8ac4f25da360620a-1" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key : {API_KEY}"
 ```
@@ -393,6 +416,7 @@ GET /export/files/{FILE_ID}?path={FILE_NAME}.{FILE_FORMAT}
 ```shell
 curl -X GET "https://platform.adobe.io/data/foundation/export/files/ea40946ac03140ec8ac4f25da360620a-1?path=samplefile.parquet" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key : {API_KEY}"
 ```
@@ -417,6 +441,7 @@ GET /catalog/datasets/{DATASET_ID}
 curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets/59c93f3da7d0c00000798f68" \
 -H "accept: application/json" \
 -H "x-gw-ims-org-id: {IMS_ORG}" \
+-H "x-sandbox-name: {SANDBOX_NAME}" \
 -H "Authorization: Bearer {ACCESS_TOKEN}" \
 -H "x-api-key : {API_KEY}"
 ```
@@ -457,6 +482,7 @@ Using the [Catalog API](../../../../../../acpdr/swagger-specs/catalog.yaml), you
 curl -X GET "https://platform.adobe.io/data/foundation/catalog/batches?dataSet=DATASETID&createdAfter=START_TIMESTAMP&createdBefore=END_TIMESTAMP&sort=desc:created" \
   -H "accept: application/json" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "Authorization:Bearer {ACCESS_TOKEN}" \
   -H "x-api-key : {API_KEY}"
 ```
@@ -472,6 +498,7 @@ Once you have the ID for the batch you are looking for (`{BATCH_ID}`), it is pos
 ```shell
 curl -X GET "https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/files" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key : {API_KEY}"
 ```
@@ -486,6 +513,7 @@ Using the unique ID of a file (`{FILE_ID`), the [Data Access API](../../../../..
 curl -X GET "https://platform.adobe.io/data/foundation/export/files/{FILE_ID}" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "x-api-key : {API_KEY}"
 ```
 
@@ -501,6 +529,7 @@ The [Data Access API](../../../../../../acpdr/swagger-specs/data-access-api.yaml
 curl -X GET "https://platform.adobe.io/data/foundation/export/files/{DATASET_FILE_ID}?path=filename1.csv" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "x-api-key: {API_KEY}"
 ```
 
@@ -526,6 +555,7 @@ Once the data is processed, the ETL tool will write the data back to Experience 
 curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
   -H "accept: application/json" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key: {API_KEY}" \
   -d '{
@@ -564,6 +594,7 @@ Data will first land in the staging location on Adobe Experience Platform and th
 ```shell
 curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=COMPLETE" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "Authorization:Bearer {ACCESS_TOKEN}" \
   -H "x-api-key : {API_KEY}"
 ```
@@ -583,6 +614,7 @@ Before running new tasks in the ETL tool, you must ensure that the last batch wa
 curl -X GET "https://platform.adobe.io/data/foundation/catalog/batches?limit=1&sort=desc:created" \
   -H "Accept: application/json" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key: {API_KEY}"
 ```
@@ -616,6 +648,7 @@ An individual batch status can be retrieved through the [Catalog Service API](..
 curl -X GET "https://platform.adobe.io/data/foundation/catalog/batches/{BATCH_ID}" \
   -H "Accept: application/json" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key: {API_KEY}"
 ```
