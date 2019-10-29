@@ -22,7 +22,7 @@
   GROUP BY Day 
   ORDER BY Day ASC, pageViews DESC;
   ```
-  ![Image](graphics/2B-1.png)
+  ![Image](images/2B-1.png)
 2. Find a list of visitors organized by their number of page views.
   ```sql
   SELECT 
@@ -33,7 +33,7 @@
   ORDER BY pageViews DESC
   LIMIT 10;
   ```
-  ![Image](graphics/2B-2.png)
+  ![Image](images/2B-2.png)
 3. Replay a visitor's sessions.
   ```sql
   SELECT 
@@ -50,7 +50,7 @@
   ORDER BY timestamp 
   LIMIT 100;
   ```
-  ![Image](graphics/2B-3.png)
+  ![Image](images/2B-3.png)
 4. View the visitor rollup.
   ```sql
   SELECT 
@@ -70,4 +70,4 @@
   GROUP BY endUserIds._experience.aaid.id
   ORDER BY pageViews DESC;
   ```
-  ![Image](graphics/2B-4.png)
+  ![Image](images/2B-4.png)

@@ -1,4 +1,4 @@
-# Connect Power BI (PC)
+# Connect with Power BI (PC)
 
 PC users can install Power BI from [https://powerbi.microsoft.com/en-us/desktop/](https://powerbi.microsoft.com/en-us/desktop/).
 

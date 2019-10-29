@@ -5,17 +5,17 @@ Review the list of datasets by navigating to [Platform UI](https://platform.adob
 * Observe the dataset names. 
 > **Note:** Dataset names have spaces and might otherwise not be SQL safe. 
 
-![DataSets](graphics/DataSetUI%20-%20Luma.png)
+![DataSets](images/DataSetUI%20-%20Luma.png)
 
 Review the Dataset schema in the UI by clicking on a schema name in the dataset table. 
 
 * Notice the hierarchical nature of the schema. 
 
-![Schema View](graphics/DataSetUI-Schema%20-%20Luma.png)
+![Schema View](images/DataSetUI-Schema%20-%20Luma.png)
 
 Open the PSQL command line and use the connection details from here: [https://platform.adobe.com/query/configuration](https://platform.adobe.com/query/configuration).
 
-![Image](graphics/psqlcopy.png)
+![Image](images/psqlcopy.png)
 	
 To view the available tables on Platform with SQL, you can use either `\d` or `SHOW TABLES;`.
 

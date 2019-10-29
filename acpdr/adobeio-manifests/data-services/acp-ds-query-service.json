@@ -130,6 +130,21 @@
 		{
 			"pages": 
 			[
+                {
+                    "pages": [],
+                    "path": "end-user/markdown/query-service/qs-clients-looker.md",
+                    "title": "Connect Looker"
+                },
+                {
+					"pages": [],
+					"path": "end-user/markdown/query-service/qs-clients-postico.md",
+					"title": "Connect Postico (Mac)"
+                },
+                {
+					"pages": [],
+					"path": "end-user/markdown/query-service/qs-clients-powerbi.md",
+					"title": "Connect Power BI (PC)"
+				},
 				{
 					"pages": [],
 					"path": "end-user/markdown/query-service/qs-clients-psql.md",
@@ -139,16 +154,6 @@
 					"pages": [],
 					"path": "end-user/markdown/query-service/qs-clients-tableau.md",
 					"title": "Connect Tableau"
-				},
-				{
-					"pages": [],
-					"path": "end-user/markdown/query-service/qs-clients-powerbi.md",
-					"title": "Connect Power BI (PC)"
-				},
-				{
-					"pages": [],
-					"path": "end-user/markdown/query-service/qs-clients-postico.md",
-					"title": "Connect Postico (Mac)"
 				}
 			]
 		},

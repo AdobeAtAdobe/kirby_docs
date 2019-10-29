@@ -19,4 +19,4 @@ GROUP BY OperatingSystem
 ORDER BY PageViews DESC
 LIMIT 50;
 ```
-![Image](graphics/2C-1.png)
+![Image](images/2C-1.png)

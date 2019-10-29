@@ -1,4 +1,4 @@
-# Connect PSQL
+# Connect with PSQL
 
 PSQL is a command-line interface that comes when you install Postgres on your machine. You can install it by following these instructions. 
 
@@ -30,7 +30,7 @@ After issuing these commands, you should see the following:
 
 2. Edit your path variable:
 
-    ![Image](graphics/path.png)
+    ![Image](images/path.png)
     
     Next, you need to add the two lines shown that include "Postgres."
     
@@ -51,7 +51,7 @@ After issuing these commands, you should see the following:
 
 2. Click **copy** for "PSQL Command."
     
-    ![Image](graphics/psqlcopy.png)
+    ![Image](images/psqlcopy.png)
     
     **Important**: If you are on a PC, use a text editor to remove the line breaks in the command string, then copy the string.
 

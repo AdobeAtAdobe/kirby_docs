@@ -32,7 +32,7 @@ Structure with fields `(timestamp_diff, num, is_new, depth)`
   )
   LIMIT 100;
   ```
-  ![Image](graphics/2C-S-1.png)
+  ![Image](images/2C-S-1.png)
 2. Create a new trended report with visitors, sessions, and page views:
   ```sql
   SELECT 
@@ -58,7 +58,7 @@ Structure with fields `(timestamp_diff, num, is_new, depth)`
   ORDER BY Day DESC 
   LIMIT 31;
   ```
-  ![Image](graphics/2C-S-2.png)
+  ![Image](images/2C-S-2.png)
 
 ## Attribution
 
@@ -93,7 +93,7 @@ FROM your_analytics_table
 WHERE _ACP_YEAR=2018 AND _ACP_MONTH=4
 LIMIT 50;
 ```
-![Image](graphics/2C-A-1.png)
+![Image](images/2C-A-1.png)
 2. Create a breakdown of orders by Last Member Level (eVar10).
 ```sql
 SELECT
@@ -114,7 +114,7 @@ GROUP BY LastMemberLevel
 ORDER BY MemberLevelOrders DESC
 LIMIT 25;
 ```
-![Image](graphics/2C-A-2.png)
+![Image](images/2C-A-2.png)
 
 ## Pathing
 
@@ -146,7 +146,7 @@ struct with field `(value)`
   WHERE _ACP_YEAR=2018 
   LIMIT 10;
   ```
-  ![Image](graphics/2C-P-1.png)
+  ![Image](images/2C-P-1.png)
 2. Create a breakdown report for the top five page names on entry of the session.
   ```sql
   SELECT 
@@ -200,4 +200,4 @@ struct with field `(value)`
   ORDER BY PageViews DESC
   LIMIT 100;
   ```
-  ![Image](graphics/2C-P-2.png)
+  ![Image](images/2C-P-2.png)

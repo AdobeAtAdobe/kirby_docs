@@ -1,4 +1,4 @@
-# Connect Tableau
+# Connect with Tableau
 
 1. Install Tableau, if it is not already installed.
 
@@ -8,10 +8,10 @@
 
 2. Run Tableau, and on the opening screen click to open a Postgres connection.
 
-    ![Image](graphics/tableau.png)
+    ![Image](images/tableau.png)
 
 3. Individually copy `Host, Port, Database, Username, Password` from the Platform UI's **Connect BI Tools** page into the corresponding Tableau fields.
 
 4. Confirm that you have checked the **SSL Required** box before trying to connect.
     
-    ![Image](graphics/sslrequired.png)
+    ![Image](images/sslrequired.png)

@@ -4,7 +4,8 @@ This section explains how to connect to Query Service from a variety of desktop 
 
 Instructions are provided for the following clients:
 
-* [PSQL](qs-clients-psql.md)
-* [Tableau](qs-clients-tableau.md)
-* [Power BI (PC)](qs-clients-powerbi.md)
-* [Postico (Mac)](qs-clients-postico.md)
+- [Looker](qs-clients-looker.md)
+- [Postico (Mac)](qs-clients-postico.md)
+- [Power BI (PC)](qs-clients-powerbi.md)
+- [PSQL](qs-clients-psql.md)
+- [Tableau](qs-clients-tableau.md)
