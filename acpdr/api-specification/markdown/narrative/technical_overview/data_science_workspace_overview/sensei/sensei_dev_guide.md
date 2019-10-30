@@ -59,11 +59,21 @@ This guide provides example API calls to demonstrate how to format your requests
 
 ### Gather values for required headers
 
-In order to make calls to Platform APIs, you must first complete the [Authentication to Adobe Experience Platform tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+In order to make calls to Platform APIs, you must first complete the [authentication tutorial](../../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
-*   Authorization: Bearer `{ACCESS_TOKEN}`
-*   x-api-key: `{API_KEY}`
-*   x-gw-ims-org-id: `{IMS_ORG}`
+- Authorization: Bearer `{ACCESS_TOKEN}`
+- x-api-key: `{API_KEY}`
+- x-gw-ims-org-id: `{IMS_ORG}`
+
+All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
+
+- x-sandbox-name: `{SANDBOX_NAME}`
+
+> **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../../sandboxes/sandboxes-overview.md). 
+
+All requests that contain a payload (POST, PUT, PATCH) require an additional header:
+
+- Content-Type: application/json
 
 ## Sample API calls
 
@@ -89,7 +99,8 @@ GET /engines/dockerRegistry
 curl -X GET https://platform.adobe.io/data/sensei/engines/dockerRegistry \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 #### Response
 
@@ -123,6 +134,7 @@ curl -X POST \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
     -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}' \
     -H 'content-type: multipart/form-data' \
     -F 'engine={
         "name": "A name for this Engine",
@@ -196,6 +208,7 @@ curl -X POST \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
     -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}' \
     -H 'content-type: multipart/form-data' \
     -F 'engine={
         "name": "A name for this Engine",
@@ -259,6 +272,7 @@ curl -X POST \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
     -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}' \
     -H 'content-type: multipart/form-data' \
     -F 'engine={
         "name": "Feature Pipeline Engine",
@@ -323,7 +337,8 @@ curl -X GET \
     https://platform.adobe.io/data/sensei/engines \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 #### Response
 
@@ -396,7 +411,8 @@ curl -X GET \
     https://platform.adobe.io/data/sensei/engines/{ENGINE_ID} \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 #### Response
 
@@ -468,6 +484,7 @@ curl -X PUT \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
     -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}' \
     -H 'content-type: application/vnd.adobe.platform.sensei+json;profile=engine.v1.json' \
     -d '{
         "name": "An updated name for this Engine",
@@ -532,7 +549,8 @@ curl -X DELETE \
     https://platform.adobe.io/data/sensei/engines/{ENGINE_ID} \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -568,7 +586,8 @@ curl -X POST \
     https://platform.adobe.io/data/sensei/mlInstances \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
     -H 'content-type: application/vnd.adobe.platform.sensei+json;profile=mlInstance.v1.json' \
     -d '{
         "name": "A name for this MLInstance",
@@ -677,7 +696,8 @@ curl -X GET \
     https://platform.adobe.io/data/sensei/mlInstances \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -739,7 +759,8 @@ curl -X GET \
     https://platform.adobe.io/data/sensei/mlInstances/{MLINSTANCE_ID} \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -847,6 +868,7 @@ curl -X PUT \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
     -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}' \
     -H 'content-type: application/vnd.adobe.platform.sensei+json;profile=mlInstance.v1.json' \
     -d '{
         "name": "A name for this MLInstance",
@@ -938,7 +960,8 @@ curl -X DELETE \
     https://platform.adobe.io/data/sensei/mlInstances?engineId={ENGINE_ID} \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -970,7 +993,8 @@ curl -X DELETE \
     https://platform.adobe.io/data/sensei/mlInstances/{MLINSTANCE_ID} \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -1007,6 +1031,7 @@ curl -X POST \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
     -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}' \
     -H 'content-type: application/vnd.adobe.platform.sensei+json;profile=experiment.v1.json' \
     -d '{
         "name": "a name for this Experiment",
@@ -1055,6 +1080,7 @@ curl -X POST \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
     -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}' \
     -H 'content-type: application/vnd.adobe.platform.sensei+json;profile=experimentRun.v1.json' \
     -d '{
         "mode": "{TASK}"
@@ -1113,7 +1139,8 @@ curl -X GET \
     https://platform.adobe.io/data/sensei/experiments?property=mlInstanceId=={MLINSTANCE_ID} \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -1174,7 +1201,8 @@ curl -X GET \
     https://platform.adobe.io/data/sensei/experiments/{EXPERIMENT_ID} \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 
@@ -1221,7 +1249,8 @@ curl -X GET \
     https://platform.adobe.io/data/sensei/experiments/{EXPERIMENT_ID}/runs?property=mode==train \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -1286,6 +1315,7 @@ curl -X PUT \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
     -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}' \
     -H 'content-type: application/vnd.adobe.platform.sensei+json;profile=experiments.v1.json' \
     -d '{
         "name": "An upated name",
@@ -1335,7 +1365,8 @@ curl -X DELETE \
     https://platform.adobe.io/data/sensei/experiments/{EXPERIMENT_ID} \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -1367,7 +1398,8 @@ curl -X DELETE \
     https://platform.adobe.io/data/sensei/experiments?mlInstanceId={MLINSTANCE_ID} \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -1404,6 +1436,7 @@ curl -X POST \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
     -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}' \
     -H 'content-type: application/vnd.adobe.platform.sensei+json; profile=mlService.v1.json' \
     -d '{
         "name": "A name for this MLService",
@@ -1492,7 +1525,8 @@ curl -X GET \
     'https://platform.adobe.io/data/sensei/mlServices?property=mlInstanceId=={MLINSTANCE_ID}' \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 *   `{MLINSTANCE_ID}`: A valid MLInstance ID.
@@ -1545,7 +1579,8 @@ curl -X GET \
     https://platform.adobe.io/data/sensei/mlServices/{MLSERVICE_ID} \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -1591,6 +1626,7 @@ curl -X PUT \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
     -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}' \
     -H 'content-type: application/vnd.adobe.platform.sensei+json; profile=mlService.v1.json' \
     -d '{
         "name": "A name for this MLService",
@@ -1662,7 +1698,8 @@ curl -X DELETE \
     https://platform.adobe.io/data/sensei/mlServices/{MLSERVICE_ID} \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -1694,7 +1731,8 @@ curl -X DELETE \
     https://platform.adobe.io/data/sensei/mlServices?mlInstanceId={MLINSTANCE_ID} \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
-    -H 'x-gw-ims-org-id: {IMS_ORG}'
+    -H 'x-gw-ims-org-id: {IMS_ORG}' \
+    -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
