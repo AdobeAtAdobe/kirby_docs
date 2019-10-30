@@ -445,9 +445,9 @@ After a segmentation job has successfully completed (the value of the `status` a
 The following steps are required to export your audience:
 
 1. [Create a target dataset](#create-a-target-dataset) - Create the dataset to hold audience members.
-1. [Generate audience profiles in the dataset](#generate-profiles-for-audience-members) - Populate the dataset with XDM Profiles based on the results of a segment job.
+1. [Generate audience profiles in the dataset](#generate-profiles-for-audience-members) - Populate the dataset with XDM Individual Profiles based on the results of a segment job.
 1. [Monitor export progress](#monitor-export-progress) - Check the current progress of the export process. 
-1. [Read audience data](#next-steps) - Retrieve the resulting XDM Profiles representing the members of your audience.
+1. [Read audience data](#next-steps) - Retrieve the resulting XDM Individual Profiles representing the members of your audience.
 
 ### Create a target dataset
 
