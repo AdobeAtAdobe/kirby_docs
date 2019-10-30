@@ -181,7 +181,15 @@
     },
     {
       "importedFileName": "evaluate_segment",
-      "pages": [],
+      "pages": [
+        {
+          "importedFileName": "segment-export-dataset",
+          "pages": [],
+          "path": "api-specification/markdown/narrative/tutorials/segmentation/segment-export-dataset.md",
+          "title": "Create a dataset for exporting an audience segment",
+          "description": "A tutorial describing how to use the Experience Platform UI to create a dataset that is configured for exporting an audience segment."
+        }
+      ],
       "path": "api-specification/markdown/narrative/tutorials/segmentation/evaluate_segment.md",
       "title": "Evaluate and access segment results",
       "description": "Evaluate and access segment results using the Real-time Customer Profile API."

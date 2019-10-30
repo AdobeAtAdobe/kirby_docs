@@ -5,8 +5,11 @@ This document provides a tutorial for evaluating segments and accessing segment 
 The tutorial covers the following steps:
 
 1. [Evaluate a segment](#evaluate-a-segment)
-    * [Create a segment job](#create-a-segment-job) 
-    * [Lookup segment job status](#lookup-segment-job-status)
+    * [Scheduled evaluation](#scheduled-evaluation)
+        * [Create a schedule](#create-a-schedule)
+    * [On-demand evaluation](#on-demand-evaluation)
+        * [Create a segment job](#create-a-segment-job) 
+        * [Lookup segment job status](#lookup-segment-job-status)
 1. [Interpret segment results](#interpret-segment-results)
 1. [Access segment results](#access-segment-results)
     * [Lookup a profile](#lookup-a-profile)
@@ -16,9 +19,12 @@ The tutorial covers the following steps:
 
 This tutorial requires a working understanding of the various Adobe Experience Platform services involved in creating audience segments. Before beginning this tutorial, please review the documentation for the following services:
 
-- [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, consumer profile in real-time based on aggregated data from multiple sources.
-- [Adobe Experience Platform Segmentation Service](../../../../../end-user/markdown/segmentation_overview/segmentation.md): Allows you to build audience segments from Real-time Customer Profile data.
-- [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
+* [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, customer profile in real-time based on aggregated data from multiple sources.
+* [Adobe Experience Platform Segmentation Service](../../../../../end-user/markdown/segmentation_overview/segmentation.md): Allows you to build audience segments from Real-time Customer Profile data.
+* [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
+* [Sandboxes](../../technical_overview/sandboxes/sandboxes-overview.md): Experience Platform provides virtual sandboxes which partition a single Platform instance into separate virtual environments to help develop and evolve digital experience applications.
+
+### Required headers
 
 This tutorial also requires you to have completed the [authentication tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
@@ -26,17 +32,176 @@ This tutorial also requires you to have completed the [authentication tutorial](
 * x-api-key: `{API_KEY}`
 * x-gw-ims-org-id: `{IMS_ORG}`
 
+All resources in Experience Platform are isolated to specific virtual sandboxes. Requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
+
+* x-sandbox-name: `{SANDBOX_NAME}`
+
+> **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../../technical_overview/sandboxes/sandboxes-overview.md). 
+
 All POST, PUT, and PATCH requests require an additional header:
 
 * Content-Type: application/json
 
 ## Evaluate a segment
 
-Once you have developed, tested, and saved your segment definition, you can create a segment job to build an audience using the Real-time Customer Profile API. If you have not yet completed the [Create a segment using the Real-time Customer Profile API](../creating_a_segment_tutorial/creating_a_segment_tutorial.md) tutorial or created a segment definition using [Segment Builder](../../../../../end-user/markdown/segmentation_overview/segment-builder-guide.md), please do so before proceeding with this tutorial.
+Once you have developed, tested, and saved your segment definition, you can then evaluate the segment through either scheduled evaluation or on-demand evaluation.
+
+[Scheduled evaluation](#scheduled-evaluation) allows you to create a recurring schedule for running an export job at a specific time, whereas [on-demand evaluation](#on-demand-evaluation) involves creating a segment job to build the audience immediately. Steps for each are outlined below.
+
+If you have not yet completed the [Create a segment using the Real-time Customer Profile API](../creating_a_segment_tutorial/creating_a_segment_tutorial.md) tutorial or created a segment definition using [Segment Builder](../../../../../end-user/markdown/segmentation_overview/segment-builder-guide.md), please do so before proceeding with this tutorial.
+
+## Scheduled evaluation
+
+Through scheduled evaluation, your IMS Org can create a recurring schedule to automatically run export jobs.
+
+### Create a schedule
+
+By making a POST request to the `/config/schedules` endpoint, you can create a schedule and include the specific time when the schedule should be triggered.
+
+#### API format
+
+```http
+POST /config/schedules
+```
+
+#### Request
+
+The following request creates a new schedule based on the specifications provided in the payload.
+
+```shell
+curl -X POST \
+  https://platform.adobe.io/data/core/ups/config/schedules \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
+  -d '{
+        "name": "{SCHEDULE_NAME}",
+        "type": "batch_segmentation",
+        "properties": {
+            "segments": ["*"]
+        },
+        "schedule": "0 0 1 * * ?",
+        "state": "inactive"
+        }'
+```
+
+* `name`: **(Required)** The name of schedule. Must be a string.
+* `type`: **(Required)** The job type in string format.  
+    * Supported types: `batch_segmentation` and `export`.
+* `properties`: **(Required)** An object containing additional properties related to the schedule.
+    * `properties.segments`: **(Required when `type` equals `batch_segmentation`)** Using `["*"]` ensures all segments are included.
+* `schedule`: **(Required)** A string containing the job schedule. Jobs can only be scheduled to run once a day, meaning you cannot schedule a job to run more than once during a 24 hour period. The example shown (`0 0 1 * * ?`) means the job is triggered every day at 1:00:00 UTC. For more information, please review the [cron expression format](http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html) documentation.
+* `state`: *(Optional)* String containing the schedule state. Available values: `active` and `inactive`. Default value is `inactive`. An IMS Organization can only create one schedule. Steps for updating the schedule are available later in this tutorial.
+
+#### Response
+
+A successful response returns the details of the newly created schedule.
+
+```json
+{
+    "id": "cd585edf-962d-420d-94ad-3be03e619ac2",
+    "imsOrgId": "{IMS_ORG}",
+    "sandbox": {
+        "sandboxId": "e7e17720-c5bb-11e9-aafb-87c71c35cac8",
+        "sandboxName": "prod",
+        "type": "production",
+        "default": true
+    },
+    "name": "{SCHEDULE_NAME}",
+    "state": "inactive",
+    "type": "batch_segmentation",
+    "schedule": "0 0 1 * * ?",
+    "properties": {
+        "segments": [
+            "*"
+        ]
+    },
+    "createEpoch": 1568267948,
+    "updateEpoch": 1568267948
+}
+```
+
+### Enable a schedule
+
+By default, a schedule is inactive when created unless the `state` property is set to `active` in the create (POST) request body. You can enable a schedule (set the `state` to `active`) by making a PATCH request to the `/config/schedules` endpoint and including the ID of the schedule in the path.
+
+#### API format
+
+```http
+POST /config/schedules/{SCHEDULE_ID}
+```
+
+#### Request
+
+The following request uses [JSON Patch formatting](http://jsonpatch.com/) in order to update the `state` of the schedule to `active`.
+
+```shell
+curl -X POST \
+  https://platform.adobe.io/data/core/ups/config/schedules/cd585edf-962d-420d-94ad-3be03e619ac2 \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
+  -d '[
+        {
+          "op": "add",
+          "path": "/state",
+          "value": "active"
+        }
+      ]'
+```
+
+#### Response
+
+A successful update returns an empty response body and HTTP Status 204 (No Content).
+
+The same operation can be used to disable a schedule by replacing the "value" in the previous request with "inactive". Once a schedule is set to "active", all other schedules become "inactive" automatically.
+
+### Update the schedule time
+
+Schedule timing can be updated by making a PATCH request to the `/config/schedules` endpoint and including the ID of the schedule in the path.
+
+#### API format
+
+```http
+POST /config/schedules/{SCHEDULE_ID}
+```
+
+#### Request
+
+The following request uses [JSON Patch formatting](http://jsonpatch.com/) in order to update the [cron expression](http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html) for the schedule. In this example, the schedule would now be triggered at 10:15:00 UTC.
+
+```shell
+curl -X POST \
+  https://platform.adobe.io/data/core/ups/config/schedules/cd585edf-962d-420d-94ad-3be03e619ac2 \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
+  -d '[
+        {
+          "op": "add",
+          "path": "/schedule",
+          "value": "0 15 10 * * ?"
+        }
+      ]'
+```
+
+#### Response
+
+A successful update returns an empty response body and HTTP Status 204 (No Content).
+
+## On-demand evaluation
+
+On-demand evaluation allows you to create a segment job in order to generate an audience segment whenever you require it. Unlike scheduled evaluation, this will happen only when requested and is not recurring.
 
 ### Create a segment job
 
-A segment job is an asynchronous process that creates a new audience segment. It references a segment definition, as well as any merge policies controlling how Real-time Customer Profile merges overlapping attributes across your profile fragments. When a segment job successfully completes, you can gather various information about your segment, such as any errors that may have occurred and the ultimate size of your audience.
+A segment job is an asynchronous process that creates a new audience segment. It references a segment definition, as well as any merge policies controlling how Real-time Customer Profile merges overlapping attributes across your profile fragments. When a segment job successfully completes, you can gather various information about the segment, such as any errors that may have occurred during processing and the ultimate size of your audience.
 
 You can create a new segment job by making a POST request to the `/segment/jobs` endpoint in the Real-time Customer Profile API.
 
@@ -57,6 +222,7 @@ curl -X POST \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
   -d '[
         {
           "segmentId" : "42f49f2d-edb0-474f-b29d-2799d89cd5a6"
@@ -71,7 +237,7 @@ curl -X POST \
 
 #### Response
 
-A successful response returns the details of the newly created segment job.
+A successful response returns the details of the newly created segment job, including its `id`, a read-only, system-generated value that is unique to this segment job.
 
 ```json
 {
@@ -136,7 +302,7 @@ A successful response returns the details of the newly created segment job.
     }
 }
 ```
-* `id`: The identifier of the new segment job, used for lookup purposes later in this tutorial.
+* `id`: The identifier of the new segment job, used for lookup purposes.
 * `status`: The current status of the segment job. Will be "PROCESSING" until processing is complete, at which point it becomes "SUCCEEDED" or "FAILED".
 
 ### Lookup segment job status
@@ -146,10 +312,10 @@ You can use the `id` for a specific segment job to perform a lookup request (GET
 #### API format
 
 ```http
-GET /segment/jobs/{segmentJobId}
+GET /segment/jobs/{SEGMENT_JOB_ID}
 ```
 
-* `{segmentJobId}`: The identifier of the segment job you want to access.
+* `{SEGMENT_JOB_ID}`: The `id` of the segment job you want to access.
 
 #### Request
 
@@ -159,11 +325,13 @@ curl -X GET \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
 ```
 
 #### Response
 
-A successful response returns the details of the segmentation job, and will provide different information depending on the job's current status.
+A successful response returns the details of the segmentation job, and will provide different information depending on the job's current status. You can repeat the lookup request until the `status` reaches "SUCCEEDED", at which time you can export the segment to a dataset.
+
 
 ```json
 {
@@ -225,8 +393,6 @@ A successful response returns the details of the segmentation job, and will prov
 }
 ```
 
-Repeat the above API call to continue retrieving the segment job until the `status` reaches "SUCCEEDED", indicating that you can export the segment to a dataset.
-
 ## Interpret segment results
 
 When segment jobs are successfully run, the `segmentMembership` map is updated for each profile included within the segment. `segmentMembership` also stores any pre-evaluated audience segments that are ingested into Platform, allowing for integration with other solutions like Adobe Audience Manager.
@@ -264,15 +430,13 @@ The following example shows what the `segmentMembership` attribute looks like fo
 
 ## Access segment results
 
-Results of a segment job can be accessed in one of two ways: you can access individual profiles or export an entire audience to a dataset.
+The results of a segment job can be accessed in one of two ways: you can access individual profiles or export an entire audience to a dataset.
 
 The following sections outline these options in more detail.
 
 ## Lookup a profile 
 
-If you know the specific profile that you would like to access, you can do so using the Real-time Customer Profile API. 
-
-Complete steps for accessing individual profiles are available in the [Access Real-time Customer Profile data using the Profile API](../consuming_unified_profile_data/consuming_unified_profile_data.md) tutorial.
+If you know the specific profile that you would like to access, you can do so using the Real-time Customer Profile API. The complete steps for accessing individual profiles are available in the [Access Real-time Customer Profile data using the Profile API](../consuming_unified_profile_data/consuming_unified_profile_data.md) tutorial.
 
 ## Export a segment
 
@@ -281,21 +445,22 @@ After a segmentation job has successfully completed (the value of the `status` a
 The following steps are required to export your audience:
 
 1. [Create a target dataset](#create-a-target-dataset) - Create the dataset to hold audience members.
-1. [Generate audience profiles in the dataset](#generate-xdm-profiles-for-audience-members) - Populate the dataset with XDM Profiles based on the results of a segment job.
+1. [Generate audience profiles in the dataset](#generate-profiles-for-audience-members) - Populate the dataset with XDM Profiles based on the results of a segment job.
 1. [Monitor export progress](#monitor-export-progress) - Check the current progress of the export process. 
-1. [Read audience data](#read-audience-data) - Retrieve the resulting XDM Profiles representing the members of your audience.
+1. [Read audience data](#next-steps) - Retrieve the resulting XDM Profiles representing the members of your audience.
 
 ### Create a target dataset
 
 When exporting an audience, a target dataset must first be created. It is important that the dataset be configured correctly to ensure the export is successful. 
 
-One of the key considerations is the schema upon which the dataset is based (`schemaRef.id` in the sample request below). In order to export a segment, the dataset must be based on the XDM Profile Union Schema (`https://ns.adobe.com/xdm/context/profile__union`). A union schema is a system-generated, read-only schema that aggregates the fields of schemas which share the same class, in this case that is the XDM Profile class. For more information on union view schemas, please see the [Real-time Customer Profile section of the Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md#real-time-customer-profile).
+One of the key considerations is the schema upon which the dataset is based (`schemaRef.id` in the API sample request below). In order to export a segment, the dataset must be based on the XDM Individual Profile Union Schema (`https://ns.adobe.com/xdm/context/profile__union`). A union schema is a system-generated, read-only schema that aggregates the fields of schemas which share the same class, in this case that is the XDM Individual Profile class. For more information on union view schemas, please see the [Real-time Customer Profile section of the Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md#real-time-customer-profile).
 
-To view Union Schemas using the Adobe Experience Platform user interface, click **Profiles** in the left-navigation, then click on the *Union Schema* tab as shown below.
+There are two ways to create the necessary dataset:
 
-![Union Schema in Experience Platform UI](images/union-schema-ui.png)
+* **Using APIs:** The steps that follow in this tutorial outline how to create a dataset that references the XDM Individual Profile Union Schema using the Catalog API. 
+* **Using the UI:** To use the Adobe Experience Platform user interface to create a dataset that references the union schema, follow the steps in the [UI tutorial](segment-export-dataset.md) and then return to this tutorial to proceed with the steps for [generating audience profiles](#generate-xdm-profiles-for-audience-members).
 
-The following steps outline how to create a dataset that references the XDM Profile Union Schema using the [Catalog Service API](../../../../../../acpdr/swagger-specs/catalog.yaml). If you already have a compatible dataset and know its ID, you can proceed to the next step on [generating audience profiles](#generate-xdm-profiles-for-audience-members).
+If you already have a compatible dataset and know its ID, you can proceed directly to the step for [generating audience profiles](#generate-xdm-profiles-for-audience-members).
 
 #### API format
 
@@ -313,6 +478,7 @@ curl -X POST \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
   -d '{
 	"name": "Segment Export",
 	"schemaRef": {
@@ -334,7 +500,7 @@ curl -X POST \
 
 #### Response
 
-A successful response returns an array containing the read-only, system-generated ID of the newly created dataset. Each dataset ID is unique. This ID will be used for lookup purposes later in this tutorial.
+A successful response returns an array containing the read-only, system-generated unique ID of the newly created dataset. A properly configured dataset ID is required in order to successfully export audience members.
 
 ```json
 [
@@ -342,9 +508,9 @@ A successful response returns an array containing the read-only, system-generate
 ] 
 ```
 
-### Generate XDM Profiles for audience members
+### Generate profiles for audience members
 
-Once you have a union-persisting dataset, you can create an export job to persist the audience members to the dataset by providing the `datasetId` and the segments to export in a POST request to the `/export/jobs` endpoint in the Real-time Customer Profile API.
+Once you have a union-persisting dataset, you can create an export job to persist the audience members to the dataset by making a POST request to the `/export/jobs` endpoint in the Real-time Customer Profile API and providing the dataset ID and the segment information for the segments that you wish to export.
 
 #### API format
 
@@ -363,6 +529,7 @@ curl -X POST \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
   -d '{
     "fields": "identities.id,personalEmail.address",
     "mergePolicy": {
@@ -386,7 +553,8 @@ curl -X POST \
             "startTime": "2019-09-01T00:00:00Z",
             "endTime": "2019-09-02T00:00:00Z"
         },
-      "fromIngestTimestamp": "2018-10-25T13:22:04-07:00"
+      "fromIngestTimestamp": "2018-10-25T13:22:04-07:00",
+      "emptyProfiles": false
     },
     "additionalFields" : {
       "eventList": {
@@ -421,6 +589,7 @@ curl -X POST \
   * `fromIngestTimestamp`: *(Optional)* Limits exported profiles to only include those that have been updated after this timestamp. The timestamp must be provided in [RFC 3339](https://tools.ietf.org/html/rfc3339) format.
     * `fromIngestTimestamp` for **profiles**, if provided: Includes all the merged profiles where merged updated timestamp is greater than the given timestamp. Supports `greater_than` operand.
     * `fromTimestamp` for events: All events ingested after this timestamp will be exported corresponding to resultant profile result. This is not the event time itself but the ingestion time for the events.
+  * `emptyProfiles` - *(Optional)* Boolean. Profiles can contain profile fragments, ExperienceEvent fragments, or both. Profiles with no profile fragments and only ExperienceEvent fragments are referred to as "emptyProfiles". To export all profiles in the profile store, including the "emptyProfiles", set the value of `emptyProfiles` to `true`. If `emptyProfiles` is set to `false`, only profiles with profile fragments in the store are exported. By default, if `emptyProfiles` attribute is not included, only profiles containing profile fragments are exported.
 * `additionalFields.eventList`: *(Optional)* Controls the time series event fields exported for child or associated objects by providing one or more of the following settings:
   * `eventList.fields`: Control the fields to export.
   * `eventList.filter`: Specifies criteria that limits the results included from associated objects. Expects a minimum value required for export, typically a date.
@@ -492,7 +661,7 @@ A successful response returns a dataset populated with profiles that qualified f
 }
 ```
 
-If `destination.segmentPerBatch` had not been included (which defaults to `false`) or the value had been set to `false`, the response would include one batch containing all segment IDs, which would look like the following:
+If `destination.segmentPerBatch` had not been included in the request (if not present, it defaults to `false`) or the value had been set to `false`, the `destination` object in the response above would not have a `batches` array and instead would include only one `batchId`, as shown below. That single batch would include all segment IDs, whereas the response above shows a single segment ID per batch ID.
 
 ```json
   "destination": {
@@ -525,6 +694,7 @@ curl -X GET \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
 ```
 
 #### Response
@@ -533,135 +703,135 @@ The response includes a `records` object containing the export jobs created by y
 
 ```json
 {
-    "records": [
+  "records": [
+    {
+      "profileInstanceId": "ups",
+      "jobType": "BATCH",
+      "filter": {
+          "segments": [
+              {
+                  "segmentId": "52c26d0d-45f2-47a2-ab30-ed06abc981ff"
+              }
+          ]
+      },
+      "id": 726,
+      "schema": {
+          "name": "_xdm.context.profile"
+      },
+      "mergePolicy": {
+          "id": "timestampOrdered-none-mp",
+          "version": 1
+      },
+      "status": "SUCCEEDED",
+      "requestId": "d995479c-8a08-4240-903b-af469c67be1f",
+      "computeGatewayJobId": {
+          "exportJob": "f3058161-7349-4ca9-807d-212cee2c2e94",
+          "pushJob": "feaeca05-d137-4605-aa4e-21d19d801fc6"
+      },
+      "metrics": {
+          "totalTime": {
+              "startTimeInMs": 1538615973895,
+              "endTimeInMs": 1538616233239,
+              "totalTimeInMs": 259344
+          },
+          "profileExportTime": {
+              "startTimeInMs": 1538616067445,
+              "endTimeInMs": 1538616139576,
+              "totalTimeInMs": 72131
+          },
+          "aCPDatasetWriteTime": {
+              "startTimeInMs": 1538616195172,
+              "endTimeInMs": 1538616195715,
+              "totalTimeInMs": 543
+          }
+      },
+      "destination": {
+          "datasetId": "5b7c86968f7b6501e21ba9df",
+          "batchId": "da5cfb4de32c4b93a09f7e37fa53ad52"
+      },
+      "updateTime": 1538616233239,
+      "imsOrgId": "{IMS_ORG}",
+      "creationTime": 1538615973895
+    },
+    {
+      "profileInstanceId": "test_xdm_latest_profile_20_e2e_1538573005395",
+      "errors": [
         {
-    "profileInstanceId": "ups",
-    "jobType": "BATCH",
-    "filter": {
-        "segments": [
-            {
-                "segmentId": "52c26d0d-45f2-47a2-ab30-ed06abc981ff"
-            }
-        ]
-    },
-    "id": 726,
-    "schema": {
-        "name": "_xdm.context.profile"
-    },
-    "mergePolicy": {
-        "id": "timestampOrdered-none-mp",
-        "version": 1
-    },
-    "status": "SUCCEEDED",
-    "requestId": "d995479c-8a08-4240-903b-af469c67be1f",
-    "computeGatewayJobId": {
-        "exportJob": "f3058161-7349-4ca9-807d-212cee2c2e94",
-        "pushJob": "feaeca05-d137-4605-aa4e-21d19d801fc6"
-    },
-    "metrics": {
-        "totalTime": {
-            "startTimeInMs": 1538615973895,
-            "endTimeInMs": 1538616233239,
-            "totalTimeInMs": 259344
+          "code": "0090000009",
+          "msg": "Error writing profiles to output path 'adl://va7devprofilesnapshot.azuredatalakestore.net/snapshot/722'",
+          "callStack": "com.adobe.aep.unifiedprofile.common.logging.Logger" 
         },
-        "profileExportTime": {
-            "startTimeInMs": 1538616067445,
-            "endTimeInMs": 1538616139576,
-            "totalTimeInMs": 72131
-        },
-        "aCPDatasetWriteTime": {
-            "startTimeInMs": 1538616195172,
-            "endTimeInMs": 1538616195715,
-            "totalTimeInMs": 543
+        {
+          "code": "unknown",
+          "msg": "Job aborted.",
+          "callStack": "org.apache.spark.SparkException: Job aborted."
         }
-    },
-    "destination": {
-        "datasetId": "5b7c86968f7b6501e21ba9df",
-        "batchId": "da5cfb4de32c4b93a09f7e37fa53ad52"
-    },
-    "updateTime": 1538616233239,
-    "imsOrgId": "{IMS_ORG}",
-    "creationTime": 1538615973895
-},
-        {
-    "profileInstanceId": "test_xdm_latest_profile_20_e2e_1538573005395",
-    "errors": [
-        {
-            "code": "0090000009",
-            "msg": "Error writing profiles to output path 'adl://va7devprofilesnapshot.azuredatalakestore.net/snapshot/722'",
-            "callStack": "com.adobe.aep.unifiedprofile.common.logging.Logger" 
-        },
-        {
-            "code": "unknown",
-            "msg": "Job aborted.",
-            "callStack": "org.apache.spark.SparkException: Job aborted."
-        }
-    ],
-    "jobType": "BATCH",
-    "filter": {
+      ],
+      "jobType": "BATCH",
+      "filter": {
         "segments": [
             {
                 "segmentId": "7a93d2ff-a220-4bae-9a4e-5f3c35032be3"
             }
         ]
-    },
-    "id": 722,
-    "schema": {
-        "name": "_xdm.context.profile"
-    },
-    "mergePolicy": {
-        "id": "7972e3d6-96ea-4ece-9627-cbfd62709c5d",
-        "version": 1
-    },
-    "status": "FAILED",
-    "requestId": "KbOAsV7HXmdg262lc4yZZhoml27UWXPZ",
-    "computeGatewayJobId": {
-        "exportJob": "15971e0f-317c-4390-9038-1a0498eb356f"
-    },
-    "metrics": {
-        "totalTime": {
-            "startTimeInMs": 1538573416687,
-            "endTimeInMs": 1538573922551,
-            "totalTimeInMs": 505864
-        },
-        "profileExportTime": {
-            "startTimeInMs": 1538573872211,
-            "endTimeInMs": 1538573918809,
-            "totalTimeInMs": 46598
-        }
-    },
-    "destination": {
-        "datasetId": "5bb4c46757920712f924a3eb",
-        "batchId": ""
-    },
-    "updateTime": 1538573922551,
-    "imsOrgId": "{IMS_ORG}",
-    "creationTime": 1538573416687
-}
-    ],
-    "page": {
-        "sortField": "createdTime",
-        "sort": "desc",
-        "pageOffset": "1538573416687_722",
-        "pageSize": 2
-    },
-    "link": {
-        "next": "/export/jobs/?limit=2&offset=1538573416687_722"
+      },
+      "id": 722,
+      "schema": {
+          "name": "_xdm.context.profile"
+      },
+      "mergePolicy": {
+          "id": "7972e3d6-96ea-4ece-9627-cbfd62709c5d",
+          "version": 1
+      },
+      "status": "FAILED",
+      "requestId": "KbOAsV7HXmdg262lc4yZZhoml27UWXPZ",
+      "computeGatewayJobId": {
+          "exportJob": "15971e0f-317c-4390-9038-1a0498eb356f"
+      },
+      "metrics": {
+          "totalTime": {
+              "startTimeInMs": 1538573416687,
+              "endTimeInMs": 1538573922551,
+              "totalTimeInMs": 505864
+          },
+          "profileExportTime": {
+              "startTimeInMs": 1538573872211,
+              "endTimeInMs": 1538573918809,
+              "totalTimeInMs": 46598
+          }
+      },
+      "destination": {
+          "datasetId": "5bb4c46757920712f924a3eb",
+          "batchId": ""
+      },
+      "updateTime": 1538573922551,
+      "imsOrgId": "{IMS_ORG}",
+      "creationTime": 1538573416687
     }
+  ],
+  "page": {
+      "sortField": "createdTime",
+      "sort": "desc",
+      "pageOffset": "1538573416687_722",
+      "pageSize": 2
+  },
+  "link": {
+      "next": "/export/jobs/?limit=2&offset=1538573416687_722"
+  }
 }
 ```
 
 ### Monitor export progress
 
-As an export job processes, you can monitor its status by making a GET request to the `/export/jobs/{exportJobId}` endpoint. The export job is complete once the `status` field returns the value "SUCCEEDED".
+As an export job processes, you can monitor its status by making a GET request to the `/export/jobs` endpoint and including the `id` of the export job in the path. The export job is complete once the `status` field returns the value "SUCCEEDED".
 
 #### API format
 
 ```http
-GET /export/jobs/{exportJobId}
+GET /export/jobs/{EXPORT_JOB_ID}
 ```
 
-* `{exportJobId}`: The ID of the export job you want to access.
+* `{EXPORT_JOB_ID}`: The `id` of the export job you want to access.
 
 #### Request
 
@@ -670,7 +840,8 @@ curl -X GET \
   https://platform.adobe.io/data/core/ups/export/jobs/24115 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}'
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
 ```
 
 #### Response
@@ -748,14 +919,14 @@ curl -X GET \
 }
 ```
 
-* `batchId`: The identifier of the batches created from a successful export, to be used for lookup purposes when reading audience data as outlined in the next section.
+* `batchId`: The identifier of the batches created from a successful export, to be used for lookup purposes when reading audience data.
 
-### Read audience data
+## Next Steps
 
 Once the export has completed successfully, your data is available within the Data Lake in Experience Platform. You can then use the [Data Access API](../../../../../../acpdr/swagger-specs/data-access-api.yaml) to access the data using the `batchId` associated with the export. Depending on the size of the segment, the data may be in chunks and the batch may consist of several files.
 
 For step-by-step instructions on how to use the Data Access API to access and download batch files, follow the [Data Access tutorial](../../tutorials/data_access_tutorial/data_access_tutorial.md).
 
-You can also access successfully exported segment data using Adobe Experience Platform Query Service. Using the UI or a RESTful API, Query Service allows you to write, validate, and run queries on data within the Data Lake.
+You can also access successfully exported segment data using Adobe Experience Platform Query Service. Using the UI or RESTful API, Query Service allows you to write, validate, and run queries on data within the Data Lake.
 
 For more information on how to query audience data, please review the [Query Service documentation](../../../../../end-user/markdown/query-service/qs-intro.md).
