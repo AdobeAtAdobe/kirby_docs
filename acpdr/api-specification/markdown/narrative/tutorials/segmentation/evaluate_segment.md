@@ -75,7 +75,7 @@ curl -X POST \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{
         "name": "{SCHEDULE_NAME}",
         "type": "batch_segmentation",
@@ -144,7 +144,7 @@ curl -X POST \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '[
         {
           "op": "add",
@@ -158,7 +158,7 @@ curl -X POST \
 
 A successful update returns an empty response body and HTTP Status 204 (No Content).
 
-The same operation can be used to disable a schedule by replacing the "value" in the previous request with "inactive". Once a schedule is set to "active", all other schedules become "inactive" automatically.
+The same operation can be used to disable a schedule by replacing the "value" in the previous request with "inactive".
 
 ### Update the schedule time
 
@@ -181,7 +181,7 @@ curl -X POST \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '[
         {
           "op": "add",
@@ -222,7 +222,7 @@ curl -X POST \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '[
         {
           "segmentId" : "42f49f2d-edb0-474f-b29d-2799d89cd5a6"
@@ -325,7 +325,7 @@ curl -X GET \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
-  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
 ```
 
 #### Response
@@ -478,7 +478,7 @@ curl -X POST \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{
 	"name": "Segment Export",
 	"schemaRef": {
@@ -529,7 +529,7 @@ curl -X POST \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{
     "fields": "identities.id,personalEmail.address",
     "mergePolicy": {
@@ -694,7 +694,7 @@ curl -X GET \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'
-  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
 ```
 
 #### Response
@@ -841,7 +841,7 @@ curl -X GET \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: `{SANDBOX_NAME}`' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
 ```
 
 #### Response
