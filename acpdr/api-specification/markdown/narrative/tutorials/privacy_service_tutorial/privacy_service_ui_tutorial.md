@@ -1,7 +1,5 @@
 # Privacy Service UI tutorial
 
-> **Note:** All functionalities related to CCPA are currently in beta and will be publicly available in mid-November 2019.
-
 Adobe Experience Platform Privacy Service provides a RESTful API and user interface that allow you to coordinate privacy and compliance requests across various solutions. This document explores the Privacy Service UI. For information on using the API, please see the [Privacy Service API tutorial](privacy_service_api_tutorial.md). 
 
 This document covers steps for performing the following tasks in the Privacy Service UI:

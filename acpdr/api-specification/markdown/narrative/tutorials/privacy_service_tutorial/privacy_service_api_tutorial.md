@@ -1,7 +1,5 @@
 # Privacy Service API tutorial
 
-> **Note:** All functionalities related to CCPA as outlined in this document are currently in beta and will not be publicly available until early November 2019.
-
 Adobe Experience Platform Privacy Service provides a RESTful API and user interface that allow you to manage (access and delete) the personal data of your customers (data subjects) across Adobe Experience Cloud solutions. Privacy Service also provides a central audit and logging mechanism that allows you to access the status and results of jobs involving Experience Cloud solutions.
 
 This tutorial covers how to use the Privacy Service API. For details on how to use the UI, see the [Privacy Service UI tutorial](privacy_service_ui_tutorial.md). For a comprehensive list of all available endpoints in the Privacy Service API, please see the [API reference](../../../../../../acpdr/swagger-specs/privacy-service.yaml).

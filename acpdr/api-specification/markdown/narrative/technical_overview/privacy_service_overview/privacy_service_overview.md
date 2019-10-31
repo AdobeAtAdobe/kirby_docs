@@ -1,7 +1,5 @@
 # Privacy Service overview
 
-> **Note**: All functionalities related to CCPA are currently in beta and will be publicly available in mid-November 2019.
-
 Adobe Experience Platform Privacy Service provides a RESTful API and user interface to help companies manage customer data requests. With Privacy Service, you can submit requests to access and delete private or personal customer data, facilitating automated compliance with organizational and legal privacy regulations.
 
 ## Why Privacy Service?
