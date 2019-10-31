@@ -4,7 +4,7 @@ info:
     Real-time Customer Profile enables you to drive coordinated, consistent, and relevant experiences for your customers no matter where or when they interact with your brand. Profile provides a holistic view of each individual customer that combines data from multiple channels, including online, offline, CRM, and third-party data.
     
     
-    The Real-time Customer Profile API allows you to programatically integrate Profile's various functionalities into your service, providing RESTful endpoints for merge policy configuration, segmentation, edge projections, and more.
+    The Real-time Customer Profile API allows you to programmatically integrate Profile's various functionalities into your service, providing RESTful endpoints for merge policy configuration, segmentation, edge projections, and more.
 
 
     Related overview documentation:
@@ -16,6 +16,7 @@ info:
       * [Access Real-time Customer Profile data using APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/consuming_unified_profile_data/consuming_unified_profile_data.md)
       * [Work with merge policies using APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md)
       * [Create segments using APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md)
+      * [Evaluate and access segment results](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/segmentation/evaluate_segment.md)
 
     Visualize API calls with Postman (a free, third-party software):
       * [Real-time Customer Profile API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Real-time%20Customer%20Profile%20API.postman_collection.json)
@@ -36,32 +37,34 @@ info:
 host: platform.adobe.io
 basePath: /data/core/ups
 tags:
-  - name: Merge policies
-    description: "A merge policy is a set of configurations controlling aspects of identity stitching and data fragment merging. Merge policies are specific to a single schema, and can only be used to access entities adhering to that schema."
+  
   - name: Entities
     description: "Entities are Experience Data Model (XDM) objects whose attributes, data contents, and related time-series events have been merged from various sources by Real-time Customer Profile."
-  - name: "Segment definitions"
-    description: "A segment definition includes a Profile Query Language (PQL) statement that defines how to subdivide a customer base for an audience segment."
-  - name: Macros
-    description: "Macros allow you to inject pre-computed fields and values into segment definitions. Values from different fields are added together and tested against the profile store as a single value. With macros, audience segments can be defined in more ways than would otherwise be available from isolated profile data fields."
-  - name: "PQL conversions"
-    description: "Convert PQL formatting between `pql/json` and `pql/text`."
-  - name: Segment jobs
-    description: "Segment jobs process previously established segment definitions against your profile store to generate an audience segment."
-  - name: "Estimates"
+  - name: Estimates
     description: "Estimates provide statistical information on a segment definition, such as the projected audience size and confidence interval."
-  - name: "Previews"
-    description: "Previews provide paginated lists of qualifying profiles for a segment definition."
-  - name: Export jobs
-    description: "Export jobs are asynchronous processes that are used to persist audience segment members to datasets."
-  - name: Projection configurations
-    description: >-
-      Edge projection configurations determine what data should be projected to each edge.
-  - name: Projection destinations
-    description: >-
-      Edge projection destinations define where to route a projection that has been created or changed.
   - name: Event types
     description: Event types are context descriptors for time series events within Real-time Customer Profile.
+  - name: Export jobs
+    description: "Export jobs are asynchronous processes that are used to persist audience segment members to datasets."
+  - name: Macros
+    description: "Macros allow you to inject pre-computed fields and values into segment definitions. Values from different fields are added together and tested against the profile store as a single value. With macros, audience segments can be defined in more ways than would otherwise be available from isolated profile data fields."
+  - name: Merge policies
+    description: "A merge policy is a set of configurations controlling aspects of identity stitching and data fragment merging. Merge policies are specific to a single schema, and can only be used to access entities adhering to that schema."
+  - name: Previews
+    description: "Previews provide paginated lists of qualifying profiles for a segment definition."
+  - name: PQL conversions
+    description: "Convert Profile Query Language (PQL) formatting between `pql/json` and `pql/text`."
+  - name: Projection configurations
+    description: Edge projection configurations determine what data should be projected to each edge.
+  - name: Projection destinations
+    description: Edge projection destinations define where to route a projection that has been created or changed.
+  - name: Schedules
+    description: Create a recurring schedule to automatically run export jobs. A schedule can run at most once daily.
+  - name: Segment definitions
+    description: "A segment definition includes a Profile Query Language (PQL) statement that defines how to subdivide a customer base for an audience segment."
+  - name: Segment jobs
+    description: "Segment jobs process previously established segment definitions against your profile store to generate an audience segment."
+
 paths:
   '/config/mergePolicies':
     get:
@@ -133,7 +136,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/json-header'           
+        - $ref: '#/parameters/content-type'           
         - name: x-profile-instance-id
           in: header
           description: Profile Instance ID
@@ -187,7 +190,6 @@ paths:
           required: false
           type: string
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
-
       responses:
         '200':
           description: MergePolicy successfully returned
@@ -445,7 +447,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/json-header'        
+        - $ref: '#/parameters/content-type'        
         - in: body
           name: body
           description: XDM objects to be created. Each object should be in JSON format.
@@ -601,7 +603,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/json-header'
+        - $ref: '#/parameters/content-type'
         - name: x-profile-instance-id
           in: header
           description: Profile Instance ID
@@ -774,7 +776,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/json-header'
+        - $ref: '#/parameters/content-type'
         - name: x-request-id
           in: header
           description: Unique ID per request
@@ -873,7 +875,7 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/segmentId'
-        - $ref: '#/parameters/json-header'
+        - $ref: '#/parameters/content-type'
         - name: x-request-id
           in: header
           description: Unique ID per request
@@ -908,7 +910,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/json-header'
+        - $ref: '#/parameters/content-type'
         - name: x-request-id
           in: header
           description: Unique ID per request
@@ -997,7 +999,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/json-header'        
+        - $ref: '#/parameters/content-type'        
         - name: x-profile-instance-id
           in: header
           description: Profile Instance ID
@@ -1108,7 +1110,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/json-header'
+        - $ref: '#/parameters/content-type'
         - in: "body"
           name: "body"
           description: >- 
@@ -1629,24 +1631,7 @@ paths:
         - $ref: '#/parameters/authorization'        
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key' 
-        - name: x-gw-ims-authorization
-          in: header
-          description: Gateway IMS service token.
-          required: true
-          type: string
-          x-example: Bearer <token>
-        - name: x-user-token
-          in: header
-          description: User access token.
-          required: false
-          type: string
-          x-example: Bearer <token>
-        - name: x-request-id
-          in: header
-          description: Optional header that may be used for debugging purposes when investigating issues with a client flow. The same ID can be used to identify a single request to the service from a flow. A new ID should be created for each request.
-          required: false
-          type: string
-          x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
+        - $ref: '#/parameters/x-request-id'
       responses:
         '200':
           description: The projection destination is returned.
@@ -2435,6 +2420,165 @@ paths:
           description: Forbidden
         '404':
           description: Macro not found
+        '503':
+          description: Service Unavailable
+  '/config/schedules':
+    get:
+      tags:
+      - Schedules
+      summary: Retrieve a list of schedules for your IMS Org
+      description: ''
+      operationId: getSchedules
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
+      - $ref: '#/parameters/x-request-id'
+      - $ref: '#/parameters/start'
+      - $ref: '#/parameters/limit'
+      responses:
+        '200':
+          description: Returns a list of schedules for IMS Org
+          schema:
+            $ref: '#/definitions/schedulesResponse'
+        '403':
+          description: Forbidden
+        '500':
+          description: There was issue reading the schedules from the database
+        '503':
+          description: Service Unavailable
+    post:
+      tags:
+      - Schedules
+      summary: Create a schedule, including specifying the time when the schedule should be triggered.
+      description: ''
+      operationId: createSchedule
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
+      - $ref: '#/parameters/content-type'
+      - $ref: '#/parameters/x-request-id' 
+      - in: body
+        name: body
+        description: >-
+          * **name**: **(Required)** The name of schedule. Must be a string.
+          * **type**: **(Required)** The job type in string format.  
+            * Supported types: `batch_segmentation` and `export`.
+          * **properties**: **(Required)** An object containing additional properties related to the schedule.
+            * **properties.segments**: **(Required when `type` equals `batch_segmentation`)** Using `["*"]` ensures all segments are included.
+          * **schedule**: **(Required)** A string containing the job schedule. Jobs can only be scheduled to run once a day, meaning you cannot schedule a job to run more than once during a 24 hour period. The example shown (`0 0 1 * * ?`) means the job is triggered every day at 1:00:00 UTC. For more information, please review the [cron expression format](http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html) documentation.
+          
+          * **state**: *(Optional)* String containing the schedule state. Available values: `active` and `inactive`. Default value is `inactive`.
+        required: true
+        schema:
+          "$ref": "#/definitions/scheduleCreate"
+      responses:
+        '200':
+          description: Schedule created successfully
+          schema:
+            $ref: '#/definitions/Schedule'
+        '400':
+          description: Invalid cron expression
+        '403':
+          description: Forbidden
+        '500':
+          description: There was issue reading schedules from database
+        '503':
+          description: Service Unavailable
+  '/schedules/{SCHEDULE_ID}':
+    get:
+      tags:
+      - Schedules
+      summary: Lookup a schedule by its ID.
+      description: ''
+      operationId: getScheduleById
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/schedule-id'
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
+      - $ref: '#/parameters/x-request-id'
+      responses:
+        '200':
+          description: schedule successfully returned
+          schema:
+            $ref: '#/definitions/Schedule'
+        '403':
+          description: Forbidden
+        '404':
+          description: schedule not found
+        '503':
+          description: Service Unavailable
+    patch:
+      tags:
+      - Schedules
+      summary: Update a schedule, including changing the trigger time or enabling/disabling the schedule.
+      description: ''
+      operationId: updateSchedule
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/schedule-id'
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
+      - $ref: '#/parameters/x-request-id'
+      - in: body
+        name: body
+        description: Use [JSON Patch formatting](http://jsonpatch.com/) to update the schedule.
+        required: true
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/schedulePatchOperation'
+      responses:
+        '204':
+          description: (No Content) Schedule successfully updated.
+        '400':
+          description: Please double check your post body
+        '403':
+          description: Forbidden
+        '429':
+          description: Request rate too large!
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+    delete:
+      tags:
+      - Schedules
+      summary: Delete a schedule by its ID.
+      description: ''
+      operationId: deleteSchedule
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/schedule-id'
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
+      - $ref: '#/parameters/x-request-id'
+      responses:
+        '204':
+          description: (No Content) Schedule deleted successfully
+        '403':
+          description: Forbidden
+        '404':
+          description: Schedule not found
         '503':
           description: Service Unavailable
 definitions:
@@ -3685,6 +3829,148 @@ definitions:
         example: Private Graph
         description: the new value used to update the specified attribute
     description: Patch operation
+  schedulesResponse:
+    type: object
+    required:
+    - _page
+    - children
+    properties:
+      _page:
+        $ref: '#/definitions/schedulesPage'
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/Schedule'
+  schedulesPage:
+    type: object
+    required:
+    - totalCount
+    - pageSize
+    properties:
+      totalCount:
+        type: number
+        example: 100
+        description: total number of schedules
+      pageSize:
+        type: number
+        example: 100
+        description: number of schedules per page
+      next:
+        type: string
+        example: 1
+        description: page offset
+  Schedule:
+    type: object
+    required:
+    - type
+    - name
+    - schedule
+    - properties
+    properties:
+      id:
+        type: string
+        example: 5e61e66e-e8b4-4a7b-8d41-70c74b0b981a
+        description: unique, read-only, system-generated schedule ID
+      name:
+        type: string
+        example: profile-default
+        description: schedule name
+      type:
+        type: string
+        enum: [batch_segmentation]
+        example: batch_segmentation
+        description: job type
+      schedule:
+        type: string
+        example: 0 0 1 * * ?
+        description: cron expression
+      state:
+        type: string
+        enum: [active, inactive]
+        example: inactive
+        description: schedule state. If the schedule is inactive, the job won't be triggered at the scheduled time.
+      properties:
+        type: object
+        required:
+        - segments
+        properties:
+          segments:
+            type: array
+            items:
+              type: string
+              example: '*'
+            description: this field is required if the job type is batch_segmentation. It holds a list of segment definitions which need to be evaluated at the scheduled time. Use `*` to evaluate all segments.
+        description: schedule properties
+      createEpoch:
+        type: integer
+        example: 1234567890
+        description: creation timestamp (unix timestamp in seconds)
+      updateEpoch:
+        type: integer
+        example: 1234567890
+        description: update timestamp (unix timestamp in seconds)
+    description: 'schedule entity'
+  scheduleCreate:
+    type: object
+    required:
+    - name
+    - type
+    - schedule
+    - properties
+    properties:
+      name:
+        type: string
+        example: profile-default
+        description: The name of the schedule being created.
+      type:
+        type: string
+        enum: [batch_segmentation]
+        example: batch_segmentation
+        description: The job type.
+      properties:
+        type: object
+        required:
+        - segments
+        properties:
+          segments:
+            type: array
+            items:
+              type: string
+              example: '*'
+            description: This field is required if the job type is batch_segmentation. It holds a list of segment definitions which need to be evaluated at the scheduled time. Use `*` to evaluate all segments.
+        description: schedule properties 
+      schedule:
+        type: string
+        example: 0 0 1 * * ?
+        description: A cron expression stating when the schedule should be triggered.
+      state:
+        type: string
+        enum: [active, inactive]
+        example: inactive
+        description: Schedule state. If schedule is inactive, it must be activated before it will be triggered.
+    description: 'Request body for creating a schedule'
+  schedulePatchOperation:
+    type: object
+    required:
+    - op
+    - path
+    - value
+    properties:
+      op:
+        type: string
+        example: add
+        description: op
+        enum:
+        - add
+      path:
+        type: string
+        example: /state
+        description: path of the attribute need to be updated
+      value:
+        type: string
+        example: active
+        description: the new value used to update the specified attribute
+    description: Patch operation
 parameters:
   authorization:
     name: Authorization
@@ -3705,9 +3991,9 @@ parameters:
     required: true
     type: string
     in: header
-  json-header:
+  content-type:
     name: Content-Type
-    description: 'application/json'
+    description: Type of content being sent in the body of the request. Should be 'application/json'.
     required: true
     type: string
     in: header
@@ -3730,17 +4016,21 @@ parameters:
   x-request-id:
     name: x-request-id
     in: header
-    description: Request ID.
+    description: Optional header that may be used for debugging purposes when investigating issues with a workflow. The same ID can be used to identify a single request to the service from a flow. A new ID should be created for each request.
     required: false
     type: string
-    x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
   eventTypeId:
     name: eventTypeId
     in: path
     description: Event type ID.
     required: true
     type: string
-    x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
+  x-sandbox-name:
+    name: x-sandbox-name
+    in: header
+    description: All resources in Experience Platform are isolated to specific virtual sandboxes. Requests to Platform APIs require a header that specifies the name of the sandbox in which the operation will take place.
+    required: true
+    type: string
   x-profile-instance-id:  
     name: x-profile-instance-id
     in: header
@@ -3786,7 +4076,24 @@ parameters:
   macroId:
     name: macroId
     in: path
-    description: Macro ID.
+    description: Macro ID. For example, `ca8fe8a8-0f38-478a-9905-fd515d1d2988`
     required: true
     type: string
-    x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
+  start:      
+    name: start
+    in: query
+    description: Return results from a specific page offset. For example, `start=3`
+    required: false
+    type: integer
+  limit:  
+    name: limit
+    in: query
+    description: Limit response to a specific number of objects. Must be a positive number. For example, `limit=10`
+    required: false
+    type: integer
+  schedule-id:  
+    name: SCHEDULE_ID
+    in: path
+    description: The ID of the schedule against which the operation is being performed.
+    required: true
+    type: string
