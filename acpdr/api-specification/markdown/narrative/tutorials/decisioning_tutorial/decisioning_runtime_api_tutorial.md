@@ -17,23 +17,35 @@ This tutorial requires a working understanding of the Experience Platform servic
 * [Profile Query Language (PQL)](../../technical_overview/unified_profile_architectural_overview/unified_profile_pql.md): PQL is used to define rules and filters.
 * [Manage Decisioning objects and rules using APIs](./decisioning_entities_api_tutorial.md): Prior to using the Decisioning Services runtime, you will need to set up the related entities.
 
-## Tutorial
+The following sections provide additional information that you will need to know in order to successfully make calls to the Platform APIs.
 
-This tutorial requires you to have completed the [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Platform API calls, as shown below:
+### Reading sample API calls
 
-* Authorization: Bearer `{ACCESS_TOKEN}`
-* x-api-key: `{API_KEY}`
-* x-gw-ims-org-id: `{IMS_ORG}`
+This tutorial provides example API calls to demonstrate how to format your requests. These include paths, required headers, and properly formatted request payloads. Sample JSON returned in API responses is also provided. For information on the conventions used in documentation for sample API calls, see the section on [how to read example API calls](../../technical_overview/platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md#how-do-i-format-an-api-request) in the Experience Platform troubleshooting guide.
+
+### Gather values for required headers
+
+In order to make calls to Platform APIs, you must first complete the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+
+- Authorization: Bearer `{ACCESS_TOKEN}`
+- x-api-key: `{API_KEY}`
+- x-gw-ims-org-id: `{IMS_ORG}`
+
+All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
+
+* x-sandbox-name: `{SANDBOX_NAME}`
+
+> **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../../technical_overview/sandboxes/sandboxes-overview.md). 
+
+All requests that contain a payload (POST, PUT, PATCH) require an additional header:
+
+- Content-Type: application/json
 
 Also needed for runtime requests:
 
 * x-request-id: `{UUID}`
 
 > **Note:** `UUID` is a string in UUID format that is globally unique and must not be reused for different API calls
-
-All POST, PUT, and PATCH requests require an additional header:
-
-* Content-Type: application/json
 
 Decisioning Service is controlled by a number of business objects that are related to each other. All business objects are stored in Platform’s business object repository, XDM Core Object Repository. A key feature of this repository is that the APIs are orthogonal to the type of business object. Instead of using a POST, GET, PUT, PATCH or DELETE API that indicates the type of resource in its API endpoint, there are only 6 generic endpoints but they accept or return a parameter that indicates the type of the object when that disambiguation is needed. The schema must be registered with the repository, but beyond that the repository is usable for an open-ended set of object types.  
 
@@ -52,11 +64,12 @@ Offers are continuously created, changes occur in their lifecycle status, or the
 ### Request
 
 ```shell
-curl -X GET ${DECISION_SERVICE_ENDPOINT_PATH}/${CONTAINER_ID}/offers?activityId=${ACTIVITY_URI} \
+curl -X GET {DECISION_SERVICE_ENDPOINT_PATH}/{CONTAINER_ID}/offers?activityId={ACTIVITY_URI}' \
   -H 'Accept: application/vnd.adobe.xdm+json \
-  -H 'x-api-key: ${API_KEY}' \
-  -H 'x-gw-ims-org-id: ${IMS_ORG} \
-  -H 'x-request-id: ${NEW_UUID}'
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
+  -H 'x-request-id: {NEW_UUID}'
 ```
 
 ### Response
@@ -68,39 +81,39 @@ The parameter `activityId` can be repeated in the url and up to 30 different act
   "xdm:activityOffers": [
     {
       "xdm:offerActivity": {
-        "@id": "${ACTIVITY_URI}",
+        "@id": "{ACTIVITY_URI}",
         "_links": {
           "self": {
-            "href": "${repository_endpoint}/${CONTAINER_ID}/instances/${ACTIVITY_INSTANCE_ID}"
+            "href": "{repository_endpoint}/{CONTAINER_ID}/instances/{ACTIVITY_INSTANCE_ID}"
           }
         },
         "repo:etag": "1"
       },
       "xdm:offers": [
         {
-          "@id": "${OFFER_URI_1}",
+          "@id": "{OFFER_URI_1}",
           "_links": {
             "self": {
-              "href": "${REPOSITORY_ENDPOINT}/${CONTAINER_ID}/instances/${OFFER_INSTANCE_ID_1}"
+              "href": "{REPOSITORY_ENDPOINT}/{CONTAINER_ID}/instances/{OFFER_INSTANCE_ID_1}"
             }
           },
           "repo:etag": "15"
         },
         {
-          "@id": "${OFFER_URI_2}",
+          "@id": "{OFFER_URI_2}",
           "_links": {
             "self": {
-              "href": "${REPOSITORY_ENDPOINT}/${CONTAINER_ID}/instances/${OFFER_INSTANCE_ID_2}"
+              "href": "{REPOSITORY_ENDPOINT}/{CONTAINER_ID}/instances/{OFFER_INSTANCE_ID_2}"
             }
           },
           "repo:etag": "5"
         }
       ],
       "xdm:fallbackOffer": {
-        "@id": "${FALLBACK_URI}",
+        "@id": "{FALLBACK_URI}",
         "_links": {
           "self": {
-            "href": "${REPOSITORY_ENDPOINT}/${CONTAINER_ID}/instances/${FALLBACK_INSTANCE_ID}"
+            "href": "{REPOSITORY_ENDPOINT}/{CONTAINER_ID}/instances/{FALLBACK_INSTANCE_ID}"
           }
         },
         "repo:etag": "2"
@@ -121,11 +134,12 @@ A diagnostics API is provided to obtain any compilation errors that occurred in 
 #### Request
 
 ```shell
-curl -X GET ${DECISION_SERVICE_ENDPOINT_PATH}/${CONTAINER_ID}/diagnostics \
-  -H 'Accept: application/vnd.adobe.xdm+json \
-  -H 'x-api-key: ${API_KEY}' \
-  -H 'x-gw-ims-org-id: ${IMS_ORG} \
-  -H 'x-request-id: ${NEW_UUID}'
+curl -X GET {DECISION_SERVICE_ENDPOINT_PATH}/{CONTAINER_ID}/diagnostics \
+  -H 'Accept: application/vnd.adobe.xdm+json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
+  -H 'x-request-id: {NEW_UUID}'
 ```
 
 The only parameter for this API call is `containerId`. The results all updates from all clients that have modified decision rules, offers, activities or offer filters in that container. There is a small delay of a few seconds between the time the objects were updated and the time when the compilation finishes. The last update timestamp and any errors are returned in the response to the diagnostics call.
@@ -155,44 +169,45 @@ Applications can achieve better performance by requesting a decision for up to 3
 
 It is possible that two different activities come up with the same option as their “best”. To avoid repeating a composed experience, by default, Decisioning Service arbitrates between the activities that are referenced in the same request. Arbitration means that for each of the activities their top-N options are considered, but no option will be proposed more than once across those activities. If two activities have the same topmost ranked option one of them will be elected to use its second-best choice or third-best and so forth. Those de-duplication rules try to avoid that any of the activities must use their fallback option.
 
-The decision request contains the arguments its body of a POST request. The body is formatted as JSON `Content-Type` header value `application/vnd.adobe.xdm+json; schema="${REQUEST_SCHEMA_AND_VERSION}"`
+The decision request contains the arguments its body of a POST request. The body is formatted as JSON `Content-Type` header value `application/vnd.adobe.xdm+json; schema="{REQUEST_SCHEMA_AND_VERSION}"`
 
 The request schema and version supported at this time is `https://ns.adobe.com/experience/offer-management/decision-request;version=0.9`. In the future, additional request schemas or versions will be provided.
 
 ### Request
 
 ```shell
-curl -X POST ${DECISION_SERVICE_ENDPOINT_PATH}/${CONTAINER_ID}/decisions \
+curl -X POST {DECISION_SERVICE_ENDPOINT_PATH}/{CONTAINER_ID}/decisions \
   -H 'Accept: application/json, application/problem+json \
   -H '
-  -H 'x-api-key: ${API_KEY}' \
-  -H 'x-gw-ims-org-id: ${IMS_ORG} \
-  -H 'x-request-id: ${NEW_UUID}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
+  -H 'x-request-id: {NEW_UUID}' \
   -d '{
-  "xdm:dryRun": ${DRY_RUN_TRUE_FALSE},
-  "xdm:validateContextData": ${VALIDATE_CONTEXT_DATA_TRUE_FALSE},
+  "xdm:dryRun": {DRY_RUN_TRUE_FALSE},
+  "xdm:validateContextData": {VALIDATE_CONTEXT_DATA_TRUE_FALSE},
 
   "xdm:offerActivities":[
     {
-      "xdm:offerActivity": "${ACTIVITY_URI_1}"
+      "xdm:offerActivity": "{ACTIVITY_URI_1}"
     },
   ],
   "xdm:identityMap":{
-    "${PROFILE_ID_NAMESPACE_CODE}":[
+    "{PROFILE_ID_NAMESPACE_CODE}":[
       {
-        "xdm:id":"${PROFILE_ID}"
+        "xdm:id":"{PROFILE_ID}"
       }
     ]
   },
-  "xdm:profileModel":"${PROFILE_MODEL}",
+  "xdm:profileModel":"{PROFILE_MODEL}",
   "xdm:contextData": [
     {
-      "@type": "${CONTEXT_DATASSCHEMA_ID}"
+      "@type": "{CONTEXT_DATASSCHEMA_ID}"
       "xdm:data": { JSON PROPERTIES OF CONTEXT ENTITY }
     }
   ] ,
   "xdm:allowDuplicatePropositions": {
-    "xdm:acrossActivities": ${DUPLICATE_OFFER_IDS_OF_TRUE_FALSE},
+    "xdm:acrossActivities": {DUPLICATE_OFFER_IDS_OF_TRUE_FALSE},
   }
 }’
 ```
@@ -216,9 +231,9 @@ The previous section indicated how XDM objects can be passed to a decision reque
 ```json
 "xdm:contextData": [
   {
-    "@type":" https://ns.adobe.com/${TENANT_ID_OF_ORG}/schemas/${NUMERIC_SCHEMA_ID};version=1",
+    "@type":" https://ns.adobe.com/{TENANT_ID_OF_ORG}/schemas/{NUMERIC_SCHEMA_ID};version=1",
     "xdm:data":{ 
-      "${TENANT_ID_OF_ORG}": {
+      "{TENANT_ID_OF_ORG}": {
         "productDetails":{ 
           "xdm:gender":      "unisex",
           "xdm:fabrication": "leather",
@@ -230,11 +245,11 @@ The previous section indicated how XDM objects can be passed to a decision reque
 ]
 ```
 
-The schema must have been constructed by your organization. To learn about constructing schemas please refer to the [Schema Editor Tutorial](../schema_editor_tutorial/schema_editor_tutorial.md). Your schema will be in a namespace `https://ns.adobe.com/${TENANT_ID}/schemas`.
+The schema must have been constructed by your organization. To learn about constructing schemas please refer to the [Schema Editor Tutorial](../schema_editor_tutorial/schema_editor_tutorial.md). Your schema will be in a namespace `https://ns.adobe.com/{TENANT_ID}/schemas`.
 
 The [Schema Registry API developer guide](../schema_registry_api_tutorial/schema_registry_api_tutorial.md) explains how schemas can be accessed programmatically and how a developer obtains the tenant ID and the numeric identifier of your schema. The version number is required and is also provided by the schema registry APIs.
 
-A schema defined by an organization will typically have a root property named `_${TENANT_ID}`, also called the tenant namespace string.
+A schema defined by an organization will typically have a root property named `_{TENANT_ID}`, also called the tenant namespace string.
 Note that the proerties used from a global schema component such as _`https://ns.adobe.com/xdm/context/product` have a namespace prefix `xdm:`. In this case the organization-defined property `productDetails` was constructed with that datatype. While tenant properties are nested in a property named after the tenant namespace, datatypes that are globally available use the reserved prefix `xdm:` to prevent collisions of property names.
 
 Multiple data objects can be listed in the `xdm:contextData` property. Each object must identify its type via the `@type` property.
@@ -248,7 +263,7 @@ The values of the context data objects are available to be used in PQL expressio
       "gender in (\"female\",\"non-specific\")  
        and (
          select p from
-           @{https://ns.adobe.com/${TENANT_ID}/schemas/${NUMERIC_SCHEMA_ID}}._${TENANT_ID}
+           @{https://ns.adobe.com/{TENANT_ID}/schemas/{NUMERIC_SCHEMA_ID}}._{TENANT_ID}
          select e from xEvent 
             where e.type = \"productSearch\" 
               and e.category = p.category 
@@ -260,9 +275,9 @@ The values of the context data objects are available to be used in PQL expressio
 }
 ```
 
-In the example above, the variable `p` is iterating over the array of objects that were marked with the `@type` = `https://ns.adobe.com/${TENANT_ID}/schemas/${NUMERIC_SCHEMA_ID}}`. 
+In the example above, the variable `p` is iterating over the array of objects that were marked with the `@type` = `https://ns.adobe.com/{TENANT_ID}/schemas/{NUMERIC_SCHEMA_ID}}`. 
 
-Note that the PQL syntax does not use prefixes in property names. Global properties, by default, are simply referenced without the `xdm:` prefix. Properties your organization defines are nested within an **additional** property named after the tenant namespace (in the example indicated by the variable `${TENANT_ID}`). To be able to reference the custom-defined properties directly, the variable `p` is bound to the result of the path that dereferences the additional nesting property.
+Note that the PQL syntax does not use prefixes in property names. Global properties, by default, are simply referenced without the `xdm:` prefix. Properties your organization defines are nested within an **additional** property named after the tenant namespace (in the example indicated by the variable `{TENANT_ID}`). To be able to reference the custom-defined properties directly, the variable `p` is bound to the result of the path that dereferences the additional nesting property.
 
 ## Usage of profile records
 
