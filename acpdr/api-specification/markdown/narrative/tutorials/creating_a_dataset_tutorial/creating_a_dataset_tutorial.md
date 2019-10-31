@@ -1,8 +1,8 @@
 # Create a dataset using APIs
 
-This tutorial walks through the steps to create a dataset using Adobe Experience Platform APIs, and populate the dataset using a file.
+This tutorial walks through the steps to create a dataset using Adobe Experience Platform APIs, and populate the dataset using a file. If you are trying to create and populate a dataset using a connector, see the documentation on [creating a connector](../creating_a_connector_tutorial/creating_a_connector_tutorial.md).
 
-The steps involved include:
+The following steps are covered:
 
 1. [Lookup a dataset schema](#lookup-dataset-schema)
 1. [Create a dataset](#create-a-dataset) based on the schema
@@ -15,41 +15,35 @@ The steps involved include:
 
 ## Getting started
 
-You can ingest data into a dataset in two different ways:
+This guide requires a working understanding of the following components of Adobe Experience Platform:
 
-* Batch ingestion using file upload
-* Set up a connector to ingest files
+* [Batch ingestion](../../technical_overview/ingest_architectural_overview/ingest_architectural_overview.md): Experience Platform allows you to ingest data as batch files.
+* [Experience Data Model (XDM) System](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Experience Platform organizes customer experience data.
+* [Sandboxes](../../technical_overview/sandboxes/sandboxes-overview.md): Experience Platform provides virtual sandboxes which partition a single Platform instance into separate virtual environments to help develop and evolve digital experience applications.
 
-This tutorial covers batch ingestion using a file. For information about how to create and populate a dataset using a connector, see the documentation on [creating a connector](../creating_a_connector_tutorial/creating_a_connector_tutorial.md).
+The following sections provide additional information that you will need to know in order to successfully make calls to the Platform APIs.
 
-### Reading the API calls
+### Reading sample API calls
 
-Before making calls to the API, it is important to understand how to read the calls in this document. 
+This tutorial provides example API calls to demonstrate how to format your requests. These include paths, required headers, and properly formatted request payloads. Sample JSON returned in API responses is also provided. For information on the conventions used in documentation for sample API calls, see the section on [how to read example API calls](../../technical_overview/platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md#how-do-i-format-an-api-request) in the Experience Platform troubleshooting guide.
 
-Each API call is shown in two different ways. First, the command is presented in its "API format", a template representation showing only the operation (GET, POST, PUT, PATCH, DELETE) and the endpoint being used (for example, `/datasets`). Some templates also show the location of variables to help illustrate how a call should be formulated, such as `GET /datasets/{variable}`.
+### Gather values for required headers
 
-The calls are then shown as [cURL](https://curl.haxx.se/docs/faq.html#What_is_cURL) commands in a "Request", which includes the necessary headers and full "base path" needed to successfully interact with the API.
+In order to make calls to Platform APIs, you must first complete the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
-For example, the base path for the Catalog Service API is: `https://platform.adobe.io/data/foundation/catalog`. 
+- Authorization: Bearer `{ACCESS_TOKEN}`
+- x-api-key: `{API_KEY}`
+- x-gw-ims-org-id: `{IMS_ORG}`
 
-The base path should be pre-pended to all endpoints. For example, the `/datasets` endpoint becomes: `https://platform.adobe.io/data/foundation/catalog/datasets` in order to make a call to the API.
+All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
 
-The API format / Request pattern is used throughout the tutorial. Please ensure that you are using the complete path shown in the Request section, as the calls in this tutorial use multiple services with different base paths.
+* x-sandbox-name: `{SANDBOX_NAME}`
 
-### Authentication and request headers
+> **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../../technical_overview/sandboxes/sandboxes-overview.md). 
 
-The calls in this tutorial require the following three request headers to be sent with each call in order to successfully use the APIs:
+All requests that contain a payload (POST, PUT, PATCH) require an additional header:
 
-* Authorization: Bearer `{ACCESS_TOKEN}` - The token provided after [authentication](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). 
-* x-api-key: `{API_KEY}` - Your specific API key for your unique Platform integration.
-* x-gw-ims-org-id: `{IMS_ORG}` - The IMS Organization credentials for your unique Platform integration.
-
-The following headers are also occasionally required:
-
-* Content-Type: Used to specify acceptable media types in the request body
-* Accept: Used to specify acceptable media types in the response body
-
-The correct headers are included in the Request example for each call.
+- Content-Type: application/json
 
 ## Tutorial
 
@@ -80,6 +74,7 @@ curl -X GET \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
 
 #### Response
@@ -197,6 +192,7 @@ curl -X POST \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{
     "name":"LoyaltyMembersDataset",
     "schemaRef": {
@@ -241,6 +237,7 @@ The request body includes a "datasetId" field, the value of which is the `{DATAS
 curl -X POST 'https://platform.adobe.io/data/foundation/import/batches' \
   -H 'accept: application/json' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key : {API_KEY}' \
   -H 'content-type: application/json' \
@@ -356,6 +353,7 @@ curl -X GET \
   'https://platform.adobe.io/data/foundation/catalog/batches?batch=5d01230fc78a4e4f8c0c6b387b4b8d1c' \
   -H 'x-api-key : {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMG_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}'
 ```
 
