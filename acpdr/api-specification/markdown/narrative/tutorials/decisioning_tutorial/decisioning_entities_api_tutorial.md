@@ -16,13 +16,31 @@ This tutorial requires a working understanding of the Experience Platform servic
 - [Decisioning Service](../../technical_overview/decisioning-overview/decisioning-service-overview.md): Explains the concepts and components used for Experience Decisioning in general and Offer decisioning in particular. Illustrates the strategies used for choosing the best option to present during a customer's experience.
 - [Profile Query Language (PQL)](../../technical_overview/unified_profile_architectural_overview/unified_profile_pql.md): PQL is a powerful language to write expressions over XDM instances. PQL is used to define decision rules.
 
+The following sections provide additional information that you will need to know in order to successfully make calls to the Platform APIs.
+
+### Reading sample API calls
+
+This tutorial provides example API calls to demonstrate how to format your requests. These include paths, required headers, and properly formatted request payloads. Sample JSON returned in API responses is also provided. For information on the conventions used in documentation for sample API calls, see the section on [how to read example API calls](../../technical_overview/platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md#how-do-i-format-an-api-request) in the Experience Platform troubleshooting guide.
+
+### Gather values for required headers
+
+In order to make calls to Platform APIs, you must first complete the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+
+- Authorization: Bearer `{ACCESS_TOKEN}`
+- x-api-key: `{API_KEY}`
+- x-gw-ims-org-id: `{IMS_ORG}`
+
+All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
+
+* x-sandbox-name: `{SANDBOX_NAME}`
+
+> **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../../technical_overview/sandboxes/sandboxes-overview.md). 
+
+All requests that contain a payload (POST, PUT, PATCH) require an additional header:
+
+- Content-Type: application/json
+
 # Managing repository entities using APIs
-
-This tutorial requires you to have completed the [Authentication to Adobe Experience Platform tutorial](../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
-
-* Authorization: Bearer `{ACCESS_TOKEN}`
-* x-api-key: `{API_KEY}`
-* x-gw-ims-org-id: `{IMS_ORG}`
 
 ## Repository API conventions
 
@@ -62,7 +80,10 @@ The list of accessible containers is obtained by calling the repository root end
 
 ## Managing access to containers
 
-An administrator can group similar principals, resources, access permissions into profiles. This reduces the management burden and is supported by [Adobe’s Admin Console UI](https://adminconsole.adobe.com). You must be a product administrator for the Adobe Adobe Experience Platform and Offers in your organization to create profiles and assign users to them.It is sufficient to create product profiles that match certain permissions in a one-time step and then simply add users to those profiles. Profiles act as groups that have been granted permissions and every real user or technical user in that group inherits those permissions. 
+An administrator can group similar principals, resources, access permissions into profiles. This reduces the management burden and is supported by [Adobe’s Admin Console UI](https://adminconsole.adobe.com). You must be a product administrator for the Adobe Adobe Experience Platform and Offers in your organization to create profiles and assign users to them.
+
+It is sufficient to create product profiles that match certain permissions in a one-time step and then simply add users to those profiles. Profiles act as groups that have been granted permissions and every real user or technical user in that group inherits those permissions.
+ 
 ### List containers accessible to users and integrations
 
 When the administrator has granted access to containers for regular users or integrations those containers will show up in the so-called “Home” list of the repository. The list may be different for different users or integrations as it is a subset of all containers accessible to the caller. The list of containers can be filtered by their association to product contexts. The filter parameter is called `product` and can be repeated. If more than one product context filter is given then the union of the containers that have associations with any of the given product contexts will be returned. Note that a single container can be associated to multiple product contexts.
@@ -74,12 +95,13 @@ The context for the Platform Decisioning Service containters is currently `dma_o
 #### Request
 
 ```shell
-curl -X GET ${ENDPOINT_PATH}/?product=dma_offers&product=acp \ 
+curl -X GET {ENDPOINT_PATH}/?product=dma_offers&product=acp \ 
   -H 'Accept: application/vnd.adobe.platform.xcore.home.hal+json' \ 
-  -H 'Authorization: Bearer ${ACCESS_TOKEN}' \ 
-  -H 'x-api-key: ${API_KEY}' \ 
-  -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
-  -H 'x-request-id: ${NEW_UUID}' 
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \ 
+  -H 'x-api-key: {API_KEY}' \ 
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  _H 'x-sandbox-name: {SANDBOX_NAME}' \ 
+  -H 'x-request-id: {NEW_UUID}' 
 ```
 
 #### Response
@@ -140,15 +162,16 @@ The HAL `_links` property must be present but can be empty. It means that no cus
 #### Request
 
 ```shell
-curl -X POST ${ENDPOINT_PATH}/${CONTAINER_ID}/instances \ 
-  -H 'Content-Type: application/vnd.adobe.platform.xcore.hal+json; schema="${SCHEMA_ID}"' \  
+curl -X POST {ENDPOINT_PATH}/{CONTAINER_ID}/instances \ 
+  -H 'Content-Type: application/vnd.adobe.platform.xcore.hal+json; schema="{SCHEMA_ID}"' \  
   -H 'Accept: application/vnd.adobe.platform.xcore.xdm.receipt+json \ 
-  -H 'x-api-key: ${API_KEY}' \ 
-  -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
-  -H 'x-request-id: ${NEW_UUID}' \ 
+  -H 'x-api-key: {API_KEY}' \ 
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  _H 'x-sandbox-name: {SANDBOX_NAME}' \ 
+  -H 'x-request-id: {NEW_UUID}' \ 
   -d '{ 
     "_instance": { 
-        ${JSON_PAYLOAD} 
+        {JSON_PAYLOAD} 
     }, 
     "_links": { 
     } 
@@ -190,11 +213,12 @@ Using the URL in the Location header returned with the Create call, an applicati
 #### Request 
 
 ```shell
-curl -X GET ${ENDPOINT_PATH}/${CONTAINER_ID}/instances/${INSTANCE_ID} \ 
-  -H 'Accept: *, application/vnd.adobe.platform.xcore.hal+json; schema="${SCHEMA_ID}" \ 
-  -H 'x-api-key: ${API_KEY}' \ 
-  -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
-  -H 'x-request-id: ${NEW_UUID}'  
+curl -X GET {ENDPOINT_PATH}/{CONTAINER_ID}/instances/{INSTANCE_ID} \ 
+  -H 'Accept: *, application/vnd.adobe.platform.xcore.hal+json; schema="{SCHEMA_ID}" \ 
+  -H 'x-api-key: {API_KEY}' \ 
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  _H 'x-sandbox-name: {SANDBOX_NAME}' \ 
+  -H 'x-request-id: {NEW_UUID}'  
 ```
 
 > **Note:** Although `instanceId` is given as a path parameter, applications should, whenever possible, not construct the path themselves and instead follow links to instances contained in list and search operations. See sections ‎6.4.4 and ‎6.4.6 for details. 
@@ -239,12 +263,13 @@ The lookup API allows a client to specify an `If-None-Match` header parameter. S
 #### Request
 
 ```shell
-curl -X GET ${ENDPOINT_PATH}/${CONTAINER_ID}/instances/${INSTANCE_ID} \ 
-  -H 'Accept: *, application/vnd.adobe.platform.xcore.hal+json; schema="${SCHEMA_ID}" \ 
-  -H 'If-None-Match: "${LAST_RECEIVED_ETAG}" \ 
-  -H 'x-api-key: ${API_KEY}' \ 
-  -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
-  -H 'x-request-id: ${NEW_UUID}'  
+curl -X GET {ENDPOINT_PATH}/{CONTAINER_ID}/instances/{INSTANCE_ID} \ 
+  -H 'Accept: *, application/vnd.adobe.platform.xcore.hal+json; schema="{SCHEMA_ID}" \ 
+  -H 'If-None-Match: "{LAST_RECEIVED_ETAG}" \ 
+  -H 'x-api-key: {API_KEY}' \ 
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  _H 'x-sandbox-name: {SANDBOX_NAME}' \ 
+  -H 'x-request-id: {NEW_UUID}'  
 ```
 
 The repository API will respond with a status 304 Not Modified when the instance’s last revision is that with the etag given. 
@@ -258,11 +283,12 @@ A more typical access pattern will be to page through the set of all instances.
 #### Request
 
 ```shell
-curl -X GET ${ENDPOINT_PATH}/${CONTAINER_ID}/instances?schema="${SCHEMA_ID}" \ 
+curl -X GET {ENDPOINT_PATH}/{CONTAINER_ID}/instances?schema="{SCHEMA_ID}" \ 
   -H 'Accept: *, application/vnd.adobe.platform.xcore.hal+json; schema="https://ns.adobe.com/experience/xcore/hal/results" \ 
-  -H 'x-api-key: ${API_KEY}' \ 
-  -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
-  -H 'x-request-id: ${NEW_UUID}'  
+  -H 'x-api-key: {API_KEY}' \ 
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  _H 'x-sandbox-name: {SANDBOX_NAME}' \ 
+  -H 'x-request-id: {NEW_UUID}'  
 ```
 
 #### Response
@@ -318,18 +344,19 @@ Not only instance payload properties can be used in filter expressions. Envelope
 <br/>
 The `property` query parameter can be repeated so that multiple filter conditions are applied, e.g to return all instances that were last modified after a certain date and before a certain date. Values in those expressions must be URL encoded. If no expression is given and the property’s name is simply listed the items that qualify are those that have a property with the given name.<br/>
 <br/>
-* **`id`**: Sometimes a list needs to be filtered by the URI of the instances. The `property` query parameter can be used to filter out one instance, but to obtain more than one instance, a list of URIs can be given to the request. The `id` parameter is repeated and each occurrence specifies one URI value, `id=${URI_1}&id=${URI_2},…` The URI values must be URL encoded.
+* **`id`**: Sometimes a list needs to be filtered by the URI of the instances. The `property` query parameter can be used to filter out one instance, but to obtain more than one instance, a list of URIs can be given to the request. The `id` parameter is repeated and each occurrence specifies one URI value, `id={URI_1}&id={URI_2},…` The URI values must be URL encoded.
 
 Paged results will be returned as a special mime-type `application/vnd.adobe.platform.xcore.hal+json; schema="https://ns.adobe.com/experience/xcore/hal/results"`. 
 
 #### Request
 
 ```shell
-curl -X GET ${ENDPOINT_PATH}/${CONTAINER_ID}/instances?schema="${SCHEMA_ID}"&orderby=${ORDER_BY_PROPERTY_PATH}&property=${TIMESTAMP_PROPERTY_PATH}>=2019-02-19T03:19:03.627Z&property=${TIMESTAMP_PROPERTY_PATH}<=2019-06-19T03:19:03.627Z \ 
+curl -X GET {ENDPOINT_PATH}/{CONTAINER_ID}/instances?schema="{SCHEMA_ID}"&orderby${ORDER_BY_PROPERTY_PATH}&property={TIMESTAMP_PROPERTY_PATH}>=2019-02-19T03:19:03.627Z&property${TIMESTAMP_PROPERTY_PATH}<=2019-06-19T03:19:03.627Z \ 
   -H 'Accept: *, application/vnd.adobe.platform.xcore.hal+json; schema="https://ns.adobe.com/experience/xcore/hal/results" \ 
-  -H 'x-api-key: ${API_KEY}' \ 
-  -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
-  -H 'x-request-id: ${NEW_UUID}'  
+  -H 'x-api-key: {API_KEY}' \ 
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  _H 'x-sandbox-name: {SANDBOX_NAME}' \ 
+  -H 'x-request-id: {NEW_UUID}'  
 ```
 
 #### Response
@@ -403,11 +430,12 @@ In cases where clients want to provide more complex filter conditions and search
 #### Request
 
 ```shell
-curl -X GET ${ENDPOINT_PATH}/${CONTAINER_ID}/queries/core/search?schema="${SCHEMA_ID}"&… \ 
+curl -X GET {ENDPOINT_PATH}/{CONTAINER_ID}/queries/core/search?schema="{SCHEMA_ID}"&… \ 
   -H 'Accept: *, application/vnd.adobe.platform.xcore.hal+json; schema="https://ns.adobe.com/experience/xcore/hal/results" \ 
-  -H 'x-api-key: ${API_KEY}' \ 
-  -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
-  -H 'x-request-id: ${NEW_UUID}'  
+  -H 'x-api-key: {API_KEY}' \ 
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  _H 'x-sandbox-name: {SANDBOX_NAME}' \ 
+  -H 'x-request-id: {NEW_UUID}'  
 ```
 
 <!-- TODO: needs example response -->
@@ -429,18 +457,19 @@ In both cases the URL of the request specifies the path to the physical instance
 #### Request (PUT)
 
 ```shell
-curl -X PUT ${ENDPOINT_PATH}/${CONTAINER_ID}/instances/${INSTANCE_ID} \ 
-  -H 'Content-Type: application/vnd.adobe.platform.xcore.hal+json; schema="${SCHEMA_ID}"' \  
+curl -X PUT {ENDPOINT_PATH}/{CONTAINER_ID}/instances/{INSTANCE_ID} \ 
+  -H 'Content-Type: application/vnd.adobe.platform.xcore.hal+json; schema="{SCHEMA_ID}"' \  
   -H 'Accept: application/vnd.adobe.platform.xcore.xdm.receipt+json \ 
-  -H 'x-api-key: ${API_KEY}' \ 
-  -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
-  -H 'x-request-id: ${NEW_UUID}'\ 
+  -H 'x-api-key: {API_KEY}' \ 
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  _H 'x-sandbox-name: {SANDBOX_NAME}' \ 
+  -H 'x-request-id: {NEW_UUID}'\ 
   -d '{ 
   "_instance": { 
-    ${JSON_PROPERTIES_OF_THIS_INSTANCE} 
+    {JSON_PROPERTIES_OF_THIS_INSTANCE} 
   }, 
   "_links": { 
-    ${HAL_LINKS_OF_THIS_INSTANCE} 
+    {HAL_LINKS_OF_THIS_INSTANCE} 
   } 
 }'  
 ```
@@ -448,15 +477,16 @@ curl -X PUT ${ENDPOINT_PATH}/${CONTAINER_ID}/instances/${INSTANCE_ID} \
 #### Request (PATCH)
 
 ```shell
-curl -X PATCH ${ENDPOINT_PATH}/${CONTAINER_ID}/instances/${INSTANCE_ID} \ 
-  -H 'Content-Type: application/vnd.adobe.platform.xcore.patch.hal+json; schema="${SCHEMA_ID}"' \  
+curl -X PATCH {ENDPOINT_PATH}/{CONTAINER_ID}/instances/{INSTANCE_ID} \ 
+  -H 'Content-Type: application/vnd.adobe.platform.xcore.patch.hal+json; schema="{SCHEMA_ID}"' \  
   -H 'Accept: application/vnd.adobe.platform.xcore.xdm.receipt+json \ 
-  -H 'x-api-key: ${API_KEY}' \ 
-  -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
-  -H 'x-request-id: ${NEW_UUID}' \ 
+  -H 'x-api-key: {API_KEY}' \ 
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  _H 'x-sandbox-name: {SANDBOX_NAME}' \ 
+  -H 'x-request-id: {NEW_UUID}' \ 
   -d '[ 
   { 
-    ${JSON_PATCH_INSTRUCTIONS_FOR_THIS_INSTANCE} 
+    {JSON_PATCH_INSTRUCTIONS_FOR_THIS_INSTANCE} 
   } 
 ]'
 ```
@@ -481,11 +511,12 @@ Instances can be deleted with a DELETE call. A client should preferably use the 
 #### Request
 
 ```shell
-curl -X DELETE ${ENDPOINT_PATH}/${CONTAINER_ID}/instances/${INSTANCE_ID} \ 
+curl -X DELETE {ENDPOINT_PATH}/{CONTAINER_ID}/instances/{INSTANCE_ID} \ 
   -H 'Accept: application/vnd.adobe.platform.xcore.xdm.receipt+json \ 
-  -H 'x-api-key: ${API_KEY}' \ 
-  -H 'x-gw-ims-org-id: ${IMS_ORG} \ 
-  -H 'x-request-id: ${NEW_UUID}'  
+  -H 'x-api-key: {API_KEY}' \ 
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  _H 'x-sandbox-name: {SANDBOX_NAME}' \ 
+  -H 'x-request-id: {NEW_UUID}'  
 ```
 
 #### Response
@@ -514,7 +545,7 @@ If an instance is found that references the instance being deleted, the outcome 
 
 The APIs described in the previous section uniformly apply to all types of business objects. The only difference between, say creating an offer and an activity would be the `content-type` header noting the JSON schema the JSON payload of the request that complies with the schema. Therefore, the following sections will only need to focus on those schemas and the relationships between them. 
 
-When using the APIs with the content type `application/vnd.adobe.platform.xcore.hal+json; schema="${SCHEMA_ID}"`, the instance’s own properties are embedded in the `_instance` property next to which there is a `_links` property. This will be the general format in which all instances are represented: 
+When using the APIs with the content type `application/vnd.adobe.platform.xcore.hal+json; schema="{SCHEMA_ID}"`, the instance’s own properties are embedded in the `_instance` property next to which there is a `_links` property. This will be the general format in which all instances are represented: 
 
 ```json
 { 
@@ -742,12 +773,13 @@ The base priority is embedded in the property `xdm:rank`:
 Adjusting the base priority can be done with the following PATCH call:
 
 ```shell
-curl -X PATCH ${ENDPOINT_PATH}/${CONTAINER_ID}/instances/${INSTANCE_ID} \
-  -H 'Content-Type: application/vnd.adobe.platform.xcore.patch.hal+json; schema="${SCHEMA_ID}"' \ 
+curl -X PATCH {ENDPOINT_PATH}/{CONTAINER_ID}/instances/{INSTANCE_ID} \
+  -H 'Content-Type: application/vnd.adobe.platform.xcore.patch.hal+json; schema="{SCHEMA_ID}"' \ 
   -H 'Accept: application/vnd.adobe.platform.xcore.xdm.receipt+json \
-  -H 'x-api-key: ${API_KEY}' \
-  -H 'x-gw-ims-org-id: ${IMS_ORG} \
-  -H 'x-request-id: ${NEW_UUID}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  _H 'x-sandbox-name: {SANDBOX_NAME}' \
+  -H 'x-request-id: {NEW_UUID}' \
   -d '[
   {
     "op":   "replace",
@@ -775,7 +807,7 @@ https://ns.adobe.com/experience/offer-management/eligibility-rule. The `_instanc
       "membership.status = \"elite\" 
        and (select e from xEvent 
             where e.type = \"flight\" 
-              and e.flightnumber = @{${SCHEMA_ID}}.flightnumber
+              and e.flightnumber = @{{SCHEMA_ID}}.flightnumber
               and (e.timestamp occurs <= 6 months before now).count() > 3
            )",
     "xdm:format": "pql/text",
