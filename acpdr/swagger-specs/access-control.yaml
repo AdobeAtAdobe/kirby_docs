@@ -20,15 +20,37 @@ tags:
 produces:
   - application/json
 paths:
+  /acl/reference:
+    get:
+      tags:
+        - "Access Control Policies"
+      summary: "List all available permission names and resource types."
+      description: ""
+      operationId: "getPolicyNames"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+      responses:
+        200:
+          description: Successful operation
+          schema: 
+            $ref: '#/definitions/referenceResponse'
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
   /acl/effective-policies:
     post:
       tags:
         - "Access Control Policies"
-      summary: "Retrieve the effective policies for a user on given resources within a sandbox."
+      summary: "List all effective policies for a user on given resources within a sandbox."
       description: ""
       operationId: "getEffectiveAclPolicies"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
@@ -93,3 +115,532 @@ parameters:
     required: true
     type: string
     in: header
+definitions:
+  referenceResponse:
+    type: object
+    properties:
+      permissions:
+        type: object
+        properties:
+          export-audience-for-segment:
+            $ref: '#/definitions/exportAudience'
+          manage-datasets:
+            $ref: '#/definitions/manageDatasets'
+          manage-identity-namespaces:
+            $ref: '#/definitions/manageNamespaces'
+          manage-profiles:
+            $ref: '#/definitions/manageProfiles'
+          manage-sandboxes:
+            $ref: '#/definitions/manageSandboxes'
+          manage-shemas:
+            $ref: '#/definitions/manageShemas'
+          reset-sandboxes:
+            $ref: '#/definitions/resetSandboxes'
+          view-datasets:
+            $ref: '#/definitions/viewDatasets'
+          view-identity-namespaces:
+            $ref: '#/definitions/viewNamespaces'
+          view-monitoring-dashboard:
+            $ref: '#/definitions/viewMonitoring'
+          view-profiles:
+            $ref: '#/definitions/viewProfiles'
+          view-sandboxes:
+            $ref: '#/definitions/viewSandboxes'
+          view-schemas:
+            $ref: '#/definitions/viewSchemas'
+      resource-types:
+        $ref: '#/definitions/resourceTypes'
+  exportAudience:
+    type: object
+    properties:
+      segments:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+  manageDatasets:
+    type: object
+    properties:
+      connection:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      datasets:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      datasets-data:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      dule-label:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      schemas:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+  manageNamespaces:
+    type: object
+    properties:
+      identity-namespaces:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+  manageProfiles:
+    type: object
+    properties:
+      datasets:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+      profile-configs:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      profile-datasets:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      profiles:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      schemas:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+      segment-jobs:
+        type: array
+        items:
+          type: string
+        example: 
+          - write
+      segments:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+  manageSandboxes:
+    type: object
+    properties:
+      sandboxes:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+  manageShemas:
+    type: object
+    properties:
+      classes:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      data-types:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      identity-descriptor:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      mixins:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      relationship-descriptor:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      schemas:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+  resetSandboxes:
+    type: object
+    properties:
+      reset-sandboxes:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+  viewDatasets:
+    type: object
+    properties:
+      connection:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+      datasets:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+      datasets-data:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+      dule-label:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+      schemas:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+  viewNamespaces:
+    type: object
+    properties:
+      identity-namespaces:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+  viewMonitoring:
+    type: object
+    properties:
+      datasets:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+      datasets-data:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+      monitoring:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+  viewProfiles:
+    type: object
+    properties:
+      datasets:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+      profile-configs:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+      profile-datasets:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      profiles:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+      schemas:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+      segments:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+  viewSandboxes:
+    type: object
+    properties:
+      sandboxes:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+  viewSchemas:
+    type: object
+    properties:
+      classes:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+      data-types:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+      identity-descriptor:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+      mixins:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+      relationship-descriptor:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+      schemas:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+  resourceTypes:
+    type: object
+    properties:
+      classes:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      connection:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      data-types:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      datasets:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      datasets-data:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      dule-label:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      identity-descriptor:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      identity-namespaces:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      mixins:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      monitoring:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      profile-configs:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      profile-datasets:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      profiles:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      relationship-descriptor:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      reset-sandboxes:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      sandboxes:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      schemas:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      segment-jobs:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
+      segments:
+        type: array
+        items:
+          type: string
+        example: 
+          - read
+          - write
+          - delete
