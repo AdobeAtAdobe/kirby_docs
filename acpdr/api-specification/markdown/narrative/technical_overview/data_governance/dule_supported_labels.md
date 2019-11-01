@@ -1,6 +1,6 @@
 # Supported Data Usage Labels
 
-Adobe Experience Platform includes infrastructure for data governance with Data Usage Labeling and Enforcement (DULE) at its core.  DULE features enable the application of data usage labels to connections, datasets, and fields in order to categorize data according to the type of usage policies that apply to that data.
+Adobe Experience Platform includes infrastructure for data governance with Data Usage Labeling and Enforcement (DULE) at its core.  DULE features enable the application of data usage labels to datasets and fields in order to categorize data according to the type of usage policies that apply to that data.
 
 The following list outlines all data usage labels currently supported by Experience Platform.
 

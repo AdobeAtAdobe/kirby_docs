@@ -1,69 +1,22 @@
 # Data usage labels user guide
 
-Data Usage Labeling and Enforcement (DULE) is the core mechanism of Adobe Experience Platform Data Governance. DULE features enable you to apply data usage labels to connections, datasets, and fields, categorizing each according to related data usage policies.
+Data Usage Labeling and Enforcement (DULE) is the core mechanism of Adobe Experience Platform Data Governance. DULE features enable you to apply data usage labels to datasets and fields, categorizing each according to related data usage policies.
 
 This user guide covers steps for working with data usage labels (also known as DULE labels) within the Experience Platform user interface. Before using the guide, please see the [Data Governance overview](../../technical_overview/data_governance/dule_overview.md) for a more robust introduction to the DULE framework.
 
 The following topics are covered:
 
 * [Understanding data usage labels](#understanding-data-usage-labels)
-* [Managing data usage labels at the connection level](#managing-data-usage-labels-at-the-connection-level)
 * [Managing data usage labels at the dataset level](#managing-data-usage-labels-at-the-dataset-level)
 * [Managing data usage labels at the dataset field level](#managing-data-usage-labels-at-the-dataset-field-level)
 
 ## Understanding data usage labels
 
-Data usage labels allow you to categorize data connections, datasets, and fields according to usage policies that apply to that data. Labels can be applied at any time, providing flexibility in how you choose to govern data. Best practices encourage labeling data as soon as it is ingested into Experience Platform, or as soon as data becomes available for use in Platform.
+Data usage labels allow you to categorize datasets and fields according to usage policies that apply to that data. Labels can be applied at any time, providing flexibility in how you choose to govern data. Best practices encourage labeling data as soon as it is ingested into Experience Platform, or as soon as data becomes available for use in Platform.
 
-Data usage labels are inherited down from connections to datasets, and from datasets to fields. This means that data usage labels applied at the connection level are propagated to all datasets and fields created from that connection. In turn, labels applied at the dataset level are propagated to all fields within the dataset. Labels can also be applied directly to individual fields (column headers) in a dataset, without propagation.
+Data usage labels that are applied at the dataset level are propagated to all fields within the dataset. Labels can also be applied directly to individual fields (column headers) in a dataset, without propagation.
 
 For more information on available data usage labels in Experience Platform and the usage policies they represent, see the guide on [supported data usage labels](../../technical_overview/data_governance/dule_supported_labels.md).
-
-## Managing data usage labels at the connection level
-
-Connection-level labels can only be added when first creating a connection. In order to create a connection, you need to have login credentials for the connector of your choice. In this tutorial, a connection is made to Microsoft Dynamics.
-
-In Adobe Experience Platform, select **Connections** from the left-navigation to open the _Connections_ workspace. If connections have been made, they will be listed here with their name, source, and status. The workspace also includes information regarding the number of connections in your organization, recently updated connections, and composition of connections across sources.  
-
-![List of Connections](images/connections_workspace.png)
-
-To create a new connection, click **Create Connection** in the top-right of the Connections workspace.
-
-![Create Connection button](images/create_connection.png)
-
-On the _Create Connection_ screen, select **Microsoft Dynamics Connection**.
-
-![Create Connection](images/connection_create.png)
-
-Use your Microsoft Dynamics credentials to complete the Authentication fields, then click **Connect**. Once the connection is confirmed, click **Next**.  
-
-![Microsoft Dynamics Authentication](images/connection_microsoft_dynamics.png)
-
-The _Configure: Microsoft Dynamics Online_ screen appears. Give your connection a name (required) and a description (optional, but recommended), then click **Add Labels** to begin adding labels.  
-
-![Configure and Add Labels](images/connection_configure.png)
-
-The _Edit Governance Labels_ dialog appears. Expand each type of label to see all available options, and select the checkbox next to each label that you would like to add. The _Applied Labels_ header at the top of the dialog shows the labels that have been selected. The _Inherited Labels_ section remains blank as connections do not inherit labels. Once you have finished selecting connection-level labels, click **Save Changes**.   
-
-![Add connection-level labels](images/connection_add_label_dialog.png)
-
-The connection labels you selected will now appear on the _Configure: Microsoft Dynamics Online_ screen. Click **Add Labels** to add more connection-level labels, or click **Next** to continue.
-
-![Configure screen with connection-level labels](images/connection_configure_with_labels.png)
-
-The _Ingestion Schedule_ screen appears, where you can set the timing of data ingestion for this connector. Once complete, click **Next**.
-
-![Set Ingestion Schedule for connection](images/connection_ingestion_schedule.png)
-
-You can now select datasets for ingestion. Select any number of datasets from the list, then click **Add** to add them to the connection. You can also use the **plus (+)** icon next to a dataset to add it with a single click. Once you have selected at least one dataset, click **Save & Ingest** to continue. 
-
-![Select datasets for ingestion](images/connection_select_dataset.png)
-
-On the _Connection Details_ page, you will now see information related your connection, including the _Ingestion Schedule_ and related _Datasets_ information.
-
-![Connection Details](images/connection_details.png)
-
-You have now successfully created a Microsoft Dynamics connection and applied data usage labels at the connection-level. In the future, all datasets created using this connection will inherit the connection-level labels to that dataset and to all individual fields within.
 
 ## Managing data usage labels at the dataset level
 
@@ -145,8 +98,8 @@ You can repeat these steps to continue adding and editing field-level labels for
 
 ![Select multiple fields to apply field-level labels simultaneously.](images/fields_select_multiple.png)
 
-It is important to remember that inheritance moves from the top-level down only (connection → dataset → fields), meaning that labels applied at the field level are not propagated to other fields, datasets, or connections.
+It is important to remember that inheritance moves from the top-level down only (dataset → fields), meaning that labels applied at the field level are not propagated to other fields or datasets.
 
 ## Next steps
 
-Now that you have added data usage labels at the connection, dataset, and field level, you can begin to ingest data into Experience Platform. To learn more, start by reading the [data ingestion documentation](../../technical_overview/ingest_architectural_overview/ingest_architectural_overview.md).
+Now that you have added data usage labels at the dataset and field level, you can begin to ingest data into Experience Platform. To learn more, start by reading the [data ingestion documentation](../../technical_overview/ingest_architectural_overview/ingest_architectural_overview.md).

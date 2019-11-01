@@ -92,9 +92,6 @@ __Connection:__ A connection is a virtual pipeline that enables data to flow in 
 <a name="Condition"></a>
 __Condition:__ In Experience Platform Launch, a condition is a rule component that evaluates a logical statement that must return `true` or `false`. All conditions must evaluate to `true` and all exception conditions must evaluate to `false` before any actions on the rule are executed.
 
-<a name="Connection Labels"></a>
-__Connection Labels:__ Labels applied to a connection will result in all ingested datasets and fields to inherit the specified labels. 
-
 <a name="Contract Data C Labels"></a>
 __Contract Data "C" Labels:__ Contract `C` labels are used to categorize data that has contractual obligations or is related to a customer's data governance policies.
 
@@ -165,13 +162,13 @@ __Dataset Output:__ Dataset output provides a mechanism for determining what the
 __Data Governance:__ Data governance encompasses the strategies and technologies used to ensure data is in compliance with regulations and organization policies with respect to data usage.
 
 <a name="Data Governance Labels"></a>
-__Data Governance Labels:__ Data governance labels provide users the ability to classify data that reflects privacy-related considerations and contractual conditions to be compliant with regulations and corporate policies. Data governance labels added to a connection are inherited down or applied to all datasets and fields ingested through the connection.  Data governance labels can also be applied directly to datasets and fields.
+__Data Governance Labels:__ Data governance labels provide users the ability to classify data that reflects privacy-related considerations and contractual conditions to be compliant with regulations and corporate policies. Data governance labels added to a dataset are inherited down or applied to all fields within that dataset.  Data governance labels can also be applied directly to fields.
 
 <a name="Data Integration Partners"></a>
 __Data Integration Partners:__ Data integration partners simplify and automate the loading and transformation of massive volumes of data from over 200 sources to Experience Platform without writing code.
 
 <a name="Dataset Labels"></a>
-__Dataset Labels:__ Dataset labels can inherit labels added via a connection. Edit connection to add, edit, or remove dataset labels. Labels can be added to a dataset. Fields will inherit all dataset labels.
+__Dataset Labels:__ Data usage labels can be added to datasets. All fields within that dataset will inherit the dataset's labels.
 
 <a name="Data Science Workspace"></a>
 __Data Science Workspace:__ Data Science Workspace within Experience Platform enables customers to create machine learning models utilizing data across Experience Platform and Adobe Solutions to generate intelligent insights and predictions to weave delightful end-user digital experiences.
@@ -261,7 +258,7 @@ __Feature Mapping:__ Feature Mapping refers to the process of mapping features f
 __Field:__ A field is the lowest level element of a dataset. Each field has a name for referencing and a type to identify the type of data that it contains. Field types can include, integer, number, string, Boolean and schema.
 
 <a name="Field Labels"></a>
-__Field Labels:__ Field labels are data governance labels that are either inherited from a connection and/or a dataset or applied directly to a field.  Governance labels from a field are inherited across the dataset or connection.
+__Field Labels:__ Field labels are data governance labels that are either inherited from a dataset or applied directly to a field.
 
 <a name="Field Name"></a>
 __Field Name:__ Field is a name used to reference the field in queries and services.

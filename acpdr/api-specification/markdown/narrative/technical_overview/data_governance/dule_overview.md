@@ -28,7 +28,7 @@ While data governance should be the responsibility of every individual in the or
 
 Data stewards are the heart of data governance. This role is responsible for interpreting regulations, contractual restrictions, and policies, and applying them directly to the data. Informed by their understanding of these regulations, restrictions, and policies, the role of a data steward includes:
 * Reviewing data, datasets, and data samples to apply and manage metadata usage labeling.
-* Creating data policies and applying them to a data connection, dataset, or field.
+* Creating data policies and applying them to datasets and fields.
 * Communicating data policies to the organization.
 
 #### Marketer
@@ -50,7 +50,7 @@ There are three key elements to the DULE framework: Labels, Policies, and Enforc
 
 ## Data usage labels
 
-Data Governance enables data stewards to apply usage labels at the connection-, dataset-, and field-level to categorize data according to the type of policies that apply.
+Data Governance enables data stewards to apply usage labels at the dataset and field level to categorize data according to the type of policies that apply.
 
 The DULE framework includes predefined data usage labels that can be used to categorize data in four ways:
 
@@ -61,17 +61,11 @@ The DULE framework includes predefined data usage labels that can be used to cat
 * **Sensitive "S" Data Labels:** Label and categorize data related to sensitive data such as geographic data.
 * **GDPR Data Labels:** Label and categorize data that may contain personal identifiers for use in GDPR access and/or delete requests.
 
-See the guide on [supported data usage labels](dule_supported_labels.md) for a complete list of available labels, as well as definitions for each label type.
-
-### When and how to apply usage labels
-
-Data usage labels can be applied at three levels. Those data labels propagate from connections, to datasets, then to fields. This means that data usage labels applied at the connection level are inherited by all datasets and fields in the connection, while labels applied to datasets are propagated to all fields in the dataset. Labels can also be applied directly to individual fields (column headers) in a dataset, without propagation.
-
-![Data Usage Label Hierarchy](dule_images/Data_usage_label_hierarchy.png "Data Usage Labels can be applied at three levels and are inherited from the top down.")
+> **Note:** See the guide on [supported data usage labels](dule_supported_labels.md) for a complete list of available labels, as well as definitions for each label type.
 
 Labels can be applied at any time, providing flexibility in how you choose to govern data. Best practice encourages labeling data as soon as it is ingested into Experience Platform, or as soon as data becomes available in Platform.
 
-See the tutorial on [working with data usage labels](../../tutorials/dule/dule_working_with_labels.md) for step-by-step instructions on how to apply DULE labels to connections, datasets, and fields using the UI.
+See the tutorial on [working with data usage labels](../../tutorials/dule/dule_working_with_labels.md) for step-by-step instructions on how to apply DULE labels to datasets and fields using the UI.
 
 ## Data usage policies
 
@@ -91,7 +85,7 @@ For more information on performing the key operations provided by the DULE Polic
 
 ## Future releases
 
-Data Governance currently supports DULE labeling at three levels (connection, dataset, and field) with full support for inheritance between levels. Data Governance also supports the creation and management of data usage policies and marketing actions via the DULE Policy Service API.
+Data Governance currently supports DULE labeling at two levels (dataset and field). Data Governance also supports the creation and management of data usage policies and marketing actions via the DULE Policy Service API.
 
 Subsequent releases will provide the following features:
 
@@ -103,15 +97,14 @@ Subsequent releases will provide the following features:
 
 |Term|Definition |
 |---|---|
-|**Connection labels**|Connection labels are data governance labels that are applied when setting up or editing a connection. Data governance labels added to a connection are inherited down and will be applied to all datasets and fields ingested through the connection.| 
 |**Contract labels**|Contract "C" labels are used to categorize data that has contractual obligations or is related to your organization's data governance policies.|
 |**Cross-site data**|Cross-site data is the combination of data from several sites, including a combination of on-site data and off-site data or a combination of data from several off-site sources.|
 |**Data governance**|Data governance encompasses the strategies and technologies used to ensure data is in compliance with regulations and corporate policies with respect to data usage.|
 |**Data steward**|The data steward is the person responsible for the management, oversight, and enforcement of an organization's data assets. A data steward also ensures data governance policies are safeguarded and maintained to be compliant with government regulations and organization policies.|
 |**Data usage labels**|Data usage labels provide users the ability to categorize data that reflects privacy-related considerations and contractual conditions to be compliant with regulations and corporate policies.|
-|**Dataset labels**|Dataset labels can inherit labels added via a connection. Edit connection to add, edit or remove dataset labels. Labels can be added to a dataset. Fields will inherit all dataset labels.|
+|**Dataset labels**|Labels can be added to a dataset. All fields within a dataset inherit the dataset's labels.|
 |**DULE**|DULE is an acronym for "Data Usage Labeling and Enforcement." A key part of data governance, DULE is a collection of features that allows for data usage labeling and applying data access policies for governance needs within an organization.|
-|**Field labels**|Field labels are data governance labels that are either inherited from a connection or a dataset, or applied directly to a field.  Data governance labels applied to a field are not inherited up to a dataset or connection.|
+|**Field labels**|Field labels are data governance labels that are either inherited from a dataset or applied directly to a field.  Data governance labels applied to a field are not inherited up to a dataset.|
 |**Geofence**| A geofence is a virtual geographic boundary, defined by GPS or RFID technology, that enables software to trigger a response when a mobile device enters or leaves a particular area.|
 |**Identity labels**|Identity "I" labels are used to categorize data that can identify or contact a specific person.|
 |**Interest-based targeting**|Interest-based targeting, also known as personalization, occurs if the following three conditions are met: data collected on-site is, used to make inferences about a users’ interest, is used in another context, such as on another site or app (off-site) and is used to select which content or ads are served based on those inferences.|

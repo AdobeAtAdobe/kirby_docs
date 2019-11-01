@@ -23,7 +23,7 @@ Using the API requires you to have an Adobe ID and access to Adobe Experience Pl
 
 ## Getting started with DULE Policy Service
 
-Before beginning to work with the Policy Service, data on Experience Platform must have appropriate DULE labels applied. Complete step-by-step instructions for applying data usage labels at the connection-, dataset-, and field-level can be found in the [DULE labels user guide](../../tutorials/dule/dule_working_with_labels.md). 
+Before beginning to work with the Policy Service, data on Experience Platform must have appropriate DULE labels applied. Complete step-by-step instructions for applying data usage labels to datasets and fields can be found in the [DULE labels user guide](../../tutorials/dule/dule_working_with_labels.md). 
 
 This guide requires a working understanding of the following components of Adobe Experience Platform:
 
@@ -948,9 +948,9 @@ curl -X POST \
 
 #### Response
 
-The response object includes a `duleLabels` array that contains a consolidated list of all labels found within the specified datasets. This list includes connection-, dataset-, and field-level labels on all fields within the dataset.
+The response object includes a `duleLabels` array that contains a consolidated list of all labels found within the specified datasets. This list includes dataset- and field-level labels on all fields within the dataset.
 
-The response also includes a `discoveredLabels` array containing objects for each dataset, showing `datasetLabels` broken down into connection-, dataset-, and field-level labels. Each field-level label shows the path to the specific field with that label.
+The response also includes a `discoveredLabels` array containing objects for each dataset, showing `datasetLabels` broken down into dataset- and field-level labels. Each field-level label shows the path to the specific field with that label.
 
 If the specified marketing action violates a policy involving the `duleLabels` within the datasets, the `violatedPolicies` array will contain the details of the policy (or policies) affected. If no policies are violated, the `violatedPolicies` array will appear empty (`[]`).
 
@@ -1129,7 +1129,7 @@ In addition to supplying one or more dataset IDs, a subset of fields from within
 
 _**Important information for policy evaluation using dataset fields:**_
 * **Field names are case sensitive.** When providing fields, they must be written exactly as they appear in the dataset. (e.g. `firstName` vs `firstname`)
-* **Connection and dataset label inheritance.** DULE labels can be applied at multiple levels and are inherited downward. If your policy evaluations are not returning they way you thought they might, be sure to check the inherited labels from connections down to datasets and from datasets down to fields in addition to those applied at the field level.
+* **Dataset label inheritance.** DULE labels can be applied at multiple levels and are inherited downward. If your policy evaluations are not returning the way you thought they might, be sure to check the inherited labels from datasets down to fields in addition to those applied at the field level.
 
 #### API format
 
@@ -1185,7 +1185,7 @@ curl -X POST \
 
 #### Response
 
-The response object includes a `duleLabels` array that contains the consolidated list of labels found on the specified fields. Remember that this includes connection and dataset labels as well, as they are inherited down to fields. 
+The response object includes a `duleLabels` array that contains the consolidated list of labels found on the specified fields. Remember that this includes dataset labels as well, as they are inherited down to fields. 
 
 If a policy is violated by performing the specified marketing action on the data in the provided fields, the `violatedPolicies` array will contain the details of the policy (or policies) affected. If no policies are violated, the `violatedPolicies` array will appear empty (`[]`).
 
