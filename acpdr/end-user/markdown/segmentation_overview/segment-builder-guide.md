@@ -51,7 +51,7 @@ The **Segments** tab lists all previously created segments.
 
 ![](images/segments-tab.png)  
 
-Any type of component can be searched for by typing its name in the search bar. The search results begin to populate as entire words are entered. For example, to build a rule based on the XDM field `ExperienceEvent.commerce.productViews`, start typing “product views” in the search field. After the word "product" has been typed search results begin to appear, listing the object hierarchy to which it belongs.
+Any type of component can be searched for by typing its name in the search bar, which uses [Lucene's search syntax][lucene]. The search results begin to populate as entire words are entered. For example, to build a rule based on the XDM field `ExperienceEvent.commerce.productViews`, start typing “product views” in the search field. After the word "product" has been typed search results begin to appear, listing the object hierarchy to which it belongs. 
 
 ![](images/builder-find-field.png)
 
@@ -75,7 +75,7 @@ Within these folders, a list of the available audiences can be seen.
 
 Additionally, you can see the full folder hierarchy by clicking the highlighted button.
 
-Any type of Audience can be searched for by typing its name in the search bar. The search results begin to populate as entire words are entered. For example, to find an Audience named `Sample Audience 5`, start typing "Audience" in the search field. After typing in the word "Audience", results will begin to appear, as seen below.
+Any type of Audience can be searched for by typing its name in the search bar, which uses [Lucene's search syntax][lucene]. The search results begin to populate as entire words are entered. For example, to find an Audience named `Sample Audience 5`, start typing "Audience" in the search field. After typing in the word "Audience", results will begin to appear, as seen below.
 
 ![](images/new-audience-find-field.png)
 
@@ -156,3 +156,5 @@ Segment Builder provides a rich workflow allowing you to isolate marketable audi
 * Use containers to control the order in which segment rules are executed.  
 
 For steps on how to work with segments using the Real-time Customer Profile API, see the tutorial on [creating audience segments using APIs](../../../api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md).
+
+[lucene]: https://docs.microsoft.com/en-us/azure/search/query-lucene-syntax
