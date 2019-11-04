@@ -28,21 +28,11 @@ This guide provides example API calls to demonstrate how to format your requests
 
 In order to make calls to Experience Platform APIs, you must first complete the [authentication tutorial][auth-tutorial]. Completing the authentication tutorial provides the values for each of the required headers in all Platform API calls, as shown below:
 
-<!-- ```shell
-Authorization: Bearer {ACCESS_TOKEN}
-x-api-key: {API_KEY}
-x-gw-ims-org-id: {IMS_ORG}
-``` -->
-
 - Authorization: `Bearer {ACCESS_TOKEN}`
 - x-api-key: `{API_KEY}`
 - x-gw-ims-org-id: `{IMS_ORG}`
 
 All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox in which the operation will take place:
-<!-- 
-```shell
-x-sandbox-name: {SANDBOX_NAME}
-``` -->
 
 - x-sandbox-name: `{SANDBOX_NAME}`
 
