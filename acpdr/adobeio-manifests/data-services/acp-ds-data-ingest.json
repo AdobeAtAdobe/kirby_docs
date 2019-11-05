@@ -70,6 +70,11 @@
           "title":"Authenticated data collection"
         },
         {
+          "pages": [],
+          "path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/kafka_connector.md",
+          "title": "Kafka connector"
+        },
+        {
           "pages":[],
           "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/retrieving_failed_batches.md",
           "title":"Retrieving failed batches"
