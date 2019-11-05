@@ -51,6 +51,7 @@ paths:
         description: Unique Identifier for your IMS Organization ({IMS_ORG}).
         required: true
         type: string
+      - $ref: '#/parameters/x-sandbox-name'
       - name: limit
         in: query
         description: Number of records to fetch per page.
@@ -135,6 +136,7 @@ paths:
         description: Unique Identifier for your IMS Organization ({IMS_ORG}).
         required: true
         type: string
+      - $ref: '#/parameters/x-sandbox-name'
       - in: body
         name: mappingSet
         description: mappingSet.
@@ -193,6 +195,7 @@ paths:
         description: Unique Identifier for your IMS Organization ({IMS_ORG}).
         required: true
         type: string
+      - $ref: '#/parameters/x-sandbox-name'
       - name: batchId
         in: query
         description: Id of source Batch.
@@ -259,6 +262,7 @@ paths:
         description: Unique Identifier for your IMS Organization ({IMS_ORG}).
         required: true
         type: string
+      - $ref: '#/parameters/x-sandbox-name'
       - name: id
         in: path
         description: id
@@ -312,6 +316,7 @@ paths:
         description: Unique Identifier for your IMS Organization ({IMS_ORG}).
         required: true
         type: string
+      - $ref: '#/parameters/x-sandbox-name'
       - name: id
         in: path
         description: id
@@ -369,6 +374,7 @@ paths:
         description: Unique Identifier for your IMS Organization ({IMS_ORG}).
         required: true
         type: string
+      - $ref: '#/parameters/x-sandbox-name'
       - name: id
         in: path
         description: id
@@ -421,6 +427,7 @@ paths:
         description: Unique Identifier for your IMS Organization ({IMS_ORG}).
         required: true
         type: string
+      - $ref: '#/parameters/x-sandbox-name'
       - name: mappingSetId
         in: path
         description: mappingSetId.
@@ -474,6 +481,7 @@ paths:
         description: Unique Identifier for your IMS Organization ({IMS_ORG}).
         required: true
         type: string
+      - $ref: '#/parameters/x-sandbox-name'
       - name: mappingSetId
         in: path
         description: mappingSetId.
@@ -532,6 +540,7 @@ paths:
         description: Unique Identifier for your IMS Organization ({IMS_ORG}).
         required: true
         type: string
+      - $ref: '#/parameters/x-sandbox-name'
       - name: mappingId
         in: path
         description: mappingId.
@@ -590,6 +599,7 @@ paths:
         description: Unique Identifier for your IMS Organization ({IMS_ORG}).
         required: true
         type: string
+      - $ref: '#/parameters/x-sandbox-name'
       - name: mappingId
         in: path
         description: mappingId.
@@ -652,6 +662,7 @@ paths:
         description: Unique Identifier for your IMS Organization ({IMS_ORG}).
         required: true
         type: string
+      - $ref: '#/parameters/x-sandbox-name'
       - name: mappingId
         in: path
         description: mappingId.
@@ -709,6 +720,7 @@ paths:
         description: Unique Identifier for your IMS Organization ({IMS_ORG}).
         required: true
         type: string
+      - $ref: '#/parameters/x-sandbox-name'
       - name: destinationDatasetId
         in: query
         description: Dataset Id.
@@ -804,6 +816,7 @@ paths:
         description: Unique Identifier for your IMS Organization ({IMS_ORG}).
         required: true
         type: string
+      - $ref: '#/parameters/x-sandbox-name'
       - name: destinationDataSetId
         in: query
         description: destinationDataSetId.
@@ -866,6 +879,7 @@ paths:
         description: Unique Identifier for your IMS Organization ({IMS_ORG}).
         required: true
         type: string
+      - $ref: '#/parameters/x-sandbox-name'
       - name: id
         in: path
         description: id.
@@ -918,6 +932,7 @@ paths:
         description: Unique Identifier for your IMS Organization ({IMS_ORG}).
         required: true
         type: string
+      - $ref: '#/parameters/x-sandbox-name'
       - name: id
         in: path
         description: id
@@ -970,6 +985,7 @@ paths:
         description: Unique Identifier for your IMS Organization ({IMS_ORG}).
         required: true
         type: string
+      - $ref: '#/parameters/x-sandbox-name'
       - name: activityId
         in: path
         description: activityId.
@@ -1026,6 +1042,7 @@ paths:
         description: Unique Identifier for your IMS Organization ({IMS_ORG}).
         required: true
         type: string
+      - $ref: '#/parameters/x-sandbox-name'
       - name: requestId
         in: path
         description: requestId.
@@ -1056,7 +1073,13 @@ paths:
           schema:
             "$ref": "#/definitions/ErrorResponse"
       deprecated: false
-
+parameters:
+  x-sandbox-name:
+    name: x-sandbox-name
+    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information.'
+    required: true
+    type: string
+    in: header
 definitions:
   DataConversion:
     type: object

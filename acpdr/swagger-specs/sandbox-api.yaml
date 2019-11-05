@@ -33,6 +33,7 @@ paths:
         - $ref: '#/parameters/Authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-user-token'
       responses:
         200:
@@ -59,6 +60,7 @@ paths:
         - $ref: '#/parameters/Authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
       responses:
         200:
           description: List of supported sandbox types
@@ -86,6 +88,7 @@ paths:
         - $ref: '#/parameters/Authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-user-token'
         - $ref: '#/parameters/property'
         - $ref: '#/parameters/orderBy'
@@ -115,6 +118,7 @@ paths:
         - $ref: '#/parameters/Authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/Content-Type'
         - $ref: '#/parameters/x-user-token'
         - $ref: '#/parameters/sandboxPayload'
@@ -142,10 +146,11 @@ paths:
       produces:
         - application/json
       parameters:
+        - $ref: '#/parameters/sandboxName'
         - $ref: '#/parameters/Authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/sandboxName'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-user-token'
       responses:
         200:
@@ -170,10 +175,11 @@ paths:
       produces:
         - application/json
       parameters:
+        - $ref: '#/parameters/sandboxName'
         - $ref: '#/parameters/Authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/sandboxName'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-user-token'
       responses:
         202:
@@ -202,12 +208,13 @@ paths:
       produces:
         - application/json
       parameters:
+        - $ref: '#/parameters/sandboxName'
         - $ref: '#/parameters/Authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/Content-Type'
         - $ref: '#/parameters/x-user-token'
-        - $ref: '#/parameters/sandboxName'
         - name: action
           description: Reset Sandbox
           required: true
@@ -239,12 +246,13 @@ paths:
       produces:
         - application/json
       parameters:
+        - $ref: '#/parameters/sandboxName'
         - $ref: '#/parameters/Authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/Content-Type'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-user-token'
-        - $ref: '#/parameters/sandboxName'
         - name: action
           description: JSON payload outlining the sandbox properties to be updated, along with their new values.
           required: true
@@ -282,6 +290,12 @@ parameters:
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
     description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer". For more information on how to obtain this value, visit the <a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md">authentication tutorial</a>.'
+    required: true
+    type: string
+    in: header
+  x-sandbox-name:
+    name: x-sandbox-name
+    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information.'
     required: true
     type: string
     in: header

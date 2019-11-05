@@ -47,6 +47,7 @@ paths:
     parameters:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/propertyQuery'
       - $ref: '#/parameters/orderbyQuery'
@@ -68,6 +69,7 @@ paths:
     parameters:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/authorization'
       - name: policyId
         in: path
@@ -96,6 +98,7 @@ paths:
     parameters:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
     get:
       summary: List all custom policies.
       operationId: listCustomPolicies
@@ -104,6 +107,7 @@ paths:
       parameters:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/propertyQuery'
         - $ref: '#/parameters/orderbyQuery'
@@ -124,6 +128,7 @@ paths:
       parameters:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/contentType'
         - name: policy
@@ -141,6 +146,7 @@ paths:
     parameters:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/authorization'
       - name: policyId
         in: path
@@ -173,6 +179,7 @@ paths:
       parameters:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/contentType'
         - name: policy
@@ -198,6 +205,7 @@ paths:
       parameters:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/contentType'
         - name: policyPatchInstructions
@@ -237,6 +245,7 @@ paths:
     parameters:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
     get:
       summary: List all core marketing actions.
       operationId: listCoreMarketingActions
@@ -245,6 +254,7 @@ paths:
       parameters:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/propertyQuery'
         - $ref: '#/parameters/orderbyQuery'
@@ -259,6 +269,7 @@ paths:
     parameters:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/authorization'
       - name: marketingActionName
         in: path
@@ -287,6 +298,7 @@ paths:
     parameters:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/authorization'
       - name: marketingActionName
         in: path
@@ -311,6 +323,7 @@ paths:
       parameters:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/authorization'
         - name: marketingActionName
           in: path
@@ -345,6 +358,7 @@ paths:
       parameters:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/authorization'
         - name: marketingActionName
           in: path
@@ -381,6 +395,7 @@ paths:
     parameters:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
     get:
       summary: List all custom marketing actions.
       operationId: listCustomMarketingActions
@@ -389,6 +404,7 @@ paths:
       parameters:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/propertyQuery'
         - $ref: '#/parameters/orderbyQuery'
@@ -403,6 +419,7 @@ paths:
     parameters:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/authorization'
       - name: marketingActionName
         in: path
@@ -435,6 +452,7 @@ paths:
       parameters:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/contentType'
         - name: marketingActionName
@@ -494,6 +512,7 @@ paths:
       parameters:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/authorization'
         - name: marketingActionName
           in: path
@@ -528,6 +547,7 @@ paths:
       parameters:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/authorization'
         - name: marketingActionName
           in: path
@@ -563,19 +583,26 @@ paths:
 parameters:
   x-api-key:
     name: x-api-key
-    description: The API key belonging to the calling client.
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
     required: true
     type: string
     in: header
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
-    description: The IMS organization of the client making the request.
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
+  x-sandbox-name:
+    name: x-sandbox-name
+    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information.'
     required: true
     type: string
     in: header
   authorization:
     name: Authorization
-    description: The access token provided after authorization in the format "Bearer {ACCESS_TOKEN}".
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
+    For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
     required: true
     type: string
     in: header

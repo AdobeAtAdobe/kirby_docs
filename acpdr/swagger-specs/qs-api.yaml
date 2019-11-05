@@ -54,6 +54,7 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-gw-ims-org-id'
       - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/x-request-id'
       - $ref: '#/parameters/User-Agent'
       responses:
@@ -80,6 +81,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/User-Agent'
         - $ref: '#/parameters/queries_orderby'
@@ -114,6 +116,7 @@ paths:
       parameters:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/User-Agent'
         - $ref: '#/parameters/json-header'
@@ -149,6 +152,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/User-Agent'
 
@@ -184,6 +188,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/User-Agent'
 
@@ -231,6 +236,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/schedules_orderby'
         - $ref: '#/parameters/limit'
@@ -263,6 +269,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/User-Agent'
 
@@ -297,6 +304,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/User-Agent'
 
@@ -331,6 +339,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/User-Agent'
 
@@ -372,6 +381,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/User-Agent'
 
@@ -405,6 +415,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/schedules_orderby'
         - $ref: '#/parameters/limit'
@@ -443,6 +454,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/User-Agent'
 
@@ -476,6 +488,7 @@ paths:
           - $ref: '#/parameters/authorization'
           - $ref: '#/parameters/x-gw-ims-org-id'
           - $ref: '#/parameters/x-api-key'
+          - $ref: '#/parameters/x-sandbox-name'
           - $ref: '#/parameters/x-request-id'
           - $ref: '#/parameters/User-Agent'
 
@@ -516,6 +529,7 @@ paths:
           - $ref: '#/parameters/authorization'
           - $ref: '#/parameters/x-gw-ims-org-id'
           - $ref: '#/parameters/x-api-key'
+          - $ref: '#/parameters/x-sandbox-name'
           - $ref: '#/parameters/x-request-id'
           - $ref: '#/parameters/User-Agent'
 
@@ -565,6 +579,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/User-Agent'
         - $ref: '#/parameters/queries_orderby'
@@ -598,6 +613,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/User-Agent'
 
@@ -630,6 +646,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/User-Agent'
 
@@ -664,6 +681,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/User-Agent'
 
@@ -700,6 +718,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/User-Agent'
 
@@ -740,6 +759,12 @@ parameters:
   x-api-key:
     name: x-api-key
     description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
+  x-sandbox-name:
+    name: x-sandbox-name
+    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information.'
     required: true
     type: string
     in: header

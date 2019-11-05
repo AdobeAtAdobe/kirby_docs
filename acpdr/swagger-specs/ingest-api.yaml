@@ -55,23 +55,16 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: Authorization
-          in: header
-          required: true
-          type: string
-          description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - in: "header"
           name: "Cache-Control"
-          required: true
-          type: string
-          enum:
-            - "no-cache"
-        - in: "header"
-          name: "Content-Type"
           required: false
           type: string
           enum:
-            - "application/json"
+            - "no-cache"
         - name: dataType
           in: query
           required: false
@@ -106,16 +99,6 @@ paths:
           required: false
           type: boolean
           description: "Having this set to true requires that calls carry an Authorization token when sending data to the inlet"
-        - name: x-api-key
-          in: header
-          required: true
-          type: string
-          description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-        - name: x-gw-ims-org-id
-          in: header
-          required: true
-          type: string
-          description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       responses:
         '200':
           description: OK
@@ -138,39 +121,23 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: Authorization
-          in: header
-          required: true
-          type: string
-          description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/json-header'
         - in: "header"
           name: "Cache-Control"
-          required: true
+          required: false
           type: string
           enum:
             - "no-cache"
-        - in: "header"
-          name: "Content-Type"
-          required: true
-          type: string
-          enum:
-            - "application/json"
         - in: body
           name: body
           description: inlet
           required: true
           schema:
             $ref: '#/definitions/InletDTO'
-        - name: x-api-key
-          in: header
-          required: true
-          type: string
-          description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-        - name: x-gw-ims-org-id
-          in: header
-          required: true
-          type: string
-          description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       responses:
         '200':
           description: OK
@@ -196,38 +163,21 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: Authorization
-          in: header
-          required: true
-          type: string
-          description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - in: "header"
           name: "Cache-Control"
-          required: true
-          type: string
-          enum:
-            - "no-cache"
-        - in: "header"
-          name: "Content-Type"
           required: false
           type: string
           enum:
-            - "application/json"
+            - "no-cache"
         - name: id
           in: path
           description: "The ID of the data inlet you want to retrieve."
           required: true
           type: string
-        - name: x-api-key
-          in: header
-          required: true
-          type: string
-          description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-        - name: x-gw-ims-org-id
-          in: header
-          required: true
-          type: string
-          description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       responses:
         '200':
           description: OK
@@ -252,23 +202,17 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: Authorization
-          in: header
-          required: true
-          type: string
-          description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/json-header'
         - in: "header"
           name: "Cache-Control"
-          required: true
+          required: false
           type: string
           enum:
             - "no-cache"
-        - in: "header"
-          name: "Content-Type"
-          required: true
-          type: string
-          enum:
-            - "application/json"
         - name: id
           in: path
           description: "The ID of the data inlet you want to update."
@@ -280,16 +224,6 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/InletPUTDTO'
-        - name: x-api-key
-          in: header
-          required: true
-          type: string
-          description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-        - name: x-gw-ims-org-id
-          in: header
-          required: true
-          type: string
-          description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       responses:
         '200':
           description: OK
@@ -312,38 +246,21 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: "Authorization"
-          in: "header"
-          required: true
-          type: string
-          description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - in: "header"
           name: "Cache-Control"
-          required: true
-          type: string
-          enum:
-            - "no-cache"
-        - in: "header"
-          name: "Content-Type"
           required: false
           type: string
           enum:
-            - "application/json"
+            - "no-cache"
         - name: id
           in: path
           description: "The ID of the data inlet you want to delete."
           required: true
           type: string
-        - name: x-api-key
-          in: header
-          required: true
-          type: string
-          description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-        - name: x-gw-ims-org-id
-          in: header
-          required: true
-          type: string
-          description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
       responses:
         '200':
           description: OK
@@ -360,8 +277,6 @@ paths:
       deprecated: false
   '/collection/{inletId}':
     post:
-      security:
-        - Bearer: []
       tags:
       - "Streaming Ingestion"
       summary: "Publish messages to Adobe Experience Platform using the inlet ID."
@@ -372,11 +287,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-        - name: "Authorization"
-          in: "header"
-          required: false
-          type: string
-          description: "Your specific bearer token value provided after authentication. Authorization is optional if the inlet configured has authenticationRequired set to false, otherwise it is required."
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/json-header'
         - in: "query"
           name: "debug"
           required: false
@@ -392,16 +304,10 @@ paths:
             $ref: "#/definitions/streamingMessage"
         - in: "header"
           name: "Cache-Control"
-          required: true
+          required: false
           type: string
           enum:
             - "no-cache"
-        - in: "header"
-          name: "Content-Type"
-          required: true
-          type: string
-          enum:
-            - "application/json"
         - in: "path"
           name: "inletId"
           required: true
@@ -448,11 +354,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-        - name: "Authorization"
-          in: "header"
-          required: false
-          type: string
-          description: "Your specific bearer token value provided after authentication. Authorization is optional if the inlet configured has authenticationRequired set to false, otherwise it is required."
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/json-header'
         - in: "query"
           name: "debug"
           required: false
@@ -466,12 +369,6 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/BatchMessage"
-        - in: "header"
-          name: "Content-Type"
-          required: true
-          type: string
-          enum:
-            - "application/json"
         - in: "path"
           name: "inletId"
           required: true
@@ -507,38 +404,28 @@ paths:
   /batches:
     post:
       security:
-      - Bearer: []
+        - Bearer: []
       tags:
-      - "Batch Ingestion"
+        - "Batch Ingestion"
       summary: "Register a new batch in Adobe Data Catalog."
       description: "Creates a new batch in Data Catalog as a first step to bulk data ingestion. The data is uploaded to this batch after which the batch is marked ready for triggering data registration in Catalog"
       operationId: "createBatch"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "Authorization"
-        in: "header"
-        required: true
-        type: string
-        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-      - name: "x-api-key"
-        in: "header"
-        required: true
-        type: string
-        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-      - in: "body"
-        name: "body"
-        description: "Ingest object that contains information needed to create batch"
-        required: true
-        schema:
-          $ref: "#/definitions/IngestBatch"
-      - name: "x-gw-ims-org-id"
-        in: "header"
-        required: true
-        type: "string"
-        description: "The ID of the IMS organization to create the batch under"
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/json-header'
+        - in: "body"
+          name: "body"
+          description: "Ingest object that contains information needed to create batch"
+          required: true
+          schema:
+            $ref: "#/definitions/IngestBatch"
       responses:
         201:
           description: "Created"
@@ -573,43 +460,27 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "Authorization"
-        in: "header"
-        required: true
-        type: string
-        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-      - name: "x-api-key"
-        in: "header"
-        required: true
-        type: string
-        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-      - name: "content-type"
-        in: "header"
-        required: true
-        type: string
-        enum:
-          - application/octet-stream
-      - name: "x-gw-ims-org-id"
-        in: "header"
-        required: true
-        type: "string"
-        description: "The ID of the IMS organization associated with the batch"
-      - name: "batchId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The ID of the batch data is being uploaded to"
-      - name: "datasetId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The ID of the dataset data is being uploaded to"
-      - name: "filePath"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The complete path of the file. Note that the directory structure denoted in this path is preserved
-        and can be used to denote partitions that the file data belongs to"
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/json-header'
+        - name: "batchId"
+          in: "path"
+          required: true
+          type: "string"
+          description: "The ID of the batch data is being uploaded to"
+        - name: "datasetId"
+          in: "path"
+          required: true
+          type: "string"
+          description: "The ID of the dataset data is being uploaded to"
+        - name: "filePath"
+          in: "path"
+          required: true
+          type: "string"
+          description: "The complete path of the file. Note that the directory structure denoted in this path is preserved
+          and can be used to denote partitions that the file data belongs to"
       responses:
         200:
           description: "Ok"
@@ -639,53 +510,42 @@ paths:
       consumes:
       - "multipart/form-data"
       parameters:
-      - name: "Authorization"
-        in: "header"
-        required: true
-        type: string
-        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-      - name: "x-api-key"
-        in: "header"
-        required: true
-        type: string
-        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-      - name: "content-type"
-        in: "header"
-        required: true
-        type: string
-        enum:
-          - application/octet-stream
-      - name: "batchId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The ID of the batch data is being uploaded to"
-      - name: "datasetId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The ID of the dataset data is being uploaded to"
-      - name: "filePath"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The complete path of the file. Note that the directory structure denoted in this path is preserved
-        and can be used to denote partitions that the file data belongs to"
-      - name: "x-gw-ims-org-id"
-        in: "header"
-        required: true
-        type: "string"
-        description: "The ID of the IMS organization associated with the batch"
-      - name: "Content-Range"
-        in: "header"
-        required: true
-        type: "string"
-        description: "The range of bytes of the file being uploaded with this request"
-      - in: "formData"
-        name: "file"
-        type: "file"
-        required: true
-        description: The content bytes for the file or file part being uploaded
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - name: "Content-Type"
+          in: "header"
+          required: true
+          type: string
+          enum:
+            - application/octet-stream
+        - name: "batchId"
+          in: "path"
+          required: true
+          type: "string"
+          description: "The ID of the batch data is being uploaded to"
+        - name: "datasetId"
+          in: "path"
+          required: true
+          type: "string"
+          description: "The ID of the dataset data is being uploaded to"
+        - name: "filePath"
+          in: "path"
+          required: true
+          type: "string"
+          description: "The complete path of the file. Note that the directory structure denoted in this path is preserved
+          and can be used to denote partitions that the file data belongs to"
+        - name: "Content-Range"
+          in: "header"
+          required: true
+          type: "string"
+          description: "The range of bytes of the file being uploaded with this request"
+        - in: "formData"
+          name: "file"
+          type: "file"
+          required: true
+          description: The content bytes for the file or file part being uploaded
       responses:
         200:
           description: "successful operation"
@@ -720,43 +580,33 @@ paths:
       consumes:
       - "multipart/form-data"
       parameters:
-      - name: "Authorization"
-        in: "header"
-        required: true
-        type: string
-        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-      - name: "x-api-key"
-        in: "header"
-        required: true
-        type: string
-        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-      - name: "batchId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The ID of the batch data is being uploaded to"
-      - name: "datasetId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The ID of the dataset data is being uploaded to"
-      - name: "filePath"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The complete path of the file. Note that the directory structure denoted in this path is preserved
-        and can be used to denote partitions that the file data belongs to"
-      - name: "x-gw-ims-org-id"
-        in: "header"
-        required: true
-        type: "string"
-        description: "The ID of the IMS organization associated with the batch"
-      - name: "action"
-        in: "query"
-        required: true
-        type: "string"
-        description: "The action to perform on the file with the supported values currently being INITIALIZE and COMPLETE"
-        enum: ["INITIALIZE", "COMPLETE"]
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/json-header'
+        - name: "batchId"
+          in: "path"
+          required: true
+          type: "string"
+          description: "The ID of the batch data is being uploaded to"
+        - name: "datasetId"
+          in: "path"
+          required: true
+          type: "string"
+          description: "The ID of the dataset data is being uploaded to"
+        - name: "filePath"
+          in: "path"
+          required: true
+          type: "string"
+          description: "The complete path of the file. Note that the directory structure denoted in this path is preserved
+          and can be used to denote partitions that the file data belongs to"
+        - name: "action"
+          in: "query"
+          required: true
+          type: "string"
+          description: "The action to perform on the file with the supported values currently being INITIALIZE and COMPLETE"
+          enum: ["INITIALIZE", "COMPLETE"]
       responses:
         200:
           description: "successful operation"
@@ -784,37 +634,26 @@ paths:
       get the byte range information received by the server so far."
       operationId: "getChunkedFileStatus"
       parameters:
-      - name: "Authorization"
-        in: "header"
-        required: true
-        type: string
-        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-      - name: "x-api-key"
-        in: "header"
-        required: true
-        type: string
-        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-      - name: "x-gw-ims-org-id"
-        in: "header"
-        required: true
-        type: "string"
-        description: "The ID of the IMS organization associated with the batch"
-      - name: "batchId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The ID of the batch data is being uploaded to"
-      - name: "datasetId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The ID of the dataset data is being uploaded to"
-      - name: "filePath"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The complete path of the file. Note that the directory structure denoted in this path is preserved
-        and can be used to denote partitions that the file data belongs to"
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - name: "batchId"
+          in: "path"
+          required: true
+          type: "string"
+          description: "The ID of the batch data is being uploaded to"
+        - name: "datasetId"
+          in: "path"
+          required: true
+          type: "string"
+          description: "The ID of the dataset data is being uploaded to"
+        - name: "filePath"
+          in: "path"
+          required: true
+          type: "string"
+          description: "The complete path of the file. Note that the directory structure denoted in this path is preserved
+          and can be used to denote partitions that the file data belongs to"
       responses:
         200:
           description: "successful operation"
@@ -849,74 +688,63 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "Authorization"
-        in: "header"
-        required: true
-        type: string
-        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-      - name: "x-api-key"
-        in: "header"
-        required: true
-        type: string
-        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-      - name: "batchId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The ID of the batch data is being uploaded to"
-      - name: "datasetId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The ID of the dataset data is being uploaded to"
-      - name: "x-gw-ims-org-id"
-        in: "header"
-        required: true
-        type: "string"
-        description: "The ID of the IMS organization associated with the batch"
-      - name: "format"
-        in: "query"
-        required: true
-        type: "string"
-        description: "The file format for the uploaded file"
-      - name: "delimiter"
-        in: "query"
-        required: false
-        type: "string"
-        default: ","
-        description: "The delimiter to use for parsing column values"
-      - name: "quote"
-        in: "query"
-        required: false
-        type: "string"
-        default: "\""
-        description: "The quote value to use while parsing"
-      - name: "escape"
-        in: "query"
-        required: false
-        type: "string"
-        default: "\\"
-        description: "The escape character to use while parsing"
-      - name: "charset"
-        in: "query"
-        required: false
-        type: "string"
-        default: "UTF-8"
-        description: "The encoding to use for parsing"
-      - name: "header"
-        in: "query"
-        required: false
-        type: "boolean"
-        default: true
-        description: "The flag to indicate if the header is supplied in the dataset files. Currently headerless files
-        aren't supported and the header flag should always be true. This is kept for future implementation"
-      - name: "nrow"
-        in: "query"
-        required: false
-        type: "integer"
-        default: 0
-        format: "int32"
-        description: "The number of rows to parse"
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - name: "batchId"
+          in: "path"
+          required: true
+          type: "string"
+          description: "The ID of the batch data is being uploaded to"
+        - name: "datasetId"
+          in: "path"
+          required: true
+          type: "string"
+          description: "The ID of the dataset data is being uploaded to"
+        - name: "format"
+          in: "query"
+          required: true
+          type: "string"
+          description: "The file format for the uploaded file"
+        - name: "delimiter"
+          in: "query"
+          required: false
+          type: "string"
+          default: ","
+          description: "The delimiter to use for parsing column values"
+        - name: "quote"
+          in: "query"
+          required: false
+          type: "string"
+          default: "\""
+          description: "The quote value to use while parsing"
+        - name: "escape"
+          in: "query"
+          required: false
+          type: "string"
+          default: "\\"
+          description: "The escape character to use while parsing"
+        - name: "charset"
+          in: "query"
+          required: false
+          type: "string"
+          default: "UTF-8"
+          description: "The encoding to use for parsing"
+        - name: "header"
+          in: "query"
+          required: false
+          type: "boolean"
+          default: true
+          description: "The flag to indicate if the header is supplied in the dataset files. Currently headerless files
+          aren't supported and the header flag should always be true. This is kept for future implementation"
+        - name: "nrow"
+          in: "query"
+          required: false
+          type: "integer"
+          default: 0
+          format: "int32"
+          description: "The number of rows to parse"
       responses:
         200:
           description: "OK"
@@ -948,32 +776,21 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "Authorization"
-        in: "header"
-        required: true
-        type: string
-        description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-      - name: "x-api-key"
-        in: "header"
-        required: true
-        type: string
-        description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
-      - name: "batchId"
-        in: "path"
-        required: true
-        type: "string"
-        description: "The ID of the batch that needs to be updated"
-      - name: "x-gw-ims-org-id"
-        in: "header"
-        required: true
-        type: "string"
-        description: "The ID of the IMS organization associated with the batch"
-      - name: "action"
-        in: "query"
-        required: true
-        type: "string"
-        description: "The action to take on the Batch"
-        enum: ["COMPLETE", "ABORT","FAIL", "REVERT"]
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - name: "batchId"
+          in: "path"
+          required: true
+          type: "string"
+          description: "The ID of the batch that needs to be updated"
+        - name: "action"
+          in: "query"
+          required: true
+          type: "string"
+          description: "The action to take on the Batch"
+          enum: ["COMPLETE", "ABORT","FAIL", "REVERT"]
       responses:
         200:
           description: "successful operation"
@@ -991,6 +808,38 @@ paths:
           description: "Internal server error."
         503:
           description: "Service Unavailable. The bulk ingest api or dependency is unavailable."
+parameters:
+  authorization:
+    name: Authorization
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
+    For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
+  x-gw-ims-org-id:
+    name: x-gw-ims-org-id
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
+  x-api-key:
+    name: x-api-key
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
+  x-sandbox-name:
+    name: x-sandbox-name
+    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information.'
+    required: true
+    type: string
+    in: header
+  json-header:
+    name: Content-Type
+    description: 'application/json'
+    required: true
+    type: string
+    in: header
 definitions:
   streamingMessage:
     type: "object"

@@ -54,6 +54,7 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
     get:
       tags:
       - "Stats"
@@ -86,6 +87,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/acceptListing'
         - $ref: '#/parameters/properties'
         - $ref: '#/parameters/orderBy'
@@ -116,6 +118,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/createSchemaPayload'
       responses:
@@ -139,6 +142,7 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept'
       summary: Lookup a specific schema by its unique ID.
       description: <p>The response format depends on the Accept header sent in the request. The following Accept headers are available for this request:<br/><ul><li><strong>application/vnd.adobe.xed+json; version={major version}</strong>  Raw with $ref and allOf, has titles, descriptions</li><li><strong>application/vnd.adobe.xed-full+json; version={major version}</strong> $refs and allOf resolved, has titles and descriptions</li><li><strong>application/vnd.adobe.xed-notext+json; version={major version}</strong> Raw with $ref and allOf, no titles or descriptions</li><li><strong>application/vnd.adobe.xed-full-notext+json; version={major version}</strong>  $refs and allOf resolved, no titles or descriptions</li><li><strong>application/vnd.adobe.xed-full-desc+json; version={major version}</strong> $refs and allOf resolved, descriptors included</li></ul></p><br/><p>A lookup request requires the resource 'major version' be included in the Accept header. When supplying the major version, the registry returns the latest minor version automatically.</p>
@@ -176,6 +180,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/patchPayload'
       responses:
@@ -205,6 +210,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/replaceSchemaPayload'
       responses:
@@ -228,6 +234,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
       responses:
         '204':
           description: Returns an empty response body and HTTP Status 204 (No Content)
@@ -250,6 +257,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/acceptListing'
         - $ref: '#/parameters/properties'
         - $ref: '#/parameters/orderBy'
@@ -284,6 +292,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'        
         - $ref: '#/parameters/mixinPayload'
       responses:
@@ -307,6 +316,7 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept'
       summary: Lookup a specific mixin by its unique ID.
       operationId: lookup_mixin
@@ -341,6 +351,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/patchMixinPayload'
       responses:
@@ -368,6 +379,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/replaceMixinPayload'
       responses:
@@ -391,6 +403,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
       responses:
         '204':
           description: Returns an empty response body and HTTP Status 204 (No Content)
@@ -413,6 +426,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/accept'
         - $ref: '#/parameters/properties'
         - $ref: '#/parameters/orderBy'
@@ -443,6 +457,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/createClassPayload'
       responses:
@@ -466,6 +481,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/accept'
       summary: Lookup a specific class by its unique ID.
       operationId: lookup_class
@@ -500,6 +516,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/patchPayload'
       responses:
@@ -527,6 +544,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/replaceClassPayload'
       responses:
@@ -550,6 +568,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
       responses:
         '204':
           description: Returns an empty response body and HTTP Status 204 (No Content)
@@ -570,6 +589,7 @@ paths:
         - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/accept'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/properties'
@@ -599,6 +619,7 @@ paths:
         - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/accept'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/content-type'
@@ -624,6 +645,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/accept'
       summary: Returns the datatype schema associated with the given identifier.
       produces:
@@ -656,6 +678,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/patchDataTypePayload'
       responses:
@@ -683,6 +706,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/replaceDataTypePayload'
       responses:
@@ -706,6 +730,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
       responses:
         '204':
           description: Returns an empty response body and HTTP Status 204 (No Content)
@@ -729,6 +754,7 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/acceptDescriptors'
       responses:
         '200':
@@ -756,6 +782,7 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/content-type'
       - $ref: '#/parameters/descriptorPayload'
       responses:
@@ -786,6 +813,7 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
 
       responses:
         '200':
@@ -814,6 +842,7 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/content-type'
       - $ref: '#/parameters/descriptorPayload'
       responses:
@@ -842,6 +871,7 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
       responses:
         '204':
           description: Returns an empty response body and HTTP Status 204 (No Content)
@@ -864,6 +894,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/properties'
         - $ref: '#/parameters/orderBy'
         - $ref: '#/parameters/start'
@@ -888,6 +919,7 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept'
       summary: Lookup a union view by ID.
       responses:
@@ -939,6 +971,12 @@ parameters:
   x-api-key:
     name: x-api-key
     description: Your specific API key for your unique Platform configuration ({API_KEY})
+    required: true
+    type: string
+    in: header
+  x-sandbox-name:
+    name: x-sandbox-name
+    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information.'
     required: true
     type: string
     in: header

@@ -57,6 +57,7 @@ paths:
   /engines:
     parameters:
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
     get:
       tags:
         - Engines
@@ -72,6 +73,7 @@ paths:
         - $ref: '#/parameters/authHeaderParam'
         - $ref: '#/parameters/xApiKey'
         - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/startQueryParam'
         - $ref: '#/parameters/limitQueryParam'
         - $ref: '#/parameters/orderbyQueryParam'
@@ -111,6 +113,7 @@ paths:
         - $ref: '#/parameters/authHeaderParam'
         - $ref: '#/parameters/xApiKey'
         - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+        - $ref: '#/parameters/x-sandbox-name'
         - in: formData
           name: engine
           type: string
@@ -207,6 +210,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
 
     get:
       tags:
@@ -244,6 +248,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/engineIdPathParam'
     get:
       tags:
@@ -290,6 +295,7 @@ paths:
         - $ref: '#/parameters/authHeaderParam'
         - $ref: '#/parameters/xApiKey'
         - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+        - $ref: '#/parameters/x-sandbox-name'
         - in: body
           name: engine
           description: Engine object to be updated
@@ -363,6 +369,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
     get:
       tags:
         - MLInstances
@@ -488,6 +495,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/mlInstanceIdPathParam'
     get:
       tags:
@@ -600,6 +608,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
     get:
       tags:
         - Experiments
@@ -724,6 +733,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/experimentIdPathParam'
     get:
       tags:
@@ -838,6 +848,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/experimentIdPathParam'
     get:
       tags:
@@ -935,6 +946,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/experimentIdPathParam'
       - $ref: '#/parameters/experimentRunIdPathParam'
     get:
@@ -974,6 +986,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/experimentIdPathParam'
       - $ref: '#/parameters/experimentRunIdPathParam'
     get:
@@ -1013,6 +1026,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
     get:
       tags:
         - Models
@@ -1107,6 +1121,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/modelIdPathParam'
     get:
       tags:
@@ -1222,6 +1237,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/modelIdPathParam'
     get:
       tags:
@@ -1260,6 +1276,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/modelIdPathParam'
     get:
       tags:
@@ -1356,6 +1373,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/modelIdPathParam'
       - $ref: '#/parameters/modelTranscodingIdPathParam'
     get:
@@ -1395,6 +1413,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
     get:
       tags:
         - Insights
@@ -1486,6 +1505,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/insightIdPathParam'
     get:
       tags:
@@ -1523,6 +1543,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/algorithmQueryParam'
     get:
       tags:
@@ -1558,6 +1579,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
     get:
       tags:
         - MLServices
@@ -1678,6 +1700,7 @@ paths:
       - $ref: '#/parameters/authHeaderParam'
       - $ref: '#/parameters/xApiKey'
       - $ref: '#/parameters/gwImsOrgIdHeaderParam'
+      - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/mlServiceIdPathParam'
     get:
       tags:
@@ -1790,6 +1813,12 @@ parameters:
       The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
     required: true
     type: string
+  x-sandbox-name:
+    name: x-sandbox-name
+    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information.'
+    required: true
+    type: string
+    in: header
   startQueryParam:
     name: start
     in: query

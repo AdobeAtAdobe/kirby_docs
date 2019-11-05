@@ -2,27 +2,108 @@
 
 Access control for Experience Platform is administered through the [Adobe Admin Console](https://adminconsole.adobe.com). This functionality leverages product profiles in Admin Console, which link users with permissions and sandboxes. See the [access control overview](access-control-overview.md) for more information.
 
-This document provides information on how to format your requests to the [Access Control API](../../../../../../acpdr/swagger-specs/access-control.yaml) to retrieve the status of specific permissions for the current user.
+This document provides information on how to format your requests to the [Access Control API](../../../../../../acpdr/swagger-specs/access-control.yaml), and covers the following operations:
+
+* [List names of permissions and resource types](#list-names-of-permissions-and-resource-types)
+* [View effective policies for the current user](#view-effective-policies) 
+
 
 ## Getting started
 
-This guide provides an example API call to demonstrate how to format your requests, including the path, required headers, and a properly formatted request payload. A sample JSON response returned by the API is also provided. For information on the conventions used in the documentation for sample API calls, see the section on [how to read example API calls](../platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md#how-do-i-format-an-api-request) in the Experience Platform troubleshooting guide.
+The following sections provide additional information that you will need to know in order to successfully make calls to the Schema Registry API.
+
+### Reading sample API calls
+
+This guide provides example API calls to demonstrate how to format your requests. These include paths, required headers, and properly formatted request payloads. Sample JSON returned in API responses is also provided. For information on the conventions used in documentation for sample API calls, see the section on [how to read example API calls](../platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md#how-do-i-format-an-api-request) in the Experience Platform troubleshooting guide.
 
 ### Gather values for required headers
 
-This guide requires you to have completed the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md) in order to successfully make calls to Platform APIs. Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+In order to make calls to Platform APIs, you must first complete the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
 
-* Authorization: Bearer `{ACCESS_TOKEN}`
-* x-api-key: `{API_KEY}`
-* x-gw-ims-org-id: `{IMS_ORG}`
+- Authorization: Bearer `{ACCESS_TOKEN}`
+- x-api-key: `{API_KEY}`
+- x-gw-ims-org-id: `{IMS_ORG}`
 
-All requests to Platform APIs require the following header which specifies the name of the sandbox the operation will take place in:
+All resources in Experience Platform, including those belonging to the Schema Registry, are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
 
-* x-sandbox-name: `{SANDBOX_NAME}`
+- x-sandbox-name: `{SANDBOX_NAME}`
 
-All requests that contain a payload (POST, PUT, and PATCH) require an additional header:
+> **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../sandboxes/sandboxes-overview.md). 
 
-* Content-Type: application/json
+All requests that contain a payload (POST, PUT, PATCH) require an additional header:
+
+- Content-Type: application/json
+
+## List names of permissions and resource types
+
+You can list the names of all permissions and resource types by making a GET request to the `/acl/reference` endpoint. These names can then be used in API calls to [view effective policies](#view-effective-policies) for the current user.
+
+A **permission** is a policy that is managed through the Adobe Admin Console, and maps to zero or more resource-type policies. A **resource type** is a policy that enables read, write, and/or delete capabilities for a specific type of Platform resource (such as datasets or schemas).
+
+#### API format
+
+```http
+GET /acl/reference
+```
+
+#### Request
+
+```shell
+curl -X GET \
+  https://platform.adobe.io/data/foundation/access-control/acl/reference \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}'
+```
+
+#### Response
+
+A successful response returns a `permissions` object and a `resource-types` object, each containing a full list of names for access permissions or resource types, respectively.
+
+```json
+{
+  "permissions": {
+    "export-audience-for-segment": {
+      "segments": [
+        "read"
+      ]
+    },
+    "manage-datasets": {
+      "connection": [
+        "read",
+        "write",
+        "delete"
+      ],
+      "datasets": [
+        "read",
+        "write",
+        "delete"
+      ]
+    }
+    {"..."}
+  },
+  "resource-types": {
+    "classes": [
+      "read",
+      "write",
+      "delete"
+    ],
+    "connection": [
+      "read",
+      "write",
+      "delete"
+    ],
+    "data-types": [
+      "read",
+      "write",
+      "delete"
+    ],
+    "...": [
+      "..."
+    ]
+  }
+}
+```
 
 ## View effective policies
 

@@ -78,7 +78,8 @@ paths:
       parameters:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'      
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'      
         - name: x-request-id
           in: header
           description: Request Id
@@ -136,6 +137,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'           
         - name: x-profile-instance-id
           in: header
@@ -184,6 +186,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - name: x-request-id
           in: header
           description: Request Id
@@ -214,6 +217,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - name: x-profile-instance-id
           in: header
           description: Profile Instance ID
@@ -260,6 +264,7 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
       - name: x-profile-instance-id
         in: header
         description: Profile Instance ID
@@ -306,6 +311,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - name: x-request-id
           in: header
           description: Request Id
@@ -332,6 +338,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - name: schema.name
           in: query
           description: XED schema class name.
@@ -447,6 +454,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'        
         - in: body
           name: body
@@ -497,6 +505,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - name: schema.name
           in: query
           description: Name of the associated XDM schema.
@@ -565,6 +574,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - name: limit
           in: query
           description: Limit the number of export jobs returned in the list.
@@ -603,6 +613,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'
         - name: x-profile-instance-id
           in: header
@@ -665,6 +676,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - name: exportJobId
           in: path
           description: Export job ID
@@ -693,6 +705,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - name: exportJobId
           in: path
           description: Export job ID
@@ -722,6 +735,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - name: x-request-id
           in: header
           description: Unique ID per request
@@ -776,6 +790,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'
         - name: x-request-id
           in: header
@@ -815,6 +830,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/segmentId'
         - name: x-request-id
           in: header
@@ -845,6 +861,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/segmentId'
         - name: x-request-id
           in: header
@@ -874,6 +891,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/segmentId'
         - $ref: '#/parameters/content-type'
         - name: x-request-id
@@ -910,6 +928,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'
         - name: x-request-id
           in: header
@@ -944,6 +963,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - name: x-request-id
           in: header
           description: Request ID
@@ -999,6 +1019,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'        
         - name: x-profile-instance-id
           in: header
@@ -1047,6 +1068,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/segmentJobId'
         - name: x-request-id
           in: header
@@ -1077,6 +1099,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/segmentJobId'
         - name: x-request-id
           in: header
@@ -1110,6 +1133,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'
         - in: "body"
           name: "body"
@@ -1150,6 +1174,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/previewId'
         - name: "offset"
           in: "query"
@@ -1185,6 +1210,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/previewId'
       responses:
         200:
@@ -1209,6 +1235,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/previewId'      
       responses:
         200:
@@ -1233,6 +1260,7 @@ paths:
       parameters:
         - $ref: '#/parameters/authorization'        
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-api-key'      
         - name: x-gw-ims-authorization
           in: header
@@ -1314,6 +1342,7 @@ paths:
       parameters:
         - $ref: '#/parameters/authorization'        
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-api-key'  
         - name: schemaName
           in: query
@@ -1399,6 +1428,7 @@ paths:
       parameters:
         - $ref: '#/parameters/authorization'        
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-api-key'
         - name: projectionid
           in: path
@@ -1477,6 +1507,7 @@ paths:
       parameters:
         - $ref: '#/parameters/authorization'        
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-api-key'      
         - name: projectionid
           in: path
@@ -1556,6 +1587,7 @@ paths:
       parameters:
         - $ref: '#/parameters/authorization'        
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-api-key'      
         - name: projectionid
           in: path
@@ -1630,6 +1662,7 @@ paths:
       parameters:
         - $ref: '#/parameters/authorization'        
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-api-key' 
         - $ref: '#/parameters/x-request-id'
       responses:
@@ -1686,6 +1719,7 @@ paths:
       parameters:
         - $ref: '#/parameters/authorization'        
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-api-key' 
         - name: x-gw-ims-authorization
           in: header
@@ -1765,6 +1799,7 @@ paths:
       parameters:
         - $ref: '#/parameters/authorization'        
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-api-key' 
         - name: destinationId
           in: path
@@ -1843,6 +1878,7 @@ paths:
       parameters:
         - $ref: '#/parameters/authorization'        
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-api-key' 
         - name: destinationId
           in: path
@@ -1922,6 +1958,7 @@ paths:
       parameters:
         - $ref: '#/parameters/authorization'        
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-api-key' 
         - name: destinationId
           in: path
@@ -2001,6 +2038,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - name: start
           in: query
@@ -2040,6 +2078,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-profile-instance-id'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/event-type-body'
@@ -2070,6 +2109,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/eventTypeId'        
         - $ref: '#/parameters/x-request-id'
       responses:
@@ -2094,6 +2134,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/eventTypeId'
         - $ref: '#/parameters/x-profile-instance-id'
         - $ref: '#/parameters/x-request-id'
@@ -2123,7 +2164,8 @@ paths:
       parameters:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'      
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'      
         - $ref: '#/parameters/eventTypeId'
         - $ref: '#/parameters/x-profile-instance-id'
         - $ref: '#/parameters/x-request-id'
@@ -2159,6 +2201,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/eventTypeId'
         - $ref: '#/parameters/x-request-id'
       responses:
@@ -2182,6 +2225,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - name: x-request-id
           in: header
           description: Request ID
@@ -2243,6 +2287,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - name: x-profile-instance-id
           in: header
           description: Profile Instance ID
@@ -2288,6 +2333,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/macroId'
         - name: x-request-id
           in: header
@@ -2317,6 +2363,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/macroId'  
         - name: x-profile-instance-id
           in: header
@@ -2362,6 +2409,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/macroId'
         - name: x-profile-instance-id
           in: header
@@ -2406,6 +2454,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/macroId'
         - name: x-request-id
           in: header

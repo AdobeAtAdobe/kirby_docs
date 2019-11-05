@@ -67,6 +67,7 @@ paths:
         description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         required: true
         type: "string"
+      - $ref: '#/parameters/x-sandbox-name'  
       - name: "x-api-key"
         in: "header"
         description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
@@ -116,6 +117,7 @@ paths:
         description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         required: true
         type: "string"
+      - $ref: '#/parameters/x-sandbox-name'  
       - name: "x-api-key"
         in: "header"
         description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
@@ -156,6 +158,7 @@ paths:
         description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         required: true
         type: "string"
+      - $ref: '#/parameters/x-sandbox-name'  
       - name: "x-api-key"
         in: "header"
         description: "The API key belonging to the calling client."
@@ -209,6 +212,7 @@ paths:
         description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         required: true
         type: "string"
+      - $ref: '#/parameters/x-sandbox-name'  
       - name: "x-api-key"
         in: "header"
         description: "The API key belonging to the calling client."
@@ -271,6 +275,7 @@ paths:
         description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         required: true
         type: "string"
+      - $ref: '#/parameters/x-sandbox-name'  
       - name: "x-api-key"
         in: "header"
         description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
@@ -350,6 +355,7 @@ paths:
         description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         required: true
         type: "string"
+      - $ref: '#/parameters/x-sandbox-name'  
       - name: "x-api-key"
         in: "header"
         description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
@@ -426,6 +432,7 @@ paths:
         in: "header"
         required: true
         type: "string"
+      - $ref: '#/parameters/x-sandbox-name'  
       - name: "x-api-key"
         in: "header"
         description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
@@ -487,6 +494,7 @@ paths:
         description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
         required: true
         type: "string"
+      - $ref: '#/parameters/x-sandbox-name'  
       - name: "x-api-key"
         in: "header"
         description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
@@ -539,6 +547,7 @@ paths:
           description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
           required: true
           type: "string"
+        - $ref: '#/parameters/x-sandbox-name'  
         - name: "x-api-key"
           in: "header"
           description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
@@ -576,7 +585,13 @@ paths:
             description: "Unauthorized"
           422:
             description: "Unprocessable entity"
-
+parameters:
+  x-sandbox-name:
+    name: x-sandbox-name
+    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information.'
+    required: true
+    type: string
+    in: header
 definitions:
   Resource:
     type: "object"

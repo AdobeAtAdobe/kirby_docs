@@ -53,6 +53,7 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
     get:
       operationId: "get-dataset-files-by-batchId"
       tags:
@@ -91,6 +92,7 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
     get:
       operationId: "get-failed-batch-by-batchId"
       tags:
@@ -134,6 +136,7 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
     head:
       operationId: "get-dataset-file-operation"
       tags:
@@ -227,6 +230,7 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
     get:
       operationId: "get-preview-by-dataSetId"
       tags:
@@ -263,6 +267,12 @@ parameters:
   x-api-key:
     name: x-api-key
     description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, see the [Authentication Tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
+  x-sandbox-name:
+    name: x-sandbox-name
+    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information.'
     required: true
     type: string
     in: header
