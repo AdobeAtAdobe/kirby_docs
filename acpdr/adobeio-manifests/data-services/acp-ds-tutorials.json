@@ -160,14 +160,21 @@
           "importedFileName": "configuring_merge_policies_tutorial",
           "pages": [],
           "path": "api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md",
-          "title": "Configure merge policies",
+          "title": "Work with merge policies using the API",
           "description": "Follow steps to create new merge policies for your organization, as well as how to access and update existing merge policies."
+        },
+        {
+          "importedFileName": "create-merge-policies",
+          "pages": [],
+          "path": "api-specification/markdown/narrative/tutorials/merge_policies/create-merge-policies.md",
+          "title": "Work with merge policies in the UI",
+          "description": "Follow steps to create and manage merge policies for your organization using the UI."
         },
         {
           "importedFileName": "configuring_edge_tutorial",
           "pages": [],
           "path": "api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_edge_tutorial.md",
-          "title": "Configure edge destinations and projections using APIs",
+          "title": "Configure edge destinations and projections using the API",
           "description": "Configure Edge Service by creating projection configurations and the destinations they route to, as used by Projection Service."
         }
       ]
