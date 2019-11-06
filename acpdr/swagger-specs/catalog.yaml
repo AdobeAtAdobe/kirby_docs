@@ -1809,7 +1809,7 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-  /datasets:
+  /dataSets:
     parameters:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
@@ -1981,7 +1981,7 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-  '/datasets/{id}':
+  '/dataSets/{id}':
     parameters:
       - $ref: '#/parameters/id'
       - $ref: '#/parameters/authorization'
@@ -2164,7 +2164,7 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-  '/datasets/{id}/credentials':
+  '/dataSets/{id}/credentials':
     parameters:
       - $ref: '#/parameters/id'
       - $ref: '#/parameters/authorization'
@@ -2201,7 +2201,7 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-  '/datasets/{id}/views':
+  '/dataSets/{id}/views':
     parameters:
       - $ref: '#/parameters/id'
       - $ref: '#/parameters/authorization'
@@ -2311,7 +2311,7 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-  '/datasets/{id}/views/{viewid}':
+  '/dataSets/{id}/views/{viewid}':
     parameters:
       - $ref: '#/parameters/id'
       - name: viewid
@@ -2384,7 +2384,7 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-  '/datasets/{id}/views/{viewId}/files':
+  '/dataSets/{id}/views/{viewId}/files':
     parameters:
       - $ref: '#/parameters/id'
       - name: viewId
@@ -2486,7 +2486,7 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-  '/datasets/{id}/views/{viewId}/files/{fileId}':
+  '/dataSets/{id}/views/{viewId}/files/{fileId}':
     parameters:
       - $ref: '#/parameters/id'
       - name: viewId
@@ -2570,7 +2570,7 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-  '/datasets/{id}/ingestBatchSummary':
+  '/dataSets/{id}/ingestBatchSummary':
     parameters:
       - $ref: '#/parameters/id'
       - $ref: '#/parameters/authorization'
@@ -2609,7 +2609,7 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-  '/datasets/{id}/dule':
+  '/dataSets/{id}/dule':
     parameters:
       - $ref: '#/parameters/id'
       - $ref: '#/parameters/authorization'
@@ -2639,7 +2639,7 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-  /datasetviews:
+  /dataSetViews:
     parameters:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
@@ -2835,7 +2835,7 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-  '/datasetviews/{id}':
+  '/dataSetViews/{id}':
     parameters:
       - $ref: '#/parameters/id'
       - $ref: '#/parameters/authorization'
@@ -3008,7 +3008,7 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-  /datasetfiles:
+  /dataSetFiles:
     parameters:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
@@ -3198,7 +3198,7 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-  '/datasetfiles/{id}':
+  '/dataSetFiles/{id}':
     parameters:
       - $ref: '#/parameters/id'
       - $ref: '#/parameters/authorization'
@@ -8065,7 +8065,7 @@ definitions:
             type: string
             description: >-
                This property represents the relative URI for persistence credentials of this dataset,
-               for e.g. @/datasets/{id}/credentials.
+               for e.g. @/dataSets/{id}/credentials.
       datastream:
         type: object
         description: This object represents stream persistence type for dataSets.
