@@ -70,7 +70,6 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-id'
         - $ref: '#/parameters/x-sandbox-name'
         - name: connector
           description: The ID for the Connector this Account params was created from.
@@ -145,7 +144,6 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-id'
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/accept-encoding'
         - name: account
@@ -180,7 +178,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -366,7 +363,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -655,7 +651,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -819,7 +814,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -1081,7 +1075,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -1137,7 +1130,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -1283,7 +1275,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -1466,7 +1457,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -1548,7 +1538,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -1707,7 +1696,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -1794,7 +1782,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -1827,7 +1814,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -2001,7 +1987,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -2185,7 +2170,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/x-user-token'
       - $ref: '#/parameters/accept-encoding'
@@ -2223,7 +2207,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -2339,7 +2322,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -2413,7 +2395,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -2521,7 +2502,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -2596,7 +2576,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -2636,7 +2615,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -2666,7 +2644,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -2864,7 +2841,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -3037,7 +3013,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -3229,7 +3204,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -3367,7 +3341,6 @@ paths:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/accept-encoding'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
     get:
       tags:
@@ -3438,7 +3411,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -3589,7 +3561,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -3732,7 +3703,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -3852,7 +3822,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -3972,7 +3941,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -4084,7 +4052,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -4179,7 +4146,6 @@ paths:
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept-encoding'
     get:
@@ -4335,12 +4301,6 @@ parameters:
     name: x-gw-ims-org-id
     description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the <a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md">authentication tutorial</a>.'
     required: true
-    type: string
-    in: header
-  x-sandbox-id:
-    name: x-sandbox-id
-    description: 'The URN string ID of the Sandbox virtual environment to be accessed.'
-    required: false
     type: string
     in: header
   x-api-key:
