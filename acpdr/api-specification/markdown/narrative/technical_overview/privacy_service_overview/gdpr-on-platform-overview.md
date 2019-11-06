@@ -100,7 +100,7 @@ The `schemaMetadata` property for the dataset contains a `gdpr` array, which is 
 #### API format
 
 ```http
-PATCH /datasets/{DATASET_ID}
+PATCH /dataSets/{DATASET_ID}
 ```
 * `{DATASET_ID}`: The `id` value of the dataset to be updated.
 
@@ -111,7 +111,7 @@ In this example, a dataset includes an email address in the `personalEmail.addre
 > **Important:** When running a PATCH operation on a dataset's `schemaMetadata` property, be sure to copy any existing sub-properties within the request payload. Excluding any existing values from the payload will cause them to be removed from the dataset.
 
 ```shell
-curl -X PATCH 'https://platform.adobe.io/data/foundation/catalog/datasets/5d8e9cf5872f18164763f971' \ \
+curl -X PATCH 'https://platform.adobe.io/data/foundation/catalog/dataSets/5d8e9cf5872f18164763f971' \ \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \

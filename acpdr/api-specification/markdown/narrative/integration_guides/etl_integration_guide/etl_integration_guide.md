@@ -76,7 +76,7 @@ _**Note**_: The ETL connector must specify a time stamp filter marking the date 
 
 Using the source of data for mapping, a list of all available datasets can be fetched using the [Catalog API](../../../../../../acpdr/swagger-specs/catalog.yaml). 
 
-You can issue a single API request to view all available datasets (e.g. `GET /datasets`), with best practice being to include query parameters that limit the size of the response. 
+You can issue a single API request to view all available datasets (e.g. `GET /dataSets`), with best practice being to include query parameters that limit the size of the response. 
 
 In cases where _full_ dataset information is being requested the response payload can reach past 3GB in size, which can slow overall performance. Therefore, using query parameters to filter only the information needed will make Catalog queries more efficient.
 
@@ -97,14 +97,14 @@ Query parameters are covered in more detail in the [filtering data with query pa
 #### API format
 
 ```http
-GET /catalog/datasets
-GET /catalog/datasets?{filter1}={value1},{value2}&{filter2}={value3}
+GET /catalog/dataSets
+GET /catalog/dataSets?{filter1}={value1},{value2}&{filter2}={value3}
 ```
 
 #### Request
 
 ```shell
-curl -X GET "https://platform.adobe.io/data/foundation/catalog/datasets?limit=3&properties=name,description,schemaRef" \
+curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets?limit=3&properties=name,description,schemaRef" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key: {API_KEY}" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
@@ -274,13 +274,13 @@ You can refer to the [Catalog Service Overview](../../technical_overview/catalog
 #### API Format
 
 ```
-GET /catalog/datasets?limit={value}&properties={value}
+GET /catalog/dataSets?limit={value}&properties={value}
 ```
 
 #### Request
 
 ```SHELL
-curl -X GET "https://platform.adobe.io/data/foundation/catalog/datasets?limit=1&properties=files" \
+curl -X GET "https://platform.adobe.io/data/foundation/catalog/dataSets?limit=1&properties=files" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
   -H "x-api-key: {API_KEY}" \
   -H "x-gw-ims-org-id: {IMS_ORG}" \
@@ -306,7 +306,7 @@ You can also use a GET request to fetch file details using the "files" attribute
 #### API Format
 
 ```
-GET /catalog/datasets/{DATASET_ID}/views/{VIEW_ID}/files
+GET /catalog/dataSets/{DATASET_ID}/views/{VIEW_ID}/files
 ```
 
 #### Request
@@ -432,7 +432,7 @@ The destination component as output of transformed data, the Data Engineer will 
 #### API Format
 
 ```SHELL
-GET /catalog/datasets/{DATASET_ID}
+GET /catalog/dataSets/{DATASET_ID}
 ```
 
 #### Request
@@ -574,7 +574,7 @@ After successfully creating a new batch, files can then be uploaded to a specifi
 Data in Experience Platform should be written in the form of parquet files.
 
 ```shell
-curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.parquet" \
+curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/dataSets/{DATASET_ID}/files/{FILE_NAME}.parquet" \
   -H "accept: application/json" \
   -H "x-gw-ims-org-id:{IMS_ORG}" \
   -H "Authorization:Bearer ACCESS_TOKEN" \

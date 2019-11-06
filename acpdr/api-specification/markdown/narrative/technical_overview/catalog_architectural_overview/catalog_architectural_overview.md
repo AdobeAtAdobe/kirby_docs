@@ -22,7 +22,7 @@ Catalog "objects" are the metadata encapsulation of data, schemas, provisioning,
 |Batch|/batches|Batches allow Catalog users to understand which operations and applications have been performed on objects tracked by the system. A batch outlines the final results (records processed, size on disk, etc.) but may also include links to Datasets, DatasetViews, and more that were affected by the batch operation.|
 |Connection|/connections|Connections are customer-specific instances of Connectors. As an example, when a user selects the Azure Blob Connector and supplies the necessary details as defined by that Connector, the result is a Connection.|
 |Connector|/connectors|Connectors define how and when data is ingested into Platform. They define how data is to be gathered from technology sources (like S3, RedShift, and SFTP) and partner sources (like DFA, SAP, MSFT and ExactTarget). Connectors also define how and when Adobe Solution data is ingested into Platform.|
-|Dataset|/datasets|Datasets are the building blocks for data transformation and tracking in Catalog Service. Generally, datasets represent a table or file made available by a Connection. |
+|Dataset|/dataSets|Datasets are the building blocks for data transformation and tracking in Catalog Service. Generally, datasets represent a table or file made available by a Connection. |
 |Dataset File|/datasetFiles|Dataset Files represent blocks of data that has been saved on Platform. As records of literal files, these are where you can find the file size and which batch the file came from. This construct will also provide the number of records contained in the file.|
 |Transform|/transforms|Transforms are used to house the instructions that translate data into a new form. As a customer maps their newly uploaded data to XDM schema, a Transform is created to document links to the repository where the code resides, as well as a link to the vehicle (or engine) used to perform that work.|
 
@@ -74,19 +74,19 @@ In addition to providing an introduction to working with Catalog Service, this d
 - [Link multiple requests](#multiple-requests-in-a-single-call)
 - [Filter data using query parameters](#filtering-data-with-query-parameters)
 
-Most of the examples in this document use the `/datasets` endpoint, but the principles can be applied to other endpoints within Catalog. The complete [Catalog Service API Reference](../../../../../../acpdr/swagger-specs/catalog.yaml) shows all calls and operations available for each endpoint.
+Most of the examples in this document use the `/dataSets` endpoint, but the principles can be applied to other endpoints within Catalog. The complete [Catalog Service API Reference](../../../../../../acpdr/swagger-specs/catalog.yaml) shows all calls and operations available for each endpoint.
 
 ## Listing objects
 
-It is possible to view a list of all available objects through a single API call (e.g. `GET /datasets`), with best practice being to include filters that limit the size of the response. In cases where _full_ dataset information is being requested the response payload can reach past 3GB in size, which can slow overall performance. Using filters to limit the size of the response prevents lag in the system.
+It is possible to view a list of all available objects through a single API call (e.g. `GET /dataSets`), with best practice being to include filters that limit the size of the response. In cases where _full_ dataset information is being requested the response payload can reach past 3GB in size, which can slow overall performance. Using filters to limit the size of the response prevents lag in the system.
 
 For more information on using filters, see the section on [filtering data with query parameters](#filtering-data-with-query-parameters) later in this document.
 
 #### API format
 
 ```http
-GET /datasets
-GET /datasets?{filter}={value}&{filter2}={value}
+GET /dataSets
+GET /dataSets?{filter}={value}&{filter2}={value}
 ```
 
 #### Request
@@ -95,7 +95,7 @@ The sample request below includes two filters, separated by an ampersand (`&`).
 
 ```shell
 curl -X GET \
-  'https://platform.adobe.io/data/foundation/catalog/datasets?limit=5&properties=name,description,files' \
+  'https://platform.adobe.io/data/foundation/catalog/dataSets?limit=5&properties=name,description,files' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -142,15 +142,15 @@ Even though you are requesting a specific object, it is best practice to [filter
 #### API format
 
 ```http
-GET /datasets/{id}
-GET /datasets/{id}?properties={property1},{property2},{property3}
+GET /dataSets/{id}
+GET /dataSets/{id}?properties={property1},{property2},{property3}
 ```
 
 #### Request
 
 ```shell
 curl -X GET \
-  'https://platform.adobe.io/data/foundation/catalog/datasets/5ba9452f7de80400007fc52a?properties=name,description,state,tags,transforms,files' \
+  'https://platform.adobe.io/data/foundation/catalog/dataSets/5ba9452f7de80400007fc52a?properties=name,description,state,tags,transforms,files' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -196,7 +196,7 @@ The distinction between PUT and PATCH is an important one, as PUT will replace t
 #### API format
 
 ```http
-PATCH /datasets/{id}
+PATCH /dataSets/{id}
 ```
 
 #### Request
@@ -205,7 +205,7 @@ Requests containing a payload require the header `Content-Type: application/json
 
 ```shell
 curl -X PATCH \
-  https://platform.adobe.io/data/foundation/catalog/datasets/5ba9452f7de80400007fc52a \
+  https://platform.adobe.io/data/foundation/catalog/dataSets/5ba9452f7de80400007fc52a \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
@@ -236,7 +236,7 @@ Alternatively, Catalog supports `json-patch` as described in [RFC-6902](https://
 #### API format
 
 ```http
-PATCH /datasets/{id}
+PATCH /dataSets/{id}
 ```
 
 #### Request
@@ -245,7 +245,7 @@ To use this method, the request must have the header `Content-Type: application/
 
 ```shell
 curl -X PATCH \
-  https://platform.adobe.io/data/foundation/catalog/datasets/5ba9452f7de80400007fc52a \
+  https://platform.adobe.io/data/foundation/catalog/dataSets/5ba9452f7de80400007fc52a \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'Content-Type: application/json-patch+json' \
   -H 'x-api-key: {API_KEY}' \
@@ -277,14 +277,14 @@ Catalog allows for the removal of objects using a DELETE request. Take extra car
 #### API format
 
 ```http
-DELETE /datasets/{id}
+DELETE /dataSets/{id}
 ```
 
 #### Request
 
 ```shell
 curl -X DELETE \
-  'https://platform.adobe.io/data/foundation/catalog/datasets/5ba9452f7de80400007fc52a' \
+  'https://platform.adobe.io/data/foundation/catalog/dataSets/5ba9452f7de80400007fc52a' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -316,8 +316,8 @@ Despite requesting specific datasets, it is still best practice to [filter by pr
 #### API format
 
 ```http
-GET /datasets/{id1},{id2},{id3},{id4}
-GET /datasets/{id1},{id2},{id3},{id4}?properties={property1},{property2},{property3}
+GET /dataSets/{id1},{id2},{id3},{id4}
+GET /dataSets/{id1},{id2},{id3},{id4}?properties={property1},{property2},{property3}
 ```
 
 #### Request
@@ -326,7 +326,7 @@ The sample request includes a comma-separated list of dataset IDs as well as a c
 
 ```shell
 curl -X GET \
-  'https://platform.adobe.io/data/foundation/catalog/datasets/5bde21511dd27b0000d24e95,5bda3a4228babc0000126377,5bceaa4c26c115000039b24b,5bb276b03a14440000971552,5ba9452f7de80400007fc52a?properties=name,description,files' \
+  'https://platform.adobe.io/data/foundation/catalog/dataSets/5bde21511dd27b0000d24e95,5bda3a4228babc0000126377,5bceaa4c26c115000039b24b,5bb276b03a14440000971552,5ba9452f7de80400007fc52a?properties=name,description,files' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -370,21 +370,21 @@ If a dataset does not contain all of the requested properties, it will return an
 
 Catalog manages interrelated objects. These related objects, if queried properly, can be joined automatically via Catalog and included in the response. As you inspect a response, fields prefixed by `@` denote interrelated objects that can be expanded. 
 
-For example, when [a specific dataset was requested](#view-an-object) earlier, the response contained a `"transforms"` field with the value `"@/datasets/5ba9452f7de80400007fc52a/views/5ba9452f7de80400007fc52b/transforms"`. 
+For example, when [a specific dataset was requested](#view-an-object) earlier, the response contained a `"transforms"` field with the value `"@/dataSets/5ba9452f7de80400007fc52a/views/5ba9452f7de80400007fc52b/transforms"`. 
 
 This field can be expanded to show details by issuing a GET request to the dataset `{id}` and using the `expansion` query parameter.
 
 #### API format
 
 ```http
-GET /datasets/{id}?expansion=transforms
+GET /dataSets/{id}?expansion=transforms
 ```
 
 #### Request
 
 ```shell
 curl -X GET \
-  'https://platform.adobe.io/data/foundation/catalog/datasets/5ba9452f7de80400007fc52a?expansion=transforms' \
+  'https://platform.adobe.io/data/foundation/catalog/dataSets/5ba9452f7de80400007fc52a?expansion=transforms' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -485,7 +485,7 @@ curl -X POST \
   -d '[
     {
         "id": "firstObjectId",
-        "resource": "/datasets",
+        "resource": "/dataSets",
         "method": "post",
         "body": {
             "type": "raw",
@@ -517,7 +517,7 @@ curl -X POST \
 
 The request involves several important fields, outlined in more detail below:
 * `"id"`: User-supplied ID that is attached to the response object so that you can match up requests to responses. Catalog does not use this value except to pass it back in the response.
-* `"resource"`: The resource path relative to the root (Catalog). The protocol and domain should not be part of this value and it is expected to be prefixed with "/". When using PATCH and DELETE, include the object `{id}` in the resource path. Not to be confused with the user-supplied `"id"`, the resource path uses the `{id}` of the dataset itself (e.g. `"resource": "/datasets/1234567890"`).
+* `"resource"`: The resource path relative to the root (Catalog). The protocol and domain should not be part of this value and it is expected to be prefixed with "/". When using PATCH and DELETE, include the object `{id}` in the resource path. Not to be confused with the user-supplied `"id"`, the resource path uses the `{id}` of the dataset itself (e.g. `"resource": "/dataSets/1234567890"`).
 * `"method"`: The name of the method (e.g. GET, PUT, POST, PATCH, DELETE) related to the action taking place in the request.
 * `"body"`: The JSON document that would normally be passed as the payload in a POST, PUT, or PATCH request.
 
@@ -568,7 +568,7 @@ Using an ampersand (`&`), you can combine multiple filters in a single request. 
 #### API format
 
 ```http
-GET /datasets?{filter}={value}&{filter2}={value}&{filter3}={value}
+GET /dataSets?{filter}={value}&{filter2}={value}&{filter3}={value}
 ```
 
 ### Filter using limits
@@ -586,14 +586,14 @@ Catalog responses are automatically metered according to configured limits:
 #### API format
 
 ```http
-GET /datasets?limit=3
+GET /dataSets?limit=3
 ```
 
 #### Request
 
 ```shell
 curl -X GET \
-  https://platform.adobe.io/data/foundation/catalog/datasets?limit=3 \
+  https://platform.adobe.io/data/foundation/catalog/dataSets?limit=3 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -613,9 +613,9 @@ The `properties` parameter can be used to filter within a single object or a gro
 #### API format
 
 ```http
-GET /datasets?properties={property1},{property2},{property3}
-GET /datasets/{id}?properties={property1},{property2},{property3}
-GET /datasets/{id1},{id2},{id3},{id4}?properties={property1},{property2},{property3}
+GET /dataSets?properties={property1},{property2},{property3}
+GET /dataSets/{id}?properties={property1},{property2},{property3}
+GET /dataSets/{id1},{id2},{id3},{id4}?properties={property1},{property2},{property3}
 ```
 
 #### Request
@@ -624,7 +624,7 @@ The following request includes a comma-separated list of properties, as well as 
 
 ```shell
 curl -X GET \
-  'https://platform.adobe.io/data/foundation/catalog/datasets?limit=4&properties=created,updated,name,schemaRef' \
+  'https://platform.adobe.io/data/foundation/catalog/dataSets?limit=4&properties=created,updated,name,schemaRef' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -681,13 +681,13 @@ If the `start` parameter is not paired with a `limit` parameter, the maximum num
 #### API format
 
 ```http
-GET /datasets?start={number}
+GET /dataSets?start={number}
 ```
 #### Request
 
 ```shell
 curl -X GET \
-  https://platform.adobe.io/data/foundation/catalog/datasets?limit=2&start=4 \
+  https://platform.adobe.io/data/foundation/catalog/dataSets?limit=2&start=4 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -720,19 +720,19 @@ Some objects in Catalog support the use of tags. Tags can be used to attach info
 
 Filter by a specific tag having a specific value:
 ```
-GET /datasets?tags={TAG_NAME}:{TAG_VALUE}
+GET /dataSets?tags={TAG_NAME}:{TAG_VALUE}
 ```
 Filter by multiple tags having specific values (assumes an AND relationship):
 ```
-GET /datasets?tags={TAG_NAME}:{TAG_VALUE},{TAG2_NAME}:{TAG2_VALUE}
+GET /dataSets?tags={TAG_NAME}:{TAG_VALUE},{TAG2_NAME}:{TAG2_VALUE}
 ```
 Filter by a tag value containing a wildcard (e.g. `test*` returns any dataset where the tag value begins with "test"):
 ```
-GET /datasets?tags={TAG_NAME}:{TAG_VALUE}*
+GET /dataSets?tags={TAG_NAME}:{TAG_VALUE}*
 ```
 Filter by the existence of a specific tag. This request uses a wildcard (`*`) to accept any value:
 ```
-GET /datasets?tags={TAG_NAME}:*
+GET /dataSets?tags={TAG_NAME}:*
 ```
 
 #### Request
@@ -777,7 +777,7 @@ This sample dataset contains `"tags"`:
 The following sample request could be made to filter by one tag having a specific value AND the second tag being present.
 ```shell
 curl -X GET \
-  'https://platform.adobe.io/data/foundation/catalog/datasets?tags=sampleTag:123456,secondTag:* \
+  'https://platform.adobe.io/data/foundation/catalog/dataSets?tags=sampleTag:123456,secondTag:* \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -831,19 +831,19 @@ Sort parameters can be joined together allowing you to order by one field and th
 #### API format
 
 ```http
-GET /datasets?orderBy=asc:created
-GET /datasets?orderBy=desc:created
-GET /datasets?orderBy=created,desc:updated
+GET /dataSets?orderBy=asc:created
+GET /dataSets?orderBy=desc:created
+GET /dataSets?orderBy=created,desc:updated
 ```
 
 ### Filter by property
 
-Certain Catalog APIs, such as `/datasets` allow filtering by property. Some simple filters are designed for equivalency comparisons, while others support wildcards.  
+Certain Catalog APIs, such as `/dataSets` allow filtering by property. Some simple filters are designed for equivalency comparisons, while others support wildcards.  
 
 #### API format
 
 ```http
-GET /datasets?property={VALUE}
+GET /dataSets?property={VALUE}
 ```
 
 |Supported Operations|Description|
@@ -852,16 +852,16 @@ GET /datasets?property={VALUE}
 |~|Match the (string) value against a regular expression|
 |< , > , <= , >= , == , !=|Comparison of the field value against another field or value|
 
-> **Note:** Simple filters support the ability to pass in a set of values.  If a set is passed in, it is treated like an "in" clause for an array (i.e. is the value of this field in the provided list).  You can invert the query by prefixing a `!` character to the list to return "where the value is not in the provided list" (e.g. `/datasets?name=!samplename,anothername`).
+> **Note:** Simple filters support the ability to pass in a set of values.  If a set is passed in, it is treated like an "in" clause for an array (i.e. is the value of this field in the provided list).  You can invert the query by prefixing a `!` character to the list to return "where the value is not in the provided list" (e.g. `/dataSets?name=!samplename,anothername`).
 
 #### Additional Examples
 
 |Usage|Explanation|
 |---|---|
-|`GET /datasets?property=name`|Returns only datasets which contain the property `name`|
-|`GET /datasets?property=!name`|Returns only datasets that don't contain the property `name`|
-|`GET /datasets?property=name~^Sample`|Returns only datasets whose name starts with the word `Sample`|
-|`GET /datasets?property=version>1.0.0`|Returns only datasets whose version are greater than 1.0.0|
+|`GET /dataSets?property=name`|Returns only datasets which contain the property `name`|
+|`GET /dataSets?property=!name`|Returns only datasets that don't contain the property `name`|
+|`GET /dataSets?property=name~^Sample`|Returns only datasets whose name starts with the word `Sample`|
+|`GET /dataSets?property=version>1.0.0`|Returns only datasets whose version are greater than 1.0.0|
 
 > **Note:** The `name` property supports the use of a wildcard `*` character within, or as, the search string. Wildcards match empty/no character, such that the search string `te*st` will match the value "test". Asterisks are escaped using `**` (double asterisk) to represent a single asterisk as a literal string in your search string.
 
@@ -871,7 +871,7 @@ The following request will return any datasets with a version number greater tha
 
 ```shell
 curl -X GET \
-  https://platform.adobe.io/data/foundation/catalog/datasets?property=version>1.0.3 \
+  https://platform.adobe.io/data/foundation/catalog/dataSets?property=version>1.0.3 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \

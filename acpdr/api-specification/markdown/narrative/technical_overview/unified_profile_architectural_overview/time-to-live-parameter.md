@@ -39,7 +39,7 @@ TTL can be specified at the dataset level by specifying the `id` of a dataset in
 #### API format
 
 ```http
-PATCH /datasets/{DATASET_ID}
+PATCH /dataSets/{DATASET_ID}
 ```
 * `{DATASET_ID}`: The `id` value of the dataset you want to configure TTL for.
 
@@ -49,7 +49,7 @@ The following request updates the `tags` property of the dataset specified in th
 
 ```shell
 curl -X PATCH \
-  https://platform.adobe.io/data/foundation/catalog/datasets/5d8e9cf5872f18164763f971 \
+  https://platform.adobe.io/data/foundation/catalog/dataSets/5d8e9cf5872f18164763f971 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \

@@ -170,14 +170,14 @@ The response will point to either a single file or a directory of files. In this
 
 ### GET - View a List of Datasets
 
-It is possible to view a list of Catalog objects through a single API call (e.g. `GET /datasets`), but it is best practice to use filters when doing so because the response can be quite large. 
+It is possible to view a list of Catalog objects through a single API call (e.g. `GET /dataSets`), but it is best practice to use filters when doing so because the response can be quite large. 
 
 For example, in cases where _full_ dataset information is being requested the response payload can reach past 3GB in size, which places a heavy load on the API and can slow overall performance.
 
 #### API Format
 
 ```
-GET /datasets?{filter}={value}&{filter2}={value}
+GET /dataSets?{filter}={value}&{filter2}={value}
 ```
 
 #### Request
@@ -186,7 +186,7 @@ The sample request below includes two query parameters to filter the response. W
 
 ```
 curl -X GET \
-  'https://platform.adobe.io/data/foundation/catalog/datasets?limit=5&properties=name,description,files' \
+  'https://platform.adobe.io/data/foundation/catalog/dataSets?limit=5&properties=name,description,files' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}'

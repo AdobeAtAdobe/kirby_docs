@@ -168,7 +168,7 @@ The following call to the [Catalog Service API](../../../../../../swagger-specs/
 #### API format
 
 ```http
-GET /datasets/{DATASET_ID}/dule
+GET /dataSets/{DATASET_ID}/dule
 ```
 * `{DATASET_ID}`: The ID of the dataset whose data usage labels you want to lookup.
 
@@ -176,7 +176,7 @@ GET /datasets/{DATASET_ID}/dule
 
 ```shell
 curl -X GET \
-  https://platform.adobe.io/data/foundation/catalog/datasets/5b95b155419ec801e6eee780/dule \
+  https://platform.adobe.io/data/foundation/catalog/dataSets/5b95b155419ec801e6eee780/dule \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \

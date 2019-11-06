@@ -363,7 +363,7 @@ Other consumers that work with data in the data lake, such as Data Science Works
 #### Request
 
 ```shell
-CURL -X POST https://platform.adobe.io/data/foundation/catalog/datasets \
+CURL -X POST https://platform.adobe.io/data/foundation/catalog/dataSets \
   -H 'Accept: application/json' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'Cache-Control: no-cache' \
@@ -417,7 +417,7 @@ An example of a successful response can be found below:
 
 ```json
 [
-    "@/datasets/{DATASET_ID}"
+    "@/dataSets/{DATASET_ID}"
 ]
 ```
 
@@ -798,7 +798,7 @@ There are **two** important things to note about this dataset:
 #### Request
 
 ```shell
-curl -X POST https://platform.adobe.io/data/foundation/catalog/datasets \
+curl -X POST https://platform.adobe.io/data/foundation/catalog/dataSets \
   -H 'Accept: application/json' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'Cache-Control: no-cache' \
@@ -853,7 +853,7 @@ An example of a successful response can be found below:
 
 ```json
 [
-    "@/datasets/{DATASET_ID}"
+    "@/dataSets/{DATASET_ID}"
 ]
 ```
 

@@ -43,7 +43,7 @@ When making calls to Experience Platform APIs, a sandbox name must be supplied u
 
 ```shell
 curl -X GET \
-  https://platform.adobe.io/data/foundation/catalog/datasets \
+  https://platform.adobe.io/data/foundation/catalog/dataSets \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \

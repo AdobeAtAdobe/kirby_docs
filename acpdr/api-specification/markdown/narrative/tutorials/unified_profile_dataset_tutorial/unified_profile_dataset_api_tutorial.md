@@ -54,7 +54,7 @@ The following call to the Catalog API enables a dataset for Profile and Identity
 #### API format
 
 ```http
-POST /datasets
+POST /dataSets
 ```
 
 #### Request
@@ -63,7 +63,7 @@ By including `unifiedProfile` and `unifiedIdentity` under `tags` in the request 
 
 ```shell
 curl -X POST \
-  https://platform.adobe.io/data/foundation/catalog/datasets \
+  https://platform.adobe.io/data/foundation/catalog/dataSets \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
@@ -95,7 +95,7 @@ A successful response shows an array containing the ID of the newly created data
 
 ```json
 [
-    "@/datasets/5b020a27e7040801dedbf46e"
+    "@/dataSets/5b020a27e7040801dedbf46e"
 ] 
 ```
 
