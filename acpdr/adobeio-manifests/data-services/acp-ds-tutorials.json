@@ -53,6 +53,13 @@
       "description": "Create a dataset based on a pre-configured schema using Catalog and Data Ingestion APIs."
     },
     {
+      "importedFileName": "map-csv-to-xdm",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/map-csv-to-xdm/map-csv-to-xdm.md",
+      "title": "Map a CSV file to an XDM schema",
+      "description": "Map a CSV file to an XDM schema before ingestion using the Experience Platform UI."
+    },
+    {
       "importedFileName": "creating_a_connector_ui_tutorial",
       "pages": [],
       "path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/using_data_connector_ui_tutorial.md",
