@@ -8,6 +8,7 @@ This document provides a tutorial for accessing Real-time Customer Profile data 
 - Access time series events by:
     - [Identity](#access-time-series-events-for-a-profile-by-identity)
     - [List of identities](#access-time-series-events-for-multiple-profiles-by-identities)
+- [Access time series events in multiple schema entities](#access-time-series-events-in-multiple-schema-entities) 
 - [Access an exported segment](#access-an-exported-segment)
 - [Ensure your requests are GDPR-compliant](#ensure-your-requests-are-gdpr-compliant)
 
@@ -1083,6 +1084,114 @@ A successful response returns a paginated list of time series events associated 
 
 Results are paginated when retrieving time series events. If there are subsequent pages of results for a particular profile, the response's `_links.next.payload` parameter for that profile will contain a payload object. Using this object as the payload for another API call to the same endpoint will retrieve the subsequent page of time series data for that profile.
 
+## Access time series events in multiple schema entities
+
+You can access multiple entities that are connected through a relationship descriptor. The following example API call assumes a relationship has already been defined between two different schemas: the Profile schema and the ProductList schema. For more information on relationship descriptors, please read the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md#defining-descriptors-in-the-api). For a step-by-step tutorial on how to define a relationship descriptor, please read the [relationship descriptor tutorial](../schema_registry_api_tutorial/relationship_descriptor_tutorial.md).
+
+#### API format
+
+```http
+GET /access/entities?{QUERY_PARAMETERS}
+```
+
+#### Request
+
+The following request retrieves an entity containing a previously established relationship descriptor to access information across different schemas.
+
+```shell
+curl -X GET \
+  https://platform.adobe.io/data/core/ups/access/entities?relatedSchema.name=_xdm.context.profile&schema.name=_xdm.context.experienceevent&relatedEntityId=GkouAW-2Xkftzer3bBtHiW8GkaFL \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+```
+
+#### Response
+
+A successful response returns a paginated list of time series events associated with the multiple entities.
+
+```json
+{
+    "_page": {
+        "orderby": "timestamp",
+        "start": "cb10369f-a47b-4e65-afb4-06e1ad78a648",
+        "count": 1,
+        "next": ""
+    },
+    "children": [
+        {
+            "relatedEntityId": "GkouAW-2Xkftzer3bBtHiW8GkaFL",
+            "entityId": "cb10369f-a47b-4e65-afb4-06e1ad78a648",
+            "timestamp": 1564614939000,
+            "entity": {
+                "environment": {
+                    "browserDetails": {}
+                },
+                "identityMap": {
+                    "CRMId": [
+                        {
+                            "id": "78520026455138218785449796480922109723",
+                            "primary": true
+                        }
+                    ]
+                },
+
+                "commerce": {
+                    "productViews": {
+                        "value": 1
+                    }
+                },
+                "productListItems": [
+                    {
+                        "name": "Red shoe",
+                        "quantity": 85,
+                        "storesAvailableIn": [
+                            "da6dced5-9574-4dda-89b5-9dc106903f80",
+                            "981bb433-2ee5-4db0-a19a-449ec9dbf39f"
+                        ],
+                        "SKU": "8f998279-797b-4da2-9e60-88bf73a9f15a",
+                        "priceTotal": 934.8
+                    }
+                ],
+                "_id": "cb10369f-a47b-4e65-afb4-06e1ad78a648",
+                "commerce": {
+                    "order": {}
+                },
+                "placeContext": {
+                    "geo": {
+                        "_schema": {}
+                    }
+                },
+                "device": {},
+                "timestamp": "2019-07-31T23:15:39Z",
+                "_experience": {
+                    "profile": {
+                        "identityNamespaces": {
+                            "/productListItems[*]/SKU": {
+                                "namespace": {
+                                    "code": "ECID"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "lastModifiedAt": "2019-10-10T00:14:19Z"
+        }
+    ],
+    "_links": {
+        "next": {
+            "href": ""
+        }
+    }
+}
+
+```
+### Access a subsequent page of results
+
+Results are paginated when retrieving time series events. If there are subsequent pages of results, the response's `_page.next` parameter will contain an ID. Additionally, the response's `_links.next.href` parameter provides a request URI for retrieving the subsequent page. 
+
 ## Access an exported segment
 
 You can access Profile data using criteria (or rules) by using the Segmentation Service. The Real-time Customer Profile API provides endpoints that allow you to create and test segment definitions, generate audience segments from those definitions, and export segments to persist in datasets. See the tutorial on [creating a segment using the Profile API](../creating_a_segment_tutorial/creating_a_segment_tutorial.md) for more information.
@@ -1098,12 +1207,12 @@ For general information on how GDPR applies to Experience Platform, see the [GDP
 The following workflow outlines how Privacy Service interacts with Platform components to ensure GDPR compliance:
 
 1. As part of good data hygiene, the data controller should curate and appropriately label all personal data that is ingested into Experience Platform. See the [Data Governance user guide](../../technical_overview/data_governance/dule_overview.md) for more information on working with data labels.
-1. When a data subject requests to access or delete their data, the data controller collects identities from the data subject, verifies that data, and submits it to Privacy Service.
-1. Privacy Service sends the request to Pipeline and confirms that it was accepted by returning a "processing" status.
-1. Privacy Service sends the request to Real-time Customer Profile.
-1. Profile either deletes all data for the given identity and all related identities, or gathers all uploaded file data associated with the identity.
-1. Profile sends the response back to Privacy Service, indicating the action and a status message of "complete" or "error".
-1. Privacy Service stores the response sent from Profile.
+2. When a data subject requests to access or delete their data, the data controller collects identities from the data subject, verifies that data, and submits it to Privacy Service.
+3. Privacy Service sends the request to Pipeline and confirms that it was accepted by returning a "processing" status.
+4. Privacy Service sends the request to Real-time Customer Profile.
+5. Profile either deletes all data for the given identity and all related identities, or gathers all uploaded file data associated with the identity.
+6. Profile sends the response back to Privacy Service, indicating the action and a status message of "complete" or "error".
+7. Privacy Service stores the response sent from Profile.
 
 ## Next steps
 
