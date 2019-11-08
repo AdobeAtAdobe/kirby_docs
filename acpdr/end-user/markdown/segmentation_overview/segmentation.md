@@ -37,7 +37,7 @@ For information on building segment definitions using the API, see the tutorial 
 
 Streaming segmentation is an ongoing data selection process that updates your segments in response to user activity. Once a segment has been built and saved, the segment definition is applied against incoming data on either Real-time Customer Profile or the edge service, depending on how the segment is activated (or used downstream). Segment additions and removals are processed regularly, ensuring your target audience remains relevant. 
 
-To learn more about streaming segmentation, please read the [streaming segmentation documentation](../../../api-specification/markdown/narrative/tutorials/segmentation/streaming_segmentation.md).
+To learn more about streaming segmentation, please read the [streaming segmentation documentation](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/tutorials/segmentation/streaming_segmentation.md).
 
 **Batch segmentation**
 
