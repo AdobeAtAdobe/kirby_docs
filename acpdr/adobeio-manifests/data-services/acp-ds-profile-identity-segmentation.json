@@ -68,7 +68,12 @@
 					"pages": [],
 					"path": "api-specification/markdown/narrative/tutorials/segmentation/multi_entity_segmentation.md",
 					"title": "Multi-entity segmentation"
-				}
+                }, 
+                {
+                    "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/segmentation/streaming_segmentation.md",
+                    "title" : "Streaming segmentation"
+                }
 			],
 			"path": "end-user/markdown/segmentation_overview/segmentation.md",
 			"title": "Segmentation Service overview"

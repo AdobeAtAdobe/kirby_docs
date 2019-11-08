@@ -47,6 +47,8 @@ The first step in segmentation is to define a segment, represented in a construc
 
 You can create a new segment definition by making a POST request to the `/segment/definitions` endpoint in the Real-time Customer Profile API. The following example outlines how to format a definition request, including what information is required in order for a segment to be defined successfully.
 
+Segment definitions can be evaluated in two ways - batch segmentation and streaming segmentation. Batch segmentation evaluates segments based on a preset schedule or when evaluation is manually triggered, whereas streaming segmentation evaluates segments as soon as data is ingested in Platform. This tutorial will be using **batch segmentation**. For more information on streaming segmentation, please read the [tutorial on streaming segmentation](../segmentation/streaming_segmentation.md).
+
 #### API format
 
 ```http

@@ -9,6 +9,7 @@ Adobe Experience Platform Segmentation Service provides a RESTful API and user i
 * [Containers](#containers): Control how segment rules are executed by using nested queries. 
 * [Segment properties](#segment-properties): Understand the resulting segment properties from the rules created on the rule builder canvas.
 * [Enabling scheduled segmentation](#enable-scheduled-segmentation): Organizations can enable segments to evaluate on a recurring schedule. 
+* [Enabling streaming segmentation](#enable-streaming-segmentation): Organizations can enable segments to evaluate as data is ingested.
 
 ## Getting started
 
@@ -160,11 +161,25 @@ Once segment definitions have been created, you can then evaluate them through o
 
 On-demand evaluation involves using the API to perform evaluation and build audiences as needed, whereas scheduled evaluation allows you to create a recurring schedule to evaluate segment definitions at a specific time (at a maximum, once daily).
 
-Enabling your segment definitions for scheduled evaluation can be done via the UI or the API. In the UI, return to the *Browse* tab within **Segments** and toggle on **Evaluate all segments**. This will cause all segments to be evaluated based on the schedule set by your organization. 
+Enabling your segment definitions for scheduled evaluation can be done using the UI or the API. In the UI, return to the *Browse* tab within **Segments** and toggle on **Evaluate all segments**. This will cause all segments to be evaluated based on the schedule set by your organization. 
 
 Schedules can currently only be created using the API. For detailed steps on creating, editing, and working with schedules using the API, please follow the tutorial on evaluating and accessing segment results, specifically the section on [scheduled evaluation using the API](../../../api-specification/markdown/narrative/tutorials/segmentation/evaluate_segment.md#scheduled-evaluation).
 
 ![](images/scheduled-segmentation.png)
+
+## Enable streaming segmentation
+
+>**Note:** Streaming segmentation is a beta feature, and will be available on request.
+
+Additionally, a segment definition can be enabled for streaming segmentation before or after it has been created. Streaming segmentation instantly evaluates a customer as soon as an event comes into a particular segment group. With this capability, most segment rules can now be evaluated as the data is passed into Platform, meaning segment membership will be kept up to date without running scheduled segmentation jobs. For more detailed information about streaming segmentation, please read the [streaming segmentation documentation](../../../api-specification/markdown/narrative/tutorials/segmentation/streaming_segmentation.md).
+
+Enabling your segment definitions for streaming can be done using the UI or the API. To enable a new segment definition for streaming in the UI, you need to toggle the *Streaming* option to **ON**. 
+
+![](images/enable-streaming-segmentation.png)
+
+Similarly, to enable an existing segment definition for streaming in the UI, you need to select the segment you want to enable for streaming, and then toggle the *Streaming* option to **ON**.
+
+![](images/enable-streaming-segmentation-existing-segment.png)
 
 ## Next steps
 
@@ -175,6 +190,7 @@ Segment Builder provides a rich workflow allowing you to isolate marketable audi
 * Use containers to control the order in which segment rules are executed.
 * View estimates of your prospective audiences, allowing you to adjust your segment definitions as required before creating the segment.
 * Enable all segments for scheduled segmentation.
+* Enable specified segments for streaming segmentation.
   
 For step-by-step instructions on how to work with segments using the Real-time Customer Profile API, see the [creating audience segments using APIs](../../../api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md) tutorial.
 
