@@ -465,7 +465,11 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/json-header'
+        - name: "Content-Type"
+          description: 'application/octet-stream'
+          required: true
+          type: string
+          in: header
         - name: "batchId"
           in: "path"
           required: true
