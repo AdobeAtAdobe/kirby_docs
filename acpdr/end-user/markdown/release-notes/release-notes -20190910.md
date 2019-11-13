@@ -1,47 +1,20 @@
 ---
 
 title: Adobe Experience Platform Release Notes
-description: Experience Platform release notes November 18, 2019
+description: Experience Platform release notes September 10, 2019
 doc-type: release notes
-last-update: November 18, 2019
-author: crhoades, ens28527
+last-update: September 13, 2019
+author: ens28527
 
 ---
 
 # Adobe Experience Platform release notes 
-
-## Release date: November 18, 2019
-
-New release:
-[Real-time Customer Data Platform](#real-time-customer-data-platform)
+## Release date: September 10, 2019
 
 Updates to existing features:
  *   [Data Ingestion](#data-ingestion)
  *   [Data Science Workspace](#data-science-workspace)
  *   [Query Service](#query-service)
-
-## Real-time Customer Data Platform
-
-Built on Adobe Experience Platform, the Adobe Real-time Customer Data Platform (real-time CDP) helps companies bring together known and unknown data to activate customer profiles with intelligent decisioning throughout the customer journey. Real-time CDP combines multiple enterprise data sources to create unified profiles in real time that can be used to provide one-to-one personalized customer experiences across all channels and devices.
-
-Real-time Customer Data Platform includes tools for data governance, identity management, advanced segmentation, and data science so that you can build profiles and define audiences, as well as derive rich insights while being able to enforce strict data governance policies.
-
-Adobe connects to a large ecosystem of partners, not to mention native integrations with Adobe Experience Cloud, so you can seamlessly activate these audiences and deliver great customer experiences across all channels, from on-site or in-app personalization to email, paid media, call centers, connected devices, and more.
-
-With Real-time CDP, you can:
-
-* Achieve a single view of your customer with streaming collection of customer data from across the enterprise.
-* Responsibly manage profiles with trusted governance and privacy controls for known and unknown identifiers.
-* Generate actionable insights and scale audiences with AI and machine learning powered by Adobe Sensei and built for marketers.
-* Deliver personalized experiences in realtime across all channels and destinations.
-
-### Key features
-
-|Feature|Description|
-|===|===|
-|Home page metrics dashboard|The Adobe Real-time Customer Data Platform (Real-time CDP) home page includes a metrics dashboardthat shows information about profiles and segments. The home page also contains links to learning materials.|
-| | |
-| | |
 
 ## Data Ingestion
 
