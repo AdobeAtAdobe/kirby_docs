@@ -183,6 +183,13 @@
           "path": "api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_edge_tutorial.md",
           "title": "Configure edge destinations and projections using the API",
           "description": "Configure Edge Service by creating projection configurations and the destinations they route to, as used by Projection Service."
+        },
+        {
+          "importedFileName": "computed-attributes-tutorial",
+          "pages": [],
+          "path": "api-specification/markdown/narrative/tutorials/computed_attributes/computed-attributes-tutorial.md",
+          "title": "Configure and access computed attributes",
+          "description": "Computed attributes enable you to automatically compute the value of fields based on other values, calculations, and expressions. Computed attributes operate on the profile level, meaning you can aggregate values across all records and events."
         }
       ]
     },
