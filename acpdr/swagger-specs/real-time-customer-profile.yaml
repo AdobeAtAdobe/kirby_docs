@@ -1,5 +1,7 @@
 swagger: '2.0'
 info:
+  version: '1.0'
+  title: Real-time Customer Profile API
   description: >-
     Real-time Customer Profile enables you to drive coordinated, consistent, and relevant experiences for your customers no matter where or when they interact with your brand. Profile provides a holistic view of each individual customer that combines data from multiple channels, including online, offline, CRM, and third-party data.
     
@@ -30,14 +32,14 @@ info:
       
     Required headers:
       * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+      * All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information.
       * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
 
-  version: '1.0'
-  title: Real-time Customer Profile API
 host: platform.adobe.io
 basePath: /data/core/ups
 tags:
-  
+  - name: Computed Attributes
+    description: Computed attributes enable a field value to be automatically computed based on other values, calculations, and expressions.
   - name: Entities
     description: "Entities are Experience Data Model (XDM) objects whose attributes, data contents, and related time-series events have been merged from various sources by Real-time Customer Profile."
   - name: Estimates
@@ -66,6 +68,140 @@ tags:
     description: "Segment jobs process previously established segment definitions against your profile store to generate an audience segment."
 
 paths:
+  '/config/computedAttributes':
+    get:
+      tags:
+        - Computed Attributes
+      summary: Retrieve a list of computed attributes.
+      description: ''
+      operationId: listComputedAttributes
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name' 
+      responses:
+        '200':
+          description: Returns a list of computed attributes
+          schema:
+            $ref: '#/definitions/listComputedAttributes'
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+    post:
+      tags:
+        - Computed Attributes
+      summary: Create a computed attribute.
+      description: >- 
+        In order to configure a computed attribute, you first need to identify the field that will hold the computed attribute value. This field can be created using a mixin to add a new field to an existing schema, or by selecting a field that you have already defined within a schema.
+
+
+        **Note:** Computed attributes cannot be added to fields within Adobe-defined mixins, the field must be within the tenant namespace ({TENANT_ID}), meaning it must be a field that you define and add to a schema.
+
+
+        In order to successfully define a computed attribute field, the schema must be enabled for Profile and appear as part of the union schema for the class upon which the schema is based. For more information, see the [tutorial for configuring and accessing computed attributes](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/computed_attributes/computed-attributes-tutorial.md).
+      operationId: createComputedAttribute
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/createComputedAttribute'
+      responses:
+        '200':
+          description: Returns the details of the newly created computed attribute
+          schema:
+            $ref: '#/definitions/computedAttributeResponse'
+        '400':
+          description: >- 
+            Bad Request. Common examples include:
+              * "Function with the same name already exists for the specified schema or definedOn"
+              * "Could not lookup schema of the computed attribute for the provided path"
+              * "Return schema of the expression is not same as the schema of the computed attribute in the XDM schema".
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+  '/config/computedAttributes/{ATTRIBUTE_ID}':
+    get:
+      tags:
+        - Computed Attributes
+      summary: Retrieve a specific computed attribute by its ID.
+      description: ''
+      operationId: lookupComputedAttribute
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/attribute-id'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name' 
+      responses:
+        '200':
+          description: Returns the details of the computed attribute
+          schema:
+            $ref: '#/definitions/computedAttributeResponse'
+        '404':
+          description: Computed attribute not found
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+    patch:
+      tags:
+        - Computed Attributes
+      summary: Update a computed attribute by its ID.
+      description: ''
+      operationId: updateComputedAttribute
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/attribute-id'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name' 
+        - $ref: '#/parameters/computedAttributeUpdate'
+      responses:
+        '204':
+          description: Returns HTTP Status 204 (No Content) and an empty response body
+        '404':
+          description: Computed attribute not found
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+    delete:
+      tags:
+        - Computed Attributes
+      summary: Delete a computed attribute by its ID.
+      description: ''
+      operationId: deleteComputedAttribute
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/attribute-id'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name' 
+      responses:
+        '200':
+          description: Returns HTTP Status 200 (OK) and an empty response body
+        '404':
+          description: Computed attribute not found
+        '422':
+          description: Cannot perform delete as some other functions are dependent on this function.
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
   '/config/mergePolicies':
     get:
       tags:
@@ -2543,7 +2679,7 @@ paths:
           description: There was issue reading schedules from database
         '503':
           description: Service Unavailable
-  '/schedules/{SCHEDULE_ID}':
+  '/config/schedules/{SCHEDULE_ID}':
     get:
       tags:
       - Schedules
@@ -2631,6 +2767,186 @@ paths:
         '503':
           description: Service Unavailable
 definitions:
+  listComputedAttributes:
+    type: object
+    properties:
+      "_page":
+        type: object
+        properties:
+          totalCount:
+            type: integer
+            example: 1
+          pageSize: 
+            type: integer
+            example: 1
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/computedAttributeResponse'
+      "_links":
+        type: object
+        properties:
+          next:
+            type: object
+  createComputedAttribute:
+    type: object
+    required:
+      - name
+      - path
+      - expression
+      - schema
+    properties:
+      name:
+        type: string
+        example: "birthdayCurrentMonth"
+      path:
+        type: string
+        example: "_{TENANT_ID}"
+      description:
+        type: string
+        example: "Computed attribute to capture customer birthday in the current month."
+      expression:
+        type: object
+        description: A valid Profile Query Language (PQL) expression.
+        properties:
+          type:
+            type: string
+            example: PQL
+          format:
+            type: string
+            example: "pql/text"
+          value:
+            type: string
+            example: "person.birthDate.getMonth() = currentMonth()"
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            example: "_xdm.context.profile"
+  computedAttributeResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        example: "2afcf410-450e-4a39-984d-2de99ab58877"
+      imsOrgId:
+        type: string
+        example: "{IMS_ORG}"
+      sandbox:
+        type: object
+        properties:
+          sandboxId: 
+            type: string
+            example: "ff0f6870-c46d-11e9-8ca3-036939a64204"
+          sandboxName: 
+            type: string
+            example: "prod"
+          type: 
+            type: string
+            example: "production"
+          default: 
+            type: boolean
+            example: true
+      name:
+        type: string
+        example: "birthdayCurrentMonth"
+      path:
+        type: string
+        example: "_{TENANT_ID}"
+      positionPath:
+        type: array
+        items:
+          type: string
+          example: ["_{TENANT_ID}"]
+      description:
+        type: string
+        example: "Computed attribute to capture customer birthday in the current month."
+      expression:
+        type: object
+        description: A valid Profile Query Language (PQL) expression.
+        properties:
+          type:
+            type: string
+            example: PQL
+          format:
+            type: string
+            example: "pql/text"
+          value:
+            type: string
+            example: "person.birthDate.getMonth() = currentMonth()"
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            example: "_xdm.context.profile"
+      returnSchema:
+        type: object
+        properties:
+          "meta:xdmType":
+            type: string
+            example: string
+      definedOn: 
+        type: array
+        items:
+          type: object
+          properties:
+            "meta:resourceType": 
+              type: string
+              example: "unions"
+            "meta:containerId":
+              type: string
+              example: "tenant"
+            "$ref": 
+              type: string
+              example: "https://ns.adobe.com/xdm/context/profile__union"
+      encodedDefinedOn:
+        type: string
+        example: "?\b?VR)JMS?R?())(????+?KL?OJ?K???H??O??+I?(?/(?O??I??/????S?8{?E:"
+      dependencies: 
+        type: array
+        items:
+          type: string
+      dependents: 
+        type: array
+        items:
+          type: string
+      active: 
+        type: boolean
+        example: true
+      type: 
+        type: string
+        example: "ComputedAttribute"
+      createEpoch: 
+        type: integer
+        example: 1572555223
+      updateEpoch: 
+        type: integer
+        example: 1572555225
+  updateComputedAttribute:
+    type: array
+    items:
+      type: object
+      properties:
+        op:
+          type: string
+          example: add
+        path:
+          type: string
+          example: "/expression"
+        value:
+          type: object
+          properties:
+            type:
+              type: string
+              example: PQL
+            format:
+              type: string
+              example: "pql/text"
+            value:
+              type: string
+              example: "{VALID_PQL_EXPRESSION}"
   MacrosResponse:
     type: object
     required:
@@ -4046,6 +4362,41 @@ parameters:
     required: true
     type: string
     in: header
+  createComputedAttribute:
+    in: body
+    name: body
+    description: >-
+      A JSON obect containing the details of the computed attribute being created.
+      
+      * **name: (Required)** The name of the computed attribute field, as a string.
+      
+      * **path: (Required)** The path to the computed attributed field within a schema. This path is found within the 'properties' attribute of the schema, but it omits the layers of 'properties' when writing the path. It also omits the field name itself. For example, if the computed attribute path is a.b.c, the "name" is "c" and the "path" is "a.b".
+        * **{TENANT_ID}:** If you are unfamiliar with your tenant ID, please refer to the steps for finding your tenant ID in the [Schema Registry developer guide](https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/schema_registry_developer_guide.md#know-your-tenant_id)
+      * **description:** *(Optional)* A description of the computed attribute. This is especially useful once multiple computed attributes have been defined as it will help others within your IMS Organization to determine the correct computed attribute to use.
+      
+      * **expression: (Required)** A valid Profile Query Language (PQL) expression. For more information on PQL and links to supported queries, please read the [PQL overview documentation](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_pql.md).
+      
+      * **schema.name: (Required)** The class upon which the schema containing the computed attribute field is based. For example, if the schema was based on the XDM ExperienceEvent class, the value would be '_xdm.context.experienceevent'.
+    required: true
+    schema:
+      $ref: '#/definitions/createComputedAttribute'
+  attribute-id:
+    name: ATTRIBUTE_ID
+    description: The unique, read-only ID of the computed attribute that is generated by the system when the attribute is created.
+    required: true
+    type: string
+    in: path
+  computedAttributeUpdate:
+    name: body
+    description: >-
+      Use [JSON Patch formatting](http://jsonpatch.com/) to update the computed attribute.
+      
+      
+      The "value" must be a valid Profile Query Language (PQL) expression. For more information on PQL and links to supported queries, please read the [PQL overview documentation](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_pql.md).
+    required: true
+    in: body
+    schema:
+      $ref: '#/definitions/updateComputedAttribute'
   segment-body: 
     in: body
     name: body
@@ -4061,7 +4412,7 @@ parameters:
       `ttlInDays` - number
     required: true
     schema:
-      "$ref": "#/definitions/SegmentDefinition"
+      $ref: '#/definitions/SegmentDefinition'
   x-request-id:
     name: x-request-id
     in: header
