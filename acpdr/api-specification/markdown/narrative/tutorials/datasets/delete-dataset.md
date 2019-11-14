@@ -13,7 +13,7 @@ This tutorial includes the following operations:
 
 ## Getting started
 
-This tutorial requires a working understanding of the various Adobe Experience Platform services involved in creating audience segments. Before beginning this tutorial, please review the documentation for the following services:
+This tutorial requires a working understanding of the various Adobe Experience Platform services involved in working with datasets. Before beginning this tutorial, please review the documentation for the following services:
 
 * [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, customer profile in real-time based on aggregated data from multiple sources.
 * [Data Ingestion](https://www.adobe.io/apis/experienceplatform/home/data-ingestion.html): The ability to bring data into Platform via batch ingestion, streaming ingestion, and third-party data connectors.
@@ -276,7 +276,7 @@ Experience Platform allows you to delete a previous request, which may be useful
 #### API format
 
 ```http
-DELETE /system/jobs
+DELETE /system/jobs/{DELETE_REQUEST_ID}
 ```
 
 #### Request
