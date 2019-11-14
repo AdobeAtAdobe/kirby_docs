@@ -19,6 +19,8 @@ info:
       * [Work with merge policies using APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md)
       * [Create segments using APIs](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md)
       * [Evaluate and access segment results](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/segmentation/evaluate_segment.md)
+      * [Configure and access computed attributes](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/computed_attributes/computed-attributes-tutorial.md)
+      * [Delete a dataset or specific batch in a dataset](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/datasets/delete-dataset.md)
 
     Visualize API calls with Postman (a free, third-party software):
       * [Real-time Customer Profile API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Real-time%20Customer%20Profile%20API.postman_collection.json)
@@ -56,6 +58,8 @@ tags:
     description: "Previews provide paginated lists of qualifying profiles for a segment definition."
   - name: PQL conversions
     description: "Convert Profile Query Language (PQL) formatting between `pql/json` and `pql/text`."
+  - name: Profile System Jobs
+    description: Profile System Jobs allow you to delete profile fragments for a given dataset or batch.
   - name: Projection configurations
     description: Edge projection configurations determine what data should be projected to each edge.
   - name: Projection destinations
@@ -2766,6 +2770,153 @@ paths:
           description: Schedule not found
         '503':
           description: Service Unavailable
+  '/system/jobs':
+    get:
+      tags:
+        - Profile System Jobs
+      summary: Retrieve a list of all delete requests (Profile System Jobs) created by your organization.
+      description: ''
+      operationId: listDeleteRequests
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name' 
+        - $ref: '#/parameters/start'
+        - $ref: '#/parameters/limit'
+        - name: page
+          in: query
+          description: Return a specific page of results, as per the create time of the request. For example, `page=0`
+          required: false
+          type: integer
+        - name: sort
+          in: query
+          description: Sort results by a specific field in ascending (`asc`) or descending (`desc`) order. The sort parameter does not work when returning multiple pages of results. For example, `sort=batchId:asc`
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Returns a list of all delete requests (Profile System Jobs) defined by your organization.
+          schema:
+            "$ref": "#/definitions/ProfileSystemJobsResponse"
+        '403':
+          description: Forbidden
+        '503':
+          description: Service Unavailable
+        '500':
+          description: Internal Server Error
+    post:
+      tags:
+        - Profile System Jobs
+      summary: Create a delete request (Profile System Job)
+      description: >-
+        Initiating a new delete request is done through a POST request to the `/systems/jobs` endpoint, where the ID of the dataset or batch to be deleted is provided in the body of the request.
+        
+          In order to delete a dataset, the dataset ID must be included in the body of the POST request. This action will delete ALL data for a given dataset. Experience Platform allows you to delete datasets based on both record and time series schemas.
+          
+          In order to delete a batch, the batch ID must be included in the body of the POST request. Please be advised that you cannot delete batches for datasets based on record schemas. Only batches for datasets based on time series schemas may be deleted. 
+
+          **Note:** The reason you cannot delete batches for datasets based on record schemas is because record type dataset batches overwrite previous records and therefore cannot be "undone" or deleted. The way to remove the impact of erroneous batches for datasets based on record schemas is to reingest the batch with the correct data and it will overwrite the incorrect records. 
+          
+          For more information on record and time series behavior, please review the section on XDM data behaviors in the [XDM System overview](https://www.adobe.io/apis/experienceplatform/home/xdm/xdmservices.html#!api-specification/markdown/narrative/technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md).
+      operationId: createDeleteRequest
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'
+        - name: body
+          in: body
+          description: >-
+            A JSON object containing the ID of the dataset or batch to be deleted.
+            
+            **Example for batch ID:**
+            
+            <pre>{
+              "batchId": "8d075b5a178e48389126b9289dcfd0ac"
+            }</pre>
+          required: true
+          schema:
+              "$ref": "#/definitions/XdmDataJobPostBodyWithDataSetId"
+      responses:
+        '200':
+          description: Delete request (Profile System Job) successfully created
+          schema:
+            "$ref": "#/definitions/ProfileSystemJob"
+        '400':
+          description: Invalid delete request (Profile System Job)
+        '403':
+          description: Forbidden
+        '422':
+          description: Delete request (Profile System Job) Definition already exists.
+        '503':
+          description: Service Unavailable
+        '500':
+          description: Internal Server Error
+  '/system/jobs/{ID}':
+    get:
+      tags:
+        - Profile System Jobs
+      summary: 'View a specific delete request (Profile System Job) by its ID.'
+      description: ''
+      operationId: viewDeleteRequest
+      produces:
+        - application/json
+      parameters:
+        - name: ID
+          in: path
+          description: ID of the delete request (Profile System Job) that you wish to view. For example, '3e64ad31-5e6b-4399-80ad-ccfab54254ae'.
+          required: true
+          type: string
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+      responses:
+        '200':
+          description: Returns the details of a specific delete request (Profile System Job).
+          schema:
+            $ref: '#/definitions/ProfileSystemJob'
+        '403':
+          description: Forbidden
+        '404':
+          description: Delete request (Profile System Job) not found
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+    delete:
+      tags:
+        - Profile System Jobs
+      summary: Remove a specific delete request (Profile System Job) by its ID.
+      description: ''
+      operationId: deleteDeleteRequest
+      produces:
+        - application/json
+      parameters:
+        - name: ID
+          in: path
+          description: ID of the delete request (Profile System Job) that you wish to view. For example, '3e64ad31-5e6b-4399-80ad-ccfab54254ae'.
+          required: true
+          type: string
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+      responses:
+        '200':
+          description: If removal is successful, returns HTTP Status 200 (OK) and an empty response body.
+        '403':
+          description: Forbidden
+        '404':
+          description: Delete request (Profile System Job) not found
+        '503':
+          description: Service Unavailable
 definitions:
   listComputedAttributes:
     type: object
@@ -4336,6 +4487,82 @@ definitions:
         example: active
         description: the new value used to update the specified attribute
     description: Patch operation
+  ProfileSystemJobsResponse:
+    type: object
+    required:
+      - _page
+      - children
+    properties:
+      _page:
+        $ref: '#/definitions/SystemJobsPage'
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/ProfileSystemJob'
+  SystemJobsPage:
+    type: object
+    required:
+      - count
+    properties:
+      count:
+        type: number
+        example: 100
+        description: number of ProfileSystemJobsDefinition per page
+      next:
+        type: string
+        example: K1JJRDpFaWc5QUwyZFgtMEpBQUFBQUFBQUFBPT0jUlQ6MSNUUkM6MiNGUEM6QWdFQUFBQVFBQWZBQUg0Ly9yL25PcmpmZndEZUR3QT0=
+        description: page offset
+  XdmDataJobPostBodyWithDataSetId:
+    type: object
+    properties:
+      dataSetId:
+        type: string
+        example: "5cf212ed73fbff145365d15d"
+        description: dataSetId      
+  ProfileSystemJob:
+    type: object
+    properties:
+      id:
+        type: string
+        example: "9c2018e2-cd04-46a4-b38e-89ef7b1fcdf4"
+        description: ProfileSystemJob or delete request ID
+      imsOrgId:
+        type: string
+        example: "{IMS_ORG}"
+        description: ims org id
+      dataSetId:
+        type: string
+        example: 5cf212ed73fbff145365d15d
+        description: dataset Id
+      batchId:
+        type: string
+        example: 5cf212ed73fbff145365d15d
+        description: batch Id
+      jobType:
+        type: string
+        example: DELETE
+        description: Type of Profile System Job
+      status:
+        type: string
+        enum:
+          - NEW
+          - PROCESSING
+          - COMPLETED
+          - ERROR
+        example: NEW
+        description: Status of Profile System Job
+      metrics:
+        type: string
+        example: '{\"recordsProcessed\":727109,\"timeTakenInSec\":50}'
+        description: Rum time metrics of Profile System Job
+      createEpoch:
+        type: integer
+        example: 1234567890
+        description: create timestamp
+      updateEpoch:
+        type: integer
+        example: 1234567890
+        description: update timestamp
 parameters:
   authorization:
     name: Authorization
