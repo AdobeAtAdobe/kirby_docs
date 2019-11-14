@@ -53,6 +53,13 @@
       "description": "Create a dataset based on a pre-configured schema using Catalog and Data Ingestion APIs."
     },
     {
+      "importedFileName": "delete-dataset",
+      "pages": [],
+      "path": "api-specification/markdown/narrative/tutorials/datasets/delete-dataset.md",
+      "title": "Delete a dataset or batch",
+      "description": "Step-by-step instructions for deleting a dataset, or an individual batch from within a dataset, to remove data from Platform that you no longer require."
+    },
+    {
       "importedFileName": "map-csv-to-xdm",
       "pages": [],
       "path": "api-specification/markdown/narrative/tutorials/map-csv-to-xdm/map-csv-to-xdm.md",
