@@ -46,13 +46,15 @@ All POST, PUT, and PATCH requests require an additional header:
 
 Once you have developed, tested, and saved your segment definition, you can then evaluate the segment through either scheduled evaluation or on-demand evaluation.
 
-[Scheduled evaluation](#scheduled-evaluation) allows you to create a recurring schedule for running an export job at a specific time, whereas [on-demand evaluation](#on-demand-evaluation) involves creating a segment job to build the audience immediately. Steps for each are outlined below.
+[Scheduled evaluation](#scheduled-evaluation) (also known as 'scheduled segmentation') allows you to create a recurring schedule for running an export job at a specific time, whereas [on-demand evaluation](#on-demand-evaluation) involves creating a segment job to build the audience immediately. Steps for each are outlined below.
 
 If you have not yet completed the [Create a segment using the Real-time Customer Profile API](../creating_a_segment_tutorial/creating_a_segment_tutorial.md) tutorial or created a segment definition using [Segment Builder](../../../../../end-user/markdown/segmentation_overview/segment-builder-guide.md), please do so before proceeding with this tutorial.
 
 ## Scheduled evaluation
 
 Through scheduled evaluation, your IMS Org can create a recurring schedule to automatically run export jobs.
+
+> **Note:** Scheduled evaluation can be enabled for sandboxes with a maximum of five (5) merge policies for XDM Individual Profile. If your organization has more than five merge policies for XDM Individual Profile within a single sandbox environment, you will not be able to use scheduled evaluation.
 
 ### Create a schedule
 

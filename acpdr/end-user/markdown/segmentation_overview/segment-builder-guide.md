@@ -159,9 +159,11 @@ You can create merge policies for your organization using the user interface. Fo
 
 Once segment definitions have been created, you can then evaluate them through on-demand or scheduled (continuous) evaluation. Evaluation means moving Real-time Customer Profile data through segment definitions in order to produce corresponding audience segments. Once created, the audience segments are saved and stored so that they can be exported using Experience Platform APIs. 
 
-On-demand evaluation involves using the API to perform evaluation and build audiences as needed, whereas scheduled evaluation allows you to create a recurring schedule to evaluate segment definitions at a specific time (at a maximum, once daily).
+On-demand evaluation involves using the API to perform evaluation and build audiences as needed, whereas scheduled evaluation (also known as 'scheduled segmentation') allows you to create a recurring schedule to evaluate segment definitions at a specific time (at a maximum, once daily).
 
-Enabling your segment definitions for scheduled evaluation can be done using the UI or the API. In the UI, return to the *Browse* tab within **Segments** and toggle on **Evaluate all segments**. This will cause all segments to be evaluated based on the schedule set by your organization. 
+Enabling your segment definitions for scheduled evaluation can be done using the UI or the API. In the UI, return to the *Browse* tab within **Segments** and toggle on **Evaluate all segments**. This will cause all segments to be evaluated based on the schedule set by your organization.
+
+> **Note:** Scheduled evaluation can be enabled for sandboxes with a maximum of five (5) merge policies for XDM Individual Profile. If your organization has more than five merge policies for XDM Individual Profile within a single sandbox environment, you will not be able to use scheduled evaluation.
 
 Schedules can currently only be created using the API. For detailed steps on creating, editing, and working with schedules using the API, please follow the tutorial on evaluating and accessing segment results, specifically the section on [scheduled evaluation using the API](../../../api-specification/markdown/narrative/tutorials/segmentation/evaluate_segment.md#scheduled-evaluation).
 
