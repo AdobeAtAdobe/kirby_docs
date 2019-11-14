@@ -1,25 +1,30 @@
-# GDPR in Adobe Experience Platform
+# Privacy request processing in Adobe Experience Platform
 
-Adobe Experience Platform Privacy Service provides a method to submit both access and delete requests by the data controller as delineated by privacy regulations such as the General Data Protection Regulation (GDPR).
+Adobe Experience Platform Privacy Service provides a method to submit both access and delete requests by the data controller as delineated by privacy regulations such as the General Data Protection Regulation (GDPR) and California Consumer Privacy Act (CCPA).
 
-GDPR job requests can be submitted to Adobe Experience Platform using the [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service UI](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md). There are two different data stores on Experience Platform where requests are to be processed:
+Privacy Service receives customer data access and delete requests (referred to as "privacy jobs" in this document) from Experience Platform through either the [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service UI](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md). There are two different data stores on Experience Platform where privacy job requests can be processed:
 
-* Data lake
-* Real-time Customer Profile 
+- Data Lake
+- Real-time Customer Profile
 
-This document describes how data needs to be set up by the customer for Adobe Experience Platform in order to process GDPR job requests.
+This document describes how to format and label your datasets in Experience Platform in order for Privacy Service to process access/delete requests from your customers. The following topics are covered:
 
-## Understanding Real-time Customer Profile and Identity Service
+- [Understanding identity namespaces](#understanding-identity-namespaces)
+- [Labeling data fields with privacy namespaces](#labeling-data-fields-with-privacy-namespaces)
+- [Submitting requests](#submitting-requests)
+- [Delete request processing](#delete-request-processing)
 
-Data access and delete requests for [Real-time Customer Profile](../unified_profile_architectural_overview/unified_profile_architectural_overview.md) data is facilitated by Adobe Experience Platform Identity Service.
+## Understanding identity namespaces
 
-Identity Service honors namespaces that are registered with the Identity core service for your IMS Organization. A list of standard namespaces are available for all organizations (for example, "Email" and "ECID"). Additionally, custom namespaces can be created for the organization. For more information about identity namespaces in Experience Platform, see the [identity namespace overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_namespace_overview/identity_namespace_overview.md). To learn more about how to associate identities when sending data to Platform, please refer to the [Identity Service overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md).
+[Adobe Experience Platform Identity Service](../identity_services_architectural_overview/identity_services_architectural_overview.md) bridges customer identity data across systems and devices. Identity Service honors **identity namespaces** which serve as indicators of the context to which an identity relates, such as a value of "someone<i></i>@somewhere.com" being an email address, or "443522" as a numeric ID used by a particular CRM. 
 
-If data ingested into Profile has an associated identity namespace, Profile can process a GDPR request in the appropriate format against that data, as shown in the section on “Submitting requests” below.
+Identity namespaces are registered with the Identity core service for your IMS Organization. A list of standard namespaces are available for all organizations (for example, "Email" and "ECID"), while your organization can also create custom namespaces to suit its particular needs. If data ingested into [Real-time Customer Profile](../unified_profile_architectural_overview/unified_profile_architectural_overview.md) has an associated identity namespace, Profile can process a privacy job request in the appropriate format against that data.
 
-## Labeling data fields with GDPR namespaces
+For more information about identity namespaces in Experience Platform, see the [identity namespace overview](../identity_namespace_overview/identity_namespace_overview.md).
 
-In order for the data lake to process GDPR requests, any relevant data fields in Platform datasets must be labeled with appropriate GDPR namespaces with which you expect to send GDPR requests. This section demonstrates how to add a GDPR namespace to a dataset.
+## Labeling data fields with privacy namespaces
+
+In order for the Data Lake to process privacy requests, any relevant data fields in Platform datasets must be labeled with appropriate privacy namespaces with which you expect to send privacy requests. This section demonstrates how to add a privacy namespace to a dataset.
 
 Consider the following dataset:
 
@@ -95,7 +100,9 @@ Consider the following dataset:
 }
 ```
 
-The `schemaMetadata` property for the dataset contains a `gdpr` array, which is currently empty. To add GDPR namespaces to the dataset, this array must be updated using a PATCH operation to the [Catalog Service API](../../../../../../acpdr/swagger-specs/catalog.yaml).
+The `schemaMetadata` property for the dataset contains a `gdpr` array, which is currently empty. To add privacy namespaces to the dataset, this array must be updated using a PATCH operation to the [Catalog Service API](../../../../../../acpdr/swagger-specs/catalog.yaml).
+
+> **Note:** Although the array is named `gdpr`, adding namepaces to it will allow for privacy job requests for both GDPR and CCPA regulations.
 
 #### API format
 
@@ -148,7 +155,7 @@ curl -X PATCH 'https://platform.adobe.io/data/foundation/catalog/dataSets/5d8e9c
 
 #### Response
 
-A successful response returns HTTP status 200 (OK) with the ID of the dataset provided in the payload. Using the ID to lookup the dataset again reveals that the GDPR namespaces has been added.
+A successful response returns HTTP status 200 (OK) with the ID of the dataset provided in the payload. Using the ID to lookup the dataset again reveals that the privacy namespaces have been added.
 
 ```json
 [
@@ -156,6 +163,62 @@ A successful response returns HTTP status 200 (OK) with the ID of the dataset pr
 ]
 ```
 
+### Labeling nested map-type fields
+
+In order for Privacy Service to maintain optimal performance and respond to requests within appropriate legal timelines, there are two kinds of nested map-type fields that are not supported:
+
+* A map-type field within an array-type field
+* A map-type field within another map-type field
+
+Making privacy job requests on either of two examples above will eventually fail. For this reason, it is recommended that you avoid using nested map-type fields to store private customer data. Relevant consumer IDs should be stored as a non-map datatype within a profile's `identityMap` (itself a map-type field), or the `endUserID` field of an ExperienceEvent.
+
 ## Submitting requests 
 
-Privacy Service provides a RESTful API and user interface that allow you to submit GDPR job requests to Adobe Experience Platform. Please refer to the [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service UI](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md) documentation for information about how to submit and monitor of GDPR job requests.
+Privacy Service provides a RESTful API and user interface that allow you to submit privacy job requests to Adobe Experience Platform. Please refer to the [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service UI](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md) documentation for information about how to submit and monitor of privacy job requests.
+
+When creating job requests in the API, be sure to provide the product values for Data Lake ("aepDataLake") and/or Real-time Customer Profile ("ProfileService") within the `include` array in the request payload, as shown below.
+
+```shell
+curl -X POST \
+  https://platform.adobe.io/data/core/privacy/jobs \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -d '{
+    "companyContexts": [
+      {
+        "namespace": "imsOrgID",
+        "value": "{IMS_ORG}"
+      }
+    ],
+    "users": [
+      {
+        "key": "user12345",
+        "action": ["access","delete"],
+        "userIDs": [
+          {
+            "namespace": "email",
+            "value": "ajones@acme.com",
+            "type": "standard"
+          }
+        ]
+      }
+    ],
+    "include": ["aepDataLake", "ProfileService"],
+    "expandIds": false,
+    "priority": "normal",
+    "analyticsDeleteMethod": "anonymize",
+    "regulation": "ccpa"
+}'
+```
+
+When creating job requests in the UI, be sure to select "AdobeCloudPlatform" and/or "Profile Service" under _Products_ to access/delete data stored in the Data Lake or Real-time Customer Profile, respectively.
+
+<img src='images/product-values.png' width=450><br>
+
+## Delete request processing
+
+When Experience Platform receives a data delete request, Platform sends confirmation to Privacy Service that the request has been received and affected data has been marked for deletion. The records are then removed from the Data Lake within seven days. During that seven-day window, the data is soft-deleted and is therefore not accessible by any Platform service.
+
+In future releases, Platform will send confirmation to Privacy Service after data has been physically deleted.
