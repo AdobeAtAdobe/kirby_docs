@@ -1,17 +1,17 @@
 # Create a dataset using APIs
 
-This tutorial walks through the steps to create a dataset using Adobe Experience Platform APIs, and populate the dataset using a file. If you are trying to create and populate a dataset using a connector, see the documentation on [creating a connector](../creating_a_connector_tutorial/creating_a_connector_tutorial.md).
+This tutorial walks through the steps to create a dataset using Adobe Experience Platform APIs, and populate the dataset using a file.
 
 The following steps are covered:
 
 1. [Lookup a dataset schema](#lookup-dataset-schema)
-1. [Create a dataset](#create-a-dataset) based on the schema
-1. [Create a batch](#create-a-batch) for uploading data into the dataset
-1. [Upload files](#upload-files-to-a-batch) to the batch
-1. [Signal to the server that the batch has been completed](#signal-batch-completion)
-1. [Monitor data ingestion](#monitor-ingestion) for a batch
-1. Verify that the operation was successful by [reading back the data in the dataset](#read-data-from-the-dataset)
-1. (Optional) [Update the dataset schema](#update-the-dataset-schema) to ingest additional data into an existing dataset
+2. [Create a dataset](#create-a-dataset) based on the schema
+3. [Create a batch](#create-a-batch) for uploading data into the dataset
+4. [Upload files](#upload-files-to-a-batch) to the batch
+5. [Signal to the server that the batch has been completed](#signal-batch-completion)
+6. [Monitor data ingestion](#monitor-ingestion) for a batch
+7. Verify that the operation was successful by [reading back the data in the dataset](#read-data-from-the-dataset)
+8. (Optional) [Update the dataset schema](#update-the-dataset-schema) to ingest additional data into an existing dataset
 
 ## Getting started
 
