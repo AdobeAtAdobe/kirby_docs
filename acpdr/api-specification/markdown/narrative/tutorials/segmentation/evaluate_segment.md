@@ -581,7 +581,7 @@ curl -X POST \
   * `id`: The ID of the merge policy.
   * `version`: The specific version of the merge policy to use. Omitting this value will default to the most recent version.
 * `filter`: *(Optional)* Specifies one or more of the following filters to apply to the segment before export:
-  * `segments`: *(Optional)* Specifies the segments to export. Omitting this value will result in all data from all segments being exported. Accepts an array of segment objects, each containing the following fields:
+  * `segments`: *(Optional)* Specifies the segments to export. Omitting this value will result in all data from all profiles being exported. Accepts an array of segment objects, each containing the following fields:
     * `segmentId`: **(Required if using `segments`)** Segment ID for profiles to be exported.
     * `segmentNs`: *(Optional)* Segment namespace for the given `segmentID`.
     * `status`: *(Optional)* An array of strings providing a status filter for the `segmentID`. By default, `status` will have the value `["realized", "existing"]` which represents all profiles that fall into the segment at the current time. Possible values include: `"realized"`, `"existing"`, and `"exited"`.
@@ -591,7 +591,7 @@ curl -X POST \
   * `fromIngestTimestamp`: *(Optional)* Limits exported profiles to only include those that have been updated after this timestamp. The timestamp must be provided in [RFC 3339](https://tools.ietf.org/html/rfc3339) format.
     * `fromIngestTimestamp` for **profiles**, if provided: Includes all the merged profiles where merged updated timestamp is greater than the given timestamp. Supports `greater_than` operand.
     * `fromTimestamp` for events: All events ingested after this timestamp will be exported corresponding to resultant profile result. This is not the event time itself but the ingestion time for the events.
-  * `emptyProfiles` - *(Optional)* Boolean. Profiles can contain profile fragments, ExperienceEvent fragments, or both. Profiles with no profile fragments and only ExperienceEvent fragments are referred to as "emptyProfiles". To export all profiles in the profile store, including the "emptyProfiles", set the value of `emptyProfiles` to `true`. If `emptyProfiles` is set to `false`, only profiles with profile fragments in the store are exported. By default, if `emptyProfiles` attribute is not included, only profiles containing profile fragments are exported.
+  * `emptyProfiles` - *(Optional)* Boolean. Profiles can contain Profile records, ExperienceEvent records, or both. Profiles with no Profile records and only ExperienceEvent records are referred to as "emptyProfiles". To export all profiles in the Profile store, including the "emptyProfiles", set the value of `emptyProfiles` to `true`. If `emptyProfiles` is set to `false`, only profiles with Profile records in the store are exported. By default, if `emptyProfiles` attribute is not included, only profiles containing Profile records are exported.
 * `additionalFields.eventList`: *(Optional)* Controls the time series event fields exported for child or associated objects by providing one or more of the following settings:
   * `eventList.fields`: Control the fields to export.
   * `eventList.filter`: Specifies criteria that limits the results included from associated objects. Expects a minimum value required for export, typically a date.

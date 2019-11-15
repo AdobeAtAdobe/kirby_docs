@@ -171,6 +171,13 @@
           "description": "Learn multiple ways to access Profile Service data on Experience Platform, including accessing data by identity and accessing an exported segment."
         },
         {
+          "importedFileName": "profile-export",
+          "pages": [],
+          "path": "api-specification/markdown/narrative/tutorials/profile/profile-export.md",
+          "title": "Export Profile data using APIs",
+          "description": "Access Profile data by using the Profile Export API to work with export jobs."
+        },
+        {
           "importedFileName": "configuring_merge_policies_tutorial",
           "pages": [],
           "path": "api-specification/markdown/narrative/tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md",
