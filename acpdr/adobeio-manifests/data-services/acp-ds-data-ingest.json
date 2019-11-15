@@ -76,23 +76,8 @@
         },
         {
           "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/retrieving_failed_batches.md",
-          "title":"Retrieving failed batches"
-        },
-        {
-          "pages":[],
           "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_to_datasets_in_adobe_experience_platform.md",
           "title":"Streaming to datasets"
-        },
-        {
-          "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_validation.md",
-          "title":"Streaming validation"
-        },
-        {
-          "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/e2e-monitor-streaming-data-flows.md",
-          "title":"Monitoring streaming data flows"
         },
         {
           "pages":[],
@@ -102,6 +87,28 @@
       ],
       "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_ingest_overview.md",
       "title":"Streaming ingestion"
+    },
+    {
+        "pages": [
+            {
+                "pages":[],
+                "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/monitor-data-flows.md",
+                "title":"Monitoring data flows"
+            },
+            {
+                "pages":[],
+                "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/retrieving_failed_batches.md",
+                "title":"Retrieving failed batches"
+            },
+            {
+                "pages":[],
+                "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_validation.md",
+                "title":"Streaming validation"
+            }
+            
+        ],
+        "path": "api-specification/markdown/narrative/technical_overview/data_ingestion_quality/data_ingestion_quality.md",
+        "title": "Data ingestion quality and monitoring"
     }
   ],
   "app2app_map":{

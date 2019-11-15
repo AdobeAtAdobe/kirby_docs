@@ -1106,6 +1106,6 @@ Now that you are able to get your data into Adobe Experience Platform, you can s
 
 [identity-descriptor]: ../schema_registry/schema_registry_developer_guide.md#descriptors
 
-[monitoring-streaming-data-flows]: e2e-monitor-streaming-data-flows.md
+[monitoring-streaming-data-flows]: monitor-data-flows.md
 
 [aep-extension]: https://docs.adobe.com/content/help/en/launch/using/extensions-ref/adobe-extension/adobe-experience-platform-extension.html

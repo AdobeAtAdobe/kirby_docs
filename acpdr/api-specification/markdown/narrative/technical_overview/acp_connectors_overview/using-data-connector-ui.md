@@ -52,4 +52,4 @@ After setting up your connection, you can begin to monitor the data that is bein
 
     ![](images/connector-microsoft-dynamics-online-dataset.png)
 
-For more information about monitoring data ingestion, please read the [Monitoring Streaming Data Flows](../streaming_ingest/e2e-monitor-streaming-data-flows.md).
+For more information about monitoring data ingestion, please read the [Monitoring Streaming Data Flows](../streaming_ingest/monitor-data-flows.md).

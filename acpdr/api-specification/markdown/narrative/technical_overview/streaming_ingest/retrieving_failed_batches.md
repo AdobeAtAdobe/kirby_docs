@@ -1,6 +1,48 @@
-# Retrieving Failed Batches
+# Retrieving failed batches using the API
 
-So what happens if you post data that has formatting errors? For example, when you stream in data with an incorrectly formatted timestamp, by making the month's value to be **00**, like so:
+Adobe Experience Platform provides two methods for uploading and ingesting data. You can either use batch ingestion, which allows you to insert their data using various file types (such as CSVs), or streaming ingestion, which allows you to insert their data to Platform using streaming endpoints in real-time.
+
+This tutorial covers steps for retrieving information about a failed batch using Data Ingestion APIs. Specifically, this tutorial shows you how to:
+
+- [Retrieve a failed batch](#retrieve-the-failed-batch)
+- [Download a failed batch](#download-the-failed-batch)
+
+## Getting started
+
+This guide requires a working understanding of the following components of Adobe Experience Platform:
+
+- [Experience Data Model (XDM) System](../schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Experience Platform organizes customer experience data.
+- [Data Ingestion](./streaming_ingest_overview.md): The methods by which data can be sent to Experience Platform.
+
+### Reading sample API calls
+
+This tutorial provides example API calls to demonstrate how to format your requests. These include paths, required headers, and properly formatted request payloads. Sample JSON returned in API responses is also provided. For information on the conventions used in documentation for sample API calls, see the section on [how to read example API calls](../platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md#how-do-i-format-an-api-request) in the Experience Platform troubleshooting guide.
+
+The API calls shown in this tutorial are demonstrated using cURL commands. To follow along, you may wish to use [Postman](https://www.getpostman.com/), a free, third-party software that is helpful for visualizing API calls. You can download a [Postman collection](https://raw.githubusercontent.com/adobe/experience-platform-postman-samples/master/postman/schema_editor_tutorial/Schema%20Registry%20API%20Tutorial.postman_collection.json) and corresponding [Postman environment](https://raw.githubusercontent.com/adobe/experience-platform-postman-samples/master/postman/schema_editor_tutorial/Schema%20Registry%20API%20Tutorial.postman_environment.json) to begin using the Schema Registry API. Steps for importing environments and collections are available through the [Postman Learning Center](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/). 
+
+> **Note:** In order to successfully use the collection and environment you must first complete the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+
+### Gather values for required headers
+
+In order to make calls to Platform APIs, you must first complete the [authentication tutorial](../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md). Completing the authentication tutorial provides the values for each of the required headers in all Experience Platform API calls, as shown below:
+
+- Authorization: Bearer `{ACCESS_TOKEN}`
+- x-api-key: `{API_KEY}`
+- x-gw-ims-org-id: `{IMS_ORG}`
+
+All resources in Experience Platform, including those belonging to the Schema Registry, are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
+
+* x-sandbox-name: `{SANDBOX_NAME}`
+
+> **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../sandboxes/sandboxes-overview.md). 
+
+All requests that contain a payload (POST, PUT, PATCH) require an additional header:
+
+- Content-Type: `application/json`
+
+### Sample failed batch
+
+This tutorial will be using sample data with an incorrectly formatted timestamp that sets the month's value to be **00**, as seen below:
 
 <pre style="color:#183691">
 {
@@ -27,23 +69,15 @@ So what happens if you post data that has formatting errors? For example, when y
 
 The payload above will not properly validate against the XDM schema due to the malformed timestamp.
 
-Let's assume you didn't know the reason for failure upfront. To find out what might have happened to this record, you'll need to log into [Adobe Experience Platform][platform], and click the "Data" tab, and find the failed batch. 
+## Retrieve the failed batch
 
-From here, you can search for the dataset that you've attempted to insert the data into, by searching for the dataset's name:
+#### API format
 
-![](images/dataset-search.png)
+```http
+GET /batches/{BATCH_ID}/failed
+```
 
-Now, you'll be able to see a list of batches and consequently the batch ID of the failed batch.
-
-![](images/batches.png)
-
-Next, you can select the failed batch to view the batch details page
-
-![](images/batch-detail.png)
-
-Using the failed batch ID, you can now get more information about the failed batch with the following request.
-
-## Request
+#### Request
 
 ```shell
 curl -X GET "https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/failed" \
@@ -61,7 +95,7 @@ curl -X GET "https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}
 - `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
 - `{SANDBOX_NAME}`: The name of the sandbox where the operation will take place. See the [sandboxes overview](../sandboxes/sandboxes-overview.md) for more information.
 
-## Response
+#### Response
 
 ```json
 {
@@ -94,9 +128,19 @@ curl -X GET "https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}
 
 With the above response, you can see which chunks of the batch succeeded and failed. From this response, you can see that the file `part-00000-44c7b669-5e38-43fb-b56c-a0686dabb982-c000.json` contains the failed batch.
 
-Now, since we know which batch failed, we can download the failed batch and see what the error message is.
+## Download the failed batch
 
-## Request
+Once you know which file in the batch failed, you can download the failed file and see what the error message is.
+
+#### API format
+
+```http
+GET /batches/{BATCH_ID}/failed?path={FAILED_FILE}
+```
+
+#### Request
+
+The following request allows you to download the file that had ingestion errors.
 
 ```shell
 curl -X GET 'https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/failed?path={FAILED_FILE}' \
@@ -116,7 +160,7 @@ Where:
 - `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 - `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
 
-## Response
+#### Response
 
 Since the previous ingested batch had an invalid date-time, the following validation error will be shown.
 
@@ -134,7 +178,17 @@ Since the previous ingested batch had an invalid date-time, the following valida
 }
 ```
 
-## Other error types
+## Next steps
+
+After reading this tutorial, you have learned how to retrieve errors from failed batches. For more information about batch ingestion, please read the [batch ingestion developer guide](../ingest_architectural_overview/batch_data_ingestion_developer_guide.md). For more information about streaming ingestion, please read the [getting started with streaming ingestion guide](./getting_started_with_platform_streaming_ingestion.md).
+
+## Appendix
+
+This section contains information about other ingestion error types that can occur.
+
+### Incorrectly formatted XDM
+
+Like the timestamp error in the previous example flow, these errors are due to incorrectly formatted XDM. These error messages will vary, depending on the nature of the problem. As a result, no specific error example can be shown.
 
 ### Missing or invalid IMS Org ID
 
@@ -195,9 +249,5 @@ This error is shown if there is no `xdmEntity` present.
     ]
 }
 ```
-
-### Other validation errors
-
-Like the timestamp error in the previous example flow, these errors are due to incorrectly formatted XDM. These error messages will vary quite a bit depending on the nature of the problem.
 
 [platform]: http://platform.adobe.com
