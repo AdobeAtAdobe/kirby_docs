@@ -18,6 +18,7 @@ New release:
 Updates to existing features:
  *   [Data Ingestion](#data-ingestion)
  *   [Data Science Workspace](#data-science-workspace)
+ *   [Experience Data Model (XDM) System](#experience-data-model-xdm-system)
  *   [Query Service](#query-service)
 
 ## Real-time Customer Data Platform
@@ -38,10 +39,8 @@ With Real-time CDP, you can:
 ### Key features
 
 |Feature|Description|
-|===|===|
+|---|---|
 |Home page metrics dashboard|The Adobe Real-time Customer Data Platform (Real-time CDP) home page includes a metrics dashboardthat shows information about profiles and segments. The home page also contains links to learning materials.|
-| | |
-| | |
 
 ## Data Ingestion
 
@@ -74,6 +73,25 @@ Adobe Experience Platform Data Science Workspace is a fully managed service with
 *   When configuring scheduled training or scoring runs through the Service Gallery, setting the frequency to hourly prevents the schedule from being applied.
 
 For more information, visit the [Data Science Workspace Overview](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html) or refer to the [Data Science Workspace Tutorials](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials.html).
+
+## Experience Data Model (XDM) System
+
+Standardization and interoperability are key concepts behind Experience Platform. Experience Data Model (XDM), driven by Adobe, is an effort to standardize customer experience data and define schemas for customer experience management.
+
+XDM is a publicly documented specification designed to improve the power of digital experiences. It provides common structures and definitions for any application to communicate with services on Adobe Experience Platform. By adhering to XDM standards, all customer experience data can be incorporated into a common representation delivering insights in a faster, more integrated way. You can gain valuable insights from customer actions, define customer audiences through segments, and use customer attributes for personalization purposes.
+
+**New features**
+
+| Feature    | Description  |
+| ---------- | ------------ |
+| Notification schema | New schema that represents notification data sent during the data ingestion process. |
+| Adobe AdCloud DSP schemas | Five new schemas have been added to represent Adobe Advertising Cloud demand-side platform (DSP) metadata:<ul><li>Placement</li><li>Campaign</li><li>Package</li><li>Advertiser</li><li>Account</li></ul>  |
+| ExperienceEvent Implementation Details mixin | New ExperienceEvent mixin that adds a standard field to store information about the software used to collect the event. |
+| Profile Privacy mixin | New profile mixin that adds fields to accept general out-out and sales/sharing opt-out signals for Real-time Customer Profile. |
+| Format constraints for `xdm:alternateDisplayInfo` | The "Title" and "Description" fields for `xdm:alternateDisplayInfo` must both be strings to pass validation. |
+| Name change: XDM Individual Profile  | The "title" of the "XDM Profile" class has been updated to "XDM Individual Profile". The formal `$id` of the class has not changed. |
+
+To learn more about working with XDM using the Schema Registry API and Schema Editor, please read the [XDM System documentation](https://www.adobe.io/apis/experienceplatform/home/xdm.html).
 
 ## Query Service
 Query Service provides the ability to use standard SQL to query data in Adobe Experience Platform to support a variety of analysis and data management use cases. It is a serverless tool that allows you to join datasets from the Data Lake and capture the query results as a new dataset for use in reporting, Data Science Workspace, or for ingestion into Real-time Customer Profile.
