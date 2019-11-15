@@ -37,7 +37,7 @@ Adobe Experience Platform Data Science Workspace is a fully managed service with
 | Feature    | Description  |
 | -----------| ---------- |
 | Scheduling of Services via the UI | Integrated with Platform Orchestration Service to automate Model training and scoring with user-defined schedules using the UI. |
-| Service Gallery | Browse, monitor, and access machine learning Services with the ability to schedule automated training and scoring jobs, all within the redesigned Service Gallery. |
+| Service Gallery | Browse, monitor, and access machine learning services with the ability to schedule automated training and scoring jobs, all within the redesigned Service Gallery. |
 | JupyterLab 5.0.0 | JupyterLab UI improvements. |
 
 **Known issues**
