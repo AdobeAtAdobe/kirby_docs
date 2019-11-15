@@ -1,73 +1,35 @@
-# Data connectors overview
+# Sources overview
 
-Adobe Experience Platform connectors help you easily ingest data from multiple sources, allowing you to structure, label, and enhance your data using Platform services. You can ingest data from a variety of sources such as cloud-based storage, third party software, and your CRM. 
+Adobe Experience Platform allows data to be ingested from external sources while providing you with the ability to structure, label, and enhance incoming data using Platform services. You can ingest data from a variety of sources such as Adobe Solutions, cloud-based storage, third party software, and your CRM.
 
-## Adobe Experience Platform data connectors
-Adobe Experience Platform provides connectors to ingest all of your diverse data from various SaaS and file-based sources. 
+Experience Platform provides a RESTful API and an interactive UI that lets you set-up source connections to various data providers with ease. These source connections allow you to you authenticate to your storage systems and CRM services, set times for ingestion runs, and manage data ingestion throughput.
 
-**Platform connectors.** Use custom connector APIs and wizards to ingest cloud-based storage and CRM data. These connectors let you authenticate to your storage systems and CRM services, set times for ingestion runs, and manage data ingestion throughput.
+## Centralizing your data
 
-Tutorials:
-* [Azure Blob connector](../../tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md) ingests your data from Microsoft Azure Blob cloud storage to Adobe Experience Platform. 
+In this day and age where the world is augmented by digital technologies, information is constantly being generated and digitally stored. By leveraging the power of machine learning and advancements in the field of data science, useful insights can be derived through data analysis to help understand why things are the way they are. As an organization, data science can be applied to help better understand their customers given that the required data is available and uniform in representation. With the growing demand for data, the natural bottleneck in capitalising digital information is obtaining it at-scale, especially when it is scattered across innumerable locations and represented in countless ways. Sources on Experience Platform lifts the restrictions involved in data collection by centralizing your data to represent them in unified fashion.
 
-* [Amazon S3 connector](../../tutorials/creating_a_connector_tutorial/ACP_s3_connector_tutorial.md) ingests your data from Amazon S3 cloud storage to Adobe Experience Platform.  
+## Types of sources
 
-* [Microsoft Dynamics connector](../../tutorials/creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md) lets you set up Microsoft Dynamics CRM data to ingest into the Platform on a defined schedule. The Microsoft Dynamics connector also supports backfill data ingestion.
+Sources in Experience Platform are grouped into the following categories:
 
-* [Salesforce connector](../../tutorials/creating_a_connector_tutorial/ACP_salesforce_connector_tutorial.md) lets you set up Salesforce CRM data to ingest into the Platform on a defined schedule.
+### Adobe applications
 
-* [Using Connector UI](../../tutorials/creating_a_connector_tutorial/using_data_connector_ui_tutorial.md) to set up Salesforce and Microsoft Dynamics connectors. 
+Experience Platform allow data to be ingested from other Adobe applications, including Adobe Analytics, Adobe Audience Manager, and Experience Platform Launch. See the following related documents for more information:
 
-### Important conditions
-* For incremental ingestion, you will have to clean up data after every ingestion run.
-* Currently, a pipeline run is configured for a delay of 30 minutes between consecutive runs. 
+-   [Adobe Audience Manager connector overview](./audience_manager_connector.md)
+-   [Create an Adobe Audience Manager source connector in the UI](../../tutorials/sources_tutorial/aam-ui-tutorial.md)
+-   [Adobe Analytics data connector overview](./analytics_data_connector.md)
+-   [Create an Adobe Analytics source connector in the UI](../../tutorials/sources_tutorial/adobe-analytics-ui-tutorial.md)
 
-#### Preview data
-To know if data is ingested, enable the Preview button in the top right corner of the connector wizard. 
+### Cloud Storage
 
-You can also use Catalog APIs to see if dataset files are being created for the current batch, or make a batch query with *datasetViewId* filter from Catalog services to see if batches are getting created properly.
+Cloud storage sources allow you to bring your own data into Platform without the need to download, format, or upload. Every step of the process is integrated into the Sources workflow using the user interface. Support for cloud storage providers include Amazon S3, Azure Blob, FTP servers, and SFTP servers. See the following related documents for more information:
 
-## Adobe Solution Connectors
-Adobe Experience Platform provides connectors to ingest all of your diverse data from various Adobe Services:
+-   [Create an Azure Blob or Amazon S3 source connector in the UI](../../tutorials/sources_tutorial/amazon-s3-ui-tutorial.md)
+-   [Create an FTP or SFTP source connector in the UI](../../tutorials/sources_tutorial/ftp-sftp-ui-tutorial.md)
 
-* [Analytics data connector](analytics_data_connector.md) streams data collected by Adobe Analytics to Experience Platform in real time.
+### Customer Relationship Management (CRM)
 
-* [Audience Manager connector](audience_manager_connector.md) ingests your data from Adobe Audience Manager to Experience Platform. 
+CRM systems provide data can be help build customer relations which creates loyalty and customer retention. Experience Platform provides support for ingesting CRM data from Microsoft Dynamics 365 and Salesforce. See the following related documents for more information:
 
-For information on how to enable or disable solution data within Platform, please see the [connectors troubleshooting guide](connector-api-error-codes.md)
-
-## Other APIs used for Platform Connectors
-Beyond the Create Account and Create Dataset APIs, a few other helper APIs are listed below. Please see the [Partner Connectors RESTful API Resource](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/partner-connectors-api.yaml) for further information on Platform Connector APIs.
-
-### Object Listing API 
-This API lists the content of an object:
-```shell
-curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/objects?object=s3://{BUCKET_NAME}/{PATH} \
-  -H 'authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'content-type: application/json' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: {SANDBOX_NAME}' 
-```
-### Preview Object API
-This API lists the content of the file. (Currently only CSV files are supported for preview.)
-```shell
-curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/objects?object=s3://{BUCKET_NAME}/{PATH}&fileType=delimited \
-   -H 'authorization: Bearer {ACCESS_TOKEN}' \
-   -H 'content-type: application/json' \
-   -H 'x-api-key: {API_KEY}' \
-   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-   -H 'x-sandbox-name: {SANDBOX_NAME}'
-```
-### Schema Discovery API
-This API lists fields of a file. Currently only CSV files are supported
-
-```shell
-curl -X GET https://platform.adobe.io/data/foundation/connectors/connections/{CONNECTION_ID}/objects?object=s3://{BUCKET_NAME}/{PATH}&fileType=delimited \
--H 'authorization: Bearer {ACCESS_TOKEN}' \
--H 'content-type: application/json' \
--H 'x-api-key: {API_KEY}' \
--H 'x-gw-ims-org-id: {IMS_ORG}' \
--H 'x-sandbox-name: {SANDBOX_NAME}'
-```
-
+-   [Create a Microsoft Dynamics 365 or Salesforce source connector in the UI](../../tutorials/sources_tutorial/dynamics-salesforce-ui-tutorial.md)
