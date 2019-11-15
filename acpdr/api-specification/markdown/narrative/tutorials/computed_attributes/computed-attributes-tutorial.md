@@ -75,7 +75,7 @@ In order to successfully define a computed attribute field, the schema must be e
 
 The workflow in this tutorial uses a Profile-enabled schema and follows the steps for defining a new mixin containing the computed attribute field and ensuring it is the correct namespace. If you already have a field that is in the correct namespace within a Profile-enabled schema, you can proceed directly to the step for [creating a computed attribute](#create-a-computed-attribute).
 
-### Lookup a schema
+### View a schema
 
 The steps that follow use the Adobe Experience Platform user interface to locate a schema, add a mixin, and define a field. If you prefer to use the Schema Registry API, please refer to the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md) for steps on how to create a mixin, add a mixin to a schema, and enable a schema for use with Real-time Customer Profile.
 
@@ -377,9 +377,9 @@ The response also includes a `children` array composed of one or more objects, e
 * `id`: A unique, read-only, system-generated value assigned automatically to a computed attribute when it is created. For more information on the components of a computed attribute object, please see the section on [creating a computed attribute](#create-a-computed-attribute) earlier in this tutorial.
 * `_links.next`: If a single page of computed attributes is returned, `_links.next` is an empty object, as shown in the sample response above. If your organization has many computed attributes, they will be returned on multiple pages that you can access by make a GET request to the `_links.next` value.
 
-### Lookup a computed attribute
+### View a computed attribute
 
-You can also perform a lookup for a specific computed attribute by making a GET request to the `/config/computedAttributes` endpoint and including the computed attribute ID in the request path.
+You can also view a specific computed attribute by making a GET request to the `/config/computedAttributes` endpoint and including the computed attribute ID in the request path.
 
 #### API format
 
@@ -489,7 +489,7 @@ curl -X PATCH \
 
 #### Response
 
-A successful update returns HTTP Status 204 (No Content) and an empty response body. If you wish to confirm the update was successful, you can perform a GET request to lookup the computed attribute by its ID.
+A successful update returns HTTP Status 204 (No Content) and an empty response body. If you wish to confirm the update was successful, you can perform a GET request to view the computed attribute by its ID.
 
 ### Delete a computed attribute
 

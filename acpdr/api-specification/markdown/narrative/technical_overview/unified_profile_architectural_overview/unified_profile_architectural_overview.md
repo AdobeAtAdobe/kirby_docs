@@ -11,6 +11,7 @@ This overview will help you understand the role and use of Real-time Customer Pr
 * [Handling opt-out requests](#handling-opt-out-requests): Learn how Experience Platform captures opt-out requests from your customers, whose data is stored and used in Profile.
 * [Sending data to Real-time Customer Profile](#sending-data-to-real-time-customer-profile): Learn the tools used to send your record and time series data to Profile.
 * [Creating audience segments](#creating-audience-segments): Learn how to isolate sections of your customer base as audience segments, based on specified criteria.
+* [Configuring computed attributes](#configuring-computed-attributes)
 
 ## Understanding Real-time Customer Profile
 Real-time Customer Profile is a generic lookup entity store that merges data across various enterprise data assets and provides access to that data in the form of unified customer profiles and related time series events.
@@ -287,5 +288,14 @@ The cornerstone of your marketing campaign is your audience. Real-time Customer 
 * Customers for whom the sum of the purchases is greater than $10,000.
 * Customers who have seen a set number of unique marketing campaigns from a pre-defined list, specified by their Campaign ID, and explored them within 30 minutes.
 
-
 Visit the [Segment Builder overview](../../../../../end-user/markdown/segmentation_overview/segmentation.md) to learn how to build and manage segments using the Adobe Experience Platform UI. If you are using the API, see the [Create a segment tutorial](../../tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md). 
+
+## Configuring computed attributes
+
+> **Note:** The computed attribute functionality outlined in this document is in alpha. The documentation and the functionality are subject to change.
+
+Computed attributes enable you to automatically compute the value of fields based on other values, calculations, and expressions. Computed attributes operate on the profile level, meaning you can aggregate values across all records and events. 
+
+Each computed attribute contains an expression, or 'rule', that evaluates incoming data and stores the resulting value in a profile attribute or into an event. These computations help you to easily answer questions related to things like lifetime purchase value, time between purchases, or number of application opens, without requiring you to manually perform complex calculations each time the information is needed.
+
+For more information on computed attributes, and step-by-step instructions for working with them, please see the tutorial on [configuring and accessing computed attributes](../../tutorials/computed_attributes/computed-attributes-tutorial.md). This tutorial will help you better understand the role computed attributes play within Adobe Experience Platform and it includes sample API calls for performing basic CRUD operations using the Real-time Customer Profile API.
