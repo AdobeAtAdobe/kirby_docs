@@ -165,7 +165,7 @@ A successful response returns HTTP status 200 (OK) with the ID of the dataset pr
 
 ### Labeling nested map-type fields
 
-In order for Privacy Service to maintain optimal performance and respond to requests within appropriate legal timelines, there are two kinds of nested map-type fields that are not supported:
+It is important to note that there are two kinds of nested map-type fields that do not support privacy labeling:
 
 * A map-type field within an array-type field
 * A map-type field within another map-type field
