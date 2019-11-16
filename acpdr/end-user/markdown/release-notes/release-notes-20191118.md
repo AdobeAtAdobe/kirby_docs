@@ -12,14 +12,13 @@ author: crhoades, ens28527
 
 ## Release date: November 18, 2019
 
-New release:
-[Real-time Customer Data Platform](#real-time-customer-data-platform)
+New release:  
+* [Real-time Customer Data Platform](#real-time-customer-data-platform)
 
 Updates to existing features:
- *   [Data Ingestion](#data-ingestion)
- *   [Data Science Workspace](#data-science-workspace)
- *   [Experience Data Model (XDM) System](#experience-data-model-xdm-system)
- *   [Query Service](#query-service)
+* [Experience Data Model (XDM) System](#experience-data-model-xdm-system)
+* [Real-time Customer Profile](#real-time-customer-profile) 
+* [Segmentation Service](#segmentation-service)
 
 ## Real-time Customer Data Platform
 
@@ -40,39 +39,7 @@ With Real-time CDP, you can:
 
 |Feature|Description|
 |---|---|
-|Home page metrics dashboard|The Adobe Real-time Customer Data Platform (Real-time CDP) home page includes a metrics dashboardthat shows information about profiles and segments. The home page also contains links to learning materials.|
-
-## Data Ingestion
-
-Adobe Experience Platform provides a rich set of features to ingest any type and latency of data. Adobe Experience Platform Data Ingestion provides multiple alternatives for ingesting data including Batch APIs, Streaming APIs, native Adobe connectors, data integration partners, or the Adobe Experience Platform UI.
-
-**New features**
-
-| Feature    | Description  |
-| ----------- | ---------- |
-| New domain for streaming ingestion | The `dcs.data.adobe.net` domain has been moved to the new common data collection domain `dcs.adobedc.net`. Users must update their implementations according to the revised Adobe Experience Platform streaming ingestion documentation. All documentation related to Adobe Experience Platform streaming ingestion has been updated to use the new domain.
-
-For more information, visit the [Data Ingestion documentation](https://www.adobe.io/apis/experienceplatform/home/data-ingestion.html) or refer to the [Data Ingestion Service API reference](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!/acpdr/swagger-specs/ingest-api.yaml).
-
-## Data Science Workspace
-
-Adobe Experience Platform Data Science Workspace is a fully managed service within Experience Platform that enables data scientists to seamlessly generate insights from data and content across Adobe solutions and third-party systems by building and operationalizing Machine Learning Models. Data Science Workspace is tightly integrated with Platform and powers the end-to-end data science lifecycle, including exploration and preparation of XDM data, followed by the development and operationalization of Models to automatically enrich Real-time Customer Profile with Machine Learning Insights.
-
-**New features**
-
-| Feature    | Description  |
-| -----------| ---------- |
-| Scheduling of Services via the UI | Integrated with Platform Orchestration Service to automate Model training and scoring with user-defined schedules using the UI. |
-| Service Gallery | Browse, monitor, and access machine learning Services with the ability to schedule automated training and scoring jobs, all within the redesigned Service Gallery. |
-| JupyterLab 5.0.0 | JupyterLab UI improvements. |
-
-**Known issues**
-
-*   There is currently no accessible way in the Service Gallery to delete an existing Service. In the meantime, please refer to the [Sensei Machine Learning API reference](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/sensei-ml-api.yaml) to delete an existing Service through API calls.
-*   The Service Gallery does not have pagination support to filter a Service's training and scoring runs.
-*   When configuring scheduled training or scoring runs through the Service Gallery, setting the frequency to hourly prevents the schedule from being applied.
-
-For more information, visit the [Data Science Workspace Overview](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html) or refer to the [Data Science Workspace Tutorials](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials.html).
+|Home page metrics dashboard|The Adobe Real-time Customer Data Platform (Real-time CDP) home page includes a metrics dashboard that shows information about profiles and segments. The home page also contains links to learning materials.|
 
 ## Experience Data Model (XDM) System
 
@@ -91,20 +58,54 @@ XDM is a publicly documented specification designed to improve the power of digi
 | Format constraints for `xdm:alternateDisplayInfo` | The "Title" and "Description" fields for `xdm:alternateDisplayInfo` must both be strings to pass validation. |
 | Name change: XDM Individual Profile  | The "title" of the "XDM Profile" class has been updated to "XDM Individual Profile". The formal `$id` of the class has not changed. |
 
-To learn more about working with XDM using the Schema Registry API and Schema Editor, please read the [XDM System documentation](https://www.adobe.io/apis/experienceplatform/home/xdm.html).
+To learn more about working with XDM using the Schema Registry API and Schema Editor user interface, please read the [XDM System documentation](https://www.adobe.io/apis/experienceplatform/home/xdm.html).
 
-## Query Service
-Query Service provides the ability to use standard SQL to query data in Adobe Experience Platform to support a variety of analysis and data management use cases. It is a serverless tool that allows you to join datasets from the Data Lake and capture the query results as a new dataset for use in reporting, Data Science Workspace, or for ingestion into Real-time Customer Profile.
+## Real-time Customer Profile
 
-You can use Query Service to build data analysis ecosystems, creating a picture of customers across their various interaction channels. These channels might include point-of-sale systems, web, mobile, or CRM systems.
-
-**New features**
+Adobe Experience Platform enables you to drive coordinated, consistent, and relevant experiences for your customers no matter where or when they interact with your brand. With Real-time Customer Profile, you can see a holistic view of each individual customer that combines data from multiple channels, including online, offline, CRM, and third party data. Profile allows you to consolidate your disparate customer data into a unified view offering an actionable, timestamped account of every customer interaction.
 
 | Feature    | Description  |
 | -----------| ---------- |
-| Improvements to Query Editor | Added a save function that allows you to save a query and work on it later. Added a "Browse" tab to the Query Service user interface on Adobe Experience Platform that shows queries saved by users in your organization.<br><br>Implemented a "Query Details" panel that displays useful metadata about the query being viewed. |
-| New attribution functions | Adobe-defined functions in Query Service to query for channel attribution with expiration parameters. |
-| Enhancements to SQL syntax | Support for iLike syntax.
-| Generate datasets with a defined XDM Schema | Added a new clause in Create Table as Select (CTAS) queries that allows you to specify a target schema. |
+|Enhancements to Profile lookup| Users now have the ability to look up profiles using reference descriptors and related entities.|
+| Clean up data for a given dataset| Users can now delete data for a given dataset or batch using the Profile System Jobs API. Instructions can be found in the [delete a dataset tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/datasets/delete-dataset.md).
+| Edge Profile query enhancements| Applications can now query Edge Profile by any of the identities of a given profile. |
+|Configure merge policies per projection|Applications can now configure merge policies per projection in order to generate a view of the data as governed by a specific merge policy. |
 
-For more information, refer to the [Query Service documentation](https://www.adobe.io/apis/experienceplatform/home/services/query-service/query-service.html).
+**Bug Fixes**
+
+* Simplified list of available ID stitching strategies in merge policy creation workflow. See the [tutorial on working with merge policies](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/merge_policies/create-merge-policies.md) to learn more.
+
+**Known issues**
+
+None.
+
+For more information on Real-time Customer Profile, including tutorials and best practices for working with Profile data, please read the [Real-time Customer Profile Overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
+
+### Segmentation Service
+
+Adobe Experience Platform Segmentation Service provides a user interface and RESTful API that allows you to build segments and generate audiences from your Real-time Customer Profile data. These segments are centrally configured and maintained on Platform, making them readily accessible by any Adobe application.
+
+Segmentation Service defines a particular subset of profiles by describing the criteria that distinguishes a marketable group of people within your customer base. Segments can be based on record data (such as demographic information) or time series events representing customer interactions with your brand.
+
+| Feature    | Description  |
+| -----------| ---------- |
+| Scheduled segmentation | Users can now enable scheduled segment evaluation for all segments via the UI and API. Once enabled, all segments will be evaluated once per day. This does not affect on-demand segmentation capabilities which continue to work as they did previously.<br/><br/>Note: The scheduled segmentation feature cannot be used in sandboxes with more than five merge policies for XDM Individual Profile.|
+| Streaming segmentation | Support for continuous evaluation of segments (streaming segmentation) allows most segment rules to be evaluated as the data is passing into Platform. This feature means that segment membership will be up to date without the need to run scheduled segmentation jobs. Some exceptions apply, such as segments using multi-entity relationships or with enriched payloads.|
+| Segments as building blocks | When creating segments using the Segment Builder UI, users can now use previously-defined segments as building blocks for additional segments. <ul><li>Reference current audience membership: updates as people move in and out of audiences.</li><li>Copy logic: take the selected segment definition and duplicate it in the new segment.</li></ul>|
+|View segment membership by ID namespace|Segment membership can now be viewed by ID namespace (email, ECID, and total count).|
+|RBAC support|Segment Builder now provides support for basic role-based access controls and permissions.|
+|Enhanced support for external audience ingestion into Platform|Users can now bring in external (non-Experience Platform) audience metadata in scenarios where the number of audiences is large or not known apriori. This audience metadata can be used within Segment Builder to create new Experience Platform segments.|
+
+**Bug Fixes**
+
+* Fixed an issue causing Multi-Entity Segmentation to return zero profiles in case of nested relationships.
+* Fixed an issue where exclusion logic was returning misleading results.
+* Improved readability for multi-entity folders. They now show the friendly name of the XDM class.
+* Fixed an intermittent issue where multiple copies of the same XDM folder appeared.
+* Messaging is now produced to inform a user if segment estimates are unavailable for the selected merge policy.
+
+**Known issues**
+
+None.
+
+To learn more about Segmentation Service, please read the [Segmentation Service overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!end-user/markdown/segmentation_overview/segmentation.md). Then, to begin building and working with segments, follow the [Segment Builder user guide](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!end-user/markdown/segmentation_overview/segment-builder-guide.md) for UI instructions or consult the [creating segments tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md) for using the API.  
