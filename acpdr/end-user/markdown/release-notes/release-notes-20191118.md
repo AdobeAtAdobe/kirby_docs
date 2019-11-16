@@ -47,7 +47,7 @@ Standardization and interoperability are key concepts behind Experience Platform
 
 XDM is a publicly documented specification designed to improve the power of digital experiences. It provides common structures and definitions for any application to communicate with services on Adobe Experience Platform. By adhering to XDM standards, all customer experience data can be incorporated into a common representation delivering insights in a faster, more integrated way. You can gain valuable insights from customer actions, define customer audiences through segments, and use customer attributes for personalization purposes.
 
-**New features**
+### New features
 
 | Feature    | Description  |
 | ---------- | ------------ |
@@ -70,18 +70,19 @@ Adobe Experience Platform enables you to drive coordinated, consistent, and rele
 | Clean up data for a given dataset| Users can now delete data for a given dataset or batch using the Profile System Jobs API. Instructions can be found in the [delete a dataset tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/datasets/delete-dataset.md).
 | Edge Profile query enhancements| Applications can now query Edge Profile by any of the identities of a given profile. |
 |Configure merge policies per projection|Applications can now configure merge policies per projection in order to generate a view of the data as governed by a specific merge policy. |
+|Computed Attributes| Computed attributes automatically compute the value of fields based on other values, calculations, and expressions. Computed attributes operate on the profile level to aggregate values such as "total purchase", "lifetime value", or "funnel status" based on an incoming event, an incoming event and profile data, or an incoming event, profile data, and historical events. To learn more, see the [computed attributes tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/computed_attributes/computed-attributes-tutorial.md).<br/><br/>*Note: The computed attributes functionality is in alpha. The documentation and functionality are subject to change.* |
 
-**Bug Fixes**
+### Bug fixes
 
 * Simplified list of available ID stitching strategies in merge policy creation workflow. See the [tutorial on working with merge policies](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/merge_policies/create-merge-policies.md) to learn more.
 
-**Known issues**
+### Known issues
 
 None.
 
 For more information on Real-time Customer Profile, including tutorials and best practices for working with Profile data, please read the [Real-time Customer Profile Overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
 
-### Segmentation Service
+## Segmentation Service
 
 Adobe Experience Platform Segmentation Service provides a user interface and RESTful API that allows you to build segments and generate audiences from your Real-time Customer Profile data. These segments are centrally configured and maintained on Platform, making them readily accessible by any Adobe application.
 
@@ -96,7 +97,7 @@ Segmentation Service defines a particular subset of profiles by describing the c
 |RBAC support|Segment Builder now provides support for basic role-based access controls and permissions.|
 |Enhanced support for external audience ingestion into Platform|Users can now bring in external (non-Experience Platform) audience metadata in scenarios where the number of audiences is large or not known apriori. This audience metadata can be used within Segment Builder to create new Experience Platform segments.|
 
-**Bug Fixes**
+### Bug fixes
 
 * Fixed an issue causing Multi-Entity Segmentation to return zero profiles in case of nested relationships.
 * Fixed an issue where exclusion logic was returning misleading results.
@@ -104,7 +105,7 @@ Segmentation Service defines a particular subset of profiles by describing the c
 * Fixed an intermittent issue where multiple copies of the same XDM folder appeared.
 * Messaging is now produced to inform a user if segment estimates are unavailable for the selected merge policy.
 
-**Known issues**
+### Known issues
 
 None.
 
