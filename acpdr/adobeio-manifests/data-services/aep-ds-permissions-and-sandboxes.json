@@ -47,6 +47,12 @@
           "description":"Learn how to perform various tasks related to sandboxes within the Experience Platform user interface."
         }
       ]
+    },
+    {
+      "path":"api-specification/markdown/narrative/technical_overview/sandboxes/access-control-and-sandboxes-troubleshooting.md",
+      "title":"Access control and sandboxes troubleshooting guide",
+      "description":"Find answers to common questions about access control and sandboxes.",
+      "pages":[]
     }
   ],
   "app2app_map":{

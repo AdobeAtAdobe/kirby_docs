@@ -266,6 +266,7 @@ The following is a list of troubleshooting guides and API reference documentatio
 
 Service | API Reference | Troubleshooting
 --- | --- | ---
+Access Control | [Access Control API](../../../../../acpdr/swagger-specs/access-control.yaml) | [Access control & sandboxes troubleshooting guide](../sandboxes/access-control-and-sandboxes-troubleshooting.md)
 Catalog | [Catalog Service API](../../../../../acpdr/swagger-specs/catalog.yaml)
 Data Ingestion | [Data Ingestion API](../../../../../acpdr/swagger-specs/ingest-api.yaml) | [Batch Data Ingestion troubleshooting guide](../ingest_architectural_overview/batch_data_ingestion_troubleshooting_guide.md)
 Data Science Workspace | [Sensei Machine Learning API](../../../../../acpdr/swagger-specs/sensei-ml-api.yaml)
@@ -274,3 +275,4 @@ Experience Data Model (XDM) | [Schema Registry API](../../../../../acpdr/swagger
 Identity Service | [Identity Service API](../../../../../acpdr/swagger-specs/id-service-api.yaml) | [Identity Service FAQ and recommendations](../identity_services_architectural_overview/identity_services_faq.md)
 Query Service | [Query Service API](../../../../../acpdr/swagger-specs/qs-api.yaml) | [Query Service errors and troubleshooting](../../../../../end-user/markdown/query-service/qs-errors-troubleshooting.md)
 Real-time Customer Profile | [Real-time Customer Profile API](../../../../../acpdr/swagger-specs/real-time-customer-profile.yaml)
+Sandboxes | [Sandbox API](../../../../../acpdr/swagger-specs/sandbox-api.yaml) | [Access control & sandboxes troubleshooting guide](../sandboxes/access-control-and-sandboxes-troubleshooting.md)
