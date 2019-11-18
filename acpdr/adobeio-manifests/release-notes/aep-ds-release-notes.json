@@ -13,6 +13,11 @@
 				{
 					"pages": [],
 					"path": "end-user/markdown/release-notes/release-notes.md",
+					"title": "November 2019",
+					"description": "New features, updates to existing features, and bug fixes in Adobe Experience Platform."
+				},				{
+					"pages": [],
+					"path": "end-user/markdown/release-notes/release-notes20190910.md",
 					"title": "September 2019",
 					"description": "New features, updates to existing features, and bug fixes in Adobe Experience Platform."
 				},
