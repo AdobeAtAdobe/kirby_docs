@@ -43,6 +43,7 @@ For more information, see the [Adobe Real-time Customer Data Platform documentat
 |---|---|
 |Destinations|Pre-built integrations with destination platforms supported by Adobe’s Real-time Customer Data Platform that activate data to those partners in a seamless way. See [Destinations](#destinations)|
 |Home page metrics dashboard|The Adobe Real-time Customer Data Platform (Real-time CDP) home page includes a metrics dashboard that shows information about profiles and segments. The home page also contains links to learning materials. See [Real-time Customer Data Platform metrics](#real-time-customer-data-platform-metrics)|
+|Sources|You can ingest data from a variety of sources such as Adobe Solutions, cloud-based storage, third party software, and your CRM. See [Sources](#sources)|
 
 
 ### Destinations
@@ -74,6 +75,14 @@ The home page is only one of the places where metric cards appear. Real-time CDP
 If there is no data in the system when you log in to Real-time CDP, the dashboard on the home page does not appear. In this case, the home page provides learning material for a first time user experience. As data is collected, the dashboard automatically updates to display information about that data. 
 
 For additional information, see [Real-time Customer Data Platform metrics overview](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/intro/home-page-dashboards.html)
+
+### Sources
+
+Adobe Experience Platform allows data to be ingested from external sources while providing you with the ability to structure, label, and enhance incoming data using Platform services. You can ingest data from a variety of sources such as Adobe Solutions, cloud-based storage, third party software, and your CRM.
+
+Experience Platform provides a RESTful API and an interactive UI that lets you set-up source connections to various data providers with ease. These source connections allow you to you authenticate to your storage systems and CRM services, set times for ingestion runs, and manage data ingestion throughput.
+
+For more information about sources, see [Sources overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md).
 
 ## Experience Data Model (XDM) System
 
