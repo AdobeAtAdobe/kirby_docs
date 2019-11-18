@@ -14,6 +14,7 @@ author: crhoades, ens28527
 
 New release:  
 * [Real-time Customer Data Platform](#real-time-customer-data-platform)
+* [Sources](#sources)
 
 Updates to existing features:
 * [Experience Data Model (XDM) System](#experience-data-model-xdm-system)
@@ -45,7 +46,6 @@ For more information, see the [Adobe Real-time Customer Data Platform documentat
 |Home page metrics dashboard|The Adobe Real-time Customer Data Platform (Real-time CDP) home page includes a metrics dashboard that shows information about profiles and segments. The home page also contains links to learning materials. See [Real-time Customer Data Platform metrics](#real-time-customer-data-platform-metrics)|
 |Sources|You can ingest data from a variety of sources such as Adobe Solutions, cloud-based storage, third party software, and your CRM. See [Sources](#sources)|
 
-
 ### Destinations
 
 Destinations are pre-built integrations with destination platforms supported by Adobe’s Real-time Customer Data Platform that activate data to those partners in a seamless way. For more information, read the [Destinations overview](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/destinations-overview.html) article.
@@ -76,11 +76,32 @@ If there is no data in the system when you log in to Real-time CDP, the dashboar
 
 For additional information, see [Real-time Customer Data Platform metrics overview](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/intro/home-page-dashboards.html)
 
-### Sources
+## Sources
 
-Adobe Experience Platform allows data to be ingested from external sources while providing you with the ability to structure, label, and enhance incoming data using Platform services. You can ingest data from a variety of sources such as Adobe Solutions, cloud-based storage, third party software, and your CRM.
+Adobe Experience Platform can ingest data from external sources while allowing you to structure, label, and enhance that data using Platform services. You can ingest data from a variety of sources such as Adobe Solutions, cloud-based storage, third party software, and your CRM system.
 
-Experience Platform provides a RESTful API and an interactive UI that lets you set-up source connections to various data providers with ease. These source connections allow you to you authenticate to your storage systems and CRM services, set times for ingestion runs, and manage data ingestion throughput.
+Experience Platform provides a RESTful API and an interactive UI that lets you set up source connections for various data providers with ease. These source connections allow you to you authenticate to your storage systems and CRM services, set times for ingestion runs, and manage data ingestion throughput.
+
+### New features
+
+| Feature    | Description  |
+| ---------- | ------------ |
+| Sources UI | New user interface for creating, viewing, and managing source connections. |
+| Self-serve user experience for existing Adobe Solutions connectors | Redesigned Adobe Analytics and Adobe Audience Manager connector with auto-mapping of inbound Experience Event data. |
+| Revamped workflows for CRM connectors | New intuitive UI workflow for creating and managing Microsoft Dynamics and Salesforce connectors. |
+| Connector support for cloud-based storages | Connectors can now access cloud-based storages. New sources include Amazon S3, Azure Blob, and FTP/SFTP servers. |
+
+### Known issues
+
+There is currently no support for the following list of functionalities:
+
+*   Partial file ingestion
+*   Deleting a source connector or dataflow
+*   Updating credentials for an existing source connector
+*   Support for using regex when specifying a file or folder path
+*   Real-time decompression of files and folders
+*   Ingestion monitoring for individual files
+*   Notification system for data ingestion
 
 For more information about sources, see [Sources overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md).
 
