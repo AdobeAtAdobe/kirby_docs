@@ -17,7 +17,7 @@ __Activate:__ In Real-time Customer Data Platform, activate is the action taken 
 __Activity:__ In the Decisioning Service, an activity is a set of offers the marketer wants the decision engine to select the best offer from.  
 
 <a name="Adobe Admin Console"></a>
-__Adobe Admin Console:__ Adobe Admin Console provides a central location for managing Experience Platform entitlements and feature permissioning across Experience Platform.
+__Adobe Admin Console:__ Adobe Admin Console provides a central location for managing Experience Platform entitlements and feature permissioning across Adobe Experience Platform.
 
 <a name="Adobe Experience Platform"></a>
 __Adobe Experience Platform:__ Adobe Experience Platform standardizes data and content across the enterprise, powering real-time consumer profiles, enabling data science, and accelerating content velocity to drive experience personalization across the customer journey.
@@ -26,7 +26,7 @@ __Adobe Experience Platform:__ Adobe Experience Platform standardizes data and c
 __Adobe Connectors:__ Adobe Connectors are pre-configured connections created by Adobe to enable data to flow in and out of Experience Platform. Connectors include Microsoft Dynamics, Salesforce, Amazon S3, and Azure Blob.
 
 <a name="Adobe I/O"></a>
-__Adobe I/O:__ Adobe I/O is part of Experience Platform and provides access to everything developers need to integrate, extend, and customize Experience Platform including APIs, events, developer console, and helpful tooling.
+__Adobe I/O:__ Adobe I/O is part of Experience Platform and provides access to everything developers need to integrate, extend, and customize Adobe Experience Platform including APIs, events, developer console, and helpful tooling.
 
 <a name="Amazon S3 bucket"></a>
 __Amazon S3 bucket:__ Amazon S3 buckets are the foundational containers for data stored in the Amazon ecosystem. Buckets contain objects, each object is stored and retrieved using a unique developer-assigned key.
@@ -58,6 +58,9 @@ __Audience Snapshot__: An audience snapshot is a segment definition capturing al
 [Back to top](#adobe-experience-platform-glossary)
 
 ## B
+
+<a name="Backfill"></a>
+__Backfill:__ In Real-time Customer Data Platform, in scheduled source connections, backfill enables ingestion of historical data.
 
 <a name="Backfill Period"></a>
 __Backfill Period:__ `Backfill period` is an option to set the length of time for ingesting third-party historical data via a connection. Selecting a backfill period of forever will ingest the entire history of the source data to Experience Platform.  
@@ -111,6 +114,9 @@ __Connector:__ Adobe Experience Platform Source connectors help users easily ing
 <a name="Condition"></a>
 __Condition:__ In Experience Platform Launch, a condition is a rule component that evaluates a logical statement that must return `true` or `false`. All conditions must evaluate to `true` and all exception conditions must evaluate to `false` before any actions on the rule are executed.
 
+<a name="Console"></a>
+__Console:__ In Query Service, the console provides information on the status and operation of a Query. The console displays the connection status to Query Service, query operations being executed, and any error messages that result from those queries.
+
 <a name="Contract Data C Labels"></a>
 __Contract Data "C" Labels:__ Contract `C` labels are used to categorize data that has contractual obligations or is related to a customer's data governance policies.
 
@@ -159,6 +165,10 @@ __Custom Identity Namespace:__ Custom identity namespaces are customer created i
 
 <a name="Data Dictionary"></a>
 __Data Dictionary:__ In Experience Platform Launch, a data dictionary is a set of data elements defined within a property.
+
+
+<a name="Data Flow"></a>
+__Data Flow:__ In Real-time Customer Data Platform, data flow is a visual representation of source datasets that flow through Real-time Customer Profile to destinations. 
 
 <a name="Data Element"></a>
 __Data Element:__ In Experience Platform Launch, a data element is a pointer used within rules and extensions to point to a specific piece of data that exists on the client device. 
@@ -213,6 +223,9 @@ __Decision Rule:__ In the Decisioning Service, a decision rule is the logic that
 
 <a name="Decisioning Service"></a>
 __Decisioning Service:__ The Decisioning Service is collection of services and UI that enables marketers to create and deliver end-user personalized offer experiences across channels and applications using business logic and decision rules.
+
+<a name="Delta Column"></a>
+__Delta Column:__ In Real-time Customer Data Platform, delta column enables source data field selection for a timestamp for incremental ingestion
 
 <a name="Delta Save Strategy"></a>
 __Delta Save Strategy:__ `Delta save strategy` is an option for ingesting third-party data via a connection. The option allows the user to specify that new or changed rows of source data are ingested to Experience Platform. New rows are added to the end of the dataset and changed rows are updated in the dataset on Experience Platform.
@@ -393,6 +406,9 @@ __Machine Learning (ML):__ Machine learning is the field of study that enables c
 
 <a name="Machine Learning Model"></a>
 __Machine Learning Model:__ A machine learning model is an instance of a machine learning recipe that is trained using historical data and configurations to solve for a business use case. In Adobe Data Science Workspace, machine learning models are call recipes.
+
+<a name="Mapping"></a>
+__Mapping:__ In Real-time Customer Data Platform, data mapping is the process of mapping source data fields to destination related target fields. 
 
 <a name="Merge Method"></a>
 __Merge Method:__ A `merge method` is a merge policy option that enables prioritization of merging of data fragments. The merge method options are merge by dataset precedence or by dataset timestamp.
@@ -643,7 +659,7 @@ __Type:__ Type is the class of machine learning problem a recipe is designed for
 ## U
 
 <a name="Union Schema"></a>
-__Union Schema:__ Union schema is a consolidation of schemas that have been enabled for Unified Profile.
+__Union Schema:__ Union schema is a consolidation of schemas that have been enabled for Real-time Customer Profile.
 
 [Back to top](#adobe-experience-platform-glossary)
 
