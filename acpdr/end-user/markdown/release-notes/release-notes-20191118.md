@@ -87,21 +87,12 @@ Experience Platform provides a RESTful API and an interactive UI that lets you s
 | Feature    | Description  |
 | ---------- | ------------ |
 | Sources UI | New user interface for creating, viewing, and managing source connections. |
-| Self-serve user experience for existing Adobe Solutions connectors | Redesigned Adobe Analytics and Adobe Audience Manager connector with auto-mapping of inbound Experience Event data. |
 | Revamped workflows for CRM connectors | New intuitive UI workflow for creating and managing Microsoft Dynamics and Salesforce connectors. |
 | Connector support for cloud-based storages | Connectors can now access cloud-based storages. New sources include Amazon S3, Azure Blob, and FTP/SFTP servers. |
 
 ### Known issues
 
-There is currently no support for the following list of functionalities:
-
-*   Partial file ingestion
-*   Deleting a source connector or dataflow
-*   Updating credentials for an existing source connector
-*   Support for using regex when specifying a file or folder path
-*   Real-time decompression of files and folders
-*   Ingestion monitoring for individual files
-*   Notification system for data ingestion
+*   Source connectors for cloud-based storages do not support the ingestion of compressed files.
 
 For more information about sources, see [Sources overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md).
 
