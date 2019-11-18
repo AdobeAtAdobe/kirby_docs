@@ -14,6 +14,7 @@ author: crhoades, ens28527
 
 New release:  
 * [Real-time Customer Data Platform](#real-time-customer-data-platform)
+* [Destinations](#destinations)
 * [Sources](#sources)
 
 Updates to existing features:
@@ -151,6 +152,7 @@ Segmentation Service defines a particular subset of profiles by describing the c
 |View segment membership by ID namespace|Segment membership can now be viewed by ID namespace (email, ECID, and total count).|
 |RBAC support|Segment Builder now provides support for basic role-based access controls and permissions.|
 |Enhanced support for external audience ingestion into Platform|Users can now bring in external (non-Experience Platform) audience metadata in scenarios where the number of audiences is large or not known apriori. This audience metadata can be used within Segment Builder to create new Experience Platform segments.|
+|Enhanced support for external audience sharing between Platform and Adobe solutions |Users can now bring in external (non-Experience Platform) audience metadata in scenarios where the number of audiences is large or not known a priori. This release includes access to Audience Manager metadata for customers who have provisioned the solution connector. This audience metadata can be used within Segment Builder to create new Experience Platform segments. <br/><br/> Additionally, segments created in Experience Platform will now be available for use in integrated Adobe solutions, including Audience Manager, Target, and Ad Cloud.|
 
 ### Bug fixes
 
