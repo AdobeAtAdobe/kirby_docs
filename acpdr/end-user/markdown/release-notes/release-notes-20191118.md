@@ -39,7 +39,39 @@ With Real-time CDP, you can:
 
 |Feature|Description|
 |---|---|
-|Home page metrics dashboard|The Adobe Real-time Customer Data Platform (Real-time CDP) home page includes a metrics dashboard that shows information about profiles and segments. The home page also contains links to learning materials.|
+|Destinations|Pre-built integrations with destination platforms supported by Adobe’s Real-time Customer Data Platform that activate data to those partners in a seamless way. See [Destinations](#destinations)|
+|Home page metrics dashboard|The Adobe Real-time Customer Data Platform (Real-time CDP) home page includes a metrics dashboard that shows information about profiles and segments. The home page also contains links to learning materials. See [Real-time Customer Data Platform metrics](#real-time-customer-data-platform-metrics)|
+
+
+### Destinations
+
+Destinations are pre-built integrations with destination platforms supported by Adobe’s Real-time Customer Data Platform that activate data to those partners in a seamless way. For more information, read the [Destinations overview](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/destinations-overview.html) article.
+
+#### Available Destinations
+
+With the November release, Adobe's Real-time Customer Data Platform supports the following destinations:
+
+* Advertising: Google
+* Email marketing: Adobe Campaign, Salesforce Marketing Cloud, Oracle Responsys, Oracle Eloqua
+
+See the [destination catalog](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/destinations-cat/destinations-catalog.html) for information about each of the destinations.
+
+#### Known Limitations
+
+* The control to allow for custom activation schedules in the [activation flow](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/dest-tutorials/activate-destinations.html#activate-data) (Schedule step) is not available with the initial release. 
+* There is currently no way to edit or delete a destination configuration. To work around this limitation, you can enable or disable the destination in the top right corner of the [destination details page](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/destinations-interface/destination-details-page.html#n4-controls-to-edit-activation-and-enabledisable-data-flow). 
+* No validation is currently in place for account details, path, or credentials when connecting to your destination or storage account. Make sure you are entering the right credentials and double-check for spelling errors or typos. 
+* No credential renewals are in place with the initial release. Once an account is expired or needs refreshing, you must create a new destination connection and remap your previously mapped segments.
+
+### Real-time Customer Data Platform metrics
+
+The Adobe Real-time Customer Data Platform (Real-time CDP) home page, which includes a metrics dashboard, appears when you log in to Real-time CDP.
+
+The home page is only one of the places where metric cards appear. Real-time CDP provides metric cards throughout your experience. These metrics inform you about the data, profile, and segment audiences in the system. 
+
+If there is no data in the system when you log in to Real-time CDP, the dashboard on the home page does not appear. In this case, the home page provides learning material for a first time user experience. As data is collected, the dashboard automatically updates to display information about that data. 
+
+For additional information, see [Real-time Customer Data Platform metrics overview](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/intro/home-page-dashboards.html)
 
 ## Experience Data Model (XDM) System
 
