@@ -35,6 +35,8 @@ With Real-time CDP, you can:
 * Generate actionable insights and scale audiences with AI and machine learning powered by Adobe Sensei and built for marketers.
 * Deliver personalized experiences in realtime across all channels and destinations.
 
+For more information, see the [Adobe Real-time Customer Data Platform documentation](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/overview.html).
+
 ### Key features
 
 |Feature|Description|

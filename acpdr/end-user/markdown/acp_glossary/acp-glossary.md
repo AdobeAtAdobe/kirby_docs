@@ -38,7 +38,7 @@ __Amazon S3 connector:__ Amazon S3 connector allows customers of Experience Plat
 __Append Save Strategy:__ `Append` save strategy is an option used when specifying third-party data to ingest via a connection and appending any new data or rows at the end of the dataset. The previously ingested rows remain untouched and only rows created since the last scheduled run are ingested to Experience Platform. Any rows that were changed in the source system remain unchanged on Experience Platform.
 
 <a name="Application lifecycle management"></a>
-__Application lifecycle management:__ Application lifecycle management enables the ability to create separate virtual environments to develop and evolve digital experience applications.
+__Application Lifecycle Management:__ Application lifecycle management enables the ability to create separate virtual environments to develop and evolve digital experience applications.
 
 <a name="Array"></a>
 __Array:__ Arrays are used for ordered elements with the same data type.
@@ -462,7 +462,7 @@ __Personalized Offers:__ In the Decisioning Service, a personalized offer is a c
 __Placements:__ In the Decisioning Service, a placement is the location and or context in which an offer appears for an end-user.
 
 <a name="Primary key"></a>
-__Primary key:__ Primary key is a designation in a schema to uniquely identify all records.
+__Primary Key:__ Primary key is a designation in a schema to uniquely identify all records.
 
 <a name="Priority"></a>
 __Priority:__ In the Decisioning Service, priority is used to rank offers that meet all constraints, such as eligibility, calendar, and capping.
