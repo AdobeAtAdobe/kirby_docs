@@ -51,6 +51,10 @@ Upon changing the regulation type, the dashboard updates to show all operations,
 
 The graph on the left-hand side of the Status Report widget tracks submitted jobs against any jobs that may have reported back with errors. The graph on the right-hand side tracks jobs nearing the end of the 30-day compliance window.
 
+Click one of the two toggle buttons above the graph to show or hide their respective metrics.
+
+![](images/hide-errors.png)
+
 You can view the exact number of jobs associated with any data point on the graphs by hovering your mouse over the data point in question.
 
 ![Mouse-over data points](images/mouse-over.png)
@@ -98,15 +102,15 @@ To start using the Request builder, click **Create Request** below the Status Re
 
 The *Create Request* dialog opens, displaying the available options for submitting a privacy job request for the currently selected regulation type.
 
-![Create Request dialog](images/request-builder.png)
+<img src="images/request-builder.png" width="500"/><br/>
 
 Select the **Job Type** of the request ("Delete" or "Access") and one or more available **Products** from the list. Under **Customer IDs**, select an ID type from the drop-down menu (email, ECID, or AAID). Type the ID values in the textbox to the right, pressing **\<enter>** for each ID to add it to the list.
 
-![](images/request-builder-fillout.png)
+<img src="images/request-builder-fillout.png" width="500"/><br/>
 
 The IDs included in this list will receive a copy of any email notifications from Privacy Service, which are sent when a job completes, finishes with errors, or times out. When finished, click **Create**.
 
-![](images/request-builder-create.png)
+<img src="images/request-builder-create.png" width="500"/><br/>
 
 The dialog disappears, and the new job (or jobs) are listed in the Job Requests widget along with their current processing status.
 
