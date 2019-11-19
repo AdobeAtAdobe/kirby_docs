@@ -1,8 +1,8 @@
 # Delete a dataset or specific batch in a dataset
 
-Adobe Experience Platform enables you to ingest data from multiple sources and build robust profiles for individual customers. Occasionally it may be necessary to delete a dataset, or an individual batch from within a dataset, to remove data from Platform that you no longer require. This tutorial provides step-by-step instructions for working with Profile System Jobs in order to delete a dataset or delete a specific batch within a dataset using the [Real-time Customer Profile API](../../../../../../acpdr/swagger-specs/real-time-customer-profile.yaml). 
+Adobe Experience Platform enables you to ingest data from multiple sources and build robust profiles for individual customers. Data ingested into Platform is stored in the Data Lake as well as the Real-time Customer Profile data store. Occasionally it may be necessary to delete a dataset or batch from the Profile store in order to remove data that you no longer require or that was added in error. This tutorial provides step-by-step instructions for working with Profile System Jobs in order to delete datasets and batches from the Profile store. 
 
-This tutorial includes the following operations:
+Using the Real-time Customer Profile API, this tutorial shows you how to:
 
 * [View all delete requests created by your organization](#view-delete-requests)
 * [Create a new delete request](#create-a-delete-request)
@@ -10,6 +10,8 @@ This tutorial includes the following operations:
   * [Delete a batch](#delete-a-batch)
 * [Check the status of a specific delete request by its ID](#lookup-a-delete-request)
 * [Remove a delete request](#remove-a-delete-request)
+
+If you wish to delete datasets or batches from the Data Lake, this can be done using the Catalog Service API. For more information, please visit the [Catalog Service overview](../../technical_overview/catalog_architectural_overview/catalog_architectural_overview.md).
 
 ## Getting started
 
