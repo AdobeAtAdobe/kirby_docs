@@ -1,0 +1,48 @@
+{
+	"name": "query_service_connect_clients",
+	"version": "1.0.0",
+	"description": "Connect clients to Query Service",
+	"author": "Wendy Braun",
+	"view_type": "mdbook",
+	"meta_keywords": "experience platform, query service, data, adobe, analysis, data lake, reporting, queries, clients, connect",
+	"meta_description": "",
+	"publish_date": "20/11/2019",
+	"show_edit_github_banner": false,
+  "base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
+	"pages": [
+		{
+      "path": "end-user/markdown/query-service/qs-clients.md",
+			"title": "Connect clients to Query Service",
+      "pages": [
+          {
+            "pages": [],
+            "path": "end-user/markdown/query-service/qs-clients-looker.md",
+            "title": "Connect Looker"
+          },
+          {
+            "pages": [],
+            "path": "end-user/markdown/query-service/qs-clients-postico.md",
+            "title": "Connect Postico (Mac)"
+                  },
+                  {
+            "pages": [],
+            "path": "end-user/markdown/query-service/qs-clients-powerbi.md",
+            "title": "Connect Power BI (PC)"
+          },
+          {
+            "pages": [],
+            "path": "end-user/markdown/query-service/qs-clients-psql.md",
+            "title": "Connect PSQL"
+          },
+          {
+            "pages": [],
+            "path": "end-user/markdown/query-service/qs-clients-tableau.md",
+            "title": "Connect Tableau"
+          }
+      ]
+		}
+	],
+	"app2app_map": {
+		"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
+	}
+}

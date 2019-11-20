@@ -1,0 +1,43 @@
+{
+	"name": "query_service_sql_reference",
+	"version": "1.0.0",
+	"description": "Query Service SQL reference",
+	"author": "Wendy Braun",
+	"view_type": "mdbook",
+	"meta_keywords": "experience platform, query service, data, adobe, analysis, data lake, reporting, queries, sql, reference",
+	"meta_description": "",
+	"publish_date": "20/11/2019",
+	"show_edit_github_banner": false,
+  "base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
+	"pages": [
+    {
+      "path": "end-user/markdown/query-service/qs-sql-ref.md",
+			"title": "SQL reference",
+			"pages": [
+        {
+          "pages": [],
+          "path": "end-user/markdown/query-service/qs-sql-syntax.md",
+          "title": "SQL syntax"
+        },
+        {
+          "pages": [],
+          "path": "end-user/markdown/query-service/qs-sql-functions.md",
+          "title": "Adobe-defined functions"
+        },
+        {
+          "pages": [],
+          "path": "end-user/markdown/query-service/qs-sql-spark-functions.md",
+          "title": "Built-in Spark functions"
+        },
+        {
+          "pages": [],
+          "path": "end-user/markdown/query-service/qs-sql-metadata.md",
+          "title": "Metadata commands"
+        }
+      ]
+		}
+	],
+	"app2app_map": {
+		"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
+	}
+}

@@ -1,0 +1,43 @@
+{
+	"name": "query_service_sample_queries",
+	"version": "1.0.0",
+	"description": "Query Service sample queries",
+	"author": "Wendy Braun",
+	"view_type": "mdbook",
+	"meta_keywords": "experience platform, query service, data, adobe, analysis, data lake, reporting, queries",
+	"meta_description": "",
+	"publish_date": "20/11/2019",
+	"show_edit_github_banner": false,
+  "base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
+	"pages": [
+    {
+      "path": "end-user/markdown/query-service/qs-sample-queries.md",
+      "title": "Sample queries",
+			"pages": [
+        {
+          "pages": [],
+          "path": "end-user/markdown/query-service/qs-sample-aa-queries.md",
+          "title": "Adobe Analytics"
+        },
+        {
+          "pages": [],
+          "path": "end-user/markdown/query-service/qs-sample-target-queries.md",
+          "title": "Adobe Target"
+        }
+      ]
+		},   
+    {
+			"pages": [],
+			"path": "end-user/markdown/query-service/solutionref/analytics-field-map.md",
+			"title": "Adobe Analytics field mapping to ExperienceEvent XDM"
+    },
+    {
+			"pages": [],
+			"path": "end-user/markdown/query-service/qs-errors-troubleshooting.md",
+			"title": "Errors and troubleshooting"
+		}
+	],
+	"app2app_map": {
+		"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
+	}
+}
