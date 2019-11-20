@@ -8,9 +8,13 @@ This document provides an overview of Adobe Analytics and describes the use-case
 
 Adobe Analytics is a powerful engine to help you learn more about your customers, how they interact with your web properties, see where your digital marketing spend is effective, and identify areas of improvement. Adobe Analytics handles trillions of web-transactions per year and ADC allows you to easily tap into this rich behavioral data and enrich the Real-time Customer Profile in a matter of minutes.
 
-![](./images/analytics_data_to_platform.png)
+![](./images/analytics-pipeline.png)
 
-At a high level, Adobe Analytics collect data from various digital channels and multiple data centers around the world. Once the data is collected, VISTA and processing rules are applied to shape the incoming data. After raw data has gone through this lightweight processing, it is then considered mid-data and is ready for consumption by the Real-time Customer Profile. In a process parallel to the aforementioned, the same processed data is micro-batched and ingested into Platform datasets for consumption by Data Science Workspace, Query Service, and other data-discovery applications.
+At a high level, Adobe Analytics collects data from various digital channels and multiple data centers around the world. Once the data is collected, Visitor Identification, Segmentation and Transformation Architecture (VISTA) rules and processing rules are applied to shape the incoming data. After raw data has gone through this lightweight processing, it is then considered ready for consumption by Real-time Customer Profile. In a process parallel to the aforementioned, the same processed data is micro-batched and ingested into Platform datasets for consumption by Data Science Workspace, Query Service, and other data-discovery applications.
+
+See the following documents for more information on VISTA and processing rules:
+*   [VISTA rules overview](https://marketing.adobe.com/resources/help/en_US/reference/VISTA.html)
+*   [Processing rules overview](https://docs.adobe.com/content/help/en/analytics/admin/admin-tools/processing-rules/processing-rules.html)
 
 ## Experience Data Model (XDM)
 
@@ -28,8 +32,7 @@ When a connection is established for bringing in Analytics data using Platform U
 
 | Analytics Data | Latency | 
 | --- | --- | 
-| Streaming (mid) | <5 minutes.* | 
-| Batch (mid & post) | 60-120 minutes.* | 
+| Streaming | < 15 minutes.* |
 | Backfill data - 13 Months of Data or 10 Billion events (whichever is lower) | 4 weeks. |
 
 
