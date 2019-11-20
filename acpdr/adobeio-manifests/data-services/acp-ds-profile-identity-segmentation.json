@@ -1,8 +1,8 @@
 {
 	"name": "acpdr_profile-identity-segmentation-services",
 	"version": "1.0.0",
-	"description": "AEP Profile Identity Segmentation",
-	"author": "Klaasjan Tukker",
+	"description": "Documentation for the following Adobe Experience Platform services: Real-time Customer Profile, Identity Service, and Segmentation Service.",
+	"author": "Wendy Braun",
 	"view_type": "mdbook",
 	"meta_keywords": "Adobe Experience Platform,AEP, Services, Adobe AEP, Data Services, Real-time Customer Profile, Unified Identity, Profile, Identity, Unified Segmentation, Segmentation",
 	"meta_description": "Adobe Experience Platform Data Services",
@@ -11,32 +11,8 @@
 	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
 	"pages": [
 		{
-			"pages": [
-				{
-					"pages": [],
-					"path": "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_ecid.md",
-					"title": "ECID - An Essential Tool"
-				},
-				{
-					"pages": [],
-					"path": "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_api.md",
-					"title": "Identity Service API developer guide"
-				},
-				{
-					"pages": [],
-					"path": "api-specification/markdown/narrative/technical_overview/identity_namespace_overview/identity_namespace_overview.md",
-					"title": "Identity namespace overview"
-				},
-				{
-					"pages": [],
-					"path": "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_faq.md",
-					"title": "Identity Service troubleshooting guide"
-				}
-			],
-			"path": "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md",
-			"title": "Identity Service overview"
-		},
-		{
+			"path": "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md",
+			"title": "Real-time Customer Profile overview",
 			"pages": [
 				{
 					"pages": [],
@@ -52,17 +28,43 @@
 					"pages": [],
 					"path": "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md",
 					"title": "Supported PQL queries"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/technical_overview/search/search_developer_guide.md",
-                    "title": "Profile search developer guide"
-                }
-			],
-			"path": "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md",
-			"title": "Real-time Customer Profile" 
+				},
+				{
+					"pages": [],
+					"path": "api-specification/markdown/narrative/technical_overview/search/search_developer_guide.md",
+					"title": "Profile search developer guide"
+				}
+			]
 		},
 		{
+			"path": "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md",
+			"title": "Identity Service overview",
+			"pages": [
+				{
+					"pages": [],
+					"path": "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_api.md",
+					"title": "Identity Service API developer guide"
+				},
+				{
+					"pages": [],
+					"path": "api-specification/markdown/narrative/technical_overview/identity_namespace_overview/identity_namespace_overview.md",
+					"title": "Identity namespace overview"
+				},
+				{
+					"pages": [],
+					"path": "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_ecid.md",
+					"title": "ECID - An Essential Tool"
+				},
+				{
+					"pages": [],
+					"path": "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_faq.md",
+					"title": "Identity Service troubleshooting guide"
+				}
+			]
+		},
+		{
+			"path": "end-user/markdown/segmentation_overview/segmentation.md",
+			"title": "Segmentation Service overview",
 			"pages": [	
 				{
 					"pages": [],
@@ -73,15 +75,13 @@
 					"pages": [],
 					"path": "api-specification/markdown/narrative/tutorials/segmentation/multi_entity_segmentation.md",
 					"title": "Multi-entity segmentation"
-                }, 
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/segmentation/streaming_segmentation.md",
-                    "title" : "Streaming segmentation"
-                }
-			],
-			"path": "end-user/markdown/segmentation_overview/segmentation.md",
-			"title": "Segmentation Service overview"
+				}, 
+				{
+					"pages": [],
+					"path": "api-specification/markdown/narrative/tutorials/segmentation/streaming_segmentation.md",
+					"title" : "Streaming segmentation"
+				}
+			]
 		}
 	],
 	"app2app_map": {
