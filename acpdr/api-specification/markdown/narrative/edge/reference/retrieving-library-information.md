@@ -3,7 +3,7 @@ description: >-
   Learn how to retrieve information about the library loaded onto the website.
 ---
 
-# Retrieving Library Information
+# Retrieving library information
 
 It's often helpful to access some of the details behind the library you have loaded onto your website. To do this, execute the `getLibraryInfo` command as follows:
 

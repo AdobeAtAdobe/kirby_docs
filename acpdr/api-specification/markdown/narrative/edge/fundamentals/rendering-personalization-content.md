@@ -3,9 +3,9 @@ description: >-
   Learn how to render personalization content.
 ---
 
-# Rendering Personalization Content
+# Rendering personalized content
 
-The SDK will automatically take care of rendering personalization content when you send an event to the server and set `viewStart` to `true` as an option on the event.
+The SDK automatically renders personalized content when you send an event to the server and set `viewStart` to `true` as an option on the event.
 
 ```javascript
 alloy("event", {
@@ -23,19 +23,23 @@ alloy("event", {
 });
 ```
 
-The rendering of personalization content is asynchronous, so there should not be any assumption around when a particular piece content will be part of the page.
+The rendering of personalized content is asynchronous, so there should not be any assumption around when a particular piece of content is part of the page.
 
 ## Managing flicker
 
-When trying to render personalization content, the SDK has to ensure there is no flicker. Flicker, also called FOOC (Flash of Original Content), is when an original content is briefly displayed before the alternative appears during testing/personalization. The SDK will try to apply CSS styles to elements of the page to ensure those elements are hidden until the personalization content is rendered successfully.
+When trying to render personalization content, the SDK has to ensure there is no flicker. Flicker, also called FOOC (Flash of Original Content), is when an original content is briefly displayed before the alternative appears during testing/personalization. The SDK tries to apply CSS styles to elements of the page to ensure those elements are hidden until the personalization content is rendered successfully.
 
-The flicker management functionality has a few phases: prehiding, preprocessing, rendering.
+The flicker management functionality has a few phases:
+
+1. Prehiding
+1. Preprocessing
+1. Rendering
 
 ### Prehiding
 
-During the prehiding phase, the SDK will use the `prehidingStyle` configuration option to create an HTML style tag and append it to the DOM to make sure that big portions of the page are hidden. If you are unsure which portions of the page will be personalized, it is recommended to set `prehidingStyle` to `body { opacity: 0 !important }`. This will ensure that the whole page is hidden. This, however has the downside of leading to worse page rendering performance reported by tools like Lighthouse, Web Page Tests, etc. To have the best page rendering performance, it is recommended to set `prehidingStyle` to a list of container elements that would contain the portions of the page that will be personalized.
+During the prehiding phase, the SDK uses the `prehidingStyle` configuration option to create an HTML style tag and append it to the DOM to make sure that big portions of the page are hidden. If you are unsure which portions of the page will be personalized, it is recommended to set `prehidingStyle` to `body { opacity: 0 !important }`. This ensures that the whole page is hidden. This, however has the downside of leading to worse page rendering performance reported by tools like Lighthouse, Web Page Tests, etc. To have the best page rendering performance, it is recommended to set `prehidingStyle` to a list of container elements that contain the portions of the page that will be personalized.
 
-Assuming we have an HTML page like the one below and we know that only `bar` and `bazz` container elements will be ever personalized:
+Assuming you have an HTML page like the one below and you know that only `bar` and `bazz` container elements will be ever personalized:
 
 ```html
 <html>
@@ -57,19 +61,19 @@ Assuming we have an HTML page like the one below and we know that only `bar` and
 </html>
 ```
 
-Then the `prehidingStyle` would have to be set to something like `#bar, #bazz { opacity: 0 !important }`.
+Then the `prehidingStyle` should be set to something like `#bar, #bazz { opacity: 0 !important }`.
 
 ### Preprocessing
 
-The preprocessing phase kicks in once the SDK has received the personalized content from the server. During this phase, the response is preprocessed - making sure that elements that have to contain personalized content are hidden. Once these elements are hidden, the HTML style tag that has been created based on the `prehidingStyle` configuration option is removed and the HTML body or the hidden container elements are shown.
+The preprocessing phase kicks in once the SDK has received the personalized content from the server. During this phase, the response is preprocessed, making sure that elements that have to contain personalized content are hidden. After these elements are hidden, the HTML style tag that has been created based on the `prehidingStyle` configuration option is removed and the HTML body or the hidden container elements are shown.
 
 ### Rendering
 
-Once all the personalization content has been rendered successfully or if there was any error all previously hidden elements are shown to make sure that there are no hidden elements on the page that were hidden by the SDK.
+After all the personalization content has been rendered successfully, or if there was any error, all previously hidden elements are shown to make sure that there are no hidden elements on the page that were hidden by the SDK.
 
 ## Managing flicker when SDK is loaded asynchronously
 
-The recommendation is to always load the SDK asynchronously to get the best page rendering performance. However, this has some implications for the rendering of personalization content. When the SDK is loaded asynchronously, it is required to use the prehiding snippet. The prehiding snippet has to be added before the SDK in the HTML page. Here is an example snippet that hides the entire body:
+The recommendation is to always load the SDK asynchronously to get the best page rendering performance. However, this has some implications for the rendering of personalized content. When the SDK is loaded asynchronously, it is required to use the prehiding snippet. The prehiding snippet must be added before the SDK in the HTML page. Here is an example snippet that hides the entire body:
 
 ```html
 <script>
@@ -83,4 +87,4 @@ The recommendation is to always load the SDK asynchronously to get the best page
 </script>
 ```
 
-To make sure that we do not hide the HTML body or the container elements for an extended period of time, the prehiding snippet uses a timer that by default will remove the snippet after `3000` milliseconds. The `3000` milliseconds is the maximum wait time. If the response from the server has been received and processed sooner, then the prehiding HTML style tag will be removed as soon as possible.
+To make sure that the HTML body or the container elements are not hidden for an extended period of time, the prehiding snippet uses a timer that by default removes the snippet after `3000` milliseconds. The `3000` milliseconds is the maximum wait time. If the response from the server has been received and processed sooner, then the prehiding HTML style tag is removed as soon as possible.

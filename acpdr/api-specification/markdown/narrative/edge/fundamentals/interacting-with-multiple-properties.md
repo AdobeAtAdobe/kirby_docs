@@ -3,7 +3,7 @@ description: >-
   Learn how to interact with multiple properties.
 ---
 
-# Interacting with Multiple Properties
+# Interacting with multiple properties
 
 There are certain cases where you might want to interact with two different properties on the same page. These include:
 
@@ -23,11 +23,11 @@ To do this, the SDK allows you to create a separate instance for each property b
 <script src="alloy.js" async></script>
 ```
 
-As a result, the script will create two instances of the SDK. The global function for interacting with the first instance will be named `mycustomname1` and the global function for interacting with the second instance will be named `mycustomname2`.
+As a result, the script creates two instances of the SDK. The global function for interacting with the first instance is named `mycustomname1` and the global function for interacting with the second instance is named `mycustomname2`.
 
-By creating two separate instances, each can be configured for a different property. Any communication or data persistence that occurs due to interacting with `mycustomname1` will be kept isolated from `mycustomname2` and vice-versa.
+By creating two separate instances, each can be configured for a different property. Any communication or data persistence that occurs due to interacting with `mycustomname1` is kept isolated from `mycustomname2` and vice-versa.
 
-Following the above example, you can now execute commands using each of the instances as follows:
+Following the above example, you can execute commands using each of the instances, as follows:
 
 ```javascript
 mycustomname1("configure", {
@@ -57,4 +57,4 @@ Be sure to execute the `configure` command for each instance before executing ot
 
 ## Limitations
 
-To avoid conflicts with cookies, only one instance of Alloy within a page can have a particular `configId`.  Similarly, only one instance of Alloy can have a particular `orgId`.  
+To avoid conflicts with cookies, only one instance of Adobe Experience Platform Web SDK within a page can have a particular `configId`.  Similarly, only one instance of Adobe Experience Platform Web SDK can have a particular `orgId`.  
