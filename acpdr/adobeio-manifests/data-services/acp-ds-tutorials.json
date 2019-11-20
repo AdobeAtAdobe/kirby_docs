@@ -261,13 +261,6 @@
       "path": "api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md",
       "title": "Privacy Service UI tutorial",
       "description": "Create and manage data access and delete requests that comply with privacy regulations using the UI"
-    },
-    {
-      "importedFileName": "customer-ai-tutorial",
-      "pages": [],
-      "path": "api-specification/markdown/narrative/tutorials/sensei-insights/customer-ai-tutorial.md",
-      "title": "Predict customer propensity scores using Customer AI",
-      "description": "Create and manage data access and delete requests that comply with privacy regulations using the UI"
     }
   ],
   "app2app_map": {
