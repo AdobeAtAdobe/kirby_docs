@@ -11,10 +11,6 @@ Adobe Experience Platform Web SDK is a client-side JavaScript library that allow
 
 This documentation collection includes the following articles:
 
-### Overview
-
-* [Overview](README.md)
-
 ### Getting started
 
 * [Quick start with Launch](getting-started/quick-start-with-launch.md)
