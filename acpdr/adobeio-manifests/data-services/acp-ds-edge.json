@@ -1,0 +1,98 @@
+{
+  "name": "Adobe Experience Platform Web SDK",
+  "version": "1.0.0",
+  "description": "Adobe Experience Platform Web SDK",
+  "author": "Scott Rhoades",
+  "view_type": "mdbook",
+  "meta_keywords": "Adobe, Experience Platform, Web SDK, overview, documentation, API, developers",
+  "meta_description": "Adobe Experience Platform Web SDK",
+  "publish_date": "11/20/2019",
+  "show_edit_github_banner": false,
+  "base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
+  "pages": [
+   {
+          "pages": [	
+            {
+              "pages": [],
+              "path": "api-specification/markdown/narrative/edge/overview.md",
+              "title": "Overview"
+            }, 
+            {
+              "pages": [],
+              "path": "api-specification/markdown/narrative/edge/getting-started/quick-start-with-launch.md",
+              "title": "Quick start with Launch"
+            }, 
+            {
+               "pages": [],
+               "path": "api-specification/markdown/narrative/edge/getting-started/deploying-all-products.md",
+               "title": "Deploying all products"
+            },
+            {
+              "pages": [],
+              "path": "api-specification/markdown/narrative/edge/fundamentals/installing-the-sdk.md",
+              "title": "Installing the SDK"
+            }, 
+            {
+              "pages": [],
+              "path": "api-specification/markdown/narrative/edge/fundamentals/executing-commands.md",
+              "title": "Executing commands"
+            }, 
+            {
+               "pages": [],
+               "path": "api-specification/markdown/narrative/edge/fundamentals/configuring-the-sdk.md",
+               "title": "Configuring the SDK"
+            },
+            {
+              "pages": [],
+              "path": "api-specification/markdown/narrative/edge/fundamentals/tracking-events.md",
+              "title": "Tracking events"
+            }, 
+            {
+              "pages": [],
+              "path": "api-specification/markdown/narrative/edge/fundamentals/merging-event-data.md",
+              "title": "Merging event data"
+            }, 
+            {
+               "pages": [],
+               "path": "api-specification/markdown/narrative/edge/fundamentals/debugging.md",
+               "title": "Debugging"
+            },
+            {
+              "pages": [],
+              "path": "api-specification/markdown/narrative/edge/fundamentals/interacting-with-multiple-properties.md",
+              "title": "Interacting with properties"
+            }, 
+            {
+              "pages": [],
+              "path": "api-specification/markdown/narrative/edge/fundamentals/rendering-personalization-content.md",
+              "title": "Rendering personalized content"
+            }, 
+            {
+               "pages": [],
+               "path": "api-specification/markdown/narrative/edge/fundamentals/supporting-opt-in.md",
+               "title": "Supporting Opt-in"
+            },
+            {
+              "pages": [],
+              "path": "api-specification/markdown/narrative/edge/what-to-implement/commerce.md",
+              "title": "Commerce"
+            }, 
+            {
+              "pages": [],
+              "path": "api-specification/markdown/narrative/edge/reference/automatic-information.md",
+              "title": "Automatically collected information"
+            }, 
+            {
+               "pages": [],
+               "path": "api-specification/markdown/narrative/edge/reference/retrieving-library-information.md",
+               "title": "Retrieving library information"
+            }
+          ],
+          "path": "api-specification/markdown/narrative/edge/overview.md",
+          "title": "Adobe Experience Platform Web SDK",
+          "description": "Adobe Experience Platform Web SDK is a client-side JavaScript library that allows customers of the Adobe Experience Cloud to interact with the various services in the Experience Cloud."
+   }
+    ],
+    "app2app_map": {
+    }
+}
