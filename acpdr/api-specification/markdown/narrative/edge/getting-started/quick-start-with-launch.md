@@ -7,7 +7,7 @@ description: >-
 
 Currently the Adobe Experience Platform Web SDK only supports sending data to Adobe Experience Platform using XDM. You must satisfy the following prerequisites.
 
-- Have a [1st-party domain (CNAME)](https://docs.adobe.com/content/help/en/core-services/interface/ec-cookies/cookies-first-party.html) enabled
+- Have a [1st-party domain (CNAME)](https://docs.adobe.com/content/help/en/core-services/interface/ec-cookies/cookies-first-party.html) enabled. If you already have a CNAME for Analytics you should use that one.
 - Be entitled to Adobe Experience Platform
 - Be using the latest version of the Visitor ID service
 
