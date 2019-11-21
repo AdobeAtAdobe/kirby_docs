@@ -15,7 +15,10 @@ Currently the Adobe Experience Platform Web SDK only supports sending data to Ad
 
 To be able to send data to Adobe Experience Platform, you must create an XDM schema and a dataset that uses that schema.
 
-- [Create a schema](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/schema_editor_tutorial/schema_editor_tutorial.md)
+- [Create a schema](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/schema_editor_tutorial/schema_editor_tutorial.md) with the following mixins:
+  - ExperienceEvent Implementation Details
+  - ExperienceEvent Environment Details
+  - ExperienceEvent Web Details
 - Add the Adobe Experience Platform Web SDK Mixin to the schema you created
 - [Create a dataset](https://platform.adobe.com/dataset/overview) with your schema where you would like the data to land
 
