@@ -18,6 +18,7 @@ New release:
 * [Sources](#sources)
 
 Updates to existing features:
+* [Data Science Workspace](#data-science-workspace)
 * [Experience Data Model (XDM) System](#experience-data-model-xdm-system)
 * [Real-time Customer Profile](#real-time-customer-profile) 
 * [Segmentation Service](#segmentation-service)
@@ -96,6 +97,19 @@ Experience Platform provides a RESTful API and an interactive UI that lets you s
 *   Source connectors for cloud-based storages do not support the ingestion of compressed files.
 
 For more information about sources, see [Sources overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md).
+
+## Data Science Workspace
+
+Adobe Experience Platform Data Science Workspace enables data scientists to seamlessly generate insights from data and content across Adobe applications and third-party systems by building and operationalizing Machine Learning Models. Data Science Workspace is tightly integrated with Platform and powers the end-to-end data science lifecycle, including exploration and preparation of XDM data, followed by the development and operationalization of Models to automatically enrich Real-time Customer Profile with Machine Learning Insights.
+
+### New features
+
+| Feature    | Description  |
+| -----------| ---------- |
+| Data access using Platform SDK | Pre-built Recipes and launcher notebooks in Python now use Platform SDK for accessing data. |
+| Support for sandboxes | Support for upcoming sandbox functionality (currently in beta), including the ability to isolate notebooks and Recipes into development or production sandboxes. See the [sandboxes overview](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information. |
+
+See the [Data Science Workspace overview](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html) for a full introduction to the service. For step-by-step guides on common workflows, please refer to the [Data Science Workspace tutorials](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials.html).
 
 ## Experience Data Model (XDM) System
 

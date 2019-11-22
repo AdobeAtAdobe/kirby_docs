@@ -14,9 +14,11 @@ author: crhoades, ens28527
 
 New release:  
 * [Real-time Customer Data Platform](#real-time-customer-data-platform)
+* [Destinations](#destinations)
 * [Sources](#sources)
 
 Updates to existing features:
+* [Data Science Workspace](#data-science-workspace)
 * [Experience Data Model (XDM) System](#experience-data-model-xdm-system)
 * [Real-time Customer Profile](#real-time-customer-profile) 
 * [Segmentation Service](#segmentation-service)
@@ -42,29 +44,9 @@ For more information, see the [Adobe Real-time Customer Data Platform documentat
 
 |Feature|Description|
 |---|---|
-|Destinations|Pre-built integrations with destination platforms supported by Adobe’s Real-time Customer Data Platform that activate data to those partners in a seamless way. See [Destinations](#destinations)|
-|Home page metrics dashboard|The Adobe Real-time Customer Data Platform (Real-time CDP) home page includes a metrics dashboard that shows information about profiles and segments. The home page also contains links to learning materials. See [Real-time Customer Data Platform metrics](#real-time-customer-data-platform-metrics)|
-|Sources|You can ingest data from a variety of sources such as Adobe Solutions, cloud-based storage, third party software, and your CRM. See [Sources](#sources)|
-
-### Destinations
-
-Destinations are pre-built integrations with destination platforms supported by Adobe’s Real-time Customer Data Platform that activate data to those partners in a seamless way. For more information, read the [Destinations overview](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/destinations-overview.html) article.
-
-#### Available Destinations
-
-With the November release, Adobe's Real-time Customer Data Platform supports the following destinations:
-
-* Advertising: Google
-* Email marketing: Adobe Campaign, Salesforce Marketing Cloud, Oracle Responsys, Oracle Eloqua
-
-See the [destination catalog](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/destinations-cat/destinations-catalog.html) for information about each of the destinations.
-
-#### Known Limitations
-
-* The control to allow for custom activation schedules in the [activation flow](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/dest-tutorials/activate-destinations.html#activate-data) (Schedule step) is not available with the initial release. 
-* There is currently no way to edit or delete a destination configuration. To work around this limitation, you can enable or disable the destination in the top right corner of the [destination details page](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/destinations-interface/destination-details-page.html#n4-controls-to-edit-activation-and-enabledisable-data-flow). 
-* No validation is currently in place for account details, path, or credentials when connecting to your destination or storage account. Make sure you are entering the right credentials and double-check for spelling errors or typos. 
-* No credential renewals are in place with the initial release. Once an account is expired or needs refreshing, you must create a new destination connection and remap your previously mapped segments.
+|Destinations|Pre-built integrations with destination platforms supported by Adobe’s Real-time Customer Data Platform that activate data to those partners in a seamless way. See [Destinations](#destinations) below for more information.|
+|Home page metrics dashboard|The Adobe Real-time Customer Data Platform (Real-time CDP) home page includes a metrics dashboard that shows information about profiles and segments. The home page also contains links to learning materials. See the section on [Real-time Customer Data Platform metrics](#real-time-customer-data-platform-metrics) below.|
+|Sources|You can ingest data from a variety of sources such as Adobe Solutions, cloud-based storage, third party software, and your CRM. See the [Sources](#sources) section below to learn more.|
 
 ### Real-time Customer Data Platform metrics
 
@@ -74,7 +56,27 @@ The home page is only one of the places where metric cards appear. Real-time CDP
 
 If there is no data in the system when you log in to Real-time CDP, the dashboard on the home page does not appear. In this case, the home page provides learning material for a first time user experience. As data is collected, the dashboard automatically updates to display information about that data. 
 
-For additional information, see [Real-time Customer Data Platform metrics overview](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/intro/home-page-dashboards.html)
+To learn more, see the [Real-time Customer Data Platform metrics overview](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/intro/home-page-dashboards.html)
+
+## Destinations
+
+Destinations are pre-built integrations with destination platforms supported by Adobe’s Real-time Customer Data Platform that activate data to those partners in a seamless way. For more information, read the [Destinations overview](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/destinations-overview.html) article.
+
+### Available destinations
+
+With the November release, Adobe's Real-time Customer Data Platform supports the following destinations:
+
+* Advertising: Google
+* Email marketing: Adobe Campaign, Salesforce Marketing Cloud, Oracle Responsys, Oracle Eloqua
+
+See the [destination catalog](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/destinations-cat/destinations-catalog.html) for information about each of the destinations.
+
+### Known limitations
+
+* The control to allow for custom activation schedules in the [activation flow](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/dest-tutorials/activate-destinations.html#activate-data) (Schedule step) is not available with the initial release. 
+* There is currently no way to edit or delete a destination configuration. To work around this limitation, you can enable or disable the destination in the top right corner of the [destination details page](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/destinations-interface/destination-details-page.html#n4-controls-to-edit-activation-and-enabledisable-data-flow). 
+* No validation is currently in place for account details, path, or credentials when connecting to your destination or storage account. Make sure you are entering the right credentials and double-check for spelling errors or typos. 
+* No credential renewals are in place with the initial release. Once an account is expired or needs refreshing, you must create a new destination connection and remap your previously mapped segments.
 
 ## Sources
 
@@ -82,7 +84,7 @@ Adobe Experience Platform can ingest data from external sources while allowing y
 
 Experience Platform provides a RESTful API and an interactive UI that lets you set up source connections for various data providers with ease. These source connections allow you to you authenticate to your storage systems and CRM services, set times for ingestion runs, and manage data ingestion throughput.
 
-### New features
+### Key features
 
 | Feature    | Description  |
 | ---------- | ------------ |
@@ -95,6 +97,19 @@ Experience Platform provides a RESTful API and an interactive UI that lets you s
 *   Source connectors for cloud-based storages do not support the ingestion of compressed files.
 
 For more information about sources, see [Sources overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md).
+
+## Data Science Workspace
+
+Adobe Experience Platform Data Science Workspace enables data scientists to seamlessly generate insights from data and content across Adobe applications and third-party systems by building and operationalizing Machine Learning Models. Data Science Workspace is tightly integrated with Platform and powers the end-to-end data science lifecycle, including exploration and preparation of XDM data, followed by the development and operationalization of Models to automatically enrich Real-time Customer Profile with Machine Learning Insights.
+
+### New features
+
+| Feature    | Description  |
+| -----------| ---------- |
+| Data access using Platform SDK | Pre-built Recipes and launcher notebooks in Python now use Platform SDK for accessing data. |
+| Support for sandboxes | Support for upcoming sandbox functionality (currently in beta), including the ability to isolate notebooks and Recipes into development or production sandboxes. See the [sandboxes overview](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information. |
+
+See the [Data Science Workspace overview](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html) for a full introduction to the service. For step-by-step guides on common workflows, please refer to the [Data Science Workspace tutorials](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials.html).
 
 ## Experience Data Model (XDM) System
 
@@ -112,6 +127,10 @@ XDM is a publicly documented specification designed to improve the power of digi
 | Profile Privacy mixin | New profile mixin that adds fields to accept general out-out and sales/sharing opt-out signals for Real-time Customer Profile. |
 | Format constraints for `xdm:alternateDisplayInfo` | The "Title" and "Description" fields for `xdm:alternateDisplayInfo` must both be strings to pass validation. |
 | Name change: XDM Individual Profile  | The "title" of the "XDM Profile" class has been updated to "XDM Individual Profile". The formal `$id` of the class has not changed. |
+
+### Known issues
+
+* None.
 
 To learn more about working with XDM using the Schema Registry API and Schema Editor user interface, please read the [XDM System documentation](https://www.adobe.io/apis/experienceplatform/home/xdm.html).
 
@@ -133,7 +152,7 @@ Adobe Experience Platform enables you to drive coordinated, consistent, and rele
 
 ### Known issues
 
-None.
+* None.
 
 For more information on Real-time Customer Profile, including tutorials and best practices for working with Profile data, please read the [Real-time Customer Profile Overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
 
@@ -150,7 +169,7 @@ Segmentation Service defines a particular subset of profiles by describing the c
 | Segments as building blocks | When creating segments using the Segment Builder UI, users can now use previously-defined segments as building blocks for additional segments. <ul><li>Reference current audience membership: updates as people move in and out of audiences.</li><li>Copy logic: take the selected segment definition and duplicate it in the new segment.</li></ul>|
 |View segment membership by ID namespace|Segment membership can now be viewed by ID namespace (email, ECID, and total count).|
 |RBAC support|Segment Builder now provides support for basic role-based access controls and permissions.|
-|Enhanced support for external audience ingestion into Platform|Users can now bring in external (non-Experience Platform) audience metadata in scenarios where the number of audiences is large or not known apriori. This audience metadata can be used within Segment Builder to create new Experience Platform segments.|
+|Enhanced support for external audience sharing between Platform and Adobe solutions |Users can now bring in external (non-Experience Platform) audience metadata in scenarios where the number of audiences is large or not known a priori. This release includes access to Audience Manager metadata for customers who have provisioned the solution connector. This audience metadata can be used within Segment Builder to create new Experience Platform segments. <br/><br/> Additionally, segments created in Experience Platform will now be available for use in integrated Adobe solutions, including Audience Manager, Target, and Ad Cloud.|
 
 ### Bug fixes
 
@@ -162,6 +181,6 @@ Segmentation Service defines a particular subset of profiles by describing the c
 
 ### Known issues
 
-None.
+* None.
 
 To learn more about Segmentation Service, please read the [Segmentation Service overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!end-user/markdown/segmentation_overview/segmentation.md). Then, to begin building and working with segments, follow the [Segment Builder user guide](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!end-user/markdown/segmentation_overview/segment-builder-guide.md) for UI instructions or consult the [creating segments tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md) for using the API.  
