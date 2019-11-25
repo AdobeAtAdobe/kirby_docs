@@ -20,31 +20,29 @@ This tutorial requires a working understanding of XDM System and the Schema Edit
 
 ## Define a source and destination schema
 
-It is expected that you have already created the two schemas that will be defined in the relationship. For demonstration purposes, this tutorial creates a relationship between members of an organization's current loyalty program (defined in a "Loyalty Members" schema) with members of a previous loyalty program (defined in a "Legacy Loyalty Members" schema).
+It is expected that you have already created the two schemas that will be defined in the relationship. For demonstration purposes, this tutorial creates a relationship between members of an organization's loyalty program (defined in a "Loyalty Members" schema) and their favorite hotels (defined in a "Hotels" schema).
 
-Schema relationships are represented by a **source schema** having a field that refers to another field within a **destination schema**. In the steps that follow, "Loyalty Members" will be the source schema, while "Legacy Loyalty Members" will act as the destination schema.
+Schema relationships are represented by a **source schema** having a field that refers to another field within a **destination schema**. In the steps that follow, "Loyalty Members" will be the source schema, while "Hotels" will act as the destination schema.
 
 For reference purposes, the following sections describe the structure of each schema used in this tutorial before a relationship has been defined.
 
 ### Loyalty Members schema
 
-The source schema "Loyalty Members" is the schema that was constructed in the tutorial for [creating a schema in the UI](schema_editor_tutorial.md). It includes a "loyalty" object under its "\_tenantId" namespace, which includes several loyalty-specific fields. One of these fields, "loyaltyId", serves as the primary identity for the schema. As seen under _Schema Properties_, this schema has been enabled for use in [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
+The source schema "Loyalty Members" is the schema that was constructed in the tutorial for [creating a schema in the UI](schema_editor_tutorial.md). It includes a "loyalty" object under its "\_tenantId" namespace, which includes several loyalty-specific fields. One of these fields, "loyaltyId", serves as the primary identity for the schema under the "Email" namespace. As seen under _Schema Properties_, this schema has been enabled for use in [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md).
 
 ![](images/loyalty-members.png)
 
-### Legacy Loyalty Members schema
+### Hotels schema
 
-The destination schema "Legacy Loyalty Members" contains loyalty-specific fields under its "\_tenantId" namespace that are slightly different from those contained in the source schema. However, like "Loyalty Members", "Legacy Loyalty Members" contains a "loyaltyId" field that serves as its primary identity and is enabled for use in Real-time Customer Profile.
+The destination schema "Hotels" contains fields that describe a hotel, include its address, brand, number of rooms, and star rating. The "hotelId" field serves as the primary identity for the schema under the "ECID" namespace. Unlike "Loyalty Members", this schema has not been enabled for Real-time Customer Profile.
 
-![](images/legacy-loyalty-members.png)
-
-> **Note:** In order for a schema relationship to appear in a union, both schemas must be enabled for Real-time Customer Profile. If one of your schemas is Profile-enabled, you must ensure that the other schema has a primary identity field defined and is also enabled for use in Profile.
+![](images/hotels.png)
 
 ## Create a relationship mixin
 
-> **Note:** This step is only required if your source schema does not have a dedicated field to be used as a reference to another schema. If this field is already defined in your source schema, skip to the next step of [defining a relationship field](#define-a-relationship-field-for-the-source-schema).
+> **Note:** This step is only required if your source schema does not have a dedicated string-type field to be used as a reference to another schema. If this field is already defined in your source schema, skip to the next step of [defining a relationship field](#define-a-relationship-field-for-the-source-schema).
 
-In order to define a relationship between two schemas in the UI, the source schema must have a dedicated field to be used as a reference to the destination schema. You can add this field to the source schema by creating a new mixin.
+In order to define a relationship between two schemas, the source schema must have a dedicated field to be used as a reference to the destination schema. You can add this field to the source schema by creating a new mixin.
 
 Start by clicking **Add** in the _Mixins_ section.
 
@@ -78,7 +76,7 @@ Click the reference field in the canvas, then scroll down under _Field Propertie
 
 ![](images/relationship-checkbox.png)
 
-Click the dropdown for **Reference Schema** and select the destination schema for the relationship ("Legacy Loyalty Members" in this example). If the destination schema is union-enabled, the **Reference Identity Namespace** field is automatically set to the namespace of the destination schema's primary identity. If the schema is not union-enabled, you must manually select the namespace that you plan to use from the dropdown menu. Click **Apply** when finished.
+Click the dropdown for **Reference Schema** and select the destination schema for the relationship ("Hotels" in this example). If the destination schema is union-enabled, the **Reference Identity Namespace** field is automatically set to the namespace of the destination schema's primary identity. If the schema does not have a primary identity defined, you must manually select the namespace that you plan to use from the dropdown menu. Click **Apply** when finished.
 
 ![](images/reference-schema-id-namespace.png)
 
