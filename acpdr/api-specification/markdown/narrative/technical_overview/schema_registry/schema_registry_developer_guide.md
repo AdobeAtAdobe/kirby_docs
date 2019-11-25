@@ -4,8 +4,8 @@ The Schema Registry is used to access the Schema Library within Adobe Experience
 
 This developer guide provides steps to help you [start using the Schema Registry API](#getting-started-with-the-schema-registry-api), including:
 
-* [Know your `TENANT_ID`](#know-your--tenant-id-)
-* [Understand the `CONTAINER_ID`](#understand-the--container-id-)
+* [Know your TENANT_ID](#know-your-tenant_id)
+* [Understand the CONTAINER_ID](#understand-the-container_id)
 * [Schema identification](#schema-identification)
 * [Accept headers](#accept-header)
 * [XDM field constraints and best practices](#xdm-field-constraints-and-best-practices)
