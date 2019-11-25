@@ -2,7 +2,15 @@
 
 The Schema Registry is used to access the Schema Library within Adobe Experience Platform, providing a user interface and RESTful API from which all available library resources are accessible.
 
-This developer guide provides steps to help you [start using the Schema Registry API](#getting-started-with-the-schema-registry-api) and includes [sample API calls](#sample-api-calls) for performing the following actions using the Schema Registry:
+This developer guide provides steps to help you [start using the Schema Registry API](#getting-started-with-the-schema-registry-api), including:
+
+* [Know your `TENANT_ID`](#know-your--tenant-id-)
+* [Understand the `CONTAINER_ID`](#understand-the--container-id-)
+* [Schema identification](#schema-identification)
+* [Accept headers](#accept-header)
+* [XDM field constraints and best practices](#xdm-field-constraints-and-best-practices)
+
+The guide then provides [sample API calls](#sample-api-calls) for performing the following actions using the Schema Registry:
 
 * [Listing schemas, classes, mixins, or data types](#list-resources)
 * [Lookup specific schemas, classes, mixins, or data types](#lookup-a-specific-resource)
@@ -205,13 +213,13 @@ application/vnd.adobe.xed-full-desc+json; version={MAJOR_VERSION}	|`$ref` attrib
 
 > **Note:** If supplying the `major` version only (e.g. 1, 2, 3), the registry will return the latest `minor` version (e.g. .1, .2, .3) automatically.
 
-### Defining fields
+### XDM field constraints and best practices
 
 The fields of a schema are listed within its `properties` object. Each field is itself an object, containing attributes to describe and constrain the data that the field can contain. 
 
 More information about [defining field types in the API](#defining-xdm-field-types-in-the-api) can be found later in this document, including code samples and optional constraints for the most commonly used data types.
 
-The following sample field illustrates some best practices to follow when defining fields, as explained below. These best practices can also be applied when defining other resources that contain similar attributes.
+The following sample field illustrates a properly formatted XDM field, with further details on naming constraints and best practices provided below. These practices can also be applied when defining other resources that contain similar attributes.
 
 ```JSON
 "fieldName": {
@@ -232,9 +240,10 @@ The following sample field illustrates some best practices to follow when defini
 * The field requires a `type`.  
     * Defining certain types may require an optional `format`.  
     * Where a specific formatting of data is required, `examples` can be added as an array.
-    * The field type may also be defined using any data type in the registry. This is explained in more detail in the [Create a data type](#create-a-data-type) section later in this document. 
+    * The field type may also be defined using any data type in the registry. See the section on [creating a data type](#create-a-data-type) in this document for more information. 
 * The `description` explains the field and pertinent information regarding field data. It should be written in full sentences with clear language so that anyone accessing the schema can understand the intention of the field.
 
+See the appendix for more information how to [define field types in the API](#defining-xdm-field-types-in-the-api).
 
 ## Sample API calls
 
@@ -1925,7 +1934,9 @@ The open source project is available to you, but when it comes to interacting wi
 
 ### Defining XDM field types in the API
 
-As shown in the examples above, schemas are defined using JSON Schema standards and basic field types. XDM allows you to define additional field types through the use of formats and optional constraints. The XDM field types are exposed by the field-level attribute, "meta:xdmType".
+XDM schemas are defined using JSON Schema standards and basic field types, with additional constraints for field names which are enforced by Experience Platform. XDM allows you to define additional field types through the use of formats and optional constraints. The XDM field types are exposed by the field-level attribute, `meta:xdmType`.
+
+> **Note:** `meta:xdmType` is a system-generated value, and therefore you are not required to add this property to the JSON for your field. Best practice is to use JSON Schema types (such as string and integer) with the appropriate min/max constraints as defined in the table below.
 
 The following table outlines the appropriate formatting to define scalar field types and more specific field types using optional properties. More information regarding optional properties and type-specific keywords is available through the [JSON Schema documentation](https://json-schema.org/understanding-json-schema/reference/type.html).
 
