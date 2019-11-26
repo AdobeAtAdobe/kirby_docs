@@ -7,6 +7,7 @@ This document provides a tutorial for managing streaming segmentation. Specifica
 - [Retrieving all streaming enabled segments](#retrieve-all-streaming-segmentation-enabled-segments)
 - [Creating a streaming enabled segment](#create-a-streaming-enabled-segment)
 - [Enabling an existing segment for streaming segmentation](#enable-an-existing-segment-for-streaming-segmentation)
+- [Enabling scheduled segmentation to establish a baseline](#enable-scheduled-evaluation)
 
 >**Note:** Streaming segmentation is a beta feature, and will be available on request.
 
@@ -34,7 +35,7 @@ In order to make calls to Platform APIs, you must first complete the [authentica
 
 All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
 
-* x-sandbox-name: `{SANDBOX_NAME}`
+- x-sandbox-name: `{SANDBOX_NAME}`
 
 > **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../../technical_overview/sandboxes/sandboxes-overview.md). 
 
@@ -325,7 +326,7 @@ A successful response will return details of the segment definition you requeste
 }
 ```
 
->**Note:** For the next request, you will need the full details of the segment definition you just requested. Please copy the details of this payload to be used in the body of the next request.
+>**Note:** For the next request, you will need the full details of the segment definition that were returned in this response. Please copy the details of this response to be used in the body of the next request.
 
 ### Enable the existing segment for streaming segmentation
 
@@ -423,8 +424,125 @@ A successful response returns the details of the newly updated segment definitio
 
 ```
 
+## Enable scheduled evaluation
 
-## Next steps
+Once streaming evaluation has been enabled, a baseline must be created (after which the segment will always be up-to-date). This is done automatically by the system, however scheduled evaluation (also known as scheduled segmentation) must first be enabled in order for the baselining to take place. 
+
+With scheduled segmentation, your IMS Org can create a recurring schedule to automatically run export jobs to evaluate segments.
+
+> **Note:** Scheduled evaluation can be enabled for sandboxes with a maximum of five (5) merge policies for XDM Individual Profile. If your organization has more than five merge policies for XDM Individual Profile within a single sandbox environment, you will not be able to use scheduled evaluation.
+
+### Create a schedule
+
+By making a POST request to the `/config/schedules` endpoint, you can create a schedule and include the specific time when the schedule should be triggered.
+
+#### API format
+
+```http
+POST /config/schedules
+```
+
+#### Request
+
+The following request creates a new schedule based on the specifications provided in the payload.
+
+```shell
+curl -X POST \
+  https://platform.adobe.io/data/core/ups/config/schedules \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
+  -d '{
+        "name": "{SCHEDULE_NAME}",
+        "type": "batch_segmentation",
+        "properties": {
+            "segments": ["*"]
+        },
+        "schedule": "0 0 1 * * ?",
+        "state": "inactive"
+        }'
+```
+
+* `name`: **(Required)** The name of schedule. Must be a string.
+* `type`: **(Required)** The job type in string format.  
+    * Supported types: `batch_segmentation` and `export`.
+* `properties`: **(Required)** An object containing additional properties related to the schedule.
+    * `properties.segments`: **(Required when `type` equals `batch_segmentation`)** Using `["*"]` ensures all segments are included.
+* `schedule`: **(Required)** A string containing the job schedule. Jobs can only be scheduled to run once a day, meaning you cannot schedule a job to run more than once during a 24 hour period. The example shown (`0 0 1 * * ?`) means the job is triggered every day at 1:00:00 UTC. For more information, please review the [cron expression format](http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html) documentation.
+* `state`: *(Optional)* String containing the schedule state. Available values: `active` and `inactive`. Default value is `inactive`. An IMS Organization can only create one schedule. Steps for updating the schedule are available later in this tutorial.
+
+#### Response
+
+A successful response returns the details of the newly created schedule.
+
+```json
+{
+    "id": "cd585edf-962d-420d-94ad-3be03e619ac2",
+    "imsOrgId": "{IMS_ORG}",
+    "sandbox": {
+        "sandboxId": "e7e17720-c5bb-11e9-aafb-87c71c35cac8",
+        "sandboxName": "prod",
+        "type": "production",
+        "default": true
+    },
+    "name": "{SCHEDULE_NAME}",
+    "state": "inactive",
+    "type": "batch_segmentation",
+    "schedule": "0 0 1 * * ?",
+    "properties": {
+        "segments": [
+            "*"
+        ]
+    },
+    "createEpoch": 1568267948,
+    "updateEpoch": 1568267948
+}
+```
+
+### Enable a schedule
+
+By default, a schedule is inactive when created unless the `state` property is set to `active` in the create (POST) request body. You can enable a schedule (set the `state` to `active`) by making a PATCH request to the `/config/schedules` endpoint and including the ID of the schedule in the path.
+
+#### API format
+
+```http
+POST /config/schedules/{SCHEDULE_ID}
+```
+
+#### Request
+
+The following request uses [JSON Patch formatting](http://jsonpatch.com/) in order to update the `state` of the schedule to `active`.
+
+```shell
+curl -X POST \
+  https://platform.adobe.io/data/core/ups/config/schedules/cd585edf-962d-420d-94ad-3be03e619ac2 \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
+  -d '[
+        {
+          "op": "add",
+          "path": "/state",
+          "value": "active"
+        }
+      ]'
+```
+
+#### Response
+
+A successful update returns an empty response body and HTTP Status 204 (No Content).
+
+The same operation can be used to disable a schedule by replacing the "value" in the previous request with "inactive".
+
+## Next Steps
+
+Now that you have enabled both new and existing segments for streaming segmentation, and enabled scheduled segmentation to develop a baseline and perform recurring evaluations, you can begin to create segments for your organization. 
+
+To learn how to perform similar actions and work with segments using the Adobe Experience Platform user interface, please visit the [Segment Builder user guide](/end-user/markdown/segmentation_overview/segment-builder-guide.md).
 
 [rtcp]: ../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md
 [seg-service]: ../../../../../end-user/markdown/segmentation_overview/segmentation.md

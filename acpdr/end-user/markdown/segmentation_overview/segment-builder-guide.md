@@ -183,6 +183,8 @@ Similarly, to enable an existing segment definition for streaming in the UI, you
 
 ![](images/enable-streaming-segmentation-existing-segment.png)
 
+Once streaming segmentation has been enabled, a baseline must be established (this is the initial run after which the segment will always be up-to-date). The system handles baselining automatically, however this is only possible if scheduled segmentation has been enabled. For details on enabling scheduled segmentation, please refer to [the previous section in this user guide](#enable-scheduled-segmentation).
+
 ## Next steps
 
 Segment Builder provides a rich workflow allowing you to isolate marketable audiences by building segments from Real-time Customer Profile data. After reading this guide you should now be able to:

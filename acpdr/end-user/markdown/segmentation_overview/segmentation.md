@@ -3,23 +3,32 @@
 Adobe Experience Platform Segmentation Service provides a user interface and RESTful API that allows you to build segments and generate audiences from your Real-time Customer Profile data. These segments are centrally configured and maintained on Platform, and are readily accessible by any Adobe solution. 
 
 This document provides an overview of Segmentation Service and the role it plays in Adobe Experience Platform. The following topics are covered:
-* [How does segmentation work?](#how-does-segmentation-work): Understand the big picture about segmentation and its role within Experience Platform.
+
+* [How segmentation works](#how-segmentation-works): Understand the big picture of segmentation and its role within Experience Platform.
+    * [Creating segments](#create-segments)
+    * [Evaluating segments](#evaluating-segments)
+        * [Streaming segmentation](#streaming-segmentation)
+        * [Batch segmentation](#batch-segmentation)
+    * [Access segmentation results](#access-segmentation-results)
 * [Segment metadata](#segment-metadata): Learn why segment names and merge policies play an important role within Experience Platform.
 * [Advanced Segmentation Service features](#advanced-segmentation-features): Learn alternative ways to generate audiences using different segment types. 
 * [Segmentation Service data types](#segmentation-service-data-types): Learn how data types influence the segment definition process.
 
+## Getting started with Segmentation Service
+
 It is important to understand the following key terms used throughout this document:
+
 * __Segmentation__: Dividing a large group of individuals (such as customers, prospects, users, or organizations) into smaller groups that share similar traits and will respond similarly to marketing strategies.
 * __Segment definition__: The rule set used to describe key characteristics or behavior of a target audience. Once conceptualized, the rules outlined in a segment definition are used to determine qualifying audience members for a segment.
 * __Audience__: The resulting set of profiles that meet the criteria of a segment definition.
 
-## How does segmentation work?
+## How segmentation works
 
 Segmentation is the process of defining specific attributes or behaviors shared by a subset of profiles from your profile store to distinguish a marketable group of people from your customer base. For example, in an email campaign called "Did you forget to buy your sneakers?", you may want an audience of all users who searched for running shoes within the last 30 days, but who did not complete a purchase. 
 
 Once a segment has been conceptually defined it is built in Experience Platform. Typically, segments are built by the marketer or audience specialist although some organizations prefer they be created by their marketing department, in collaboration with their data analysts. Upon reviewing the data being sent to Platform, the data analyst composes the segment definition by selecting which fields and values will be used to build the rules or conditions of the segment. This is done using either the UI or API. 
 
-### Create segments
+## Create segments
 
 Whether created using the API or using the Segment Builder, segments are ultimately defined using Profile Query Language (PQL). This is where the conceptual segment definition gets described in the language built to retrieve profiles meeting the criteria. For more information, see the [PQL overview](../../../api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_pql.md). To learn what queries are supported by PQL see [supported PQL queries](../../../api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md). 
 
@@ -29,23 +38,23 @@ For information on building segment definitions using the API, see the tutorial 
 
  >**Note**: In the event a schema is extended, all future uploads must update newly added fields accordingly. For more information on customizing Experience Data Model (XDM), visit the [Schema Editor tutorial](../../../api-specification/markdown/narrative/tutorials/schema_editor_tutorial/schema_editor_tutorial.md).
 
-### Evaluate segments
+## Evaluate segments
 
-**Streaming segmentation**
+### Streaming segmentation
 
 >**Note:** Streaming segmentation is a beta feature, and will be available on request.
 
-Streaming segmentation is an ongoing data selection process that updates your segments in response to user activity. Once a segment has been built and saved, the segment definition is applied against incoming data on either Real-time Customer Profile or the edge service, depending on how the segment is activated (or used downstream). Segment additions and removals are processed regularly, ensuring your target audience remains relevant. 
+Streaming segmentation is an ongoing data selection process that updates your segments in response to user activity. Once a segment has been built and saved, the segment definition is applied against incoming data to Real-time Customer Profile. Segment additions and removals are processed regularly, ensuring your target audience remains relevant. 
 
 To learn more about streaming segmentation, please read the [streaming segmentation documentation](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/tutorials/segmentation/streaming_segmentation.md).
 
-**Batch segmentation**
+### Batch segmentation
 
 As an alternative to an ongoing data selection process, batch segmentation moves all profile data at once through segment definitions to produce corresponding audiences. Once created, this segment is saved and stored so that you can export it for use.
 
  To learn how to evaluate segments see the [segment evaluation tutorial](../../../api-specification/markdown/narrative/tutorials/segmentation/evaluate_segment.md). 
 
-### Access segmentation results
+## Access segmentation results
 
 See the Profile API tutorial to learn how to [access an exported segment](../../../api-specification/markdown/narrative/tutorials/consuming_unified_profile_data/consuming_unified_profile_data.md#access-an-exported-segment).
   
@@ -75,20 +84,20 @@ In addition to segment name and merge policy, Segment Builder offers you an addi
 ## Advanced segmentation features
 
 Segments can be configured to continually generate an audience on an ongoing basis by combining [streaming data ingestion](../../../api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_ingest_overview.md) with any of the following advanced segmentation features: 
-* Sequential segmentation
-* Dynamic segmentation
-* Multi-entity segmentation
-* Personalization payload
+* [Sequential segmentation](#sequential-segmentation)
+* [Dynamic segmentation](#dynamic-segmentation)
+* [Multi-entity segmentation](#multi-entity-segmentation)
+* [Personalization payload](#personalization-payload)
 
 These advanced features are discussed in more detail in the following sections.
 
-### Sequential segmentation
+## Sequential segmentation
 
 A standard user journey is sequential in nature.  Adobe Experience Platform allows you to define an ordered series of segments to reflect this journey thereby capturing sequences of events as they occur. You can arrange events into their desired order by using the visual event timeline in the Segment Builder.
 
 An example of a customer journey that would require sequential segmentation would be product view > product add > checkout > No purchase. 
 
-### Dynamic segmentation
+## Dynamic segmentation
 
 Dynamic segmentation solves the scalability problems marketers traditionally face when building segments for marketing campaigns.
 
@@ -108,7 +117,7 @@ As a result of the different segment combinations that inevitably arise as you s
 
 By assigning a variable to the purchase state attribute, your dynamic segment simplifies to "find me a purchase where the state of that purchase is not equal to the customer's home state". Doing so allows you to then consolidate 50 static segments into a single dynamic segment. 
  
-### Multi-entity segmentation
+## Multi-entity segmentation
 
 With the advanced multi-entity segmentation feature, you can create segments using multiple XDM classes thereby adding extensions to person schemas. As a result, Segmentation Service can access additional fields during segment definition as if they were native to the profile data store.
 
@@ -132,7 +141,7 @@ Using the API, the data architect relates the key from the ExperienceEvent schem
 
 See the [schema composition overview](../../../api-specification/markdown/narrative/technical_overview/schema_registry/schema_composition/schema_composition.md#union) to learn how to define relationships across XDM classes.
 
-### Personalization payload
+## Personalization payload
 
 Segments can now carry a payload of contextual details to enable deep personalization of Adobe Solutions as well as external non-Adobe applications. These payloads can be added while defining your target segment.
 
