@@ -62,7 +62,11 @@ The "Sandbox Management" permission allows users to manage, view, or reset sandb
 
 ### Permissions
 
-Permissions that are granted through the Admin Console are sorted by category, with some permissions granting access to several low-level functionalities. 
+The **permissions** tab within a product profile displays the sandboxes and permissions that are active for that profile:
+
+![](images/permissions-overview.png)
+
+Permissions that are granted through the Admin Console are sorted by category, with some permissions granting access to several low-level functionalities.
 
 The following table outlines the available permissions for Experience Platform in the Admin Console, with descriptions of the specific Platform capabilities they grant access to. For detailed steps on how to add permissions to a product profile, see the [access control user guide](access-control-user-guide.md).
 
