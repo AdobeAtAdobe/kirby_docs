@@ -279,6 +279,6 @@
     "end-user/markdown/query-service/qs-intro.md":"/apis/experienceplatform/home/services/query-service/query-service.html",
     "api-specification/markdown/narrative/gdpr/":"/apis/experienceplatform/gdpr/docs/alldocs.html",
     "api-specification/markdown/narrative/technical_overview/sandboxes": "/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html",
-		"api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting": "https://www.adobe.io/apis/experienceplatform/home/services/troubleshooting.html"
+    "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting": "https://www.adobe.io/apis/experienceplatform/home/services/troubleshooting.html"
   }
 }
