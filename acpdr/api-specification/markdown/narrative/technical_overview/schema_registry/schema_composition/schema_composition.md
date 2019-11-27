@@ -151,7 +151,7 @@ The valid ranges of these scalar types can be further constrained to certain pat
 
 > **Note:** The "map" field type allows for key-value pair data, including multiple values for a single key. Maps can only be defined at the system level, meaning you may encounter a map in an industry or vendor-defined schema, but it is not available for use in fields you define. The [Schema Registry API developer guide](../schema_registry_developer_guide.md) contains more information on defining field types.
 
-When constructing schemas, it is important to understand how using certain field types will impact downstream services and applications. Affected services include, but are not limited to:
+Some data operations used by downstream services and applications enforce constraints on specific field types. Affected services include, but are not limited to:
 
 * [Real-time Customer Profile](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md)
 * [Identity Service](../../identity_services_architectural_overview/identity_services_architectural_overview.md)
