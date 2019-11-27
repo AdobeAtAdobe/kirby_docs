@@ -1,6 +1,6 @@
 # Create an FTP or SFTP source connector in the UI
 
-Source connectors in Adobe Experience Platform provides the ability to ingest externally sourced data on a scheduled basis. This tutorial provide steps for creating a FTP or SFTP source connector using the Platform user interface, and is broken into the following sections:
+Source connectors in Adobe Experience Platform provide the ability to ingest externally sourced data on a scheduled basis. This tutorial provides steps for creating a FTP or SFTP source connector using the Platform user interface, and is broken into the following sections:
 
 -   [Connect to your server](#connect-to-your-server)
 -   [Configure a dataflow](#configure-a-dataflow)
@@ -9,6 +9,11 @@ Source connectors in Adobe Experience Platform provides the ability to ingest ex
     -   [Schedule ingestion runs](#schedule-ingestion-runs)
     -   [Review dataflow](#review-your-dataflow)
 -   [Monitor data ingestion](#monitor-data-ingestion)
+
+In addition, the appendix to this tutorial provides additional information for working with source connectors.
+
+-   [Disable a dataflow](#disable-a-dataflow)
+-   [Activate inbound data for Profile hydration](#activate-inbound-data-for-profile-hydration)
 
 ## Getting started
 
@@ -53,7 +58,7 @@ Once a base connection with your FTP or SFTP server is established, you can cont
 
 A dataflow is a scheduled task for the purpose of retrieving and ingesting data from a source to a Platform dataset. Follow the steps below to configure a new dataflow using your FTP or SFTP base connector.
 
-Within Experience Platform sources workspace, click the *Browse* tab to list your existing base connections. Find your FTP or SFTP connection and click its name to access the *Source activity* screen.
+Within Experience Platform sources workspace, click the **Browse** tab to list your existing base connections. Find your FTP or SFTP connection and click its name to access the *Source activity* screen.
 
 ![](./images/sftp/sftp_base_connectors.png)
 
@@ -63,11 +68,11 @@ The *Source activity* screen lists all active and inactive data flows. The infor
 
 ### Select data
 
-The *Select data* step appears, and it provides an interactive interface for you to explore your FTP or SFTP server's file hierarchy.
-*   The left-half of the interface is a directory browser, it displays files and directories found in your FTP or SFTP server. Click on a listing to display its contents.
-*   The right-half of the interface lets you preview the contents of a compatible data file. You can click on a file listing from the directory browser to view up to 100 rows of data.
+The *Select data* step appears, and it provides an interactive interface for you to explore your server's file hierarchy.
+*   The left half of the interface a directory browser, displaying your server's files and directories. 
+*   The right half of the interface lets you preview up to 100 rows of data from a compatible file.
 
-Find and select the data file you want to ingest and then click **Next**.
+Clicking a listed folder displays the contents of that folder's first compatible file in the previewer. You can choose to upload all files within the selected folder by clicking **Next**. If you want to upload to a specific file, select that file from the listing before clicking **Next**.
 
 >   **Note:** Supported file formats include CSV, JSON, and Parquet. JSON and Parquet files must be XDM compliant.
 
@@ -125,19 +130,23 @@ Once you have reviewed your dataflow, click **Finish** and allow some time for t
 
 You can monitor data that is being ingested through your FTP or SFTP dataflow. Follow the steps below to access a dataflow's dataset monitor.
 
-Within Experience Platform sources workspace, click the *Browse* tab to list your base connections. Find the FTP or SFTP connection that contains the dataflow you wish to monitor and click its name to access its *Source activity* screen.
+Within Experience Platform Sources workspace, click the **Browse** tab to list your base connections. In the displayed list, find the connection that contains the dataflow you wish to monitor and click its name to access its *Source activity* screen.
 
 ![](./images/sftp/browse_base_connections.png)
 
-Each dataflow is represented by the dataset for where source data is ingested into. Click the name of a dataset to access its *Dataset activity* screen.
+Click the name of a dataset to access its *Dataset activity* screen.
 
 ![](./images/sftp/sftp_flows.png)
 
-From here, you can see the rate of messages being consumed in the form of a graph as well as a list of successful and failed batches. You can view more details of a batch by clicking its **Batch ID**.
+From here, you can see the rate of messages being consumed in the form of a graph, as well as a list of successful and failed batches.
 
 ![](./images/sftp/dataset_activity.png)
 
-For more information on monitoring datasets and ingestion, refer to [monitoring streaming data flows](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/streaming_ingest/e2e-monitor-streaming-data-flows.md). 
+You can view more details about a batch by clicking a **Batch ID**, or by clicking **Monitoring** within the left-navigation to see the status of each batch. If a batch is ingested into a Profile-enabled dataset, the number of ingested profiles and identities are displayed.
+
+![](./images/sftp/monitoring.png)
+
+For more information on monitoring datasets and ingestion, refer to the tutorial on [monitoring streaming data flows](../../technical_overview/streaming_ingest/monitor-data-flows.md).
 
 ## Next steps
 
@@ -145,3 +154,59 @@ By following this tutorial, you have successfully created an FTP or SFTP base co
 
 *   [Real-time Customer Profile overview](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
 *   [Data Science Workspace overview](../../technical_overview/data_science_workspace_overview/dsw_overview.md)
+
+## Appendix
+
+The following section provides additional information for working with source connectors.
+
+### Disable a dataflow
+
+When a dataflow is created, it immediately becomes active and ingests data according to the schedule it was given. You can disable an active dataflow at any time by following the instructions below.
+
+Within the Sources workspace, click the **Browse** tab. Next, click the name of the base connection that the active dataflow you wish to disable belongs to.
+
+![](./images/sftp/browse_base_connections.png)
+
+Click the listing of the active dataflow and the *Properties* column appears, containing an **Enabled** toggle button. Click the toggle to disable the dataflow. The same toggle can be used to re-enable a dataflow after it has been disabled.
+
+![](./images/sftp/sftp_flows_disable.png)
+
+### Activate inbound data for Profile hydration
+
+This section provides steps for enabling a schema and dataset for Real-time Customer Profile.
+
+Inbound data from your FTP or SFTP server can be used towards enriching and hydrating your Real-time Customer Profile data.
+
+In order to enrich customer profiles, the target dataset's source schema is compatible for use in Real-time Customer Profile. A compatible schema satisfies the following requirements:
+
+*   The schema has at least one attribute specified as an identity property.
+*   The schema has an identity property defined as the primary identity.
+*   A mapping within the dataflow exists wherein the primary identity is a target attribute.
+
+Within the Sources workspace, click the **Browse** tab to list your base connections. In the displayed list, find the connection that contains the dataflow you wish to hydrate profiles with. Click the connection's name to access its details.
+
+![](./images/sftp/browse_base_connections.png)
+
+The connection's *Source activity* screen appears, displaying the datasets that the connection is ingesting source data into.
+
+![](./images/sftp/sftp_flows.png)
+
+Within the *properties* column to the right of your screen, details of the dataset are displayed, including a **Profile** switch and the schema the dataset adheres to. Click the name of the schema to view its composition.
+
+![](./images/sftp/sftp_dataset_properties.png)
+
+The *Schema Editor* appears, showing the structure of the schema in the center canvas. Within the canvas, select the field to be set as the primary identity. Under the *Field properties* tab that appears, select the **Identity** checkbox, then **Primary identity**. Finally, select an appropriate **Identity namespace**, then click **Apply** to save your changes.
+
+![](./images/sftp/sftp_schema_properties.png)
+
+Click the top-level object of the schema's structure and the *Schema properties* column appears. Enable the schema for Profile by toggling the **Profile** switch. Click **Save** to finalize your changes.
+
+![](./images/sftp/sftp_schema_enabled.png)
+
+Now that the schema is enabled for Profile, return to the Dataset activity screen and enable the dataset for Profile by clicking the **Profile** toggle within the *Properties* column.
+
+![](./images/sftp/sftp_dataset_enabled.png)
+
+With both the schema and dataset enabled for Profile, data ingested into that dataset will now also hydrate customer profiles.
+
+>   **Note:** Existing data within a recently enabled dataset is not consumed by Profile.
