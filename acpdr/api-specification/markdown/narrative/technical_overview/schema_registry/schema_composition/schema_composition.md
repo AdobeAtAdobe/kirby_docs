@@ -151,6 +151,16 @@ The valid ranges of these scalar types can be further constrained to certain pat
 
 > **Note:** The "map" field type allows for key-value pair data, including multiple values for a single key. Maps can only be defined at the system level, meaning you may encounter a map in an industry or vendor-defined schema, but it is not available for use in fields you define. The [Schema Registry API developer guide](../schema_registry_developer_guide.md) contains more information on defining field types.
 
+When constructing schemas, it is important to understand how using certain field types will impact downstream services and applications. Affected services include, but are not limited to:
+
+* [Real-time Customer Profile](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md)
+* [Identity Service](../../identity_services_architectural_overview/identity_services_architectural_overview.md)
+* [Segmentation](../../../../../../end-user/markdown/segmentation_overview/segmentation.md)
+* [Query Service](../../../../../../end-user/markdown/query-service/qs-intro.md)
+* [Data Science Workspace](../../data_science_workspace_overview/dsw_overview.md)
+
+Before creating a schema for use in downstream services, please review the appropriate documentation for those services in order to better understand the field requirements and constraints for the data operations the schema is intended for.
+
 ### XDM fields
 
 In addition to basic fields and the ability to define your own data types, XDM provides a standard set of fields and data types that are implicitly understood by Experience Platform services and provide greater consistency when used across Platform components.
