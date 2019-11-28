@@ -114,7 +114,7 @@
   "app2app_map":{
     "api-specification/markdown/narrative/tutorials/":"/apis/experienceplatform/home/tutorials/alltutorials.html",
     "acpdr/swagger-specs/":"/apis/experienceplatform/home/api-reference.html",
-    "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/":"apis/experienceplatform/home/services/troubleshooting.html",
+    "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/":"/apis/experienceplatform/home/services/troubleshooting.html",
     "api-specification/markdown/narrative/technical_overview/schema_registry":"/apis/experienceplatform/home/xdm/xdmservices.html",
     "api-specification/markdown/narrative/technical_overview/schema_registry/schema_composition/":"/apis/experienceplatform/home/xdm/xdmservices.html",
     "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
