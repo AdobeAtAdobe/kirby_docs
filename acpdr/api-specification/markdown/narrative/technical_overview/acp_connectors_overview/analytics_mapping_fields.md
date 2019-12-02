@@ -7,10 +7,9 @@ This document contains reference tables outlining Adobe Analytics fields belongi
 * [Direct mapping fields](#direct-mapping-fields): Fields that are directly mapped from Analytics to XDM.
 * [Split mapping fields](#split-mapping-fields): Fields with a single source that map to multiple XDM fields.
 * [Generated mapping fields](#generated-mapping-fields): Fields requiring logic beyond a direct copy from Analytics in order to be generated as XDM.
-* [Advanced mapping fields](#derived-mapping-fields): Fields requiring capabilities found in Adobe Experience Platform Query Service in order to be generated. *(This includes fields known as "postvalues".)*
+* [Advanced mapping fields](#advanced-mapping-fields): Fields requiring capabilities found in Adobe Experience Platform Query Service in order to be generated. *(This includes fields known as "postvalues".)*
 
-<!-- *insert image from PR 1272: https://git.corp.adobe.com/experience-platform/documentation/pull/1272
-![](images/analytics-data-into-experience-platform.png) -->
+![](images/analytics-data-experience-platform.png)
 
 ## Direct mapping fields
 
