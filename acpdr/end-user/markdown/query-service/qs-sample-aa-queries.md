@@ -1,12 +1,10 @@
 # Sample queries for Adobe Analytics data
 
-Data from selected Adobe Analytics report suites is transformed into XDM ExperienceEvents and ingested into Adobe Experience Platform as datasets for you. There are many use cases for Adobe Experience Platform Query Service with this data, and the following sample queries should work with your Adobe Analytics datasets. Information on where your Analytics fields land in XDM ExperienceEvents can be [found here](solutionref/analytics-field-map.md).
+Data from selected Adobe Analytics report suites is transformed into XDM ExperienceEvents and ingested into Adobe Experience Platform as datasets for you. This document outlines a number of use cases where Adobe Experience Platform Query Service makes use of this data, and the included sample queries should work with your Adobe Analytics datasets. Information on where your Analytics fields land in XDM can be [found here](solutionref/analytics-field-map.md).
 
 ## Getting started
 
-The SQL examples throughout this document require you to edit the SQL and fill in the expected parameters for your queries based on the dataset, eVar, event, or timeframe you are interested in evaluating. Provide parameters wherever you see `{ }` in the SQL examples that follow.
-
-Also, note whether the sample SQL calls for `post_values`. If it does, then you need to use a table that represents a dataset with post values in it. Datasets have tablenames that tell you if they are mid or post values. If the sample query does not specify, you can use either. 
+The SQL examples throughout this document require you to edit the SQL and fill in the expected parameters for your queries based on the dataset, eVar, event, or time frame you are interested in evaluating. Provide parameters wherever you see `{ }` in the SQL examples that follow.
 
 ## Commonly used SQL examples
 
@@ -16,44 +14,12 @@ Also, note whether the sample SQL calls for `post_values`. If it does, then you 
 SELECT Substring(from_utc_timestamp(timestamp, 'America/New_York'), 1, 10) AS Day,
        Substring(from_utc_timestamp(timestamp, 'America/New_York'), 12, 2) AS Hour, 
        Count(DISTINCT enduserids._experience.aaid.id) AS Visitor_Count 
-FROM   {target_table_post_values}
+FROM   {target_table}
 WHERE _acp_year = {target_year} 
       AND _acp_month = {target_month}  
       AND _acp_day = {target_day}
 GROUP BY Day, Hour
 ORDER BY Hour;
-```
-
-
-### Hourly activity count for a given day
-
-```sql
-SELECT Substring(from_utc_timestamp(timestamp, 'America/New_York'), 1, 10) AS Day,
-       Substring(from_utc_timestamp(timestamp, 'America/New_York'), 12, 2) AS Hour, 
-       Count(concat(enduserids._experience.aaid.id, 
-                    _experience.analytics.session.num,
-                    _experience.analytics.session.depth)) AS Count 
-FROM   {target_table_post_values}
-WHERE  _acp_year = {target_year} 
-       AND _acp_month = {target_month}  
-       AND _acp_day = {target_day}
-GROUP BY Day, Hour
-ORDER BY Hour;
-```
-
-### Number of events per visit
-
-```sql
-SELECT concat(enduserids._experience.aaid.id, 
-              '-#', 
-              _experience.analytics.session.num) AS aaid_sess_key, 
-       Count(timestamp) AS Count 
-FROM   {target_table_post_values}
-WHERE  _acp_year = {target_year} 
-       AND _acp_month = {target_month}  
-       AND _acp_day = {target_day}
-GROUP BY aaid_sess_key
-ORDER BY Count DESC;
 ```
 
 ### Top 10 viewed pages for a given day
@@ -129,21 +95,6 @@ FROM   (SELECT commerce.`order`.purchaseid AS Purchase_ID,
                AND _acp_day = {target_day}) 
 GROUP BY Purchase_ID 
 ORDER BY total_order_revenue DESC 
-LIMIT  10;
-```
-
-### Evar instances
-
-```sql
-SELECT _experience.analytics.customdimensions.evars.{target_evar} AS {target_evar},
-       Count(_experience.analytics.customdimensions.evars.{target_evar}) AS Instances
-FROM   {target_table_post_values}
-WHERE  _experience.analytics.customdimensions.evars.{target_evar} IS NOT NULL 
-        AND _acp_year = {target_year} 
-        AND _acp_month = {target_month}  
-        AND _acp_day = {target_day}
-GROUP BY _experience.analytics.customdimensions.evars.{target_evar} 
-ORDER BY instances DESC 
 LIMIT  10;
 ```
 
