@@ -4,8 +4,8 @@ Adobe Experience Platform enables you to drive coordinated, consistent, and rele
 
 This overview will help you understand the role and use of Real-time Customer Profile in Experience Platform. The following topics are covered:
 
-* [Understanding Real-time Customer Profile](#understanding-real-time-customer-profile): See the big picture about Profile and its role within Experience Platform.  
-* [The union view](#the-union-view): Understand the components involved in unifying profile data to build the union view.
+* [Understanding Real-time Customer Profile](#understanding-real-time-customer-profile): See the big picture of Profile and its role within Experience Platform.  
+* [The union view](#the-union-view): Understand the components involved in unifying profile data to build the union view, including [merge policies](#merge-policies) and [union schema](#union-schema).
 * [Real-time components](#real-time-components): Learn how real-time input is captured and used.
 * [Data governance](#data-governance): Learn how to use data labels and certain Profile access parameters. 
 * [Handling opt-out requests](#handling-opt-out-requests): Learn how Experience Platform captures opt-out requests from your customers, whose data is stored and used in Profile.
@@ -85,37 +85,24 @@ These decisions are configured and controlled by the use of merge policies.
 
 ### Merge policies
 
-A merge policy is a set of configurations controlling aspects of identity stitching and data fragment merging. While a single schema may have several merge policies, it can have only one "default" merge policy assigned to it. Merge policies are private and cannot be accessed outside of the organization they belong to. 
+When bringing data together from multiple sources and combining it in order to see a complete view of each of your individual customers, merge policies are the rules that Platform uses to determine how data will be prioritized and what data will be combined to create that unified view. 
 
-Using Real-time Customer Profile to access data, you are presented with the option of specifying the merge policy by which to govern the data to retrieve. Platform provides a default merge policy for Profile-enabled XDM schemas, but you can also create your own merge policy and mark it as your organization's default for a schema. 
+Using RESTful APIs or the user interface, you can create new merge policies, manage existing policies, and set a default merge policy for your organization. Platform also provides a default merge policy for Profile-enabled XDM schemas that your organization can use. While a single schema may have several merge policies, it can have only one "default" merge policy assigned to it. Merge policies are private and cannot be accessed outside of the organization they belong to.
 
-> **Note:** If no merge policy is defined, and the schema or related schema to retrieve is "_xdm.context.profile", Real-time Customer Profile fetches and merges all data fragments for all related identities.
+Each merge policy is a set of configurations controlling variables of:
 
-Merge policies are used to control variables of:
-
-* Identity stitching: Merge policies include configurations for choosing which identity graph, if any, to fetch linked identities from which to merge data.
-* Attribute merging: Data conflicts require an access-time rule to follow for resolution. This is provided as an attribute merge type in merge policies.
-
-For more information on working with merge policies, see the tutorial on [working with merge policies using APIs](../../tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md).
-
-### Identity stitching
-
-Real-time Customer Profile uses [Identity Service](../identity_services_architectural_overview/identity_services_architectural_overview.md) to construct linked identities for each individual. Merge policies configure which identity graph to use when merging profile fragments. 
-
-### Attribute merging
-
-When multiple profile fragments containing the same data elements are merged, data conflicts can arise. Merge policies can be used to tune prioritization of your data by allowing you to specify the order of data precedence by dataset or timestamp. 
+* Identity stitching: Real-time Customer Profile uses [Identity Service](../identity_services_architectural_overview/identity_services_architectural_overview.md) to construct linked identities for each individual. Merge policies include configurations for choosing which identity graph, if any, to fetch linked identities from which to merge data.
+* Attribute merging: When multiple profile fragments containing the same data elements are merged, data conflicts can arise. Merge policies can be used to tune prioritization of your data by allowing you to specify the order of data precedence by dataset or timestamp. 
 
 ![](merging-across-datasets.png)
 
+For more information on working with merge policies, please see the [working with merge policies using APIs](../../tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md) tutorial or to perform similar actions using the Platform user interface, see the tutorial on [working with merge policies in the UI](../../tutorials/merge_policies/create-merge-policies.md).
+
 ### Union schema
 
-A union schema is one that has been enabled for Real-time Customer Profile. The union view schema is an aggregate of the union schemas merged to form the union view. A union schema can be viewed on Adobe Experience Platform by selecting it from those listed on the "Union Schemas" page.
+A union schema is one that has been enabled for Real-time Customer Profile. The union schema is an aggregate of schemas merged to form the union view. You can view union schemas in the UI or using the API.
 
-![](unified-profile-schema.png)
-
-Visit the [Schema Editor tutorial](../../tutorials/schema_editor_tutorial/schema_editor_tutorial.md#schema-editor-tutorial) for steps on how to enable a union schema using the UI. 
-If you are using the API, see the [Schema Registry API developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md). 
+Visit the [Schema Editor tutorial](../../tutorials/schema_editor_tutorial/schema_editor_tutorial.md#schema-editor-tutorial) for steps on how to enable a union schema using the UI. If you are using the API, see the [Schema Registry API developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md). 
 
 ## Real-time components
 This section explains the components that allow Real-time Customer Profile to update and monitor record and time series data in real-time.
