@@ -509,7 +509,7 @@ Where the values are as follows:
 
 ### Identity graph
 
-[Adobe Experience Platform Identity Service](/api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md) manages the identity graphs used globally and for each organization on Experience Platform. The `identityGraph` attribute of the merge policy defines how to determine the related identities for a user.
+[Adobe Experience Platform Identity Service](../../technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md) manages the identity graphs used globally and for each organization on Experience Platform. The `identityGraph` attribute of the merge policy defines how to determine the related identities for a user.
 
 **`identityGraph` object**
 
