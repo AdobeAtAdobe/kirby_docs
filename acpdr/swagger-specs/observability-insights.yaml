@@ -26,7 +26,8 @@ info:
   
     
   version: "1.0.0"
-host: "platform.adobe.io"
+basePath: /data/infrastructure/observability/insights
+host: platform.adobe.io
 tags:
   - name: "Metrics"
     description: "Observability metrics are parameters used to gain statistical insights into actions being performed in Adobe Experience Platform. These insights include counts of available Platform resources and statistics on data ingestion."
