@@ -1,8 +1,8 @@
-# Using Adobe Defined Functions (ADFs)
+# Using Adobe-defined functions
 
 One of Adobe's big differentiators is that they understand experience data and what customers need to be able to do with that data. You can use this understanding to build helper functions that make your job easier.
 
-This document covers Adobe Defined Functions (ADFs) to support three key Analytics activities:
+This document covers Adobe-defined functions (ADFs) to support three key Analytics activities:
 * [Sessionization](#sessionization)
 * [Attribution](#attribution)
 * [Pathing](#pathing)

@@ -48,6 +48,11 @@
           "pages": [],
           "path": "end-user/markdown/query-service/qs-queries-adobefunctions.md",
           "title": "Using Adobe functions"
+        },
+        {
+          "pages": [],
+          "path": "end-user/markdown/query-service/qs-deduplication.md",
+          "title": "Data Deduplication"
         }
       ]
     },
