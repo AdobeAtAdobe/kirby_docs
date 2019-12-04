@@ -9,6 +9,7 @@ This document provides answers to frequently asked questions about Adobe Experie
 - [Where can I find my API key?](#where-can-i-find-my-api-key)
 - [How do I get an access token?](#how-do-i-get-an-access-token)
 - [How do I use query parameters?](#how-do-i-use-query-parameters)
+- [How do I indicate a JSON field to update in a PATCH request?](#how-do-i-indicate-a-JSON-field-to-update-in-a-patch-request)
 - [Can I use Postman to make calls to Platform APIs?](#can-i-use-postman-to-make-calls-to-platform-apis)
 - [What are the system requirements for Platform?](#what-are-the-system-requirements-for-platform)
 
@@ -135,6 +136,12 @@ GET /batches?createdAfter=1559775880000&orderBy=desc:created
 ```
 
 For detailed information on which query parameters are available for a specific service or endpoint, please review the service-specific documentation.
+
+## How do I indicate a JSON field to update in a PATCH request?
+
+Many PATCH operations in Platform APIs use [JSON Pointer](https://tools.ietf.org/html/rfc6901) strings to indicate JSON properties to update. These are typically included in request payloads using [JSON Patch](https://tools.ietf.org/html/rfc6902) format.
+
+See the [API fundamentals guide](../api-fundamentals/api-fundamentals.md) for detailed information on required syntax for these technologies.
 
 ## Can I use Postman to make calls to Platform APIs?
 

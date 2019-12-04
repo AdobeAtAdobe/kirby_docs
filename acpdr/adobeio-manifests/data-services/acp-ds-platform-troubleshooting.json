@@ -15,6 +15,12 @@
 			"path": "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md",
       "title": "Experience Platform API Troubleshooting Guide",
       "description": "Find answers to frequently asked questions about working with Adobe Experience Platform APIs, including troubleshooting for common errors."
+    },
+    {
+			"pages": [],
+			"path": "api-specification/markdown/narrative/technical_overview/api-fundamentals/api-fundamentals.md",
+      "title": "API fundamentals for Experience Platform",
+      "description": "Learn about several underlying technologies and syntaxes used in Platform APIs."
 		}
   ],
     "app2app_map": {
