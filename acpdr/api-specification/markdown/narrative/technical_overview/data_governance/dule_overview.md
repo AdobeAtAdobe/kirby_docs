@@ -9,12 +9,11 @@ This guide provides an overview of the following concepts related to Data Govern
 * [Data governance roles](#data-governance-roles)
 * [Data Usage Labeling and Enforcement (DULE)](#dule-framework)
 * [Data usage labels](#data-usage-labels)
-  * [When and how to apply usage labels](#when-and-how-to-apply-usage-labels)
 * [Data usage policies](#data-usage-policies)
-  * [How to create and work with data usage policies](#how-to-create-and-work-with-data-usage-policies)
+    * [How to create and work with data usage policies](#how-to-create-and-work-with-data-usage-policies)
 * [Future releases](#future-releases)
 
-At the end of this guide you will find a table outlining key [Data Governance terminology](#appendix-data-governance-terminology) with definitions that will assist you when working with Data Governance concepts.
+At the end of this guide you will find a table outlining key [Data Governance terminology](#data-governance-terminology) with definitions that will assist you when working with Data Governance concepts.
 
 ## Data governance roles
 
@@ -93,7 +92,17 @@ Subsequent releases will provide the following features:
 * Policy enforcement: Use the policy framework to advise and enforce policies across different data access patterns.
 * Auditing: Monitor data access activities and identify and report on compliance issues.
 
-## Appendix: Data Governance terminology
+## Next steps
+
+This document provided a high-level introduction to Data Governance and the DULE framework. You can now continue to the [data usage labels user guide](../../tutorials/dule/dule_working_with_labels.md) and start adding usage labels to your experience data.
+
+## Appendix
+
+The following section provides additional information regarding Data Governance.
+
+### Data Governance terminology
+
+The following table outlines key terms related to Data Governance and the DULE framework.
 
 |Term|Definition |
 |---|---|
