@@ -64,13 +64,13 @@ The "Sandbox Management" permission allows users to manage, view, or reset sandb
 
 The **permissions** tab within a product profile displays the sandboxes and permissions that are active for that profile:
 
-![](images/permissions-overview.png)
+![](images/permissions-overview-new.png)
 
 Permissions that are granted through the Admin Console are sorted by category, with some permissions granting access to several low-level functionalities.
 
 The following table outlines the available permissions for Experience Platform in the Admin Console, with descriptions of the specific Platform capabilities they grant access to. For detailed steps on how to add permissions to a product profile, see the [access control user guide](access-control-user-guide.md).
 
-Category | Permission | Description 
+Category | Permission | Description
 --- | --- | ---
 Data Modeling | Manage Schemas | Access to read, create, edit, and delete schemas and related resources.
 Data Modeling | View Schemas | Read-only access to schemas and related resources.
@@ -85,6 +85,11 @@ Data Monitoring | View Monitoring Dashboard | Read-only access to monitoring dat
 Sandbox Administration | Manage Sandboxes | Access to read, create, edit, and delete sandboxes.
 Sandbox Administration | View Sandboxes | Read-only access for sandboxes belonging to your organization.
 Sandbox Administration | Reset a Sandbox | Ability to reset a sandbox.
+Destinations | Manage Destinations | Access to read, create, edit, and delete destinations.
+Destinations | View Destinations | Read-only access to available destinations.
+Destinations | Activate Destinations | Ability to activate data to destinations.
+Sources | Manage Sources | Access to read, create, edit, and delete sources.
+Sources | View Sources | Read-only access for available sources.
 
 ## Next steps
 
