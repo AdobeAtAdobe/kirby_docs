@@ -1,6 +1,6 @@
 # Create and evaluate a DULE policy using the Policy Service API
 
-Data Usage Labeling and Enforcement (DULE) is the core mechanism of Adobe Experience Platform Data Governance. The [DULE Policy Service API](../../../../../../dule-policy-service.yaml) allows you to create and manage DULE policies to determine what marketing actions can be taken against data that contains certain DULE labels.
+Data Usage Labeling and Enforcement (DULE) is the core mechanism of Adobe Experience Platform Data Governance. The [DULE Policy Service API](../../../../../../acpdr/swagger-specs/dule-policy-service.yaml) allows you to create and manage DULE policies to determine what marketing actions can be taken against data that contains certain DULE labels.
 
 This document provides a step-by-step tutorial for creating a DULE policy and using it to evaluate a marketing action for policy violations. For a more comprehensive guide to the different operations available in the Policy Service API, see the [Policy Service developer guide](../../technical_overview/data_governance/dule_policy_service_developer_guide.md).
 

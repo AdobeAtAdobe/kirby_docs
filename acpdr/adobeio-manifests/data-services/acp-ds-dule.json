@@ -15,7 +15,7 @@
 				{
 					"pages": [],
 					"path": "api-specification/markdown/narrative/technical_overview/data_governance/dule_supported_labels.md",
-					"title": "Supported Data Usage Labels",
+					"title": "Supported data usage labels",
 					"description": "DULE features enable the application of data usage labels to connections, datasets, and fields to categorize data according to the type of data usage policies that apply. This list outlines all data usage labels currently supported by Experience Platform."
 				}
 			],
@@ -32,20 +32,20 @@
     {
 			"pages": [],
 			"path": "api-specification/markdown/narrative/tutorials/dule/dule_working_with_labels.md",
-			"title": "Working with DULE labels",
+			"title": "Data usage labels user guide",
 			"description": "Follow these step-by-step instructions to properly add and edit labels at the Connection, Dataset, and Field level in Adobe Experience Platform."
     },
     {
       "importedFileName": "create_a_dule_policy_tutorial",
       "pages": [],
       "path": "api-specification/markdown/narrative/tutorials/dule/create_a_dule_policy_tutorial.md",
-      "title": "Create and evaluate DULE policies using Policy Service API",
+      "title": "Create and evaluate a DULE policy using the Policy Service API",
       "description": "Create and evaluate Data Usage Labeling and Enforcement (DULE) policies using the Policy Service API."
     }
 	],
 	"app2app_map": {
 		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
-		"acpdr/swagger-specs/":"/apis/cloudplatform/dataservices/api-reference.html",
+		"acpdr/swagger-specs/":"/apis/experienceplatform/home/api-reference.html",
 		"api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html",
 		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
 		"api-specification/markdown/narrative/technical_overview/sandboxes": "/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html",
