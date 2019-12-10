@@ -29,7 +29,7 @@ info:
 host: platform.adobe.io
 basePath: /data/privacy/gdpr
 tags:
-  - name: Privacy Service
+  - name: Privacy Jobs
     description: "Retrieve and create access/delete requests, including child jobs for existing requests."
   - name: Ping
     description: "Check the processing status of access or delete requests by supplying a status code integer as a query parameter."
@@ -48,7 +48,7 @@ paths:
       - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - Privacy Service
+        - Privacy Jobs
       summary: Retrieve details of all jobs for the current logged-in user.
       description: ''
       operationId: getStatus(all)
@@ -108,7 +108,7 @@ paths:
           description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     post:
       tags:
-        - Privacy Service
+        - Privacy Jobs
       summary: Create an access or delete job request.
       description: An authenticated user can submit requests to access or delete their privacy data.
       operationId: handleExternalRequest
@@ -341,7 +341,7 @@ paths:
       - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - Privacy Service
+        - Privacy Jobs
       summary: Retrieve user preferences for the current logged-in user.
       description: ''
       operationId: getUserPreferences
@@ -525,7 +525,7 @@ paths:
       - $ref: '#/parameters/x-gw-ims-org-id'
     get:
       tags:
-        - Privacy Service
+        - Privacy Jobs
       summary: Lookup the details of a job by ID.
       description: ''
       operationId: getStatus
@@ -582,7 +582,7 @@ paths:
       - $ref: '#/parameters/x-gw-ims-org-id'
     post:
       tags:
-        - Privacy Service
+        - Privacy Jobs
       summary: Create a child job for an existing parent job by ID.
       description: An authenticated user can submit requests for creating a child job for an existing parent job.
       operationId: createChildJob
