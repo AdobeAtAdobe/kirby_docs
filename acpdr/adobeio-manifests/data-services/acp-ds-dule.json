@@ -23,32 +23,32 @@
 			"title": "Data Governance overview",
 			"description": "Adobe Experience Platform brings data from multiple enterprise systems together to better allow marketers to identify, understand, and engage customers. Experience Platform includes end-to-end data governance infrastructure, including Data Usage Labeling & Enforcement (DULE) to ensure the proper use of data within Platform and when being shared between systems."
 		},
-    {
+		{
+			"pages": [],
+			"path": "api-specification/markdown/narrative/tutorials/dule/dule_working_with_labels.md",
+			"title": "Data usage labels user guide",
+			"description": "Follow these step-by-step instructions to properly add and edit labels at the Connection, Dataset, and Field level in Adobe Experience Platform."
+		},
+		{
 			"pages": [],
 			"path": "api-specification/markdown/narrative/technical_overview/data_governance/dule_policy_service_developer_guide.md",
 			"title": "DULE Policy Service developer guide",
 			"description": "An overview of the Policy Service API and its supported operations."
 		},
-    {
+		{
+			"importedFileName": "create_a_dule_policy_tutorial",
 			"pages": [],
-			"path": "api-specification/markdown/narrative/tutorials/dule/dule_working_with_labels.md",
-			"title": "Data usage labels user guide",
-			"description": "Follow these step-by-step instructions to properly add and edit labels at the Connection, Dataset, and Field level in Adobe Experience Platform."
-    },
-    {
-      "importedFileName": "create_a_dule_policy_tutorial",
-      "pages": [],
-      "path": "api-specification/markdown/narrative/tutorials/dule/create_a_dule_policy_tutorial.md",
-      "title": "Create and evaluate a DULE policy using the Policy Service API",
-      "description": "Create and evaluate Data Usage Labeling and Enforcement (DULE) policies using the Policy Service API."
-    }
+			"path": "api-specification/markdown/narrative/tutorials/dule/create_a_dule_policy_tutorial.md",
+			"title": "Create and evaluate a DULE policy using the Policy Service API",
+			"description": "Create and evaluate Data Usage Labeling and Enforcement (DULE) policies using the Policy Service API."
+		}
 	],
 	"app2app_map": {
-		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
+		"api-specification/markdown/narrative/tutorials/":"/apis/experienceplatform/home/tutorials/alltutorials.html",
 		"acpdr/swagger-specs/":"/apis/experienceplatform/home/api-reference.html",
 		"api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html",
 		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
-		"api-specification/markdown/narrative/technical_overview/sandboxes": "/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html",
-		"api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting": "https://www.adobe.io/apis/experienceplatform/home/services/troubleshooting.html"
+		"api-specification/markdown/narrative/technical_overview/sandboxes":"/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html",
+		"api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting":"https://www.adobe.io/apis/experienceplatform/home/services/troubleshooting.html"
 	}
 }
