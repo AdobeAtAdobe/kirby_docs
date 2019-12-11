@@ -13,9 +13,16 @@
 				{
 					"pages": [],
 					"path": "end-user/markdown/release-notes/release-notes.md",
+					"title": "December 2019",
+					"description": "New features, updates to existing features, and bug fixes in Adobe Experience Platform."
+				},
+				{
+					"pages": [],
+					"path": "end-user/markdown/release-notes/release-notes-20191118.md",
 					"title": "November 2019",
 					"description": "New features, updates to existing features, and bug fixes in Adobe Experience Platform."
-				},				{
+				},			
+				{
 					"pages": [],
 					"path": "end-user/markdown/release-notes/release-notes-20190910.md",
 					"title": "September 2019",
@@ -48,6 +55,10 @@
 		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/":"/apis/experienceplatform/home/services/allservices.html",
 		"end-user/markdown/query-service/":"/apis/experienceplatform/home/services/query-service/query-service.html",
 		"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/":"/apis/experienceplatform/home/data-science-workspace/dsw-overview.html",
-		"end-user/markdown/segmentation_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html"
+		"end-user/markdown/segmentation_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+		"api-specification/markdown/narrative/technical_overview/access-control/":"/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html",
+		"api-specification/markdown/narrative/technical_overview/sandboxes/":"/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html",
+		"api-specification/markdown/narrative/technical_overview/decisioning-overview/":"/apis/experienceplatform/home/services/decisioning-service.html",
+		"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
 	}
 }
