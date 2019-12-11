@@ -82,7 +82,7 @@ A successful response returns the details of the merge policy.
     },
     "version": 1,
     "identityGraph": {
-        "type": "Private Graph"
+        "type": "pdg"
     },
     "attributeMerge": {
         "type": "timestampOrdered"
@@ -114,7 +114,7 @@ The following is a list of available query parameters for listing merge policies
 |`limit`|Specifies the page size limit to control the number of results that are included in a page. (*Default value: 20*)|
 |`orderBy`|Specifies the field by which to order results as in `orderBy=name` or `orderBy=+name` to sort by name in ascending order, or `orderBy=-name`, to sort in descending order. Omitting this value results in the default sorting of `name` in ascending order.|
 |`schema.name`|Name of the schema for which to retrieve available merge policies.|
-|`identityGraph.type`|Filters results by the identity graph type. Possible values include "None" and "Private Graph".|
+|`identityGraph.type`|Filters results by the identity graph type. Possible values include "none" and "pdg" (Private graph).|
 |`attributeMerge.type`|Filters results by the attribute merge type used. Possible values include "timestampOrdered" and "dataSetPrecedence".|
 |`start`|Page offset - specify the starting ID for data to retrieve.  (*Default value: 0*)|
 |`version`|Specify this if you are looking to use a specific version of the merge policy. By default, the latest version will be used.|
@@ -142,43 +142,59 @@ A successful response returns a paginated list of merge policies that meet the c
 ```json
 {
     "_page": {
-        "count": 2,
-        "next": "K1JJRDpFaWc5QUpZWHY1c2JBQUFBQUFBQUFBPT0jUlQ6MSNUUkM6MiNGUEM6QWdFQUFBQldBQkVBQVBnaFFQLzM4VUIvL2tKQi8rLysvMUpBLzMrMi8wRkFmLzR4UUwvL0VrRC85em4zRTBEcmNmYi92Kzh4UUwvL05rQVgzRi8rMStqNS80WHQwN2NhUUVzQUFBUUFleGpLQ1JnVXRVcEFCQUFFQVBBRA=="
+        "totalCount": 2,
+        "pageSize": 2
     },
     "children": [
         {
-            "id": "profile-default",
-            "name": "profile-default",
+            "id": "0bf16e61-90e9-4204-b8fa-ad250360957b",
+            "name": "Profile Default Merge Policy",
             "imsOrgId": "{IMS_ORG}",
+            "sandbox": {
+                "sandboxId": "ff0f6870-c46d-11e9-8ca3-036939a64204",
+                "sandboxName": "prod",
+                "type": "production",
+                "default": true
+            },
             "schema": {
                 "name": "_xdm.context.profile"
             },
             "version": 1,
             "identityGraph": {
-                "type": "None"
+                "type": "none"
             },
             "attributeMerge": {
                 "type": "timestampOrdered"
             },
             "default": true,
-            "updateEpoch": 1551660639
+            "updateEpoch": 1552086578
         },
         {
-            "id": "timestampOrdered-pdg-mp",
-            "name": "timestampOrdered-pdg-mp",
+            "id": "42d4a596-b1c6-46c0-994e-ca5ef1f85130",
+            "name": "Dataset Precedence Merge Policy",
             "imsOrgId": "{IMS_ORG}",
+            "sandbox": {
+                "sandboxId": "ff0f6870-c46d-11e9-8ca3-036939a64204",
+                "sandboxName": "prod",
+                "type": "production",
+                "default": true
+            },
             "schema": {
                 "name": "_xdm.context.profile"
             },
             "version": 1,
             "identityGraph": {
-                "type": "Private Graph"
+                "type": "pdg"
             },
             "attributeMerge": {
-                "type": "timestampOrdered"
+                "type": "dataSetPrecedence",
+                "order": [
+                    "5b76f86b85d0e00000be5c8b",
+                    "5b76f8d787a6af01e2ceda18"
+                ]
             },
             "default": false,
-            "updateEpoch": 1551661137
+            "updateEpoch": 1576099719
         }
     ],
     "_links": {
@@ -210,21 +226,19 @@ curl -X POST \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: {SANDBOX_NAME} \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -H 'Content-Type: application/json' \
   -d '{
-    "name": "All-ID-Order-By-CMS-Loyalty",
+    "name": "Loyalty members ordered by ID",
     "identityGraph" : {
-        "type": "None"
+        "type": "none"
     },
     "attributeMerge" : {
         "type":"dataSetPrecedence",
-        "data": {
-            "order" : [
-                "5b020a27e7040801dedbf46e",
-                "5b565efc0a488f01e2c19972"
-            ]
-        }
+        "order" : [
+            "5b76f86b85d0e00000be5c8b",
+            "5b76f8d787a6af01e2ceda18"
+        ]
     },
     "schema": {
         "name":"_xdm.context.profile"
@@ -233,7 +247,7 @@ curl -X POST \
 }'
 ```
 * `name`: *(Optional)* A human-friendly name by which the merge policy can be identified in list views.
-* `identityGraph.type`: The identity graph type from which to obtain related identities to merge. Possible values: "None", "Private Graph"
+* `identityGraph.type`: The identity graph type from which to obtain related identities to merge. Possible values: "none" or "pdg" (Private graph).
 * `attributeMerge`: The manner by which to prioritize profile attribute values in the case of data conflicts.
 * `schema`: The XDM schema class associated with the merge policy.
 * `default`: *(Optional)* Specifies whether this merge policy is the default for the schema.
@@ -247,23 +261,27 @@ A successful response returns the details of the newly created merge policy.
 ```json
 {
     "id": "e5bc94de-cd14-4cdf-a2bc-88b6e8cbfac2",
-    "name": "All-ID-Order-By-CMS-Loyalty",
+    "name": "Loyalty members ordered by ID",
     "imsOrgId": "{IMS_ORG}",
+    "sandbox": {
+        "sandboxId": "ff0f6870-c46d-11e9-8ca3-036939a64204",
+        "sandboxName": "prod",
+        "type": "production",
+        "default": true
+    },
     "schema": {
         "name": "_xdm.context.profile"
     },
     "version": 1,
     "identityGraph": {
-        "type": "None"
+        "type": "none"
     },
     "attributeMerge": {
-        "type":"dataSetPrecedence",
-        "data": {
-            "order" : [
-                "5b020a27e7040801dedbf46e",
-                "5b565efc0a488f01e2c19972"
-            ]
-        }
+        "type": "dataSetPrecedence",
+        "order": [
+            "5b76f86b85d0e00000be5c8b",
+            "5b76f8d787a6af01e2ceda18"
+        ]
     },
     "default": true,
     "updateEpoch": 1551898378
@@ -296,7 +314,7 @@ curl -X PATCH \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: {SANDBOX_NAME} \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -H 'Content-Type: application/json' \
   -d '{
     "op": "add",
@@ -324,27 +342,31 @@ A successful response returns the details of the newly updated merge policy.
 
 ```json
 {
-  "imsOrgId": "{IMS_ORG}",
-  "schema": {
-    "name": "_xdm.context.profile"
-  },
-  "name": "All-ID-Order-By-CMS-Loyalty",
-  "id": "e5bc94de-cd14-4cdf-a2bc-88b6e8cbfac2",
-  "identityGraph": {
-    "type": "None"
-  },
-  "attributeMerge": {
-    "type": "dataSetPrecedence",
-    "data": {
-      "order": [
-        "5b020a27e7040801dedbf46e",
-        "5b565efc0a488f01e2c19972"
-      ]
-    }
-  },
-  "default": true,
-  "version": 1,
-  "updateEpoch": 1551898378
+    "id": "e5bc94de-cd14-4cdf-a2bc-88b6e8cbfac2",
+    "name": "Loyalty members ordered by ID",
+    "imsOrgId": "{IMS_ORG}",
+    "sandbox": {
+        "sandboxId": "ff0f6870-c46d-11e9-8ca3-036939a64204",
+        "sandboxName": "prod",
+        "type": "production",
+        "default": true
+    },
+    "schema": {
+        "name": "_xdm.context.profile"
+    },
+    "version": 1,
+    "identityGraph": {
+        "type": "none"
+    },
+    "attributeMerge": {
+        "type": "dataSetPrecedence",
+        "order": [
+            "5b76f86b85d0e00000be5c8b",
+            "5b76f8d787a6af01e2ceda18"
+        ]
+    },
+    "default": true,
+    "updateEpoch": 1551898378
 }
 ```
 ### Overwrite a merge policy
@@ -365,32 +387,32 @@ The following request overwrites the specified merge policy, replacing its attri
 
 ```shell
 curl -X PUT \
-  https://platform.adobe.io/data/core/ups/config/mergePolicies/b83185bb-0bc6-489c-9363-0075eb30b4c8 \
+  https://platform.adobe.io/data/core/ups/config/mergePolicies/e5bc94de-cd14-4cdf-a2bc-88b6e8cbfac2 \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: {SANDBOX_NAME} \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -H 'Content-Type: application/json' \
   -d '{
-        "name": "All-ID-Order-By-CMS-Loyalty",
+        "name": "Loyalty members ordered by ID",
+        "imsOrgId": "{IMS_ORG}",
+        "schema": {
+            "name": "_xdm.context.profile"
+        },
+        "version": 1,
         "identityGraph": {
-            "type": "None"
+            "type": "none"
         },
         "attributeMerge": {
             "type": "dataSetPrecedence",
             "order": [
-                "5bb5331a94ef7e000091b1d4",
-                "5a909a508db82e01d6654940"
+                "5b76f86b85d0e00000be5c8b",
+                "5b76f8d787a6af01e2ceda18"
             ]
         },
-        "schema": {
-            "name": "_xdm.context.profile"
-        },
         "default": true,
-        "version": 1,
-        "updateEpoch": 1559156392,
-        "imsOrgId": "{IMS_ORG}"
-      }'
+        "updateEpoch": 1551898378
+    }'
 ```
 * `name`: *(Optional)* A human-friendly name by which the merge policy can be identified in list views.
 * `identityGraph`: The identity graph from which to obtain related identities to merge.
@@ -407,21 +429,27 @@ A successful response returns the details of the updated merge policy.
 
 ```json
 {
-    "id": "b83185bb-0bc6-489c-9363-0075eb30b4c8",
-    "name": "All-ID-Order-By-CMS-Loyalty",
+    "id": "e5bc94de-cd14-4cdf-a2bc-88b6e8cbfac2",
+    "name": "Loyalty members ordered by ID",
     "imsOrgId": "{IMS_ORG}",
+    "sandbox": {
+        "sandboxId": "ff0f6870-c46d-11e9-8ca3-036939a64204",
+        "sandboxName": "prod",
+        "type": "production",
+        "default": true
+    },
     "schema": {
         "name": "_xdm.context.profile"
     },
     "version": 1,
     "identityGraph": {
-        "type": "None"
+        "type": "none"
     },
     "attributeMerge": {
-        "type":"dataSetPrecedence",
-        "order" : [
-            "5b020a27e7040801dedbf46e",
-            "5b565efc0a488f01e2c19972"
+        "type": "dataSetPrecedence",
+        "order": [
+            "5b76f86b85d0e00000be5c8b",
+            "5b76f8d787a6af01e2ceda18"
         ]
     },
     "default": true,
@@ -497,7 +525,7 @@ Where the values are as follows:
         },
         "version": 1,
         "identityGraph": {
-            "type": "None"
+            "type": "none"
         },
         "attributeMerge": {
             "type": "timestampOrdered"
@@ -521,14 +549,14 @@ Where the values are as follows:
 
 Where `{IDENTITY_GRAPH_TYPE}` is one of the following:
 
-* **"None":** Perform no identity stitching.
-* **"Private Graph":** Perform identity stitching based on your private identity graph. If no type is provided, this is the default.
+* **"none":** Perform no identity stitching.
+* **"pdg":** Perform identity stitching based on your private identity graph.
 
 **Example `identityGraph`**
 
 ```
     "identityGraph": {
-        "type": "None"
+        "type": "pdg"
     }
 ```
 
@@ -547,17 +575,20 @@ A profile fragment is the profile information for just one identity out of the l
 Where `{ATTRIBUTE_MERGE_TYPE}` is one of the following:
 
 * **"timestampOrdered"**: (default) Give priority to the profile which was updated last in case of conflict. Using this merge type, the `data` attribute is not required.
-* **"dataSetPrecedence"** : Give priority to profile fragments based on the dataset from which they came. This could be used when information present in one dataset is preferred or trusted over data in another dataset. When using this merge type, the `data` attribute is required, as it lists the datasets in the order of priority.
-    * **"data"**: When "dataSetPrecedence" is used, a `data` field must be supplied with a list of list of datasets. Any datasets not included in the list will not be merged. In other words, datasets must be explicitly listed to be merged into a profile. The `data` object contains an `order` array that lists the IDs of the datasets in order of priority.
+* **"dataSetPrecedence"** : Give priority to profile fragments based on the dataset from which they came. This could be used when information present in one dataset is preferred or trusted over data in another dataset. When using this merge type, the `order` attribute is required, as it lists the datasets in the order of priority.
+    * **"order"**: When "dataSetPrecedence" is used, an `order` array must be supplied with a list of datasets. Any datasets not included in the list will not be merged. In other words, datasets must be explicitly listed to be merged into a profile. The `order` array lists the IDs of the datasets in order of priority.
 
 **Example `attributeMerge` object using `dataSetPrecedence` type**
 
 ```
     "attributeMerge": {
         "type": "dataSetPrecedence",
-        "data": {
-            "order" : ["dataSetId2", "dataSetId3", "dataSetId1", "dataSetId4"]
-        }
+        "order" : [
+            "dataSetId_2", 
+            "dataSetId_3", 
+            "dataSetId_1", 
+            "dataSetId_4"
+        ]
     }
 ```
 
