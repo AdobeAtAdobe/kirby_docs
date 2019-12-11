@@ -51,7 +51,7 @@ There is a _meta dataset_ for Inbound with either of the following names:
 These datasets are important for Audience Manager inbound ingestion and contain 0 size batches. Do not delete these meta datasets. 	
 
 **Profile**
-In Platform, all the profiles created from CRM data can be found in the dataset "**AAM Profile Dataset userprofile**". All the profiles created from CRMs can be found in the dataset "**AAM Profile Dataset crmprofile {Datasource ID}**". Where the {Datasource id} is the CRM datasource ID. 	
+In Platform, all the profiles created from device data can be found in the dataset "**AAM Profile Dataset userprofile**". All the profiles created from CRMs can be found in the dataset "**AAM Profile Dataset crmprofile {Datasource ID}**". Where the {Datasource id} is the CRM datasource ID. 	
 
 The following _meta datasets_ exist for Profile:	
 - **[Meta - No Data] AAM crmprofile**	
