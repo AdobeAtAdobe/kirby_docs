@@ -60,7 +60,7 @@ Segmentation Service defines a particular subset of profiles by describing the c
 
 Feature | Description
 --- | ---
-Merged Audiences tab in Segment Builder | The _Segments_ and _Audiences_ tabs in the Segment Builder have been combined into a single _Audiences_ tab. This tab allows you to browse and search for existing audiences, which you can then drag and drop into the rule builder canvas to reference audience membership in a new segment definition.
+Merged Audiences tab in Segment Builder | The _Segments_ and _Audiences_ tabs in the Segment Builder have been combined into a single _Audiences_ tab. This tab allows you to browse and search for existing audiences, which you can then drag and drop into the rule builder canvas to create a new segment definition. Referencing an audience can add one of the following sets of rule logic to the new segment definition:<br><ul><li>Audience membership as a rule</li><li>The full set of rule logic that defined the referenced audience</li></ul>
 New location for the merge policy selector | The location of the merge policy selector in the Segment Builder has been changed. To select a merge policy for a segment definition, click the gear icon on the _Fields_ tab, then use the _Merge Policy_ dropdown menu to select the merge policy that you wish to use.
 
 ### Known issues
@@ -83,7 +83,7 @@ Adobe Experience Platform Decisioning Service provides the ability to programmat
 
 * None.
 
-See the [Decisioning Service overview](https://www.adobe.io/apis/experienceplatform/home/services/decisioning-service.html#!api-specification/markdown/narrative/technical_overview/decisioning-overview/decisioning-service-overview.md) for a full introduction to the service.
+See the [Decisioning Service overview](../../../api-specification/markdown/narrative/technical_overview/decisioning-overview/decisioning-service-overview.md) for a full introduction to the service.
 
 ## Sources
 
@@ -102,4 +102,4 @@ Experience Platform provides a RESTful API and an interactive UI that lets you s
 
 * None.
 
-For more information about sources, see the [sources overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md).
+For more information about sources, see the [sources overview](../../../api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md).

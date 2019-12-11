@@ -60,7 +60,7 @@ Segmentation Service defines a particular subset of profiles by describing the c
 
 Feature | Description
 --- | ---
-Merged Audiences tab in Segment Builder | The _Segments_ and _Audiences_ tabs in the Segment Builder have been combined into a single _Audiences_ tab. This tab allows you to browse and search for existing audiences, which you can then drag and drop into the rule builder canvas to reference audience membership in a new segment definition.
+Merged Audiences tab in Segment Builder | The _Segments_ and _Audiences_ tabs in the Segment Builder have been combined into a single _Audiences_ tab. This tab allows you to browse and search for existing audiences, which you can then drag and drop into the rule builder canvas to create a new segment definition. Referencing an audience can add one of the following sets of rule logic to the new segment definition:<br><ul><li>Audience membership as a rule</li><li>The full set of rule logic that defined the referenced audience</li></ul>
 New location for the merge policy selector | The location of the merge policy selector in the Segment Builder has been changed. To select a merge policy for a segment definition, click the gear icon on the _Fields_ tab, then use the _Merge Policy_ dropdown menu to select the merge policy that you wish to use.
 
 ### Known issues
