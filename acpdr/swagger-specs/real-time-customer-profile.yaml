@@ -1284,7 +1284,7 @@ paths:
             
             `predicateModel` - (Default: xdm.model.profile) The model against which this predicate is to be evaluated. Please note that 'touchpoint' is not treated as model as it can be associated with any of the models like profile.
             
-            `graphType` - The graph type that you want to get the cluster from. Possible values are None (perform no identity stitching) and Private Graph (perform identity stitching based on your private identity graph). If no `graph-type` is provided, this is the default."
+            `graphType` - The graph type that you want to get the cluster from. Possible values are "none" (perform no identity stitching) and "pdg" (perform identity stitching based on your private identity graph).
           required: true
           schema:
             $ref: "#/definitions/PreviewQuerySessionlessRequest"
@@ -3458,7 +3458,7 @@ definitions:
         example: "_xdm.context.profile"
       graphType:
         type: "string"
-        example: "Private Graph"
+        example: "pdg"
   PreviewSegmentsIndividualResponse:
     type: "object"
     properties:
@@ -4300,11 +4300,11 @@ definitions:
     properties:
       type:
         type: string
-        example: Private Graph
+        example: pdg
         description: identity graph type
         enum:
-        - None
-        - Private Graph
+        - none
+        - pdg
     description: identity graph
   AttributeMerge:
     type: object
@@ -4342,7 +4342,7 @@ definitions:
         description: path of the attribute need to be updated
       value:
         type: string
-        example: Private Graph
+        example: pdg
         description: the new value used to update the specified attribute
     description: Patch operation
   schedulesResponse:
