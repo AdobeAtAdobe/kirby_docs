@@ -9,6 +9,8 @@ This document provides a tutorial for managing streaming segmentation. Specifica
 - [Enabling an existing segment for streaming segmentation](#enable-an-existing-segment-for-streaming-segmentation)
 - [Enabling scheduled segmentation to establish a baseline](#enable-scheduled-evaluation)
 
+![](images/streaming-segment-evaluation.png)
+
 >**Note:** Streaming segmentation is a beta feature, and will be available on request.
 
 ## Getting started
