@@ -64,7 +64,7 @@ The "Sandbox Management" permission allows users to manage, view, or reset sandb
 
 The **permissions** tab within a product profile displays the sandboxes and permissions that are active for that profile:
 
-![](images/permissions-overview-new.png)
+![](images/permissions-overview.png)
 
 Permissions that are granted through the Admin Console are sorted by category, with some permissions granting access to several low-level functionalities.
 
@@ -76,20 +76,23 @@ Data Modeling | Manage Schemas | Access to read, create, edit, and delete schema
 Data Modeling | View Schemas | Read-only access to schemas and related resources.
 Data Management | Manage Datasets | Access to read, create, edit, and delete datasets. Read-only access for schemas.
 Data Management | View Datasets | Read-only access for datasets and schemas.
+Data Management | Data Monitoring | Read-only access to monitoring datasets and streams.
 Profile Management | Manage Profiles | Access to read, create, edit, and delete datasets that are used for customer profiles. Read-only access to available profiles.
 Profile Management | View Profiles | Read-only access to available profiles.
 Profile Management | Export Audience for Segment | Ability to export an evaluated audience segment to a dataset.
 Identities | Manage Identity Namespaces | Access to read, create, edit, and delete identity namespaces.
 Identities | View Identity Namespaces | Read-only access for identity namespaces.
-Data Monitoring | View Monitoring Dashboard | Read-only access to monitoring datasets and streams.
 Sandbox Administration | Manage Sandboxes | Access to read, create, edit, and delete sandboxes.
 Sandbox Administration | View Sandboxes | Read-only access for sandboxes belonging to your organization.
 Sandbox Administration | Reset a Sandbox | Ability to reset a sandbox.
+
+<!-- (Not available until January 2020 release)
 Destinations | Manage Destinations | Access to read, create, edit, and disable destinations.
 Destinations | View Destinations | Read-only access to available destinations in the _Catalog_ tab and authenticated destinations in the _Browse_ tab.
 Destinations | Activate Destinations | Ability to activate data to destinations. This permission requires either "Manage Destinations" or "View Destinations" to be added to the product profile.
 Sources | Manage Sources | Access to read, create, edit, and disable sources.
-Sources | View Sources | Read-only access to available sources in the _Catalog_ tab and authenticated sources in the _Browse_ tab.
+Sources | View Sources | Read-only access to available sources in the _Catalog_ tab and authenticated sources in the _Browse_ tab. 
+-->
 
 ## Next steps
 

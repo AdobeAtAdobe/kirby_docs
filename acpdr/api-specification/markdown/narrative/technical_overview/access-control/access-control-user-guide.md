@@ -68,7 +68,7 @@ To add a permission, click the **plus (+)** icon next to the permission's name. 
 
 > **Note**: The _Included Permissions Items_ list only displays added permissions from the currently selected category.
 
-To remove a permission, click the **X** icon next to the permission's name, or select **Remove all** to remove all permissions under the current cateogry. Removed permissions reappear under _Available Permission Items_.
+To remove a permission, click the **X** icon next to the permission's name, or select **Remove all** to remove all permissions under the current category. Removed permissions reappear under _Available Permission Items_.
 
 Continue going through the available categories and adding any desired permissions. When finished, click **Save**.
 
