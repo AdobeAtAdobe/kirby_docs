@@ -1,0 +1,21 @@
+{
+    "name": "adobe_experience_platform_sensei_insights_tutorials",
+    "version": "1.0.0",
+    "description": "Adobe Experience Platform Sensei Insights tutorials",
+    "author": "Brian Lee - ens24257@adobe.com",
+    "view_type": "mdbook",
+    "meta_keywords": "Adobe Experience Platform, Services, Experience Platform, machine learning, recipe, Customer AI, Attribution AI, Segment AI, Sensei, tutorial, UI",
+    "meta_description": "Create personalized, optimized, and orchestrated experiences in applications running on Adobe Experience Platform.",
+    "publish_date": "12/12/2019",
+    "show_edit_github_banner": false,
+    "base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
+    "pages": [
+        {
+            "title": "Predict customer propensity scores using Customer AI (beta)",
+            "description": "Leverage the power of machine learning to predict customer propensity scores.",
+            "path": "api-specification/markdown/narrative/tutorials/sensei-insights/customer-ai-tutorial.md",
+            "pages": []
+        }
+    ],
+    "app2app_map": {}
+}

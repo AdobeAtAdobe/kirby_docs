@@ -1,6 +1,6 @@
-# Predict customer propensity scores using Customer AI (alpha)
+# Predict customer propensity scores using Customer AI (beta)
 
->   **Note**: The Customer AI functionality outlined in this document is in alpha. The documentation and the functionality are subject to change.
+>   **Note**: The Customer AI functionality outlined in this document is in beta. The documentation and the functionality are subject to change.
 
 Built and powered by Adobe Sensei, Customer AI in Adobe Experience Platform enables you to generate custom propensity scores without having to worry about the machine learning aspects.
 
@@ -8,6 +8,8 @@ This tutorial covers steps for working with Customer AI using the Experience Pla
 
 *   [Configure an instance](#configure-an-instance)
 *   [Create customer segments with predicted scores](#create-customer-segments-with-predicted-scores)
+
+In addition, the appendix to this tutorial provides information regarding the [output of Customer AI](#customer-ai-output-data).
 
 ## Getting Started
 
@@ -19,7 +21,7 @@ This guide requires a working understanding of the various Platform services inv
 
 ## Configure an instance
 
-Experience Platform provides Customer AI as a simple to use Adobe Sensei service that can be configured for different use cases. The following sections provide steps for configuring an instance of Customer AI.
+Experience Platform provides Customer AI as a simple-to-use Adobe Sensei service that can be configured for different use cases. The following sections provide steps for configuring an instance of Customer AI.
 
 ### Setup your instance
 
@@ -73,7 +75,7 @@ Exclude events as needed and then click **Finish** to create the instance.
 
 ![](./images/advanced.png)
 
-If the instance is created successfully, a prediction run will be immediately triggered and subsequent ones will execute according to your defined schedule.
+If the instance is created successfully, a prediction run will be immediately triggered and subsequent runs will execute according to your defined schedule.
 
 >   **Note:** Depending on the size of the input data, prediction runs can take up to 24 hours to complete.
 
@@ -81,22 +83,43 @@ By following this section, you have configured an instance of Customer AI and a 
 
 ## Create customer segments with predicted scores
 
-When a prediction run completes, predicted propensity scores are automatically consumed by Profiles. Enriching Profiles with Customer AI scores allows for the creation of customer segments that are based on propensity scores. This section provides steps for creating segments using the Segment Builder. For a more robust tutorial on creating segments, please see the [Segment Builder user guide](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!end-user/markdown/segmentation_overview/segment-builder-guide.md).
+When a prediction run completes, predicted propensity scores are automatically consumed by Profiles. Enriching Profiles with Customer AI scores allows for the creation of customer segments to find audiences based on their propensity scores. This section provides steps for creating segments using the Segment Builder. For a more robust tutorial on creating segments, please see the [Segment Builder user guide](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!end-user/markdown/segmentation_overview/segment-builder-guide.md).
 
 In the Platform UI, click **Segments** in the left navigation, and then click **Create segment**. 
 
 ![](./images/segments.png)
 
-The *Segment Builder* appears. From the left *Fields* column and under the *Attributes* tab, click the folder named **XDM Individual Profile** and then click the folder with the namespace of your organization. The folder named **Customer AI** contains the results of prediction runs and are named after the instance the scores belong to. Click and access the results of the desired instance.
+The *Segment Builder* appears. From the left *Fields* column and under the *Attributes* tab, click the folder named **XDM Individual Profile** and then click the folder with the namespace of your organization. The folder named **Customer AI** contains the results of prediction runs and are named after the instance the scores belong to. Click an instance folder to access its results of the desired instance.
 
 ![](./images/results.png)
 
 Located in the center of Segment Builder, drag and drop the **Score** attribute onto the *rule builder canvas* to define a rule.
 
-Under the right *Segment properties* column, select a *Merge policy* and provide a name for the segment, then click **Save** to create the segment.
+Under the right-hand *Segment properties* column, provide a name for the segment.
 
 ![](./images/properties.png)
 
+Above the left-hand *Fields* column, click the **gear** icon and select a **Merge policy**. Click **Save** to create the segment.
+
+![](./images/merge_policy.png)
+
 ## Next steps
 
-By following this tutorial, you have successfully configured an instance of Customer AI, generated propensity scores, and create a segment enforced by propensity scores using the Segment Builder. Your customer segment can now be used by activated destinations to target your audiences. See the [Destinations overview]() for more information.
+By following this tutorial, you have successfully configured an instance of Customer AI, generated propensity scores, and found audiences based on their propensity scores using the Segment Builder. You can now target your audiences by activating them to destinations. See the [destinations overview](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/destinations-overview.html) for more information.
+
+## Appendix
+
+The following section provides additional information regarding the output of Customer AI.
+
+### Customer AI output data
+
+Customer AI generates several attributes for individual profiles that are deemed eligible. These values are consumed by Real-time Customer Profile which can be used to create and define segments. The table below describes the various attributes found in the output of Customer AI:
+
+| Attribute | Description |
+| ----- | ----------- |
+| Score | The relative likelihood for a customer to achieve the predicted goal within the defined time frame. This value is not to be treated as a probability percentage but rather the likelihood of an individual compared to the overall population. |
+| Probability | This attribute is the true probability of a profile for achieving the predicted goal within the defined time frame. When comparing outputs across different goals, it is recommended that you consider probability over percentile or score. Probability should always be used when determining the average probability across the eligible population, as the probability will tend to be on the lower side for events that do not occur frequently. |
+| Percentile | This value provides information regarding the performance of a profile relative to other similarly scored profiles. For example, a profile with a percentile rank of 99 for churn indicates that it is at a higher risk of churning compared to 99% of all other profiles that were scored. |
+| Propensity type | The selected propensity type. |
+| Score date | The date on which scoring occurred. |
+| Influential factors | Predicted reasons on why a profile is likely to convert or churn. Factors are comprised of the following attributes:<ul><li>Code: The profile or behavioral attribute which positively influences a profile's predicted score. </li><li>Value: The value of the profile or behavioral attribute.</li><li>Importance: An integer ranging from 1 to 10 inclusively that determines the weight the profile or behavioral attribute has on the predicted score.</li></ul> |

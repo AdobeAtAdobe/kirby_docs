@@ -1,6 +1,6 @@
-# Customer AI (alpha) overview
+# Customer AI (beta) overview
 
->   **Note**: The Customer AI functionality outlined in this document is in alpha. The documentation and the functionality are subject to change.
+>   **Note**: The Customer AI functionality outlined in this document is in beta. The documentation and the functionality are subject to change.
 
 Customer AI in Adobe Experience Platform provides marketers with the power to leverage Adobe Sensei to anticipate what their customers will do next through machine learning.
 
@@ -11,8 +11,8 @@ Customer AI is used to generate custom propensity scores such as churn and conve
 Customer AI is built to:
 
 -   Enhance Real-time Customer Profile with customer propensity scores such as churn and conversion.
--   Enhance Customer Profiles with reason codes for propensity scores.
--   Create segments of customers based on propensity scores and influential factors.
+-   Enhance customer profiles with influential factors for propensity scores.
+-   Create segments of customers based on influential factors and propensity scores.
 
 Customer is not built to:
 
