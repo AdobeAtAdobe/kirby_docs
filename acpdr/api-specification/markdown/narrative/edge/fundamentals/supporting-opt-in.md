@@ -52,6 +52,8 @@ alloy("optIn", {
 
 Because the user chose to not opt into any purposes, promises that were returned from previously queued commands are rejected. Future commands that depend on the user opting in will return promises that are similarly rejected. For more information on handling or suppressing errors, please refer to [Executing Commands](executing-commands.md).
 
+>[!NOTE] At the current time, the Alloy library supports `all` or `none` as a value for the purposes.  While we plan to build out a more robust and set of purposes or categories that will correspond to the different Adobe capabilities and product offerings, the current implementation is an all or nothing approach to opt-in.  This only applies to Alloy and NOT other Adobe JavaScript libraries. 
+
 ## Persistence of user preferences
 
 After you have communicated user preferences to the SDK using the `optIn` command, the SDK persists the user's preferences to a cookie. The next time the user loads your website in the browser, the SDK will retrieve and use these persisted preferences. There is no need to execute the `optIn` command again, except to communicate a change in the user's preferences, which you may do at any time.
