@@ -15,6 +15,7 @@ Updates to existing features:
 * [Segmentation Service](#segmentation-service)
 * [Decisioning Service](#decisioning-service)
 * [Sources](#sources)
+* [Experience Data Model (XDM) System](#experience-data-model-xdm-system)
 
 ## Segmentation Service
 
@@ -69,3 +70,26 @@ Experience Platform provides a RESTful API and an interactive UI that lets you s
 * None.
 
 For more information about sources, see the [sources overview](../../../api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md).
+
+## Experience Data Model (XDM) System
+
+Standardization and interoperability are key concepts behind Experience Platform. Experience Data Model (XDM), driven by Adobe, is an effort to standardize customer experience data and define schemas for customer experience management.
+
+XDM is a publicly documented specification designed to improve the power of digital experiences. It provides common structures and definitions for any application to communicate with services on Adobe Experience Platform. By adhering to XDM standards, all customer experience data can be incorporated into a common representation delivering insights in a faster, more integrated way. You can gain valuable insights from customer actions, define customer audiences through segments, and use customer attributes for personalization purposes.
+
+### New features
+
+Feature | Description
+--- | ---
+Improved schema validation| <ul><li>New checks to ensure that references resolve into additional fields as expected.</li><li>Added additional checks to fields defined as an array of objects to make sure the objects are fully defined.</li><li>Improved error messages to help identify and fix problems.</li></ul>
+
+### Bug fixes
+
+* Maintenance and improvements related to access control and sandboxes.
+* Support for `eTag` for the `/descriptors` endpoint in the Schema Registry API.
+
+### Known issues
+
+* None
+
+To learn more about working with XDM using the Schema Registry API and Schema Editor user interface, please read the [XDM System documentation](../../../api-specification/markdown/narrative/technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md).
