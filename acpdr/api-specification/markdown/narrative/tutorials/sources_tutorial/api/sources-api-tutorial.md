@@ -7,6 +7,7 @@ The following is a list of tutorials for creating connectors using the Flow Serv
 ## Cloud storage
 
 -   [Azure Blob and Amazon S3 connector](./blob-s3-api-tutorial.md)
+-   [Google Cloud Storage connector](./google-cloud-api-tutorial.md)
 
 ## CRM
 
