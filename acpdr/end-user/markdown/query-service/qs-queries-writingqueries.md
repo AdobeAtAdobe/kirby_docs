@@ -12,9 +12,9 @@ Most often, the field you want to use in your query is nested within an object o
   WHERE endUserIds._experience.mcid IS NOT NULL
   LIMIT 1
   ```
-  * `{analytics_table_name}`: The name of your analytics table. 
+  - `{analytics_table_name}`: The name of your analytics table. 
 
-This next SQL statement uses bracket-notation to traverse the `endUserIds` object down to the `mcid` object. 
+The following SQL statement uses bracket-notation to traverse the `endUserIds` object down to the `mcid` object. 
  
   ```sql
   SELECT endUserIds['_experience']['mcid']
@@ -22,7 +22,7 @@ This next SQL statement uses bracket-notation to traverse the `endUserIds` objec
   WHERE endUserIds._experience.mcid IS NOT NULL
   LIMIT 1
   ```
-* `{analytics_table_name}`: The name of your analytics table. 
+- `{analytics_table_name}`: The name of your analytics table. 
 
 Notice both return the same result, a flattened object rather than a single value:
 
@@ -35,11 +35,12 @@ Notice both return the same result, a flattened object rather than a single valu
 
 The `endUserIds._experience.mcid` object contains these parameters:
 
-* `id`
-* `namespace`
-* `primary`
+- `id`
+- `namespace`
+- `primary`
 
 When the column is only declared down to the object, it returns the entire object as a string. The XDM schema is more complex than what you might have had experience with before because multiple solutions, channels, and use cases must be accounted for.  To view only the ID value, use:
+
 ```sql
 SELECT endUserIds._experience.mcid.id
 FROM {analytics_table_name}
@@ -101,7 +102,7 @@ FROM
 
 ### Back quotes
 
-Use the back quote `` ` `` to escape reserved column names when using the dot-notation syntax. For example, `order` is a reserve in SQL and the back quote needs to be used to access `commerce.order`:
+Use the back quote `` ` `` to escape reserved column names when using the dot-notation syntax. For example, `order` is a reserved word in SQL and the back quote needs to be used to access `commerce.order`:
 
 ```sql
 SELECT 
@@ -114,6 +115,15 @@ The back quotes are not needed if you are using bracket-notation.
 ```sql
 SELECT
   commerce['order']
+FROM {analytics_table_name}
+LIMIT 10
+```
+
+In addition, back quotes are necessary if accessing a field that starts with a number. For example, to access the field `30_day_value`, you would need to use the back quote notation.
+
+```SQL
+SELECT
+    commerce.`30_day_value`
 FROM {analytics_table_name}
 LIMIT 10
 ```
@@ -141,6 +151,6 @@ Results of interactive queries are returned to the client and are not persisted 
 
 ### Non-interactive query execution
 
-Queries submitted through the Query Service API are run non-interactively. For details, see the [API reference](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/qs-api.yaml).
+Queries submitted through the Query Service API are run non-interactively. For more information, please read the [API reference](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/qs-api.yaml).
 
 Non-interactive execution means that Query Service receives the API call and executes the query in the order it is received. Non-interactive queries always result in either the generation of a new dataset in Experience Platform to receive the results, or the insertion of new rows into an existing dataset. 
