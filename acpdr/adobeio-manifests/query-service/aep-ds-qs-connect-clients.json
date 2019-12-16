@@ -16,6 +16,11 @@
       "pages": [
           {
             "pages": [],
+            "path": "end-user/markdown/query-service/qs-clients-aqua-data-studio.md",
+            "title": "Connect Aqua Data Studio"
+          },
+          {
+            "pages": [],
             "path": "end-user/markdown/query-service/qs-clients-looker.md",
             "title": "Connect Looker"
           },
