@@ -52,7 +52,7 @@ alloy("optIn", {
 
 Because the user chose to not opt into any purposes, promises that were returned from previously queued commands are rejected. Future commands that depend on the user opting in will return promises that are similarly rejected. For more information on handling or suppressing errors, please refer to [Executing Commands](executing-commands.md).
 
->[!NOTE] At the current time, the Alloy library supports `all` or `none` as a value for the purposes.  While we plan to build out a more robust and set of purposes or categories that will correspond to the different Adobe capabilities and product offerings, the current implementation is an all or nothing approach to opt-in.  This only applies to Alloy and NOT other Adobe JavaScript libraries. 
+> **Note:** At the current time, the Alloy library supports `all` or `none` as a value for the purposes.  While we plan to build out a more robust and set of purposes or categories that will correspond to the different Adobe capabilities and product offerings, the current implementation is an all or nothing approach to opt-in.  This only applies to Alloy and NOT other Adobe JavaScript libraries. 
 
 ## Persistence of user preferences
 
