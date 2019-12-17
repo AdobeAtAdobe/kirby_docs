@@ -26,6 +26,7 @@
         "api-specification/markdown/narrative/technical_overview/query-service/sql": "/apis/experienceplatform/home/query-service/sql-reference.html",
         "api-specification/markdown/narrative/technical_overview/query-service/queries-and-ui": "/apis/experienceplatform/home/query-service/guide.html",
         "api-specification/markdown/narrative/technical_overview/query-service/clients": "/apis/experienceplatform/home/query-service/connect.html",
-		"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
+        "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
+        "api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
 	}
 }

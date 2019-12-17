@@ -7,7 +7,7 @@ info:
 
 
     Related Documentation:
-      * [Query Service overview](https://www.adobe.io/apis/experienceplatform/home/services/query-service/overview.html#!api-specification/markdown/narrative/technical_overview/markdown/query-service/overview/overview.md)
+      * [Query Service overview](https://www.adobe.io/apis/experienceplatform/home/query-service/overview.html#!api-specification/markdown/narrative/technical_overview/markdown/query-service/overview/overview.md)
 
     Visualize API calls with Postman (a free, third-party software):
       * [Query Service API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Query%20Service%20API.postman_collection.json)
