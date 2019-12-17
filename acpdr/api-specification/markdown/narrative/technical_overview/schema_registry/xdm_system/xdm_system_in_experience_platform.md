@@ -80,7 +80,7 @@ Adobe Experience Platform Query Service allows you to use standard SQL to query 
 
 After a schema has been composed and a dataset has been created which references that schema, data is then ingested and stored in the Data Lake. Using Query Service, you can join any datasets in the Data Lake and capture the query results as a new dataset for use in reporting, machine learning, or for ingestion into Real-time Customer Profile. 
 
-To learn more about Query Service, please see the [Query Service introduction](../../../../../../end-user/markdown/query-service/qs-intro.md).
+To learn more about Query Service, please see the [Query Service introduction](../../query-service/overview/overview.md).
 
 ### Real-time Customer Profile
 

@@ -280,6 +280,6 @@ Data Science Workspace | [Sensei Machine Learning API](../../../../../acpdr/swag
 Data Usage Labeling and Enforcement (DULE) | [DULE Policy Service API](../../../../../acpdr/swagger-specs/dule-policy-service.yaml)
 Experience Data Model (XDM) | [Schema Registry API](../../../../../acpdr/swagger-specs/schema-registry.yaml) | [XDM System FAQ and troubleshooting guide](../schema_registry/xdm_troubleshooting/xdm_system_faq_and_troubleshooting.md)
 Identity Service | [Identity Service API](../../../../../acpdr/swagger-specs/id-service-api.yaml) | [Identity Service FAQ and recommendations](../identity_services_architectural_overview/identity_services_faq.md)
-Query Service | [Query Service API](../../../../../acpdr/swagger-specs/qs-api.yaml) | [Query Service errors and troubleshooting](../../../../../end-user/markdown/query-service/qs-errors-troubleshooting.md)
+Query Service | [Query Service API](../../../../../acpdr/swagger-specs/api.yaml) | [Query Service errors and troubleshooting](../query-service/sample-queries-and-troubleshooting/errors-and-troubleshooting.md)
 Real-time Customer Profile | [Real-time Customer Profile API](../../../../../acpdr/swagger-specs/real-time-customer-profile.yaml)
 Sandboxes | [Sandbox API](../../../../../acpdr/swagger-specs/sandbox-api.yaml) | [Access control & sandboxes troubleshooting guide](../sandboxes/access-control-and-sandboxes-troubleshooting.md)

@@ -124,6 +124,6 @@
     "api-specification/markdown/narrative/technical_overview/streaming_ingest/": "/apis/experienceplatform/home/data-ingestion.html",
     "api-specification/markdown/narrative/tutorials/dsw/":"/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html", 
     "api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
-    "end-user/markdown/query-service/": "/apis/experienceplatform/home/services/query-service/query-service.html"
+    "api-specification/markdown/narrative/technical_overview/query-service/overview": "/apis/experienceplatform/home/services/query-service/overview.html"
   }
 }

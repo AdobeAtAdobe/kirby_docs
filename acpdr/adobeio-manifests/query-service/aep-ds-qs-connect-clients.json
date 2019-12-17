@@ -11,43 +11,47 @@
   "base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
 	"pages": [
 		{
-      "path": "end-user/markdown/query-service/qs-clients.md",
+      "path": "api-specification/markdown/narrative/technical_overview/query-service/clients/overview.md",
 			"title": "Connect clients to Query Service",
       "pages": [
           {
             "pages": [],
-            "path": "end-user/markdown/query-service/qs-clients-aqua-data-studio.md",
+            "path": "api-specification/markdown/narrative/technical_overview/query-service/clients/aqua-data-studio.md",
             "title": "Connect Aqua Data Studio"
           },
           {
             "pages": [],
-            "path": "end-user/markdown/query-service/qs-clients-looker.md",
+            "path": "api-specification/markdown/narrative/technical_overview/query-service/clients/looker.md",
             "title": "Connect Looker"
           },
           {
             "pages": [],
-            "path": "end-user/markdown/query-service/qs-clients-postico.md",
+            "path": "api-specification/markdown/narrative/technical_overview/query-service/clients/postico.md",
             "title": "Connect Postico (Mac)"
                   },
                   {
             "pages": [],
-            "path": "end-user/markdown/query-service/qs-clients-powerbi.md",
+            "path": "api-specification/markdown/narrative/technical_overview/query-service/clients/power-bi.md",
             "title": "Connect Power BI (PC)"
           },
           {
             "pages": [],
-            "path": "end-user/markdown/query-service/qs-clients-psql.md",
+            "path": "api-specification/markdown/narrative/technical_overview/query-service/clients/psql.md",
             "title": "Connect PSQL"
           },
           {
             "pages": [],
-            "path": "end-user/markdown/query-service/qs-clients-tableau.md",
+            "path": "api-specification/markdown/narrative/technical_overview/query-service/clients/tableau.md",
             "title": "Connect Tableau"
           }
       ]
 		}
 	],
 	"app2app_map": {
-		"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
+        "api-specification/markdown/narrative/technical_overview/query-service/overview": "/apis/experienceplatform/home/query-service/overview.html",
+        "api-specification/markdown/narrative/technical_overview/query-service/sample-queries-and-troubleshooting": "/apis/experienceplatform/home/query-service/sample-queries.html",
+        "api-specification/markdown/narrative/technical_overview/query-service/sql": "/apis/experienceplatform/home/query-service/sql-reference.html",
+        "api-specification/markdown/narrative/technical_overview/query-service/queries-and-ui": "/apis/experienceplatform/home/query-service/guide.html",
+        "api-specification/markdown/narrative/technical_overview/acp_connectors_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
 	}
 }

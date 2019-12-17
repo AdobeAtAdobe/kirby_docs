@@ -552,4 +552,4 @@ For step-by-step instructions on how to use the Data Access API to access and do
 
 You can also access successfully exported Real-time Customer Profile data using Adobe Experience Platform Query Service. Using the UI or RESTful API, Query Service allows you to write, validate, and run queries on data within the Data Lake.
 
-For more information on how to query audience data, please review the [Query Service documentation](../../../../../end-user/markdown/query-service/qs-intro.md).
+For more information on how to query audience data, please review the [Query Service documentation](../../technical_overview/query-service/overview/overview.md).

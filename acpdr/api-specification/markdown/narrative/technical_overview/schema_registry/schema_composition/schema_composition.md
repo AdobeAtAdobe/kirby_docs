@@ -156,7 +156,7 @@ Some data operations used by downstream services and applications enforce constr
 * [Real-time Customer Profile](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md)
 * [Identity Service](../../identity_services_architectural_overview/identity_services_architectural_overview.md)
 * [Segmentation](../../../../../../end-user/markdown/segmentation_overview/segmentation.md)
-* [Query Service](../../../../../../end-user/markdown/query-service/qs-intro.md)
+* [Query Service](../../query-service/overview/overview.md)
 * [Data Science Workspace](../../data_science_workspace_overview/dsw_overview.md)
 
 Before creating a schema for use in downstream services, please review the appropriate documentation for those services in order to better understand the field requirements and constraints for the data operations the schema is intended for.

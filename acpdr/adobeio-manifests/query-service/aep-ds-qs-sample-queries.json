@@ -11,33 +11,37 @@
   "base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
 	"pages": [
     {
-      "path": "end-user/markdown/query-service/qs-sample-queries.md",
+      "path": "api-specification/markdown/narrative/technical_overview/query-service/sample-queries-and-troubleshooting/sample-queries.md",
       "title": "Sample queries",
 			"pages": [
         {
           "pages": [],
-          "path": "end-user/markdown/query-service/qs-sample-aa-queries.md",
+          "path": "api-specification/markdown/narrative/technical_overview/query-service/sample-queries-and-troubleshooting/adobe-analytics-queries.md",
           "title": "Adobe Analytics"
         },
         {
           "pages": [],
-          "path": "end-user/markdown/query-service/qs-sample-target-queries.md",
+          "path": "api-specification/markdown/narrative/technical_overview/query-service/sample-queries-and-troubleshooting/adobe-target-queries.md",
           "title": "Adobe Target"
         }
       ]
 		},   
     {
 			"pages": [],
-			"path": "end-user/markdown/query-service/solutionref/analytics-field-map.md",
+			"path": "api-specification/markdown/narrative/technical_overview/query-service/sample-queries-and-troubleshooting/analytics-field-map.md",
 			"title": "Adobe Analytics field mapping to ExperienceEvent XDM"
     },
     {
 			"pages": [],
-			"path": "end-user/markdown/query-service/qs-errors-troubleshooting.md",
+			"path": "api-specification/markdown/narrative/technical_overview/query-service/sample-queries-and-troubleshooting/errors-and-troubleshooting.md",
 			"title": "Errors and troubleshooting"
 		}
 	],
 	"app2app_map": {
+        "api-specification/markdown/narrative/technical_overview/query-service/overview": "/apis/experienceplatform/home/query-service/overview.html",
+        "api-specification/markdown/narrative/technical_overview/query-service/sql": "/apis/experienceplatform/home/query-service/sql-reference.html",
+        "api-specification/markdown/narrative/technical_overview/query-service/queries-and-ui": "/apis/experienceplatform/home/query-service/guide.html",
+        "api-specification/markdown/narrative/technical_overview/query-service/clients": "/apis/experienceplatform/home/query-service/connect.html",
 		"api-specification/markdown/narrative/technical_overview/acp_connectors_overview/":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
 	}
 }

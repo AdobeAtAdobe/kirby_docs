@@ -53,7 +53,7 @@
 		"api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/":"/apis/experienceplatform/home/services/allservices.html",
-		"end-user/markdown/query-service/":"/apis/experienceplatform/home/services/query-service/query-service.html",
+		"api-specification/markdown/narrative/technical_overview/query-service/overview":"/apis/experienceplatform/home/services/query-service/overview.html",
 		"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/":"/apis/experienceplatform/home/data-science-workspace/dsw-overview.html",
 		"end-user/markdown/segmentation_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/technical_overview/access-control/":"/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html",
