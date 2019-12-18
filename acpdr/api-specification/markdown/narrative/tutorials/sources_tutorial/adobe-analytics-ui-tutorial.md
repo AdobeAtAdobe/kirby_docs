@@ -16,7 +16,7 @@ The *Source activity* screen lists all previously established connections to Ado
 
 From the list of available report suites, select the one you want to bring into Platform and click **Next**.
 
->   **Note**: Only one report suite can be selected per Analytics source connection.
+>   **Note**: Only one report suite can be selected per Analytics source connection. Additionally, only one report suite can only exist in one sandbox.
 
 ![](./images/analytics/AA-select_data.png)
 
@@ -33,3 +33,6 @@ Once the connection is created, a target schema and dataset is automatically cre
 
 *   [Real-time Customer Profile overview](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
 *   [Segmentation Service overview](../../technical_overview/segmentation/segmentation-overview.md)
+*   [Data Science Workspace overview](../../technical_overview/data_science_workspace_overview/dsw_overview.md)
+*   [Query Service overview](../../technical_overview/query-service/overview/overview.md)
+

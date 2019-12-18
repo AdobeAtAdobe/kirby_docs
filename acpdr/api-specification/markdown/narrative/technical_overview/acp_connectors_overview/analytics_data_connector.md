@@ -32,9 +32,11 @@ For detailed information on the field mapping that occurs between Analytics and 
 
 ## What is the expected latency for Analytics Data on Platform?
 
-| Analytics Data | Latency | 
-| --- | --- | 
-| Streaming | < 15 minutes.* |
-| Backfill data (13 Months of Data or 10 Billion events, whichever is lower) | 4 weeks. |
+Analytics Data | Expected Latency 
+-------------- | ---------------- 
+New data to Real-time Customer Profile (A4T **not** enabled) | < 2 minutes 
+New data to Real-time Customer Profile (A4T **is** enabled) | < 15 minutes
+New data to Data Lake | < 45 minutes
+Backfill data (13 Months of Data or 10 Billion events, whichever is lower) | < 4 weeks
 
 > __*Note:__ Latency will vary depending on customer configuration, data volumes, and consumer applications. For example, if the Analytics implementation is configured with `A4T` the latency to Pipeline will increase to 5-10 minutes.
