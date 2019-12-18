@@ -16,7 +16,7 @@ Adobe Experience Platform Segmentation Service provides a RESTful API and user i
 
 Working with segment definitions requires an understanding of the various Experience Platform services involved with segmentation. Before reading this user guide, please review the documentation for the following services:
 
-* [Segmentation Service](segmentation.md): Segmentation Service allows you divide data stored in Experience Platform that relates to individuals (such as customers, prospects, users, or organizations) into smaller groups that share similar traits and will respond similarly to marketing strategies.
+* [Segmentation Service](segmentation-overview.md): Segmentation Service allows you divide data stored in Experience Platform that relates to individuals (such as customers, prospects, users, or organizations) into smaller groups that share similar traits and will respond similarly to marketing strategies.
 * [Real-time Customer Profile](../unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, real-time consumer profile based on aggregated data from multiple sources.
 * [Identity Service](../identity_services_architectural_overview/identity_services_architectural_overview.md): Enables Real-time Customer Profile by bridging identities from disparate data sources being ingested into Platform.
 * [Experience Data Model (XDM)](../schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.

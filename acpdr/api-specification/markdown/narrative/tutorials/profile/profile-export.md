@@ -16,7 +16,7 @@ In addition to creating an export job, you can also access Profile data using th
 This tutorial requires a working understanding of the various Adobe Experience Platform services involved in working with Profile data. Before beginning this tutorial, please review the documentation for the following services:
 
 * [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, customer profile in real-time based on aggregated data from multiple sources.
-* [Adobe Experience Platform Segmentation Service](../../segmentation/segmentation-overview.md): Allows you to build audience segments from Real-time Customer Profile data.
+* [Adobe Experience Platform Segmentation Service](../../technical_overview/segmentation/segmentation-overview.md): Allows you to build audience segments from Real-time Customer Profile data.
 * [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
 * [Sandboxes](../../technical_overview/sandboxes/sandboxes-overview.md): Experience Platform provides virtual sandboxes which partition a single Platform instance into separate virtual environments to help develop and evolve digital experience applications.
 

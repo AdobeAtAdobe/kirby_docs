@@ -14,7 +14,7 @@ For information on how to build segments using the user interface, please see th
 This tutorial requires a working understanding of the various Adobe Experience Platform services involved in creating audience segments. Before beginning this tutorial, please review the documentation for the following services:
 
 - [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, real-time consumer profile based on aggregated data from multiple sources.
-- [Adobe Experience Platform Segmentation Service](../../technical_overview/segmentation/segmentation-overview.mderview.md): Allows you to build audience segments from Real-time Customer Profile data.
+- [Adobe Experience Platform Segmentation Service](../../technical_overview/segmentation/segmentation-overview.md): Allows you to build audience segments from Real-time Customer Profile data.
 - [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
 
 The following sections provide additional information that you will need to know in order to successfully make calls to the Platform APIs.

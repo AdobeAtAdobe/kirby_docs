@@ -34,7 +34,7 @@ New location for the merge policy selector | The location of the merge policy se
 
 * None
 
-For more information, please see the [Segmentation Service overview](../segmentation_overview/segmentation-overview.md).
+For more information, please see the [Segmentation Service overview](../../../api-specification/markdown/narrative/technical_overview/segmentation/segmentation-overview.md).
 
 ## Decisioning Service
 
