@@ -31,7 +31,7 @@ The *Review* step appears, allowing you to review your new inbound connection be
 
 ## Next steps
 
-Once the connection is created, a target schema and dataset is automatically created to contain the incoming data. Furthermore, data back-filling occurs and ingests up to 13 months of historical data. When the initial ingestion completes, Analytics data and be used by downstream Platform services such as Real-time Customer Profile and Segmentation Service. See the following documents for more details:
+Once the connection is created, a target schema and dataset is automatically created to contain the incoming data. When the initial ingestion completes, customer attributes profile data can be used by downstream Platform services such as Real-time Customer Profile and Segmentation Service. See the following documents for more details:
 
 *   [Real-time Customer Profile overview](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
 *   [Segmentation Service overview](../../technical_overview/segmentation/segmentation-overview.md)
