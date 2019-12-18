@@ -8,6 +8,7 @@ The following is a list of tutorials for creating connectors in the Platform UI:
 
 -   [Adobe Audience Manager connector](./aam-ui-tutorial.md)
 -   [Adobe Analytics connector](./adobe-analytics-ui-tutorial.md)
+-   [Customer attributes connector](./customer-attributes-ui-tutorial.md)
 
 ## Cloud storage
 
