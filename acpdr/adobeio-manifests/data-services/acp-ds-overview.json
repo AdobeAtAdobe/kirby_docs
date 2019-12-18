@@ -50,7 +50,6 @@
 		}
 	],
 	"app2app_map": {
-		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html", 
 		"acpdr/swagger-specs/":"/apis/cloudplatform/dataservices/api-reference.html",
 		"api-specification/markdown/narrative/technical_overview/schema_registry/":"/apis/experienceplatform/home/xdm/xdmservices.html",
 		"api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
@@ -60,10 +59,12 @@
 		"api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/": "/apis/experienceplatform/home/services/troubleshooting.html",
 		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/": "/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
 		"api-specification/markdown/narrative/technical_overview/data_governance/": "/apis/experienceplatform/home/dule/duleservices.html",
+		"api-specification/markdown/narrative/tutorials/dule/dule_working_with_labels.md": "/apis/experienceplatform/home/dule/duleservices.html",
 		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"end-user/markdown/segmentation_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/": "/apis/experienceplatform/home/data-science-workspace/dsw-overview.html",
-		"end-user/markdown/query-service/": "/apis/experienceplatform/home/services/query-service/query-service.html",
-		"api-specification/markdown/narrative/technical_overview/decisioning-overview/": "/apis/experienceplatform/home/services/decisioning-service.html"
+		"api-specification/markdown/narrative/technical_overview/query-service/overview/": "/apis/experienceplatform/home/query-service/overview.html",
+		"api-specification/markdown/narrative/technical_overview/decisioning-overview/": "/apis/experienceplatform/home/services/decisioning-service.html",
+		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html"
 	}
 }
