@@ -75,4 +75,4 @@ See the [section on union schemas](../schema_registry/schema_composition/schema_
 
 ## Next steps
 
-By reading this guide, you now know how to view and manage your profile data in the Experience Platform UI. For information on how to leverage Real-time Customer Profile to generate audience segments in the UI, see the [Segment Builder user guide](../../../../../end-user/markdown/segmentation_overview/segment-builder-guide.md).
+By reading this guide, you now know how to view and manage your profile data in the Experience Platform UI. For information on how to leverage Real-time Customer Profile to generate audience segments in the UI, see the [Segment Builder user guide](../segmentation/segment-builder-guide.md).

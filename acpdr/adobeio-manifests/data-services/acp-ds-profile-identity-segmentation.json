@@ -63,12 +63,12 @@
 			]
 		},
 		{
-			"path": "end-user/markdown/segmentation_overview/segmentation.md",
+			"path": "api-specification/markdown/narrative/technical_overview/segmentation/segmentation-overview.md",
 			"title": "Segmentation Service overview",
 			"pages": [	
 				{
 					"pages": [],
-					"path": "end-user/markdown/segmentation_overview/segment-builder-guide.md",
+					"path": "api-specification/markdown/narrative/technical_overview/segmentation/segment-builder-guide.md",
 					"title": "Segment Builder user guide"
 				}, 
 				{
@@ -95,6 +95,6 @@
 		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
 		"api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/":"/apis/experienceplatform/home/services/troubleshooting.html",
-		"end-user/markdown/segmentation_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html"
+		"api-specification/markdown/narrative/technical_overview/segmentation/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html"
 	}
 }

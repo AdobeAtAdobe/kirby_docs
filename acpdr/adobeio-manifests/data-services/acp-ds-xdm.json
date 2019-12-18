@@ -74,7 +74,7 @@
     "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
     "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md":"/apis/experienceplatform/home/services/allservices.html",
     "api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_overview.md":"/apis/experienceplatform/home/data-science-workspace/dsw-overview.html",
-    "end-user/markdown/segmentation_overview/segmentation.md":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+    "api-specification/markdown/narrative/technical_overview/segmentation/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
     "api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/batch_data_ingestion_developer_guide.md":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
     "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/":"/apis/experienceplatform/home/services/troubleshooting.html",
     "api-specification/markdown/narrative/integration_guides/etl_integration_guide/":"/apis/experienceplatform/home/services/allservices.html",

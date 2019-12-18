@@ -544,9 +544,9 @@ The same operation can be used to disable a schedule by replacing the "value" in
 
 Now that you have enabled both new and existing segments for streaming segmentation, and enabled scheduled segmentation to develop a baseline and perform recurring evaluations, you can begin to create segments for your organization. 
 
-To learn how to perform similar actions and work with segments using the Adobe Experience Platform user interface, please visit the [Segment Builder user guide](../../../../../end-user/markdown/segmentation_overview/segment-builder-guide.md).
+To learn how to perform similar actions and work with segments using the Adobe Experience Platform user interface, please visit the [Segment Builder user guide](../../technical_overview/segmentation/segment-builder-guide.md).
 
 [rtcp]: ../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md
-[seg-service]: ../../../../../end-user/markdown/segmentation_overview/segmentation.md
+[seg-service]: ../../technical_overview/segmentation/segmentation-overview.md
 [xdm]: ../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md
 [json-patch]: http://jsonpatch.com/

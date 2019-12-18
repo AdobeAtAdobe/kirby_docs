@@ -11,9 +11,20 @@
 	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
 	"pages": [
 		{
-			"pages": [],
+			"pages": [
+				{
+					"pages": [],
+					"path": "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog-developer-guide.md",
+					"title": "Catalog Service developer guide"
+				},
+				{
+					"pages": [],
+					"path": "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/filtering-catalog-data.md",
+					"title": "Filtering Catalog data using query parameters"
+				}
+			],
 			"path": "api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md",
-			"title": "Catalog Service Overview"
+			"title": "Catalog Service overview"
 		},
 		{
 			"pages": [],
@@ -61,7 +72,7 @@
 		"api-specification/markdown/narrative/technical_overview/data_governance/": "/apis/experienceplatform/home/dule/duleservices.html",
 		"api-specification/markdown/narrative/tutorials/dule/dule_working_with_labels.md": "/apis/experienceplatform/home/dule/duleservices.html",
 		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
-		"end-user/markdown/segmentation_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+		"api-specification/markdown/narrative/technical_overview/segmentation/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/": "/apis/experienceplatform/home/data-science-workspace/dsw-overview.html",
 		"api-specification/markdown/narrative/technical_overview/query-service/overview/": "/apis/experienceplatform/home/query-service/overview.html",
 		"api-specification/markdown/narrative/technical_overview/decisioning-overview/": "/apis/experienceplatform/home/services/decisioning-service.html",

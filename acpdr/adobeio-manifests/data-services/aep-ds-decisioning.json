@@ -37,7 +37,7 @@
 		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/catalog_architectural_overview.md":"/apis/experienceplatform/home/services/allservices.html",
 		"api-specification/markdown/narrative/technical_overview/query-service/overview":"/apis/experienceplatform/home/services/query-service/overview.html",
 		"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_overview.md":"/apis/experienceplatform/home/data-science-workspace/dsw-overview.html",
-		"end-user/markdown/segmentation_overview/segmentation.md":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+		"api-specification/markdown/narrative/technical_overview/segmentation/":"/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/batch_data_ingestion_developer_guide.md":"/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
 	}
 }

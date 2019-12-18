@@ -61,7 +61,7 @@ Segment rules are built and applied to Real-time Customer Profile using the Segm
 When an audience segment is created, qualifying profiles add the ID of that segment to their list of segment memberships.
 Segment memberships are stored in a `segments` field. This field is included in a [mixin](../schema_registry/schema_composition/schema_composition.md#mixin) that is added to the schema once it has been [enabled for use in Real-time Customer Profile](#union-schema).
 
-To learn more about using ExperienceEvent data for segmentation using the Platform UI, visit the documentation on [Segment Builder](../../../../../end-user/markdown/segmentation_overview/segmentation.md). If you are using the API, see the guide on [creating segments using APIs](../../tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md).
+To learn more about using ExperienceEvent data for segmentation using the Platform UI, visit the documentation on [Segment Builder](../segmentation/segmentation-overview.md). If you are using the API, see the guide on [creating segments using APIs](../../tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md).
 
 ### Profile fragments
 
@@ -275,7 +275,7 @@ The cornerstone of your marketing campaign is your audience. Real-time Customer 
 * Customers for whom the sum of the purchases is greater than $10,000.
 * Customers who have seen a set number of unique marketing campaigns from a pre-defined list, specified by their Campaign ID, and explored them within 30 minutes.
 
-Visit the [Segment Builder overview](../../../../../end-user/markdown/segmentation_overview/segmentation.md) to learn how to build and manage segments using the Adobe Experience Platform UI. If you are using the API, see the [Create a segment tutorial](../../tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md). 
+Visit the [Segment Builder overview](../segmentation/segmentation-overview.md) to learn how to build and manage segments using the Adobe Experience Platform UI. If you are using the API, see the [Create a segment tutorial](../../tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md). 
 
 ## Configuring computed attributes
 

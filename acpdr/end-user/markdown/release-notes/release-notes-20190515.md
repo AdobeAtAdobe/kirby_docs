@@ -235,7 +235,7 @@ For example, in an email campaign called "Did you forget to buy your sneakers?,"
 
 None.
 
-For product documentation, see [Segment Builder Overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!end-user/markdown/segmentation_overview/segmentation.md) for building segments using the Platform UI, or [Creating segments via API](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md) for instructions on building segments using the API.
+For product documentation, see [Segment Builder Overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/segmentation/segmentation-overview.md) for building segments using the Platform UI, or [Creating segments via API](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md) for instructions on building segments using the API.
 
 ## Data Governance
 

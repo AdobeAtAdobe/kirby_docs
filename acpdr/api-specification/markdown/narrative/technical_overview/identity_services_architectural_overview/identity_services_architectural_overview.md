@@ -100,7 +100,7 @@ Any field of type `string` in schemas that implement either record or time serie
 Identity fields also allow for the linking of identities if they share common PII data.
 For example, by labeling phone number fields as identity fields, Identity Service automatically graphs relationships with the other individuals found to be using the same phone number.
 
->Note: The namespace of resulting identities is provided at the time the field is labeled. 
+>**Note:** The namespace of resulting identities is provided at the time the field is labeled. 
 
 <!--- ### Identity maps
 

@@ -109,4 +109,4 @@ Now that you have generated and ingested insights into your Profile-enabled data
 
 ## Next steps
 
-This document walked you through the steps required to enable a schema and dataset for Profile, and briefly demonstrated the workflow for creating insight segments using the Segment Builder. To learn more about segments and the Segment Builder, refer to the <a href="https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!end-user/markdown/segmentation_overview/segmentation.md" target="_blank">Segmentation Service overview</a>.
+This document walked you through the steps required to enable a schema and dataset for Profile, and briefly demonstrated the workflow for creating insight segments using the Segment Builder. To learn more about segments and the Segment Builder, refer to the <a href="https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/segmentation/segmentation-overview.md" target="_blank">Segmentation Service overview</a>.

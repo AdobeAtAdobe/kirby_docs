@@ -83,4 +83,4 @@ Once you have made the necessary changes, click **Save** to return to the *Merge
 
 ## Next steps
 
-Now that you have created and configured merge policies for your IMS Organization, you can use them to create audience segments from your profile data. See the [Segment Builder guide](end-user/markdown/segmentation_overview/segment-builder-guide.md) for more information on how to create and work with segments using the Experience Platform user interface.
+Now that you have created and configured merge policies for your IMS Organization, you can use them to create audience segments from your profile data. See the [Segment Builder guide](../../technical_overview/segmentation/segment-builder-guide.md) for more information on how to create and work with segments using the Experience Platform user interface.

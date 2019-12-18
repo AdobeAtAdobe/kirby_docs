@@ -155,7 +155,7 @@ Some data operations used by downstream services and applications enforce constr
 
 * [Real-time Customer Profile](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md)
 * [Identity Service](../../identity_services_architectural_overview/identity_services_architectural_overview.md)
-* [Segmentation](../../../../../../end-user/markdown/segmentation_overview/segmentation.md)
+* [Segmentation](../../segmentation/segmentation-overview.md)
 * [Query Service](../../query-service/overview/overview.md)
 * [Data Science Workspace](../../data_science_workspace_overview/dsw_overview.md)
 

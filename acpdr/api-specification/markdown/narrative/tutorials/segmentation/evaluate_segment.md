@@ -20,7 +20,7 @@ The tutorial covers the following steps:
 This tutorial requires a working understanding of the various Adobe Experience Platform services involved in creating audience segments. Before beginning this tutorial, please review the documentation for the following services:
 
 * [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, customer profile in real-time based on aggregated data from multiple sources.
-* [Adobe Experience Platform Segmentation Service](../../../../../end-user/markdown/segmentation_overview/segmentation.md): Allows you to build audience segments from Real-time Customer Profile data.
+* [Adobe Experience Platform Segmentation Service](../../technical_overview/segmentation/segmentation-overview.md): Allows you to build audience segments from Real-time Customer Profile data.
 * [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
 * [Sandboxes](../../technical_overview/sandboxes/sandboxes-overview.md): Experience Platform provides virtual sandboxes which partition a single Platform instance into separate virtual environments to help develop and evolve digital experience applications.
 
@@ -48,7 +48,7 @@ Once you have developed, tested, and saved your segment definition, you can then
 
 [Scheduled evaluation](#scheduled-evaluation) (also known as 'scheduled segmentation') allows you to create a recurring schedule for running an export job at a specific time, whereas [on-demand evaluation](#on-demand-evaluation) involves creating a segment job to build the audience immediately. Steps for each are outlined below.
 
-If you have not yet completed the [Create a segment using the Real-time Customer Profile API](../creating_a_segment_tutorial/creating_a_segment_tutorial.md) tutorial or created a segment definition using [Segment Builder](../../../../../end-user/markdown/segmentation_overview/segment-builder-guide.md), please do so before proceeding with this tutorial.
+If you have not yet completed the [Create a segment using the Real-time Customer Profile API](../creating_a_segment_tutorial/creating_a_segment_tutorial.md) tutorial or created a segment definition using [Segment Builder](../../technical_overview/segmentation/segment-builder-guide.md), please do so before proceeding with this tutorial.
 
 ## Scheduled evaluation
 

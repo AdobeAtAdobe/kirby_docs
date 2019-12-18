@@ -29,4 +29,4 @@ If you wish to pause incoming Audience Manager data, you can do so by clicking t
 While an Audience Manager dataflow is active, incoming data is automatically ingested into Real-time Customer Profiles. You can now utilize this incoming data and create audience segments using Platform Segmentation Service. See the following documents for more details:
 
 -   [Real-time Customer Profile overview](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
--   [Segmentation Service overview](../../../../../end-user/markdown/segmentation_overview/segmentation.md)
+-   [Segmentation Service overview](../../technical_overview/segmentation/segmentation-overview.md)

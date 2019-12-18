@@ -39,11 +39,11 @@ This process can only be done using the Real-time Customer Profile API. For a de
 
 [rtcp]: ../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md
 
-[seg-service]: ../../../../../end-user/markdown/segmentation_overview/segmentation.md
+[seg-service]: ../../technical_overview/segmentation/segmentation-overview.md
 
 [xdm]: ../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md
 
-[segmentation-overview]: ../../../../../end-user/markdown/segmentation_overview/segmentation.md#advanced-segmentation-features
+[segmentation-overview]: ../../technical_overview/segmentation/segmentation-overview.md#advanced-segmentation-features
 
 [get-schema-id]: ../schema_registry_api_tutorial/relationship_descriptor_tutorial.md#define-a-source-and-destination-schema
 
@@ -53,6 +53,6 @@ This process can only be done using the Real-time Customer Profile API. For a de
 [relationship-ui]: ../schema_editor_tutorial/schema-relationship-ui-tutorial.md
 
 [segment-api]: ../creating_a_segment_tutorial/creating_a_segment_tutorial.md
-[segment-ui]: ../../../../../end-user/markdown/segmentation_overview/segment-builder-guide.md
+[segment-ui]: ../../technical_overview/segmentation/segment-builder-guide.md
 
 [access-segment-api]: ./evaluate_segment.md

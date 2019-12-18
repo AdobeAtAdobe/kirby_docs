@@ -238,7 +238,7 @@ For more detailed documentation about the query syntax, please read the [Lucene 
 
 [xdm]: ../schema_registry/xdm_system/xdm_system_in_experience_platform.md
 [rtcp]: ../unified_profile_architectural_overview/unified_profile_architectural_overview.md
-[segmentation]: ../../../../../end-user/markdown/segmentation_overview/segmentation.md
+[segmentation]: ../../segmentation/segmentation-overview.md
 [read-api-calls]: ../platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md#how-do-i-format-an-api-request
 [auth-tutorial]: ../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md
 [sandboxes]: ../sandboxes/sandboxes-overview.md
