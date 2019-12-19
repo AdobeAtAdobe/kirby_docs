@@ -178,73 +178,7 @@ Real-time Customer Profile supports filtering responses by specific fields, mean
 
 ## Handling opt-out requests
 
-Experience Platform allows your customers to send opt-out requests for the storage and use of their data in Real-time Customer Profile. In order to accept opt-out requests, one of the schemas featured in the union schema must contain opt-out XDM fields. There are two mixins that can provide these fields and they are described in more detail in the sections that follow.
-
-* [Profile Privacy](#profile-privacy): Used to capture different opt-out types (general or sales/sharing).
-* [Profile Preferences Details](#profile-preferences-details): Used to capture opt-out requests for specific XDM channels.
-
-Detailed steps on how to add a mixin to a schema are provided in the XDM documentation. If you are using the API, see the "Add a mixin" section in the [Schema Registry API tutorial](../../tutorials/schema_registry_api_tutorial/schema_registry_api_tutorial.md#add-a-mixin). If you are using the user interface, see the "Add a mixin" section in the [Schema Editor tutorial](../../tutorials/schema_editor_tutorial/schema_editor_tutorial.md#add-a-mixin).
-
-### Profile Privacy
-
-The Profile Privacy mixin allows you to capture two kinds of opt-out requests from customers:
-
-1. General opt-out
-1. Sales/Sharing opt-out
-
-The example JSON below highlights the fields provided by the mixin:
-
-```json
-{
-  "xdm:optOutConsentLevel": {
-    "xdm:privacyOptOuts": [
-      {
-        "xdm:optOutType": "general_opt_out",
-        "xdm:optOutValue": "out",
-        "xdm:timestamp": "2019-01-01T15:52:25+00:00"
-      }
-    ]
-  }
-}
-```
-* `xdm:privacyOptOuts`: An array containing a list of opt-out objects.
-* `xdm:optOutType`: The type of opt-out. Has two possible values:
-    * `general_opt_out`
-    * `sales_sharing_opt_out`
-* `xdm:optOutValue`: The active state of the opt-out. Has four possible values:
-    * `not_provided`: Opt-out request not provided
-    * `pending`: Pending verification
-    * `out`: The customer has opted out for the opt-out type indicated by `xdm:optOutType`.
-    * `in`: The customer has opted in for the opt-out type indicated by `xdm:optOutType`.
-* `xdm:timestamp`: Timestamp at the received opt-out signal.
-
-See the [public GitHub repository](https://github.com/adobe/xdm/blob/master/schemas/context/profile-privacy.schema.json) for the full XDM schema for this mixin. 
-
-### Profile Preferences Details
-
-The Profile Preferences Details mixin provides several fields that represent preferences for customer profiles. One of these fields, `xdm:optInOut`, allows you to set opt-out values for individual XDM channels. The example JSON below highlights how `xdm:optInOut` can capture multiple opt-out signals:
-
-```json
-{
-  "xdm:optInOut": {
-    "https://ns.adobe.com/xdm/channels/email": "pending",
-    "https://ns.adobe.com/xdm/channels/phone": "out",
-    "https://ns.adobe.com/xdm/channels/sms": "in",
-    "https://ns.adobe.com/xdm/channels/fax": "not_provided",
-    "https://ns.adobe.com/xdm/channels/direct-mail": "not_provided",
-    "https://ns.adobe.com/xdm/channels/apns": "not_provided",
-    "xdm:globalOptout": false
-  }
-}
-```
-* `xdm:optInOut`: Each key must represent a valid and known URI for an XDM channel, and has four possible values:
-    * `not_provided`: Opt-out request not provided
-    * `pending`: Pending verification
-    * `out`: The customer has opted out for the XDM channel indicated by the key name.
-    * `in`: The customer has opted in for the XDM channel indicated by the key name.
-* `xdm:optInOut > xdm:globalOptout`: When set to true, this property sets a global opt-out override for the profile.
-
-See the [public GitHub repository](https://github.com/adobe/xdm/blob/master/schemas/context/profile-preferences-details.schema.json) for the full XDM schema for this mixin. 
+Experience Platform enables your customers to send opt-out requests related to the usage and storage of their data within Real-time Customer Profile. For more information on how opt-out requests are handled, please see the documentation on [honoring opt-out requests](../profile/profile-opt-out.md).
 
 ## Sending data to Real-time Customer Profile
 
