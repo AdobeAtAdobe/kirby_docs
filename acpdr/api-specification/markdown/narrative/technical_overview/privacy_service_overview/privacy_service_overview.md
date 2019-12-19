@@ -18,11 +18,15 @@ For more information on how to set up your organization's data operations to be 
 
 The [California Consumer Privacy Act](https://www.caprivacy.org/about) (CCPA) enhances privacy rights and consumer protection for residents of California, United States, and is set to become effective on January 1, 2020.
 
-The CCPA provides new data privacy rights to California residents, including the right to access and delete their personal data and to know whether their personal data is sold or disclosed (and to whom). Privacy Service supports access and delete requests for the CCPA regulation, and tracks them separately from GDPR requests.
+The CCPA provides new data privacy rights to California residents, including the right to access and delete their personal data, to know whether their personal data is sold or disclosed (and to whom), and the right to opt out of having their data sold.
+
+Privacy Service supports access and delete requests for the CCPA regulation, and tracks them separately from GDPR requests. Privacy Service also supports sending opt-out-of-sale requests for Experience Cloud applications that support them.
 
 ## How to use Privacy Service to manage privacy job requests
 
-Privacy Service provides a RESTful API and user interface that allow you to manage your customers' requests for accessing or deleting their private data (also known as **privacy jobs**). The service also provides a central audit and logging mechanism that allows you to view the status and results of privacy jobs involving Experience Cloud applications.
+Privacy Service provides a RESTful API and user interface that allow you to manage your customers' requests for accessing/deleting their private data or opting out of sale (also known as **privacy jobs**). The service also provides a central audit and logging mechanism that allows you to view the status and results of privacy jobs involving Experience Cloud applications.
+
+> **Note:** Opt-out requests are currently only supported by the Privacy Service API.
 
 ### Using the API
 
