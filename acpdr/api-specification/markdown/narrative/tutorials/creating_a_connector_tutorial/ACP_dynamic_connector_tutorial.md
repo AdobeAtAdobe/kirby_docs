@@ -1,4 +1,6 @@
-# Microsoft Dynamics connector for Adobe Experience Platform
+# Microsoft Dynamics connector for Adobe Experience Platform (Legacy)
+
+>   **Note**: The Microsoft Dynamics connector outlined in this document is being deprecated. For documentation on the updated Microsoft Dynamics connector, see the tutorial on [collecting CRM data from Microsoft Dynamics or Salesforce using the Flow Service API](../sources_tutorial/api/dynamics-salesforce-api-tutorial.md).
 
 Adobe Experience Platform provides a RESTful API and user interface that allow you to ingest your Microsoft Dynamics CRM data.
 
