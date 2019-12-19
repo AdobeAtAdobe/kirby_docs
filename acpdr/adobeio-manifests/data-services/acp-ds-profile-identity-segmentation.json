@@ -100,6 +100,7 @@
 		"api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
 		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
 		"api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/":"/apis/experienceplatform/home/services/troubleshooting.html",
-		"api-specification/markdown/narrative/technical_overview/segmentation/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html"
+		"api-specification/markdown/narrative/technical_overview/segmentation/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+		"api-specification/markdown/narrative/technical_overview/privacy_service_overview/":"/apis/experienceplatform/home/services/privacy-service.html"
 	}
 }
