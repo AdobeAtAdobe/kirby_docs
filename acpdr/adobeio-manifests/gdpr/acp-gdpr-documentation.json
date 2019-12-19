@@ -58,6 +58,11 @@
     },
     {
       "pages": [],
+      "path": "api-specification/markdown/narrative/technical_overview/privacy_service_overview/ccpa-faq.md",
+      "title": "CCPA FAQ"
+    },
+    {
+      "pages": [],
       "path": "api-specification/markdown/narrative/gdpr/gdpr-positioning.md",
       "title": "Adobe Experience Cloud GDPR positioning"
     },
