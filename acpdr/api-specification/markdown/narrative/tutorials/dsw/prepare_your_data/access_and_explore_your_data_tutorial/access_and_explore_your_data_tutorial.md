@@ -16,7 +16,7 @@ Before starting this tutorial, you must have the following prerequisites:
     *   Client secret: `{CLIENT_SECRET}`
     *   Client certificate: `{PRIVATE_KEY}`
 *   Sample data and source files for the [Retail Sales Recipe](../../../../technical_overview/data_science_workspace_overview/dsw_prebuilt_recipes/retail_sales_recipe/retail_sales_recipe.md). Download the assets required for this and other Data Science Workspace tutorials from the <a href="https://github.com/adobe/experience-platform-dsw-reference/" target="_blank">Adobe public Git repository</a>.
-*   <a href="https://www.python.org/download/releases/2.7/" target="_blank">Python 2.7</a> and the following Python packages:
+*   <a href="https://www.python.org/downloads/" target="_blank">Python >= 2.7</a> and the following Python packages:
     *   <a href="https://pypi.org/project/pip/" target="_blank">pip</a>
     *   <a href="https://pyyaml.org/" target="_blank">PyYAML</a>
     *   <a href="https://pypi.org/project/dictor/" target="_blank">dictor</a>
