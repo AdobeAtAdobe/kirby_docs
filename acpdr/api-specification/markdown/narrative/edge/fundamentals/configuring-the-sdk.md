@@ -26,14 +26,6 @@ There are many options that can be set during configuration. All options can be 
 
 Your assigned configuration ID, which links the SDK to the appropriate accounts and configuration.  When configuring multiple instances within a single page, you must configure a different `configId` for each instance.
 
-### `context`
-
-| **Type**         | **Required** | **Default Value**                                  |
-| ---------------- | ------------ | -------------------------------------------------- |
-| Array of Strings | No           | `["web", "device", "environment", "placeContext"]` |
-
-Indicates which context categories to collect automatically as described in [Automatic Information](../reference/automatic-information.md).  If this configuration is not specified, all of the categories are used by default.
-
 ### `debugEnabled`
 
 | **Type** | **Required** | **Default Value** |
@@ -73,13 +65,21 @@ Your assigned Experience Cloud organization ID.  When configuring multiple insta
 
 ## Data collection
 
+### `context`
+
+| **Type**         | **Required** | **Default Value**                                  |
+| ---------------- | ------------ | -------------------------------------------------- |
+| Array of Strings | No           | `["web", "device", "environment", "placeContext"]` |
+
+Indicates which context categories to collect automatically as described in [Automatic Information](../reference/automatic-information.md).  If this configuration is not specified, all of the categories are used by default.
+
 ### `clickCollectionEnabled`
 
 | **Type** | **Required** | **Default Value** |
 | -------- | ------------ | ----------------- |
 | Boolean  | No           | `true`            |
 
-Indicates whether data associated with link clicks should be automatically collected. For clicks that qualify as link clicks, the following [Web Interaction](https://github.com/adobe/xdm/blob/master/docs/reference/context/webinteraction.schema.md) data is collected:
+Indicates whether data associated with clicks on navigational links, download links, or personalized content should be automatically collected or not.  For clicks that qualify as link clicks, the following [Web Interaction](https://github.com/adobe/xdm/blob/master/docs/reference/context/webinteraction.schema.md) data is collected:
 
 | **Property** |                                     |
 | ------------ | ----------------------------------- |
