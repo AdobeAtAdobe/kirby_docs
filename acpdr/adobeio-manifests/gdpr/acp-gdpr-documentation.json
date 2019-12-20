@@ -97,6 +97,7 @@
     "api-specification/markdown/narrative/tutorials/":"/apis/experienceplatform/home/tutorials/alltutorials.html",
     "api-specification/markdown/narrative/technical_overview/privacy_service_overview/":"/apis/experienceplatform/home/services/privacy-service.html",
     "api-specification/markdown/narrative/technical_overview/sandboxes": "/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html",
-    "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting": "https://www.adobe.io/apis/experienceplatform/home/services/troubleshooting.html"
+    "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting": "/apis/experienceplatform/home/services/troubleshooting.html",
+    "api-specification/markdown/narrative/technical_overview/segmentation/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html"
   }
 }
