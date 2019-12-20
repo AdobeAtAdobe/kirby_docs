@@ -40,6 +40,11 @@
             "title": "Connect PSQL"
           },
           {
+              "pages": [],
+              "path": "api-specification/markdown/narrative/technical_overview/query-service/clients/rstudio.md",
+              "title": "Connect RStudio"
+          },
+          {
             "pages": [],
             "path": "api-specification/markdown/narrative/technical_overview/query-service/clients/tableau.md",
             "title": "Connect Tableau"

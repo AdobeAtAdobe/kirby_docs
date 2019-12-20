@@ -16,9 +16,11 @@ From here, you can fill out the details for the Connection Settings.
 
 - **Name:** The name of your connection.
 - **Dialect:** The dialect used for the SQL database. Query Service uses **PostgreSQL**.
-- **Host and Port:** The host endpoint and its port for Query Service. To find the host and port that you should use, visit the [credentials page on Platform][credentials].
-- **Database:** The database that will be used. To find the database you should use, visit the [credentials page on Platform][credentials].
-- **Username and Password:** The login credentials that will be used. The username will be in the form of `ORG_ID@AdobeOrg`. To find out your login credentials, visit the [credentials page on Platform][credentials].
+- **Host and Port:** The host endpoint and its port for Query Service. 
+- **Database:** The database that will be used. 
+- **Username and Password:** The login credentials that will be used. The username will be in the form of `ORG_ID@AdobeOrg`. 
+
+>**Note:** For more information on finding your host and port, database name, and login credentials, visit the [credentials page on Platform][credentials]. To find your credentials, log in to Platform, click **Queries**, then click **Credentials**.
 
 After inputting your connection details, click on **Test These Settings** to ensure your credentials work properly. If they do, a message telling you can connect will appear below. If your connection is indeed successful, click on **Add Connection** to create your connection.
 

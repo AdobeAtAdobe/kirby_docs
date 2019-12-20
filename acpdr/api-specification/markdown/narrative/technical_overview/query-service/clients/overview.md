@@ -9,4 +9,5 @@ Instructions are provided for the following clients:
 - [Postico (Mac)](./postico.md)
 - [Power BI (PC)](./power-bi.md)
 - [PSQL](./psql.md)
+- [RStudio](./rstudio.md)
 - [Tableau](./tableau.md)
