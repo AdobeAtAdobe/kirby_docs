@@ -76,6 +76,7 @@
 		"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/": "/apis/experienceplatform/home/data-science-workspace/dsw-overview.html",
 		"api-specification/markdown/narrative/technical_overview/query-service/overview/": "/apis/experienceplatform/home/query-service/overview.html",
 		"api-specification/markdown/narrative/technical_overview/decisioning-overview/": "/apis/experienceplatform/home/services/decisioning-service.html",
-		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html"
+		"api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
+		"api-specification/markdown/narrative/technical_overview/streaming_ingest/": "/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html"
 	}
 }

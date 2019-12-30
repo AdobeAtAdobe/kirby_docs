@@ -25,7 +25,6 @@ Catalog tracks metadata for several kinds of resources and operations within Exp
 * [Experience Data Model (XDM)](../schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
 * [Batch ingestion](../ingest_architectural_overview/ingest_architectural_overview.md): How Experience Platform ingests and stores data from data files, such as CSV and Parquet.
 * [Streaming ingestion](../streaming_ingest/streaming_ingest_overview.md): How Experience Platform ingests and stores data from client- and server-side devices in real-time.
-* [Sources](../acp_connectors_overview/acp-connectors-overview.md): Experience Platform allows you to set up source connections to various data providers such as Adobe Analytics, Amazon S3, and Microsoft Dynamics.
 
 The following sections provide additional information that you will need to know or have on-hand in order to successfully make calls to the Catalog Service API.
 
