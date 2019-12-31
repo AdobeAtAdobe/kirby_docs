@@ -8,6 +8,7 @@ The following tasks are covered:
 * [Browse the access control workspace](#browse-the-access-control-workspace)
 * [Create a new product profile](#create-a-new-product-profile)
 * [Manage permissions for a product profile](#manage-permissions-for-a-product-profile)
+* [Manage details and additional services for a product profile](#manage-details-and-additional-services-for-a-product-profile)
 * [Manage users for a product profile](#manage-users-for-a-product-profile)
 
 ## Access the Admin Console
@@ -77,6 +78,31 @@ Continue going through the available categories and adding any desired permissio
 The _Permissions_ tab for the product profile reappears, and shows that the selected permissions are now active.
 
 ![](images/added-permissions.png)
+
+## Manage details and additional services for a product profile
+
+You can configure a profile's details and access to additional services from within the *Profile Settings* menu. To access the menu, click **Settings** from the *Product Profile* page.
+
+![](images/settings-profiles.png)
+
+The *Profile Settings* menu appears starting on the *Details* tab. This tab allows you to input and edit your **Profile Name** and **Description**. You can also modify your **Display Name** as well as the email notification settings for your account.
+
+![](images/edit-details-settings.png)
+
+Click **Services** to access the *Services* page.
+
+![](images/servicespage.png)
+
+The *Services* menu allows you to modify a profile's access to additional Platform services that were initially configured when the profile was created. These services include:
+
+* Data Science Workspace
+* Query Service
+
+Click the toggle on the right side of a particular service to enable or disable it. You can also click the **All on** checkbox to enable or disable all listed services.
+
+When finished, click **Save**.
+
+![](images/edit-additional-services.png)
 
 ## Manage users for a product profile
 
