@@ -435,7 +435,7 @@ GET ?regulation={REGULATION}&page={PAGE}
 GET ?regulation={REGULATION}&size={SIZE}
 GET ?regulation={REGULATION}&page={PAGE}&size={SIZE}
 ```
-* `{REGULATION}`: The regulation type to query for, includes choices ['gdpr','ccpa'].
+* `{REGULATION}`: The regulation type to query for. Accepted values are `gdpr` and `ccpa`.
 * `{PAGE}`: The page of data to be displayed, using 0-based numbering. The default is `0`.
 * `{SIZE}`: The number of results to display on each page. The default is `1` and the maximum is `100`. Exceeding the maximum causes the API to return a 400-code error.
 
