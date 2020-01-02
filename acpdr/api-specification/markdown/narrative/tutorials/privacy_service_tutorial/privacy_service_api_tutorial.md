@@ -1,6 +1,6 @@
 # Privacy Service API tutorial
 
-Adobe Experience Platform Privacy Service provides a RESTful API and user interface that allow you to manage (access and delete) the personal data of your customers (data subjects) across Adobe Experience Cloud applications. Privacy Service also provides a central audit and logging mechanism that allows you to access the status and results of jobs involving Experience Cloud applications.
+Adobe Experience Platform Privacy Service provides a RESTful API and user interface that allow you to manage (access and delete) the personal data of your data subjects (customers) across Adobe Experience Cloud applications. Privacy Service also provides a central audit and logging mechanism that allows you to access the status and results of jobs involving Experience Cloud applications.
 
 This tutorial covers how to use the Privacy Service API. For details on how to use the UI, see the [Privacy Service UI tutorial](privacy_service_ui_tutorial.md). For a comprehensive list of all available endpoints in the Privacy Service API, please see the [API reference](../../../../../../acpdr/swagger-specs/privacy-service.yaml).
 
@@ -19,7 +19,7 @@ The [appendix section](#appendix) provides additional information for working wi
 
 This tutorial requires a working understanding the following Experience Platform features:
 
-* [Privacy Service](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview): Provides a RESTful API and user interface that allow you to manage access and delete requests from your customers (data subjects) across Adobe Experience Cloud applications.
+* [Privacy Service](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview): Provides a RESTful API and user interface that allow you to manage access and delete requests from your data subjects (customers) across Adobe Experience Cloud applications.
 
 The following sections provide additional information that you will need to know in order to successfully make calls to the Privacy Service API.
 
@@ -41,12 +41,14 @@ All requests that contain a payload (POST, PUT, PATCH) require an additional hea
 
 ## Create a job request
 
-The first step in creating a new job request is to gather your customer data. As the data controller, you need to collect information about the data subjects whose data you want to access, delete, or opt out of sale. Once you have the required data, it must be provided in the payload of a POST request to the root endpoint (`/`) of the [Privacy Service API](../../../../../acpdr/swagger-specs/privacy-service.yaml).
+Before creating a new job request, you must first collect identifying information about the data subjects whose data you want to access, delete, or opt out of sale. Once you have the required data, it must be provided in the payload of a POST request to the root endpoint (`/`) of the Privacy Service API.
 
-The Privacy Service API supports two kinds of job requests for private customer data:
+> **Note:** Compatible Adobe Experience Cloud applications use different values for identifying data subjects. See the guide on [Privacy Service and Experience Cloud applications](../../gdpr/solutions/index.md) for more information on required identifiers for your application(s).
 
-* [Access and/or delete](#create-an-access/delete-job): Access (read) or delete private customer data.
-* [Opt out of sale](#create-an-opt-out-of-sale-job): Mark private customer data as not to be sold.
+The Privacy Service API supports two kinds of job requests for personal data:
+
+* [Access and/or delete](#create-an-access/delete-job): Access (read) or delete personal data.
+* [Opt out of sale](#create-an-opt-out-of-sale-job): Mark personal data as not to be sold.
 
 > **Important:** While access and delete requests can be combined as a single API call, opt-out requests must be made separately.
 
@@ -138,8 +140,8 @@ curl -X POST \
         * `type`: The qualifier for the ID namespace being used. A list of [accepted namespace qualifiers](#namespace-qualifiers) is provided later in this tutorial.
 * `include`: An array of Adobe products to include in your processing. If this value is missing or otherwise empty, the request will be rejected. Only include products that your organization has an integration with. A list of [accepted product values](#product-values) is provided later in this tutorial.
 * `expandIDs`: *(Optional)*: When set to `true`, this value represents an optimization for processing the IDs in the applications (currently only supported by Analytics). If omitted, this value defaults to `false`.
-* `priority`: *(Optional)*: Sets the priority for processing requests based on customer need. Accepted values are `normal` and `low`.
-* `analyticsDeleteMethod`: *(Optional)*: Specifies how Analytics should handle the customer data. Two possible values are accepted for this attribute:
+* `priority`: *(Optional)*: Sets the priority for processing requests. Accepted values are `normal` and `low`.
+* `analyticsDeleteMethod`: *(Optional)*: Specifies how Adobe Analytics should handle the personal data. Two possible values are accepted for this attribute:
     * `anonymize`: All data referenced by the given collection of user IDs is made anonymous. If `analyticsDeleteMethod` is omitted, this is the default behavior.
     * `purge`: All data is removed completely.
 * `regulation`: **(Required)** The regulation for the request (must be either "gdpr" or "ccpa").
@@ -281,8 +283,8 @@ curl -X POST \
         * `type`: The qualifier for the ID namespace being used. A list of [accepted namespace qualifiers](#namespace-qualifiers) is provided later in this tutorial.
 * `include`: An array of Adobe products to include in your processing. If this value is missing or otherwise empty, the request will be rejected. Only include products that your organization has an integration with. A list of [accepted product values](#product-values) is provided later in this tutorial.
 * `expandIDs`: *(Optional)*: When set to `true`, this value represents an optimization for processing the IDs in the applications (currently only supported by Analytics). If omitted, this value defaults to `false`.
-* `priority`: *(Optional)*: Sets the priority for processing requests based on customer need. Accepted values are `normal` and `low`.
-* `analyticsDeleteMethod`: *(Optional)*: Specifies how Analytics should handle the customer data. Two possible values are accepted for this attribute:
+* `priority`: *(Optional)*: Sets the priority for processing requests. Accepted values are `normal` and `low`.
+* `analyticsDeleteMethod`: *(Optional)*: Specifies how Analytics should handle the personal data. Two possible values are accepted for this attribute:
     * `anonymize`: All data referenced by the given collection of user IDs is made anonymous. If `analyticsDeleteMethod` is omitted, this is the default behavior.
     * `purge`: All data is removed completely.
 * `regulation`: **(Required)** The regulation for the request (must be either "gdpr" or "ccpa").
@@ -330,13 +332,15 @@ Once you have successfully submitted the job request, you can proceed to the nex
 
 Using one of the `jobId` values returned in the previous step, you can retrieve information about that job, such as its current processing status.
 
+> **Important:** Data for previously created jobs is only available for retrieval within 30 days of the job's completion date.
+
 #### API format
 
 ```http
-GET /{jobId}
+GET /{JOB_ID}
 ```
 
-* `{jobId}`: The ID of the job you want to lookup, returned under `jobId` in the response of the [previous step](#create-a-job-request).
+* `{JOB_ID}`: The ID of the job you want to lookup, returned under `jobId` in the response of the [previous step](#create-a-job-request).
 
 #### Request
 
