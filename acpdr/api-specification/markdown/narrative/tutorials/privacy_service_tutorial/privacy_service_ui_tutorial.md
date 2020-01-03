@@ -15,7 +15,7 @@ This document covers steps for performing the following tasks in the Privacy Ser
 
 You must have an Adobe ID in order to authenticate to the Privacy Service UI. In addition, you must have System Administrator privileges within the organization your Adobe ID is associated with.
 
-Navigate to the Adobe Experience Cloud sign-in page at https://marketing.adobe.com. Click **Sign In with an Adobe ID**.
+Navigate to the Adobe Experience Cloud sign-in page at https://experience.adobe.com. Click **Sign In with an Adobe ID**.
 
 <img src="images/privacy-ui-login.png" width=400><br>
 
@@ -37,9 +37,12 @@ The dashboard for the Privacy Service UI provides two widgets that allow you to 
 
 ### Regulation Type
 
-Privacy Service supports job requests for two regulation types: the General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA). Jobs for each regulation type are tracked separately.
+Privacy Service supports job requests for two regulation types: 
 
-To switch between regulation types, click the **Regulation Type** dropdown menu and select the desired regulation from the list.
+* The General Data Protection Regulation (GDPR)
+* The California Consumer Privacy Act (CCPA). 
+
+Jobs for each regulation type are tracked separately. To switch between regulation types, click the **Regulation Type** dropdown menu and select the desired regulation from the list.
 
 ![Regulation Type dropdown](images/regulation-type-dropdown.png)
 
@@ -68,6 +71,8 @@ To view further details about a given data point, click the data point in questi
 ### Job Requests
 
 The Job Requests widget lists all available job requests in your organization, including details such as the request type, current status, due date, and requestor email.
+
+> **Note:** The data for previously created jobs is only accessible for 30 days after the completion date.
 
 You can filter the list by typing keywords into the search bar below the Job Requests title. The list automatically filters as you type, showing requests that contain values that match your search terms. You can also use the **Requested on** dropdown menu to select a time range for the listed jobs.
 
