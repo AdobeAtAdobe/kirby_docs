@@ -61,7 +61,7 @@ The following SQL statement uses bracket notation to traverse the `endUserIds` o
 
 Both of the example queries above return a flattened object, rather than a single value:
 
-```
+```console
               endUserIds._experience.mcid   
 --------------------------------------------------------
  (48168239533518554367684086979667672499,"(ECID)",true)
@@ -83,7 +83,7 @@ WHERE endUserIds._experience.mcid IS NOT NULL
 LIMIT 1
 ```
 
-``` 
+```console 
      endUserIds._experience.mcid.id 
 ----------------------------------------
  48168239533518554367684086979667672499
