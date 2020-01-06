@@ -178,7 +178,7 @@ Real-time Customer Profile supports filtering responses by specific fields, mean
 
 ## Handling opt-out requests
 
-Experience Platform enables your customers to send opt-out requests related to the usage and storage of their data within Real-time Customer Profile. For more information on how opt-out requests are handled, please see the documentation on [honoring opt-out requests](../profile/profile-opt-out.md).
+Experience Platform enables your customers to send opt-out requests related to the usage and storage of their data within Real-time Customer Profile. For more information on how opt-out requests are handled, please see the documentation on [honoring opt-out requests](../segmentation/honoring-opt-outs.md).
 
 ## Sending data to Real-time Customer Profile
 
