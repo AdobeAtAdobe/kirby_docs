@@ -17,6 +17,7 @@ The [appendix](#appendix) section contains additional information for working wi
 - [View interrelated objects](#view-interrelated-objects)
 - [Make multiple requests in a single call](#make-multiple-requests-in-a-single-call)
 - [Additional request headers](#additional-request-headers)
+- [Data compaction](#data-compaction)
 
 ## Getting started
 
@@ -636,6 +637,12 @@ If the versions do not match (the object was modified by another process since y
 
 **Pragma**
 
-On occasion, you may wish to validate an object without saving the information. Using the `Pragma` header with a value of `validate-only` allows you to send POST or PUT requests for validation purposes only, preventing any changes to the data from being persisted. 
+On occasion, you may wish to validate an object without saving the information. Using the `Pragma` header with a value of `validate-only` allows you to send POST or PUT requests for validation purposes only, preventing any changes to the data from being persisted.
+
+### Data compaction
+
+Compaction is an Experience Platform service that merges data from small files into larger files without changing any data. For performance reasons, it is sometimes beneficial to combine a set of small files into larger files in order to provide faster access to data when being queried.
+
+When the files in an ingested batch have been compacted, its associated Catalog object is updated for monitoring purposes.
 
 <img src="https://i.imgur.com/aIgvaQu.png" alt="back-to-top" width="50" height="50" style="position: fixed; bottom: 30px; float: right; right: 10%; left: 90%; opacity: 0.4; padding-top: 0px; padding-bottom: 0px; border-style: hidden; border-radius: 50%;" onmouseover="this.style.opacity = 0.9;" onmouseout="this.style.opacity = 0.4;" onclick="document.documentElement.scrollTop = document.getElementsByClassName('udp-header')[0].offsetHeight; document.body.scrollTop = document.getElementsByClassName('udp-header')[0].offsetHeight;">
