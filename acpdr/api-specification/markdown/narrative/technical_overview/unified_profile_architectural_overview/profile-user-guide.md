@@ -27,7 +27,7 @@ In the [Experience Platform UI](http://platform.adobe.com), click **Profiles** i
 
 ## View profile samples
 
-Click **Samples** to view a sample list of available profiles. Each listed profile displays its ID, first name, last name, and personal email. Clicking the ID of a listed profile displays its details within the [Profile Viewer](#profile-viewer).
+Click **Browse** to view a sample list of available profiles. Each listed profile displays its ID, first name, last name, and personal email. Clicking the ID of a listed profile displays its details within the [Profile Viewer](#profile-viewer).
 
 ![](images/profile-samples.png)
 
