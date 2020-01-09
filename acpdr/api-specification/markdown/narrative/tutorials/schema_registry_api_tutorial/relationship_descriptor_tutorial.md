@@ -7,7 +7,7 @@ This document provides a tutorial for defining a one-to-one relationship between
 1. [Define a source and destination schema](#define-a-source-and-destination-schema)
 1. [Define reference fields for both schemas](#define-reference-fields-for-both-schemas)
 1. _(Optional)_ [Define primary identity fields](#define-primary-identity-fields-for-both-schemas) for both schemas
-1. _(Optional)_ [Create reference identity descriptors](#create-reference-identity-descriptors) for both schemas
+1. [Create a reference identity descriptor](#create-a-reference-identity-descriptor) for the destination schema
 1. [Create a relationship descriptor](#create-a-relationship-descriptor)
 
 ## Getting started
@@ -49,9 +49,9 @@ All requests that contain a payload (POST, PUT, PATCH) require an additional hea
 
 ## Define a source and destination schema
 
-It is expected that you have already created the two schemas that will be defined in the relationship. This tutorial creates a relationship between members of an organization's current loyalty program (defined in a "Loyalty Members" schema) with members of a previous loyalty program (defined in a "Legacy Loyalty Members" schema).
+It is expected that you have already created the two schemas that will be defined in the relationship. This tutorial creates a relationship between members of an organization's current loyalty program (defined in a "Loyalty Members" schema) and their favorite hotels (defined in a "Hotels" schema).
 
-Schema relationships are represented by a **source schema** having a field that refers to another field within a **destination schema**. In the steps that follow, "Loyalty Members" will be the source schema, while "Legacy Loyalty Members" will act as the destination schema.
+Schema relationships are represented by a **source schema** having a field that refers to another field within a **destination schema**. In the steps that follow, "Loyalty Members" will be the source schema, while "Hotels" will act as the destination schema.
 
 In order to define a relationship between two schemas, you must first acquire the `$id` values for both schemas. If you know the display names (`title`) of the schemas, you can find their `$id` values by making a GET request to the `/tenant/schemas` endpoint in the Schema Registry API.
 
@@ -94,9 +94,9 @@ A successful response returns a list of schemas defined by your organization, in
             "version": "1.5"
         },
         {
-            "title": "Legacy Loyalty Members",
-            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/a9f1dec864882e2f74689ef924b126f2",
-            "meta:altId": "_{TENANT_ID}.schemas.a9f1dec864882e2f74689ef924b126f2",
+            "title": "Hotels",
+            "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/d4ad4b8463a67f6755f2aabbeb9e02c7",
+            "meta:altId": "_{TENANT_ID}.schemas.d4ad4b8463a67f6755f2aabbeb9e02c7",
             "version": "1.0"
         }
     ],
@@ -122,9 +122,9 @@ Within the Schema Registry, relationship descriptors work similarly to foreign k
 
 > **Important:** If the schemas are to be enabled for use in [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md), the reference field for the destination schema must be its **primary identity**. This is explained in more detail later in this tutorial.
 
-If either schema does not have a field for this purpose, you may need to create a mixin with the new field and add it to the schema. This new field must have a `type` value of "string". See the section on [defining a new mixin](./schema_registry_api_tutorial#define-a-new-mixin) in the Schema Registry API tutorial for more information.
+If either schema does not have a field for this purpose, you may need to create a mixin with the new field and add it to the schema. This new field must have a `type` value of "string".
 
-For the purposes of this tutorial, the "Loyalty Members" schema is given a new mixin that adds a new field, `legacyId`, under its `TENANT_ID` namespace.
+For the purposes of this tutorial, the destination schema "Hotels" already contains a field for this purpose: `hotelId`. However, the source schema "Loyalty Members" does not have such a field, and must be given a new mixin that adds a new field, `favoriteHotel`, under its `TENANT_ID` namespace.
 
 ### Create a new mixin
 
@@ -138,7 +138,7 @@ POST /tenant/mixins
 
 #### Request
 
-The following request creates a new mixin that adds a `legacyId` field under the `TENANT_ID` namespace of any schema it is added to.
+The following request creates a new mixin that adds a `favoriteHotel` field under the `TENANT_ID` namespace of any schema it is added to.
 
 ```shell
 curl -X POST\
@@ -150,24 +150,19 @@ curl -X POST\
   -H 'content-type: application/json' \
   -d '{
         "type": "object",
-        "title": "Legacy Loyalty ID",
+        "title": "Favorite Hotel",
         "meta:intendedToExtend": ["https://ns.adobe.com/xdm/context/profile"],
-        "description": "Legacy Loyalty ID Mixin.",
+        "description": "Favorite hotel mixin for the Loyalty Members schema.",
         "definitions": {
-            "legacyId": {
+            "favoriteHotel": {
               "properties": {
                 "_{TENANT_ID}": {
                   "type":"object",
                   "properties": {
-                      "legacyId": {
-                          "type": "object",
-                          "properties": {
-                            "legacyId": {
-                                "title": "Legacy Loyalty Identifier",
-                                "type": "string",
-                                "description": "Legacy Loyalty Identifier."
-                            }
-                          }
+                    "favoriteHotel": {
+                      "title": "Favorite Hotel",
+                      "type": "string",
+                      "description": "Favorite hotel for a Loyalty Member."
                     }
                   }
                 }
@@ -176,7 +171,7 @@ curl -X POST\
         },
         "allOf": [
             {
-              "$ref": "#/definitions/legacyId"
+              "$ref": "#/definitions/favoriteHotel"
             }
         ]
       }'
@@ -188,33 +183,27 @@ A successful response returns the details of the newly created mixin.
 
 ```json
 {
-    "$id": "https://ns.adobe.com/{TENANT_ID}/mixins/61969bc646b66a6230a7e8840f4a4d33",
-    "meta:altId": "_{TENANT_ID}.mixins.61969bc646b66a6230a7e8840f4a4d33",
+    "$id": "https://ns.adobe.com/{TENANT_ID}/mixins/3387945212ad76ee59b6d2b964afb220",
+    "meta:altId": "_{TENANT_ID}.mixins.3387945212ad76ee59b6d2b964afb220",
     "meta:resourceType": "mixins",
     "version": "1.0",
     "type": "object",
-    "title": "Legacy Loyalty ID",
+    "title": "Favorite Hotel",
     "meta:intendedToExtend": [
         "https://ns.adobe.com/xdm/context/profile"
     ],
-    "description": "Legacy Loyalty ID Mixin.",
+    "description": "Favorite hotel mixin for the Loyalty Members schema.",
     "definitions": {
-        "legacyId": {
+        "favoriteHotel": {
             "properties": {
                 "_{TENANT_ID}": {
                     "type": "object",
                     "properties": {
-                        "legacyId": {
-                            "type": "object",
-                            "properties": {
-                                "legacyId": {
-                                    "title": "Legacy Loyalty Identifier",
-                                    "type": "string",
-                                    "description": "Legacy Loyalty Identifier.",
-                                    "meta:xdmType": "string"
-                                }
-                            },
-                            "meta:xdmType": "object"
+                        "favoriteHotel": {
+                            "title": "Favorite Hotel",
+                            "type": "string",
+                            "description": "Favorite hotel for a Loyalty Member.",
+                            "meta:xdmType": "string"
                         }
                     },
                     "meta:xdmType": "object"
@@ -226,21 +215,17 @@ A successful response returns the details of the newly created mixin.
     },
     "allOf": [
         {
-            "$ref": "#/definitions/legacyId"
+            "$ref": "#/definitions/favoriteHotel"
         }
     ],
+    "meta:xdmType": "object",
     "meta:abstract": true,
     "meta:extensible": true,
     "meta:containerId": "tenant",
     "meta:tenantNamespace": "_{TENANT_ID}",
-    "imsOrg": "{IMS_ORG}",
-    "meta:xdmType": "object",
     "meta:registryMetadata": {
-        "repo:createdDate": 1566418653122,
-        "repo:lastModifiedDate": 1566418653122,
-        "xdm:createdClientId": "{API_KEY}",
-        "xdm:lastModifiedClientId": "{CLIENT_ID}",
-        "eTag": "v95HW07fWEoqyKwSs8N4JgKCcJg="
+        "eTag": "quM2aMPyb2NkkEiZHNCs/MG34E4=",
+        "palm:sandboxName": "prod"
     }
 }
 ```
@@ -250,7 +235,7 @@ Record the `$id` URI of the mixin, to be used in the next step of adding the mix
 
 ### Add the mixin to the source schema
 
-Once you have created a mixin, you can add it to the source schema by making a PATCH request to the `/tenant/schemas/{$id}` endpoint.
+Once you have created a mixin, you can add it to the source schema by making a PATCH request to the `/tenant/schemas/{SCHEMA_ID}` endpoint.
 
 #### API format
 
@@ -261,7 +246,7 @@ PATCH /tenant/schemas/{SCHEMA_ID}
 
 #### Request
 
-The following request adds the "Legacy Loyalty ID" mixin to the "Loyalty Members" schema.
+The following request adds the "Favorite Hotel" mixin to the "Loyalty Members" schema.
 
 ```shell
 curl -X PATCH \
@@ -276,7 +261,7 @@ curl -X PATCH \
       "op": "add", 
       "path": "/allOf/-", 
       "value":  {
-        "$ref": "https://ns.adobe.com/{TENANT_ID}/mixins/61969bc646b66a6230a7e8840f4a4d33"
+        "$ref": "https://ns.adobe.com/{TENANT_ID}/mixins/3387945212ad76ee59b6d2b964afb220"
       }
     }
   ]'
@@ -315,7 +300,7 @@ A successful response returns the details of the updated schema, which now inclu
             "$ref": "https://ns.adobe.com/xdm/context/identitymap"
         },
         {
-            "$ref": "https://ns.adobe.com/{TENANT_ID}/mixins/61969bc646b66a6230a7e8840f4a4d33"
+            "$ref": "https://ns.adobe.com/{TENANT_ID}/mixins/3387945212ad76ee59b6d2b964afb220"
         }
     ],
     "meta:containerId": "tenant",
@@ -348,7 +333,7 @@ A successful response returns the details of the updated schema, which now inclu
 
 ## Define primary identity fields for both schemas
 
-> **Note:** This step is only required for schemas that will be enabled for use in [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md). If you do not want either schema to participate in a union, you can skip to the final step of [creating a relationship descriptor](#create-a-relationship-descriptor). If your schemas already have primary identities defined, skip to the next section on [creating reference identity descriptors](#create-reference-identity-descriptors).
+> **Note:** This step is only required for schemas that will be enabled for use in [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md). If you do not want either schema to participate in a union, or if your schemas already have primary identities defined, you can skip to the next step of [creating a reference identity descriptor](#create-a-relationship-descriptor) for the destination schema.
 
 In order for schemas to be enabled for use in Real-time Customer Profile, they must have a primary identity defined. In addition, a relationship's destination schema must use its primary identity as its reference field.
 
@@ -362,7 +347,7 @@ POST /tenant/descriptors
 
 #### Request
 
-The following request creates a new identity descriptor that defines the `legacyId` field of the "Legacy Loyalty Members" destination schema as a primary identity field.
+The following request creates a new identity descriptor that defines the `hotelId` field of the destination schema "Hotels" as a primary identity field.
 
 ```shell
 curl -X POST \
@@ -374,10 +359,10 @@ curl -X POST \
   -H 'Content-Type: application/json' \
   -d '{
     "@type": "xdm:descriptorIdentity",
-    "xdm:sourceSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/a9f1dec864882e2f74689ef924b126f2",
+    "xdm:sourceSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/d4ad4b8463a67f6755f2aabbeb9e02c7",
     "xdm:sourceVersion": 1,
-    "xdm:sourceProperty": "/_{TENANT_ID}/legacyId",
-    "xdm:namespace": "Email",
+    "xdm:sourceProperty": "/_{TENANT_ID}/hotelId",
+    "xdm:namespace": "ECID",
     "xdm:property": "xdm:code",
     "xdm:isPrimary": true
   }'
@@ -386,8 +371,8 @@ curl -X POST \
 * `xdm:sourceSchema`: The `$id` value of the destination schema, obtained in the [previous step](#define-a-source-and-destination-schema).
 * `xdm:sourceVersion`: The version number of the schema.
 * `sourceProperty`: The path to the specific field that will serve as the schema's primary identity.
-  * This path should begin with a "/" and not end with one, while also excluding any "properties" namespaces. The request above uses "/\_{TENANT_ID}/legacyId" instead of "/properties/\_{TENANT_ID}/properties/legacyId", for example.
-* `xdm:namespace`: The identity namespace for the identity field. `legacyId` is an email address in this example, therefore the "Email" namespace is used. See the [identity namespace overview](../../technical_overview/identity_namespace_overview/identity_namespace_overview.md) for a list of available namespace values.
+  * This path should begin with a "/" and not end with one, while also excluding any "properties" namespaces. For example, the request above uses `/_{TENANT_ID}/hotelId` instead of `/properties/_{TENANT_ID}/properties/hotelId`.
+* `xdm:namespace`: The identity namespace for the identity field. `hotelId` is an ECID value in this example, therefore the "ECID" namespace is used. See the [identity namespace overview](../../technical_overview/identity_namespace_overview/identity_namespace_overview.md) for a list of available namespaces.
 * `xdm:isPrimary`: A boolean property determining whether the identity field will be the primary identity for the schema. Since this request defines a primary identity, the value is set to true.
 
 #### Response
@@ -397,10 +382,10 @@ A successful response returns the details of the newly created identity descript
 ```json
 {
     "@type": "xdm:descriptorIdentity",
-    "xdm:sourceSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/a9f1dec864882e2f74689ef924b126f2",
+    "xdm:sourceSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/d4ad4b8463a67f6755f2aabbeb9e02c7",
     "xdm:sourceVersion": 1,
-    "xdm:sourceProperty": "/_{TENANT_ID}/legacyId",
-    "xdm:namespace": "Email",
+    "xdm:sourceProperty": "/_{TENANT_ID}/hotelId",
+    "xdm:namespace": "ECID",
     "xdm:property": "xdm:code",
     "xdm:isPrimary": true,
     "meta:containerId": "tenant",
@@ -408,15 +393,11 @@ A successful response returns the details of the newly created identity descript
 }
 ```
 
-## Create reference identity descriptors
+## Create a reference identity descriptor
 
-> **Note:** This step is only required for schemas that will be enabled for use in [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md). If you do not want either schema to participate in a union, you can skip to the final step of [creating a relationship descriptor](#create-a-relationship-descriptor).
+Schema fields must have a reference identity descriptor applied to them if they are being used as a reference from other schemas in a relationship. Since the `favoriteHotel` field in "Loyalty Members" will refer to the `hotelId` field in "Hotels", `hotelId` must be given a reference identity descriptor.
 
-Fields in union-enabled schemas must have a reference identity descriptor applied to them if they are being used to reference other schemas in a relationship. The following sections describe the steps for creating reference descriptors in both the source and destination schema.
-
-### Create a reference descriptor for the source schema
-
-Create a reference descriptor for the source schema by making a POST request to the `/tenant/descriptors` endpoint.
+Create a reference descriptor for the destination schema by making a POST request to the `/tenant/descriptors` endpoint.
 
 #### API format
 
@@ -426,7 +407,7 @@ POST /tenant/descriptors
 
 #### Request
 
-The following request creates a reference descriptor for the `legacyId` field in the "Loyalty Members" source schema:
+The following request creates a reference descriptor for the `hotelId` field in the destination schema "Hotels".
 
 ```shell
 curl -X POST \
@@ -438,69 +419,16 @@ curl -X POST \
   -H 'Content-Type: application/json' \
   -d '{
     "@type": "xdm:descriptorReferenceIdentity",
-    "xdm:sourceSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/2c66c3a4323128d3701289df4468e8a6",
+    "xdm:sourceSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/d4ad4b8463a67f6755f2aabbeb9e02c7",
     "xdm:sourceVersion": 1,
-    "xdm:sourceProperty": "/_{TENANT_ID}/legacyId",
-    "xdm:identityNamespace": "Email"
-  }'
-```
-* `@type`: The type of descriptor to be created. The `@type` value for reference descriptors is `xdm:descriptorReferenceIdentity`.
-* `xdm:sourceSchema`: The `$id` URL of the source schema.
-* `xdm:sourceVersion`: The version number of the source schema.
-* `sourceProperty`: The path to the specific field that will serve as a reference to the primary identity field of the destination schema.
-  * This path should begin with a "/" and not end with one, while also excluding any "properties" namespaces. The request above uses "/\_{TENANT_ID}/legacyId" instead of "/properties/\_{TENANT_ID}/properties/legacyId", for example.
-* `xdm:identityNamespace`: The identity namespace of the reference field. If you plan on enabling this schema for Real-time Customer Profile, this value must be the same as the `xdm:namespace` field of the destination schema's primary identity descriptor.
-
-#### Response
-
-A successful response returns the details of the newly created reference descriptor for the source schema.
-
-```json
-{
-    "@type": "xdm:descriptorReferenceIdentity",
-    "xdm:sourceSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/2c66c3a4323128d3701289df4468e8a6",
-    "xdm:sourceVersion": 1,
-    "xdm:sourceProperty": "/_{TENANT_ID}/legacyId",
-    "xdm:identityNamespace": "Email",
-    "meta:containerId": "tenant",
-    "@id": "9ce89704fd64e3cb08f8266716cfcf1c11782cb2"
-}
-```
-
-### Create a reference descriptor for the destination schema
-
-Next, create a reference descriptor for the destination schema by making another POST request to the `/tenant/descriptors` endpoint.
-
-#### API format
-
-```http
-POST /tenant/descriptors
-```
-
-#### Request
-
-The following request creates a reference descriptor for the `legacyId` field in the "Legacy Loyalty Members" destination schema.
-
-```shell
-curl -X POST \
-  https://platform.adobe.io/data/foundation/schemaregistry/tenant/descriptors \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: {SANDBOX_NAME}' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "@type": "xdm:descriptorReferenceIdentity",
-    "xdm:sourceSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/a9f1dec864882e2f74689ef924b126f2",
-    "xdm:sourceVersion": 1,
-    "xdm:sourceProperty": "/_{TENANT_ID}/legacyId",
-    "xdm:identityNamespace": "Email"
+    "xdm:sourceProperty": "/_{TENANT_ID}/hotelId",
+    "xdm:identityNamespace": "ECID"
   }'
 ```
 * `xdm:sourceSchema`: The `$id` URL of the destination schema.
 * `xdm:sourceVersion`: The version number of the destination schema.
 * `sourceProperty`: The path to the destination schema's primary identity field.
-* `xdm:identityNamespace`: The identity namespace of the reference field. This value must be the same as the `xdm:namespace` field of the destination schema's primary identity descriptor.
+* `xdm:identityNamespace`: The identity namespace of the reference field. `hotelId` is an ECID value in this example, therefore the "ECID" namespace is used. See the [identity namespace overview](../../technical_overview/identity_namespace_overview/identity_namespace_overview.md) for a list of available namespaces.
 
 #### Response
 
@@ -509,10 +437,10 @@ A successful response returns the details of the newly created reference descrip
 ```json
 {
     "@type": "xdm:descriptorReferenceIdentity",
-    "xdm:sourceSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/a9f1dec864882e2f74689ef924b126f2",
+    "xdm:sourceSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/d4ad4b8463a67f6755f2aabbeb9e02c7",
     "xdm:sourceVersion": 1,
-    "xdm:sourceProperty": "/_{TENANT_ID}/legacyId",
-    "xdm:identityNamespace": "Email",
+    "xdm:sourceProperty": "/_{TENANT_ID}/hotelId",
+    "xdm:identityNamespace": "ECID",
     "meta:containerId": "tenant",
     "@id": "53180e9f86eed731f6bf8bf42af4f59d81949ba6"
 }
@@ -544,10 +472,10 @@ curl -X POST \
     "@type": "xdm:descriptorOneToOne",
     "xdm:sourceSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/2c66c3a4323128d3701289df4468e8a6",
     "xdm:sourceVersion": 1,
-    "xdm:sourceProperty": "/_{TENANT_ID}/legacyId",
-    "xdm:destinationSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/a9f1dec864882e2f74689ef924b126f2",
+    "xdm:sourceProperty": "/_{TENANT_ID}/favoriteHotel",
+    "xdm:destinationSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/d4ad4b8463a67f6755f2aabbeb9e02c7",
     "xdm:destinationVersion": 1,
-    "xdm:destinationProperty": "/_{TENANT_ID}/legacyId"
+    "xdm:destinationProperty": "/_{TENANT_ID}/hotelId"
   }'
 ```
 * `@type`: The type of descriptor to be created. The `@type` value for relationship descriptors is `xdm:descriptorOneToOne`.
@@ -567,10 +495,10 @@ A successful response returns the details of the newly created relationship desc
     "@type": "xdm:descriptorOneToOne",
     "xdm:sourceSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/2c66c3a4323128d3701289df4468e8a6",
     "xdm:sourceVersion": 1,
-    "xdm:sourceProperty": "/_{TENANT_ID}/legacyId",
-    "xdm:destinationSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/a9f1dec864882e2f74689ef924b126f2",
+    "xdm:sourceProperty": "/_{TENANT_ID}/favoriteHotel",
+    "xdm:destinationSchema": "https://ns.adobe.com/{TENANT_ID}/schemas/d4ad4b8463a67f6755f2aabbeb9e02c7",
     "xdm:destinationVersion": 1,
-    "xdm:destinationProperty": "/_{TENANT_ID}/legacyId",
+    "xdm:destinationProperty": "/_{TENANT_ID}/hotelId",
     "meta:containerId": "tenant",
     "@id": "76f6cc7105f4eaab7eb4a5e1cb4804cadc741669"
 }
