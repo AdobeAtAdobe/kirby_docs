@@ -6,13 +6,13 @@ Privacy Service provides a RESTful API and user interface to help companies mana
 
 ### FAQ
 
-* [Can I use Privacy Service to clean up data that was accidentally sent to Platform?](#can-i-use-privacy-service-to-clean-up-data-that-was-accidentally-sent-to-platform)
-* [How do I get information about the status of my privacy request or job?](#how-do-i-get-information-about-the-status-of-my-privacy-request-or-job)
-* [How do I download the results of my completed privacy jobs?](#how-do-i-download-the-results-of-my-completed-privacy-jobs)
+- [Can I use Privacy Service to clean up data that was accidentally sent to Platform?](#can-i-use-privacy-service-to-clean-up-data-that-was-accidentally-sent-to-platform)
+- [How do I get information about the status of my privacy request or job?](#how-do-i-get-information-about-the-status-of-my-privacy-request-or-job)
+- [How do I download the results of my completed privacy jobs?](#how-do-i-download-the-results-of-my-completed-privacy-jobs)
 
 ## Can I use Privacy Service to clean up data that was accidentally sent to Platform?
 
-Privacy Service is designed to assist you in meeting your obligations for data subject (or consumer) access or delete requests. These requests are time-sensitive and are completed related to applicable privacy law. Using Privacy Service for any other purposes, such as clearing out data that was accidentally submitted to a product, is not supported by Adobe. Submission of requests which are not data-subject/consumer access or delete requests impacts all Privacy Service customers and the ability for Privacy Service to support the appropriate legal timelines.
+Adobe does not support using Privacy Service for clearing out data that was accidentally submitted to a product. Privacy Service is designed to assist you in meeting your obligations for data subject (or consumer) access or delete requests. These requests are time-sensitive and are completed related to applicable privacy law. Submission of requests which are not data-subject/consumer access or delete requests impacts all Privacy Service customers and the ability for Privacy Service to support the appropriate legal timelines.
 
 Please contact your account manager (CDM) to coordinate and provide a level of effort to remove any PII or data issues.
 
@@ -40,4 +40,4 @@ For more details, see the section on [looking up a job by its ID](../tutorials/p
 
 ### Using the UI
 
-On the Privacy Service UI dashboard, find the job you want to download from the **Job Requests** widget. Click the ID of the job to open the *Job Details* page. From here, click **Download** in the top-right corner to download the ZIP file. See the [Privacy Service UI tutorial](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md) for more detailed steps.
+On the Privacy Service UI dashboard, find the job you want to download from the **Job Requests** widget. Click the ID of the job to open the _Job Details_ page. From here, click **Download** in the top-right corner to download the ZIP file. See the [Privacy Service UI tutorial](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md) for more detailed steps.
