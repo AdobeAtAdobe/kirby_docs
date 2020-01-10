@@ -8,7 +8,7 @@ After you have Power BI installed, you need to set up the necessary components t
 
 1. Find and install `npgsql`, a .NET driver package for PostgresSQL that is the official way for PowerBI to connect.
 
-2. Select v3.2.7 (newer versions currently result in an error).
+2. Select v4.0.10 (newer versions currently result in an error).
 
 3. Under "Npgsql GAC Installation" on the Custom Setup screen, select **Will be installed on local hard drive**. 
 
@@ -47,7 +47,11 @@ After performing those preparatory steps, you can connect Power BI to Query Serv
     ORDER BY SUM(web.webPageDetails.pageviews.value) DESC 
     LIMIT 10
     ``` 
-    > **Note:** Query Service currently supports import, but not direct query in Power BI. You need to identify the query that will import the data you need for your project.
+    > **Note:** If SQL statement is not provided then Power BI will preview all the tables in database. For hirearchichal data Custom Sql statement should be used. If the table schema is flat it will work with or without custom sql statment. Compound types are yet not supported by Power BI. User is suggested to write sql stament to get primitive types from compond types.
+    
+8. You can use either DirectQuery or Import option.
+
+    > **Note:** In Import mode data will be imported in power BI and in DirectQueryMode all the queries will be sent to Query Service          for execution.
 
 7. Click **OK**.
 
