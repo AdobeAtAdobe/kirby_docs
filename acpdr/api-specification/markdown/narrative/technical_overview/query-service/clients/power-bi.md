@@ -12,7 +12,7 @@ After you have Power BI installed, you need to set up the necessary components t
 
 3. Under "Npgsql GAC Installation" on the Custom Setup screen, select **Will be installed on local hard drive**. 
 
-    Not installing the GAC will cause Power BI to fail later.
+Not installing the GAC will cause Power BI to fail later.
 
 4. Restart Windows.
 
@@ -28,35 +28,32 @@ After performing those preparatory steps, you can connect Power BI to Query Serv
 
 3. Choose **PostgreSQL database**, then click **Connect**.
 
-4. Enter values for the Server and Database>
+4. Enter values for the Server and Database.
 
-    * **Server** is the Host found under the connection details. For production, add port `:80` to the end of the Host string.
-    
-    * **Database** can be either "all" or a dataset table name. (Try one of the CTAS-derived datasets.)
+ - **Server** is the Host found under the connection details. For production, add port `:80` to the end of the Host string.
+ - **Database** can be either "all" or a dataset table name. (Try one of the CTAS-derived datasets.)
 
 5. Click **Advanced options**, and then uncheck **include relationship columns**. Do not check **Navigate using full hierarchy**.
 
 6. (Optional but recommended when "all" is declared for the database) Enter a SQL statement.
 
-    ```
-    SELECT web.webPageDetails.name AS Page_Name, 
-    SUM(web.webPageDetails.pageviews.value) AS Page_Views 
-    FROM _TABLE_ 
-    WHERE _ACP_YEAR=2018 AND _ACP_MONTH=11 AND _ACP_DAY=20 
-    GROUP BY web.webPageDetails.name 
-    ORDER BY SUM(web.webPageDetails.pageviews.value) DESC 
-    LIMIT 10
-    ``` 
-    > **Note:** If SQL statement is not provided then Power BI will preview all the tables in database. For hirearchichal data Custom Sql statement should be used. If the table schema is flat it will work with or without custom sql statment. Compound types are yet not supported by Power BI. User is suggested to write sql stament to get primitive types from compond types.
-    
-8. You can use either DirectQuery or Import option.
+```sql
+SELECT web.webPageDetails.name AS Page_Name, 
+SUM(web.webPageDetails.pageviews.value) AS Page_Views 
+FROM _TABLE_ 
+WHERE _ACP_YEAR=2018 AND _ACP_MONTH=11 AND _ACP_DAY=20 
+GROUP BY web.webPageDetails.name 
+ORDER BY SUM(web.webPageDetails.pageviews.value) DESC 
+LIMIT 10
+``` 
+> **Note:** If a SQL statement is not provided, then Power BI will preview all the tables in database. For hierarchical data, a custom SQL statement should be used. If the table schema is flat, it will work with or without a custom SQL statement. Compound types are yet not supported by Power BI - to get primitive types from compound types, you will need to write SQL statements to derive them.
 
-    > **Note:** In Import mode data will be imported in power BI and in DirectQueryMode all the queries will be sent to Query Service          for execution.
+7. Select either **DirectQuery** or **Import** mode.
 
-7. Click **OK**.
+> **Note:** In **Import** mode, data will be imported in power BI. In **DirectQuery** mode, all the queries will be sent to Query Service for execution.
 
-    At this step Power BI connects to the Query Service and, if there are no errors, produces a preview.
-    
-    > **Note:** There is a known issue with the Preview rendering numeric columns. Proceed to the next step.
+8. Click **OK**. Now, Power BI connects to the Query Service and produces a preview if there are no errors.
 
-8. Click **Load** to bring the dataset into Power BI.
+> **Note:** There is a known issue with the Preview rendering numeric columns. Proceed to the next step.
+
+9. Click **Load** to bring the dataset into Power BI.
