@@ -22,6 +22,7 @@ Updates to existing features:
 * [Experience Data Model (XDM) System](#experience-data-model-xdm-system)
 * [Real-time Customer Profile](#real-time-customer-profile) 
 * [Segmentation Service](#segmentation-service)
+* [Privacy Service](#privacy-service)
 
 ## Real-time Customer Data Platform
 
@@ -138,6 +139,8 @@ To learn more about working with XDM using the Schema Registry API and Schema Ed
 
 Adobe Experience Platform enables you to drive coordinated, consistent, and relevant experiences for your customers no matter where or when they interact with your brand. With Real-time Customer Profile, you can see a holistic view of each individual customer that combines data from multiple channels, including online, offline, CRM, and third party data. Profile allows you to consolidate your disparate customer data into a unified view offering an actionable, timestamped account of every customer interaction.
 
+### New features
+
 | Feature    | Description  |
 | -----------| ---------- |
 |Enhancements to Profile lookup| Users now have the ability to look up profiles using reference descriptors and related entities.|
@@ -162,6 +165,8 @@ Adobe Experience Platform Segmentation Service provides a user interface and RES
 
 Segmentation Service defines a particular subset of profiles by describing the criteria that distinguishes a marketable group of people within your customer base. Segments can be based on record data (such as demographic information) or time series events representing customer interactions with your brand.
 
+### New features
+
 | Feature    | Description  |
 | -----------| ---------- |
 | Scheduled segmentation | Users can now enable scheduled segment evaluation for all segments via the UI and API. Once enabled, all segments will be evaluated once per day. This does not affect on-demand segmentation capabilities which continue to work as they did previously.<br/><br/>Note: The scheduled segmentation feature cannot be used in sandboxes with more than five merge policies for XDM Individual Profile.|
@@ -184,3 +189,23 @@ Segmentation Service defines a particular subset of profiles by describing the c
 * None.
 
 To learn more about Segmentation Service, please read the [Segmentation Service overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!end-user/markdown/segmentation_overview/segmentation.md). Then, to begin building and working with segments, follow the [Segment Builder user guide](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!end-user/markdown/segmentation_overview/segment-builder-guide.md) for UI instructions or consult the [creating segments tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md) for using the API.  
+
+## Privacy Service
+
+New legal and organizational regulations are giving users the right to access or delete their personal data from your data stores upon request. Adobe Experience Platform Privacy Service provides a RESTful API and user interface to help you manage these data requests from your customers. With Privacy Service, you can submit requests to access and delete private or personal customer data from Adobe Experience Cloud applications, facilitating automated compliance with legal and organizational privacy regulations.
+
+### New features
+
+Feature | Description
+--- | ---
+Privacy Service rebranding | The formerly named "GDPR Service" has been rebranded to Privacy Service as the service has grown to support other regulations in addition to GDPR.
+New API endpoints | Base path for the Privacy Service API has been updated from `/data/privacy/gdpr` to `/data/core/privacy/jobs`
+New required `regulation` property | When creating new jobs in the Privacy Service API, a `regulation` property must be supplied in the request payload to indicate which regulation to track the job under. Accepted values are `gdpr` and `ccpa`. See the [Privacy Service API tutorial](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) for more information.
+Support for Adobe Primetime Authentication | Privacy Service now accepts access/delete requests from Adobe Primetime Authentication, using `primetimeAuthentication` as its product value. See the [Primetime Authentication documentation](http://tve.helpdocsonline.com/how-to-make-a-privacy-request) for more information.
+Privacy Service UI enhancements | <ul><li>Separate job tracking pages for GDPR and CCPA regulations.</li><li>New _Regulation Type_ dropdown to switch between tracking data for GDPR and CCPA.</li></ul>
+
+### Known issues
+
+* None
+
+For more information about Privacy Service, please start by reading the [Privacy Service overview](https://www.adobe.io/apis/experiencecloud/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/technical_overview/privacy_service_overview/privacy_service_overview.md).
