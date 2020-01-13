@@ -2,7 +2,24 @@
 
 This document contains information about new features for Adobe Experience Platform Privacy Service, as well as enhancements and significant bug fixes.
 
-## 25 July, 2019
+## January 14, 2020
+
+### New features
+
+Feature | Description
+--- | ---
+Privacy Service rebranding | The formerly named "GDPR Service" has been rebranded to Privacy Service as the service has grown to support other regulations in addition to GDPR.
+New API endpoints | Base path for the Privacy Service API has been updated from `/data/privacy/gdpr` to `/data/core/privacy/jobs`
+New required `regulation` property | When creating new jobs in the Privacy Service API, a `regulation` property must be supplied in the request payload to indicate which regulation to track the job under. Accepted values are `gdpr` and `ccpa`. See the [Privacy Service API tutorial](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) for more information.
+Support for Adobe Primetime Authentication | Privacy Service now accepts access/delete requests from Adobe Primetime Authentication, using `primetimeAuthentication` as its product value. See the [Primetime Authentication documentation](http://tve.helpdocsonline.com/how-to-make-a-privacy-request) for more information.
+
+### Enhancements
+
+* Privacy Service UI enhancements:
+    * Separate job tracking pages for GDPR and CCPA regulations.
+    * New _Regulation Type_ dropdown to switch between tracking data for GDPR and CCPA.
+
+## July 25, 2019
 
 ### New features
 
@@ -12,15 +29,8 @@ Request Metrics Dashboard | The new metrics dashboard in the Privacy Service UI 
 Request Builder | To service organizations with both technical and non-technical users submitting GDPR requests, a “Create Request” functionality has been added to the UI. The JSON file submission capability is still available in the Privacy Service UI for those organizations who prefer to continue using it.
 GDPR Job Event Notifications | Event notifications about GDPR job statuses are a critical element to many workflows. While notifications were previously served using individual email notices, GDPR event notifications are messages that leverage Adobe I/O events, which are sent to a configured webhook facilitating job request automation. Privacy Service UI users can subscribe to Adobe I/O GDPR events to receive updates when a product or the GDPR job has been completed.
 
-### Enhancements
 
-* None.
-
-### Bug fixes
-
-* None.
-
-## 18 April, 2019
+## April 18, 2019
 
 ### Enhancements
 * Default range for the status table in the Privacy Service UI modified to a 7-day span.
@@ -30,25 +40,19 @@ GDPR Job Event Notifications | Event notifications about GDPR job statuses are a
 ### Bug fixes
 * Added missing logging information for filtered queries for the `GET /` endpoint in the Privacy Service API.
 
-## 11 April, 2019
+## April 11, 2019
 
 ### Enhancements
 * Updated UI to support new functionality for beta customers
 * New metrics API to support UI 2.0 features in beta
 
-### Bug fixes
-* None
-
-## 09 April, 2019
+## April 9, 2019
 
 ### Enhancements
 * Updated all lookup (GET) API calls to default to a 30-day lookback range
 * Restricted API usage to have a maximum lookback range of 45 days
 
-### Bug fixes
-* None
-
-## 14 February, 2019
+## February 14, 2019
 
 ### Enhancements
 * Enforce the `include` field in every POST submission.
