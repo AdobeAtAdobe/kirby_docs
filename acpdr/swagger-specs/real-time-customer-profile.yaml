@@ -3566,9 +3566,37 @@ definitions:
         - totalTime
         properties:
           totalTime:
-            $ref: '#/definitions/FeedbackMetrics'
+            type: object
+            properties:
+              startTimeInMs:
+                type: number
+                example: 123456789000
+                description: Timestamp in milliseconds when the segment job request is made
+              endTimeInMs:
+                type: number
+                example: 123456799000
+                description: Timestamp in milliseconds when the segment job is completed
+              totalTimeInMs:
+                type: number
+                example: 10000
+                description: The time it takes for the segment job to complete in milliseconds
+            description: Total time metrics
           profileSegmentationTime:
-            $ref: '#/definitions/FeedbackMetrics'
+            type: object
+            properties:
+              startTimeInMs:
+                type: number
+                example: 123456789000
+                description: Timestamp in milliseconds when the actual computation starts
+              endTimeInMs:
+                type: number
+                example: 123456799000
+                description: Timestamp in milliseconds when the computation is completed
+              totalTimeInMs:
+                type: number
+                example: 10000
+                description: Computation time in milliseconds
+            description: Actual computation time metrics
           totalProfile:
             type: integer
             format: int64
