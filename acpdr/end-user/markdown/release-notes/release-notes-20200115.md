@@ -1,7 +1,7 @@
 ---
 
 title: Adobe Experience Platform Release Notes
-description: Experience Platform release notes November 18, 2019
+description: Experience Platform release notes January 15, 2020
 doc-type: release notes
 last-update: January 15, 2020
 author: crhoades, ens28527
@@ -13,8 +13,24 @@ author: crhoades, ens28527
 ## Release date: January 15, 2020
 
 Updates to existing features:
+
+* [Destinations](#destinations)
 * [Experience Data Model (XDM) System](#experience-data-model-xdm-system)
 * [Privacy Service](#privacy-service)
+
+## Destinations (only available to customers provisioned for Real-time CDP)
+
+In [Adobe Real-time CDP](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/overview.html), destinations are pre-built integrations with destination platforms that activate data to those partners in a seamless way. For more information, read the [Destinations overview](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/destinations-overview.html) article.
+
+### New features
+
+The Destinations functionality in Real-time CDP works with [Adobe Experience Platform access control permissions](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/access-control/access-control-overview.md). Depending on your user's permission level, you can view, manage, and activate destinations. See the table below for information about each individual permission.
+
+Category | Permission | Description
+--- | --- | ---
+Destinations | Manage Destinations | Access to read, create, edit, and disable destinations.
+Destinations | View Destinations | Read-only access to available destinations in the _Catalog_ tab and authenticated destinations in the _Browse_ tab.
+Destinations | Activate Destinations | Ability to activate data to destinations. This permission requires either "Manage Destinations" or "View Destinations" to be added to the product profile.
 
 ## Experience Data Model (XDM) System
 
