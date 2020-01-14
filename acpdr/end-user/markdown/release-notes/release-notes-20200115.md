@@ -120,20 +120,16 @@ XDM is a publicly documented specification designed to improve the power of digi
 
 ### New features
 
-| Feature    | Description  |
-| ---------- | ------------ |
-| Notification schema | New schema that represents notification data sent during the data ingestion process. |
-| Adobe AdCloud DSP schemas | Five new schemas have been added to represent Adobe Advertising Cloud demand-side platform (DSP) metadata:<ul><li>Placement</li><li>Campaign</li><li>Package</li><li>Advertiser</li><li>Account</li></ul>  |
-| ExperienceEvent Implementation Details mixin | New ExperienceEvent mixin that adds a standard field to store information about the software used to collect the event. |
-| Profile Privacy mixin | New profile mixin that adds fields to accept general out-out and sales/sharing opt-out signals for Real-time Customer Profile. |
-| Format constraints for `xdm:alternateDisplayInfo` | The "Title" and "Description" fields for `xdm:alternateDisplayInfo` must both be strings to pass validation. |
-| Name change: XDM Individual Profile  | The "title" of the "XDM Profile" class has been updated to "XDM Individual Profile". The formal `$id` of the class has not changed. |
+Feature | Description
+--- | ---
+Field-type restrictions for fields of equal hierarchy | After an XDM field has been defined as as a certain type, any other fields of the same name and hierarchy must use the same field type, regardless of the classes or mixins they are used in.<br><br>For example, if a mixin for the XDM Profile class contains a `profile.age` field of type "integer", a similar mixin for XDM ExperienceEvent cannot have a `profile.age` field of type "string". In order to utilize a different field type, the field must be of a different hierarchy than the previously defined field (for example, `profile.person.age`).<br><br>This feature is meant to prevent conflicts when schemas are brought together in a union. While the constraint does not retroactively affect existing schemas, it is strongly recommended that you review your schemas for field-type conflicts and edit them as necessary.
+Case-sensitive field validation | Custom fields on the same level must have different names, regardless of capitalization. For example, if you add ad a custom field named "Email", you cannot add another custom field at the same level named "email".
 
 ### Known issues
 
-* None.
+* None
 
-To learn more about working with XDM using the Schema Registry API and Schema Editor user interface, please read the [XDM System documentation](https://www.adobe.io/apis/experienceplatform/home/xdm.html).
+To learn more about working with XDM using the Schema Registry API and Schema Editor user interface, please read the [XDM System documentation](../../../api-specification/markdown/narrative/technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md).
 
 ## Real-time Customer Profile
 
