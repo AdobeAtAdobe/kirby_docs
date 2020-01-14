@@ -17,6 +17,7 @@ Updates to existing features:
 * [Destinations](#destinations)
 * [Experience Data Model (XDM) System](#experience-data-model-xdm-system)
 * [Privacy Service](#privacy-service)
+* [Sources](#sources)
 
 ## Destinations (only available to customers provisioned for Real-time CDP)
 
@@ -70,3 +71,24 @@ Privacy Service UI enhancements | <ul><li>Separate job tracking pages for GDPR a
 * None
 
 For more information about Privacy Service, please start by reading the [Privacy Service overview](https://www.adobe.io/apis/experiencecloud/gdpr/docs/alldocs.html#!api-specification/markdown/narrative/technical_overview/privacy_service_overview/privacy_service_overview.md).
+
+## Sources
+
+Adobe Experience Platform can ingest data from external sources while allowing you to structure, label, and enhance that data using Platform services. You can ingest data from a variety of sources such as Adobe applications, cloud-based storage, third party software, and your CRM system.
+
+Experience Platform provides a RESTful API and an interactive UI that lets you set up source connections for various data providers with ease. These source connections allow you to authenticate and connect to external storage systems and CRM services, set times for ingestion runs, and manage data ingestion throughput.
+
+### New features
+
+Feature | Description
+--- | ---
+Support for customer attribute data | UI and API support for creating streaming connectors to ingest customer attribute data.
+Support for database systems | New connectors for accessing database systems including, Amazon Redshift, Azure Data Lake Storage Gen2, MySQL, and PostgreSQL.
+Support for advertising systems | Connectors can now access Google AdWords.
+Support for CRM | Connectors can now access Google BigQuery.
+
+### Known issues
+
+* None
+
+For more information about sources, see [sources overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md)
