@@ -1,6 +1,6 @@
 # Access control user guide
 
-Access control in Adobe Experience Platform allows you to manage roles and permissions for various Platform capabilities by using the [Adobe Admin Console](https://adminconsole.adobe.com). This document serves as a guide for how to perform various access control tasks for Platform using the Admin Console. For a high-level overview of access control in Experience Platform, see the [access control overview](access-control-overview.md). 
+Access control in Adobe Experience Platform allows you to manage roles and permissions for various Platform capabilities by using the [Adobe Admin Console](https://adminconsole.adobe.com). This document serves as a guide for how to manage access control for Platform using the Admin Console. For a high-level overview of access control in Experience Platform, see the [access control overview](access-control-overview.md). 
 
 The following tasks are covered:
 
@@ -83,20 +83,21 @@ The _Permissions_ tab for the product profile reappears, and shows that the sele
 
 You can configure a profile's details and access to additional services from within the *Profile Settings* menu. To access the menu, click **Settings** from the *Product Profile* page.
 
-![](images/settings-profiles.png)
+![](images/profile-settings.png)
 
-The *Profile Settings* menu appears starting on the *Details* tab. This tab allows you to input and edit your **Profile Name** and **Description**. You can also modify your **Display Name** as well as the email notification settings for your account.
+The *Profile Settings* menu appears, starting on the *Details* tab. This tab allows you to input and edit your **Profile Name** and **Description**. You can also modify your **Display Name** as well as the email notification settings for your account.
 
 ![](images/edit-details-settings.png)
 
 Click **Services** to access the *Services* page.
 
-![](images/servicespage.png)
+![](images/services-page.png)
 
-The *Services* menu allows you to modify a profile's access to additional Platform services that were initially configured when the profile was created. These services include:
+The *Services* menu allows you to modify a profile's access to additional Platform services that were initially configured when the profile was created. Depending on your Platform subscription, these services can include:
 
 * Data Science Workspace
 * Query Service
+* Real-Time Customer Data Platform UI (For Real-time CDP only)
 
 Click the toggle on the right side of a particular service to enable or disable it. You can also click the **All on** checkbox to enable or disable all listed services.
 
