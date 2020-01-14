@@ -14,24 +14,10 @@ author: crhoades, ens28527
 
 Updates to existing features:
 
-* [Destinations](#destinations)
 * [Experience Data Model (XDM) System](#experience-data-model-xdm-system)
 * [Privacy Service](#privacy-service)
 * [Sources](#sources)
-
-## Destinations (only available to customers provisioned for Real-time CDP)
-
-In [Adobe Real-time CDP](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/overview.html), destinations are pre-built integrations with destination platforms that activate data to those partners in a seamless way. For more information, read the [Destinations overview](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/destinations-overview.html) article.
-
-### New features
-
-The Destinations functionality in Real-time CDP works with [Adobe Experience Platform access control permissions](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/access-control/access-control-overview.md). Depending on your user's permission level, you can view, manage, and activate destinations. See the table below for information about each individual permission.
-
-Category | Permission | Description
---- | --- | ---
-Destinations | Manage Destinations | Access to read, create, edit, and disable destinations.
-Destinations | View Destinations | Read-only access to available destinations in the _Catalog_ tab and authenticated destinations in the _Browse_ tab.
-Destinations | Activate Destinations | Ability to activate data to destinations. This permission requires either "Manage Destinations" or "View Destinations" to be added to the product profile.
+* [Destinations](#destinations)
 
 ## Experience Data Model (XDM) System
 
@@ -91,4 +77,28 @@ Support for CRM | Connectors can now access Google BigQuery.
 
 * None
 
-For more information about sources, see [sources overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md)
+For more information about sources, see the [sources overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md)
+
+## Destinations
+
+In [Adobe Real-time CDP](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/overview.html), destinations are pre-built integrations with destination platforms that activate data to those partners in a seamless way.
+
+### New features
+
+Feature | Description
+--- | ---
+Support for access control permissions | The Destinations functionality in Real-time CDP works with Adobe Experience Platform access control permissions. Depending on your user's permission level, you can view, manage, and activate destinations. See the [access control overview](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/access-control/access-control-overview.md) for more information.
+
+**Permission details**
+
+Category | Permission | Description
+--- | --- | ---
+Destinations | Manage Destinations | Access to read, create, edit, and disable destinations.
+Destinations | View Destinations | Read-only access to available destinations in the _Catalog_ tab and authenticated destinations in the _Browse_ tab.
+Destinations | Activate Destinations | Ability to activate data to destinations. This permission requires either "Manage Destinations" or "View Destinations" to be added to the product profile.
+
+### Known issues
+
+* None
+
+See the [Destinations overview](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/destinations-overview.html) for more information.

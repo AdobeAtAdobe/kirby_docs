@@ -13,6 +13,12 @@
 				{
 					"pages": [],
 					"path": "end-user/markdown/release-notes/release-notes.md",
+					"title": "January 2020",
+					"description": "New features, updates to existing features, and bug fixes in Adobe Experience Platform."
+				},
+				{
+					"pages": [],
+					"path": "end-user/markdown/release-notes/release-notes-20191211.md",
 					"title": "December 2019",
 					"description": "New features, updates to existing features, and bug fixes in Adobe Experience Platform."
 				},
