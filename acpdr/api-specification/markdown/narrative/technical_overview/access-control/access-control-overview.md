@@ -85,11 +85,13 @@ Identities | View Identity Namespaces | Read-only access for identity namespaces
 Sandbox Administration | Manage Sandboxes | Access to read, create, edit, and delete sandboxes.
 Sandbox Administration | View Sandboxes | Read-only access for sandboxes belonging to your organization.
 Sandbox Administration | Reset a Sandbox | Ability to reset a sandbox.
-Destinations | Manage Destinations | Access to read, create, edit, and disable destinations. This permission requires provisions to Real-time Customer Data Platform.
-Destinations | View Destinations | Read-only access to available destinations in the _Catalog_ tab and authenticated destinations in the _Browse_ tab. This permission requires provisions to Real-time Customer Data Platform.
-Destinations | Activate Destinations | Ability to activate data to active destinations that have been created. This permission requires either "Manage Destinations" or "View Destinations" to be added to the product profile, as well as the profile being provisioned for Real-time Customer Data Platform.
+Destinations | Manage Destinations | Access to read, create, edit, and disable destinations.*
+Destinations | View Destinations | Read-only access to available destinations in the _Catalog_ tab and authenticated destinations in the _Browse_ tab.*
+Destinations | Activate Destinations | Ability to activate data to active destinations that have been created. This permission requires either "Manage Destinations" or "View Destinations" to be added to the product profile.*
 Data Ingestion | Manage Sources | Access to read, create, edit, and disable sources.
-Data Ingestion | View Sources | Read-only access to available sources in the _Catalog_ tab and authenticated sources in the _Browse_ tab. 
+Data Ingestion | View Sources | Read-only access to available sources in the _Catalog_ tab and authenticated sources in the _Browse_ tab.
+
+> (*) This permission requires provisions to Real-time Customer Data Platform. For more information regarding Real-time CDP, please begin by reading the [Real-time CDP overview](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/overview.html).
 
 ## Next steps
 
