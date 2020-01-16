@@ -69,9 +69,20 @@ Experience Platform provides a RESTful API and an interactive UI that lets you s
 Feature | Description
 --- | ---
 Support for customer attribute data | UI and API support for creating streaming connectors to ingest customer attribute data.
-Support for database systems | New connectors for accessing database systems including, Amazon Redshift, Azure Data Lake Storage Gen2, MySQL, and PostgreSQL.
-Support for advertising systems | Connectors can now access Google AdWords.
-Support for CRM | Connectors can now access Google BigQuery.
+Support for Data Store DB systems| Connectors can now access PosgreSQL and MySQL API.
+Support for Data Store Lake systems | Connectors can now access ADLS Gen2 API.
+Support for Data Store Warehouse systems | Connectors can now access Amazon RedShift API.
+Support for AdTech systems | Connectors can now access Google AdWords API.
+Support for Analytics | Connectors can now access Google BigQuery API.
+Additional file format support for cloud storages | File ingestion from cloud storages now supports XDM-compliant Parquet and JSON file formats.
+Support for access control permissions | The access control framework in Adobe Experience Platform provides the permissions needed to grant access to sources in data ingestion. Depending on their permission level, a user can view sources, manage sources, or be denied access altogether. See the [access control overview](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/access-control/access-control-overview.md) for more information.
+
+**Access control permissions**
+
+Category | Permission | Description
+--- | --- | ---
+Data Ingestion | Manage Sources | Access to read, create, edit, and disable sources.
+Data Ingestion | View Sources | Read-only access to available sources in the *Catalog* tab and authenticated sources in the *Browse* tab.
 
 ### Known issues
 
@@ -89,7 +100,7 @@ Feature | Description
 --- | ---
 Support for access control permissions | The Destinations functionality in Real-time CDP works with Adobe Experience Platform access control permissions. Depending on your user's permission level, you can view, manage, and activate destinations. See the [access control overview](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/access-control/access-control-overview.md) for more information.
 
-**Permission details**
+**Access control permissions**
 
 Category | Permission | Description
 --- | --- | ---
