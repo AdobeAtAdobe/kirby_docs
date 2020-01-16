@@ -3,28 +3,28 @@
 This developer guide provides steps for performing various operations in the Adobe Experience Platform Query Service API. The guide includes sample API calls for performing the following actions:
 
 - Queries
-  - [Retrieve a list of queries](#retrieve-a-list-of-queries)
-  - [Create a query](#create-a-query) 
-  - [Retrieve a query by ID](#retrieve-a-query-by-id)
-  - [Cancel a query](#create-a-query)
+    - [Retrieve a list of queries](#retrieve-a-list-of-queries)
+    - [Create a query](#create-a-query) 
+    - [Retrieve a query by ID](#retrieve-a-query-by-id)
+    - [Cancel a query](#create-a-query)
 - Connection parameters
-  - [Request connection parameters for the interactive service](#request-connection-parameters-for-the-interactive-service)
+    - [Request connection parameters for the interactive service](#request-connection-parameters-for-the-interactive-service)
 - Scheduled queries
-  - [Retrieve a list of scheduled queries](#retrieve-a-list-of-scheduled-queries)
-  - [Create a new scheduled query](#create-a-new-scheduled-query)
-  - [Request details of a specified scheduled query](#request-details-of-a-specified-scheduled-query)
-  - [Update details of a specified scheduled query](#update-a-specified-query-template)
+    - [Retrieve a list of scheduled queries](#retrieve-a-list-of-scheduled-queries)
+    - [Create a new scheduled query](#create-a-new-scheduled-query)
+    - [Request details of a specified scheduled query](#request-details-of-a-specified-scheduled-query)
+    - [Update details of a specified scheduled query](#update-a-specified-query-template)
 - Runs for scheduled queries
-  - [Retrieve a list of all runs for a specified scheduled query](#retrieve-a-list-of-all-runs-for-a-specified-scheduled-query)
-  - [Immediately trigger a run for a specific scheduled query](#immediately-trigger-a-run-for-a-specific-scheduled-query)
-  - [Retrieve details of a run for a specific scheduled query](#retrieve-details-of-a-run-for-a-specific-scheduled-query)
-  - [Immediately stop a run for a specific scheduled query](#immediately-stop-a-run-for-a-specific-scheduled-query)
+    - [Retrieve a list of all runs for a specified scheduled query](#retrieve-a-list-of-all-runs-for-a-specified-scheduled-query)
+    - [Immediately trigger a run for a specific scheduled query](#immediately-trigger-a-run-for-a-specific-scheduled-query)
+    - [Retrieve details of a run for a specific scheduled query](#retrieve-details-of-a-run-for-a-specific-scheduled-query)
+    - [Immediately stop a run for a specific scheduled query](#immediately-stop-a-run-for-a-specific-scheduled-query)
 - Query templates
-  - [Retrieve a list of query templates](#retrieve-a-list-of-query-templates)
-  - [Create a query template](#create-a-query-template)
-  - [Retrieve a specified query template](#retrieve-a-specified-query-template)
-  - [Update a specified query template](#update-a-specified-query-template)
-  - [Delete a specified query template](#delete-a-specified-query-template)
+    - [Retrieve a list of query templates](#retrieve-a-list-of-query-templates)
+    - [Create a query template](#create-a-query-template)
+    - [Retrieve a specified query template](#retrieve-a-specified-query-template)
+    - [Update a specified query template](#update-a-specified-query-template)
+    - [Delete a specified query template](#delete-a-specified-query-template)
 
 ## Getting started
 
