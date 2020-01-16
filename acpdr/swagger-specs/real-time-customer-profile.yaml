@@ -43,21 +43,21 @@ tags:
   - name: Computed Attributes
     description: Computed attributes enable a field value to be automatically computed based on other values, calculations, and expressions.
   - name: Entities
-    description: "Entities are Experience Data Model (XDM) objects whose attributes, data contents, and related time-series events have been merged from various sources by Real-time Customer Profile."
+    description: An entity is an Experience Data Model (XDM) object whose attributes and related time-series events have been merged from various sources to form an individual profile.
   - name: Estimates
-    description: "Estimates provide statistical information on a segment definition, such as the projected audience size and confidence interval."
+    description: Estimates provide statistical information on a segment definition, such as the projected audience size and confidence interval.
   - name: Event types
     description: Event types are context descriptors for time series events within Real-time Customer Profile.
   - name: Export jobs
-    description: "Export jobs are asynchronous processes that are used to persist audience segment members to datasets."
+    description: Export jobs are asynchronous processes that are used to persist audience segment members to datasets.
   - name: Macros
-    description: "Macros allow you to inject pre-computed fields and values into segment definitions. Values from different fields are added together and tested against the profile store as a single value. With macros, audience segments can be defined in more ways than would otherwise be available from isolated profile data fields."
+    description: "Warning: The macros endpoint is deprecated."
   - name: Merge policies
-    description: "A merge policy is a set of configurations controlling aspects of identity stitching and data fragment merging. Merge policies are specific to a single schema, and can only be used to access entities adhering to that schema."
+    description: Merge policies are the rules that Platform uses to determine how data will be prioritized and what data will be combined to create an individual customer profile.
   - name: Previews
-    description: "Previews provide paginated lists of qualifying profiles for a segment definition."
+    description: Previews provide paginated lists of qualifying profiles for a segment definition.
   - name: PQL conversions
-    description: "Convert Profile Query Language (PQL) formatting between `pql/json` and `pql/text`."
+    description: Convert Profile Query Language (PQL) formatting between `pql/json` and `pql/text`.
   - name: Profile System Jobs
     description: Profile System Jobs allow you to delete profile fragments for a given dataset or batch.
   - name: Projection configurations
@@ -67,9 +67,9 @@ tags:
   - name: Schedules
     description: Create a recurring schedule to automatically run export jobs. A schedule can run at most once daily.
   - name: Segment definitions
-    description: "A segment definition includes a Profile Query Language (PQL) statement that defines how to subdivide a customer base for an audience segment."
+    description: A segment definition includes a Profile Query Language (PQL) statement that defines which profiles will be part of an audience segment.
   - name: Segment jobs
-    description: "Segment jobs process previously established segment definitions against your profile store to generate an audience segment."
+    description: Segment jobs process previously established segment definitions to generate an audience segment.
 
 paths:
   '/config/computedAttributes':
@@ -2358,7 +2358,7 @@ paths:
       tags:
         - Macros
       summary: Retrieve a list of all macros for your organization.
-      description: ''
+      description: "Warning: The macros endpoint is deprecated."
       produces:
         - application/json
       parameters:
@@ -2421,6 +2421,7 @@ paths:
       tags:
         - Macros
       summary: Create a new macro.
+      description: "Warning: The macros endpoint is deprecated."
       produces:
         - application/json
       parameters:
@@ -2466,7 +2467,7 @@ paths:
       tags:
         - Macros
       summary: Lookup a macro by ID.
-      description: ''
+      description: "Warning: The macros endpoint is deprecated."
       produces:
         - application/json
       parameters:
@@ -2496,7 +2497,7 @@ paths:
       tags:
         - Macros
       summary: Overwrite a macro by ID.
-      description: ''
+      description: "Warning: The macros endpoint is deprecated."
       produces:
         - application/json
       parameters:
@@ -2542,7 +2543,7 @@ paths:
       tags:
         - Macros
       summary: Update a macro by ID.
-      description: ''
+      description: "Warning: The macros endpoint is deprecated."
       produces:
       - application/json
       parameters:
@@ -2588,6 +2589,7 @@ paths:
       tags:
         - Macros
       summary: Delete a macro by ID.
+      description: "Warning: The macros endpoint is deprecated."
       produces:
         - application/json
       parameters:
