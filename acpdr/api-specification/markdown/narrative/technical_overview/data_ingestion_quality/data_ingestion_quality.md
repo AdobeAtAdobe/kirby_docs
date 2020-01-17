@@ -15,7 +15,31 @@ Format check | No | Yes
 
 ## Supported validation behaviors
 
-Both batch and streaming ingestion prevent failed data from going downstream by moving bad data for retrieval and analysis in Data Lake.
+Both batch and streaming ingestion prevent failed data from going downstream by moving bad data for retrieval and analysis in Data Lake. Data ingestion provides the following validations for batch and streaming ingestion.
+
+### Batch ingestion
+
+The following validations are done for batch ingestion:
+
+Validation area | Description
+--------------- | ------------
+Schema | Ensures that the schema is **not** empty and contains a reference to the union schema, as follows: `"meta:immutableTags": ["union"]` 
+`identityField` | Ensures that all valid identity descriptors are defined.
+`createdUser` | Ensures that the user who ingested the batch is allowed to ingest the batch.
+
+### Streaming ingestion
+
+The following validations are done for streaming ingestion:
+
+Validation area | Description
+--------------- | ------------
+Schema | Ensures that the schema is **not** empty and contains a reference to the union schema, as follows: `"meta:immutableTags": ["union"]` 
+`identityField` | Ensures that all valid identity descriptors are defined.
+JSON | Ensures that the JSON is valid. 
+IMS Organization | Ensures that the IMS Organization that is listed is a valid organization.
+Source name |  Ensures that the name of the data source is specified.
+Dataset | Ensures that the dataset is specified, enabled, and has not been removed.
+Header | Ensures that the header is specified and is valid.
 
 More information about how Platform monitors and validates data can be found in the [monitoring data flows documentation][data-flows].
 

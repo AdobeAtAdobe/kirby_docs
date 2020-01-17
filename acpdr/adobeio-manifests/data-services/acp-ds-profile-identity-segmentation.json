@@ -90,7 +90,8 @@
 		}
 	],
 	"app2app_map": {
-		"acpdr/swagger-specs/": "/apis/experienceplatform/home/api-reference.html",
+        "acpdr/swagger-specs/": "/apis/experienceplatform/home/api-reference.html",
+        "api-specification/markdown/narrative/technical_overview/data_ingestion_quality/": "/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html",
 		"api-specification/markdown/narrative/technical_overview/data_governance/": "/apis/experienceplatform/home/dule/duleservices.html",
 		"api-specification/markdown/narrative/gdpr/": "/apis/experienceplatform/gdpr/docs/alldocs.htm",
 		"api-specification/markdown/narrative/technical_overview/catalog_architectural_overview/": "/apis/experienceplatform/home/services.html",

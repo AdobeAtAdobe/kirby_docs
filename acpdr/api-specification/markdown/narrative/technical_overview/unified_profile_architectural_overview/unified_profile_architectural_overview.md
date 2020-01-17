@@ -107,7 +107,7 @@ Visit the [Schema Editor tutorial](../../tutorials/schema_editor_tutorial/schema
 ## Real-time components
 This section explains the components that allow Real-time Customer Profile to update and monitor record and time series data in real-time.
 
-Real-time input is made possible through a process called [Streaming Ingestion](../streaming_ingest/streaming_ingest_overview.md). Once ingested, Real-time Customer Profile then filters relevant data, based on pre-defined requirements, through a process called [Streaming segmentation](#streaming-segmentation) before merging it with existing data and updating the union view. 
+Real-time input is made possible through a process called [Streaming Ingestion](../streaming_ingest/streaming_ingest_overview.md). Once ingested, Real-time Customer Profile then processes the incoming records, based on pre-defined requirements, through a process called [Streaming segmentation](#streaming-segmentation) and updates existing profiles. While being ingested, the data undergoes validation to ensure it is all proper. For more information about what validation is done during ingestion, please read the [document on ingestion validation](../data_ingestion_quality/data_ingestion_quality.md).
 
 Real-time output is made possible by [Edge Service](#edge-service) and [Projection Service](#projection-service) , which relay updated data to your customers. 
   
