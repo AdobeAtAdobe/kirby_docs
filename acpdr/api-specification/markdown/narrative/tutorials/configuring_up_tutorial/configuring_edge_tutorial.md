@@ -221,7 +221,8 @@ A successful response returns a list of projection configurations within the roo
                 "id": "99aed0bc-c183-4997-ada7-7843642e08f6",
                 "schemaName": "_xdm.context.profile",
                 "name": "adcloud_rlsa",
-                "destinationId": "a689248a-5d2b-44af-bb70-c8f17f97011b"
+                "destinationId": "a689248a-5d2b-44af-bb70-c8f17f97011b",
+                "mergePolicyId": "90b2977c-afb0-4b93-aea3-2eea5f26131d"
             },
         ]
     }
@@ -253,7 +254,8 @@ curl -X POST \
   -d '{
         "selector": "emails,person(firstName)",
         "name": "my_test_projection",
-        "destinationId": "cc5a3bd1-f2b9-4965-b9bd-4e7416a02cd4"
+        "destinationId": "cc5a3bd1-f2b9-4965-b9bd-4e7416a02cd4",
+        "mergePolicyId": "90b2977c-afb0-4b93-aea3-2eea5f26131d"
       }'
 ```
 
@@ -297,7 +299,8 @@ A successful response returns the details of the newly created projection config
     "id": "87fcd0bc-c183-4997-daf9-7843642g95a1",
     "schemaName": "_xdm.context.profile",
     "name": "my_test_projection",
-    "destinationId": "cc5a3bd1-f2b9-4965-b9bd-4e7416a02cd4"
+    "destinationId": "cc5a3bd1-f2b9-4965-b9bd-4e7416a02cd4",
+    "mergePolicyId": "90b2977c-afb0-4b93-aea3-2eea5f26131d"
 }
 ```
 

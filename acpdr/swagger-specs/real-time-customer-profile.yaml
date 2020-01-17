@@ -3282,6 +3282,11 @@ definitions:
         example: 1111-2222-3333-4444
         description: The ID of the projection destination containing routing metadata for the projection destination
         default: 123-123-123-123
+      mergePolicyId:
+        type: "string"
+        example: "90b2977c-afb0-4b93-aea3-2eea5f26131d"
+        description: "The merge policy id."
+        default: "90b2977c-afb0-4b93-aea3-2eea5f26131d"
       _links:
         type: object
         readOnly: true
@@ -3341,8 +3346,12 @@ definitions:
       destinationId:
         type: string
         example: 1111-2222-3333-4444
-        description: The ID of the projection destination containing routing metadata for the projection destination
+        description: The ID of the projection destination containing routing metadata for the projection destination.
         default: 123-123-123-123
+      mergePolicyId:
+        type: "string"
+        example: "90b2977c-afb0-4b93-aea3-2eea5f26131d"
+        description: "Id of the merge policy. Merge policy includes information of Identity stitching and key-value xdm object merging. If not present, the default merge policy will be used."
     description: 'Projections are an edge "view" of the full profile data managed by Real-time Customer Profile. Edge projections are materialized by applying a mask on top of the complete Profile data. Each customer can manage the edge projections by maintaining a projection configuration using the Edge Projection Configuration API. There is one single projection configuration per customer. <br/>A projection configuration contains:<ul><li>A selector of properties under the extended data model that are to be replicated to the edges (the mask to apply on top of the data in Profile).</li><li>A time-to-live (TTL) value representing the default maximum time an idle profile projection is stored on the edge before being deleted. Expressed in seconds</li></ul>'
   ProjectionConfigurationList:
     type: object
