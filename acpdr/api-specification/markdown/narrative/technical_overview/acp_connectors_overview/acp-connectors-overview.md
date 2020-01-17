@@ -41,7 +41,7 @@ The following table outlines how the UI behaves based on different combinations 
 | Permission level | Description |
 | ---- | ----|
 | **View Sources** On | Grant read-only access to sources in each source-type in the *Catalog* tab, as well as the *Browse*, *Accounts*, and *DataFlow* tabs. |
-| **Manage Sources** On | In addition to the functions included in **View Sources**, grants access to *Connect Source* option in *Catalog*, as well as *Select Data* option in *Browse*. |
+| **Manage Sources** On | In addition to the functions included in **View Sources**, grants access to *Connect Source* option in *Catalog* and to *Select Data* option in *Browse*. **Manage Sources** also allows you to enable or disable *DataFlows* and edit their schedules. |
 | **View Sources** Off and **Manage Sources** Off | Revoke all access to sources. |
 
 For more information about the available permissions granted through the Admin Console, including those four sources, see the [access control overview](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/access-control/access-control-overview.md).
