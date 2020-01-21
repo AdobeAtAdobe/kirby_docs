@@ -4,11 +4,15 @@ Access control for Experience Platform is provided through the [Adobe Admin Cons
 
 This document serves as an overview of access control in Experience Platform and covers the following topics:
 
-* [Access control hierarchy and workflow](#access-control-hierarchy-and-workflow)
-* [Adobe Admin Console](#adobe-admin-console)
-    * [Product profiles](#product-profiles)
-    * [Default product profiles](#default-product-profiles)
-* [Sandboxes and permissions](#sandboxes-and-permissions)
+- [Access control in Adobe Experience Platform](#access-control-in-adobe-experience-platform)
+  - [Access control hierarchy and workflow](#access-control-hierarchy-and-workflow)
+  - [Adobe Admin Console](#adobe-admin-console)
+    - [Product profiles](#product-profiles)
+    - [Default product profiles](#default-product-profiles)
+  - [Sandboxes and permissions](#sandboxes-and-permissions)
+    - [Access to sandboxes](#access-to-sandboxes)
+    - [Permissions](#permissions)
+  - [Next steps](#next-steps)
 
 ## Access control hierarchy and workflow
 
@@ -87,7 +91,7 @@ Sandbox Administration | View Sandboxes | Read-only access for sandboxes belongi
 Sandbox Administration | Reset a Sandbox | Ability to reset a sandbox.
 Destinations | Manage Destinations | Access to read, create, edit, and disable destinations.*
 Destinations | View Destinations | Read-only access to available destinations in the _Catalog_ tab and authenticated destinations in the _Browse_ tab.*
-Destinations | Activate Destinations | Ability to activate data to active destinations that have been created. This permission requires either "Manage Destinations" or "View Destinations" to be added to the product profile.*
+Destinations | Activate Destinations | Ability to activate data to active destinations that have been created. This permission requires either “View Destinations” or “Manage Destinations” to be granted to the user who will activate destinations.*
 Data Ingestion | Manage Sources | Access to read, create, edit, and disable sources.
 Data Ingestion | View Sources | Read-only access to available sources in the _Catalog_ tab and authenticated sources in the _Browse_ tab.
 
