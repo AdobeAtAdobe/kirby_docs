@@ -4,15 +4,11 @@ Access control for Experience Platform is provided through the [Adobe Admin Cons
 
 This document serves as an overview of access control in Experience Platform and covers the following topics:
 
-- [Access control in Adobe Experience Platform](#access-control-in-adobe-experience-platform)
-  - [Access control hierarchy and workflow](#access-control-hierarchy-and-workflow)
-  - [Adobe Admin Console](#adobe-admin-console)
-    - [Product profiles](#product-profiles)
-    - [Default product profiles](#default-product-profiles)
-  - [Sandboxes and permissions](#sandboxes-and-permissions)
-    - [Access to sandboxes](#access-to-sandboxes)
-    - [Permissions](#permissions)
-  - [Next steps](#next-steps)
+* [Access control hierarchy and workflow](#access-control-hierarchy-and-workflow)
+* [Adobe Admin Console](#adobe-admin-console)
+    * [Product profiles](#product-profiles)
+    * [Default product profiles](#default-product-profiles)
+* [Sandboxes and permissions](#sandboxes-and-permissions)
 
 ## Access control hierarchy and workflow
 
