@@ -14,7 +14,7 @@ This developer guide will help begin using streaming ingestion APIs, part of the
     - [Set Primary Identity Descriptor for XDM ExperienceEvent](#set-primary-identity-descriptor-for-xdm-experienceevent)
     - [Create a dataset for XDM ExperienceEvents](#create-a-dataset-for-xdm-experienceevents)
     - [Call Streaming Ingestion APIs to ingest an XDM ExperienceEvent](#call-streaming-ingestion-apis-to-ingest-an-xdm-experienceevent)
-    - [Retrieve the newly persisted XDM ExperienceEvent back from Unified Profile](#retrieve-the-newly-persisted-xdm-experienceevent-back-from-unified-profile)
+    - [Retrieve the newly persisted XDM ExperienceEvent back from Real-time Customer Profile](#retrieve-the-newly-persisted-xdm-experienceevent-back-from-real-time-customer-profile)
 
 ## Getting started
 
@@ -184,7 +184,7 @@ Once you've created a data inlet, you can use it to stream XDM records and creat
 
 ### Compose an XDM Individual Profile schema
 
-This guide composes a schema using standard mixins provided by Platform to describe personal and work-related details. Begin by calling the Schema Registry API to create a schema that implements XDM Individual Profile, a standard class, and enables the schema for use with Unified Profile Service (UPS).
+This guide composes a schema using standard mixins provided by Platform to describe personal and work-related details. Begin by calling the Schema Registry API to create a schema that implements XDM Individual Profile, a standard class, and enables the schema for use with Real-time Customer Profile.
 
 > **Note:** For more information about how to create schemas, please read the [Schema Registry API Developer Guide][schema-registry].
 
@@ -973,7 +973,7 @@ Where:
 
 
 
-### Retrieve the newly persisted XDM ExperienceEvent back from Unified Profile
+### Retrieve the newly persisted XDM ExperienceEvent back from Real-time Customer Profile
 
 Now, you can use the Profile Access APIs to read the ExperienceEvent you just sent back.
 

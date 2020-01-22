@@ -267,11 +267,11 @@ In order for a schema to be enabled for use with Real-time Customer Profile, it 
 
 To enable the "Loyalty Members" schema for use in Profile, begin by clicking on "Loyalty Members" in the *Structure* section of the editor. 
 
-On the right-hand side of the editor, under *Schema Properties*, information is shown about the schema including its display name, description, and type. In addition to this information, there is a toggle button entitled **Unified Profile**.
+On the right-hand side of the editor, under *Schema Properties*, information is shown about the schema including its display name, description, and type. In addition to this information, there is a toggle button entitled **Profile**.
 
 ![](images/unified_profile_toggle.png)
 
-Click **Unified Profile** and a pop-up appears, asking you to confirm that you wish to enable the schema for Profile. 
+Click **Profile** and a pop-up appears, asking you to confirm that you wish to enable the schema for Profile. 
 
 ![](images/enable_unified_profile.png)
 

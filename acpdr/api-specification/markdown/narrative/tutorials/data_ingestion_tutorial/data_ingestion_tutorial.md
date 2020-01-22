@@ -6,7 +6,7 @@ This tutorial will walk you through the steps to ingest data into Experience Pla
 
 * [Create a dataset](#create-a-dataset)
 * [Select a dataset schema](#select-dataset-schema)
-* [Enable a dataset for Unified Profile Service](#enable-dataset-for-unified-profile-service)
+* [Enable a dataset for Real-time Customer Profile](#enable-dataset-for-unified-profile-service)
 * [Add data to a dataset](#add-data-to-dataset)
 * [View batch details](#batch-details)
 * [Preview dataset data](#preview-dataset)
@@ -23,7 +23,7 @@ The Datasets workspace within Experience Platform allows you to view and manage 
 
 View the Datasets workspace by clicking **Datasets** in the left-hand navigation. The Datasets workspace contains a list of datasets, including columns showing _Name_, _Created_ (date and time), _Source_, _Schema_, and _Last Batch Status_, as well as the date and time the dataset was _Last Updated_. 
 
-> **Note:** Click on the filter icon next to the Search bar to use filtering capabilities to view only those datasets enabled for Unified Profile.
+> **Note:** Click on the filter icon next to the Search bar to use filtering capabilities to view only those datasets enabled for Profile.
 
 ![View all datasets](images/datasets_workspace.png)
 
@@ -64,29 +64,29 @@ An empty dataset has now been created and you have been returned to the **Datase
 
 On the right-hand side of the Datasets workspace you will see the **Info** tab containing information related to your new dataset such as _Dataset ID_, _Name_, _Description_, _Table Name_, _Schema_, _Streaming_, and _Source_. The Info tab also includes information about when the dataset was _Created_ and its _Last Modified_ date. 
 
-Also in the Info tab is a _Unified Profile_ toggle that is used for enabling your dataset for use with Unified Profile Service. Use of this toggle, and Unified Profile Service, will be explained in more detail in the section that follows.
+Also in the Info tab is a  _Profile_ toggle that is used for enabling your dataset for use with Real-time Customer Profile. Use of this toggle, and Real-time Customer Profile, will be explained in more detail in the section that follows.
 
 ![Dataset activity](images/dataset_activity.png)
 
-## Enable dataset for Unified Profile Service
+## Enable dataset for Real-time Customer Profile
 
-Datasets are used for ingesting data into Experience Platform, and that data is ultimately used to identify individuals and stitch together information coming from multiple sources. That stitched together information is called a Real-Time Customer Profile. In order for Platform to know which information should be included in the Real-Time Profile, datasets can be marked for inclusion using the **Unified Profile** toggle. 
+Datasets are used for ingesting data into Experience Platform, and that data is ultimately used to identify individuals and stitch together information coming from multiple sources. That stitched together information is called a Real-Time Customer Profile. In order for Platform to know which information should be included in the Real-Time Profile, datasets can be marked for inclusion using the **Profile** toggle. 
 
-By default, this toggle is off. If you choose to toggle on Unified Profile, all data ingested into the dataset will be used to help identify an individual and stitch together their Real-Time Profile.
+By default, this toggle is off. If you choose to toggle on Profile, all data ingested into the dataset will be used to help identify an individual and stitch together their Real-Time Profile.
 
-To learn more about Unified Profile Service and working with identities, please review the [Identity Service](../../technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md) documentation.
+To learn more about Real-time Customer Profile and working with identities, please review the [Identity Service](../../technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md) documentation.
 
-1. To enable the dataset for Unified Profile, click the **Unified Profile** toggle in the **Info** tab. 
+1. To enable the dataset for Real-time Customer Profile, click the **Profile** toggle in the **Info** tab. 
 
-![Unified Profile toggle](images/enable_dataset_unified_profile.png)
+![Profile toggle](images/enable_dataset_unified_profile.png)
 
-2. A dialog will appear asking you to confirm that you want to enable the dataset for Unified Profile.
+1. A dialog will appear asking you to confirm that you want to enable the dataset for Real-time Customer Profile.
 
-![Enable Unified Profile dialog](images/confirm_dataset_enable.png)
+![Enable Profile dialog](images/confirm_dataset_enable.png)
 
-3. Click **Enable** and the toggle will turn blue, indicating it is on.
+1. Click **Enable** and the toggle will turn blue, indicating it is on.
 
-![Enabled for Unified Profile](images/dataset_enabled.png)
+![Enabled for Profile](images/dataset_enabled.png)
 
 ## Add data to dataset
 

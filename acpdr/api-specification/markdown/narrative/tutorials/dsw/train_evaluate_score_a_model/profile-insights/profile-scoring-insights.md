@@ -76,13 +76,13 @@ Before you can enable a dataset for Profile, you need to configure the dataset's
 3.  Set the field as the primary identity by enabling the field's **Identity** property, **Primary Identity** property, and then selecting an appropriate **Identity Namespace**. Click **Apply** once you have made your changes.
     ![](./images/set_identity.png)
 
-4.  Click the top-level object of your schema structure to display the schema properties and enable the schema for Profile by toggling the **Unified Profile** switch. Click **Save** to finalize your changes, dataset that were created using this schema can now be enabled for Profile.
+4.  Click the top-level object of your schema structure to display the schema properties and enable the schema for Profile by toggling the **Profile** switch. Click **Save** to finalize your changes, dataset that were created using this schema can now be enabled for Profile.
     ![](./images/enable_schema.png)
 
 5.  Use the dataset browser to find the dataset you wish to enable Profile on and click its name to access its details.
     ![](./images/datasets.png)
 
-6.  Enable the dataset for Profile by toggling the **Unified Profile** switch found in the right information column. 
+6.  Enable the dataset for Profile by toggling the **Profile** switch found in the right information column. 
     ![](./images/enable_dataset.png)
 
 When data is ingested into a Profile-enabled dataset, that same data is also ingested as Profile records. Now that your schema and dataset is prepared, generate some data into the dataset by performing scoring runs using an appropriate model, and continue with this tutorial to create insight segments using the Segment Builder.

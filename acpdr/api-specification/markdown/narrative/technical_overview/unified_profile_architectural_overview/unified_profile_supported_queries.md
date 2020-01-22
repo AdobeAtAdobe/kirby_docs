@@ -2,7 +2,7 @@
 
 ## Overview
 
-Segmentation enables a multitude of use cases ranging from simple segmentation for filtering data to more complex uses for targeting and personalization. Unified Profile's segmentation engine provides these capabilities using a language built to query XDM Individual Profile data; the Profile Query Language, or PQL. Segments are defined as a query in PQL, where any Profiles meeting the conditions are considered part of the Segment. See [Profile Query Language](unified_profile_pql.md) for more information on PQL, or [Unified Profile](unified_profile_architectural_overview.md) for more information on Unified Profile and Segmentation.
+Segmentation enables a multitude of use cases ranging from simple segmentation for filtering data to more complex uses for targeting and personalization. Real-time Customer Profile's segmentation engine provides these capabilities using a language built to query XDM Individual Profile data; the Profile Query Language, or PQL. Segments are defined as a query in PQL, where any Profiles meeting the conditions are considered part of the Segment. See [Profile Query Language](unified_profile_pql.md) for more information on PQL, or [Real-time Customer Profile overview](unified_profile_architectural_overview.md) for more information on Profile and Segmentation.
 
 ## Classes of queries
 

@@ -16,7 +16,7 @@ As stated above, the usage of the Decisioning Service is optional and only requi
 
 1. Authenticate to the Platform.
 2. Define a schema based on the profile class and optionally define a schema based on the experience event class.
-3. Configure a dataset to upload record and time series data and prepare it for upload of datasets to Unified Profile.
+3. Configure a dataset to upload record and time series data and prepare it for upload of datasets to Real-time Customer Profile.
 4. Add data via the dataset configured in the prior step.
 
 Following these four steps, Decisioning Service adds the steps:
@@ -32,7 +32,7 @@ Once the option sets, rule sets and constraints are activated and have been push
 
 ![](decisioning-API3.png)
 
-The Delivery Service is assembling data for the decision request. It determines the ID of the profile entity for which the best option is returned. It also assembles any context data that is not stored in the Unified Profile Store but is potentially used by the decision logic. 
+The Delivery Service is assembling data for the decision request. It determines the ID of the profile entity for which the best option is returned. It also assembles any context data that is not stored in the Real-time Customer Profile Store but is potentially used by the decision logic. 
 
 The decision logic is organized by Activities each of them specifies a filter for the subset of options that should be considered for this activity, along with a single fallback option that is selected when all the general options fail to meet the constraints defined in the decision logic.
 

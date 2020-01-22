@@ -251,7 +251,7 @@ When uploading data to a new dataset for the first time, or as part of a process
 
 Using the Real-time Customer Profile Access API, you can retrieve batch data as it gets loaded into a dataset. If you are unable to retrieve any of the entities you expect, your dataset may not be enabled for Real-time Customer Profile. After confirming that your dataset has been enabled, ensure that your source data format and identifiers support your expectations.
 
-For detailed instructions on how to use the Real-time Customer Profile API, please follow the [Accessing Unified Profile data via API](../consuming_unified_profile_data/consuming_unified_profile_data.md) tutorial.
+For detailed instructions on how to use the Real-time Customer Profile API, please follow the [Accessing Real-time Customer Profile data via API](../consuming_unified_profile_data/consuming_unified_profile_data.md) tutorial.
 
 ## Confirm data ingest by Identity Service
 

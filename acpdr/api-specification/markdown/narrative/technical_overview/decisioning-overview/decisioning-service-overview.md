@@ -54,7 +54,7 @@ You can use Decisioning Service in a synchronous request-response interaction mo
 
 Use of Decisioning Service is optional and only requires a few steps in addition to the typical steps required to create Profile entities and manage them.
 
- > To make the most out of the Unified Profile, the Decisioning Service directly integrates with the profile store. The API calls only need to indicate one of the identities for a given profile.
+ > To make the most out of the Real-time Customer Profile, the Decisioning Service directly integrates with the profile store. The API calls only need to indicate one of the identities for a given profile.
 
 The typical sequence of steps starts with building out profiles:
 
@@ -62,7 +62,7 @@ The typical sequence of steps starts with building out profiles:
 2.	Define a schema based on the profile class and optionally define a schema based on the experience event class.
 3.	Configure a dataset to upload record and time series data to Customer Profile.
 4.	Add data via the dataset configured in the prior step or stream instance data via Pipeline.
-5.  Stream experience events into the Platform to enrich the profile with behavioral data.
+1.  Stream experience events into the Platform to enrich the profile with behavioral data.
 
 Additionally, to use Decisioning Service, the following steps:
 

@@ -51,9 +51,9 @@ Machine Learning offers predefined models you can leverage in your own solutions
 
 ### Audience Activation
 
-Audience Activation includes Unified Profile, Identity, and Edge Services. These services work together to enable you to build and activate audiences based on customer profiles containing individual attributes and behaviors.
+Audience Activation includes Real-time Customer Profile, Identity, and Edge Services. These services work together to enable you to build and activate audiences based on customer profiles containing individual attributes and behaviors.
 
-* **Unified Profile Service** serves as a central data store for customer attributes and interactions. By deciphering customer behavior across multiple interactions, Adobe solutions and other integrations are able to leverage the complete picture of a customer. This can be used to identify interests and preferences, predict behavior, and deliver personalized experiences.
+* **Real-time Customer Profile Service** serves as a central data store for customer attributes and interactions. By deciphering customer behavior across multiple interactions, Adobe solutions and other integrations are able to leverage the complete picture of a customer. This can be used to identify interests and preferences, predict behavior, and deliver personalized experiences.
 
 * **Identity Service** stitches together the identity of the consumer. It examines unauthenticated and authenticated interactions with your brand to build an identity graph that connects with the 360-degree customer profile to represent behavior and interests.
 
@@ -73,10 +73,8 @@ Data Access |	Provides access to the content of registered datasets for data exp
 Decisioning | Create optimized and personalized experiences in applications to programmatically select the next best action from a set of available choices.
 Governance	| Manages Data Usage Labelling and Enforcement (DULE) metadata for registered datasets and enforces the usage labels as data travels through Experience Platform.
 Unified Identity	| Every customer can be identified in a number of different ways, ranging from unknown identities like a cookie, to an authenticated identity like a ECID. The Identity service provides identity stitching and identity resolution by bringing interactions together.
-Unified Profile	| Creates a single 360-degree view of the consumer. The profile is populated with information provided in Experience Platform datasets and can be consumed by any service, either using point lookups or segmentation queries.
-
-
-Experience Data Model (XDM) Registry	|Manages the library of available XDM standard schemas as well as customer-defined schemas and extensions. 
+Real-time Customer Profile | Creates a single 360-degree view of the consumer. The profile is populated with information provided in Experience Platform datasets and can be consumed by any service, either using point lookups or segmentation queries.
+Experience Data Model (XDM) Registry	| Manages the library of available XDM standard schemas as well as customer-defined schemas and extensions. 
  
 Additional information on each of these services can be found by visiting [Platform Services on Adobe I/O](https://www.adobe.io/apis/cloudplatform/dataservices/services.html).
 
@@ -84,11 +82,11 @@ Additional information on each of these services can be found by visiting [Platf
 
 To highlight a potential use case, consider the world of Interactive Voice Response (IVR) systems and call center management software. 
 
-Experience Platform APIs can be used to ingest historical information of the customer’s call center activity into the Experience Data Lake. If the data is ingested into the ExperienceEvent Schema (an XDM schema that expresses customer interactions), these interactions can be ingested directly into Unified Profile Service. In this case, a `callerId` can be used as the unique customer identifier. Identity service will take care of identity resolution and assist Unified Profile Service in stitching together data points from recent interactions with the Call Center to flesh out the individual customer’s profile.
+Experience Platform APIs can be used to ingest historical information of the customer’s call center activity into the Experience Data Lake. If the data is ingested into the ExperienceEvent Schema (an XDM schema that expresses customer interactions), these interactions can be ingested directly into Real-time Customer Profile. In this case, a `callerId` can be used as the unique customer identifier. Identity service will take care of identity resolution and assist Real-time Customer Profile in stitching together data points from recent interactions with the Call Center to flesh out the individual customer’s profile.
 
-The next time the customer calls into the call center, the IVR will be able to personalize the message and deliver an offer tailored to the caller thanks to API integration with Unified Profile.
+The next time the customer calls into the call center, the IVR will be able to personalize the message and deliver an offer tailored to the caller thanks to API integration with Real-time Customer Profile.
 
-When the customer calls, the IVR is able to make an API request to the Unified Profile Service for a point-lookup: consulting either the profile attributes that apply to call-center interactions or the full customer profile. By using identity resolution to combine data from multiple sources and the individual attributes stored in Unified Profile, the IVR can deliver a tailored customer experience unique to each individual.
+When the customer calls, the IVR is able to make an API request to Real-time Customer Profile for a point-lookup: consulting either the profile attributes that apply to call-center interactions or the full customer profile. By using identity resolution to combine data from multiple sources and the individual attributes stored in Real-time Customer Profile, the IVR can deliver a tailored customer experience unique to each individual.
 
 With Experience Platform, every interaction with your call center becomes an opportunity to engage customers, deliver a personalized brand experience, and gain insights toward providing additional targeted experiences in the future.
 

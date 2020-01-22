@@ -18,7 +18,7 @@ Experience Platform unifies customer data from all types of marketing, sales, an
 
 <p style="text-align: center;"><img src="platform-process.png"  /></p>
 
-Unified Profile ultimately gives context to a customer's profile and associated experiences across devices. With intelligent and comprehensive customer data serving as a trusted source, you can then confidently apply your insights and intelligence across the marketing workflows built on Adobe and partner services and products. 
+Real-time Customer Profile ultimately gives context to a customer's profile and associated experiences across devices. With intelligent and comprehensive customer data serving as a trusted source, you can then confidently apply your insights and intelligence across the marketing workflows built on Adobe and partner services and products. 
 
 <p style="text-align: center;"><img src="platform-overview-1.png"  /></p>
 
@@ -44,7 +44,7 @@ For a quick introduction to Adobe Experience Platform and its services and under
 
 ### Recipes
 * First-time walkthrough [link]
-* Segmenting with Unified Profile [link]
+* Segmenting with Real-time Customer Profile [link]
 
 ###Resources
 * Technical Overview [link]
@@ -73,7 +73,7 @@ The Adobe Experience Platform unifies customer data from all types of marketing,
 <p style="text-align: center;"><img src="platform-intro.png"  /></p>
 
 
-Adobe Experience Platform transforms your data into rich XDM schemas, allowing you to analyze activities and respond to customer insights faster with less cost. It creates a Unified Profile for each customer, leveraging data from fields across the XDM schemas to define the customer experience and provide unified customer profiles. A Unified Profile [link] allows you to segment and target to effectively provide a personalized experience for each customer.
+Adobe Experience Platform transforms your data into rich XDM schemas, allowing you to analyze activities and respond to customer insights faster with less cost. It creates a Real-time Customer Profile for each customer, leveraging data from fields across the XDM schemas to define the customer experience and provide unified customer profiles. A Real-time Customer Profile [link] allows you to segment and target to effectively provide a personalized experience for each customer.
 
 
 ## Ingesting and Blending Data
@@ -114,7 +114,7 @@ The schemas standardizes data for the platform not just for taxonomy but for bus
 
 [link to component overview]
 
-## Unified Profiles
+## Real-time Customer Profiles
 Structuring your data with semantic content then lets you build a comprehensive profile with rich content, allowing you to segment audiences and respond based on XDM data. 
 
 <p style="text-align: center;"><img src="platform-unified-profile.png"  /></p>
@@ -123,7 +123,7 @@ In the Adobe Experience Platform, you first define your required XDM schemas (st
 
 [link to component overview]
 
-### Using Unified Profiles example
+### Using Real-time Customer Profile example
 
 For example, take the simple use case of Interactive Voice Response (IVR) systems and Call Center management software integrators. Suppliers use the Adobe Experience Platform APIs to ingest historical information of the customer's call center activity in the Experience Data Lake. If the data is ingested in the XDM ExperienceEvent schema, a schema that expresses customer interactions, then these interactions can be ingested into the Unified Profile Service. 
 

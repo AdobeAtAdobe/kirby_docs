@@ -7,7 +7,7 @@ Adobe Experience Platform Privacy Service provides a method to submit both acces
 GDPR requests can be submitted to Adobe Experience Platform using the [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service user interface](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md). There are two different data stores on the Platform where requests are to be processed:
 
 * Data Lake
-* Unified Profile 
+* Real-time Customer Profile 
 
 
 The following workflow describes how data needs to be set up by the customer for Experience Platform to process the requests.
@@ -15,13 +15,13 @@ The following workflow describes how data needs to be set up by the customer for
 ## Step 1: Associate identities when profile data is ingested to Platform
 
 
-Data access and delete requests in Unified Profile on Platform is facilitated by the Profile GDPR service.
+Data access and delete requests in Real-time Customer Profile on Platform is facilitated by the Profile GDPR service.
 
 The profile GDPR honors namespaces that are registered with the Identity core service for that IMSOrg.
 
 A list of standard namespaces are available for all organizations. For example: Email and ECID. Additionally, custom namespaces can be created for the organization. Both aspects are documented at [Identity Namespace Overview](https://www.adobe.io/apis/cloudplatform/dataservices/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_namespace_overview/identity_namespace_overview.md).
 
-If profile schema-based data ingested into Platform has an associated identity namespace, Unified Profile can process a GDPR request submitted in the appropriate format against that data, as shown in Step 3 (below).
+If profile schema-based data ingested into Platform has an associated identity namespace, Real-time Customer Profile can process a GDPR request submitted in the appropriate format against that data, as shown in Step 3 (below).
 
 The example below shows how the identities column for a record in the profile-schema-based dataset might look. In this example, only the standard identity namespace Email is associated with the data:
 
@@ -119,7 +119,7 @@ Request payload:
 * Parameter type `unregistered` is required for the data lake because the namespace applied for the dataset in Step 2 is not registered with the identity. For more information regarding the type parameter, refer to [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md#namespace-qualifiers).
 * The parameter type should be `standard` for the profile to process based on standard namespaces.
 * The parameter type should be `custom` for the profile to process based on custom namespaces.
-* The `include` field is optional in the request format. The central service sends the GDPR request to all registered products if no inclusion is specified. If an inclusion is specified, specify `aepDataLake` and `profileService` in the list of include parameters for the GDPR request to be processed in Data Lake and Unified Profile respectively. 
+* The `include` field is optional in the request format. The central service sends the GDPR request to all registered products if no inclusion is specified. If an inclusion is specified, specify `aepDataLake` and `profileService` in the list of include parameters for the GDPR request to be processed in Data Lake and Real-time Customer Profile respectively. 
 
 ## Step 4: Track the status of the GDPR request
 

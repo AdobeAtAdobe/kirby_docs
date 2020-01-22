@@ -105,7 +105,7 @@ For more information on using the API to enable a schema for use in Real-time Cu
 
 ### Enabling an existing schema for Profile using the UI
 
-In Experience Platform, click on **Schemas** in the left-navigation, and select the name of the schema you wish to enable from the list of schemas. Then, on the right-hand side of the editor under **Schema Properties**, click on **Unified Profile** to toggle it on.
+In Experience Platform, click on **Schemas** in the left-navigation, and select the name of the schema you wish to enable from the list of schemas. Then, on the right-hand side of the editor under **Schema Properties**, click on **Profile** to toggle it on.
 
 
 For more information, see the [Use in Real-time Customer Profile](../../../tutorials/schema_editor_tutorial/schema_editor_tutorial.md#use-in-unified-profile-service) section in the Schema Editor tutorial.

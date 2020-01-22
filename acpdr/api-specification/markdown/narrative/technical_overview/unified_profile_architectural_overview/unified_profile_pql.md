@@ -6,11 +6,11 @@ The following discusses the features of the Profile Query Language (PQL) and the
 
 ## Purpose of PQL
 
-PQL is a query language developed to support the definition and execution of segmentation queries over Unified Profile.  Initially, it is focused on queries over profiles (i.e. _xdm.context.profile) and their associated experience events (i.e. _xdm.context.experienceevent), as the name Profile Query Language suggests.  However, it will soon be extended to support segmentation over any XDM schema.
+PQL is a query language developed to support the definition and execution of segmentation queries over Real-time Customer Profile.  Initially, it is focused on queries over profiles (i.e. _xdm.context.profile) and their associated experience events (i.e. _xdm.context.experienceevent), as the name Profile Query Language suggests.  However, it will soon be extended to support segmentation over any XDM schema.
 
 PQL is a DSL (Domain Specific Language), meaning that it has a defined grammar which is tailored to its domain.  Specifically, PQL makes it easy to create and evaluate segment definitions which combine both CRM-style profile conditions and the kind of time series conditions which are required when segmenting over experience events.
 
-PQL is XDM-compliant; it supports evaluating queries against data which has been ingested into the Adobe Cloud Platform Unified Profile Store in XDM format.  Prior to evaluation, PQL supports validating queries against the XDM schemas which they reference, so that any schema-related problems with the queries can be identified as early as possible.
+PQL is XDM-compliant; it supports evaluating queries against data which has been ingested into the Real-time Customer Profile in XDM format.  Prior to evaluation, PQL supports validating queries against the XDM schemas which they reference, so that any schema-related problems with the queries can be identified as early as possible.
 
 A PQL query is evaluated over one profile at a time (with its linked experience events).  There is therefore always an implicit profile in context in the initial version of PQL (e.g. a PQL expression such as person.birthDay is understood to apply to the profile in context without explicitly including a reference to _xdm.context.profile).
 
@@ -221,7 +221,7 @@ Every PQL query is a statement that is composed of expressions that are built to
 
 For CRM statements, since the execution is running in the context of a single user, it is possible to omit the "user" portion in the expressions and refer to the fields directly as Example 1 shows.
 
-There are various types of statements supported in PQL. For more examples of supported queries, see [Unified Profile Supported Queries](unified_profile_supported_queries.md).
+There are various types of statements supported in PQL. For more examples of supported queries, see [Real-time Customer Profile supported queries](unified_profile_supported_queries.md).
 
 #### Coercion of types
 
