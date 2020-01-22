@@ -69,11 +69,6 @@ Experience Platform provides a RESTful API and an interactive UI that lets you s
 Feature | Description
 --- | ---
 Support for customer attribute data | UI and API support for creating streaming connectors to ingest customer attribute data.
-Support for Data Store DB systems| Connectors can now access PosgreSQL and MySQL API.
-Support for Data Store Lake systems | Connectors can now access ADLS Gen2 API.
-Support for Data Store Warehouse systems | Connectors can now access Amazon RedShift API.
-Support for AdTech systems | Connectors can now access Google AdWords API.
-Support for Analytics | Connectors can now access Google BigQuery API.
 Additional file format support for cloud storages | File ingestion from cloud storages now supports XDM-compliant Parquet and JSON file formats.
 Support for access control permissions | The access control framework in Adobe Experience Platform provides the permissions needed to grant access to sources in data ingestion. Depending on their permission level, a user can view sources, manage sources, or be denied access altogether. See the [access control overview](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/access-control/access-control-overview.md) for more information.
 
