@@ -20,13 +20,13 @@ This document provides an overview of JupyterLab and its features as well as ins
     -   [Filter ExperienceEvent data in Python/R](#filter-experienceevent-data-in-pythonr)
     -   [Filter ExperienceEvent data in PySPark/Spark](#filter-experienceevent-data-in-pysparkspark)
 
-The appendix to this document includes additional useful resources related to JupyterLab:
--   [Supported libraries](#appendix-supported-libraries)
--   [Optional SQL flags for Query Service](#appendix-optional-sql-flags-for-query-service)
+The [appendix](#appendix) to this document includes additional useful resources related to JupyterLab, including:
+-   [Supported libraries](#supported-libraries)
+-   [Optional SQL flags for Query Service](#optional-sql-flags-for-query-service)
 
 ## JupyterLab on Adobe Experience Platform
 
-Experience Platform's JupyterLab integration is accompanied with architectural changes, design considerations, customized notebook extensions, pre-installed libraries, and an Adobe themed interface.
+The JupyterLab integration for Experience Platform is accompanied with architectural changes, design considerations, customized notebook extensions, pre-installed libraries, and an Adobe themed interface.
 
 The following list outlines some of the features that are unique to JupyterLab on Platform:
 
@@ -502,9 +502,15 @@ val timedf = spark.sql("""
     AND timestamp < CAST('2019-12-31 23:59:59.9' AS TIMESTAMP)
 """)
 ```
+## Next steps 
 
+For additional information, such as the workflow involved in building and deploying a model, please begin by reading the [Creating a Recipe using Jupyter notebooks](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/dsw-all-tutorials.html#!api-specification/markdown/narrative/tutorials/dsw/author_a_model/create_a_recipe_using_jupyter_notebooks/create_a_recipe_using_jupyter_notebooks.md) documentation.
 
-## Appendix: supported libraries
+## Appendix
+
+The following sections contain supplemental information for working with the JupyterLab integration for Experience Platform.
+
+### Supported libraries
 
 Click the kernels below to show their supported libraries:
 
@@ -638,7 +644,7 @@ mkl-rt | 11.1
 </details>
 
 
-## Appendix: Optional SQL flags for Query Service
+### Optional SQL flags for Query Service
 
 <table>
     <tr>
@@ -678,3 +684,9 @@ mkl-rt | 11.1
         </td>
     </tr>
 </table>
+
+## Additional resources 
+
+The following video outlines how to load Adobe Analytics data, select features, and explore data using the JupyterLab integration for Adobe Experience Platform.
+
+<a href="https://docs.adobe.com/content/help/en/platform-learn/tutorials/data-science-workspace/build-and-deploy-a-model.html" target="_blank"><img src="./images/using_dsw_build_and_deploy.png"></a>
