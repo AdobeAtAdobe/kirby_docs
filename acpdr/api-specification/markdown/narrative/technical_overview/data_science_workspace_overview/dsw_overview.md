@@ -1,9 +1,14 @@
-# Data Science Workspace Overview <!-- omit in toc -->
+# Data Science Workspace Overview
 
-- [Overview](#overview)
-- [Introduction](#introduction)
-- [Terminology](#terminology)
-- [Why Data Science Workspace?](#why-data-science-workspace)
+Data Science Workspace uses machine learning and artificial intelligence to unleash insights from your data. Integrated into Adobe Experience Platform, Data Science Workspace helps you make predictions using your content and data assets across Adobe solutions.  
+
+Data scientists of all skill levels will find sophisticated, easy-to-use tools that support rapid development, training, and tuning of machine learning recipes - all the benefits of AI technology, without the complexity.  
+
+With Data Science Workspace, data scientists can easily create intelligent services APIs - powered by machine learning. These services work with other Adobe services, including Adobe Target and Adobe Analytics Cloud, to help you automate personalized, targeted digital experiences in web, desktop, and mobile apps.
+
+This guide provides an overview of the following concepts related to Data Science Workspace:
+
+- [Understanding Data Science Workspace](#understanding-data-science-workspace)
     - [One-stop data access](#one-stop-data-access)
     - [Prebuilt machine learning recipes](#prebuilt-machine-learning-recipes)
     - [Workflow focused on the data scientist](#workflow-focused-on-the-data-scientist)
@@ -20,20 +25,6 @@
     - [Author the recipe](#author-the-recipe)
     - [Experiment with the recipe](#experiment-with-the-recipe)
     - [Operationalize the model](#operationalize-the-model)
-- [Conclusion](#conclusion)
-- [Additional resources](#additional-resources)
-
----
-
-## Overview
-
-Data Science Workspace uses machine learning and artificial intelligence to unleash insights from your data. Integrated into Adobe Experience Platform, Data Science Workspace helps you make predictions using your content and data assets across Adobe solutions.  
-
-Data scientists of all skill levels will find sophisticated, easy-to-use tools that support rapid development, training, and tuning of machine learning recipes - all the benefits of AI technology, without the complexity.  
-
-With Data Science Workspace, data scientists can easily create intelligent services APIs - powered by machine learning. These services work with other Adobe services, including Adobe Target and Adobe Analytics Cloud, to help you automate personalized, targeted digital experiences in web, desktop, and mobile apps.
-
----
 
 ## Introduction
 
@@ -51,9 +42,9 @@ With Data Science Workspace, Adobe Experience Platform allows you to bring exper
 
 Data scientists of all skill levels will achieve insights faster and more effective digital experiences sooner. 
 
-## Terminology
+## Getting started
 
-Before diving into details of Data Science Workspace, here is a brief summary of key terms:
+Before diving into the details of Data Science Workspace, here is a brief summary of  the key terms:
 
 | Term | Definition |
 |---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -74,7 +65,7 @@ The following chart outlines the hierarchical relationship between Recipes, Mode
 
 ![](./images/recipe_hiearchy_ui.png)
 
-## Why Data Science Workspace?
+## Understanding Data Science Workspace
 
 With Data Science Workspace, your data scientists can streamline the cumbersome process of uncovering insights in large datasets. Built on a common machine learning framework and runtime, Data Science Workspace delivers advanced workflow management, model management, and scalability. Intelligent services support re-use of machine learning recipes to power a variety of applications created using Adobe products and solutions. 
 
@@ -133,10 +124,10 @@ Data scientists can take advantage of new technologies and datasets as soon as t
 
 ### Security and peace of mind
 
-Securing your data is a top priority for Adobe. We protect your data with security processes and controls developed to help us comply with industry-accepted standards, regulations, and certifications.
+Securing your data is a top priority for Adobe. Adobe protects your data with security processes and controls developed to help comply with industry-accepted standards, regulations, and certifications.
 
-We build security into our software and services as part of Adobe Secure Product Lifecycle.
-To learn more about Adobe data and software security, compliance, and more, visit our security page at https://www.adobe.com/security.html. 
+Security is built into software and services as part of the Adobe Secure Product Lifecycle.
+To learn about Adobe data and software security, compliance, and more, visit the security page at https://www.adobe.com/security.html. 
 
 ## Data Science Workspace in action 
 
@@ -176,7 +167,7 @@ If you already found a recipe that meets all your needs, you can move on to expe
 
 You can also import a recipe in to Data Science Workspace and take advantage of the experimentation workflows as you create your intelligent service.
 
-Visit [this section](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/authormodel.html) for tutorials on recipe and model authoring in Data Science Workspace.
+Visit the [model authoring section](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/authormodel.html) for tutorials on recipe and model authoring in Data Science Workspace.
 
 ### Experiment with the recipe 
 
@@ -199,16 +190,21 @@ A published intelligent service is configurable to automatically train itself fr
 
 Visit [this section](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials/operationalize.html) for tutorials on how to publish services in Data Science Workspace.
 
-## Conclusion
+## Next steps
 
 Data Science Workspace helps streamline and simplify data science workflow, from data gathering to algorithms to intelligent services, for data scientists of all skill levels. With the sophisticated tools Data Science Workspace provides, you can significantly shorten the time from data to insights.
 
 More importantly, Data Science Workspace puts the data science and algorithmic optimization capabilities of Adobe's leading marketing platform in the hands of enterprise data scientists. For the first time, enterprises can bring proprietary algorithms to the platform, taking advantage of Adobe's powerful machine learning and AI capabilities to deliver highly personalized customer experiences at massive scale.  
 
-With the marriage of brand expertise and Adobe's machine learning and AI prowess, enterprises will have the power to drive more business value and brand loyalty by giving customers what they want, before they ask for it.
+With the marriage of brand expertise and Adobe's machine learning and AI prowess, enterprises have the power to drive more business value and brand loyalty by giving customers what they want, before they ask for it.
 
-Adobe was recently named the only leader in "The Forrester Wave™: Digital Intelligence Platforms, Q2 2017" report, and received the highest scores possible in nine criteria, including behavioral targeting and online testing.
+For additional information, such as a complete day-to-day workflow, please begin by reading the [Data Science Workspace walk-through](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html#!api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_walkthrough/dsw_walkthrough.md) documentation.
+
+To access Data Science Workspace tutorials, visit the [tutorials page](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials.html).
 
 ## Additional resources
-For more information, check out [our walkthrough](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/dsw-overview.html#!api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_walkthrough/dsw_walkthrough.md) where we will be working through a day to day workflow.  
-To access all Data Science Workspace tutorials, visit [the tutorials page](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials.html).
+
+The following video is designed to support your understanding of Data Science Workspace.
+
+<a href="https://docs.adobe.com/content/help/en/platform-learn/tutorials/data-science-workspace/understanding-data-science-workspace.html" target="_blank"><img src="understanding_data_science_workspace.png"></a>
+

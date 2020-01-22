@@ -13,8 +13,7 @@
     - [Evaluator file](#evaluator-file)
     - [Data Saver file](#data-saver-file)
 - [Training and scoring](#training-and-scoring)
-- [Create recipe](#create-recipe)
-- [Conclusion](#conclusion)
+- [Create a recipe](#create-recipe)
 
 
 ## Objective
@@ -488,6 +487,15 @@ Once the process is complete, the recipe will look something like this:
 
 ---
 
-## Conclusion
+## Next steps
 
-This tutorial went over creating a machine learning model in the Recipe Builder notebook. From there, we exercised the notebook to recipe workflow within the notebook to create a recipe within Data Science Workspace.
+By completing this tutorial, you have learned how to create a machine learning model in the Recipe Builder notebook. You have also learned how to exercise the notebook to recipe workflow within the notebook to create a recipe within Data Science Workspace.
+
+To continue learning how to work with resources within Data Science Workspace, please visit the Data Science Workspace [tutorials](https://www.adobe.io/apis/experienceplatform/home/tutorials/data-science-workspace/dsw-tutorials.html).
+
+## Additional resources
+
+The following video is designed to support your understanding of building and deploying models.
+
+<a href="https://docs.adobe.com/content/help/en/platform-learn/tutorials/data-science-workspace/build-and-deploy-a-model.html" target="_blank"><img src="using_dsw_build_and_deploy.png"></a>
+
