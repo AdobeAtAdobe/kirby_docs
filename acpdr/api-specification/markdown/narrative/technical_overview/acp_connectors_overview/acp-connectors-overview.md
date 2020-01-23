@@ -32,6 +32,10 @@ CRM systems provide data that can help build customer relationships, which in tu
 
 -   [Create a Microsoft Dynamics 365 or Salesforce source connector in the UI](../../tutorials/sources_tutorial/dynamics-salesforce-ui-tutorial.md)
 
+## API tutorials
+
+You can create source connectors using the Flow Service API. For more information, see the [sources API tutorial document](https://www.adobe.io/apis/experienceplatform/home/tutorials/sources-api-tutorials.html#!api-specification/markdown/narrative/tutorials/sources_tutorial/api/sources-api-tutorial.md).
+
 ## Access control for sources in data ingestion
 
 Permissions for sources in data ingestion can be managed within the Adobe Admin Console. You can access permissions through the *Permissions* tab in a particular product profile. From the **Edit Permissions** panel, you can access the permissions pertaining to sources through the *data ingestion* menu entry. The **View Sources** permission grants read-only access to available sources in the *Catalog* tab and authenticated sources in the *Browse* tab, while the **Manage Sources** permission grants full access to read, create, edit, and disable sources.

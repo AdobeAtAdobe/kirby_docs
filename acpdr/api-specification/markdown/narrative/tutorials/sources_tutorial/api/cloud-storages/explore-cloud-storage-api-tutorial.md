@@ -22,6 +22,7 @@ In order to explore a third party cloud storage using Platform APIs, you must po
 *   [Azure Blob](./blob-api-tutorial.md)
 *   [Azure Data Lake Storage Gen2](./adls-gen2-api-tutorial.md)
 *   [Google Cloud Store](./google-cloud-api-tutorial.md)
+*   [SFTP](./sftp-api-tutorial.md)
 
 ### Reading sample API calls
 
@@ -35,7 +36,7 @@ In order to make calls to Platform APIs, you must first complete the [authentica
 *   x-api-key: `{API_KEY}`
 *   x-gw-ims-org-id: `{IMS_ORG}`
 
-All resources in Experience Platform, including those belonging to the Flow Service, are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
+All resources in Experience Platform, including those belonging to Flow Service, are isolated to specific virtual sandboxes. All requests to Platform APIs require a header that specifies the name of the sandbox the operation will take place in:
 
 *   x-sandbox-name: `{SANDBOX_NAME}`
 
