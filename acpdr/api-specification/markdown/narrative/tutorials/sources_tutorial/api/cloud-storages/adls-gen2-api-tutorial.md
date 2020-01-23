@@ -4,7 +4,7 @@ Flow Service is used to collect and centralize customer data from various dispar
 
 This tutorial uses the Flow Service API to walk you through the steps to connect Experience Platform to Azure Data Lake Storage Gen2 (hereinafter referred to as "ADLS Gen2"), including showing you how to:
 
-*   [Look up connection specifications](#look up-connection-specifications)
+*   [Look up connection specifications](#look-up-connection-specifications)
 *   [Create a base connection](#create-a-base-connection)
 
 ## Getting started
