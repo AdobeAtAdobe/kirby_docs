@@ -20,6 +20,7 @@ In order to explore a third party cloud storage using Platform APIs, you must po
 
 *   [Amazon S3](./s3-api-tutorial.md)
 *   [Azure Blob](./blob-api-tutorial.md)
+*   [Azure Data Lake Storage Gen2](./adls-gen2-api-tutorial.md)
 *   [Google Cloud Store](./google-cloud-api-tutorial.md)
 
 ### Reading sample API calls
