@@ -84,9 +84,15 @@
                 },
                 {
                     "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ftp-sftp-ui-tutorial.md",
+                    "title": "FTP and SFTP connector"
+                },
+                {
+                    "pages": [],
                     "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/dynamics-salesforce-ui-tutorial.md",
                     "title": "Microsoft Dynamics and Salesforce connector"
                 }
+                
             ],
             "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/sources-ui-tutorial.md",
             "title": "Create a source connector in the UI",
