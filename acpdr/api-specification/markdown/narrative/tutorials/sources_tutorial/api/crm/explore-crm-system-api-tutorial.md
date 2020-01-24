@@ -18,8 +18,9 @@ The following sections provide additional information that you will need to know
 
 In order to explore your CRM system using Platform APIs, you must possess a valid base connection ID. If you do not already have a base connection for the CRM system you wish to work with, you can create one through the following tutorials:
 
-*   [Salesforce](./s3-api-tutorial.md)
+*   [Google AdWords](./google-adwords-api-tutorial.md)
 *   [Microsoft Dynamics](./blob-api-tutorial.md)
+*   [Salesforce](./s3-api-tutorial.md)
 
 ### Reading sample API calls
 

@@ -40,6 +40,11 @@
                 },
                 {
                     "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/crm/google-adwords-api-tutorial.md",
+                    "title": "Google AdWords connector"
+                },
+                {
+                    "pages": [],
                     "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/crm/dynamics-api-tutorial.md",
                     "title": "Microsoft Dynamics 365 connector"
                 },
