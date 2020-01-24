@@ -2,7 +2,7 @@
 
 This tutorial covers the steps for retrieving data from a CRM system and bringing them in to Platform through source connectors and APIs. The steps involved include:
 
-*   [Create an Ad-hoc XDM class and schema](#create-an-ad-hoc-xdm-class-and-schema)
+*   [Create an ad-hoc XDM class and schema](#create-an-ad-hoc-xdm-class-and-schema)
 *   [Create a source connection](#create-a-source-connection)
 *   [Create a target XDM schema](#create-a-target-xdm-schema)
 *   [Create a target dataset](#create-a-target-dataset)
@@ -46,11 +46,11 @@ All requests that contain a payload (POST, PUT, PATCH) require an additional med
 
 *   Content-Type: `application/json`
 
-## Create an Ad-hoc XDM class and schema
+## Create an ad-hoc XDM class and schema
 
-In order to bring external data into Platform through source connectors, an Ad-hoc XDM class and schema must be created for the raw source data.
+In order to bring external data into Platform through source connectors, an ad-hoc XDM class and schema must be created for the raw source data.
 
-To create an ad-hoc class and schema, follow the steps outlined in the [ad-hoc schema workflow](../../../../technical_overview/schema_registry/schema_registry_developer_guide.md#ad-hoc-schema-workflow) section in the Schema Registry developer guide. When creating an Ad-hoc class, all fields found in the source data must be described within the request body.
+To create an ad-hoc class and schema, follow the steps outlined in the [ad-hoc schema tutorial](../../../schema_registry_api_tutorial/adhoc-schema-tutorial.md). When creating an ad-hoc class, all fields found in the source data must be described within the request body.
 
 Continue following the steps outlined in the developer guide until you have created an ad-hoc schema. Obtain and store the unique identifier (`$id`) of the ad-hoc schema and then proceed to the next step of this tutorial.
 

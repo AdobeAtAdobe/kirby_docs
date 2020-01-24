@@ -917,4 +917,4 @@ Information on how to map a CSV file to comply with an XDM schema can be found i
 
 [6]: ../../../../../../acpdr/swagger-specs/ingest-api.yaml
 
-[ad-hoc]: ../schema_registry/schema_registry_developer_guide.md#ad-hoc-schema-workflow
+[ad-hoc]: ../../tutorials/schema_registry_api_tutorial/adhoc-schema-tutorial.md

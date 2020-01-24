@@ -108,6 +108,7 @@
         }
     ],
     "app2app_map": {
+        "api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/":"/apis/experienceplatform/home/xdm/xdmservices.html",
         "api-specification/markdown/narrative/technical_overview/segmentation/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
         "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
         "api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/": "/apis/experienceplatform/home/services/allservices.html",

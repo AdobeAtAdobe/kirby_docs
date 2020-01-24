@@ -32,6 +32,13 @@
             "description": "Use the Schema Registry API to create a schema, including assigning a class and defining mixins."
         },
         {
+            "importedFileName": "adhoc-schema-tutorial",
+            "pages": [],
+            "path": "api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/adhoc-schema-tutorial.md",
+            "title": "Create an ad-hoc schema using the Schema Registry API",
+            "description": "Follow step-by-step instructions for creating an ad-hoc schema using the Schema Registry API."
+        },
+        {
             "importedFileName": "relationship_descriptor_tutorial",
             "pages": [],
             "path": "api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/relationship_descriptor_tutorial.md",

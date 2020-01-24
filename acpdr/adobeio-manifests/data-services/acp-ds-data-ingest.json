@@ -132,6 +132,7 @@
     }
   ],
   "app2app_map":{
+    "api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/":"/apis/experienceplatform/home/xdm/xdmservices.html",
     "api-specification/markdown/narrative/tutorials/":"/apis/experienceplatform/home/tutorials/alltutorials.html",
     "acpdr/swagger-specs/":"/apis/experienceplatform/home/api-reference.html",
     "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/":"/apis/experienceplatform/home/services/troubleshooting.html",
