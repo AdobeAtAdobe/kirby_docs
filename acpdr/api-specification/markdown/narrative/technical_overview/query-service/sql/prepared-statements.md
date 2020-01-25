@@ -69,7 +69,7 @@ SELECT * FROM table WHERE id >= 10000 AND id <= 10005;
 The SQL query above will return the following response:
 
 id | firstname | lastname | birthdate | email  | city | country
---- | --------- | -------- | --------- | ----- | ------- | ---- | -------
+--- | --------- | -------- | --------- | ----- | ------- | ---- 
 10000 | alexander | davis | 1993-09-15 | example@example.com | Vancouver | Canada 
 10001 | antoine | dubois | 1967-03-14 | example2@example.com | Paris | France
 10002 | kyoko | sakura | 1999-11-26 | example3@example.com | Tokyo | Japan
@@ -92,7 +92,7 @@ EXECUTE getIdRange(10000, 10005);
 When this is called, you will see the exact same results as before:
 
 id | firstname | lastname | birthdate | email  | city | country
---- | --------- | -------- | --------- | ----- | ------- | ---- | -------
+--- | --------- | -------- | --------- | ----- | ------- | ---- 
 10000 | alexander | davis | 1993-09-15 | example@example.com | Vancouver | Canada 
 10001 | antoine | dubois | 1967-03-14 | example2@example.com | Paris | France
 10002 | kyoko | sakura | 1999-11-26 | example3@example.com | Tokyo | Japan
