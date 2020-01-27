@@ -177,7 +177,7 @@ curl -X POST \
         }
     }
 ```
-| **Parameter** | **Description** |
+| Property | Description |
 | ------------- | --------------- |
 | `auth.params.clientCustomerID` | Your AdWords Client Customer ID. |
 | `auth.params.developerToken` | Your AdWords Developer Token. |
@@ -199,4 +199,4 @@ A successful response returns the unique identifier (`id`) of the newly created 
 
 ## Next steps
 
-By following this tutorial, you have created an AdWords base connection using the Flow Service API, and have obtained the connection's unique ID value. You can use this base connection ID in the next tutorial as you learn how to [explore cloud storages using the Flow Service API](./explore-cloud-storage-api-tutorial.md).
+By following this tutorial, you have created an AdWords base connection using the Flow Service API, and have obtained the connection's unique ID value. You can use this base connection ID in the next tutorial as you learn how to [explore CRM systems using the Flow Service API](./explore-crm-system-api-tutorial.md).

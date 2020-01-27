@@ -169,7 +169,7 @@ curl -X POST \
     }'
 ```
 
-| **Parameter** | **Description** |
+| Property | Description |
 | ------------- | --------------- |
 | `auth.params.server`|  Your Redshift server. |
 | `auth.params.database`| The database associated with your Redshift account. |
@@ -189,7 +189,4 @@ A successful response returns details of the newly created base connection, incl
 
 ## Next steps
 
-By following this tutorial, you have created a source connector to collect data from your Redshift on a scheduled basis. Incoming data can now be used by downstream Platform services such as Real-time Customer Profile and Data Science Workspace. See the following documents for more details:
-
-*   [Real-time Customer Profile overview](../../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
-*   [Data Science Workspace overview](../../../technical_overview/data_science_workspace_overview/dsw_overview.md)
+By following this tutorial, you have created a Redshift base connection using the Flow Service API, and have obtained the connection's unique ID value. You can use this base connection ID in the next tutorial as you learn how to [explore CRM systems using the Flow Service API](./explore-crm-system-api-tutorial.md).

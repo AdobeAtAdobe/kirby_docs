@@ -20,6 +20,7 @@ In order to explore your CRM system using Platform APIs, you must possess a vali
 
 *   [Amazon Redshift](./amazon-redshift-api-tutorial.md)
 *   [Google AdWords](./google-adwords-api-tutorial.md)
+*   [Google BigQuery](./google-bigquery-api-tutorial.md)
 *   [Microsoft Dynamics](./blob-api-tutorial.md)
 *   [Salesforce](./s3-api-tutorial.md)
 

@@ -16,6 +16,7 @@ The following is a list of tutorials for creating connectors using the Flow Serv
 
 -   [Amazon Redshift connector](./crm/amazon-redshift-api-tutorial.md)
 -   [Google AdWords connector](./crm/google-adwords-api-tutorial.md)
+-   [Google BigQuery connector](./crm/google-bigquery-api-tutorial.md)
 -   [Microsoft Dynamics connector](./crm/dynamics-api-tutorial.md)
 -   [Salesforce connector](./crm/salesforce-api-tutorial.md)
 
