@@ -169,14 +169,17 @@ The following is a list of permissions and resource types you can include in the
 **Permissions**
 
 ```plaintext
+"permissions/activate-destinations"
 "permissions/export-audience-for-segments"
 "permissions/manage-datasets"
+"permissions/manage-destinations"
 "permissions/manage-identity-namespaces"
 "permissions/manage-profiles"
 "permissions/manage-sandboxes"
 "permissions/manage-schemas"
 "permissions/reset-sandboxes"
 "permissions/view-datasets"
+"permissions/view-destinations"
 "permissions/view-identity-namespaces"
 "permissions/view-monitoring-dashboard"
 "permissions/view-profiles"
@@ -192,6 +195,7 @@ The following is a list of permissions and resource types you can include in the
 "resource-types/data-types"
 "resource-types/dataset-data"
 "resource-types/datasets"
+"resource-types/destinations"
 "resource-types/dule-labels"
 "resource-types/identity-descriptors"
 "resource-types/identity-namespaces"
