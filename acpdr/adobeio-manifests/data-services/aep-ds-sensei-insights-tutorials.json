@@ -15,6 +15,12 @@
             "description": "Leverage the power of machine learning to predict customer propensity scores.",
             "path": "api-specification/markdown/narrative/tutorials/sensei-insights/customer-ai-tutorial.md",
             "pages": []
+        },
+        {
+            "title": "Segment AI user guide (Alpha)",
+            "description": "This document serves as a guide for interacting with Segment AI user interface.",
+            "path": "api-specification/markdown/narrative/technical_overview/sensei-insights/segment-ai-user-guide.md",
+            "pages": []
         }
     ],
     "app2app_map": {}
