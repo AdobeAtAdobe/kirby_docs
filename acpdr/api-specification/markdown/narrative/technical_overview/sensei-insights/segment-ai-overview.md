@@ -38,7 +38,7 @@ Segment AI can be used to assist with the following example use cases:
 
 ## Next steps
 
-To further your understanding of Segment AI and to start utilizing it, visit the [Segment AI user guide](https://www.adobe.io/apis/experienceplatform/home/services/sensei-insights/sensei-insights-overview.html#api-specification/markdown/narrative/technical_overview/sensei-insights/segment-ai-user-guide.md).
+To further your understanding of Segment AI and to start utilizing it, visit the [Segment AI user guide](https://www.adobe.io/apis/experienceplatform/home/services/sensei-insights/sensei-insights-overview.html#!api-specification/markdown/narrative/technical_overview/sensei-insights/segment-ai-user-guide.md).
 
 
 
