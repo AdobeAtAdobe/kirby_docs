@@ -17,9 +17,15 @@
             "pages": []
         },
         {
-            "title": "Segment AI (alpha)",
+            "title": "Segment AI overview (alpha)",
             "description": "Overview of the Segment AI deep learning model used to identify audience segments",
             "path": "api-specification/markdown/narrative/technical_overview/sensei-insights/segment-ai-overview.md",
+            "pages": []
+        },
+        {
+            "title": "Segment AI user guide (alpha)",
+            "description": "This document serves as a guide for interacting with Segment AI user interface.",
+            "path": "api-specification/markdown/narrative/technical_overview/sensei-insights/segment-ai-user-guide.md",
             "pages": []
         }
     ],
