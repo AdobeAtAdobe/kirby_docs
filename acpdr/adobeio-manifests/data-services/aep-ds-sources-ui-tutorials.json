@@ -42,6 +42,11 @@
                     "pages": [],
                     "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/dynamics-salesforce-ui-tutorial.md",
                     "title": "Microsoft Dynamics and Salesforce connector"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/google-cloud-storage-ui-tutorial.md",
+                    "title": "Google Cloud Storage connector"
                 }
             ],
             "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/sources-ui-tutorial.md",
