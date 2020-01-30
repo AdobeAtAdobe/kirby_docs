@@ -27,7 +27,13 @@ It is also important to know two key terms that are used through this document a
 
 ## Accessing segment definitions
 
-To begin working with segment definitions in Adobe Experience Platform, click **Segments** in the left navigation. To see all segment definitions for your organization, click on the *Browse* tab. Clicking **Create segment** in the top-right corner opens the Segment Builder workspace, where you can begin creating a segment definition.
+To begin working with segment definitions in Adobe Experience Platform, click **Segments** in the left navigation. To see all segment definitions for your organization, click on the *Browse* tab. This view lists information about the segment definition including the evaluation method, created date, and last modified date.
+
+The evaluation method can either be streaming or batch. Streaming segments are constantly evaluated as data enters the system. Batch segments are evaluated according to a set schedule. 
+
+Batch segments have additional information displayed, showing both the last evaluation date as well as the next evaluation date for the batch.
+
+Clicking **Create segment** in the top-right corner opens the Segment Builder workspace, where you can begin creating a segment definition.
 
 ![](./images/segment-browse.png)
 
