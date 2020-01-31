@@ -35,9 +35,10 @@ All resources in Experience Platform are isolated to specific virtual sandboxes.
 
 > **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../../technical_overview/sandboxes/sandboxes-overview.md). 
 
-All requests that contain a payload (POST, PUT, PATCH) require an additional header:
+Requests that contain a payload (POST, PUT, PATCH) require an additional `Content-Type` header. The following types are used in this tutorial:
 
 - Content-Type: application/json
+- Content-Type: application/vnd.adobe.platform.projectionDestination+json; version=1
 
 ## List destinations 
 
@@ -93,7 +94,7 @@ If edge destinations have been configured for your organization, the `projection
 
 ## Create a destination
 
-If the destination you require does not already exist, you can create a new one with a POST request to the `/config/destinations` endpoint. 
+If the destination you require does not already exist, you can create a new projection destination by making a POST request to the `/config/destinations` endpoint. 
 
 #### API format
 
@@ -103,7 +104,9 @@ POST /config/destinations
 
 #### Request
 
-The following API call creates a new edge destination.
+The following request creates a new edge destination. 
+
+> **Note:** The POST request to create a destination requires a specific `Content-Type` header, as shown below. Using an incorrect `Content-Type` header results in an HTTP Status 415 (Unsupported Media Type) error.
 
 ```shell
 curl -X POST \
@@ -112,24 +115,30 @@ curl -X POST \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -H 'x-sandbox-name: {SANDBOX_NAME}' \
-  -H 'Content-Type: application/json' \
+  -H 'Content-Type: application/vnd.adobe.platform.projectionDestination+json; version=1' \
   -d '{
         "type": "EDGE",
         "dataCenters": [ 
           "OR1" 
         ],
-        "ttl": 3600
+        "ttl": 3600,
+        "replicationPolicy": REACTIVE
       }'
 ```
 
-* `type`: The type of destination to be created. The only accepted value, "EDGE", creates an edge destination.
-* `dataCenters`: A string array that lists the data centers for the destination. Can contain one or more of the following values:
+* **type**: **(Required)** The type of destination to be created. The only accepted value, "EDGE", creates an edge destination.
+* **dataCenters**: **(Required)** A string array that lists the edges toward which projections are to be routed. May contain one or more of the following values:
     * "OR1" - Western United States
     * "VA5" - Eastern United States
+    * "NLD1" - EMEA
+* **ttl**: **(Required)** Specifies projection expiration. Accepted value range: 600 to 604800. Default value: 3600.
+* **replicationPolicy**: **(Required)** Defines the behavior of the data replication from the hub to the edges. Default value: REACTIVE. Supported values:
+    * PROACTIVE
+    * REACTIVE
 
 #### Response
 
-A successful response returns the details of the newly created edge destination.
+A successful response returns the details of the newly created edge destination, including the read-only, system-generated unique ID (`"id"`).
 
 ```json
 {
@@ -143,9 +152,13 @@ A successful response returns the details of the newly created edge destination.
        "OR1"
     ],
     "ttl": 3600,
-    "version": 3
+    "version": 1
 }
 ```
+
+* **self.href**: This path is used to lookup (GET) the destination directly and can also be used for updating (PUT) or deleting (DELETE) the destination.
+* **id**: The read-only, system-generated unique ID for the destination. This ID is used to reference the destination directly and when creating projection configurations.
+* **version**: This read-only value shows the current version of the destination. When a destination is updated, the version number automatically increments.
 
 ## List projection configurations
 

@@ -35,7 +35,7 @@ info:
     Required headers:
       * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
       * All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information.
-      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
+      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type`. Accepted values specific to each call are provided in the call parameters.
 
 host: platform.adobe.io
 basePath: /data/core/ups
@@ -1110,12 +1110,6 @@ paths:
           required: false
           type: string
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
-        - name: snapshot.name
-          in: query
-          description: The snapshot name
-          required: false
-          type: string
-          x-example: inUS
         - name: start
           in: query
           description: Page Offset - As per created Time of resource
@@ -3658,7 +3652,6 @@ definitions:
     type: object
     required:
       - segment
-      - snapshot
     properties:
       segmentId:
         type: string
@@ -3695,24 +3688,7 @@ definitions:
                 description: merge policy version
             description: 'merge policy, part of a segment meta data response'
         description: Segment meta data in a segment job response
-      snapshot:
-        $ref: '#/definitions/SegmentSnapshot'
     description: Segment Job Response
-  SegmentSnapshot:
-    type: object
-    required:
-      - name
-    properties:
-      name:
-        type: string
-        example: inUS
-        description: Snapshot name
-      ttlInDays:
-        type: integer
-        format: int32
-        example: 10
-        description: TTL in days
-    description: Snapshot has not been supported yet. Do not use!!!
   StandardResponse:
     type: object
     properties:
@@ -3734,8 +3710,6 @@ definitions:
         type: string
         example: 7863c010-e092-41c8-ae5e-9e533186752e
         description: Segment ID
-      snapshot:
-        $ref: '#/definitions/SegmentSnapshot'
   SegmentDefinition:
     type: object
     required:
