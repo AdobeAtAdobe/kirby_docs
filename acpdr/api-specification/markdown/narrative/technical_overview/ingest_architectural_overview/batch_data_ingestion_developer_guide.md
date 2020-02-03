@@ -1,22 +1,22 @@
 # Batch ingestion developer guide
 
-This document provides a comprehensive overview of using [batch ingestion APIs][6]. Specifically, this documentation will show you how to do the following:
+This document provides a comprehensive overview of using [batch ingestion APIs](../../../../../../acpdr/swagger-specs/ingest-api.yaml). Specifically, this documentation will show you how to do the following:
 
-- [Ingest JSON files](#how-to-ingest-json-files)
-- [Ingest Parquet files](#how-to-ingest-parquet-files)
-- [Ingest large Parquet files](#how-to-ingest-large-parquet-files)
-- [Ingest CSV files](#how-to-ingest-csv-files)
-- [Cancel a batch](#cancelling-a-batch)
-- [Delete a batch](#deleting-a-batch)
-- [Replay a batch](#replaying-a-batch)
+- [Ingest JSON files](#ingest-json-files)
+- [Ingest Parquet files](#ingest-parquet-files)
+- [Ingest large Parquet files](#ingest-large-parquet-files)
+- [Ingest CSV files](#ingest-csv-files)
+- [Cancel a batch](#cancel-a-batch)
+- [Delete a batch](#delete-a-batch)
+- [Replay a batch](#replay-a-batch)
 
 The appendix to this document provides information for [formatting data to be used for ingestion](#data-transformation-for-batch-ingestion), including sample CSV and JSON data files.
 
 ## Getting started
 
-Catalog provides a RESTful API through which you can perform basic CRUD operations against the supported object types.
+Data ingestion provides a RESTful API through which you can perform basic CRUD operations against the supported object types.
 
-The following sections provide additional information that you will need to know or have on-hand in order to successfully make calls to the Catalog Service API.
+The following sections provide additional information that you will need to know or have on-hand in order to successfully make calls to the Batch Ingestion API.
 
 This guide requires a working understanding of the following components of Adobe Experience Platform:
 
@@ -42,17 +42,18 @@ All resources in Experience Platform are isolated to specific virtual sandboxes.
 
 > **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../sandboxes/sandboxes-overview.md). 
 
-All requests that contain a payload (POST, PUT, PATCH) require an additional header:
+Requests that contain a payload (POST, PUT, PATCH) may require an additional `Content-Type` header. The accepted values specific to each call are provided in the call parameters. The following content types are used in this guide:
 
 - Content-Type: application/json
+- Content-Type: application/octet-stream
 
 ## Types
 
-When ingesting data, it is important to understand how Experience Data Model (XDM) schemas work. For more information about how XDM field types map to different formats, check out the [Schema Developer Guide][4].
+When ingesting data, it is important to understand how Experience Data Model (XDM) schemas work. For more information about how XDM field types map to different formats, please read the [Schema Registry developer guide](../schema_registry/schema_registry_developer_guide.md).
 
 There is some flexibility when ingesting data -  if a type does not match what is in the target schema, the data will be converted to the expressed target type.  If it cannot, it will fail the batch with a `TypeCompatibilityException`. 
 
-For example, neither JSON nor CSV has a date or date-time type. As a result, these values are expressed using [ISO 8061 formatted strings][5] ("2018-07-10T15:05:59.000-08:00") or Unix Time formatted in milliseconds (1531263959000) and are converted at ingestion time to the target XDM type.
+For example, neither JSON nor CSV has a date or date-time type. As a result, these values are expressed using [ISO 8061 formatted strings](https://www.iso.org/iso-8601-date-and-time-format.html) ("2018-07-10T15:05:59.000-08:00") or Unix Time formatted in milliseconds (1531263959000) and are converted at ingestion time to the target XDM type.
 
 The table below shows the conversions supported when ingesting data.
 
@@ -80,11 +81,11 @@ Batch data ingestion has some constraints:
 - Maximum number of properties or fields per row: 10000
 - Maximum number of batches per minute, per user: 138
 
-## How to Ingest JSON files
+## Ingest JSON files
 
 > **Note**: The following steps are applicable for small files (256 MB or less). If you hit a gateway timeout or request body size errors, you need to switch to large file upload.
 
-### Create Batch
+### Create batch
 
 Firstly, you will need to create a batch, with JSON as the input format. When creating the batch, you will need to provide a dataset ID. You will also need to ensure that all the files uploaded as part of the batch conform to the XDM schema linked to the provided dataset.
 
@@ -97,12 +98,12 @@ POST /batches
 #### Request
 
 ```shell
-curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
-  -H "Accept: application/json" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key : {API_KEY}"
+curl -X POST https://platform.adobe.io/data/foundation/import/batches \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key : {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{
           "datasetId": "{DATASET_ID}",
            "inputFormat": {
@@ -110,7 +111,10 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
            }
       }'
 ```   
-- `{DATASET_ID}`: The ID of the reference dataset.
+
+| Parameter | Description |
+| --------- | ----------- |
+| `datasetId` | The ID of the reference dataset. |
 
 #### Response
 
@@ -134,10 +138,10 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
 }
 ```
 
-Where:
-
-- `{BATCH_ID}`: The ID of the newly created batch.  
-- `{DATASET_ID}`: The ID of the referenced dataset.  
+| Parameter | Description |
+| --------- | ----------- |
+| `id` | The ID of the newly created batch. |
+| `relatedObjects.id` | The ID of the referenced dataset. |
 
 ### Upload files
 
@@ -145,30 +149,35 @@ Now that you have created a batch, you can use the `batchId` from before to uplo
 
 > **Note:** See the appendix section for an [example of a properly-formatted JSON data file](#data-transformation-for-batch-ingestion).
 
-
 #### API format
 
 ```http
 PUT /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
 ```
-- `{BATCH_ID}`: The ID of the batch you just created.
-- `{DATASET_ID}`: The ID of the dataset that you're referring to in the created batch.
-- `{FILE_NAME}`: The name of the file you want to upload.
+
+| Parameter | Description |
+| --------- | ----------- |
+| `{BATCH_ID}` | The ID of the batch you want to upload to. |
+| `{DATASET_ID}` | The ID of the batch's reference dataset. |
+| `{FILE_NAME}` | The name of the file you want to upload. |
 
 #### Request
 
+> **Note**: The API supports single-part upload. Ensure that the content-type is application/octet-stream. 
+
 ```shell
-curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.json" \
-  -H "content-type: application/octet-stream" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key : {API_KEY}" \
+curl -X PUT https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.json \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'content-type: application/octet-stream' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key : {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   --data-binary "@{FILE_PATH_AND_NAME}.json"
 ```  
-- `{FILE_PATH_AND_NAME}`: The full path and name of the file you're trying to upload.  
 
-> **Note**: The API only supports single-part upload. Ensure that the content-type is application/octet-stream. 
+| Parameter | Description |
+| --------- | ----------- |
+| `{FILE_PATH_AND_NAME}` | The full path and name of the file you are trying to upload. |
 
 #### Response
 
@@ -176,7 +185,7 @@ curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}
 200 OK
 ```
 
-### Complete Batch
+### Complete batch
 
 Once you have finished uploading all the different parts of the file, you will need to signal that the data has been fully uploaded, and that the batch is ready for promotion.
 
@@ -185,16 +194,19 @@ Once you have finished uploading all the different parts of the file, you will n
 ```http
 POST /batches/{BATCH_ID}?action=COMPLETE
 ```
-- `{BATCH_ID}`: The ID of the batch you created.  
+
+| Parameter | Description |
+| --------- | ----------- |
+| `{BATCH_ID}` | The ID of the batch you want to upload to. |
 
 #### Request
 
 ```shell
 curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=COMPLETE" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key : {API_KEY}"
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key : {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ``` 
 
 #### Response
@@ -203,11 +215,11 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID
 200 OK
 ```
 
-## How to ingest Parquet files
+## Ingest Parquet files
 
 > **Note**: The following steps are applicable for small files (256 MB or less). If you hit a gateway timeout or request body size errors, you will need to switch to large file upload.
 
-### Create Batch
+### Create batch
 
 Firstly, you will need to create a batch, with Parquet as the input format. When creating the batch, you will need to provide a dataset ID. You will also need to ensure that all the files uploaded as part of the batch conform to the XDM schema linked to the provided dataset.
 
@@ -215,11 +227,11 @@ Firstly, you will need to create a batch, with Parquet as the input format. When
 
 ```shell
 curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
-  -H "accept: application/json" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
   -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key : {API_KEY}"
+  -H "Content-Type: application/json" \
+  -H "x-gw-ims-org-id: {IMS_ORG}" \
+  -H "x-api-key : {API_KEY}" \
+  -H "x-sandbox-name: {SANDBOX_NAME}" 
   -d '{
           "datasetId": "{DATASET_ID}",
            "inputFormat": {
@@ -228,12 +240,9 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
       }'
 ```
 
-Where:
-
-- `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
-- `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.     
-- `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.   
-- `{DATASET_ID}`: The ID of the reference dataset.
+| Parameter | Description |
+| --------- | ------------ |
+| `{DATASET_ID}` | The ID of the reference dataset. |
 
 #### Response
 
@@ -261,40 +270,45 @@ Where:
 }
 ```
 
-Where:
-
-- `{BATCH_ID}`: The ID of the newly created batch.  
-- `{IMS_ORG}`: The ID of the IMS Organization that created the batch.  
-- `{DATASET_ID}`: The ID of the referenced dataset.  
-- `{USER_ID}`: The ID of the user who created the batch.
+| Parameter | Description |
+| --------- | ----------- |
+| `{BATCH_ID}` | The ID of the newly created batch. |
+| `{DATASET_ID}` | The ID of the referenced dataset. | 
+| `{USER_ID}` | The ID of the user who created the batch. |
 
 ### Upload files
 
 Now that you have created a batch, you can use the `batchId` from before to upload files to the batch. You can upload multiple files to the batch.
 
+#### API format
+
+```http
+PUT /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| `{BATCH_ID}` | The ID of the batch you want to upload to. |
+| `{DATASET_ID}` | The ID of the batch's reference dataset. |
+| `{FILE_NAME}` | The name of the file you want to upload. |
+
 #### Request
 
+> **Note**: This API supports single-part upload. Ensure that the content-type is application/octet-stream.
+
 ```shell
-curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.parquet" \
-  -H "content-type: application/octet-stream" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key : {API_KEY}" \
+curl -X PUT https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.parquet \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/octet-stream' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key : {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   --data-binary "@{FILE_PATH_AND_NAME}.parquet"
 ```
 
-Where:
-
-- `{BATCH_ID}`: The ID of the batch you just created.
-- `{DATASET_ID}`: The ID of the dataset that you're referring to in the created batch.
-- `{FILE_NAME}`: The name of the file you want to upload.
-- `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
-- `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.     
-- `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.   
-- `{FILE_PATH_AND_NAME}`: The full path and name of the file you're trying to upload.  
-
-> **Note**: The API only supports single-part upload. Ensure that the content-type is application/octet-stream.
+| Parameter | Description |
+| --------- | ----------- |
+| `{FILE_PATH_AND_NAME}` | The full path and name of the file you're trying to upload.  |
 
 #### Response
 
@@ -302,26 +316,29 @@ Where:
 200 OK
 ```
 
-### Complete Batch
+### Complete batch
 
 Once you have finished uploading all the different parts of the file, you will need to signal that the data has been fully uploaded, and that the batch is ready for promotion.
 
+#### API format
+
+```http
+POST /batches/{BATCH_ID}?action=complete
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| `{BATCH_ID}` | The ID of the batch you want to signal is ready for completion. |
+
 #### Request
 
 ```shell
-curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=COMPLETE" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key : {API_KEY}"
+curl -X POST https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=COMPLETE \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key : {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' 
 ```
-
-Where:
-
-- `{BATCH_ID}`: The ID of the newly created batch.  
-- `{IMS_ORG}`: The ID of the IMS Organization that created the batch.  
-- `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.     
-- `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 
 #### Response
 
@@ -329,23 +346,29 @@ Where:
 200 OK
 ```
 
-## How to ingest large Parquet files
+## Ingest large Parquet files
 
 > **Note**: This section details how to upload files that are larger than 256 MB. The large files are uploaded in chunks and then stitched via an API signal.
 
-### Create Batch
+### Create batch
 
 Firstly, you will need to create a batch, with Parquet as the input format. When creating the batch, you will need to provide a dataset ID. You will also need to ensure that all the files uploaded as part of the batch conform to the XDM schema linked to the provided dataset.
+
+#### API format
+
+```http
+POST /batches
+```
 
 #### Request
 
 ```shell
-curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
-  -H "accept: application/json" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key : {API_KEY}"
+curl -X POST https://platform.adobe.io/data/foundation/import/batches \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key : {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
   -d '{
           "datasetId": "{DATASET_ID}",
            "inputFormat": {
@@ -354,12 +377,9 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
       }'
 ```
 
-Where:
-
-- `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
-- `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.     
-- `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.   
-- `{DATASET_ID}`: The ID of the reference dataset.
+| Parameter | Description |
+| --------- | -----------  |
+| `{DATASET_ID}` | The ID of the reference dataset. |
 
 #### Response
 
@@ -386,35 +406,34 @@ Where:
 }
 ```
 
-Where:
+| Parameter | Description |
+| --------- | ----------- |
+| `{BATCH_ID}` | The ID of the newly created batch. |
+| `{DATASET_ID}` | The ID of the referenced dataset. |
+| `{USER_ID}` | The ID of the user who created the batch. |
 
-- `{BATCH_ID}`: The ID of the newly created batch.  
-- `{IMS_ORG}`: The ID of the IMS Organization that created the batch.  
-- `{DATASET_ID}`: The ID of the referenced dataset.  
-- `{USER_ID}`: The ID of the user who created the batch.
-
-### Initialize Large File
+### Initialize large file
 
 After creating the batch, you will need to initialize the large file before uploading chunks to the batch.
 
+#### API format
+
+```http
+POST /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
+```
+
+Parameter | Description
+--------- | -----------
+
 #### Request
 
 ```shell
-curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.parquet?action=INITIALIZE" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key: {API_KEY}"
+curl -X POST https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.parquet?action=INITIALIZE \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' 
 ```
-
-Where:
-
-- `{BATCH_ID}`: The ID of the batch you just created.
-- `{DATASET_ID}`: The ID of the dataset that you're referring to in the created batch.
-- `{FILE_NAME}`: The name of the file you want to upload.
-- `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
-- `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.     
-- `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.   
 
 #### Response
 
@@ -422,35 +441,42 @@ Where:
 201 Created
 ```
 
-### Upload Large File Chunks
+### Upload large file chunks
 
 Now that the file has been created, all subsequent chunks can be uploaded by making repeated PATCH requests, one for each section of the file.
 
+#### API format
+
+```http
+PATCH /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| `{BATCH_ID}` | The ID of the batch you want to upload to. |
+| `{DATASET_ID}` | The ID of the batch's reference dataset. |
+| `{FILE_NAME}` | The name of the file you want to upload. |
+
 #### Request
 
+> **Note**: This API supports single-part upload. Ensure that the content-type is application/octet-stream.
+
 ```shell
-curl -X PATCH "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.parquet" \
-  -H "content-type: application/octet-stream" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key: {API_KEY}" \
-  -H "Content-Range: bytes {CONTENT_RANGE}" \
+curl -X PATCH https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.parquet \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/octet-stream' \
+  -H 'Content-Range: bytes {CONTENT_RANGE}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   --data-binary "@{FILE_PATH_AND_NAME}.parquet"
 ```
 
-Where:
+Parameter | Description
+--------- | -----------
+`{CONTENT_RANGE}` | In integers, the beginning and the end of the requested range.
+`{FILE_PATH_AND_NAME}` | The full path and name of the file you're trying to upload.  
 
-- `{BATCH_ID}`: The ID of the batch you just created.
-- `{DATASET_ID}`: The ID of the dataset that you're referring to in the created batch.
-- `{FILE_NAME}`: The name of the file you want to upload.
-- `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
-- `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.     
-- `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.   
-- `{CONTENT_RANGE}`: In integers, the beginning and the end of the requested range.
-- `{FILE_PATH_AND_NAME}`: The full path and name of the file you're trying to upload.  
-
-> **Note**: The API only supports single-part upload. Ensure that the content-type is application/octet-stream.
 
 #### Response
 
@@ -458,28 +484,31 @@ Where:
 200 OK
 ```
 
-### Complete Large File
+### Complete large file
 
 Now that you have created a batch, you can use the `batchId` from before to upload files to the batch. You can upload multiple files to the batch.
+
+#### API format
+
+```http
+POST /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| `{BATCH_ID}` | The ID of the batch you want to signal completion of. |
+| `{DATASET_ID}` | The ID of the batch's reference dataset. |
+| `{FILE_NAME}` | The name of the file you want to signal completion of. |
 
 #### Request
 
 ```shell
-curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.parquet?action=COMPLETE" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key: {API_KEY}"
+curl -X POST https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.parquet?action=COMPLETE \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key: {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' 
 ```
-
-Where:
-
-- `{BATCH_ID}`: The ID of the batch you created. 
-- `{DATASET_ID}`: The ID of the dataset that you're referring to in the created batch.
-- `{FILE_NAME}`: The name of the file you want to upload.
-- `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
-- `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
-- `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 
 #### Response
 
@@ -487,26 +516,31 @@ Where:
 201 Created
 ```
 
-### Complete Batch
+### Complete batch
 
 Once you have finished uploading all the different parts of the file, you will need to signal that the data has been fully uploaded, and that the batch is ready for promotion.
+
+#### API format
+
+```http
+POST /batches/{BATCH_ID}?action=COMPLETE
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| `{BATCH_ID}` | The ID of the batch you want to signal is complete. |
+
 
 #### Request
 
 ```shell
-curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=COMPLETE" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key : {API_KEY}"
+curl -X POST https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=COMPLETE \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key : {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' 
+
 ```
-
-Where:
-
-- `{BATCH_ID}`: The ID of the batch you created.  
-- `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
-- `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
-- `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 
 #### Response
 
@@ -514,24 +548,31 @@ Where:
 200 OK
 ```
 
-## How to ingest CSV files
+## Ingest CSV files
 
-In order to ingest CSV files, you'll need to create a class, schema, and a dataset that supports CSV. For detailed information on how to create the necessary class and schema, follow the instructions provided in the [Schema Registry Developer Guide][ad-hoc]. 
+In order to ingest CSV files, you'll need to create a class, schema, and a dataset that supports CSV. For detailed information on how to create the necessary class and schema, follow the instructions provided in the [ad-hoc schema creation tutorial](../../tutorials/schema_registry_api_tutorial/adhoc-schema-tutorial.md). 
 
 > **Note**: The following steps are applicable for small files (256 MB or less). If you hit a gateway timeout or request body size errors, you will need to switch to large file upload.
 
-### Create Dataset
+### Create dataset
 
 After following the instructions above to create the necessary class and schema, you'll need to create a dataset that can support CSV.
+
+#### API format
+
+```http
+POST /catalog/dataSets
+```
 
 #### Request
 
 ```shell
-curl -X POST 'https://platform.adobe.io/data/foundation/catalog/dataSets'
+curl -X POST https://platform.adobe.io/data/foundation/catalog/dataSets \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'Content-Type: application/json' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
   -d '{
       "name": "{DATASET_NAME}",
       "schemaRef": {
@@ -550,13 +591,10 @@ curl -X POST 'https://platform.adobe.io/data/foundation/catalog/dataSets'
 
 ```
 
-Where:
-
-- `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.     
-- `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.   
-- `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
-- `{TENANT_ID}`: This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Org.
-- `{SCHEMA_ID}`: The ID of the schema you've created.
+| Parameter | Description |
+| --------- | ----------- |
+| `{TENANT_ID}` | This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Organization. | 
+| `{SCHEMA_ID}` | The ID of the schema you've created. |
 
 An explanation of what the different part of the "fileDescription" section of the JSON body can be seen below:
 
@@ -573,42 +611,47 @@ An explanation of what the different part of the "fileDescription" section of th
 }
 ```
 
-- "format": The format of the mastered file, not the format of the input file.
-- "delimiters": The character to use as the delimiter.
-- "quotes": The character to use for quotes.
-- "escapes": The character to use as the escape character.
-- "header": The uploaded file **must** contain headers. Since schema validation is done, this must be set to true. In addition, headers may **not** contain any spaces - if you have any spaces in your header, please replace them with underscores instead.
-- "charset": An optional field. Other supported charsets include "US-ASCII" and "ISO-8869-1". If left empty, UTF-8 is assumed by default.
+| Parameter | Description |
+| --------- | ----------- |
+| `format` | The format of the mastered file, not the format of the input file. |
+| `delimiters` | The character to use as the delimiter. |
+| `quotes` | The character to use for quotes. |
+| `escapes` | The character to use as the escape character. |
+| `header` | The uploaded file **must** contain headers. Since schema validation is done, this must be set to true. In addition, headers may **not** contain any spaces - if you have any spaces in your header, please replace them with underscores instead. |
+| `charset` | An optional field. Other supported charsets include "US-ASCII" and "ISO-8869-1". If left empty, UTF-8 is assumed by default. |
 
 The dataset referenced must have the file description block listed above and must point to a valid schema in the registry. Otherwise, the file will not be mastered into parquet.
 
-### Create Batch
+### Create batch
 
 Next, you will need to create a batch with CSV as the input format. When creating the batch, you will need to provide a dataset ID. You will also need to ensure that all of the files uploaded as part of the batch conform to the schema linked to the provided dataset.
+
+#### API format
+
+```http
+POST /batches
+```
 
 #### Request
 
 ```shell
-curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
-  -H "accept: application/json" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key : {API_KEY}"
+curl -X POST https://platform.adobe.io/data/foundation/import/batches \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key : {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
   -d '{
-          "datasetId": "{DATASET_ID}",
-           "inputFormat": {
-             "format": "csv"
-           }
+            "datasetId": "{DATASET_ID}",
+            "inputFormat": {
+                "format": "csv"
+            }
       }'
 ```
 
-Where:
-
-- `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
-- `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.     
-- `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.   
-- `{DATASET_ID}`: The ID of the reference dataset.
+| Parameter | Description |
+| --------- | ----------- |
+| `{DATASET_ID}` | The ID of the reference dataset. |
 
 #### Response
 
@@ -616,7 +659,7 @@ Where:
 201 Created
 ```
 ```json
-+{
+{
     "id": "{BATCH_ID}",
     "imsOrg": "{IMS_ORG}",
     "updated": 0,
@@ -635,12 +678,11 @@ Where:
 }
 ```
 
-Where:
-
-- `{BATCH_ID}`: The ID of the newly created batch.  
-- `{IMS_ORG}`: The ID of the IMS Organization that created the batch.  
-- `{DATASET_ID}`: The ID of the referenced dataset.  
-- `{USER_ID}`: The ID of the user who created the batch.
+| Parameter | Description |
+| --------- | ----------- |
+| `{BATCH_ID}` | The ID of the newly created batch. |  
+| `{DATASET_ID}` | The ID of the referenced dataset. |  
+| `{USER_ID}` | The ID of the user who created the batch. |
 
 ### Upload files
 
@@ -648,29 +690,36 @@ Now that you have created a batch, you can use the `batchId` from before to uplo
 
 > **Note:** See the appendix section for an [example of a properly-formatted CSV data file](#data-transformation-for-batch-ingestion).
 
+#### API format
+
+```http
+PUT /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
+```
+
+Parameter | Description
+--------- | -----------
+`{BATCH_ID}` | The ID of the batch you want to upload to.
+`{DATASET_ID}` | The ID of the batch's reference dataset.
+`{FILE_NAME}` | The name of the file you want to upload. 
+
 #### Request
 
+> **Note**: This API supports single-part upload. Ensure that the content-type is application/octet-stream.
+
 ```shell
-curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.csv" \
-  -H "content-type: application/octet-stream" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key : {API_KEY}" \
+curl -X PUT https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.csv \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/octet-stream' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key : {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   --data-binary "@{FILE_PATH_AND_NAME}.csv"
 ```
 
-Where:
+| Parameter | Description |
+| --------- | ----------- |
+| `{FILE_PATH_AND_NAME}` | The full path and name of the file you're trying to upload. |
 
-- `{BATCH_ID}`: The ID of the batch you just created.
-- `{DATASET_ID}`: The ID of the dataset that you're referring to in the created batch.
-- `{FILE_NAME}`: The name of the file you want to upload.
-- `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
-- `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.     
-- `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.   
-- `{FILE_PATH_AND_NAME}`: The full path and name of the file you're trying to upload.  
-
-> **Note**: The API only supports single-part upload. Ensure that the content-type is application/octet-stream.
 
 #### Response
 
@@ -678,26 +727,25 @@ Where:
 200 OK
 ```
 
-### Complete Batch
+### Complete batch
 
 Once you have finished uploading all of the different parts of the file, you will need to signal that the data has been fully uploaded, and that the batch is ready for promotion.
 
+#### API format
+
+```http
+POST /batches/{BATCH_ID}?action=COMPLETE
+```
+
 #### Request
 
 ```shell
-curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=COMPLETE" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key : {API_KEY}"
+curl -X POST https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=COMPLETE \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key : {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
-
-Where:
-
-- `{BATCH_ID}`: The ID of the newly created batch.  
-- `{IMS_ORG}`: The ID of the IMS Organization that created the batch.  
-- `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.     
-- `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 
 #### Response
 
@@ -705,77 +753,89 @@ Where:
 200 OK
 ```
 
-## Cancelling a batch
+## Cancel a batch
 
 While the batch is processing, it can still be cancelled. However, once a batch is finalized (such as either a success or failed state), the batch cannot be cancelled.
 
-### Request
-
-```shell
-curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=ABORT" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key : {API_KEY}"
-```
-
-Where:
-
-- `{BATCH_ID}`: The ID of the batch you want to cancel.  
-- `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
-- `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.     
-- `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.   
-
-### Response
+#### API format
 
 ```http
-200 OK
+POST /batches/{BATCH_ID}?action=ABORT
 ```
 
-## Deleting a batch
-
-A batch can be deleted by performing the following POST request with the `action=REVERT` query parameter to the ID of the batch you wish to delete. The batch is the marked as "inactive", making it eligible for garbage collection. The batch will be asynchronously collected, at which time it will be marked as "deleted".
-
-### Request
-
-```shell
-curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=REVERT" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key : {API_KEY}"
-```
-
-Where:
-
-- `{BATCH_ID}`: The ID of the newly created batch.  
-- `{IMS_ORG}`: The ID of the IMS Organization that created the batch.  
-- `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.     
-- `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
-
-### Response
-
-```http
-200 OK
-```
-
-## Replaying a batch
-
-If you want to replace an already ingested batch, you can do so with "batch replay" - this action is equivalent to deleting the old batch and ingesting a new one instead.
-
-### Create Batch
-
-Firstly, you will need to create a batch, with JSON as the input format. When creating the batch, you will need to provide a dataset ID. You will also need to ensure that all the files uploaded as part of the batch conform to the XDM schema linked to the provided dataset. Additionally, you will need to provide the old batch(es) as reference in the replay section. In the  example below, you are replaying batches with IDs `batchIdA` and `batchIdB`.
+| Parameter | Description |
+| --------- | ----------- |
+| `{BATCH_ID}` | The ID of the batch you want to cancel. |
 
 #### Request
 
 ```shell
-curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
-  -H "accept: application/json" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key : {API_KEY}"
+curl -X POST https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=ABORT \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key : {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' 
+```
+
+#### Response
+
+```http
+200 OK
+```
+
+## Delete a batch
+
+A batch can be deleted by performing the following POST request with the `action=REVERT` query parameter to the ID of the batch you wish to delete. The batch is the marked as "inactive", making it eligible for garbage collection. The batch will be asynchronously collected, at which time it will be marked as "deleted".
+
+#### API format
+
+```http
+POST /batches/{BATCH_ID}?action=REVERT
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| `{BATCH_ID}` | The ID of the batch you want to delete. |
+
+#### Request
+
+```shell
+curl -X POST https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=REVERT \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key : {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' 
+```
+
+#### Response
+
+```http
+200 OK
+```
+
+## Replay a batch
+
+If you want to replace an already ingested batch, you can do so with "batch replay" - this action is equivalent to deleting the old batch and ingesting a new one instead.
+
+### Create batch
+
+Firstly, you will need to create a batch, with JSON as the input format. When creating the batch, you will need to provide a dataset ID. You will also need to ensure that all the files uploaded as part of the batch conform to the XDM schema linked to the provided dataset. Additionally, you will need to provide the old batch(es) as reference in the replay section. In the  example below, you are replaying batches with IDs `batchIdA` and `batchIdB`.
+
+#### API format
+
+```http
+POST /batches
+```
+
+#### Request
+
+```shell
+curl -X POST https://platform.adobe.io/data/foundation/import/batches \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/json' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key : {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' 
   -d '{
           "datasetId": "{DATASET_ID}",
            "inputFormat": {
@@ -788,12 +848,9 @@ curl -X POST "https://platform.adobe.io/data/foundation/import/batches" \
       }'
 ```
 
-Where: 
-
-- `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
-- `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.     
-- `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.   
-- `{DATASET_ID}`: The ID of the reference dataset.
+| Parameter | Description |
+| --------- | ----------- | 
+| `{DATASET_ID}` | The ID of the reference dataset. |
 
 #### Response
 
@@ -827,41 +884,46 @@ Where:
 }
 ```
 
-Where:
-
-- `{BATCH_ID}`: The ID of the newly created batch.  
-- `{IMS_ORG}`: The ID of the IMS Organization that created the batch.  
-- `{DATASET_ID}`: The ID of the referenced dataset.  
-- `{USER_ID}`: The ID of the user who created the batch.
+Parameter | Description
+--------- | -----------
+`{BATCH_ID}` | The ID of the newly created batch.  
+`{DATASET_ID}` | The ID of the referenced dataset.  
+`{USER_ID}` | The ID of the user who created the batch.
 
 
 ### Upload files
 
 Now that you have created a batch, you can use the `batchId` from before to upload files to the batch. You can upload multiple files to the batch.
 
+#### API format
+
+```http
+PUT /batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| `{BATCH_ID}` | The ID of the batch you want to upload to. |
+| `{DATASET_ID}` | The ID of the batch's reference dataset. |
+| `{FILE_NAME}` | The name of the file you want to upload. |
+
 #### Request
 
+> **Note**: This API supports single-part upload. Ensure that the content-type is application/octet-stream. Do not use the curl -F option, as it defaults to multi-part request that is incompatible with the API.
+
 ```shell
-curl -X PUT "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.json" \
-  -H "content-type: application/octet-stream" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key : {API_KEY}" \
+curl -X PUT https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}/datasets/{DATASET_ID}/files/{FILE_NAME}.json \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'Content-Type: application/octet-stream' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key : {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}' \
   --data-binary "@{FILE_PATH_AND_NAME}.json"
 ```
 
-Where:
-
-- `{BATCH_ID}`: The ID of the batch you just created.
-- `{DATASET_ID}`: The ID of the dataset that you're referring to in the created batch.
-- `{FILE_NAME}`: The name of the file you want to upload.
-- `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
-- `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.     
-- `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.   
-- `{FILE_PATH_AND_NAME}`: The full path and name of the file you're trying to upload.  
-
-> **Note**: The API only supports single-part upload. Ensure that the content-type is application/octet-stream. Do not use the curl -F option, as it defaults to multi-part request that's incompatible with the API.
+| Parameter | Description |
+| --------- | ----------- |
+| `{FILE_PATH_AND_NAME}` | The full path and name of the file you're trying to upload. |
 
 #### Response
 
@@ -869,24 +931,29 @@ Where:
 200 OK
 ```
 
-### Complete Batch
+### Complete batch
 
 Once you have finished uploading all the different parts of the file, you will need to signal that the data has been fully uploaded, and that the batch is ready for promotion.
+
+#### API format
+
+```http
+POST /batches/{BATCH_ID}?action=COMPLETE
+```
+
+| Parameter | Description |
+| --------- | ----------- |
+| `{BATCH_ID}` | The ID of the batch you want to complete. |
 
 #### Request
 
 ```shell
-curl -X POST "https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=COMPLETE" \
-  -H "x-gw-ims-org-id: {IMS_ORG}" \
-  -H "x-sandbox-name: {SANDBOX_NAME}" \
-  -H "Authorization: Bearer {ACCESS_TOKEN}" \
-  -H "x-api-key : {API_KEY}"
+curl -X POST https://platform.adobe.io/data/foundation/import/batches/{BATCH_ID}?action=COMPLETE \
+  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
+  -H 'x-gw-ims-org-id: {IMS_ORG}' \
+  -H 'x-api-key : {API_KEY}' \
+  -H 'x-sandbox-name: {SANDBOX_NAME}'
 ```
-
-- `{BATCH_ID}`: The ID of the batch you created.  
-- `{IMS_ORG}`: Your IMS organization ID can be found under the integration details in the Adobe I/O Console.  
-- `{ACCESS_TOKEN}`: Your specific bearer token value provided after authentication.   
-- `{API_KEY}`: Your specific API key value found in your unique Adobe Experience Platform integration.  
 
 #### Response
 
@@ -904,17 +971,3 @@ Information on how to map a CSV file to comply with an XDM schema can be found i
 
 * [CRM_profiles.csv](https://github.com/adobe/experience-platform-etl-reference/blob/master/example_files/CRM_profiles.csv)
 * [CRM_profiles.json](https://github.com/adobe/experience-platform-etl-reference/blob/master/example_files/CRM_profiles.json)
-
-[1]: ../../tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md 
-
-[2]: https://medium.com/adobetech/using-postman-for-jwt-authentication-on-adobe-i-o-7573428ffe7f
-
-[3]: ../../tutorials/creating_a_dataset_tutorial/creating_a_dataset_tutorial.md
-
-[4]: ../schema_registry/schema_registry_developer_guide.md
-
-[5]: https://www.iso.org/iso-8601-date-and-time-format.html
-
-[6]: ../../../../../../acpdr/swagger-specs/ingest-api.yaml
-
-[ad-hoc]: ../../tutorials/schema_registry_api_tutorial/adhoc-schema-tutorial.md
