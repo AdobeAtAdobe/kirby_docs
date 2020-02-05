@@ -53,7 +53,7 @@ __Attributes:__ Attributes are specified characteristics that represent a profil
 __Audience__: An audience is a collection of profiles that meet the segment definition criteria.
 
 <a name="Audience Snapshot"></a>
-__Audience Snapshot__: An audience snapshot captures all profiles who qualify the segment criteria at the time of segmentation.
+__Audience Snapshot__: An audience snapshot captures all profiles who qualify for the segment criteria at the time of segmentation.
 
 [Back to top](#adobe-experience-platform-glossary)
 
