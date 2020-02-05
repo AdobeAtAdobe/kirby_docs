@@ -765,7 +765,7 @@ paths:
           description: >- 
             * <strong>fields</strong> - [Optional] Column filters (comma-separated list of columns in dot notation). Limits the data fields to be included in the export to only those provided in this parameter. The same parameter is also available when creating a segment, therefore the fields in the segment may have already been filtered. Omitting this value will result in all fields being included in the exported data.
             
-            * <strong>mergePolicy</strong> - [Optional] Specifies the merge policy to govern the exported data. Include this parameter when there are multiple segments being exported. Omitting this value will cause the Export Service to use the merge policy provided by the segmentId or snapshotName
+            * <strong>mergePolicy</strong> - [Optional] Specifies the merge policy to govern the exported data. Include this parameter when there are multiple segments being exported. Omitting this value will cause the Export Service to use the merge policy provided by the segmentId
                 * <strong>id</strong> - The ID of the merge policy.
                 * <strong>version</strong> - The specific version of the merge policy to use. Omitting this value will default to the most recent version.
             * <strong>filter</strong> - [Optional] Specifies one or more of the following filters to apply to the segment before export.

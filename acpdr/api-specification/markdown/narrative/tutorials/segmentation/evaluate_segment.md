@@ -262,10 +262,6 @@ A successful response returns the details of the newly created segment job, incl
                     "id": "mpid1",
                     "version": 1
                 }
-            },
-            "snapshot": {
-                "name": "Canadian1",
-                "ttlInDays": 1
             }
         },
         {
@@ -282,10 +278,6 @@ A successful response returns the details of the newly created segment job, incl
                     "id": "mpid1",
                     "version": 1
                 }
-            },
-            "snapshot": {
-                "name": "USA3",
-                "ttlInDays": 1
             }
         }
     ],
@@ -358,10 +350,6 @@ A successful response returns the details of the segmentation job, and will prov
                     "id": "0bf16e61-90e9-4204-b8fa-ad250360957b",
                     "version": 1
                 }
-            },
-            "snapshot": {
-                "name": "",
-                "ttlInDays": 0
             }
         }
     ],
