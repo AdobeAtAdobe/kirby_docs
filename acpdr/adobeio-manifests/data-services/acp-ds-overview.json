@@ -27,7 +27,13 @@
 			"title": "Catalog Service overview"
 		},
 		{
-			"pages": [],
+			"pages": [
+				{
+					"pages": [],
+					"path": "api-specification/markdown/narrative/technical_overview/datasets/datasets-user-guide.md",
+					"title": "Datasets user guide"
+				}
+			],
 			"path": "api-specification/markdown/narrative/technical_overview/datasets/datasets-overview.md",
 			"title": "Datasets overview"
 		},
