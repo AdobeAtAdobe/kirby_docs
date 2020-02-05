@@ -6,8 +6,8 @@ Using the Real-time Customer Profile API, this tutorial shows you how to:
 
 * [View all delete requests created by your organization](#view-delete-requests)
 * [Create a new delete request](#create-a-delete-request)
-  * [Delete a dataset](#delete-a-dataset)
-  * [Delete a batch](#delete-a-batch)
+    * [Delete a dataset](#delete-a-dataset)
+    * [Delete a batch](#delete-a-batch)
 * [Check the status of a specific delete request by its ID](#lookup-a-delete-request)
 * [Remove a delete request](#remove-a-delete-request)
 
@@ -111,11 +111,13 @@ The response includes a "children" array with an object for each delete request 
 
 ## Create a delete request
 
-Initiating a new delete request is done through a POST request to the `/systems/jobs` endpoint, where the ID of the dataset or batch to be deleted is provided in the body of the request.
+Initiating a new delete request is done through a POST request to the `/systems/jobs` endpoint, where the ID of the dataset or batch to be deleted is provided in the body of the request. Steps for [deleting a dataset](#delete-a-dataset) and [deleting a batch](#delete-a-batch) are included in the sections that follow.
 
 ### Delete a dataset
 
 In order to delete a dataset, the dataset ID must be included in the body of the POST request. This action will delete ALL data for a given dataset. Experience Platform allows you to delete datasets based on both record and time series schemas.
+
+> **Note:** When attempting to delete a Profile-enabled dataset using the Experience Platform UI, the dataset is deleted from the Data Lake and disabled for ingestion, but will not be deleted from the Profile store until a delete request is created using the API. For more information, see the [appendix](#appendix) to this document.
 
 #### API format
 
@@ -163,7 +165,7 @@ A successful request returns the details of the newly created delete request, in
 
 In order to delete a batch, the batch ID must be included in the body of the POST request. Please be advised that you cannot delete batches for datasets based on record schemas. Only batches for datasets based on time series schemas may be deleted. 
 
-> **Note:** The reason you cannot delete batches for datasets based on record schemas is because record type dataset batches overwrite previous records and therefore cannot be "undone" or deleted. The way to remove the impact of erroneous batches for datasets based on record schemas is to reingest the batch with the correct data and it will overwrite the incorrect records. 
+> **Note:** The reason you cannot delete batches for datasets based on record schemas is because record type dataset batches overwrite previous records and therefore cannot be "undone" or deleted. The way to remove the impact of erroneous batches for datasets based on record schemas is to re-ingest the batch with the correct data and it will overwrite the incorrect records. 
 
 For more information on record and time series behavior, please review the [section on XDM data behaviors](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md#data-behaviors-in-xdm-system) in the [XDM System overview](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md).
 
@@ -298,4 +300,20 @@ A successful delete request returns HTTP Status 200 (OK) and an empty response b
 
 ## Next Steps
 
-After completing this tutorial, you now know the steps involved in deleting datasets and batches containing data that you no longer need in Experience Platform. You can now begin to delete data from your organization, being mindful that the delete request cannot be undone, therefore you should only delete data that you are confident you do not need now and will not need in the future.
+After completing this tutorial, you now know the steps involved in deleting datasets and batches from the Profile store. When deleting data from your organization, be mindful that the delete request cannot be undone. Therefore, it is recommended to only delete data that you are confident you do not need now and will not need in the future.
+
+## Appendix
+
+The following information is supplemental to the act of deleting a dataset from the Profile store.
+
+### Deleting a dataset using the Experience Platform UI
+
+When using the Experience Platform user interface to delete a dataset that has been enabled for Profile, a dialog opens asking, "Are you sure you want to delete this dataset from the Experience Data Lake? Use the 'profile systems jobs' API to delete this dataset from the Profile Service."
+
+As indicated by the warning dialog, clicking **Delete** in the UI deletes the dataset from the Data Lake and disables the dataset for ingestion, but DOES NOT automatically delete the dataset from the Profile store. In order to permanently delete the dataset from the Profile store, a delete request must be created using the steps for [creating a delete request](#create-a-delete-request) provided earlier in this document.
+
+The following image shows the warning when attempting to delete a Profile-enabled dataset using the UI.
+
+![](images/delete-profile-dataset.png)
+
+For additional information regarding working with datasets, please visit the [datasets overview](../../technical_overview/datasets/datasets-overview.md).
