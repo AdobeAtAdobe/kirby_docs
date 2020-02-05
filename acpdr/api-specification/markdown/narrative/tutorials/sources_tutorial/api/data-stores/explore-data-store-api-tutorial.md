@@ -1,4 +1,4 @@
-# Explore your data store repository using the Flow Service API
+# Explore a data store repository using the Flow Service API
 
 This tutorial uses the Flow Service API to explore data store repository, and includes the following topics:
 

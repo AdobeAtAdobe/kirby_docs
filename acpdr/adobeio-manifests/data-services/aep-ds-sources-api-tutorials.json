@@ -108,6 +108,13 @@
             "description": ""
         },
         {
+            "importedFileName": "explore-data-store-api-tutorial",
+            "pages": [],
+            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/data-stores/explore-data-store-api-tutorial.md",
+            "title": "Explore a data store repository using the Flow Service API",
+            "description": ""
+        },
+        {
             "importedFileName": "retrieve-cloud-storage-api-tutorial",
             "pages": [],
             "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/cloud-storages/retrieve-cloud-storage-api-tutorial.md",
@@ -119,6 +126,13 @@
             "pages": [],
             "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/crm/retrieve-crm-data-api-tutorial.md",
             "title": "Collect CRM data through source connectors and APIs",
+            "description": ""
+        },
+        {
+            "importedFileName": "retrieve-data-store-api-tutorial",
+            "pages": [],
+            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/data-stores/retrieve-data-store-api-tutorial.md",
+            "title": "Collect data from external data stores through source connectors and APIs",
             "description": ""
         }
     ],
