@@ -20,6 +20,10 @@ The following is a list of tutorials for creating connectors using the Flow Serv
 -   [Microsoft Dynamics connector](./crm/dynamics-api-tutorial.md)
 -   [Salesforce connector](./crm/salesforce-api-tutorial.md)
 
+## Data Stores
+
+-   [MySQL connector](./data-stores/mysql-db-api-tutorial.md)
+
 ## Legacy connectors
 
 The following list of tutorials walks through deprecated methods for creating source connections:
