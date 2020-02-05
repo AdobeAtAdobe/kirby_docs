@@ -377,7 +377,21 @@ A successful response returns the details of the segmentation job, and will prov
             "startTimeInMs": 1547063669001,
             "endTimeInMs": 1547063720887,
             "totalTimeInMs": 51886
-        }
+        },
+        "segmentedProfileCounter": {
+            "ca763983-5572-4ea4-809c-b7dff7e0d79b": 4195,
+            "251e3a1f-645c-4444-836b-18e6b668bdf8": 0,
+            "3da8bad9-29fb-40e0-b39e-f80322e964de": 0,
+            "30230300-ccf1-48ad-8012-c5563a007069": 0
+        },
+        "segmentedProfileByNamespaceCounter": {
+            "ca763983-5572-4ea4-809c-b7dff7e0d79b": {
+                "email": 4195
+            },
+            "251e3a1f-645c-4444-836b-18e6b668bdf8": {},
+            "3da8bad9-29fb-40e0-b39e-f80322e964de": {},
+            "30230300-ccf1-48ad-8012-c5563a007069": {}
+        }     
     },
     "updateTime": 1547063731181,
     "imsOrgId": "{IMS_ORG}",
@@ -394,6 +408,11 @@ A successful response returns the details of the segmentation job, and will prov
     }
 }
 ```
+
+Property | Description 
+-------- | ------------
+`segmentedProfileCounter` | The total number of merged profiles which qualify for the segment.
+`segmentedProfileByNamespaceCounter` | A breakdown of the profiles that qualify for the segment by identity namespace code. A list of identity namespace codes can be found in the [identity namespace overview](../../technical_overview/identity_namespace_overview/identity_namespace_overview.md).
 
 ## Interpret segment results
 
