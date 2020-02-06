@@ -121,3 +121,9 @@ The following table outlines key terms related to Data Governance and the DULE f
 |**Policy**|In the data governance framework, a policy is a rule that describes what kind of marketing actions are allowed or not allowed to be taken on specific data.|
 |**Sensitive Labels**|Sensitive “S” labels are used to categorize data that you, and your organization, consider sensitive.|
 
+## Additional resources
+
+The following video is intended to support your understanding of Data Governance, and outlines the key aspects of the Data Usage Labeling and Enforcement (DULE) framework.
+
+<a href="https://docs.adobe.com/content/help/en/platform-learn/tutorials/data-governance/understanding-data-governance.html" target="_blank"><img src="./dule_images/understanding_data_governance.png"></a>
+
