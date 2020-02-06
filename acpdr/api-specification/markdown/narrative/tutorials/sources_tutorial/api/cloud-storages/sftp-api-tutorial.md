@@ -20,7 +20,13 @@ The following sections provide additional information that you will need to know
 
 ### Gather required credentials
 
-In order to access your SFTP server you must provide the **host name**, **username**, and **password**.
+In order for Flow Service to connect to SFTP, you must provide values for the following connection properties:
+
+| Credential | Description |
+| ---------- | ----------- |
+| `host` | The name or IP address associated with your SFTP server. |
+| `username` | The username with access to your SFTP server. |
+| `password` | The password for your SFTP server. |
 
 ### Reading sample API calls
 
@@ -152,10 +158,12 @@ curl -X POST \
 }
 ```
 
-- `auth.params.host`: The server host name.
-- `auth.params.username`: The username associated with your SFTP account.
-- `auth.params.password`: The password associated with your SFTP account.
-- `connectionSpec.id`: The base connection ID of your SFTP.
+| Property | Description |
+| -------- | ----------- |
+| `auth.params.host` | The host name of your SFTP server. |
+| `auth.params.username` | The username associated with your SFTP server. |
+| `auth.params.password` | The password associated with your SFTP server. |
+| `connectionSpec.id` | The connection specification `id` of your SFTP server retrieved in the previous step. |
 
 #### Response
 
@@ -164,6 +172,7 @@ A successful response returns the unique identifier (`id`) of the newly created 
 ```json
 {
     "id": "bf367b0d-3d9b-4060-b67b-0d3d9bd06094",
+    "etag": "\"1700cc7b-0000-0200-0000-5e3b3fba0000\""
 }
 ```
 

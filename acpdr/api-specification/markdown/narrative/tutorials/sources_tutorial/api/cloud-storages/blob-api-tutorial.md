@@ -20,7 +20,13 @@ The following sections provide additional information that you will need to know
 
 ### Gather required credentials
 
-In order for Platform to connect with your Blob storage, you must provide a valid **Azure Storage connection string**. You can learn more about connection strings including ways to obtain them through <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string" target="_blank">this Microsoft Azure document</a>.
+In order for Flow Service to connect with your Blob storage, you must provide values for the following connection property:
+
+| Credential | Description |
+| ---------- | ----------- |
+| `connectionString` | The connection string required to access data in your Blob storage. |
+
+For more information on getting started, visit [this Azure Blob document](https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string).
 
 ### Reading sample API calls
 
@@ -63,7 +69,7 @@ The following request retrieves the connection specifications for Blob.
 
 ```shell
 curl -X GET \
-    'https://platform.adobe.io/data/foundation/flowservice/connectionSpecs?property=name==%22azure-blob%22' \
+    'https://platform.adobe.io/data/foundation/flowservice/connectionSpecs?property=name=="azure-blob"' \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
     -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -72,7 +78,7 @@ curl -X GET \
 
 #### Response
 
-A successful response returns the connection specifications for Blob, including its unique identifier (`id`). Store this ID as it is required in the next step for creating a base connection.
+A successful response returns the connection specifications for Blob, including its unique identifier (`id`). This ID is required in the next step to create a base connection.
 
 ```json
 {
@@ -132,7 +138,7 @@ curl -X POST \
         "auth": {
             "specName": "ConnectionString",
             "params": {
-                "connectionString": "{BLOB_STRING}",
+                "connectionString": "{CONNECTION_STRING}"
             }
         },
         "connectionSpec": {
@@ -142,16 +148,19 @@ curl -X POST \
     }'
 ```
 
-*   `auth.params.connectionString`: Your Azure Blob connection string.
-*   `connectionSpec.id`: The ID of the connection specifications for Blob.
+| Property | Description |
+| -------- | ----------- |
+|   `auth.params.connectionString` | The connection string for your Blob storage. |
+|   `connectionSpec.id` | The connection specification `id` of your Blob storage retrieved in the previous step. |
 
 #### Response
 
-A successful response returns details of the newly created base connection, including its unique identifier (`id`). Store this ID as it is required in the next step to explore your cloud storage.
+A successful response returns details of the newly created base connection, including its unique identifier (`id`). This ID is required to explore your storage in the next tutorial.
 
 ```json
 {
-    "id": "4cb0c374-d3bb-4557-b139-5712880adc55"
+    "id": "4cb0c374-d3bb-4557-b139-5712880adc55",
+    "etag": "\"1700c57b-0000-0200-0000-5e3b3f440000\""
 }
 ```
 

@@ -18,12 +18,14 @@ The following sections provide additional information that you will need to know
 
 ### Gather required credentials
 
-In order for the Flow Service to connect to ADLS Gen2, you must provide values for the following connection properties:
+In order for Flow Service to connect to ADLS Gen2, you must provide values for the following connection properties:
 
-* `url`: The address URL.
-* `servicePrincipalId`: The application's client ID.
-* `servicePrincipalKey`: The application's key.
-* `tenant`: The tenant information that contains your application.
+| Credential | Description |
+| ---------- | ----------- |
+| `url` | The address URL. |
+| `servicePrincipalId` | The application's client ID. |
+| `servicePrincipalKey` | The application's key. |
+| `tenant` | The tenant information that contains your application. |
 
 For more information about these values, refer to [this ADLS Gen2 document](https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-data-lake-storage).
 
@@ -153,10 +155,10 @@ curl -X POST \
         "auth": {
             "specName": "Basic Authentication for adls-gen2",
             "params": {
-                "url": "my-url"
-                "servicePrincipalId": "my-servicePrincipalId",
-                "servicePrincipalKey": "my-servicePrincipalKey",
-                "tenant": "my-tenant",
+                "url": "{URL}",
+                "servicePrincipalId": "{SERVICE_PRINCIPAL_ID}",
+                "servicePrincipalKey": "{SERVICE_PRINCIPAL_KEY}",
+                "tenant": "{TENANT}"
             }
         },
         "connectionSpec": {
@@ -166,11 +168,13 @@ curl -X POST \
     }'
 ```
 
-* `auth.params.url`: The ADLS-Gen2 URL.
-* `auth.params.servicePrincipalId`: The ADLS-Gen2 service principal ID.
-* `auth.params.servicePrincipalkey`: The ADLS-Gen2 service principal key.
-* `auth.params.tenant`: The ADLS-Gen2 tenant information.
-* `connectionSpec.id`: The ADLS-Gen2 connection specification.
+| Property | Description |
+| -------- | ----------- |
+| `auth.params.url` | The URL endpoint for your ADLS Gen2 account. |
+| `auth.params.servicePrincipalId` | The service principal ID of your ADLS Gen2 account. |
+| `auth.params.servicePrincipalKey` | The service principal key of your ADLS Gen2 account. |
+| `auth.params.tenant` | The tenant information of your ADLS Gen2 account. |
+| `connectionSpec.id` | The connection specification `id` of your ADLS Gen2 account retrieved in the previous step. |
 
 #### Response
 

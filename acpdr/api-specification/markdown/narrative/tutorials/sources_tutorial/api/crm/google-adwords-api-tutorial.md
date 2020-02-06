@@ -18,12 +18,12 @@ The following sections provide additional information that you will need to know
 
 ### Gather required credentials
 
-In order for the Flow Service to connect with AdWords, you must provide values for the following connection properties:
+In order for Flow Service to connect with AdWords, you must provide values for the following connection properties:
 
 | **Credential** | **Description** |
 | -------------- | --------------- |
 | `clientCustomerID` | The customer ID associated with the target Google AdWords |account. |
-| `developerToken` | A string used to identify an AdWords API developer. |
+| `developerToken` | The string used to identify an AdWords API developer. |
 | `refreshToken` | The refresh token obtained from Google used to authorize access to AdWords. |
 | `clientID` | The ID of the application used to generate the refresh token. |
 | `clientSecret` | The client secret for the application used to generate the refresh token. |
@@ -178,13 +178,13 @@ curl -X POST \
     }
 ```
 | Property | Description |
-| ------------- | --------------- |
-| `auth.params.clientCustomerID` | Your AdWords Client Customer ID. |
-| `auth.params.developerToken` | Your AdWords Developer Token. |
-| `auth.params.refreshToken` | Your AdWords Refresh Token. |
-| `auth.params.clientID` | Your AdWords Client ID. |
-| `auth.params.clientSecret` | Your Client Secret. |
-| `connectionSpec.id` | Your connection specification ID. |
+| -------- | ----------- |
+| `auth.params.clientCustomerID` | The client customer ID of your AdWords account. |
+| `auth.params.developerToken` | The developer token of your AdWords account. |
+| `auth.params.refreshToken` | The refresh token of your AdWords account. |
+| `auth.params.clientID` | The client ID of your AdWords account. |
+| `auth.params.clientSecret` | The client secret of your AdWords account. |
+| `connectionSpec.id` | The connection specification `id` of your AdWords account retrieved in the previous step. |
 
 #### Response
 

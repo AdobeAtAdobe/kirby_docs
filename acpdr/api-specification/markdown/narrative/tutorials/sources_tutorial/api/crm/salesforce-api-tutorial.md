@@ -20,7 +20,16 @@ The following sections provide additional information that you will need to know
 
 ### Gather required credentials
 
-In order to access your Salesforce account within Platform, you must provide your **environment URL**, **username**, **password**, and **security token**.
+In order for Flow Service to connect to Salesforce, you must provide values for the following connection properties:
+
+| Credential | Description |
+| ---------- | ----------- |
+| `environmentUrl` | The URL of the Salesforce source instance. |
+| `username` | The username for the Salesforce user account. |
+| `password` | The password for the Salesforce user account. |
+| `securityToken` | The security token for the Salesforce user account. |
+
+For more information on getting started, visit [this Salesforce document](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_understanding_authentication.htm).
 
 ### Reading sample API calls
 
@@ -48,7 +57,7 @@ Before connecting Platform to a Salesforce account, you must verify that connect
 
 Each available source has its own unique set of connection specifications for describing connector properties such as authentication requirements. You can look up connection specifications for Salesforce by performing a GET request and using query parameters.
 
-#### API Format
+#### API format
 
 Sending a GET request without query parameters will return connection specifications for all available sources. You can include the query `property=name=="salesforce"` to obtain information specifically for Salesforce.
 
@@ -72,7 +81,7 @@ curl -X GET \
 
 #### Response
 
-A successful response returns the connection specifications for Salesforce, including its unique identifier (`id`). Store this ID as it is required in the next step to create a base connection.
+A successful response returns the connection specifications for Salesforce, including its unique identifier (`id`). This ID is required in the next step to create a base connection.
 
 ```json
 {
@@ -127,9 +136,9 @@ A successful response returns the connection specifications for Salesforce, incl
 
 A base connection specifies a source and contains your credentials for that source. Only one base connection is required per Salesforce account as it can be used to create multiple source connectors to bring in different data.
 
-Perform the following POST request to create a base connection. 
+Perform the following POST request to create a base connection.
 
-#### API Format
+#### API format
 
 ```http
 POST /connections
@@ -163,18 +172,21 @@ curl -X POST \
     }'
 ```
 
-*   `auth.params.username`: Salesforce username.
-*   `auth.params.password`: Salesforce password.
-*   `auth.params.securityToken`: Salesforce security token.
-*   `connectionSpec.id`: Salesforce connection specifications ID.
+| Property | Description |
+| -------- | ----------- |
+| `auth.params.username` | The username associated with your Salesforce account. |
+| `auth.params.password` | The password associated with your Salesforce account. |
+| `auth.params.securityToken` | The security token associated with your Salesforce account. |
+| `connectionSpec.id` | The connection specification `id` of your Salesforce account retrieved in the previous step. |
 
 #### Response
 
-A successful response contains the base connection's unique identifier (`id`). Store this ID as it is required in the next step to explore data tables.
+A successful response contains the base connection's unique identifier (`id`). This ID is required to explore your data in the next tutorial.
 
 ```json
 {
-    "id": "4cb0c374-d3bb-4557-b139-5712880adc55"
+    "id": "4cb0c374-d3bb-4557-b139-5712880adc55",
+    "etag": "\"1700df7b-0000-0200-0000-5e3b424f0000\""
 }
 ```
 

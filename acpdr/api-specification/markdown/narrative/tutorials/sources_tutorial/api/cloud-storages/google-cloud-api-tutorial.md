@@ -18,7 +18,14 @@ The following sections provide additional information that you will need to know
 
 ### Gather required credentials
 
-In order for the Flow Service to connect with your cloud storage, you must provide your **access key ID** and **secret access key**. For more information about the keys, refer to <a href="https://cloud.google.com/storage/docs/migrating#keys" target="_blank">this Google Cloud Storage document</a>.
+In order for Flow Service to connect with your Google Cloud storage, you must provide values for the following connection properties:
+
+| Credential | Description |
+| ---------- | ----------- |
+| `accessKeyId` | The access key ID for your Google Cloud storage account. |
+| `secretAccessKey` | The secret access key for your Google Cloud storage account. |
+
+For information on getting started, visit [this Google Cloud document](https://cloud.google.com/docs/authentication).
 
 ### Reading sample API calls
 
@@ -46,7 +53,7 @@ Before connecting Platform to a Google Cloud storage, you must verify that conne
 
 Each available source has its own unique set of connection specifications for describing connector properties such as authentication requirements. You can look up connection specifications for Google Cloud storage by performing a GET request and using query parameters.
 
-#### API Format
+#### API format
 
 Sending a GET request without query parameters will return connection specifications for all available sources. You can include the query `property=name=="google-cloud"` to obtain information specifically for Google Cloud storage.
 
@@ -61,7 +68,7 @@ The following request retrieves the connection specifications for Google Cloud s
 
 ```shell
 curl -X GET \
-    'https://platform.adobe.io/data/foundation/flowservice/connectionSpecs?property=name==google-cloud' \
+    'https://platform.adobe.io/data/foundation/flowservice/connectionSpecs?property=name=="google-cloud"' \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
     -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -70,7 +77,7 @@ curl -X GET \
 
 #### Response
 
-A successful response returns the connection specifications for Google Cloud storage, including its unique identifier (`id`). Store this ID as it is required in the next step for creating a base connection.
+A successful response returns the connection specifications for Google Cloud storage, including its unique identifier (`id`). This ID is required in the next step to create a base connection.
 
 ```json
 {
@@ -115,7 +122,7 @@ A successful response returns the connection specifications for Google Cloud sto
 
 A base connection specifies a source and contains your credentials for that source. Only one base connection is required per Google Cloud storage account as it can be used to create multiple source connectors to bring in different data.
 
-#### API Format
+#### API format
 
 ```http
 POST /connections
@@ -132,8 +139,8 @@ curl -X POST \
     -H 'x-sandbox-name: {SANDBOX_NAME}' \
     -H 'Content-Type: application/json' \
     -d '{
-        "name": "Google Cloud Storage base connection",
-        "description": "Base connector for Google Cloud Storage",
+        "name": "Google Cloud storage base connection",
+        "description": "Base connector for Google Cloud storage",
         "auth": {
             "specName": "Basic Authentication for google-cloud",
             "params": {
@@ -148,17 +155,20 @@ curl -X POST \
     }'
 ```
 
-*   `auth.params.accessKeyId`: Your Google Cloud Storage access key ID
-*   `auth.params.secretAccessKey`: Your Google Cloud Storage secret access key.
-*   `connectionSpec.id`: The ID of the connection specifications for Google Cloud Storage.
+| Property | Description |
+| -------- | ----------- |
+| `auth.params.accessKeyId` | The access key ID associated with your Google Cloud storage. |
+| `auth.params.secretAccessKey` | The secret access key associated with your Google Cloud storage. |
+| `connectionSpec.id` | The connection specification `id` of your Google Cloud storage retrieved in the previous step. |
 
 #### Response
 
-A successful response returns details of the newly created base connection, including its unique identifier (`id`). Store this ID as it is required in the next step to explore your cloud storage.
+A successful response returns details of the newly created base connection, including its unique identifier (`id`). This ID is required to explore your cloud storage data in the next tutorial.
 
 ```json
 {
-    "id": "4cb0c374-d3bb-4557-b139-5712880adc55"
+    "id": "4cb0c374-d3bb-4557-b139-5712880adc55",
+    "etag": "\"6507cfd8-0000-0200-0000-5e18fc600000\""
 }
 ```
 

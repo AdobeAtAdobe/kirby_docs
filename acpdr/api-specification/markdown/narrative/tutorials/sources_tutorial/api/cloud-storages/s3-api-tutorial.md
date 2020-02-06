@@ -20,7 +20,14 @@ The following sections provide additional information that you will need to know
 
 ### Gather required credentials
 
-In order for Platform to connect with your S3 storage, you must provide your **S3 Access Key** and **S3 Secret Key**. For more information, refer to <a href="https://aws.amazon.com/blogs/security/wheres-my-secret-access-key/" target="_blank">this AWS document</a>.
+In order for Flow Service to connect with your S3 storage, you must provide values for the following connection properties:
+
+| Credential | Description |
+| ---------- | ----------- |
+| `s3AccessKey` | The access key ID for your S3 storage. |
+| `s3SecretKey` | The secret key ID for your S3 storage. |
+
+For more information on getting started, visit [this AWS document](https://aws.amazon.com/blogs/security/wheres-my-secret-access-key/).
 
 ### Reading sample API calls
 
@@ -63,7 +70,7 @@ The following request retrieves the connection specifications for S3.
 
 ```shell
 curl -X GET \
-    'https://platform.adobe.io/data/foundation/flowservice/connectionSpecs?property=name==%22amazon-s3%22' \
+    'https://platform.adobe.io/data/foundation/flowservice/connectionSpecs?property=name=="amazon-s3"' \
     -H 'Authorization: Bearer {ACCESS_TOKEN}' \
     -H 'x-api-key: {API_KEY}' \
     -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -72,7 +79,7 @@ curl -X GET \
 
 #### Response
 
-A successful response returns the connection specifications for S3, including its unique identifier (`id`). Store this ID as it is required in the next step for creating a base connection.
+A successful response returns the connection specifications for S3, including its unique identifier (`id`). This ID is required in the next step to create a base connection.
 
 ```json
 {
@@ -150,17 +157,20 @@ curl -X POST \
     }'
 ```
 
-*   `auth.params.s3AccessKey`: Your Amazon S3 access key.
-*   `auth.params.s3SecretKey`: Your Amazon S3 secret key.
-*   `connectionSpec.id`: The ID of the connection specifications for S3.
+| Property | Description |
+| -------- | ----------- |
+| `auth.params.s3AccessKey` | The access key associated with your S3 storage. |
+| `auth.params.s3SecretKey` | Your secret key associated with your S3 storage. |
+| `connectionSpec.id` | The connection specification `id` of your S3 storage retrieved in the previous step. |
 
 #### Response
 
-A successful response returns details of the newly created base connection, including its unique identifier (`id`). Store this ID as it is required in the next step to explore your S3 storage.
+A successful response returns details of the newly created base connection, including its unique identifier (`id`). This ID is required to explore your storage in the next tutorial.
 
 ```json
 {
-    "id": "4cb0c374-d3bb-4557-b139-5712880adc55"
+    "id": "4cb0c374-d3bb-4557-b139-5712880adc55",
+    "etag": "\"1700d77b-0000-0200-0000-5e3b41a10000\""
 }
 ```
 

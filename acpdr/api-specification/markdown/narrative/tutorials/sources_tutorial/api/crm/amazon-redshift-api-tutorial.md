@@ -22,10 +22,10 @@ In order for Flow Service to connect with Redshift, you must provide the followi
 
 | **Credential** | **Description** |
 | -------------- | --------------- |
-| `server`| The server associated with your Redshift account. |
-| `username`| The username associated with your Redshift account. |
-| `password`| The password associated with your Redshift account. |
-| `database`| The Redshift database you are accessing. |
+| `server` | The server associated with your Redshift account. |
+| `username` | The username associated with your Redshift account. |
+| `password` | The password associated with your Redshift account. |
+| `database` | The Redshift database you are accessing. |
 
 For more information about getting started, refer to [this Redshift document](https://docs.aws.amazon.com/redshift/latest/gsg/getting-started.html).
 
@@ -171,19 +171,20 @@ curl -X POST \
 
 | Property | Description |
 | ------------- | --------------- |
-| `auth.params.server`|  Your Redshift server. |
-| `auth.params.database`| The database associated with your Redshift account. |
-| `auth.params.password`| The password associated with your Redshift account. |
-| `auth.params.username`| The username associated with your Redshift account. |
-| `connectionSpec.id`| The connection specification ID associated with Redshift. |
+| `auth.params.server` |  Your Redshift server. |
+| `auth.params.database` | The database associated with your Redshift account. |
+| `auth.params.password` | The password associated with your Redshift account. |
+| `auth.params.username` | The username associated with your Redshift account. |
+| `connectionSpec.id` | The connection specification `id` of your Redshift account retrieved in the previous step. |
 
 #### Response
 
-A successful response returns details of the newly created base connection, including its unique identifier (`id`). This ID is required to explore your cloud storage in the next step.
+A successful response returns details of the newly created base connection, including its unique identifier (`id`). This ID is required to explore your data in the next tutorial.
 
 ```json
 {
     "id": "373e88fc-43da-4e3c-be88-fc43da3e3c0f",
+    "etag": "\"1700ce7b-0000-0200-0000-5e3b405e0000\""
 }
 ```
 
