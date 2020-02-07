@@ -51,6 +51,7 @@
       "api-specification/markdown/narrative/gdpr/": "/apis/experienceplatform/gdpr/docs/alldocs.html",
       "api-specification/markdown/narrative/technical_overview/sandboxes/": "/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html",
       "api-specification/markdown/narrative/technical_overview/platform_faq_and_troubleshooting/": "/apis/experienceplatform/home/services/troubleshooting.html",
-      "api-specification/markdown/narrative/technical_overview/identity_namespace_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html"
+      "api-specification/markdown/narrative/technical_overview/identity_namespace_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
+      "api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html"
     }
 }
