@@ -52,9 +52,7 @@ In order to create a MySQL connection, a set of MySQL connection specifications 
 
 #### API format
 
-Each available source has its own unique set of connection specifications for describing connector properties such as authentication requirements. You can look up connection specifications for MySQL by performing a GET request and using query parameters.
-
-Sending a GET request without query parameters will return connection specifications for all available sources. You can include the query `property=name=="mysql"` to obtain information specifically for MySQL.
+Each available source has its own unique set of connection specifications for describing connector properties such as authentication requirements. Sending a GET request to the `/connectionSpecs` endpoint will return connection specifications for all available sources. You can also include the query `property=name=="mysql"` to obtain information specifically for MySQL.
 
 ```http
 GET /connectionSpecs

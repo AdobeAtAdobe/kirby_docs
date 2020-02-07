@@ -70,6 +70,11 @@
                 },
                 {
                     "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/data-stores/psql-api-tutorial.md",
+                    "title": "PostgreSQL connector"
+                },
+                {
+                    "pages": [],
                     "path": "api-specification/markdown/narrative/tutorials/creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md",
                     "title": "Azure Blob connector (Legacy)"
                 },

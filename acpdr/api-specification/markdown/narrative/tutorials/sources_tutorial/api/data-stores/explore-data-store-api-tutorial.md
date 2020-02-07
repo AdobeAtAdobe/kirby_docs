@@ -16,7 +16,10 @@ The following sections provide additional information that you will need to know
 
 ### Obtain a base connection
 
-In order to explore your data store repository using Platform APIs, you must possess a valid base connection ID. If you do not already have a base connection for the data store repository you wish to work with, you can create one through the [MySQL tutorial](./mysql-db-api-tutorial.md).
+In order to explore your data store repository using Platform APIs, you must possess a valid base connection ID. If you do not already have a base connection for the data store repository you wish to work with, you can create one through the following tutorials:
+
+* [MySQL tutorial](./mysql-db-api-tutorial.md)
+* [PostgreSQL tutorial](./psql-api-tutorial.md)
 
 ### Reading sample API calls
 

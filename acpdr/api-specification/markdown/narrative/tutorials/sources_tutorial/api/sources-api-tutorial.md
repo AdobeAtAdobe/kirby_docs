@@ -23,6 +23,7 @@ The following is a list of tutorials for creating connectors using the Flow Serv
 ## Data Stores
 
 -   [MySQL connector](./data-stores/mysql-db-api-tutorial.md)
+-   [PostgreSQL connector](./data-stores/psql-api-tutorial.md)
 
 ## Legacy connectors
 
