@@ -24,6 +24,11 @@
         },
         {
           "pages": [],
+          "path": "api-specification/markdown/narrative/technical_overview/privacy_service_overview/identity-data-for-privacy-requests.md",
+          "title": "Identity data for privacy requests"
+        },
+        {
+          "pages": [],
           "path": "api-specification/markdown/narrative/tutorials/privacy_service_tutorial/privacy-events.md",
           "title": "Subscribe to Privacy Events"
         },
