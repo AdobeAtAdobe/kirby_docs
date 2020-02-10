@@ -1,6 +1,6 @@
 # Access control user guide
 
-Access control in Adobe Experience Platform allows you to manage roles and permissions for various Platform capabilities by using the [Adobe Admin Console](https://adminconsole.adobe.com). This document serves as a guide for how to manage access control for Platform using the Admin Console. For a high-level overview of access control in Experience Platform, see the [access control overview](access-control-overview.md). 
+Access control in Adobe Experience Platform allows you to manage roles and permissions for various Platform capabilities by using the [Adobe Admin Console](https://adminconsole.adobe.com). This document serves as a guide for how to navigate the Admin Console to manage access control for Platform. For a high-level overview of access control in Experience Platform, see the [access control overview](access-control-overview.md). 
 
 The following tasks are covered:
 
@@ -9,6 +9,10 @@ The following tasks are covered:
 * [Create a new product profile](#create-a-new-product-profile)
 * [Manage permissions for a product profile](#manage-permissions-for-a-product-profile)
 * [Manage details and additional services for a product profile](#manage-details-and-additional-services-for-a-product-profile)
+    * Additional services include:
+        * Data Science Workspace
+        * Query Service
+        * Real-time Customer Data Platform
 * [Manage users for a product profile](#manage-users-for-a-product-profile)
 
 ## Access the Admin Console
