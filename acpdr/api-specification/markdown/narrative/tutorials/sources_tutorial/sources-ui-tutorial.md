@@ -14,6 +14,7 @@ The following is a list of tutorials for creating connectors in the Platform UI:
 
 -   [Azure Blob and Amazon S3 connector](./amazon-s3-ui-tutorial.md)
 -   [FTP and SFTP connector](./ftp-sftp-ui-tutorial.md)
+-   [Google Cloud Storage connector](./google-cloud-storage-ui-tutorial.md)
 
 ## CRM
 
