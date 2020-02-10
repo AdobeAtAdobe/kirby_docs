@@ -25,6 +25,7 @@ Cloud storage sources can bring your own data into Platform without the need to 
 
 -   [Create an Azure Blob or Amazon S3 source connector in the UI](../../tutorials/sources_tutorial/amazon-s3-ui-tutorial.md)
 -   [Create an FTP or SFTP source connector in the UI](../../tutorials/sources_tutorial/ftp-sftp-ui-tutorial.md)
+-   [Create a Google Cloud Storage source connector in the UI](../../tutorials/sources_tutorial/google-cloud-storage-ui-tutorial.md)
 
 ### Customer Relationship Management (CRM)
 
