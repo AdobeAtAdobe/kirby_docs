@@ -106,7 +106,9 @@ The *Scheduling* step appears, allowing you to configure an ingestion schedule t
 *   Interval: An integer that sets the interval for the selected frequency.
 *   Start time: A UTC timestamp for which the very first ingestion will occur.
 *   End time: A UTC timestamp for which the ingestion schedule ends.
-*   Backfill: Upon creating a dataflow, the selected source file is copied into Platform regardless of the configured *Start time*. If *Backfill* is enabled, the initial copy of the source file is ingested together with the version that exists in your cloud storage during the first scheduled ingestion.
+*   Backfill: A boolean value that determines what data is initially ingested.
+    *   If *Backfill* is enabled, all current files in the specified path will be ingested during the first scheduled ingestion.
+    *   If *Backfill* is disabled, only the files that are loaded in between the first run of ingestion and the *Start time* will be ingested. Files loaded prior to *Start time* will not be ingested.
 
 Dataflows are designed to automatically ingest data on a scheduled basis. If you wish to only ingest once through this workflow, you can do so by configuring the **Frequency** to **Day** and applying a very large number for the **Interval**, such as **10000** or similar.
 
