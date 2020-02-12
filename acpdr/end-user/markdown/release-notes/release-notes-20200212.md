@@ -14,7 +14,7 @@ author: ens71067
 New features in Adobe Experience Platform:
 * [Identity Service](#identity-service)
 * [Sources](#sources)
-* [Experience Edge](experience-edge)
+* [Experience Edge](#experience-edge)
 
 ## Identity Service
 
