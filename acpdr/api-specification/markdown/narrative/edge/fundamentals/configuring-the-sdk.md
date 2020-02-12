@@ -121,41 +121,7 @@ For example, if you had an element on your web page with an ID of `container` wh
   prehidingStyle: "#container { opacity: 0 !important }"
 ```
 
-## Audiences options
-
-### `cookieDestinationsEnabled`
-
-| **Type** | **Required** | **Default Value** |
-| -------- | ------------ | ----------------- |
-| Boolean  | No           | `true`            |
-
-Enables cookie destinations, which allows the setting of cookies based on segment qualification.
-
-### `urlDestinationsEnabled`
-
-| **Type** | **Required** | **Default Value** |
-| -------- | ------------ | ----------------- |
-| Boolean  | No           | `true`            |
-
-Enables URL destinations, which allows the firing of URLs based on segment qualification.
-
 ## Identity options
-
-### `idSyncContainerId`
-
-| **Type** | **Required** | **Default Value** |
-| -------- | ------------ | ----------------- |
-| Number   | No           | none              |
-
-The container ID that specifies which ID syncs are fired. This is a non-negative integer that can be obtained from your consultant.
-
-### `idSyncEnabled`
-
-| **Type** | **Required** | **Default Value** |
-| -------- | ------------ | ----------------- |
-| Boolean  | No           | `true`            |
-
-Enables the ID sync feature, which allows the firing of URLs to synchronize the Adobe unique user ID with the unique user ID of a third-party data source.
 
 ### `thirdPartyCookiesEnabled`
 
