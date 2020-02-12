@@ -14,6 +14,7 @@ author: ens71067
 New features in Adobe Experience Platform:
 * [Identity Service](#identity-service)
 * [Sources](#sources)
+* [Experience Edge](experience-edge)
 
 ## Identity Service
 
@@ -54,3 +55,18 @@ Experience Platform provides a RESTful API and an interactive UI that lets you s
 * None
 
 For more information about sources, see the [sources overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md).
+
+
+## Experience Edge
+
+Experience Edge is a Platform initiative tha provides a single, optimized gateway for requests that want to interact with other Adobe Experience Cloud edge services, such as Adobe Target, Adobe Audience Manager, and Adobe Analytics.
+
+### New features
+
+| Feature | Description |
+| ------- | ----------- |
+| Opt-in/opt-out | Support has been added for opt-in and opt-out requests. |
+
+### Known issues
+
+* None
