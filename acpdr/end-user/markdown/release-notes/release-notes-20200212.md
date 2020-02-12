@@ -56,10 +56,9 @@ Experience Platform provides a RESTful API and an interactive UI that lets you s
 
 For more information about sources, see the [sources overview](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/acp_connectors_overview/acp-connectors-overview.md).
 
-
 ## Experience Edge
 
-Experience Edge is a Platform initiative tha provides a single, optimized gateway for requests that want to interact with other Adobe Experience Cloud edge services, such as Adobe Target, Adobe Audience Manager, and Adobe Analytics.
+Experience Edge is a Platform initiative that provides a single, optimized gateway for requests that want to interact with other Adobe Experience Cloud edge services, such as Adobe Target, Adobe Audience Manager, and Adobe Analytics.
 
 ### New features
 
