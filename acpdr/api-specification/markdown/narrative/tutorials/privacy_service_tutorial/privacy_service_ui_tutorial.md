@@ -109,9 +109,11 @@ The *Create Request* dialog opens, displaying the available options for submitti
 
 <img src="images/request-builder.png" width="500"/><br/>
 
-Select the **Job Type** of the request ("Delete" or "Access") and one or more available **Products** from the list. Under **Customer IDs**, select an ID type from the drop-down menu (email, ECID, or AAID). Type the ID values in the textbox to the right, pressing **\<enter>** for each ID to add it to the list.
+Select the **Job Type** of the request ("Delete" or "Access") and one or more available **Products** from the list. Under **Customer IDs**, select an ID type from the drop-down menu (email, ECID, or AAID). Type the ID values in the textbox to the right, pressing **<enter>** for each ID to add it to the list.
 
 <img src="images/request-builder-fillout.png" width="500"/><br/>
+
+> **Note:** Privacy Service does not send out email notifications to addresses included in the _Customer IDs_ list. If you wish to send email notifications to your customers, you must set up your own protocols to fetch data from the UI or API and send it to your customers as appropriate.
 
 When finished, click **Create**.
 
