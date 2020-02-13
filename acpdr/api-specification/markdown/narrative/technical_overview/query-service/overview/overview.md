@@ -35,7 +35,7 @@ Adobe Experience Platform Segmentation Service allows users to divide their cust
 
 Query Service can be used to provide this analysis by running queries on this segment data within the Data Lake.
 
-Please read the [Segmentation Service overview](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md) for more information about segmentation, and the [Profile Query Language (PQL) guide](../../unified_profile_architectural_overview/unified_profile_pql.md) for more information on how to analyze segments.
+Please read the [Segmentation Service overview](../../unified_profile_architectural_overview/unified_profile_architectural_overview.md) for more information about segmentation, and the [Profile Query Language (PQL) guide](../../segmentation/profile_query_language.md) for more information on how to analyze segments.
 
 ## Next steps
 

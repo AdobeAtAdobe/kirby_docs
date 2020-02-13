@@ -14,7 +14,7 @@ This tutorial requires a working understanding of the Experience Platform servic
 
 * [Decisioning Service](../../technical_overview/decisioning-overview/decisioning-service-overview.md): Provides the framework for adding and removing offers and creating algorithms for choosing the best to present during a customer's experience.
 * [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
-* [Profile Query Language (PQL)](../../technical_overview/unified_profile_architectural_overview/unified_profile_pql.md): PQL is used to define rules and filters.
+* [Profile Query Language (PQL)](../../technical_overview/segmentation/profile_query_language.md): PQL is used to define rules and filters.
 * [Manage Decisioning objects and rules using APIs](./decisioning_entities_api_tutorial.md): Prior to using the Decisioning Services runtime, you will need to set up the related entities.
 
 The following sections provide additional information that you will need to know in order to successfully make calls to the Platform APIs.

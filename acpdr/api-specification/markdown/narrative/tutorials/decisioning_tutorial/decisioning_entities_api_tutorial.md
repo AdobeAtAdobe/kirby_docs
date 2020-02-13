@@ -14,7 +14,7 @@ This tutorial requires a working understanding of the Experience Platform servic
 
 - [Experience Data Model (XDM)](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Platform organizes customer experience data.
 - [Decisioning Service](../../technical_overview/decisioning-overview/decisioning-service-overview.md): Explains the concepts and components used for Experience Decisioning in general and Offer decisioning in particular. Illustrates the strategies used for choosing the best option to present during a customer's experience.
-- [Profile Query Language (PQL)](../../technical_overview/unified_profile_architectural_overview/unified_profile_pql.md): PQL is a powerful language to write expressions over XDM instances. PQL is used to define decision rules.
+- [Profile Query Language (PQL)](../../technical_overview/segmentation/profile_query_language.md): PQL is a powerful language to write expressions over XDM instances. PQL is used to define decision rules.
 
 The following sections provide additional information that you will need to know in order to successfully make calls to the Platform APIs.
 

@@ -43,7 +43,7 @@ All requests that contain a payload (POST, PUT, PATCH) require an additional hea
 
 ## Develop a segment definition
 
-The first step in segmentation is to define a segment, represented in a construct called a **segment definition**. A segment definition is an object that encapsulates a query written in Profile Query Language (PQL). This object is also called a **PQL predicate**. PQL predicates define the rules for the segment based on conditions related to any record or time series data you supply to Real-time Customer Profile. See the [list of supported PQL queries](../../technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md) for available options.
+The first step in segmentation is to define a segment, represented in a construct called a **segment definition**. A segment definition is an object that encapsulates a query written in Profile Query Language (PQL). This object is also called a **PQL predicate**. PQL predicates define the rules for the segment based on conditions related to any record or time series data you supply to Real-time Customer Profile. See the [list of supported PQL queries](../../technical_overview/segmentation/supported_pql_queries.md) for available options.
 
 You can create a new segment definition by making a POST request to the `/segment/definitions` endpoint in the Real-time Customer Profile API. The following example outlines how to format a definition request, including what information is required in order for a segment to be defined successfully.
 
@@ -89,7 +89,7 @@ curl -X POST \
   * `format`: Indicates the structure of the expression in `value`. 
     * You can choose between two possible formats:
       * `pql/text`: A textual representation of a segment definition, according to the published PQL grammar.  For example, `workAddress.stateProvince = homeAddress.stateProvince`.
-      * `pql/json`: A segment definition in JSON format. For more information regarding JSON-formatted queries, see the [Supported PQL queries guide](../../technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md).
+      * `pql/json`: A segment definition in JSON format. For more information regarding JSON-formatted queries, see the [Supported PQL queries guide](../../technical_overview/segmentation/supported_pql_queries.md).
   * `value`: An expression that conforms to the type indicated in `format` to select records from "MyProfile".
 * `mergePolicyId`: The identifier of the merge policy to use for the exported data. See the [merge policy configuration tutorial](../../tutorials/configuring_up_tutorial/configuring_merge_policies_tutorial.md) for more information.
 * `description`: A human readable description of the definition.

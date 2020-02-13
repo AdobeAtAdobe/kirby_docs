@@ -21,16 +21,6 @@
 				},
 				{
 					"pages": [],
-					"path": "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_pql.md",
-					"title": "Profile Query Language (PQL)"
-				},
-				{
-					"pages": [],
-					"path": "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/unified_profile_supported_queries.md",
-					"title": "Supported PQL queries"
-				},
-				{
-					"pages": [],
 					"path": "api-specification/markdown/narrative/technical_overview/search/search_developer_guide.md",
 					"title": "Profile search developer guide"
 				}
@@ -85,9 +75,75 @@
 					"pages": [],
 					"path": "api-specification/markdown/narrative/tutorials/segmentation/streaming_segmentation.md",
 					"title" : "Streaming segmentation"
-				}
+                }
 			]
-		}
+        },
+        {
+            "path": "api-specification/markdown/narrative/technical_overview/segmentation/profile_query_language.md",
+            "title": "Profile Query Language (PQL) overview",
+            "pages": [
+                {
+                    "pages": [],
+                    "path": "api-specification/narrative/technical_overview/segmentation/pql/boolean-functions.md",
+                    "title": "Boolean functions"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/narrative/technical_overview/segmentation/pql/comparison-functions.md",
+                    "title": "Comparison functions"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/narrative/technical_overview/segmentation/pql/array-functions.md",
+                    "title": "Array, list, and set functions"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/narrative/technical_overview/segmentation/pql/map-functions.md",
+                    "title": "Map functions"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/narrative/technical_overview/segmentation/pql/string-functions.md",
+                    "title": "String functions"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/narrative/technical_overview/segmentation/pql/arithmetic-functions.md",
+                    "title": "Arithmetic functions"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/narrative/technical_overview/segmentation/pql/aggregation-functions.md",
+                    "title": "Aggregation functions"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/narrative/technical_overview/segmentation/pql/datetime-functions.md",
+                    "title": "Date and time functions"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/narrative/technical_overview/segmentation/pql/filter-functions.md",
+                    "title": "Filter functions"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/narrative/technical_overview/segmentation/pql/logical-quantifiers.md",
+                    "title": "Logical quantifiers"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/narrative/technical_overview/segmentation/pql/misc-functions.md",
+                    "title": "Miscellaneous functions"
+                },
+                {
+					"pages": [],
+					"path": "api-specification/markdown/narrative/technical_overview/segmentation/supported_pql_queries.md",
+					"title": "Supported PQL queries"
+				}
+            ]
+        }
 	],
 	"app2app_map": {
         "acpdr/swagger-specs/": "/apis/experienceplatform/home/api-reference.html",

@@ -169,7 +169,7 @@ curl -X POST \
     > Note: When writing the path, omit the multiple levels of `properties` attributes.
 * `{TENANT_ID}`: If you are unfamiliar with your tenant ID, please refer to the steps for finding your tenant ID in the [Schema Registry developer guide](../../technical_overview/schema_registry/schema_registry_developer_guide.md#know-your-tenant_id)
 * `description`: A description of the computed attribute. This is especially useful once multiple computed attributes have been defined as it will help others within your IMS Organization to determine the correct computed attribute to use.
-* `expression.value`: A valid Profile Query Language (PQL) expression. For more information on PQL and links to supported queries, please read the [PQL overview](../../technical_overview/unified_profile_architectural_overview/unified_profile_pql.md).
+* `expression.value`: A valid Profile Query Language (PQL) expression. For more information on PQL and links to supported queries, please read the [PQL overview](../../technical_overview/segmentation/profile_query_language.md).
 * `schema.name`: The class upon which the schema containing the computed attribute field is based. For example, if the schema was based on the XDM ExperienceEvent class, the value would be `_xdm.context.experienceevent`
 
 #### Response
@@ -485,7 +485,7 @@ curl -X PATCH \
       ]'
 ```
 
-* `expression.value`: A valid Profile Query Language (PQL) expression. For more information on PQL and links to supported queries, please read the [PQL overview](../../technical_overview/unified_profile_architectural_overview/unified_profile_pql.md).
+* `expression.value`: A valid Profile Query Language (PQL) expression. For more information on PQL and links to supported queries, please read the [PQL overview](../../technical_overview/segmentation/profile_query_language.md).
 
 #### Response
 
