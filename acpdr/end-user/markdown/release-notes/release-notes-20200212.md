@@ -46,7 +46,7 @@ Experience Platform provides a RESTful API and an interactive UI that lets you s
 | ------- | ----------- |
 | API support for SaaS - Service systems| New source connectors for Salesforce Service Cloud API and ServiceNow API. |
 | API support for SaaS - Marketing systems| New source connectors for HubSpot API. |
-| API support for NoSQL database systems | New source connectors for AWS Redshift, GreenplumDB, Google BigQuery, MariaDB, MySQL, PostgreSQL, and SQL Server APIs. |
+| API support for NoSQL database systems | New source connectors for AWS Redshift, Google BigQuery, MariaDB, MySQL, PostgreSQL, and SQL Server APIs. |
 | API support for cloud storage systems | New source connectors for Azure Data Lake Service Gen 2 API and Google Cloud Storage API.
 | UI support for cloud storage systems | New source connectors for Azure Data Lake Service Gen2 and Google Cloud Storage in the UI.
 
