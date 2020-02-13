@@ -113,7 +113,7 @@ Select the **Job Type** of the request ("Delete" or "Access") and one or more av
 
 <img src="images/request-builder-fillout.png" width="500"/><br/>
 
-The IDs included in this list will receive a copy of any email notifications from Privacy Service, which are sent when a job completes, finishes with errors, or times out. When finished, click **Create**.
+When finished, click **Create**.
 
 <img src="images/request-builder-create.png" width="500"/><br/>
 
