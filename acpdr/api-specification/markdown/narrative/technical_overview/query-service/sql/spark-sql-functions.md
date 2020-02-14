@@ -1924,18 +1924,6 @@ Example:
  8cde774d6f7333752ed72cacddb05126
 ```
 
-#### reflect
-
-`reflect(class, method[, arg1[, arg2 ..]])`: Calls a method with reflection.
-
-Examples:
-```
-> SELECT reflect('java.util.UUID', 'randomUUID');
- c33fb387-8500-4bfa-81d2-6e0e3e930df2
-> SELECT reflect('java.util.UUID', 'fromString', 'a5cf6c42-0c85-418f-af6c-3e4e5b1328f2');
- a5cf6c42-0c85-418f-af6c-3e4e5b1328f2
-```
-
 #### rpad
 
 `rpad(str, len, pad)`: Returns `str`, right-padded with `pad` to a length of `len`. If `str` is longer than `len`, the return value is shortened to `len` characters.
@@ -2285,18 +2273,6 @@ Example:
 ```
 > SELECT instr('SparkSQL', 'SQL');
  6
-```
-
-#### java_method (code injection?)
-<!-- double check this should be here -->
-`java_method(class, method[, arg1[, arg2 ..]])`: Calls a method with reflection.
-
-Examples:
-```
-> SELECT java_method('java.util.UUID', 'randomUUID');
- c33fb387-8500-4bfa-81d2-6e0e3e930df2
-> SELECT java_method('java.util.UUID', 'fromString', 'a5cf6c42-0c85-418f-af6c-3e4e5b1328f2');
- a5cf6c42-0c85-418f-af6c-3e4e5b1328f2
 ```
 
 #### json_tuple
