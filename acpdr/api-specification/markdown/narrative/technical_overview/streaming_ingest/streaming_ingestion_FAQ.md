@@ -109,7 +109,7 @@ You can use the [Experience Platform UI][platform-ui] to see more information on
 [Monitoring Streaming Data Flows]: monitor-data-flows.md
 [Streaming Validation]: streaming_validation.md
 [Retrieving Failed Batches]: retrieving_failed_batches.md
-[Streaming Multiple Messages]: ../../tutorials/sending_multiple_messages_in_an_http_request/sending_multiple_messages_in_an_http_request.md
+[Streaming Multiple Messages]: ./sending_multiple_messages_in_an_http_request.md
 [platform-ui]: https://platform.adobe.com
 [Data Access Service API]: ../../../../../../acpdr/swagger-specs/data-access-api.yaml
 [Data Ingestion Service]: ../../../../../../acpdr/swagger-specs/ingest-api.yaml
