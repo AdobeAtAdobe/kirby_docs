@@ -6,30 +6,30 @@ The following is a list of tutorials for creating connectors using the Flow Serv
 
 ## Cloud storage
 
--   [Amazon S3 connector](./cloud-storages/s3-api-tutorial.md)
--   [Azure Blob connector](./cloud-storages/blob-api-tutorial.md)
--   [Azure Data Lake Storage Gen2 connector](./cloud-storages/adls-gen2-api-tutorial.md)
--   [Google Cloud Storage connector](./cloud-storages/google-cloud-api-tutorial.md)
--   [SFTP connector](./cloud-storages/sftp-api-tutorial.md)
+- [Amazon S3 connector](./cloud-storages/s3-api-tutorial.md)
+- [Azure Blob connector](./cloud-storages/blob-api-tutorial.md)
+- [Azure Data Lake Storage Gen2 connector](./cloud-storages/adls-gen2-api-tutorial.md)
+- [Google Cloud Storage connector](./cloud-storages/google-cloud-api-tutorial.md)
+- [SFTP connector](./cloud-storages/sftp-api-tutorial.md)
 
 ## CRM
 
--   [Amazon Redshift connector](./crm/amazon-redshift-api-tutorial.md)
--   [Google AdWords connector](./crm/google-adwords-api-tutorial.md)
--   [Google BigQuery connector](./crm/google-bigquery-api-tutorial.md)
--   [Microsoft Dynamics connector](./crm/dynamics-api-tutorial.md)
--   [Salesforce connector](./crm/salesforce-api-tutorial.md)
+- [Google AdWords connector](./crm/google-adwords-api-tutorial.md)
+- [Microsoft Dynamics connector](./crm/dynamics-api-tutorial.md)
+- [Salesforce connector](./crm/salesforce-api-tutorial.md)
 
-## Data Stores
+## Database or NoSQL
 
--   [MySQL connector](./data-stores/mysql-db-api-tutorial.md)
--   [PostgreSQL connector](./data-stores/psql-api-tutorial.md)
+- [Amazon Redshift connector](./database-nosql/amazon-redshift-api-tutorial.md)
+- [Google BigQuery connector](./database-nosql/google-bigquery-api-tutorial.md)
+- [MySQL connector](./database-nosql/mysql-db-api-tutorial.md)
+- [PostgreSQL connector](./database-nosql/psql-api-tutorial.md)
 
 ## Legacy connectors
 
 The following list of tutorials walks through deprecated methods for creating source connections:
 
--   [Azure Blob connector (Legacy)](../../creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md)
--   [Microsoft Dynamics connector (Legacy)](../../creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md)
--   [Amazon S3 connector (Legacy)](../../creating_a_connector_tutorial/ACP_s3_connector_tutorial.md)
--   [Salesforce connector (Legacy)](../../creating_a_connector_tutorial/ACP_salesforce_connector_tutorial.md)
+- [Azure Blob connector (Legacy)](../../creating_a_connector_tutorial/ACP_azure_blob_connector_tutorial.md)
+- [Microsoft Dynamics connector (Legacy)](../../creating_a_connector_tutorial/ACP_dynamic_connector_tutorial.md)
+- [Amazon S3 connector (Legacy)](../../creating_a_connector_tutorial/ACP_s3_connector_tutorial.md)
+- [Salesforce connector (Legacy)](../../creating_a_connector_tutorial/ACP_salesforce_connector_tutorial.md)

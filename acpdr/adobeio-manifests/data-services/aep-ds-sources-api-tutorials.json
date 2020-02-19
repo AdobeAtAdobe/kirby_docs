@@ -40,18 +40,8 @@
                 },
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/crm/amazon-redshift-api-tutorial.md",
-                    "title": "Amazon Redshift connector"
-                },
-                {
-                    "pages": [],
                     "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/crm/google-adwords-api-tutorial.md",
                     "title": "Google AdWords connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/crm/google-bigquery-api-tutorial.md",
-                    "title": "Google BigQuery connector"
                 },
                 {
                     "pages": [],
@@ -65,12 +55,22 @@
                 },
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/data-stores/mysql-db-api-tutorial.md",
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/database-nosql/amazon-redshift-api-tutorial.md",
+                    "title": "Amazon Redshift connector"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/database-nosql/google-bigquery-api-tutorial.md",
+                    "title": "Google BigQuery connector"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/database-nosql/mysql-db-api-tutorial.md",
                     "title": "MySQL connector"
                 },
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/data-stores/psql-api-tutorial.md",
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/database-nosql/psql-api-tutorial.md",
                     "title": "PostgreSQL connector"
                 },
                 {
@@ -113,17 +113,10 @@
             "description": ""
         },
         {
-            "importedFileName": "explore-nosqldb-api-tutorial",
+            "importedFileName": "explore-dbnosql-api-tutorial",
             "pages": [],
-            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/crm/explore-nosqldb-tutorial.md",
+            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/database-nosql/explore-dbnosql-api-tutorial.md",
             "title": "Explore a database or NoSQL system using the Flow Service API",
-            "description": ""
-        },
-        {
-            "importedFileName": "explore-data-store-api-tutorial",
-            "pages": [],
-            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/data-stores/explore-data-store-api-tutorial.md",
-            "title": "Explore a data store repository using the Flow Service API",
             "description": ""
         },
         {
@@ -141,10 +134,10 @@
             "description": ""
         },
         {
-            "importedFileName": "retrieve-data-store-api-tutorial",
+            "importedFileName": "retrieve-dbnosql-data-api-tutorial",
             "pages": [],
-            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/data-stores/retrieve-data-store-api-tutorial.md",
-            "title": "Collect data from external data stores through source connectors and APIs",
+            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/database-nosql/retrieve-dbnosql-data-api-tutorial.md",
+            "title": "Collect data from an external database or NoSQL system through source connectors and APIs",
             "description": ""
         }
     ],
