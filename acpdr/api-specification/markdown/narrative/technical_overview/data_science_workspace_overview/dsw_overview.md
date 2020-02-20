@@ -19,7 +19,7 @@ This guide provides an overview of the following concepts related to Data Scienc
     - [Continuous improvement](#continuous-improvement)
     - [Access to new features and datasets](#access-to-new-features-and-datasets)
     - [Security and peace of mind](#security-and-peace-of-mind)
-    - [Sandbox support](#data-science-workspace-sandbox-support)
+    - [Sandbox support](#sandbox-support)
 - [Data Science Workspace in action](#data-science-workspace-in-action)
     - [Define the problem](#define-the-problem)
     - [Explore and prepare the data](#explore-and-prepare-the-data)
