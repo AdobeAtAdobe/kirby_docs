@@ -65,6 +65,7 @@ Information regarding key features of JupyterLab and instructions on performing 
 -   [Kernel sessions](#kernel-sessions)
 -   [PySpark/Spark execution resource](#pysparkspark-execution-resource)
 -   [Launcher](#launcher)
+-   [GPU and memory configuration](#gpu-and-memory-server-configuration-in-pythonr)
 
 ### Access JupyterLab
 
@@ -274,6 +275,14 @@ Some notebook templates are limited to certain kernels. Template availability fo
 To open a new *Launcher*, click **File > New Launcher**. Alternatively, expand the **File browser** from the left sidebar and click the plus symbol (**+**):
 
 ![](./images/new_launcher.gif)
+
+### GPU and memory server configuration in Python/R
+
+In JupyterLab select the gear icon in the top-right corner to open *Notebook server configuration*. You can toggle on GPU and allocate the amount of memory you need by using the slider. The amount of memory you can allocate depends on how much your organization has provisioned. Select **Update configs** to save.
+
+> **Note:** Only one GPU is provisioned per organization for Notebooks. If the GPU is in use, you need to wait for the user that has currently reserved the GPU to release it. This can be done by logging out or leaving the GPU in an idle state for four or more hours.
+
+![](./images/notebook-gpu-config.png)
 
 ## Access Platform data using Notebooks
 
