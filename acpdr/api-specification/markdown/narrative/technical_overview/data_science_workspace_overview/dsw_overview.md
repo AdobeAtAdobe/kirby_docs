@@ -19,6 +19,7 @@ This guide provides an overview of the following concepts related to Data Scienc
     - [Continuous improvement](#continuous-improvement)
     - [Access to new features and datasets](#access-to-new-features-and-datasets)
     - [Security and peace of mind](#security-and-peace-of-mind)
+    - [Sandbox support](#data-science-workspace-sandbox-support)
 - [Data Science Workspace in action](#data-science-workspace-in-action)
     - [Define the problem](#define-the-problem)
     - [Explore and prepare the data](#explore-and-prepare-the-data)
@@ -77,7 +78,7 @@ Data Science Workspace is fully integrated with Adobe Experience Platform, inclu
 
 ### Prebuilt machine learning recipes
 
-Data Science Workspace includes prebuilt machine learning recipes for common business needs, like retail sales prediction and anomaly detection, so data scientists and developers don't have to start from scratch. Visit the <a href="https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/prebuilt-recipes.html" target="_blank">prebuilt recipe page</a> to discover what is readily available.
+Data Science Workspace includes prebuilt machine learning recipes for common business needs, like retail sales prediction and anomaly detection, so data scientists and developers don't have to start from scratch. Visit the [prebuilt recipe page](https://www.adobe.io/apis/experienceplatform/home/data-science-workspace/prebuilt-recipes.html) to discover what is readily available.
 
 [//]: # (The built-in recipe gallery offers recommendations for prebuilt recipes based on your business needs.)
 
@@ -127,7 +128,16 @@ Data scientists can take advantage of new technologies and datasets as soon as t
 Securing your data is a top priority for Adobe. Adobe protects your data with security processes and controls developed to help comply with industry-accepted standards, regulations, and certifications.
 
 Security is built into software and services as part of the Adobe Secure Product Lifecycle.
-To learn about Adobe data and software security, compliance, and more, visit the security page at https://www.adobe.com/security.html. 
+To learn about Adobe data and software security, compliance, and more, visit the security page at https://www.adobe.com/security.html.
+
+### Sandbox support
+
+Sandboxes are virtual partitions within a single instance of Experience Platform. Each Platform instance supports one production sandbox and multiple non-production sandboxes, each maintaining its own library of Platform resources. Non-production sandboxes allow you to test features, run experiments, and make custom configurations without impacting your production sandbox. For more information on sandboxes, see the [sandboxes overview](../sandboxes/sandboxes-overview.md).
+
+Currently, Data Science Workspace has a couple sandbox limitations:
+
+  - Compute resources are shared across the production sandbox and non-production sandboxes. Isolation for production sandboxes is set to be provided in the future.
+  - Scala/Spark and PySpark workloads for both notebooks and recipes are currently only supported in the production sandbox. Support for non-production sandboxes is set to be provided in the future.
 
 ## Data Science Workspace in action 
 
