@@ -25,6 +25,7 @@ In order to explore your database or NoSQL system using Platform APIs, you must 
 * [MariaDB](./mariadb-api-tutorial.md)
 * [MySQL](./mysql-db-api-tutorial.md)
 * [PostgreSQL](./psql-api-tutorial.md)
+* [SQL Server](./sql-server-api-tutorial.md)
 
 ### Reading sample API calls
 

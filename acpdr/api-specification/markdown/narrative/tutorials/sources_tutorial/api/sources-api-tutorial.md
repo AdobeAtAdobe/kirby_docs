@@ -25,6 +25,7 @@ The following is a list of tutorials for creating connectors using the Flow Serv
 - [MariaDB connector](./database-nosql/mariadb-api-tutorial.md)
 - [MySQL connector](./database-nosql/mysql-db-api-tutorial.md)
 - [PostgreSQL connector](./database-nosql/psql-api-tutorial.md)
+- [SQL Server connector](./database-nosql/sql-server-api-tutorial.md)
 
 ## Legacy connectors
 
