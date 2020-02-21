@@ -18,6 +18,7 @@ This guide provides an overview of the following concepts related to Data Scienc
     - [Operationalization](#operationalization)
     - [Continuous improvement](#continuous-improvement)
     - [Access to new features and datasets](#access-to-new-features-and-datasets)
+    - [Access control in Data Science Workspace](#access-control-in-data-science-workspace)
     - [Security and peace of mind](#security-and-peace-of-mind)
     - [Sandbox support](#sandbox-support)
 - [Data Science Workspace in action](#data-science-workspace-in-action)
@@ -122,6 +123,16 @@ Data Science Workspace tracks where intelligent services are invoked and how the
 ### Access to new features and datasets
 
 Data scientists can take advantage of new technologies and datasets as soon as they are available through Adobe services. Through frequent updates, we do the work of integrating datasets and technologies into the platform, so you don't have to.
+
+### Access control in Data Science Workspace
+
+Access control for Experience Platform is administered through the [Adobe Admin Console](http://www.adminconsole.adobe.com). This functionality leverages product profiles in Admin Console, which link users with permissions and sandboxes. See the [access control overview](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/access-control/access-control-overview.md) for more information.
+
+In order to use Data Science Workspace, the "Manage Data Science Workspace" permission must be enabled. The following table outlines the effects of having this permission enabled or disabled:
+
+| Permission | Enabled | Disabled |
+|---|---|---|
+| Manage Data Science Workspace | Provides access to all services in Data Science Workspace. | API and UI access to all services within Data Science Workspace are disabled. While disabled, routing to the Data Science Workspace *Models* and *Services* pages are prevented. |
 
 ### Security and peace of mind
 

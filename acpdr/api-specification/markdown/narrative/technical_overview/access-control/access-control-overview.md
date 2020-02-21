@@ -89,7 +89,8 @@ Destinations | Manage Destinations | Access to read, create, edit, and disable d
 Destinations | View Destinations | Read-only access to available destinations in the _Catalog_ tab and authenticated destinations in the _Browse_ tab.*
 Destinations | Activate Destinations | Ability to activate data to active destinations that have been created. This permission requires either “View Destinations” or “Manage Destinations” to be granted to the user who will activate destinations.*
 Data Ingestion | Manage Sources | Access to read, create, edit, and disable sources.
-Data Ingestion | View Sources | Read-only access to available sources in the _Catalog_ tab and authenticated sources in the _Browse_ tab.
+Data Ingestion | View Sources | Read-only access to available sources in the _Catalog_ tab and authenticated sources in the _Browse_ tab. | 
+Data Science Workspace | Manage Data Science Workspace | Access to read, create, edit, and delete in Data Science Workspace. |
 
 > (*) This permission requires provisions to Real-time Customer Data Platform. For more information regarding Real-time CDP, please begin by reading the [Real-time CDP overview](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/overview.html).
 
