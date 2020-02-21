@@ -1,32 +1,46 @@
 # Privacy request processing in Adobe Experience Platform
 
-Adobe Experience Platform Privacy Service provides a method to submit both access and delete requests by the data controller as delineated by privacy regulations such as the General Data Protection Regulation (GDPR) and California Consumer Privacy Act (CCPA).
+Adobe Experience Platform Privacy Service processes customer requests to access, opt out of sale, or delete their personal data as delineated by privacy regulations such as the General Data Protection Regulation (GDPR) and California Consumer Privacy Act (CCPA).
 
-Privacy Service receives customer data access and delete requests (referred to as "privacy jobs" in this document) from Experience Platform through either the [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service UI](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md). There are two different data stores on Experience Platform where privacy job requests can be processed:
+Privacy Service receives customer requests for their personal data (referred to as "privacy jobs" in this document) through either the [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service UI](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md). There are two different data stores on Experience Platform where privacy jobs can be processed:
 
-- Data Lake
-- Real-time Customer Profile
+* Data Lake
+* Real-time Customer Profile
 
-This document describes how to format and label your datasets in Experience Platform in order for Privacy Service to process access/delete requests from your customers. The following topics are covered:
+This document covers essential concepts related to processing privacy requests on Experience Platform. The following topics are covered:
 
-- [Understanding identity namespaces](#understanding-identity-namespaces)
-- [Labeling data fields with privacy namespaces](#labeling-data-fields-with-privacy-namespaces)
-- [Submitting requests](#submitting-requests)
-- [Delete request processing](#delete-request-processing)
+* [Understanding identity namespaces](#understanding-identity-namespaces)
+* [Adding privacy labels to datasets](#adding-privacy-labels-to-datasets)
+* [Submitting requests](#submitting-requests)
+* [Delete request processing](#delete-request-processing)
+
+## Getting started
+
+It is recommended that you have a working understanding of the following Experience Platform services before reading this guide:
+
+* [Privacy Service](privacy_service_overview.md): Manages customer requests for accessing, opting out of sale, or deleting their personal data across Adobe Experience Cloud applications.
+* [Experience Data Model (XDM) System](../schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Experience Platform organizes customer experience data.
+* [Catalog Service](../catalog_architectural_overview/catalog_architectural_overview.md): The system of record for data location and lineage within Experience Platform. Provides an API that can be used to update dataset metadata.
+* [Identity Service](../identity_services_architectural_overview/identity_services_architectural_overview.md): Solves the fundamental challenge posed by the fragmentation of customer experience data by bridging identities across devices and systems.
+* [Real-time Customer Profile](../unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, real-time consumer profile based on aggregated data from multiple sources.
 
 ## Understanding identity namespaces
 
-[Adobe Experience Platform Identity Service](../identity_services_architectural_overview/identity_services_architectural_overview.md) bridges customer identity data across systems and devices. Identity Service honors **identity namespaces** which serve as indicators of the context to which an identity relates, such as a value of "someone<i></i>@somewhere.com" being an email address, or "443522" as a numeric ID used by a particular CRM. 
+> **Note:** Identity namespaces are only involved when processing privacy requests for Real-time Customer Profile. If you are only concerned with privacy requests for the Data Lake, please continue to the next section on [adding privacy labels to data fields](#adding-privacy-labels-to-data-fields).
 
-Identity namespaces are registered with the Identity core service for your IMS Organization. A list of standard namespaces are available for all organizations (for example, "Email" and "ECID"), while your organization can also create custom namespaces to suit its particular needs. If data ingested into [Real-time Customer Profile](../unified_profile_architectural_overview/unified_profile_architectural_overview.md) has an associated identity namespace, Profile can process a privacy job request in the appropriate format against that data.
+Adobe Experience Platform Identity Service bridges customer identity data across systems and devices. Identity Service uses **identity namespaces** to provide context to identity values by relating them to their system of origin. A namespace can represent a generic concept such as an email address ("Email") or associate the identity with a specific application, such as an Adobe Advertising Cloud ID ("AdCloud") or Adobe Target ID ("TNTID").
+
+Identity Service maintains a store of globally defined (standard) and user-defined (custom) identity namespaces. Standard namespaces are available for all organizations (for example, "Email" and "ECID"), while your organization can also create custom namespaces to suit its particular needs.
 
 For more information about identity namespaces in Experience Platform, see the [identity namespace overview](../identity_namespace_overview/identity_namespace_overview.md).
 
-## Labeling data fields with privacy namespaces
+## Adding privacy labels to datasets
 
-In order for the Data Lake to process privacy requests, any relevant data fields in Platform datasets must be labeled with appropriate privacy namespaces with which you expect to send privacy requests. This section demonstrates how to add a privacy namespace to a dataset.
+> **Note:** Dataset privacy labels are only involved when processing privacy requests for the Data Lake. If you are only concerned with privacy requests for Real-time Customer Profile, please continue to the next section on [submitting privacy requests](#submitting-requests).
 
-Consider the following dataset:
+In order for a dataset to be processed in a privacy request for the Data Lake, the dataset must be given privacy labels. Privacy labels indicate which fields within a dataset's associated schema apply to the namespaces you expect to be sent in privacy requests.
+
+This section demonstrates how to add privacy labels to a dataset for use in Data Lake privacy requests. To begin, consider the following dataset:
 
 ```json
 {
@@ -100,25 +114,29 @@ Consider the following dataset:
 }
 ```
 
-The `schemaMetadata` property for the dataset contains a `gdpr` array, which is currently empty. To add privacy namespaces to the dataset, this array must be updated using a PATCH operation to the [Catalog Service API](../../../../../../acpdr/swagger-specs/catalog.yaml).
+The `schemaMetadata` property for the dataset contains a `gdpr` array, which is currently empty. To add privacy labels to the dataset, this array must be updated using a PATCH request to the [Catalog Service API](../../../../../../acpdr/swagger-specs/catalog.yaml).
 
-> **Note:** Although the array is named `gdpr`, adding namepaces to it will allow for privacy job requests for both GDPR and CCPA regulations.
+> **Note:** Although the array is named `gdpr`, adding labels to it will allow for privacy job requests for both GDPR and CCPA regulations.
 
 #### API format
 
 ```http
 PATCH /dataSets/{DATASET_ID}
 ```
-* `{DATASET_ID}`: The `id` value of the dataset to be updated.
+| Parameter | Description |
+| --- | --- |
+| `{DATASET_ID}` | The `id` value of the dataset to be updated. |
 
 #### Request
 
-In this example, a dataset includes an email address in the `personalEmail.address` field. The following request assigns an `email_label` namespace to the field, enabling it to be used when submitting access and delete requests using the Privacy Service API.
+In this example, a dataset includes an email address in the `personalEmail.address` field. In order for this field to act as an identifier for Data Lake privacy requests, a label that uses an unregistered namespace must be added to its `gdpr` array.
+
+The following request adds a privacy label which assigns the namespace "email_label" to the `personalEmail.address` field.
 
 > **Important:** When running a PATCH operation on a dataset's `schemaMetadata` property, be sure to copy any existing sub-properties within the request payload. Excluding any existing values from the payload will cause them to be removed from the dataset.
 
 ```shell
-curl -X PATCH 'https://platform.adobe.io/data/foundation/catalog/dataSets/5d8e9cf5872f18164763f971' \ \
+curl -X PATCH 'https://platform.adobe.io/data/foundation/catalog/dataSets/5d8e9cf5872f18164763f971' \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -144,18 +162,20 @@ curl -X PATCH 'https://platform.adobe.io/data/foundation/catalog/dataSets/5d8e9c
       ],
       "gdpr": [
           {
-              "path": "/properties/personalEmail/properties/address",
-              "namespace": ["email_label"]
+              "namespace": ["email_label"],
+              "path": "/properties/personalEmail/properties/address"
           }
       ]
   }'
 ```
-* `gdpr > path`: The path to the field to be updated within the dataset's associated schema. Ideally, labels should only be applied to "leaf" fields (fields without sub-fields).
-* `gdpr > namespace`: An array listing the namespaces to be added to the field specified in `path`. In this case, the namespace `email_label` is added.
+| Property | Description |
+| --- | --- |
+| `namespace` | An array listing the namespace(s) to be associated with the field specified in `path`. |
+| `path` | The path to the field within the dataset's associated schema that applies to the `namespace`. Ideally, privacy labels should only be applied to "leaf" fields (fields without sub-fields). |
 
 #### Response
 
-A successful response returns HTTP status 200 (OK) with the ID of the dataset provided in the payload. Using the ID to lookup the dataset again reveals that the privacy namespaces have been added.
+A successful response returns HTTP status 200 (OK) with the ID of the dataset provided in the payload. Using the ID to look up the dataset again reveals that the privacy labels have been added.
 
 ```json
 [
@@ -170,13 +190,29 @@ It is important to note that there are two kinds of nested map-type fields that 
 * A map-type field within an array-type field
 * A map-type field within another map-type field
 
-Making privacy job requests on either of two examples above will eventually fail. For this reason, it is recommended that you avoid using nested map-type fields to store private customer data. Relevant consumer IDs should be stored as a non-map datatype within a profile's `identityMap` (itself a map-type field), or the `endUserID` field of an ExperienceEvent.
+Privacy job processing for either of the two examples above will eventually fail. For this reason, it is recommended that you avoid using nested map-type fields to store private customer data. Relevant consumer IDs should be stored as a non-map datatype within the `identityMap` field (itself a map-type field) for record-based datasets, or the `endUserID` field for time-series-based datasets.
 
 ## Submitting requests 
 
-Privacy Service provides a RESTful API and user interface that allow you to submit privacy job requests to Adobe Experience Platform. Please refer to the [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service UI](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md) documentation for information about how to submit and monitor of privacy job requests.
+> **Note:** This section covers how to format privacy requests for Real-time Customer Profile and the Data Lake. It is strongly recommended that you review the [Privacy Service API](../tutorials/privacy_service_tutorial/privacy_service_api_tutorial.md) or [Privacy Service UI](../tutorials/privacy_service_tutorial/privacy_service_ui_tutorial.md) documentation for complete steps on how to submit a privacy job, including how to properly format submitted user identity data in request payloads.
 
-When creating job requests in the API, be sure to provide the product values for Data Lake ("aepDataLake") and/or Real-time Customer Profile ("ProfileService") within the `include` array in the request payload, as shown below.
+The following section outlines how to make privacy requests for Real-time Customer Profile and the Data Lake using the Privacy Service API or UI.
+
+### Using the API
+
+When creating job requests in the API, any `userIDs` that are provided must use a specific `namespace` and `type` depending on the data store they apply to.
+
+* IDs for the Profile store must use either "standard" or "custom" for their `type` value, and a valid [identity namespace](#understanding-identity-namespaces) recognized by Identity Service for their `namespace` value.
+* IDs for the Data Lake must use "unregistered" for their `type` value, and a `namespace` value that matches one the [privacy labels](#adding-privacy-labels-to-datasets) that have been added to applicable datasets.
+
+In addition, the `include` array of the request payload must include the product values for the different data stores the request is being made to:
+
+| Data store | Product value |
+| --- | --- |
+Data Lake | aepDataLake
+Real-time Customer Profile | ProfileService
+
+The following request creates a new privacy job for both Real-time Customer Profile and the Data Lake, using the standard "Email" identity namespace for the former and the unregistered "email_label" namespace for the latter. It also includes the product values for both Profile and the Data Lake in the `include` array:
 
 ```shell
 curl -X POST \
@@ -198,14 +234,19 @@ curl -X POST \
         "action": ["access","delete"],
         "userIDs": [
           {
-            "namespace": "email",
+            "namespace": "Email",
             "value": "ajones@acme.com",
             "type": "standard"
+          },
+          {
+            "namespace": "email_label",
+            "value": "ajones@acme.com",
+            "type": "unregistered"
           }
         ]
       }
     ],
-    "include": ["aepDataLake", "ProfileService"],
+    "include": ["ProfileService", "aepDataLake"],
     "expandIds": false,
     "priority": "normal",
     "analyticsDeleteMethod": "anonymize",
@@ -213,12 +254,18 @@ curl -X POST \
 }'
 ```
 
-When creating job requests in the UI, be sure to select "AdobeCloudPlatform" and/or "Profile Service" under _Products_ to access/delete data stored in the Data Lake or Real-time Customer Profile, respectively.
+### Using the UI
+
+When creating job requests in the UI, be sure to select **AEP Data Lake** and/or **Profile** under _Products_ in order to process jobs for data stored in the Data Lake or Real-time Customer Profile, respectively.
 
 <img src='images/product-values.png' width=450><br>
 
 ## Delete request processing
 
-When Experience Platform receives a data delete request, Platform sends confirmation to Privacy Service that the request has been received and affected data has been marked for deletion. The records are then removed from the Data Lake within seven days. During that seven-day window, the data is soft-deleted and is therefore not accessible by any Platform service.
+When Experience Platform receives a delete request from Privacy Service, Platform sends confirmation to Privacy Service that the request has been received and affected data has been marked for deletion. The records are then removed from the Data Lake or Profile store within seven days. During that seven-day window, the data is soft-deleted and is therefore not accessible by any Platform service.
 
 In future releases, Platform will send confirmation to Privacy Service after data has been physically deleted.
+
+## Next steps
+
+By reading this document, you have been introduced to the important concepts involved with processing privacy requests in Experience Platform. It is recommended that you continue reading the documentation provided throughout this guide in order to deepen your understanding of how to manage identity data and create privacy jobs.
