@@ -49,6 +49,11 @@
 			"path":"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/dsw_prebuilt_recipes/product_recommendations_recipe/product_recommendations_recipe.md",
 			"title":"Product Recommendations Recipe",
 			"description":"The Product Recommendations recipe enables you the ability to provide product recommendations that are tailored to your customer's interests. Learn more about this recipe to see how you can increase sales and improve your customers overall purchasing experience."
+		},
+		{
+			"path":"api-specification/markdown/narrative/technical_overview/data_science_workspace_overview/faq/dsw-faq.md",
+			"title":"Troubleshooting guide",
+			"description":"Troubleshooting guide for DSW"
 		}
 	],
 	"app2app_map": {
