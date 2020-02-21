@@ -89,6 +89,8 @@ Batch data ingestion has some constraints:
 
 Firstly, you will need to create a batch, with JSON as the input format. When creating the batch, you will need to provide a dataset ID. You will also need to ensure that all the files uploaded as part of the batch conform to the XDM schema linked to the provided dataset.
 
+>**Note:** The examples below are for single-line JSON. To ingest multi-line JSON, the `isMultiLineJson` flag will need to be set. For more information, please read the [batch ingestion troubleshooting guide](./batch_data_ingestion_troubleshooting_guide.md).
+
 #### API format
 
 ```http

@@ -407,8 +407,8 @@ paths:
         - Bearer: []
       tags:
         - "Batch Ingestion"
-      summary: "Register a new batch in Adobe Data Catalog."
-      description: "Creates a new batch in Data Catalog as a first step to bulk data ingestion. The data is uploaded to this batch after which the batch is marked ready for triggering data registration in Catalog"
+      summary: "Register a new batch in Catalog Service."
+      description: "Creates a new batch in Catalog Service as a first step to bulk data ingestion. The data is uploaded to this batch after which the batch is marked ready for triggering data registration in Catalog"
       operationId: "createBatch"
       consumes:
         - "application/json"
@@ -859,7 +859,7 @@ definitions:
         description: "The version of the schema that is created."
       IMS_ORG_ID:
         type: string
-        description: "Your IMS organization ID can be found under the integration details in theAdobe I/O Console."
+        description: "Your IMS organization ID can be found under the integration details in the Adobe I/O Console."
       DATASET_ID:
         type: string
         description: "The ID of the dataset that you want to publish to."
@@ -1148,6 +1148,17 @@ definitions:
           Client supplied batch identifier that is expected to be unique within an IMSOrg. Defaults to
           BatchId if not specified.
         type: "string"
+      inputFormat:
+        description: >-
+          The format of the ingested batch. Can be any of the following values.
+        type: "object"
+        properties:
+          format:
+            type: "string"
+            enum: 
+            - json
+            - parquet
+            - csv
       replay:
         description:  >-
           List of client supplied ids that identify the Batches that this new batch is replacing.
