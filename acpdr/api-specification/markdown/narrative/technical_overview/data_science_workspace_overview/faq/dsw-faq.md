@@ -4,9 +4,9 @@ This document provides answers to frequently asked questions about Adobe Experie
 
 -   [Why am I unable to access JupyterLab on Safari?](#why-am-i-unable-to-access-jupyterlab-on-safari)
 -   [Why am I seeing a '403 Forbidden' message when trying to upload or delete a file in JupyterLab?](#why-am-i-seeing-a-403-forbidden-message-when-trying-to-upload-or-delete-a-file-in-jupyterlab)
--   [Why do some parts of my Jupyter Notebook look scrambled or don't render as code?](#why-do-some-parts-of-my-jupyter-notebook-look-scrambled-or-dont-render-as-code)
--   [How can I install custom Python libraries?](#how-can-i-install-custom-python-libraries)
--   [How can I install custom PySpark libraries?](#how-can-i-install-custom-pyspark-libraries)
+-   [Why do some parts of my Jupyter Notebook look scrambled or do not render as code?](#why-do-some-parts-of-my-jupyter-notebook-look-scrambled-or-do-not-render-as-code)
+-   [How do I install custom Python libraries?](#how-do-i-install-custom-python-libraries)
+-   [Can I install custom PySpark libraries?](#can-i-install-custom-pyspark-libraries)
 -   [Is it possible to configure Spark cluster resources for JupyterLab Spark or PySpark kernel?](#is-it-possible-to-configure-spark-cluster-resources-for-jupyterlab-spark-or-pyspark-kernel)
 
 ## Why am I unable to access JupyterLab on Safari?
