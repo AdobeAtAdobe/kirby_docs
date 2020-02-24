@@ -1,6 +1,6 @@
 # Configure and access computed attributes
 
-> **Note:** The computed attribute functionality outlined in this document is in alpha. The documentation and the functionality are subject to change.
+> **Note:** The computed attribute functionality outlined in this document is currently in alpha and is not available to all users. The documentation and the functionality are subject to change.
 
 Computed attributes enable you to automatically compute the value of fields based on other values, calculations, and expressions. Computed attributes operate on the profile level, meaning you can aggregate values across all records and events. 
 

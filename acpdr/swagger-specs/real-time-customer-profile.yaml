@@ -41,7 +41,7 @@ host: platform.adobe.io
 basePath: /data/core/ups
 tags:
   - name: Computed Attributes
-    description: Computed attributes enable a field value to be automatically computed based on other values, calculations, and expressions.
+    description: Computed attributes enable a field value to be automatically computed based on other values, calculations, and expressions. Computed attributes functionality is in alpha and is not available to all users. Functionality is subject to change.
   - name: Entities
     description: An entity is an Experience Data Model (XDM) object whose attributes and related time-series events have been merged from various sources to form an individual profile.
   - name: Estimates
@@ -77,7 +77,8 @@ paths:
       tags:
         - Computed Attributes
       summary: Retrieve a list of computed attributes.
-      description: ''
+      description: >-
+        **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.**
       operationId: listComputedAttributes
       produces:
         - application/json
@@ -100,6 +101,9 @@ paths:
         - Computed Attributes
       summary: Create a computed attribute.
       description: >- 
+        **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.**  
+        
+        
         In order to configure a computed attribute, you first need to identify the field that will hold the computed attribute value. This field can be created using a mixin to add a new field to an existing schema, or by selecting a field that you have already defined within a schema.
 
 
@@ -136,7 +140,8 @@ paths:
       tags:
         - Computed Attributes
       summary: Retrieve a specific computed attribute by its ID.
-      description: ''
+      description: >- 
+        **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.** 
       operationId: lookupComputedAttribute
       produces:
         - application/json
@@ -161,7 +166,8 @@ paths:
       tags:
         - Computed Attributes
       summary: Update a computed attribute by its ID.
-      description: ''
+      description: >- 
+        **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.** 
       operationId: updateComputedAttribute
       produces:
         - application/json
@@ -185,7 +191,8 @@ paths:
       tags:
         - Computed Attributes
       summary: Delete a computed attribute by its ID.
-      description: ''
+      description: >- 
+        **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.** 
       operationId: deleteComputedAttribute
       produces:
         - application/json
@@ -2352,7 +2359,8 @@ paths:
       tags:
         - Macros
       summary: Retrieve a list of all macros for your organization.
-      description: "Warning: The macros endpoint is deprecated."
+      description: >-
+        **Warning: The macros endpoint is deprecated.**
       produces:
         - application/json
       parameters:
@@ -2415,7 +2423,8 @@ paths:
       tags:
         - Macros
       summary: Create a new macro.
-      description: "Warning: The macros endpoint is deprecated."
+      description: >-
+        **Warning: The macros endpoint is deprecated.**
       produces:
         - application/json
       parameters:
@@ -2461,7 +2470,8 @@ paths:
       tags:
         - Macros
       summary: Lookup a macro by ID.
-      description: "Warning: The macros endpoint is deprecated."
+      description: >-
+        **Warning: The macros endpoint is deprecated.**
       produces:
         - application/json
       parameters:
@@ -2491,7 +2501,8 @@ paths:
       tags:
         - Macros
       summary: Overwrite a macro by ID.
-      description: "Warning: The macros endpoint is deprecated."
+      description: >-
+        **Warning: The macros endpoint is deprecated.**
       produces:
         - application/json
       parameters:
@@ -2537,7 +2548,8 @@ paths:
       tags:
         - Macros
       summary: Update a macro by ID.
-      description: "Warning: The macros endpoint is deprecated."
+      description: >-
+        **Warning: The macros endpoint is deprecated.**
       produces:
       - application/json
       parameters:
@@ -2583,7 +2595,8 @@ paths:
       tags:
         - Macros
       summary: Delete a macro by ID.
-      description: "Warning: The macros endpoint is deprecated."
+      description: >-
+        **Warning: The macros endpoint is deprecated.**
       produces:
         - application/json
       parameters:
