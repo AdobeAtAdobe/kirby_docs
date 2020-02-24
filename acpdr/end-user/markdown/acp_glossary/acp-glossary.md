@@ -28,6 +28,9 @@ __Adobe Connectors:__ Adobe Connectors are pre-configured connections created by
 <a name="Adobe I/O"></a>
 __Adobe I/O:__ Adobe I/O is part of Experience Platform and provides access to everything developers need to integrate, extend, and customize Adobe Experience Platform including APIs, events, developer console, and helpful tooling.
 
+<a name="Adobe Sensei"></a>
+__Adobe Sensei:__ Adobe Sensei is the intelligence framework that powers Experience Platform. It also provides a set of AI services that empowers brands to enhance their ability to deliver real-time, personalized customer experiences.
+
 <a name="Amazon S3 bucket"></a>
 __Amazon S3 bucket:__ Amazon S3 buckets are the foundational containers for data stored in the Amazon ecosystem. Buckets contain objects, each object is stored and retrieved using a unique developer-assigned key.
 
@@ -50,7 +53,7 @@ __Artificial Intelligence:__ Artificial intelligence is a theory and development
 __Attributes:__ Attributes are specified characteristics that represent a profile.
 
 <a name="Audience"></a>
-__Audience__: An audience is a collection of profiles that meet the segment definition criteria.
+__Audience__: An audience is the resulting set of profiles that meet the criteria of a segment definition.
 
 <a name="Audience Snapshot"></a>
 __Audience Snapshot__: An audience snapshot captures all profiles who qualify for the segment criteria at the time of segmentation.
@@ -73,6 +76,9 @@ __Batch ID:__ Batch ID is an Adobe-generated identifier for a batch of data.
 
 <a name="Batch Ingestion"></a>
 __Batch Ingestion:__ Batch ingestion allows users to ingest petabytes of data and make it available within enterprise systems. With the latest technologies, users can now ingest any schema XDM and non-XDM into Experience Platform.
+
+<a name="Batch Segmentation"></a>
+__Batch Segmentation:__ Batch segmentation is an alternative to an ongoing data selection process and moves all profile data at once through segment definitions to produce corresponding audiences. Once created, this segment is saved and stored so it can be exported for use.
 
 <a name="Build"></a>
 __Build:__ In Experience Platform Launch, a build is a deployed library. The build is a file or set of files that contain all the configurations and code needed to execute the business logic contained inside of that library.
@@ -106,7 +112,7 @@ __Command Line Interface:__ Command Line Interface is a command line tool used t
 __Composition__: A composition is a grouping of components that form together to make up the schema.
 
 <a name="Connection"></a>
-__Connection:__ A connection is a virtual pipeline that enables data to flow in and out of Experience Platform.
+__Connection:__ A connection is a virtual pipeline that enables data to flow in and out of Experience Platform. Connections are now replaced by Sources.
 
 <a name="Connector"></a>
 __Connector:__ Adobe Experience Platform Source connectors help users easily ingest data from multiple sources, allowing the structuring, labeling and enhancement of data using Experience Platform Services. Data can be ingested from a variety of sources such as cloud-based storage, third party software, and CRM systems.
@@ -158,6 +164,9 @@ __Cross-site Data:__ Cross-site data is the combination of data from several sit
 
 <a name="Custom Identity Namespace"></a>
 __Custom Identity Namespace:__ Custom identity namespaces are customer created identifiers used to represent identities for a specific organization or business case.
+
+<a name="Customer AI"></a>
+__Customer AI:__ Customer AI is an Adobe Sensei Service that enriches customer profiles with AI-based propensities and empowers customer segmentation and targeting efforts.
 
 [Back to top](#adobe-experience-platform-glossary)
 
@@ -414,7 +423,7 @@ __Mapping:__ In Real-time Customer Data Platform, data mapping is the process of
 __Merge Method:__ A `merge method` is a merge policy option that enables prioritization of merging of data fragments. The merge method options are merge by dataset precedence or by dataset timestamp.
 
 <a name="Merge Policy"></a>
-__Merge Policy:__ A merge policy is a set of configurations controlling identity stitching and attribute merging across identities and or datasets for a specific schema.
+__Merge Policy:__ A merge policy is a set are rules used by Profile to determine how data will be prioritized and combined into a unified view under certain conditions.
 
 <a name="Mixin"></a>
 __Mixin:__ A mixin allows users to extend reusable fields that contain variables defining one or more attribute intended to be included in a schema or added to a class.
@@ -431,6 +440,9 @@ __Module:__ In Experience Platform Launch, a module is a snippet of executable J
 
 <a name="Non-production Sandbox"></a>
 __Non-production Sandbox:__ Non-production sandboxes are temporary testing environments on Experience Platform. Non-production sandboxes can be reset and deleted.
+
+<a name="Notebook"></a>
+__Notebook:__ Notebooks are authored using *Jupyter Notebook* and contain analysis description, results, and can be run to perform data analysis.
 
 [Back to top](#adobe-experience-platform-glossary)
 
@@ -575,6 +587,12 @@ __Segment:__ A segment is a set of rules that include attributes and event data 
 <a name="Segment Builder"></a>
 __Segment Builder:__ Segment Builder is the visual development environment used to build segment definitions and serves as a common component of all applications using Real-time Customer Profile Segmentation on Experience Platform.
 
+<a name="Segment Definition"></a>
+__Segment Definition:__ Segment definition is the rule set used to describe key characteristics or behavior of a target audience. Once conceptualized, the rules outlined in a segment definition are used to determine qualifying audience members for a segment.
+
+<a name="Segment Evaluation Method"></a>
+__Segment Evaluation Method:__ Segment scheduled evaluation enables a recurring schedule for running an export job at a specific time, whereas on-demand evaluation involves creating a segment job to build the audience immediately. 
+
 <a name="Segment Export"></a>
 __Segment Export:__ Segment export is one of the two types of destinations and send the profiles that qualify and have been mapped to the destination. Uses segment and user IDs and pseudonymous data and typically integrates with social networks and other digital media target platforms.
 
@@ -634,6 +652,9 @@ __Streaming Ingestion:__ Streaming ingestion provides users a method to send dat
 
 <a name="Streaming Endpoint URL"></a>
 __Streaming Endpoint URL:__ A streaming endpoint URL is a unique endpoint provided by Adobe and tied to a customer's IMS org to stream data into Experience Platform.
+
+<a name="Streaming Segmentation"></a>
+__Streaming Segmentation:__ Streaming segmentation is an ongoing data selection process that updates segments in response to user activity. Once a segment has been built and saved, the segment definition is applied against incoming data to Real-time Customer Profile. Segment additions and removals are processed regularly, ensuring your target audience remains relevant.
 
 <a name="Symbol"></a>
 __Symbol:__ Symbol is an abbreviation of an identity namespace that can be used as a reference in APIs.
