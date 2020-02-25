@@ -163,4 +163,4 @@ A successful response returns the unique identifier (`id`) of the newly created 
 
 ## Next steps
 
-By following this tutorial, you have created a PSQL base connection using the Flow Service API, and have obtained the connection's unique ID value. You can use this base connection ID in the next tutorial as you learn how to [explore data stores using the Flow Service API](./explore-data-store-api-tutorial.md).
+By following this tutorial, you have created a PSQL base connection using the Flow Service API, and have obtained the connection's unique ID value. You can use this base connection ID in the next tutorial as you learn how to [explore databases or NoSQL systems using the Flow Service API](./explore-dbnosql-api-tutorial.md).
