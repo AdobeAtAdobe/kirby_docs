@@ -36,11 +36,16 @@
 			"description": "An overview of the Policy Service API and its supported operations."
 		},
 		{
-			"importedFileName": "create_a_dule_policy_tutorial",
 			"pages": [],
 			"path": "api-specification/markdown/narrative/tutorials/dule/create_a_dule_policy_tutorial.md",
-			"title": "Create and evaluate a DULE policy using the Policy Service API",
-			"description": "Create and evaluate Data Usage Labeling and Enforcement (DULE) policies using the Policy Service API."
+			"title": "Create a DULE policy using the Policy Service API",
+			"description": "Create Data Usage Labeling and Enforcement (DULE) policies using the Policy Service API."
+		},
+		{
+			"pages": [],
+			"path": "api-specification/markdown/narrative/tutorials/dule/policy-enforcement.md",
+			"title": "Enforce data usage policies using the Policy Service API",
+			"description": "Evaluate marketing actions for Data Usage Labeling and Enforcement (DULE) policy violations using the Policy Service API."
 		}
 	],
 	"app2app_map": {
