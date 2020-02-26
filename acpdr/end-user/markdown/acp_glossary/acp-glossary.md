@@ -4,6 +4,9 @@
 
 ## A
 
+<a name="Access Control"></a>
+__Access Control:__ Access control for Experience Platform links users with access permissions and sandbox environments through product profiles in Adobe Admin Console.
+
 <a name="Access key ID"></a>
 __Access key ID:__ Access key ID is a unique identifier that's associated with an Amazon S3 secret access key. The access key ID and secret access key are used together to sign AWS requests.
 
@@ -17,7 +20,7 @@ __Activate:__ In Real-time Customer Data Platform, activate is the action taken 
 __Activity:__ In the Decisioning Service, an activity is a set of offers the marketer wants the decision engine to select the best offer from.
 
 <a name="Adobe Admin Console"></a>
-__Adobe Admin Console:__ Adobe Admin Console provides a central location for managing Experience Platform entitlements and feature permissioning across Adobe Experience Platform.
+__Adobe Admin Console:__ Adobe Admin Console provides a central location for managing access and feature permissioning for your organization.
 
 <a name="Adobe Experience Platform"></a>
 __Adobe Experience Platform:__ Adobe Experience Platform standardizes data and content across the enterprise, powering real-time consumer profiles, enabling data science, and accelerating content velocity to drive experience personalization across the customer journey.
@@ -439,7 +442,7 @@ __Module:__ In Experience Platform Launch, a module is a snippet of executable J
 ## N
 
 <a name="Non-production Sandbox"></a>
-__Non-production Sandbox:__ Non-production sandboxes are temporary testing environments on Experience Platform. Non-production sandboxes can be reset and deleted.
+__Non-production Sandbox:__ Non-production sandboxes are a form of data virtualization that allow you to isolate data from other sandboxes and are typically used for development experiments, testing, or trials. Non-production sandboxes can be reset and deleted.
 
 <a name="Notebook"></a>
 __Notebook:__ Notebooks are authored using *Jupyter Notebook* and contain analysis description, results, and can be run to perform data analysis.
@@ -456,6 +459,9 @@ __Offer Decisioning:__ In the Decisioning Service, offer decisioning enables a m
 
 <a name="Offer Library"></a>
 __Offer Library:__ In the Decisioning Service, the offer library is a central library used to manage personalized and fallback offers, decision rules and activities.
+
+<a name="Organization"></a>
+__Organization:__ An Organization is the name used to identify a company or a specific group within a company across Adobe products. Administrator can configure and manage access and permissions of features to users of an Organization. 
 
 <a name="Overwrite Save Strategy"></a>
 __Overwrite Save Strategy:__ `Overwrite` save strategy is an option for ingesting third-party data via a connection, where the user specifies if ingested data will be overwritten on a specified schedule. Experience Platform will ingest the specified dataset from the 3rd party source and overwrite the dataset on Experience Platform.
