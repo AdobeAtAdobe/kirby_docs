@@ -7,7 +7,7 @@ description: >-
 
 Currently the Adobe Experience Platform Web SDK only supports sending data to Adobe Experience Platform using XDM. You must satisfy the following prerequisites.
 
-- Have a [1st-party domain (CNAME)](https://docs.adobe.com/content/help/en/core-services/interface/ec-cookies/cookies-first-party.html) enabled. If you already have a CNAME for Analytics you should use that one.
+- Have a [1st-party domain (CNAME)](https://docs.adobe.com/content/help/en/core-services/interface/ec-cookies/cookies-first-party.html) enabled. If you already have a CNAME for Analytics you should use that one. The library will work in development environments without a CNAME, however, cookie expiration may be limited.
 - Be entitled to Adobe Experience Platform
 - Be using the latest version of the Visitor ID service
 
@@ -15,11 +15,8 @@ Currently the Adobe Experience Platform Web SDK only supports sending data to Ad
 
 To be able to send data to Adobe Experience Platform, you must create an XDM schema and a dataset that uses that schema.
 
-- [Create a schema](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/schema_editor_tutorial/schema_editor_tutorial.md) with the following mixins:
-  - ExperienceEvent Implementation Details
-  - ExperienceEvent Environment Details
-  - ExperienceEvent Web Details
-- Add the Adobe Experience Platform Web SDK Mixin to the schema you created
+- [Create a schema](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/schema_editor_tutorial/schema_editor_tutorial.md) with the following mixin:
+  - ExperienceEvent AEP Web SDK
 - [Create a dataset](https://platform.adobe.com/dataset/overview) with your schema where you would like the data to land
 
 ## Requesting a configuration ID
@@ -28,6 +25,7 @@ You must have a configuration ID to be able to use the SDK. The configuration ID
 
 - **Org ID:** You can find this using the instructions [here](https://docs.adobe.com/content/help/en/core-services/interface/manage-users-and-products/organizations.html)
 - **Dataset ID:** This is available in the dataset UI when you click on a dataset
+- **Sandbox Name** (optional) If you want to send data to a non-production environment you must provide your sandbox name
 - **Schema ID:** This is available in the URL of the schema creation screen
 - **Friendly Name:** This is the friendly name that will be used in future UIs for this configuration
 
