@@ -114,7 +114,7 @@ By default, the following configuration parameters are set for you when you acce
 
 ---
 
-### Training data loader
+## Training data loader
 
 The purpose of the Training Data Loader is to instantiate data used for creating the machine learning model. Typically, there are two tasks that the training data loader will accomplish:
 * Load data from Platform
@@ -122,15 +122,43 @@ The purpose of the Training Data Loader is to instantiate data used for creating
 
 The following two sections will go over loading data and data preparation. 
 
-##### Loading data 
+### Loading data 
 
-In this step, you will load the data into a [pandas dataframe](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html). Data can be loaded from files in Adobe Experience Platform via the Data Access SDK or externally, from pandas' `read_csv()` or `read_json()` functions.
-* [From Data Access SDK](#from-data-access-sdk)
-* [From external Source](#from-external-source)
+This step uses the [pandas dataframe](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html). Data can be loaded from files in Adobe Experience Platform using either the Platform SDK (`platform_sdk`), or from external sources using pandas' `read_csv()` or `read_json()` functions.
 
-> **Note:** In the Recipe Builder notebook, data is loaded via the Data Access SDK.
+* [Platform SDK](#platform-sdk)
+* [External sources](#external-sources)
 
-###### From Data Access SDK
+> **Note:** In the Recipe Builder notebook, data is loaded via the `platform_sdk` data loader.
+
+### Platform SDK
+For an in-depth tutorial on using the `platform_sdk` data loader, please visit the [Platform SDK guide](./../../prepare_your_data/convert_data_access_code_to_platform_sdk/convert_data_access_code_to_platform_sdk.md). This tutorial provides information on build authentication, basic reading of data, and basic writing of data.
+
+### External sources 
+
+This section shows you how to import a JSON or CSV file to a pandas object. Official documentation from the pandas library can be found here:
+* [read_csv](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html)
+* [read_json](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_json.html)
+
+First, here is an example of importing a CSV file. The `data` argument is the path to the CSV file. This variable was imported from the `configProperties` in the [previous section](#configuration-files).
+
+```PYTHON
+df = pd.read_csv(data)
+```
+
+You can also import from a JSON file. The `data` argument is the path to the CSV file. This variable was imported from the `configProperties` in the [previous section](#configuration-files).
+
+```PYTHON
+df = pd.read_json(data)
+```
+
+Now your data is in the dataframe object and can be analyzed and manipulated in the [next section](#data-preparation-and-feature-engineering).
+
+---
+
+### From Data Access SDK (Deprecated)
+
+> **Important Note:**  `data_access_sdk_python` is no longer used, please see [Convert Data Access code to Platform SDK](./../../prepare_your_data/convert_data_access_code_to_platform_sdk/convert_data_access_code_to_platform_sdk.md) for a guide on using the `platform_sdk` data loader.
 
 Users can load data using the Data Access SDK. The library can be imported at the top of the page by including the line:
 
@@ -157,29 +185,7 @@ Now that you have your data, you can begin with data preparation and feature eng
 
 ---
 
-###### From external source 
-
-This section will show you how to import a JSON or CSV file to a pandas object. Official documentation from the pandas library can be found here:
-* [read_csv](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html)
-* [read_json](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_json.html)
-
-First, here is an example of importing a CSV file. The `data` argument is the path to the CSV file. This variable was imported from the `configProperties` in the [previous section](#configuration-files).
-
-```PYTHON
-df = pd.read_csv(data)
-```
-
-You can also import from a JSON file. The `data` argument is the path to the CSV file. This variable was imported from the `configProperties` in the [previous section](#configuration-files).
-
-```PYTHON
-df = pd.read_json(data)
-```
-
-Now your data is in the dataframe object and can be analyzed and manipulated in the [next section](#data-preparation-and-feature-engineering).
-
----
-
-##### Data preparation and feature engineering
+### Data preparation and feature engineering
 
 After the data is loaded, the data undergoes preparation and is then split to the `train` and `val` datasets. Sample code is seen below:
 
@@ -299,7 +305,7 @@ The `load()` function in your scoring data loader should complete with the scori
 
 The `pipeline.py` file includes logic for training and scoring. We will go over both in the next two sections.
 
-#### Training 
+### Training 
 
 The purpose of training is to create a model using features and labels in your training dataset. 
 
@@ -345,7 +351,7 @@ Notice that depending on your application, you will have arguments in your `Grad
 
 ---
 
-#### Scoring 
+### Scoring 
 
 The `score()` function should contain the scoring algorithm and return a measurement to indicate how successful the model performs. The `score()` function uses the scoring dataset labels and the trained model to generate a set of predicted features. These predicted values are then compared with the actual features in the scoring dataset. In this example, the `score()` function uses the trained model to predict features using the labels from the scoring dataset. The predicted features are returned.
 
@@ -373,7 +379,7 @@ def score(configProperties, data, model):
 
 The `evaluator.py` file contains logic for how you wish to evaluate your trained recipe as well as how your training data should be split. In the retail sales example, the logic for loading and preparing the training data will be included. We will go over the two sections below.
 
-#### Split the dataset 
+### Split the dataset 
 
 The data preparation phase for training requires splitting the dataset to be used for training and testing. This `val` data will be used implicitly to evaluate the model after it is trained. This process is separate from scoring. 
 
@@ -392,7 +398,7 @@ def split(self, configProperties={}, dataframe=None):
     return train, val
 ```
 
-#### Evaluate the trained model
+### Evaluate the trained model
 
 The `evaluate()` function is performed after the model is trained and will return a metric to indicate how successful the model performs. The `evaluate()` function uses the testing dataset labels and the Trained model to predict a set of features. These predicted values are then compared with actual features in the testing dataset. Common scoring algorithms include:
 * [Mean absolute percentage error (MAPE)](https://en.wikipedia.org/wiki/Mean_absolute_percentage_error)

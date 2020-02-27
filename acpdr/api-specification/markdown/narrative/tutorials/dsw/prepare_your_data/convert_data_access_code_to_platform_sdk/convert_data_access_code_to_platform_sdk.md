@@ -197,3 +197,7 @@ dataset <- psdk$models$Dataset(client_context)$get_by_id("{DATASET_ID}")
 dataset_writer <- psdk$dataset_writer$DatasetWriter(client_context, dataset)
 write_tracker <- dataset_writer$write({PANDA_DATAFRAME}, file_format='json')
 ```
+
+## Next steps
+
+Once you have configured the `platform_sdk` data loader, the data undergoes preparation and is then split to the `train` and `val` datasets. To learn about data preparation and feature engineering please visit the section on [data preparation and feature engineering](./../../author_a_model/create_a_recipe_using_jupyter_notebooks/create_a_recipe_using_jupyter_notebooks.md#data-preparation-and-feature-engineering) in the tutorial for creating a recipe using JupyterLab notebooks.
