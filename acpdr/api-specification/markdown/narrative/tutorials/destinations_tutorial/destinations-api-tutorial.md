@@ -1,8 +1,6 @@
-# Create a destination using the Flow Service API
+# Create a destination and activate data using APIs
 
-Source connectors in Adobe Experience Platform allow you to ingest data from multiple sources, where it can then be labeled, structured, and enhanced using Platform services. See the [sources overview](../../../technical_overview/acp_connectors_overview/acp-connectors-overview.md) for more information.
-
-The following is a list of tutorials for creating destinations using the Flow Service API:
+Learn to create different types of destinations and activate data. This functionality is available for users of [Adobe's Real-time Customer Data Platform](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/overview.html).
 
 ## Email marketing destinations
 
