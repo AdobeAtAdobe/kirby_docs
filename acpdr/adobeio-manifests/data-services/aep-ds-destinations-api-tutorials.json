@@ -20,8 +20,8 @@
               }
           ],
           "path": "api-specification/markdown/narrative/tutorials/destinations_tutorial/destinations-api-tutorial.md",
-          "title": "Create a destination using the Flow Service API",
-          "description": "Learn to create different types of destinations using the Flow Service API."
+          "title": "Create a destination and activate data using APIs",
+          "description": "Learn to create different types of destinations and activate data. This functionality is available for users of Adobe's Real-time Customer Data Platform."
       }
   ],
   "app2app_map": {
