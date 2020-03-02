@@ -19,10 +19,10 @@ In addition, the appendix to this tutorial provides additional information for w
 
 This tutorial requires a working understanding of the following components of Adobe Experience Platform:
 
--   [Experience Data Model (XDM) System](../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Experience Platform organizes customer experience data.
-    -   [Basics of schema composition](../../technical_overview/schema_registry/schema_composition/schema_composition.md): Learn about the basic building blocks of XDM schemas, including key principles and best practices in schema composition.
-    -   [Schema Editor tutorial](../../tutorials/schema_editor_tutorial/schema_editor_tutorial.md): Learn how to create custom schemas using the Schema Editor UI.
--   [Real-time Customer Profile](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, real-time consumer profile based on aggregated data from multiple sources.
+-   [Experience Data Model (XDM) System](./../../../../technical_overview/schema_registry/xdm_system/xdm_system_in_experience_platform.md): The standardized framework by which Experience Platform organizes customer experience data.
+    -   [Basics of schema composition](./../../../../technical_overview/schema_registry/schema_composition/schema_composition.md): Learn about the basic building blocks of XDM schemas, including key principles and best practices in schema composition.
+    -   [Schema Editor tutorial](./../../../../tutorials/schema_editor_tutorial/schema_editor_tutorial.md): Learn how to create custom schemas using the Schema Editor UI.
+-   [Real-time Customer Profile](./../../../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md): Provides a unified, real-time consumer profile based on aggregated data from multiple sources.
 
 ### Gather required credentials
 
@@ -40,11 +40,11 @@ Log in to <a href="https://platform.adobe.com" target="_blank">Adobe Experience 
 
 Under the *CRM* category, select either **Microsoft Dynamics** or **Salesforce** to expose an information bar on the right-side of your screen. The information bar provides a brief description for the selected source as well as options to view its documentation or to connect with the source. To create a new inbound base connection, click **Connect source**. 
 
-![](./images/salesforce/sf_sources_catalog.png)
+![](./../../images/salesforce/sf_sources_catalog.png)
 
 On the input form, provide the base connection with a name, an optional description, and your Dynamics or Salesforce credentials. Lastly, click **Connect** and then allow some time for the new base connection to establish.
 
-![](./images/salesforce/sf_credentials.png)
+![](./../../images/salesforce/sf_credentials.png)
 
 Once a base connection with your CRM system is established, you can continue on to the next section and configure a dataflow to bring CRM data into Platform.
 
@@ -54,11 +54,11 @@ A dataflow is a scheduled task for the purpose of retrieving and ingesting data 
 
 Within Experience Platform sources workspace, click the **Browse** tab to list your existing base connections. Find your Dynamics or Salesforce connection and click its name to access the *Source activity* screen.
 
-![](./images/salesforce/sf_base_connectors.png)
+![](./../../images/salesforce/sf_base_connectors.png)
 
 The *Source activity* screen lists all active and inactive data flows. The information column to the right-side of the UI provides useful information regarding the selected base connection, such as the connecter ID. Click **Select data** to configure a new data flow using the base connector you are viewing.
 
-![](./images/salesforce/sf_flows_none.png)
+![](./../../images/salesforce/sf_flows_none.png)
 
 ### Select data
 
@@ -68,7 +68,7 @@ The *Select data* step appears, providing you with an interactive interface to e
 
 Find and select the report suite you want to ingest and then click **Next**.
 
-![](./images/salesforce/sf_select_data.png)
+![](./../../images/salesforce/sf_select_data.png)
 
 ### Map data fields to an XDM schema
 
@@ -78,22 +78,24 @@ Choose a dataset for where inbound data is ingested to. You can either use an ex
 
 *   To ingest data into an existing dataset, click the dataset icon and a window appears. Find the dataset you you wish to use, select it, then click **Continue**.
 
-    ![](./images/salesforce/sf_mapping_dataset.png)
-    ![](./images/salesforce/sf_mapping_existing.png)
+    ![](./../../images/salesforce/sf_mapping_dataset.png)
+
+    ![](./../../images/salesforce/sf_mapping_existing.png)
 
 *   To ingest data into a new dataset, you must provide a dataset name, an optional description, and select an XDM schema. Click the schema icon and a window appears. Find the schema you wish to apply to the new dataset and then click **Done**.
 
-    ![](./images/salesforce/sf_mapping_schema.png)
-    ![](./images/salesforce/sf_mapping_new.png)
+    ![](./../../images/salesforce/sf_mapping_schema.png)
+    
+    ![](./../../images/salesforce/sf_mapping_new.png)
 
-Based on your needs, you can choose to map fields directly, or use mapper functions to transform source data to derive computed or calculated values. For more information on data mapping and mapper functions, refer to the tutorial on [mapping CSV data to XDM schema](../../tutorials/map-csv-to-xdm/map-csv-to-xdm.md). Once your source data is mapped, click **Next**.
+Based on your needs, you can choose to map fields directly, or use mapper functions to transform source data to derive computed or calculated values. For more information on data mapping and mapper functions, refer to the tutorial on [mapping CSV data to XDM schema](./../../../../tutorials/map-csv-to-xdm/map-csv-to-xdm.md). Once your source data is mapped, click **Next**.
 
 
-![](./images/salesforce/sf_mapping_data.png)
+![](./../../images/salesforce/sf_mapping_data.png)
 
 Select an appropriate **Delta column**. A delta column is a data field within the chosen report suite consisting of timestamps. This information is used by Platform to differentiate between new and existing data so that only new data is considered for each scheduled ingestion run.
 
-![](./images/salesforce/sf_mapping_delta.png)
+![](./../../images/salesforce/sf_mapping_delta.png)
 
 Once your source data is mapped, click **Next**.
 
@@ -111,7 +113,7 @@ Dataflows are designed to automatically ingest data on a scheduled basis. If you
 
 Provide values for the schedule and click **Next**.
 
-![](./images/salesforce/sf_scheduling.png)
+![](./../../images/salesforce/sf_scheduling.png)
 
 ### Review your dataflow
 
@@ -123,7 +125,7 @@ The *Review* step appears, allowing you to review your new dataflow before it is
 
 Once you have reviewed your dataflow, click **Finish** and allow some time for the dataflow to be created.
 
-![](./images/salesforce/sf_review.png)
+![](./../../images/salesforce/sf_review.png)
 
 ## Monitor data ingestion
 
@@ -131,28 +133,28 @@ You can monitor data that is being ingested through your Dynamics or Salesforce 
 
 Within Experience Platform sources workspace, click the **Browse** tab to list your base connections. In the displayed list, find the connection that contains the dataflow you wish to monitor and click its name to access its *Source activity* screen.
 
-![](./images/salesforce/sf_base_connectors.png)
+![](./../../images/salesforce/sf_base_connectors.png)
 
 Each dataflow is represented by the dataset for which source data is ingested into. Click on a dataset ID to access its *Dataset activity* screen.
 
-![](./images/salesforce/sf_flows.png)
+![](./../../images/salesforce/sf_flows.png)
 
 From here, you can see the rate of messages being consumed in the form of a graph, as well as a list of successful and failed batches. 
 
-![](./images/salesforce/dataset_activity.png)
+![](./../../images/salesforce/dataset_activity.png)
 
 You can view more details about a batch by clicking a **Batch ID**, or by clicking **Monitoring** within the left-navigation to see the status of each batch. If a batch is ingested into a Profile-enabled dataset, the number of ingested profiles and identities are displayed.
 
-![](./images/sftp/monitoring.png)
+![](./../../images/sftp/monitoring.png)
 
-For more information on monitoring datasets and ingestion, refer to the tutorial on [monitoring streaming data flows](../../technical_overview/streaming_ingest/monitor-data-flows.md).
+For more information on monitoring datasets and ingestion, refer to the tutorial on [monitoring streaming data flows](./../../../../technical_overview/streaming_ingest/monitor-data-flows.md).
 
 ## Next steps
 
 By following this tutorial, you have successfully created a Dynamics or Salesforce base connection, created a dataflow to bring in CRM data from a report suite, and gained insight on monitoring datasets. Incoming data can now be used by downstream Platform services such as Real-time Customer Profile and Data Science Workspace. See the following documents for more details:
 
-*   [Real-time Customer Profile overview](../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
-*   [Data Science Workspace overview](../../technical_overview/data_science_workspace_overview/dsw_overview.md)
+*   [Real-time Customer Profile overview](./../../../../technical_overview/unified_profile_architectural_overview/unified_profile_architectural_overview.md)
+*   [Data Science Workspace overview](./../../../../technical_overview/data_science_workspace_overview/dsw_overview.md)
 
 ## Appendix
 
@@ -164,11 +166,11 @@ When a dataflow is created, it immediately becomes active and ingests data accor
 
 Within the Sources workspace, click the **Browse** tab. Next, click the name of the base connection that the active dataflow you wish to disable belongs to.
 
-![](./images/salesforce/sf_base_connectors.png)
+![](./../../images/salesforce/sf_base_connectors.png)
 
 Click the listing of the active dataflow and the *Properties* column appears, containing an **Enabled** toggle button. Click the toggle to disable the dataflow. The same toggle can be used to re-enable a dataflow after it has been disabled.
 
-![](./images/salesforce/sf_flows_disable.png)
+![](./../../images/salesforce/sf_flows_disable.png)
 
 ### Activate inbound data for Profile hydration
 
@@ -184,27 +186,27 @@ In order to enrich customer profiles, the target dataset's source schema is comp
 
 Within the Sources workspace, click the **Browse** tab to list your base connections. In the displayed list, find the connection that contains the dataflow you wish to hydrate profiles with. Click the connection's name to access its details.
 
-![](./images/sftp/browse_base_connections.png)
+![](./../../images/sftp/browse_base_connections.png)
 
 The connection's *Source activity* screen appears, displaying the datasets that the connection is ingesting source data into.
 
-![](./images/sftp/sftp_flows.png)
+![](./../../images/sftp/sftp_flows.png)
 
 Within the *properties* column to the right of your screen, details of the dataset are displayed, including a **Profile** switch and the schema the dataset adheres to. Click the name of the schema to view its composition.
 
-![](./images/sftp/sftp_dataset_properties.png)
+![](./../../images/sftp/sftp_dataset_properties.png)
 
 The *Schema Editor* appears, showing the structure of the schema in the center canvas. Within the canvas, select the field to be set as the primary identity. Under the *Field properties* tab that appears, select the **Identity** checkbox, then **Primary identity**. Finally, select an appropriate **Identity namespace**, then click **Apply** to save your changes.
 
-![](./images/sftp/sftp_schema_properties.png)
+![](./../../images/sftp/sftp_schema_properties.png)
 
 Click the top-level object of the schema's structure and the *Schema properties* column appears. Enable the schema for Profile by toggling the **Profile** switch. Click **Save** to finalize your changes.
 
-![](./images/sftp/sftp_schema_enabled.png)
+![](./../../images/sftp/sftp_schema_enabled.png)
 
 Now that the schema is enabled for Profile, return to the Dataset activity screen and enable the dataset for Profile by clicking the **Profile** toggle within the *Properties* column.
 
-![](./images/sftp/sftp_dataset_enabled.png)
+![](./../../images/sftp/sftp_dataset_enabled.png)
 
 With both the schema and dataset enabled for Profile, data ingested into that dataset will now also hydrate customer profiles.
 
