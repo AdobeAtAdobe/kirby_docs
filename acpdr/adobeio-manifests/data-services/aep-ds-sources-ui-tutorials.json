@@ -15,41 +15,41 @@
             "pages": [
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/aam-ui-tutorial.md",
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/adobe-applications/aam-ui-tutorial.md",
                     "title": "Adobe Audience Manager connector"
                 },
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/adobe-analytics-ui-tutorial.md",
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/adobe-applications/adobe-analytics-ui-tutorial.md",
                     "title": "Adobe Analytics connector"
                 },
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/customer-attributes-ui-tutorial.md",
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/adobe-applications/customer-attributes-ui-tutorial.md",
                     "title": "Customer attributes connector"
                 },
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/amazon-s3-ui-tutorial.md",
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/cloud-storages/amazon-s3-ui-tutorial.md",
                     "title": "Azure Blob and Amazon S3 connector"
                 },
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ftp-sftp-ui-tutorial.md",
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/cloud-storages/ftp-sftp-ui-tutorial.md",
                     "title": "FTP and SFTP connector"
                 },
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/dynamics-salesforce-ui-tutorial.md",
-                    "title": "Microsoft Dynamics and Salesforce connector"
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/cloud-storages/google-cloud-storage-ui-tutorial.md",
+                    "title": "Google Cloud Storage connector"
                 },
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/google-cloud-storage-ui-tutorial.md",
-                    "title": "Google Cloud Storage connector"
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/crm/dynamics-salesforce-ui-tutorial.md",
+                    "title": "Microsoft Dynamics and Salesforce connector"
                 }
             ],
-            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/sources-ui-tutorial.md",
+            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/sources-ui-tutorial.md",
             "title": "Create a source connector in the UI",
             "description": "Set up, configure, and monitor source connectors using the user interface within Adobe Experience Platform."
         }

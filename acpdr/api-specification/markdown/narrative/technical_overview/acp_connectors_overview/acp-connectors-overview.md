@@ -15,23 +15,23 @@ Sources in Experience Platform are grouped into the following categories:
 Experience Platform allows data to be ingested from other Adobe applications, including Adobe Analytics, Adobe Audience Manager, and Experience Platform Launch. See the following related documents for more information:
 
 -   [Adobe Audience Manager connector overview](./audience_manager_connector.md)
--   [Create an Adobe Audience Manager source connector in the UI](../../tutorials/sources_tutorial/aam-ui-tutorial.md)
+-   [Create an Adobe Audience Manager source connector in the UI](../../tutorials/sources_tutorial/ui/adobe-applications/aam-ui-tutorial.md)
 -   [Adobe Analytics data connector overview](./analytics_data_connector.md)
--   [Create an Adobe Analytics source connector in the UI](../../tutorials/sources_tutorial/adobe-analytics-ui-tutorial.md)
+-   [Create an Adobe Analytics source connector in the UI](../../tutorials/sources_tutorial/ui/adobe-applications/adobe-analytics-ui-tutorial.md)
 
 ### Cloud Storage
 
 Cloud storage sources can bring your own data into Platform without the need to download, format, or upload. Every step of the process is integrated into the Sources workflow using the user interface. Support for cloud storage providers include Amazon S3, Azure Blob, FTP servers, and SFTP servers. See the following related documents for more information:
 
--   [Create an Azure Blob or Amazon S3 source connector in the UI](../../tutorials/sources_tutorial/amazon-s3-ui-tutorial.md)
--   [Create an FTP or SFTP source connector in the UI](../../tutorials/sources_tutorial/ftp-sftp-ui-tutorial.md)
--   [Create a Google Cloud Storage source connector in the UI](../../tutorials/sources_tutorial/google-cloud-storage-ui-tutorial.md)
+-   [Create an Azure Blob or Amazon S3 source connector in the UI](../../tutorials/sources_tutorial/ui/cloud-storages/amazon-s3-ui-tutorial.md)
+-   [Create an FTP or SFTP source connector in the UI](../../tutorials/sources_tutorial/ui/cloud-storages/ftp-sftp-ui-tutorial.md)
+-   [Create a Google Cloud Storage source connector in the UI](../../tutorials/sources_tutorial/ui/cloud-storages/google-cloud-storage-ui-tutorial.md)
 
 ### Customer Relationship Management (CRM)
 
 CRM systems provide data that can help build customer relationships, which in turn, create loyalty and drive customer retention. Experience Platform provides support for ingesting CRM data from Microsoft Dynamics 365 and Salesforce. See the following related documents for more information:
 
--   [Create a Microsoft Dynamics 365 or Salesforce source connector in the UI](../../tutorials/sources_tutorial/dynamics-salesforce-ui-tutorial.md)
+-   [Create a Microsoft Dynamics 365 or Salesforce source connector in the UI](../../tutorials/sources_tutorial/ui/crm/dynamics-salesforce-ui-tutorial.md)
 
 ## API tutorials
 
