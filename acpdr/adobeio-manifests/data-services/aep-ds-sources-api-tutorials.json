@@ -149,6 +149,13 @@
             "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/database-nosql/retrieve-dbnosql-data-api-tutorial.md",
             "title": "Collect data from an external database or NoSQL system through source connectors and APIs",
             "description": ""
+        },
+        {
+            "importedFileName": "data-lake-base-connection-tutorial",
+            "pages": [],
+            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/data-lake-base-connection.md",
+            "title": "Connect to Data Lake using the Flow Service API",
+            "description": ""
         }
     ],
     "app2app_map": {
