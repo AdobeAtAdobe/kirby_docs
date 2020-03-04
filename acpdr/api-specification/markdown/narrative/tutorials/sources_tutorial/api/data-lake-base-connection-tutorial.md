@@ -171,4 +171,8 @@ A successful response returns details of the newly created base connection, incl
 
 ## Next steps
 
-By following this tutorial, you have created a Data Lake base connection using the Flow Service API, and have obtained the connection's unique ID value. You can use this base connection to create a target connection in the next tutorial as you [collect data from a third-party source connector using the Flow Service API](database-nosql/retrieve-dbnosql-data-api-tutorial.md).
+By following this tutorial, you have created a Data Lake base connection using the Flow Service API, and have obtained the connection's unique ID value. You can use this base connection to create a target connection in any of the following tutorials:
+
+- [Cloud storage](./cloud-storages/retrieve-cloud-storage-api-tutorial.md)
+- [CRM](./crm/retrieve-crm-data-api-tutorial.md)
+- [Database](./database-nosql/retrieve-dbnosql-data-api-tutorial.md)

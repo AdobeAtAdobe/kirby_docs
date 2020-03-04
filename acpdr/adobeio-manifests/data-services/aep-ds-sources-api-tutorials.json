@@ -153,7 +153,7 @@
         {
             "importedFileName": "data-lake-base-connection-tutorial",
             "pages": [],
-            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/data-lake-base-connection.md",
+            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/data-lake-base-connection-tutorial.md",
             "title": "Connect to Data Lake using the Flow Service API",
             "description": ""
         }
