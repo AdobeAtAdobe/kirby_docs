@@ -75,18 +75,18 @@ GET /queries?{QUERY_PARAMETERS}
 
 The following is a list of available query parameters for listing queries. All of these parameters are optional. Making a call to this endpoint with no parameters will retrieve all queries available for your organization.
 
-Parameter | Description
---------- | -----------
-`orderby` | Specifies the field by which to order results. The supported fields are `created` and `updated`. For example, `orderby=created` will sort results by created in ascending order. Adding a `-` before created (`orderby=-created`) will sort items by created in descending order. 
-`limit` | Specifies the page size limit to control the number of results that are included in a page. (*Default value: 20*)
-`start` | Offsets the response list, using zero-based numbering. For example, `start=2` will return a list starting from the third listed query. (*Default value: 0*)
-`property` | Filter results based on fields. The filters **must** be HTML escaped. Commas are used to combine multiple sets of filters. The supported fields are `created`, `updated`, `state`, and `id`. The list of supported operators are `>` (greater than), `<` (less than), `>=` (greater than or equal to), `<=` (less than or equal to), `==` (equal to), `!=` (not equal to), and `~` (contains). For example, `id==6ebd9c2d-494d-425a-aa91-24033f3abeec` will return all queries with the specified ID.
-`excludeSoftDeleted` | Indicates whether a query which has been soft deleted should be included. For example, `excludeSoftDeleted=false` will **include** soft deleted queries. (*Boolean, default value: true*)
-`excludeHidden` | Indicates whether non-user driven queries should be displayed. Having this value set to false will **include** non-user driven queries, such as CURSOR definitions, FETCH, or metadata queries. (*Boolean, default value: true*)
+| Parameter | Description |
+| --------- | ----------- |
+| `orderby` | Specifies the field by which to order results. The supported fields are `created` and `updated`. For example, `orderby=created` will sort results by created in ascending order. Adding a `-` before created (`orderby=-created`) will sort items by created in descending order. |
+| `limit` | Specifies the page size limit to control the number of results that are included in a page. (*Default value: 20*) |
+| `start` | Offsets the response list, using zero-based numbering. For example, `start=2` will return a list starting from the third listed query. (*Default value: 0*) |
+| `property` | Filter results based on fields. The filters **must** be HTML escaped. Commas are used to combine multiple sets of filters. The supported fields are `created`, `updated`, `state`, and `id`. The list of supported operators are `>` (greater than), `<` (less than), `>=` (greater than or equal to), `<=` (less than or equal to), `==` (equal to), `!=` (not equal to), and `~` (contains). For example, `id==6ebd9c2d-494d-425a-aa91-24033f3abeec` will return all queries with the specified ID. |
+| `excludeSoftDeleted` | Indicates whether a query which has been soft deleted should be included. For example, `excludeSoftDeleted=false` will **include** soft deleted queries. (*Boolean, default value: true*) |
+| `excludeHidden` | Indicates whether non-user driven queries should be displayed. Having this value set to false will **include** non-user driven queries, such as CURSOR definitions, FETCH, or metadata queries. (*Boolean, default value: true*) |
 
 #### Request
 
-The following request retrieves the latest query created for your IMS organization.
+The following request retrieves the latest query created for your IMS Organization.
 
 ```shell
 curl -X GET https://platform.adobe.io/data/foundation/query/queries?limit=1 \
@@ -98,7 +98,7 @@ curl -X GET https://platform.adobe.io/data/foundation/query/queries?limit=1 \
 
 #### Response
 
-A successful response returns HTTP status 200 with a list of queries for the specified IMS Organization as JSON. The following response returns the latest query created for your IMS organization.
+A successful response returns HTTP status 200 with a list of queries for the specified IMS Organization as JSON. The following response returns the latest query created for your IMS Organization.
 
 ```json
 {
@@ -186,10 +186,12 @@ curl -X POST https://platform.adobe.io/data/foundation/query/queries \
     }  
 ```
 
-- `dbName`: The name of the database you are creating a SQL query for.
-- `sql`: The SQL query you want to create.
-- `name`: The name of your SQL query.
-- `description`: The description of your SQL query.
+| Property | Description |
+| -------- | ----------- |
+| `dbName` | The name of the database you are creating a SQL query for. |
+| `sql` | The SQL query you want to create. You can also parameterize your queries, using the `SELECT * FROM $key` format. More information about parameterizing queries can be found in the [appendix](#parameterized-queries). |
+| `name` | The name of your SQL query. |
+| `description` | The description of your SQL query. |
 
 #### Response
 
@@ -332,7 +334,9 @@ curl -X PATCH https://platform.adobe.io/data/foundation/query/queries/4d64cd49-c
  }'
  ```
 
- - `op`: In order to cancel the query, you must set the op parameter with the value `cancel `.
+| Property | Description |
+| -------- | ----------- |
+| `op` | In order to cancel the query, you must set the op parameter with the value `cancel `. |
 
 #### Response
 
@@ -399,16 +403,16 @@ GET /schedules?{QUERY_PARAMETERS}
 
 The following is a list of available query parameters for listing scheduled queries. All of these parameters are optional. Making a call to this endpoint with no parameters will retrieve all scheduled queries available for your organization.
 
-Parameter | Description
---------- | -----------
-`orderby` | Specifies the field by which to order results. The supported fields are `created` and `updated`. For example, `orderby=created` will sort results by created in ascending order. Adding a `-` before created (`orderby=-created`) will sort items by created in descending order. 
-`limit` | Specifies the page size limit to control the number of results that are included in a page. (*Default value: 20*)
-`start` | Offsets the response list, using zero-based numbering. For example, `start=2` will return a list starting from the third listed query. (*Default value: 0*)
-`property` | Filter results based on fields. The filters **must** be HTML escaped. Commas are used to combine multiple sets of filters. The supported fields are `created`, `templateId`, and `userId`. The list of supported operators are `>` (greater than), `<` (less than), and `==` (equal to). For example, `userId==6ebd9c2d-494d-425a-aa91-24033f3abeec` will return all scheduled queries where the user ID is as specified.
+| Parameter | Description |
+| --------- | ----------- |
+| `orderby` | Specifies the field by which to order results. The supported fields are `created` and `updated`. For example, `orderby=created` will sort results by created in ascending order. Adding a `-` before created (`orderby=-created`) will sort items by created in descending order. |
+| `limit` | Specifies the page size limit to control the number of results that are included in a page. (*Default value: 20*) |
+| `start` | Offsets the response list, using zero-based numbering. For example, `start=2` will return a list starting from the third listed query. (*Default value: 0*) |
+| `property` | Filter results based on fields. The filters **must** be HTML escaped. Commas are used to combine multiple sets of filters. The supported fields are `created`, `templateId`, and `userId`. The list of supported operators are `>` (greater than), `<` (less than), and `==` (equal to). For example, `userId==6ebd9c2d-494d-425a-aa91-24033f3abeec` will return all scheduled queries where the user ID is as specified. |
 
 #### Request
 
-The following request retrieves the latest scheduled query created for your IMS organization.
+The following request retrieves the latest scheduled query created for your IMS Organization.
 
 ```shell
 curl -X GET https://platform.adobe.io/data/foundation/query/schedules?limit=1
@@ -420,7 +424,7 @@ curl -X GET https://platform.adobe.io/data/foundation/query/schedules?limit=1
 
 #### Response
 
-A successful response returns HTTP status 200 with a list of scheduled queries for the specified IMS Organization. The following response returns the latest scheduled query created for your IMS organization.
+A successful response returns HTTP status 200 with a list of scheduled queries for the specified IMS Organization. The following response returns the latest scheduled query created for your IMS Organization.
 
 ```json
 {
@@ -518,11 +522,13 @@ curl -X POST https://platform.adobe.io/data/foundation/query/schedules
  '
 ```
 
-- `query/dbName`: The name of the database you are creating a scheduled query for.
-- `query/sql`: The SQL query you want to create.
-- `query/name`: The name of the scheduled query.
-- `schedule/schedule`: The cron schedule for the query. For more information about cron schedules, please read the [cron expression format](http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html) documentation. In this example, "30 * * * *" means that the query will run every hour at the 30 minute mark.
-- `schedule/startDate`: The start date for your scheduled query, written as a UTC timestamp.
+| Property | Description |
+| ---------- | ----------- |
+| `query.dbName` | The name of the database you are creating a scheduled query for. |
+| `query.sql` | The SQL query you want to create. You can also parameterize your queries, using the `SELECT * FROM $key` format. More information can be found in the [appendix](#parameterized-queries). |
+| `query.name` | The name of the scheduled query |
+| `schedule.schedule` | The cron schedule for the query. For more information about cron schedules, please read the [cron expression format](http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html) documentation. In this example, "30 * * * *" means that the query will run every hour at the 30 minute mark |
+| `schedule.startDate` | The start date for your scheduled query, written as a UTC timestamp |
 
 #### Response
 
@@ -698,8 +704,10 @@ curl -X PATCH https://platform.adobe.io/data/foundation/query/schedules/e95186d6
  }'
 ```
 
-- `path`: The path of the value you want to patch. In this case, since you are updating the scheduled query's state, you need to set the value of `path` to `/state`.
-- `value`: The updated value of the `/state`. This value can either be set as `enable` or `disable` to enable or disable the scheduled query.
+| Property | Description |
+| --------- | ----------- |
+| `path` | The path of the value you want to patch. In this case, since you are updating the scheduled query's state, you need to set the value of `path` to `/state`. |
+| `value` | The updated value of the `/state`. This value can either be set as `enable` or `disable` to enable or disable the scheduled query. |
 
 #### Response
 
@@ -744,9 +752,10 @@ curl -X PATCH https://platform.adobe.io/data/foundation/query/schedules/e95186d6
      ]
  }'
 ```
-
-- `path`: The path of the value you want to patch. In this case, since you are updating the scheduled query's schedule, you need to set the value of `path` to `/schedule/schedule`.
-- `value`: The updated value of the `/schedule`. This value needs to be in the form of a cron schedule. So, in this example, the scheduled query will run every hour at the 45 minute mark.
+| Property | Description |
+| ---------- | ----------- |
+| `path` | The path of the value you want to patch. In this case, since you are updating the scheduled query's schedule, you need to set the value of `path` to `/schedule/schedule`. |
+| `value` | The updated value of the `/schedule`. This value needs to be in the form of a cron schedule. So, in this example, the scheduled query will run every hour at the 45 minute mark. |
 
 #### Response
 
@@ -812,12 +821,12 @@ GET /schedules/{SCHEDULE_ID}/runs?{QUERY_PARAMETERS}
 
 The following is a list of available query parameters for listing runs for a specified scheduled query. All of these parameters are optional. Making a call to this endpoint with no parameters will retrieve all runs available for the specified scheduled query.
 
-Parameter | Description
---------- | -----------
-`orderby` | Specifies the field by which to order results. The supported fields are `created` and `updated`. For example, `orderby=created` will sort results by created in ascending order. Adding a `-` before created (`orderby=-created`) will sort items by created in descending order. 
-`limit` | Specifies the page size limit to control the number of results that are included in a page. (*Default value: 20*)
-`start` | Offsets the response list, using zero-based numbering. For example, `start=2` will return a list starting from the third listed query. (*Default value: 0*)
-`property` | Filter results based on fields. The filters **must** be HTML escaped. Commas are used to combine multiple sets of filters. The supported fields are `created`, `state`, and `externalTrigger`. The list of supported operators are `>` (greater than), `<` (less than), and  `==` (equal to), and `!=` (not equal to). For example, `externalTrigger==true,state==SUCCESS,created>2019-04-20T13:37:00Z` will return all runs that manually created, succeeded, and created after April 20th, 2019.
+| Parameter | Description |
+| --------- | ----------- |
+| `orderby` | Specifies the field by which to order results. The supported fields are `created` and `updated`. For example, `orderby=created` will sort results by created in ascending order. Adding a `-` before created (`orderby=-created`) will sort items by created in descending order. |
+| `limit` | Specifies the page size limit to control the number of results that are included in a page. (*Default value: 20*) |
+| `start` | Offsets the response list, using zero-based numbering. For example, `start=2` will return a list starting from the third listed query. (*Default value: 0*) |
+| `property` | Filter results based on fields. The filters **must** be HTML escaped. Commas are used to combine multiple sets of filters. The supported fields are `created`, `state`, and `externalTrigger`. The list of supported operators are `>` (greater than), `<` (less than), and  `==` (equal to), and `!=` (not equal to). For example, `externalTrigger==true,state==SUCCESS,created>2019-04-20T13:37:00Z` will return all runs that manually created, succeeded, and created after April 20th, 2019. |
 
 #### Request
 
@@ -1069,16 +1078,16 @@ GET /query-templates?{QUERY_PARAMETERS}
 
 The following is a list of available query parameters for listing query templates. All of these parameters are optional. Making a call to this endpoint with no parameters will retrieve all query templates available for your organization.
 
-Parameter | Description
---------- | -----------
-`orderby` | Specifies the field by which to order results. The supported fields are `created` and `updated`. For example, `orderby=created` will sort results by created in ascending order. Adding a `-` before created (`orderby=-created`) will sort items by created in descending order. 
-`limit` | Specifies the page size limit to control the number of results that are included in a page. (*Default value: 20*)
-`start` | Offsets the response list, using zero-based numbering. For example, `start=2` will return a list starting from the third listed query. (*Default value: 0*)
-`property` | Filter results based on fields. The filters **must** be HTML escaped. Commas are used to combine multiple sets of filters. The supported fields are `name` and `userId`. The only supported operator is `==` (equal to). For example, `name==my_template` will return all query templates with the name `my_template`.
+| Parameter | Description |
+| --------- | ----------- |
+| `orderby` | Specifies the field by which to order results. The supported fields are `created` and `updated`. For example, `orderby=created` will sort results by created in ascending order. Adding a `-` before created (`orderby=-created`) will sort items by created in descending order. |
+| `limit` | Specifies the page size limit to control the number of results that are included in a page. (*Default value: 20*) |
+| `start` | Offsets the response list, using zero-based numbering. For example, `start=2` will return a list starting from the third listed query. (*Default value: 0*) |
+| `property` | Filter results based on fields. The filters **must** be HTML escaped. Commas are used to combine multiple sets of filters. The supported fields are `name` and `userId`. The only supported operator is `==` (equal to). For example, `name==my_template` will return all query templates with the name `my_template`. | 
 
 #### Request
 
-The following request retrieves the latest query template created for your IMS organization.
+The following request retrieves the latest query template created for your IMS Organization.
 
 ```shell
 curl -X GET https://platform.adobe.io/data/foundation/query/query-templates?limit=1
@@ -1162,9 +1171,9 @@ curl -X POST https://platform.adobe.io/data/foundation/query/query-templates
 	"name": "Sample query template"
 }'
 ```
-
-- `sql`: The SQL query you want to create.
-- `name`: The name of the query template.
+| Property | Description |
+| `sql` | The SQL query you want to create. You can also parameterize your query template, using the `SELECT * FROM $key` format. More information can be found in the [appendix](#parameterized-queries). |
+| `name` | The name of the query template. |
 
 #### Response
 
@@ -1279,9 +1288,10 @@ curl -X PUT https://platform.adobe.io/data/foundation/query/query-templates/0094
     "name": "Sample query template"
  }'
 ```
-
-- `sql`: The SQL query you want to update.
-- `name`: The name of the scheduled query.
+| Property | Description | 
+| --------- | ----------- |
+| `sql` | The SQL query you want to update. |
+| `name` | The name of the scheduled query. |
 
 #### Response
 
@@ -1352,3 +1362,28 @@ A successful response returns HTTP status 202 (Accepted) with the following mess
 ## Next steps
 
 Now that you have learned how to make calls using the Query Service API, you can create your own non-interactive queries. For more information on how to create queries, please read the [SQL reference guide](../sql/overview.md).
+
+## Appendix
+
+This section contains supplemental information for the Query Service API.
+
+### Parameterized queries
+
+Parameterized queries are SQL queries which contain parameters that can be replaced during runtime, and can be parameterized using the `$` notation. These queries are especially useful for creating query templates or scheduled queries. An example of a parameterized query is shown below:
+
+```json
+{
+    "sql": "SELECT $key from $key1 where $key = $key2",
+    "queryParameters": {
+        "key": "name",
+        "key1": "accounts",
+        "key2": "steve"
+    }
+}
+```
+| Property | Description |
+| -------- | ----------- |
+| `sql` | The SQL query you want to create. In this example, values are replaced with various keys. |
+| `queryParameters` | An object containing the key/value pairings for the replaced parameters. |
+| `queryParameters.key` | The value for the key you are replacing. The name of the key matches up with what is inside the SQL query. |
+
