@@ -264,9 +264,17 @@ A successful response returns an array containing the ID of the newly created da
 ]
 ```
 
+## Create a Data Lake connection
+
+In order to create a target connection and ingest external data into Platform, a Data Lake base connection must first be acquired.
+
+To create a Data Lake base connection, follow the steps outlined in the [Data Lake connection tutorial](../data-lake-base-connection-tutorial.md).
+
+Continue following the steps outlined in the developer guide until you have created a Data Lake base connection. Obtain and store the unique identifier (`$id`) of the base connection and then proceed to the next step of this tutorial.
+
 ## Create a target connection
 
-You now have with you the unique identifiers for a base connection, a target schema, and a target dataset. You can now create a target connection using the Flow Service API to specify the dataset that will contain the inbound source data.
+You now have the unique identifiers for a Data Lake base connection, a target schema, and a target dataset. Using these identifiers, you can create a target connection using the Flow Service API to specify the dataset that will contain the inbound source data.
 
 #### API format
 
@@ -285,7 +293,7 @@ curl -X POST \
     -H 'x-sandbox-name: {SANDBOX_NAME}' \
     -H 'Content-Type: application/json' \
     -d '{
-        "baseConnectionId": "54c22133-3a01-4d3b-8221-333a01bd3b03",
+        "baseConnectionId": "351330a8-21b3-4f16-9330-a821b39f16cb",
         "name": "Target Connection for database or NoSQL",
         "description": "Target Connection for database or NoSQL",
         "data": {
@@ -299,7 +307,7 @@ curl -X POST \
             "dataSetId": "5e47161fa49bb818ad7f47bd"
         },
         "connectionSpec": {
-            "id": "3c9b37f8-13a6-43d8-bad3-b863b941fedd",
+            "id": "c604ff05-7f1a-43c0-8e18-33bf874cb11c",
             "version": "1.0"
         }
     }'
@@ -307,9 +315,12 @@ curl -X POST \
 
 | Property | Description |
 | -------- | ----------- |
-| `baseConnectionId`| The ID of a base connection for a database or NoSQL system.
-| `data.schema.id`| The `$id` of the target XDM schema.
-| `params.dataSetId`| The ID of the target dataset.
+| `baseConnectionId` | The ID of your Data Lake base connection. |
+| `data.schema.id` | The `$id` of the target XDM schema. |
+| `params.dataSetId` | The ID of the target dataset. |
+| `connectionSpec.id` | The connection specification ID for your database. |
+
+> Note: When creating a target connection, make sure to use the Data Lake base connection value for the base connection `id` as opposed to the base connection of your third-party source connector.
 
 #### Response
 
@@ -317,8 +328,8 @@ A successful response returns the new target connection's unique identifier (`id
 
 ```json
 {
-    "id": "1e4b805e-4e11-4848-8b80-5e4e11f84895",
-    "etag": "\"920143a4-0000-0200-0000-5e4717870000\""
+    "id": "4f3845b6-87d9-4702-b845-b687d9270297",
+    "etag": "\"2a007aa8-0000-0200-0000-5e597aaf0000\""
 }
 ```
 
@@ -633,7 +644,7 @@ curl -X POST \
             "beefc650-f2dc-45e2-afc6-50f2dcc5e2b8"
         ],
         "targetConnectionIds": [
-            "1e4b805e-4e11-4848-8b80-5e4e11f84895"
+            "4f3845b6-87d9-4702-b845-b687d9270297"
         ],
         "transformations": [
             {

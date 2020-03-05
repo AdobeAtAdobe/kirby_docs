@@ -233,9 +233,17 @@ A successful response returns an array containing the ID of the newly created da
 ]
 ```
 
+## Create a Data Lake connection
+
+In order to create a target connection and ingest external data into Platform, a Data Lake base connection must first be acquired.
+
+To create a Data Lake base connection, follow the steps outlined in the [Data Lake connection tutorial](../data-lake-base-connection-tutorial.md).
+
+Continue following the steps outlined in the developer guide until you have created a Data Lake base connection. Obtain and store the unique identifier (`$id`) of the base connection and then proceed to the next step of this tutorial.
+
 ## Create a target connection
 
-You now have with you the unique identifiers for a base connection, a target schema, and a target dataset. You can now create a target connection to specify the dataset that will contain the inbound source data.
+You now have the unique identifiers for a Data Lake base connection, a target schema, and a target dataset. Using these identifiers, you can create a target connection using the Flow Service API to specify the dataset that will contain the inbound source data.
 
 #### API Format
 
@@ -254,7 +262,7 @@ curl -X POST \
     -H 'x-sandbox-name: {SANDBOX_NAME}' \
     -H 'Content-Type: application/json' \
     -d '{
-        "baseConnectionId": "4cb0c374-d3bb-4557-b139-5712880adc55",
+        "baseConnectionId": "351330a8-21b3-4f16-9330-a821b39f16cb",
         "name": "Target Connection",
         "description": "Target Connection for cloud storage data",
         "data": {
@@ -270,9 +278,14 @@ curl -X POST \
     }'
 ```
 
-*   `baseConnectionId`: The ID of a base connection for a cloud storage.
-*   `data.schema.id`: The ID of the target XDM schema.
-*   `params.dataSetId`: The ID of the target dataset.
+| Property | Description |
+| -------- | ----------- |
+| `baseConnectionId` | The ID of your Data Lake base connection. |
+| `data.schema.id` | The `$id` of the target XDM schema. |
+| `params.dataSetId` | The ID of the target dataset. |
+| `connectionSpec.id` | The connection specification ID for your cloud storage. |
+
+> Note: When creating a target connection, make sure to use the Data Lake base connection value for the base connection `id` as opposed to the base connection of your third-party source connector.
 
 #### Response
 
@@ -280,7 +293,8 @@ A successful response returns the new target connection's unique identifier (`id
 
 ```json
 {
-    "id": "4ee890c7-519c-4291-bd20-d64186b62da8"
+    "id": "4ee890c7-519c-4291-bd20-d64186b62da8",
+    "etag": "\"2a007aa8-0000-0200-0000-5e597aaf0000\""
 }
 ```
 

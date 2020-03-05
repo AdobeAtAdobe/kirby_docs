@@ -23,8 +23,8 @@ In order for Flow Service to connect with BigQuery, you must provide the followi
 | Credential | Description |
 | ---------- | ----------- |
 | `project` | The project ID of the default BigQuery project to query against. |
-| `clientID` | The ID of the application used to generate the refresh token. |
-| `clientSecret` | The secret for the application used to generate the refresh token. |
+| `clientID` | The ID value used to generate the refresh token. |
+| `clientSecret` | The secret value used to generate the refresh token. |
 | `refreshToken` | The refresh token obtained from Google used to authorize access to BigQuery. |
 
 For more information about these values, refer to [this BigQuery document](https://cloud.google.com/storage/docs/json_api/v1/how-tos/authorizing).
@@ -171,8 +171,8 @@ curl -X POST \
 | Property | Description |
 | --------- | ----------- |
 | `auth.params.project` | The project ID of the default BigQuery project to query. against. |
-| `auth.params.cliendId` | The ID of the application used to generate the refresh token. |
-| `auth.params.clientSecret` | The client secret of the application used to generate the refresh token. |
+| `auth.params.clientId` | The ID value used to generate the refresh token. |
+| `auth.params.clientSecret` | The client value used to generate the refresh token. |
 | `auth.params.refreshToken` | The refresh token obtained from Google used to authorize access to BigQuery. |
 | `connectionSpec.id` | TThe connection specification `id` of your BigQuery account retrieved in the previous step. |
 
