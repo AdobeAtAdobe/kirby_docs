@@ -147,7 +147,9 @@ A successful response returns HTTP status 200 with detailed information about th
         "started": 1576741718543,
         "metrics": {
             "inputByteSize": 568,
-            "inputFileCount": 4
+            "inputFileCount": 4,
+            "inputRecordCount": 519,
+            "outputRecordCount": 497
         },
         "completed": 1576741722026,
         "created": 1576741597205,
@@ -190,18 +192,17 @@ If the batch ingested has unparsable rows, the batch's errors will be stored in 
 #### API format
 
 ```http
-GET /data/failed/{DATASET_ID}/{BATCH_ID}/errors/parse_errors
+GET /export/batches/{BATCH_ID}/failed?path=parse_errors
 ```
 
 | Parameter | Description |
 | --------- | ----------- |
-| `{DATASET_ID}` | The `id` value of the dataset you are retrieving error information from. |
 | `{BATCH_ID}` | The `id` value of the batch you are retrieving error information from. |
 
 #### Request
 
 ```shell
-curl -X GET https://platform.adobe.io/data/foundation/data/failed/{DATASET_ID}/{BATCH_ID}/errors/parse_errors \
+curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/failed?path=parse_errors \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -230,7 +231,7 @@ If the batch ingested has invalid XDM conversions, the batch's errors will be st
 #### API format
 
 ```http
-GET /data/failed/{DATASET_ID}/{BATCH_ID}/errors/conversion_errors
+GET /export/batches/{BATCH_ID}/failed?path=conversion_errors
 ```
 
 | Parameter | Description |
@@ -241,7 +242,7 @@ GET /data/failed/{DATASET_ID}/{BATCH_ID}/errors/conversion_errors
 #### Request
 
 ```shell
-curl -X GET https://platform.adobe.io/data/foundation/data/failed/{DATASET_ID}/{BATCH_ID}/errors/conversion_errors \
+curl -X GET https://platform.adobe.io/data/foundation/export/batches/{BATCH_ID}/failed?path=conversion_errors \
   -H 'Authorization: Bearer {ACCESS_TOKEN}' \
   -H 'x-api-key: {API_KEY}' \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
