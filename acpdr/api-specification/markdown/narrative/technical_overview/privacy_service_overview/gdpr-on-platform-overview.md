@@ -108,8 +108,7 @@ This section demonstrates how to add privacy labels to a dataset for use in Data
         "schemaRef": {
             "id": "https://ns.adobe.com/{TENANT_ID}/schemas/2c66c3a4323128d3701289df4468e8a6",
             "contentType": "application/vnd.adobe.xed-full+json;version=1"
-        },
-        "streamingIngestionEnabled": "false"
+        }
     }
 }
 ```

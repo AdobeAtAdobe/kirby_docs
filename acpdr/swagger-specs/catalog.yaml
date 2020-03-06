@@ -5998,14 +5998,6 @@ definitions:
           Determines whether or not this DataSetView definition should be
           editable by the user.  Some documents are 'locked' and not available
           for edit.
-      streamingIngestionEnabled:
-        type: string
-        description: >-
-          Determines whether or not this dataset is enabled for streaming ingestion.  This is
-          an immutable attribute and once created, it cannot be updated through PUT or PATCH requests.
-        enum:
-          - true
-          - false
       dependencies:
         type: array
         description: >-

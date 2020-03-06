@@ -352,13 +352,7 @@ Where:
 
 You need to create a dataset so that any XDM Individual Profile records you stream (that pass validation) will be persisted to it. 
 
-There are **two** important things to note about this dataset:
-
-1. This dataset will be streaming enabled which will be signaled to Catalog by setting `streamingIngestionEnabled` to true. This signals to Platform Services, such as Identity and Profile, that they can read data sent to these datasets instantaneously rather than waiting for it to be batched into the data lake. 
-   
-Other consumers that work with data in the data lake, such as Data Science Workspace and Query Service will safely ignore this attribute.
-
-1. This dataset will be enabled for **Real-time Customer Profile** and **Identity Service** by setting the appropriate tags.
+>**Note:** This dataset will be enabled for **Real-time Customer Profile** and **Identity Service** by setting the appropriate tags.
 
 #### Request
 
@@ -394,7 +388,6 @@ Where:
         "containerFormat": "parquet",
         "format": "parquet"
     },
-    "streamingIngestionEnabled": "true",
     "tags": {
         "unifiedIdentity": ["enabled:true"],
         "unifiedProfile": ["enabled:true"]
@@ -790,10 +783,7 @@ Where:
 
 Like before, you'll need to create a dataset so any ExperienceEvents streamed, assuming they pass XDM validation, will be persisted into the dataset.
 
-There are **two** important things to note about this dataset:
-
-1. This dataset will be **streaming enabled**, which will be signaled to Catalog by setting the **streamingIngestionEnabled** field to true. This signals to Platform Services, such as Identity and Profile, that they can read data sent to these datasets **instantaneously**, rather than waiting for it to be batched into the data lake. Other consumers that work with data in the data lake, such as Data Science Workspace and Query Service will safely ignore this attribute.
-2. This dataset will be enabled for **Real-time Customer Profile** and **Unified Identity** by setting the appropriate tags.
+>**Note:** This dataset will be enabled for **Real-time Customer Profile** and **Unified Identity** by setting the appropriate tags.
 
 #### Request
 
@@ -829,7 +819,6 @@ Where:
         "containerFormat": "parquet",
         "format": "parquet"
     },
-    "streamingIngestionEnabled": "true",
     "tags": {
         "unifiedIdentity": ["enabled:true"],
         "unifiedProfile": ["enabled:true"]
