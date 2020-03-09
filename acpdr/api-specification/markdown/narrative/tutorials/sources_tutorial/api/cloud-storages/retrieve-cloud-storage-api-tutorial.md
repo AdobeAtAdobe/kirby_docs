@@ -6,6 +6,7 @@ This tutorial covers the steps for retrieving data from a third party cloud stor
 *   [Create a source connection](#create-a-source-connection)
 *   [Create a target XDM schema](#create-a-target-xdm-schema)
 *   [Create a target dataset](#create-a-target-dataset)
+*   [Create a dataset base connection](#create-a-dataset-base-connection)
 *   [Create a target connection](#create-a-target-connection)
 *   [Create a mapping](#create-a-mapping)
 *   [Look up dataflow specifications](#look-up-dataflow-specifications)
@@ -88,7 +89,10 @@ curl -X POST \
         "params": {
             "path": "/some/path/data.csv",
             "recursive": "true"
-        }
+        },
+        "connectionSpec": {
+            "id": "b3ba5556-48be-44b7-8b85-ff2b69b46dc4",
+            "version": "1.0"
     }'
 ```
 
@@ -233,17 +237,17 @@ A successful response returns an array containing the ID of the newly created da
 ]
 ```
 
-## Create a Data Lake connection
+## Create a dataset base connection
 
-In order to create a target connection and ingest external data into Platform, a Data Lake base connection must first be acquired.
+In order to ingest external data into Platform, an Experience Platform dataset base connection must first be acquired.
 
-To create a Data Lake base connection, follow the steps outlined in the [Data Lake connection tutorial](../data-lake-base-connection-tutorial.md).
+To create a dataset base connection, follow the steps outlined in the [dataset base connection tutorial](../dataset-base-connection-tutorial.md).
 
-Continue following the steps outlined in the developer guide until you have created a Data Lake base connection. Obtain and store the unique identifier (`$id`) of the base connection and then proceed to the next step of this tutorial.
+Continue following the steps outlined in the developer guide until you have created a dataset base connection. Obtain and store the unique identifier (`$id`) and proceed to use it as the base connection ID in the next step to create a target connection.
 
 ## Create a target connection
 
-You now have the unique identifiers for a Data Lake base connection, a target schema, and a target dataset. Using these identifiers, you can create a target connection using the Flow Service API to specify the dataset that will contain the inbound source data.
+You now have the unique identifiers for a dataset base connection, a target schema, and a target dataset. Using these identifiers, you can create a target connection using the Flow Service API to specify the dataset that will contain the inbound source data.
 
 #### API Format
 
@@ -262,7 +266,7 @@ curl -X POST \
     -H 'x-sandbox-name: {SANDBOX_NAME}' \
     -H 'Content-Type: application/json' \
     -d '{
-        "baseConnectionId": "351330a8-21b3-4f16-9330-a821b39f16cb",
+        "baseConnectionId": "d6c3988d-14ef-4000-8398-8d14ef000021",
         "name": "Target Connection",
         "description": "Target Connection for cloud storage data",
         "data": {
@@ -274,13 +278,16 @@ curl -X POST \
         },
         "params": {
             "dataSetId": "5c8c3c555033b814b69f947f"
-        }
+        },
+        "connectionSpec": {
+            "id": "b3ba5556-48be-44b7-8b85-ff2b69b46dc4",
+            "version": "1.0"
     }'
 ```
 
 | Property | Description |
 | -------- | ----------- |
-| `baseConnectionId` | The ID of your Data Lake base connection. |
+| `baseConnectionId` | The ID of your dataset base connection. |
 | `data.schema.id` | The `$id` of the target XDM schema. |
 | `params.dataSetId` | The ID of the target dataset. |
 | `connectionSpec.id` | The connection specification ID for your cloud storage. |
