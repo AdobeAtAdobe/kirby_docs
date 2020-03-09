@@ -175,4 +175,5 @@ By following this tutorial, you have created a dataset base connection connectio
 
 - [Cloud storage](./cloud-storages/retrieve-cloud-storage-api-tutorial.md)
 - [CRM](./crm/retrieve-crm-data-api-tutorial.md)
+- [Customer Success](./customer-success/retrieve-cs-data-api-tutorial.md)
 - [Database](./database-nosql/retrieve-dbnosql-data-api-tutorial.md)

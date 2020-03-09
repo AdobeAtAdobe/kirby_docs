@@ -130,6 +130,13 @@
             "description": ""
         },
         {
+            "importedFileName": "explore-cs-api-tutorial",
+            "pages": [],
+            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/customer-success/explore-cs-api-tutorial.md",
+            "title": "Explore a Customer Success system using the Flow Service API",
+            "description": ""
+        },
+        {
             "importedFileName": "retrieve-cloud-storage-api-tutorial",
             "pages": [],
             "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/cloud-storages/retrieve-cloud-storage-api-tutorial.md",
@@ -151,10 +158,17 @@
             "description": ""
         },
         {
+            "importedFileName": "retrieve-cs-data-api-tutorial",
+            "pages": [],
+            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/customer-success/retrieve-cs-data-api-tutorial.md",
+            "title": "Collect data from a Customer Success system through source connectors and APIs",
+            "description": ""
+        },
+        {    
             "importedFileName": "dataset-base-connection-tutorial",
             "pages": [],
             "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/dataset-base-connection-tutorial.md",
-            "title": "Create a dataset base connection using the Flow Service API",
+            "title": "Create a dataset base connecßtion using the Flow Service API",
             "description": ""
         }
     ],
