@@ -6,15 +6,16 @@ The following is a list of tutorials for creating connectors in the Platform UI:
 
 ## Adobe applications
 
--   [Adobe Audience Manager connector](./adobe-applications/aam-ui-tutorial.md)
--   [Adobe Analytics connector](./adobe-applications/adobe-analytics-ui-tutorial.md)
--   [Customer attributes connector](./adobe-applications/customer-attributes-ui-tutorial.md)
+- [Adobe Audience Manager connector](./adobe-applications/aam-ui-tutorial.md)
+- [Adobe Analytics connector](./adobe-applications/adobe-analytics-ui-tutorial.md)
+- [Customer attributes connector](./adobe-applications/customer-attributes-ui-tutorial.md)
 
 ## Cloud storage
 
--   [Azure Blob and Amazon S3 connector](./cloud-storages/amazon-s3-ui-tutorial.md)
--   [FTP and SFTP connector](./cloud-storages/ftp-sftp-ui-tutorial.md)
--   [Google Cloud Storage connector](./cloud-storages/google-cloud-storage-ui-tutorial.md)
+- [Azure Data Lake Storage Gen2 connector](./cloud-storages/adls-gen2-ui-tutorial.md)
+- [Azure Blob and Amazon S3 connector](./cloud-storages/amazon-s3-ui-tutorial.md)
+- [FTP and SFTP connector](./cloud-storages/ftp-sftp-ui-tutorial.md)
+- [Google Cloud Storage connector](./cloud-storages/google-cloud-storage-ui-tutorial.md)
 
 ## CRM
 
