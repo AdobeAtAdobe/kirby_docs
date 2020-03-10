@@ -179,4 +179,4 @@ A successful response returns details of the newly created base connection, incl
 
 ## Next steps
 
-By following this tutorial, you have created a ServiceNow base connection using the Flow Service API, and have obtained the connection's unique ID value. You can use this base connection ID in the next tutorial as you learn how to [explore customer success systems using the Flow Service API](./explore-cs-system-api-tutorial.md).
+By following this tutorial, you have created a ServiceNow base connection using the Flow Service API, and have obtained the connection's unique ID value. You can use this base connection ID in the next tutorial as you learn how to [explore customer success systems using the Flow Service API](./explore-cs-api-tutorial.md).
