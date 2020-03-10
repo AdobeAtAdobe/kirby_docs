@@ -20,3 +20,7 @@ The following is a list of tutorials for creating connectors in the Platform UI:
 ## CRM
 
 -   [Microsoft Dynamics and Salesforce connector](./crm/dynamics-salesforce-ui-tutorial.md)
+
+## Databases
+
+- [Google Big Query connector](./databases/google-big-query-ui-tutorial.md)
