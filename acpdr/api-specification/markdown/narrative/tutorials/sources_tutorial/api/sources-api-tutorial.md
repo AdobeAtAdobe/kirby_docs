@@ -20,6 +20,7 @@ The following is a list of tutorials for creating connectors using the Flow Serv
 
 ## Customer Success
 
+- [Salesforce Service Cloud connector](./customer-success/salesforce-service-cloud-api-tutorial.md)
 - [ServiceNow connector](./customer-success/service-now-api-tutorial.md)
 
 ## Database
