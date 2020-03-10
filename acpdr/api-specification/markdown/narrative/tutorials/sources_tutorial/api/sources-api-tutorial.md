@@ -18,7 +18,11 @@ The following is a list of tutorials for creating connectors using the Flow Serv
 - [Microsoft Dynamics connector](./crm/dynamics-api-tutorial.md)
 - [Salesforce connector](./crm/salesforce-api-tutorial.md)
 
-## Database or NoSQL
+## Customer Success
+
+- [ServiceNow connector](./customer-success/service-now-api-tutorial.md)
+
+## Database
 
 - [Amazon Redshift connector](./database-nosql/amazon-redshift-api-tutorial.md)
 - [Google BigQuery connector](./database-nosql/google-bigquery-api-tutorial.md)

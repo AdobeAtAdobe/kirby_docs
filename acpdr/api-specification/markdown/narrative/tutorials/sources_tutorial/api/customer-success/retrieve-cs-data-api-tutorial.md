@@ -91,7 +91,7 @@ curl -X POST \
             "path": "Account"
         },
         "connectionSpec": {
-            "id": "cb66ab34-8619-49cb-96d1-39b37ede86ea",
+            "id": "eb13cb25-47ab-407f-ba89-c0125281c563",
             "version": "1.0"
     }
 }'
@@ -305,7 +305,7 @@ curl -X POST \
             "dataSetId": "5e543e8a60b15218ad44b95f"
         },
             "connectionSpec": {
-            "id": "cb66ab34-8619-49cb-96d1-39b37ede86ea",
+            "id": "eb13cb25-47ab-407f-ba89-c0125281c563",
             "version": "1.0"
         }
     }'
