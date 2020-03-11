@@ -24,7 +24,7 @@ In order to access your GBQ account on Platform, you must provide the following 
 | `clientSecret` | The secret value used to generate the refresh token. |
 | `refreshToken` | The refresh token obtained from Google used to authorize access to BigQuery. |
 
-For more information about these values, refer to [this BigQuery document](https://cloud.google.com/storage/docs/json_api/v1/how-tos/authorizing).
+For more information about these values, refer to [this GBQ document](https://cloud.google.com/storage/docs/json_api/v1/how-tos/authorizing).
 
 ## Connect your GBQ account
 
@@ -34,7 +34,7 @@ Log in to <a href="https://platform.adobe.com" target="_blank">Adobe Experience 
 
 Under the *Databases* category, select **Google Big Query** to expose an information bar on the right-hand side of your screen. The information bar provides a brief description for the selected source as well as options to connect with the source or view its documentation. To create a new inbound base connection, select **Connect source**. 
 
-![](./../../images/google-big-query/sources-catalog.png)
+![](./../../images/google-big-query/browse-catalog.png)
 
 The *Connect to Google Big Query* page appears. On this page, you can either use new credentials or existing credentials.
 
@@ -42,13 +42,13 @@ The *Connect to Google Big Query* page appears. On this page, you can either use
 
 If you are using new credentials, select **New account**. On the input form that appears, provide the base connection with a name, an optional description, and your GBQ credentials. When finished, select **Connect** and then allow some time for the new base connection to establish.
 
-![](./../../images/google-big-query/gbq-new-credentials.png)
+![](./../../images/google-big-query/new-credentials.png)
 
 ### Existing account
 
 To connect an existing account, select the GBQ account you want to connect with, then select **Next** to proceed.
 
-![](./../../images/google-big-query/gbq-existing-credentials.png)
+![](./../../images/google-big-query/existing-credentials.png)
 
 ## Next steps
 
