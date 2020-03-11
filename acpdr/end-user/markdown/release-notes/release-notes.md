@@ -11,7 +11,7 @@ author: ens71067
 # Adobe Experience Platform release notes 
 ## Release date: March 11, 2020
 
-New features in Adobe Experience Platform:
+Updates to existing features in Adobe Experience Platform:
 
 - [Data Ingestion](#data-ingestion)
 - [Identity Service](#identity-service)
