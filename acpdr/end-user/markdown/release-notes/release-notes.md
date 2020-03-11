@@ -1,22 +1,55 @@
 ---
 
 title: Adobe Experience Platform Release Notes
-description: Experience Platform release notes February 12, 2020
+description: Experience Platform release notes March 11, 2020
 doc-type: release notes
-last-update: February 14, 2019
+last-update: March 10, 2020
 author: ens71067
 
 ---
 
 # Adobe Experience Platform release notes 
-## Release date: February 12, 2020
+## Release date: March 11, 2020
 
-Updates to existing features in Adobe Experience Platform:
-* [Sources](#sources)
+New features in Adobe Experience Platform:
+
+- [Data Ingestion](#data-ingestion)
+- [Identity Service](#identity-service)
+- [Sources](#sources)
+
+## Data Ingestion
+
+Adobe Experience Platform provides a rich set of features to ingest any type and latency of data. Adobe Experience Platform Data Ingestion provides multiple alternatives for ingesting data including Batch APIs, Streaming APIs, native Adobe connectors, data integration partners, or the Adobe Experience Platform UI.
+
+### Key features
+
+Feature | Description
+------- | -----------
+Partial batch ingestion | Partial batch ingestion is the ability to ingest data containing errors, up to a certain threshold. With this capability, users can successfully ingest all their correct data into Adobe Experience Platform while all their incorrect data is batched separately. Details are added to unsuccessful batches to explain why they did not pass validation. More information about partial batch ingestion can be found in the [partial batch ingestion documentation](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/partial_batch_ingestion.md).
+
+For more information, visit the [Data Ingestion documentation](https://www.adobe.io/apis/experienceplatform/home/data-ingestion.html) or refer to the [Data Ingestion Service API reference](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!/acpdr/swagger-specs/ingest-api.yaml).
+
+## Identity Service
+
+Delivering relevant digital experiences requires having a complete understanding of your customer. This is made more difficult when your customer data is fragmented across disparate systems, causing each individual customer to appear to have multiple "identities".
+
+Adobe Experience Platform Identity Service helps you to gain a better view of your customer and their behavior by bridging identities across devices and systems, allowing you to deliver impactful, personal digital experiences in real-time.
+
+### New features
+
+| Feature | Description |
+| ------- | ----------- |
+| Enhanced Private Graph | Private Graph functionality has been enhanced to reduce graph generation latency from a weekly batch process to a daily refreshed graph, allowing Identity Service customers to access more up-to-date identity graphs and linkages. |
+
+### Known issues
+
+* None
+
+For more information about Identity Service, see the [Identity Service overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_architectural_overview.md)
 
 ## Sources
 
-Adobe Experience Platform can ingest data from external sources while allowing you to structure, label, and enhance that data using Platform services. You can ingest data from a variety of sources such as Adobe applications, cloud-based storage, third party software, and your CRM system.
+Adobe Experience Platform can ingest data from external sources while allowing you to structure, label, and enhance that data using Platform services. You can ingest data from a variety of sources such as Adobe applications, cloud-based storage, third-party software, and your CRM system.
 
 Experience Platform provides a RESTful API and an interactive UI that lets you set up source connections for various data providers with ease. These source connections allow you to authenticate and connect to external storage systems and CRM services, set times for ingestion runs, and manage data ingestion throughput.
 
@@ -24,11 +57,12 @@ Experience Platform provides a RESTful API and an interactive UI that lets you s
 
 | Feature | Description |
 | ------- | ----------- |
-| API support for SaaS - Service systems| New source connectors for Salesforce Service Cloud API and ServiceNow API. |
-| API support for SaaS - Marketing systems| New source connectors for HubSpot API. |
-| API support for NoSQL database systems | New source connectors for AWS Redshift, Google BigQuery, MariaDB, MySQL, PostgreSQL, and SQL Server APIs. |
-| API support for cloud storage systems | New source connectors for Azure Data Lake Service Gen 2 API and Google Cloud Storage API.
-| UI support for cloud storage systems | New source connector for Google Cloud Storage in the UI.
+| Deprecated signals for Adobe Audience Manager connector | Signal-level data from AAM will no longer be sent. Note that segment membership for Traits and Segments will still be included. As a result of this change, inbound datasets will no longer be generated. |
+| Renamed datasets | Datasets generated by AAM connector will have updated names and descriptions. |
+| Enable Profile toggle in AAM | Profile toggle can be enabled or disabled to promote dataset to Real-time Customer Profile. Toggle will be enabled by default.
+| UI support for cloud storage systems | New source connector for Azure Data Lake Storage Gen2 in the UI. |
+| UI support for CRM systems | New source connector for HubSpot, Salesforce Service Cloud, and ServiceNow in the UI. |
+| UI support for database systems | New source connector for AWS Redshift, Google BigQuery, MariaDB, Microsoft SQL Server, and MySQL in the UI. |
 
 ### Known issues
 
