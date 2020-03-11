@@ -24,6 +24,7 @@ Experience Platform allows data to be ingested from other Adobe applications, in
 Cloud storage sources can bring your own data into Platform without the need to download, format, or upload. Every step of the process is integrated into the Sources workflow using the user interface. Support for cloud storage providers include Amazon S3, Azure Blob, FTP servers, and SFTP servers. See the following related documents for more information:
 
 -   [Create an Azure Blob or Amazon S3 source connector in the UI](../../tutorials/sources_tutorial/ui/cloud-storages/amazon-s3-ui-tutorial.md)
+-   [Create an Azure Data Lake Storage Gen2 source connector in the UI](../../tutorials/sources_tutorial/ui/cloud-storages/adls-gen2-ui-tutorial.md)
 -   [Create an FTP or SFTP source connector in the UI](../../tutorials/sources_tutorial/ui/cloud-storages/ftp-sftp-ui-tutorial.md)
 -   [Create a Google Cloud Storage source connector in the UI](../../tutorials/sources_tutorial/ui/cloud-storages/google-cloud-storage-ui-tutorial.md)
 
@@ -33,9 +34,20 @@ CRM systems provide data that can help build customer relationships, which in tu
 
 -   [Create a Microsoft Dynamics 365 or Salesforce source connector in the UI](../../tutorials/sources_tutorial/ui/crm/dynamics-salesforce-ui-tutorial.md)
 
+### Database
+
+Experience Platform provides support for ingesting data from a third-party database. See the following related documents for more information on specific source connectors:
+
+-   [Create an AWS Redshift source connector in the UI](../../tutorials/sources_tutorial/ui/databases/amazon-redshift-ui-tutorial.md)
+-   [Create an Azure Synapse Analytics source connector in the UI](../../tutorials/sources_tutorial/ui/databases/azure-synapse-analytics-ui-tutorial.md)
+-   [Create a Google BigQuery source connector in the UI](../../tutorials/sources_tutorial/ui/databases/google-big-query-ui-tutorial.md)
+-   [Create a MariaDB source connector in the UI](../../tutorials/sources_tutorial/ui/databases/google-big-query-ui-tutorial.md)
+-   [Create a Microsoft SQL Server source connector in the UI](../../tutorials/sources_tutorial/ui/databases/sql-server-ui-tutorial.md)
+-   [Create a MySQL source connector in the UI](../../tutorials/sources_tutorial/ui/databases/mysql-ui-tutorial.md)
+
 ## API tutorials
 
-You can create source connectors using the Flow Service API. For more information, see the [sources API tutorial document](https://www.adobe.io/apis/experienceplatform/home/tutorials/sources-api-tutorials.html#!api-specification/markdown/narrative/tutorials/sources_tutorial/api/sources-api-tutorial.md).
+You can create source connectors using the Flow Service API. For more information, see the [sources API tutorial document](../../tutorials/sources_tutorial/api/sources-api-tutorial.md).
 
 ## Access control for sources in data ingestion
 

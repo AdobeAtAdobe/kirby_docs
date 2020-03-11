@@ -19,8 +19,13 @@ The following is a list of tutorials for creating connectors in the Platform UI:
 
 ## CRM
 
--   [Microsoft Dynamics and Salesforce connector](./crm/dynamics-salesforce-ui-tutorial.md)
+- [Microsoft Dynamics and Salesforce connector](./crm/dynamics-salesforce-ui-tutorial.md)
 
 ## Databases
 
+- [Amazon Redshift connector](./databases/amazon-redshift-ui-tutorial.md)
+- [Azure Synapse Analytics connector](./databases/azure-synapse-analytics-ui-tutorial.md)
 - [Google Big Query connector](./databases/google-big-query-ui-tutorial.md)
+- [MariaDB connector](./databases/maria-db-ui-tutorial.md)
+- [Microsoft SQL Server connector](./databases/sql-server-ui-tutorial.md)
+- [MySQL connector](./databases/mysql-ui-tutorial.md)
