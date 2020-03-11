@@ -30,8 +30,18 @@
                 },
                 {
                     "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/amazon-redshift-ui-tutorial.md",
+                    "title": "Amazon Redshift connector"
+                },
+                {
+                    "pages": [],
                     "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/cloud-storages/adls-gen2-ui-tutorial.md",
                     "title": "Azure Data Lake Storage Gen2 connector"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/azure-synapse-analytics-ui-tutorial.md",
+                    "title": "Azure Synapse Analytics connector"
                 },
                 {
                     "pages": [],
@@ -52,6 +62,21 @@
                     "pages": [],
                     "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/cloud-storages/google-cloud-storage-ui-tutorial.md",
                     "title": "Google Cloud Storage connector"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/maria-db-ui-tutorial.md",
+                    "title": "Maria DB connector"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/sql-server-ui-tutorial.md",
+                    "title": "Microsoft SQL Server connector"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/mysql-ui-tutorial.md",
+                    "title": "MySQL connector"
                 },
                 {
                     "pages": [],

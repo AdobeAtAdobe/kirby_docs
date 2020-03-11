@@ -2,13 +2,6 @@
 
 Source connectors in Adobe Experience Platform provide the ability to ingest externally sourced data on a scheduled basis. This tutorial provides steps for creating a Google Big Query (hereinafter referred to as "GBQ") source connector using the Platform user interface.
 
-The following steps are covered:
-
-
-  - [Getting started](#getting-started)
-    - [Gather required credentials](#gather-required-credentials)
-  - [Connect your GBQ account](#connect-your-gbq-account)
-
 ## Getting started
 
 This tutorial requires a working understanding of the following components of Adobe Experience Platform:

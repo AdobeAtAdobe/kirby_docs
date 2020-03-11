@@ -1,8 +1,8 @@
-# Connect to MariaDB using the Flow Service API
+# Connect to Maria DB using the Flow Service API
 
 Flow Service is used to collect and centralize customer data from various disparate sources within Adobe Experience Platform. The service provides a user interface and RESTful API from which all supported sources are connectable.
 
-This tutorial uses the Flow Service API to walk you through the steps to connect Experience Platform to MariaDB, including showing you how to:
+This tutorial uses the Flow Service API to walk you through the steps to connect Experience Platform to Maria DB, including showing you how to:
 
 * [Look up connection specifications](#look-up-connection-specifications)
 * [Create a base connection](#create-a-base-connection)
@@ -14,17 +14,17 @@ This guide requires a working understanding of the following components of Adobe
 * [Sources](../../../../technical_overview/acp_connectors_overview/acp-connectors-overview.md): Experience Platform allows data to be ingested from various sources while providing you with the ability to structure, label, and enhance incoming data using Platform services.
 * [Sandboxes](../../../../technical_overview/sandboxes/sandboxes-overview.md): Experience Platform provides virtual sandboxes which partition a single Platform instance into separate virtual environments to help develop and evolve digital experience applications.
 
-The following sections provide additional information that you will need to know in order to successfully connect to MariaDB using the Flow Service API.
+The following sections provide additional information that you will need to know in order to successfully connect to Maria DB using the Flow Service API.
 
 ### Gather required credentials
 
-In order for Flow Service to connect with MariaDB, you must provide the following connection property:
+In order for Flow Service to connect with Maria DB, you must provide the following connection property:
 
 | Credential | Description |
 | ---------- | ----------- |
-| `connectionString` | The connection string associated with your MariaDB authentication. |
+| `connectionString` | The connection string associated with your Maria DB authentication. |
 
-Please refer to [this document](https://mariadb.com/kb/en/about-mariadb-connector-odbc/) for more information about getting started with MariaDB.
+Please refer to [this document](https://mariadb.com/kb/en/about-mariadb-connector-odbc/) for more information about getting started with Maria DB.
 
 ### Reading sample API calls
 
@@ -48,11 +48,11 @@ All requests that contain a payload (POST, PUT, PATCH) require an additional med
 
 ## Look up connection specifications
 
-In order to connect to MariaDB, a set of MariaDB connection specifications must exist within Flow Service. The first step in connecting Platform to MariaDB is to retrieve these specifications.
+In order to connect to Maria DB, a set of Maria DB connection specifications must exist within Flow Service. The first step in connecting Platform to Maria DB is to retrieve these specifications.
 
 #### API format
 
-Each available source has its own unique set of connection specifications for describing connector properties such as authentication requirements. Sending a GET request to the `/connectionSpecs` endpoint will return connection specifications for all available sources. You can include the query `property=name=="maria-db"` to obtain information specifically for MariaDB.
+Each available source has its own unique set of connection specifications for describing connector properties such as authentication requirements. Sending a GET request to the `/connectionSpecs` endpoint will return connection specifications for all available sources. You can include the query `property=name=="maria-db"` to obtain information specifically for Maria DB.
 
 ```http
 GET /connectionSpecs
@@ -61,7 +61,7 @@ GET /connectionSpecs?property=name=="maria-db"
 
 #### Request
 
-The following request retrieves the connection specifications for MariaDB.
+The following request retrieves the connection specifications for Maria DB.
 
 ```shell
 curl -X GET \
@@ -74,7 +74,7 @@ curl -X GET \
 
 #### Response
 
-A successful response returns the connection specifications for MariaDB, including its unique identifier (`id`). This ID is required in the next step to create a base connection.
+A successful response returns the connection specifications for Maria DB, including its unique identifier (`id`). This ID is required in the next step to create a base connection.
 
 ```json
 {
@@ -91,11 +91,11 @@ A successful response returns the connection specifications for MariaDB, includi
                     "spec": {
                         "$schema": "http://json-schema.org/draft-07/schema#",
                         "type": "object",
-                        "description": "defines auth params required for connecting to MariaDB",
+                        "description": "defines auth params required for connecting to Maria DB",
                         "properties": {
                             "connectionString": {
                                 "type": "string",
-                                "description": "connection string to connect to any MariaDB instance.",
+                                "description": "connection string to connect to any Maria DB instance.",
                                 "format": "password",
                                 "pattern": "^(Server=)(.*)(;Port=)(.*)(;Database=)(.*)(;UID=)(.*)(;PWD=)(.*)",
                                 "examples": [
@@ -116,7 +116,7 @@ A successful response returns the connection specifications for MariaDB, includi
 
 ## Create a base connection
 
-A base connection specifies a source and contains your credentials for that source. Only one base connection is required per MariaDB account as it can be used to create multiple source connectors to bring in different data.
+A base connection specifies a source and contains your credentials for that source. Only one base connection is required per Maria DB account as it can be used to create multiple source connectors to bring in different data.
 
 #### API format
 
@@ -152,7 +152,7 @@ curl -X POST \
 
 | Property | Description |
 | -------- | ----------- |
-| `auth.params.connectionString` | The connection string associated with your MariaDB authentication. |
+| `auth.params.connectionString` | The connection string associated with your Maria DB authentication. |
 | `connectionSpec.id` | The connection specification (`id`) gathered in the previous step. |
 
 #### Response
@@ -168,4 +168,4 @@ A successful response returns details of the newly created base connection, incl
 
 ## Next steps
 
-By following this tutorial, you have created a MariaDB base connection using the Flow Service API, and have obtained the connection's unique ID value. You can use this base connection ID in the next tutorial as you learn how to [explore databases or NoSQL systems using the Flow Service API](./explore-dbnosql-api-tutorial.md).
+By following this tutorial, you have created a Maria DB base connection using the Flow Service API, and have obtained the connection's unique ID value. You can use this base connection ID in the next tutorial as you learn how to [explore databases or NoSQL systems using the Flow Service API](./explore-dbnosql-api-tutorial.md).
