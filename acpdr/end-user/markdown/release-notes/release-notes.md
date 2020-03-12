@@ -42,7 +42,7 @@ Adobe Experience Platform Data Governance is a series of strategies and technolo
 
 | Feature | Description |
 | ------- | ----------- |
-| Automated enforcement of data usage policies for Real-time Customer Data Platform| Data usage policies are now enforced in the workflow of activating data to destinations. Data Governance is also embedded and enforced when making changes that affect existing activations (such as changes to dataset labels, merge policies, segment definitions, and others). See the overview on [Data Governance in Real-time CDP](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/privacy/data-governance-overview.html) for more information. |
+| Automated enforcement of data usage policies for Real-time Customer Data Platform| Data usage policies are now enforced in the workflow of activating data to destinations. Data Governance is also embedded and enforced when making changes that affect existing activations (such as changes to dataset labels, merge policies, segment definitions, and others). |
 | Data lineage for enforcement | When a data usage policy is violated in Real-time CDP, the UI displays a notification that contains data lineage information to help the user understand why the policies were violated and what they can do to resolve the violation. |
 
 
