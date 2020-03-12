@@ -21,6 +21,7 @@ The following is a list of tutorials for creating connectors in the Platform UI:
 
 - [HubSpot connector](./crm/hubspot-tutorial.md)
 - [Microsoft Dynamics and Salesforce connector](./crm/dynamics-salesforce-ui-tutorial.md)
+- [Salesforce Service Cloud connector](./crm/salesforce-service-cloud-tutorial.md)
 - [ServiceNow connector](./crm/servicenow-ui-tutorial.md)
 
 ## Databases
