@@ -14,6 +14,7 @@ author: ens71067
 Updates to existing in Adobe Experience Platform:
 
 - [Data Ingestion](#data-ingestion)
+- [Data Governance](#data-governance)
 - [Identity Service](#identity-service)
 - [Sources](#sources)
 
@@ -28,6 +29,28 @@ Feature | Description
 Partial batch ingestion | Partial batch ingestion is the ability to ingest data containing errors, up to a certain threshold. With this capability, users can successfully ingest all their correct data into Adobe Experience Platform while all their incorrect data is batched separately. Details are added to unsuccessful batches to explain why they did not pass validation. More information about partial batch ingestion can be found in the [partial batch ingestion documentation](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/ingest_architectural_overview/partial_batch_ingestion.md).
 
 For more information, visit the [Data Ingestion documentation](https://www.adobe.io/apis/experienceplatform/home/data-ingestion.html) or refer to the [Data Ingestion Service API reference](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!/acpdr/swagger-specs/ingest-api.yaml).
+
+## Data Governance
+
+Experience Platform allows companies to bring data from multiple enterprise systems together to better allow marketers to identify, understand, and engage customers. Experience Platform includes an end-to-end data governance infrastructure, including Data Usage Labeling and Enforcement (DULE), to ensure the proper use of data within Platform and when being shared between systems.
+
+Adobe Experience Platform Data Governance is a series of strategies and technologies used to manage customer data and ensure compliance with regulations, restrictions, and policies applicable to data usage. It plays a key role within Experience Platform at various levels, including cataloging, data lineage, data usage labeling, data access policies, and access control on data for marketing actions.
+
+### New features
+
+> **Note:** Some of the following new features are currently in beta, and are subject to change on the full release.
+
+| Feature | Description |
+| ------- | ----------- |
+| Automated enforcement of data usage policies for Real-time Customer Data Platform| Data usage policies are now enforced in the workflow of activating data to destinations. Data Governance is also embedded and enforced when making changes that affect existing activations (such as changes to dataset labels, merge policies, segment definitions, and others). See the overview on [Data Governance in Real-time CDP](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/privacy/data-governance-overview.html) for more information. |
+| Data lineage for enforcement | When a data usage policy is violated in Real-time CDP, the UI displays a notification that contains data lineage information to help the user understand why the policies were violated and what they can do to resolve the violation. |
+
+
+### Known issues
+
+* None
+
+For more information about Data Governance, see the [Data Governance overview](https://www.adobe.io/apis/experienceplatform/home/dule/duleservices.html#!api-specification/markdown/narrative/technical_overview/data_governance/dule_overview.md).
 
 ## Identity Service
 
