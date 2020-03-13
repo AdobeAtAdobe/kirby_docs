@@ -1,5 +1,7 @@
 # Evaluate events in real-time with streaming segmentation
 
+>**Note:** Streaming segmentation is a beta feature, and will be available on request.
+
 Streaming segmentation (also known as continuous query evaluation) is the ability to instantly evaluate a customer as soon as an event comes into a particular segment group. With this capability, most segment rules can now be evaluated as the data is passed into Adobe Experience Platform, meaning segment membership will be kept up to date without running scheduled segmentation jobs.
 
 This document provides a tutorial for managing streaming segmentation. Specifically, this tutorial covers the following details:
@@ -10,8 +12,6 @@ This document provides a tutorial for managing streaming segmentation. Specifica
 - [Enabling scheduled segmentation to establish a baseline](#enable-scheduled-evaluation)
 
 ![](images/streaming-segment-evaluation.png)
-
->**Note:** Streaming segmentation is a beta feature, and will be available on request.
 
 ## Getting started
 

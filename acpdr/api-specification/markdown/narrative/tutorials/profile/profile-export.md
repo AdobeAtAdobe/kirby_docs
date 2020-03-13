@@ -190,7 +190,7 @@ curl -X POST \
       * `filter.fromIngestTimestamp`: Filters time series events to those that have been ingested after the provided timestamp. This is not the event time itself but the ingestion time for the events.
 * `destination`: **(Required)** Destination information for the exported data
   * `destination.datasetId`: **(Required)** The ID of the dataset where data is to be exported.
-  * `destination.segmentPerBatch`: *(Optional)* A Boolean value that, if not provided, defaults to `false`. A value of `false` exports all segment IDs into a single batch ID. A value of `true` exports one segment ID into one batch ID.
+  * `destination.segmentPerBatch`: *(Optional)* A Boolean value that, if not provided, defaults to `false`. A value of `false` exports all segment IDs into a single batch ID. A value of `true` exports one segment ID into one batch ID. Note that setting the value to be `true` may affect batch export performance.
 * `schema.name`: **(Required)** The name of the schema associated with the dataset where data is to be exported.
 
 > **Note:** To export only Profile data, and not include related ExperienceEvent data, remove the "additionalFields" object from the request.
