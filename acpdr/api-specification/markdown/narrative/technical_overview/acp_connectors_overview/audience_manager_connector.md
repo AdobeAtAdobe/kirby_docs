@@ -35,29 +35,22 @@ You will find Audience Manager data under two data management sections in the UI
 - [Datasets](#datasets)
 - [Connections](#connections)
 
-### Datasets	
-Datasets are a storage and management construct for a collection of data, typically a table, that contains schema (columns) and fields (rows) and is made available by a data connection. Audience Manager data consists of Realtime data, Inbound data, and Profile data. To locate your Audience Manager datasets, use the search function in the UI with the provided naming conventions for each type of data. 
+### Datasets
 
-**Realtime**
-The Realtime data lands into a dataset called "**AAM Realtime**".	
+Datasets are a storage and management construct for a collection of data, typically a table, that contains schema (columns) and fields (rows) and is made available by a data connection. Audience Manager data consists of Realtime data, Inbound data, and Profile data. To locate your Audience Manager datasets, use the search function in the UI with the provided naming conventions for each type of data.
 
-**Inbound**	
-All Inbound datasets follow the naming convention "**AAM Inbound Dataset {Datasource ID}**". Where the {Datasource ID} is known from the inbound files you upload to S3. Specifically, the ID is the [_DPID_TARGET_DATA_OWNER](https://marketing.adobe.com/resources/help/en_US/aam/inbound-s3-filenames.html).
+While users have the ability to disable datasets, it is not recommended to disable datasets that will be used for segment membership in Profile.
 
-There is a _meta dataset_ for Inbound with either of the following names:	
-- **AAM inbound Meta Dataset**	
-- **[Meta - No Data] AAM Inbound**	
-
-These datasets are important for Audience Manager inbound ingestion and contain 0 size batches. Do not delete these meta datasets. 	
-
-**Profile**
-In Platform, all the profiles created from device data can be found in the dataset "**AAM Profile Dataset userprofile**". All the profiles created from CRMs can be found in the dataset "**AAM Profile Dataset crmprofile {Datasource ID}**". Where the {Datasource id} is the CRM datasource ID. 	
-
-The following _meta datasets_ exist for Profile:	
-- **[Meta - No Data] AAM crmprofile**	
-- **[Meta - No Data] AAM userprofile**	
-
-These datasets are important for Audience Manager profile ingestion and contain 0 size batches. Do not delete these meta datasets.	
+| Dataset Name | Description |
+| ------------ | ----------- |
+| Audience Manager Realtime | This dataset contains data collected by direct hits on Audience Manager DCS endpoints and identity maps for Audience Manager Profiles. Keep this dataset enabled for Profile ingestion. |
+| Audience Manager Realtime Profile Updates | This dataset enables Realtime targeting of Audience Manager traits and segments. It includes information for Edge regional routing, trait, and segment membership. Keep this dataset enabled for Profile ingestion. |
+| Audience Manager Devices Data | Device data with ECIDs and corresponding segment realizations aggregated in Audience Manager. |
+| Audience Manager Device Profile Data | Used for Audience Manager connector diagnostics. |
+| Audience Manager Authenticated Profiles | This dataset contains Audience Manager authenticated profiles. |
+| Audience Manager Authenticated Profiles Meta Data | Used for Audience Manager Connector diagnostics.  |
+| Audience Manager Inbound {Datasource ID} **(Deprecated)** | This dataset represents onboarded records in Audience Manager via the inbound file method. This data flow is deprecated and will be removed in a subsequent release. |
+| Audience Manager Inbound Meta Data **(Deprecated)** | Used for Audience Manager connector diagnostics. This data flow is deprecated and will be removed in a subsequent release.  |
 
 ### Connections	
 

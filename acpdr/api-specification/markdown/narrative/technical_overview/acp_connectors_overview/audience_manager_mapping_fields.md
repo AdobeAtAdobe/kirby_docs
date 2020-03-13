@@ -23,7 +23,7 @@ Type: Realtime data
 | client_ip | ExperienceEvent.environment <ul><li>d_os_name → os name </li><li>d_os_version → os_version</li></ul> |
 | Signals | ExperienceEvent.signals |
 
-## Inbound data
+## Inbound data **(Deprecated)**
 Type: ExperienceEvent
 
 | Inbound Field |  XDM Field | 
@@ -33,6 +33,8 @@ Type: ExperienceEvent
 | signals | ExperienceEvent.signals |
 | b_time | ExperienceEvent.timeStamp |
 | overwrite | overwriteTraits |
+
+> Note: Inbound Fields are scheduled to be deprecated in a future release.
 
 ## Profile data
 Type: Profile XDM
