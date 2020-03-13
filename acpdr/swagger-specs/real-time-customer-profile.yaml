@@ -494,7 +494,7 @@ paths:
           x-example: "_xdm.context.profile"
         - name: relatedSchema.name
           in: query
-          description: XDM schema class name that the ExperienceEvent is associated with. Used when looking up ExperienceEvents.
+          description: If `schema.name` is "_xdm.context.experienceevent", this value must specify the schema for the profile entity that the time series events are related to. For example, `relatedSchema.name=_xdm.context.profile`
           type: string
           required: false
           x-example: "_xdm.context.profile"
@@ -558,6 +558,12 @@ paths:
           x-example: '-timestamp'
           required: false
           type: string
+        - name: withCA
+          in: query
+          description: 'Feature flag for enabling computed attributes for lookup. Default: false'
+          x-example: true
+          required: false
+          type: boolean
       responses:
         '200':
           description: XDM object(s) successfully returned.
@@ -4214,7 +4220,12 @@ definitions:
       schema:
         $ref: '#/definitions/SchemaEntity'
       relatedSchema:
-        $ref: '#/definitions/SchemaEntity'
+        description: If `schema.name` is "_xdm.context.experienceevent", `relatedSchema.name` value must specify the schema for the profile entity that the time series events are related to. For example, `_xdm.context.profile`.
+        type: object
+        properties:
+          name:
+            type: string
+            example: '_xdm.context.profile'  
       fields:
         description: 'Fields for the model object. By default, all fields will be fetched. Separated by comma.'
         type: array
@@ -4235,6 +4246,10 @@ definitions:
         type: string
         description: 'The sort order of retrieved ExperienceEvents by timestamp. Syntax: (+/-)timestamp. Default: +timestamp'
         example: "-timestamp"
+      withCA:
+        type: boolean
+        description: 'Feature flag for enabling computed attributes for lookup. Default: false.'
+        example: true
   PostTimeFilterEntity:
     type: object
     properties:

@@ -10,7 +10,7 @@ This document provides a tutorial for accessing Real-time Customer Profile data 
     - [List of identities](#access-time-series-events-for-multiple-profiles-by-identities)
 - [Access time series events in multiple schema entities](#access-time-series-events-in-multiple-schema-entities) 
 - [Access an exported segment](#access-an-exported-segment)
-- [Ensure your requests are GDPR-compliant](#ensure-your-requests-are-gdpr-compliant)
+- [Ensure data access requests are compliant](#ensure-data-access-requests-are-compliant)
 
 ## Getting started
 
@@ -39,343 +39,23 @@ All resources in Experience Platform are isolated to specific virtual sandboxes.
 
 > **Note:** For more information on sandboxes in Platform, see the [sandbox overview documentation](../../technical_overview/sandboxes/sandboxes-overview.md). 
 
-All requests that contain a payload (POST, PUT, PATCH) require an additional header:
+Requests that contain a payload (POST, PUT, PATCH) require an additional header:
 
 - Content-Type: application/json
 
 Additional headers may be required to complete specific requests. The correct headers are shown in each of the examples within this document. Please pay special attention to the sample requests in order to ensure that all required headers are included.
 
-<!-- ## List Real-time Customer Profile data fields
+## Access profile data by identity
 
-All Real-time Customer Profile data is stored in data fields that conform to Profile-enabled XDM schemas. The names of these XDM data fields are often required when interacting with Profile APIs, such as when indicating specific data fields to retrieve, or when building segment rules.
-
-By making a GET request to the `/observedschemanonull` endpoint in the Profile API, you can list all fields for a given schema for which data has been supplied during any ingest.
+You can access a Profile entity by making a GET request to the `/access/entities` endpoint and providing the entity's identity as a series of query parameters. This identity consists of an ID value (`entityId`) and the identity namespace (`entityIdNS`).
 
 #### API format
 
 ```http
-GET /observedschemanonnull
+GET /access/entities?{QUERY_PARAMETERS}
 ```
 
-#### Request
-
-The following request lists all of the fields used by data ingestion for a specified schema. The schema is specified using the required header, `model-name`. In this case, the schema is `_xdm.context.profile`.
-
-```shell
-curl -X GET \
-  https://platform.adobe.io/data/core/ups/observedschemanonnull \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: {SANDBOX_NAME}' \
-  -H 'model-name: _xdm.context.profile'
-```
-
-#### Response
-
-A successful response returns a list of XDM fields. All fields prefixed with "pf" are profile fields (XDM Individual Profile), where those prefixed with "tps" are time series fields (XDM ExperienceEvent).
-
-```json
-{
-    "nonNullCols": [
-        "pf.identities.id",
-        "pf.identities.namespace.code",
-        "pf.identities.primary",
-        "pf.person.name.firstName",
-        "pf.person.name.lastName",
-        "pf.person.name.courtesyTitle",
-        "pf.person.birthYear",
-        "pf.homeAddress._schema.latitude",
-        "pf.homeAddress._schema.longitude",
-        "pf.homeAddress.countryCode",
-        "pf.homeAddress.stateProvince",
-        "pf.homeAddress.city",
-        "pf.homeAddress.postalCode",
-        "pf.homeAddress.street1",
-        "pf.homeAddress.country",
-        "pf.workAddress._schema.latitude",
-        "pf.workAddress._schema.longitude",
-        "pf.workAddress.countryCode",
-        "pf.workAddress.stateProvince",
-        "pf.workAddress.city",
-        "pf.workAddress.postalCode",
-        "pf.workAddress.street1",
-        "pf.workAddress.country",
-        "pf.personalEmail.address",
-        "pf.workEmail.address",
-        "pf.homePhone.number",
-        "tps._id",
-        "tps.timestamp",
-        "tps.endUserIDs._experience.mcid.id",
-        "tps.endUserIDs._experience.mcid.namespace.code",
-        "tps.endUserIDs._experience.aacustomid.id",
-        "tps.endUserIDs._experience.aacustomid.namespace.code",
-        "tps.endUserIDs._experience.aacustomid.primary",
-        "tps.endUserIDs._experience.acid.id",
-        "tps.endUserIDs._experience.acid.namespace.code",
-        "tps.environment.browserDetails.userAgent",
-        "tps.environment.browserDetails.acceptLanguage",
-        "tps.environment.browserDetails.cookiesEnabled",
-        "tps.environment.browserDetails.javaScriptVersion",
-        "tps.environment.browserDetails.javaEnabled",
-        "tps.environment.colorDepth",
-        "tps.environment.viewportHeight",
-        "tps.environment.viewportWidth",
-        "tps.placeContext.localTime",
-        "tps.placeContext.geo._schema.latitude",
-        "tps.placeContext.geo._schema.longitude",
-        "tps.placeContext.geo.countryCode",
-        "tps.placeContext.geo.stateProvince",
-        "tps.placeContext.geo.city",
-        "tps.placeContext.geo.postalCode"
-    ]
-}
-```
-
-### Field names in API calls
-
- When using these field names in API calls, the prefixes must be excluded. For example, in a request to preview all audiences where a home address city has been specified, the XDM field "pf.homeAddress.city" is expressed as "homeAddress.city" when used in the `predicateExpression` field:
-
-```shell
-curl -X POST \
-  https://platform.adobe.io/data/core/ups/preview \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: {SANDBOX_NAME}'
-  -H 'Content-Type: application/json' \
-  -d '{
-        "predicateExpression": "homeAddress.city",
-        "predicateType": "pql/text",
-        "predicateModel": "_xdm.context.profile",
-        "graphType": "simple",
-        "mergeStrategy": "simple"
-    }'
-```
-
-## Summarize an XDM field
-
-Real-time Customer Profile provides summaries for data fields that contain continuous values (such as age), or are restricted to a set of possible values (such as "Home State" or "Eye Color"). Using the summary endpoint in the Profile API, you can view distributions for values that occur within your profile store at a minimum of 5%.
-
-![Real-time Customer Profile Summary](up-summary.png)
-
->**Note:** Numeric fields are automatically partitioned according to the clustering of values across your profile store for the field being summarized. The distributions are given for those automatically generated partitions.
-
-If the field being summarized has no values that occur more than 5%, a failure response will be returned as these fields do not convey useful information.
-
-Below are some example use cases for the summary endpoint in the Profile API.
-
-### Longitude example
-
-The following API call retrieves summary data on the distribution of your consumer base by longitude:
-
-#### API format
-
-```http
-GET /preview/data/summary/{SCHEMA_FIELD}
-```
-
-* `{SCHEMA_FIELD}`: The name of the XDM field you want to summarize. For example, "pf.homeAddress._schema.longitude".
-
-#### Request
-
-```shell
-curl -X GET \
-  https://platform.adobe.io/data/core/ups/preview/data/summary/pf.homeAddress._schema.longitude \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: {SANDBOX_NAME}'
-```
-
-#### Response
-A successful response returns the summary data for the XDM field. The data is split into groups that are are automatically determined by the system, and are listed under the `quantiles` property. From this data, you can infer that your user base is within the boundaries of -157.86 (`"pct0"`) and -52.6912126 (`"pct100"`). The `summaries` array provides more information on each group, including the number of estimated consumers under `cardinality`.
-
-```json
-{
-    "quantiles": {
-        "pct40": -98.76600142249998,
-        "pct50": -94.0084823,
-        "pct100": -52.6912126,
-        "pct10": -118.118266245,
-        "pct80": -78.37563784266666,
-        "pct0": -157.86,
-        "pct70": -82.47644212,
-        "pct60": -87.99093141600001,
-        "pct30": -99.581649195,
-        "pct20": -106.34355807714286,
-        "pct90": -73.75254579999998
-    },
-    "summaries": [
-        {
-            "percentage": 0.09627375471568593,
-            "exclusiveUpperBound": -106.34355807714286,
-            "cardinality": 965.9216479850512,
-            "inclusiveLowerBound": -118.118266245,
-            "hll": "NOT-SUPPORTED-CURRENTLY",
-            "value": "-118.118266245:-106.34355807714286"
-        }, 
-        {
-            "percentage": 0.10656123243076433,
-            "exclusiveUpperBound": -99.581649195,
-            "cardinality": 1069.1366670471361,
-            "inclusiveLowerBound": -106.34355807714286,
-            "hll": "NOT-SUPPORTED-CURRENTLY",
-            "value": "-106.34355807714286:-99.581649195"
-        }, 
-        {
-            "percentage": 0.10114427374702012,
-            "exclusiveUpperBound": -78.37563784266666,
-            "cardinality": 1014.7879229442261,
-            "inclusiveLowerBound": -82.47644212,
-            "hll": "NOT-SUPPORTED-CURRENTLY",
-            "value": "-82.47644212:-78.37563784266666"
-        }, 
-        {
-            "percentage": 0.1034787975412938,
-            "exclusiveUpperBound": -73.75254579999998,
-            "cardinality": 1038.2103715366227,
-            "inclusiveLowerBound": -78.37563784266666,
-            "hll": "NOT-SUPPORTED-CURRENTLY",
-            "value": "-78.37563784266666:-73.75254579999998"
-        }, 
-        {
-            "percentage": 0.09902487161178347,
-            "exclusiveUpperBound": -98.76600142249998,
-            "cardinality": 993.5238057478365,
-            "inclusiveLowerBound": -99.581649195,
-            "hll": "NOT-SUPPORTED-CURRENTLY",
-            "value": "-99.581649195:-98.76600142249998"
-        }, 
-        {
-            "percentage": 0.08931089503860541,
-            "exclusiveUpperBound": -87.99093141600001,
-            "cardinality": 896.0627657399768,
-            "inclusiveLowerBound": -94.0084823,
-            "hll": "NOT-SUPPORTED-CURRENTLY",
-            "value": "-94.0084823:-87.99093141600001"
-        }, 
-        {
-            "percentage": 0.10901006611982293,
-            "exclusiveUpperBound": -94.0084823,
-            "cardinality": 1093.7059952047655,
-            "inclusiveLowerBound": -98.76600142249998,
-            "hll": "NOT-SUPPORTED-CURRENTLY",
-            "value": "-98.76600142249998:-94.0084823"
-        }, 
-        {
-            "percentage": 0.10358499159862096,
-            "exclusiveUpperBound": -118.118266245,
-            "cardinality": 1039.275824308903,
-            "inclusiveLowerBound": -157.86,
-            "hll": "NOT-SUPPORTED-CURRENTLY",
-            "value": "-157.86:-118.118266245"
-        }, 
-        {
-            "percentage": 0.10040217006872898,
-            "exclusiveUpperBound": -82.47644212,
-            "cardinality": 1007.3423422662145,
-            "inclusiveLowerBound": -87.99093141600001,
-            "hll": "NOT-SUPPORTED-CURRENTLY",
-            "value": "-87.99093141600001:-82.47644212"
-        }, 
-        {
-            "percentage": 0.08741707457716474,
-            "exclusiveUpperBound": -52.6912126,
-            "cardinality": 877.0619260354822,
-            "inclusiveLowerBound": -73.75254579999998,
-            "hll": "NOT-SUPPORTED-CURRENTLY",
-            "value": "-73.75254579999998:-52.6912126"
-        }
-    ],
-    "id": "{IMS_ORG}-pf.homeAddress._schema.longitude",
-    "summaryType": "NUMBER",
-    "fieldName": "pf.homeAddress._schema.longitude"
-}
-```
-
-### Country code example
-
-The following API call retrieves summary data on the distribution of your consumer base by country code:
-
-#### API format
-```http
-GET /preview/data/summary/{SCHEMA_FIELD}
-```
-
-#### Request
-
-```shell
-curl -X GET \
-  https://platform.adobe.io/data/core/ups/preview/data/summary/pf.homeAddress.countryCode \
-  -H 'Authorization: Bearer {ACCESS_TOKEN}' \
-  -H 'x-api-key: {API_KEY}' \
-  -H 'x-gw-ims-org-id: {IMS_ORG}' \
-  -H 'x-sandbox-name: {SANDBOX_NAME}'
-```
-
-#### Response
-
-A successful response returns the summary data for the XDM field. Notice the lack of discernable values in `quantiles`. This is due to the values being non-numeric. 
-
-```json
-{
-    "quantiles": {
-        "pct40": 0.0,
-        "pct50": 0.0,
-        "pct100": 0.0,
-        "pct10": 0.0,
-        "pct80": 0.0,
-        "pct0": 0.0,
-        "pct70": 0.0,
-        "pct60": 0.0,
-        "pct30": 0.0,
-        "pct20": 0.0,
-        "pct90": 0.0
-    },
-    "summaries": [
-        {
-            "percentage": 0.2637181166795846,
-            "exclusiveUpperBound": 0.0,
-            "cardinality": 2646.717948309003,
-            "inclusiveLowerBound": 0.0,
-            "hll": "NOT-SUPPORTED-CURRENTLY",
-            "value": "CA"
-        }, 
-        {
-            "percentage": 0.48713712210991167,
-            "exclusiveUpperBound": 0.0,
-            "cardinality": 4888.987456035888,
-            "inclusiveLowerBound": 0.0,
-            "hll": "NOT-SUPPORTED-CURRENTLY",
-            "value": "US"
-        }, 
-        {
-            "percentage": 0.24914476121050375,
-            "exclusiveUpperBound": 0.0,
-            "cardinality": 2500.4573804998995,
-            "inclusiveLowerBound": 0.0,
-            "hll": "NOT-SUPPORTED-CURRENTLY",
-            "value": "MX"
-        }
-    ],
-    "id": "{IMS_ORG}-pf.homeAddress.countryCode",
-    "summaryType": "STRING",
-    "fieldName": "pf.homeAddress.countryCode"
-}
-``` -->
-
-## Access Profile data by identity
-
-You can access a Profile entity by making a GET request to the `/access/entities` endpoint and providing the entity's identity as a series of request parameters. This identity consists of an ID value (`entityId`) and the identity namespace (`entityIdNS`).
-
-#### API format
-
-```http
-GET /access/entities?{REQUEST_PARAMETERS}
-```
-
-* `{REQUEST_PARAMETERS}`: Parameters included in the request path to specify the data to access, separated by ampersands (`&`). A complete list of valid parameters is provided in the [request parameters](#request-parameters) section of the appendix.
+* `{QUERY_PARAMETERS}`: Parameters included in the request path to specify the data to access, separated by ampersands (`&`). A complete list of valid parameters is provided in the [query parameters](#query-parameters) section of the appendix.
 
 #### Request
 
@@ -459,7 +139,7 @@ curl -X GET \
 }
 ```
 
-> **Note:** If a related graph links more than 50 identities, this service will return HTTP status 422 and the message "Too many related identities". If you receive this error, consider adding more request parameters to narrow down your search.
+> **Note:** If a related graph links more than 50 identities, this service will return HTTP status 422 and the message "Too many related identities". If you receive this error, consider adding more query parameters to narrow down your search.
 
 ## Access profile data by list of identities
 
@@ -484,38 +164,56 @@ curl -X POST \
   -H 'x-gw-ims-org-id: {IMS_ORG}' \
   -H 'x-sandbox-name: {SANDBOX_NAME}' \
   -d '{
-    "schema":{
-        "name":"_xdm.context.profile"
-    },
-    "fields":["identities","person.name","workEmail"],
-    "identities":[
-        {
-            "entityId":"89149270342662559642753730269986316601",
-            "entityIdNS":{
-                "code":"ECID"
-            }
+        "schema":{
+            "name":"_xdm.context.profile"
         },
-        {
-            "entityId":"89149270342662559642753730269986316900",
-            "entityIdNS":{
-                "code":"ECID"
+        "fields":[
+            "identities",
+            "person.name",
+            "workEmail"
+        ],
+        "identities":[
+            {
+                "entityId":"89149270342662559642753730269986316601",
+                "entityIdNS":{
+                    "code":"ECID"
+                }
+            },
+            {
+                "entityId":"89149270342662559642753730269986316900",
+                "entityIdNS":{
+                    "code":"ECID"
+                }
+            },
+            {
+                "entityId":"89149270342662559642753730269986316602",
+                "entityIdNS":{
+                    "code":"ECID"
+                }
             }
+        ],
+        "timeFilter": {
+            "startTime": 1539838505,
+            "endTime": 1539838510
         },
-        {
-            "entityId":"89149270342662559642753730269986316602",
-            "entityIdNS":{
-                "code":"ECID"
-            }
-        }
-    ]
-}'
+        "limit": 10,
+        "orderby": "-timestamp",
+        "withCA": true
+      }'
 ```
 
-* `schema > name`: The name of the XDM schema the entity belongs to.
-* `fields`: The XDM data fields you want the response to return, as an array of strings.
-* `identities`: The list of identities for the entities you want to access, in the form of an array.
-* `identities > entityId`: The ID of a listed entity
-* `identities > entityIdNS > code`: The namespace of an entity's ID 
+|Property|Description|
+|---|---|
+|schema.<span>name| ***(Required)*** The name of the XDM schema the entity belongs to.|
+|fields|The XDM fields to be returned, as an array of strings. By default, all fields will be returned.|
+|identities| ***(Required)*** An array containing a list of identities for the entities you want to access.|
+|identities.entityId| The ID of an entity you wish to access.|
+|identities.entityIdNS.code|The namespace of an entity ID you wish to access.|
+|timeFilter.startTime|Start time of the time range filter, included. Should be at millisecond granularity. Default, if not specified, is the beginning of available time.|
+|timeFilter.endTime|End time of time range filter, excluded. Should be at millisecond granularity. Default, if not specified, is the end of available time.|
+|limit|Number of records to return. Only applies to the number of experience events returned. Default limit is 1,000.|
+|orderby|The sort order of retrieved experience events by timestamp, written as `(+/-)timestamp` with the default being `+timestamp`. |
+|withCA|Feature flag for enabling computed attributes for lookup. Default value is `false`.|
 
 #### Response
 A successful response returns the requested fields of entities specified in the request body.
@@ -664,9 +362,9 @@ You can access time series events by the identity of their associated profile en
 #### API format
 
 ```http
-GET /access/entities?{REQUEST_PARAMETERS}
+GET /access/entities?{QUERY_PARAMETERS}
 ```
-* `{REQUEST_PARAMETERS}`: Parameters included in the request path to specify the data to access. A complete list of valid parameters is provided in the [request parameters](#request-parameters) section of the appendix.
+* `{QUERY_PARAMETERS}`: Parameters included in the request path to specify the data to access. A complete list of valid parameters is provided in the [query parameters](#query-parameters) section of the appendix.
 
 #### Request
 
@@ -683,7 +381,7 @@ curl -X GET \
 
 #### Response
 
-A successful response returns a paginated list of time series events and associated fields that were specified in the request parameters. 
+A successful response returns a paginated list of time series events and associated fields that were specified in the query parameters. 
 
 ```json
 {
@@ -809,31 +507,13 @@ A successful response returns the next page of results. This example demonstrate
 
 ## Access time series events for multiple profiles by identities
 
-You can access time series events from multiple associated profiles by making a POST request to the `/access/entities` endpoint and providing the profiles' identities in the payload. These identities each consist of an ID value (`entityId`) and an identity namespace (`entityIdNS`).
+You can access time series events from multiple associated profiles by making a POST request to the `/access/entities` endpoint and providing the profile identities in the payload. These identities each consist of an ID value (`entityId`) and an identity namespace (`entityIdNS`).
 
 #### API format
-
-Unlike previous examples, this API call does not use any request parameters. All parameters are supplied in the request payload instead.
 
 ```http
 POST /access/entities
 ```
-
-**Payload parameters**
-
-The following is a list of accepted parameters for the request payload. Unlike previous examples, these parameters are used in the request body, not the path. They serve to identify the profile entities whose time series events you wish to access, and filter the data returned in the response. Required parameters are labeled, while the rest are optional.
-
-|Parameter|Description|Example|
-|---|---|---|
-|`schema.name`</br>**(REQUIRED)**|The XDM schema of the entity to retrieve|_xdm.context.profile|
-|`relatedSchema.name`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the schema for the profile entity that the time series events are related to.|_xdm.context.profile|
-|`identities`</br>**(REQUIRED)**|List of profiles to retrieve associated time series events from. Each entry of this can be set one of two ways; using a fully qualified identity consisting of ID value and namespace, or providing an XID.|`[ { "relatedEntityId": "GkouAW-yD9aoRCPhRYROJ-TetAFW" } ]`|
-|`fields`|Isolates the data returned to a specified set of fields. Use this field to filter which schema field values are included in data retrieved.|personalEmail,person.name,person.gender|
-|`mergePolicyId`|Identifies the Merge Policy by which to govern the data returned. If one is not specified in the service call, your organization's default for that schema will be used. If not default Merge Policy has been configured, the default is no profile merge and no identity stitching.|5aa6885fcf70a301dabdfa4a|
-|`orderBy`|Specify the field by which to order results. For example, `orderBy=name` or `orderBy=+name` sorts by name in ascending order, and `orderBy=-name` sorts in descending order. Omitting this value results in the default sorting of `name` in ascending order.|
-|`timeFilter.startTime`|Specify the start time to filter time-series objects (in milliseconds).|1539838505|
-|`timeFilter.endTime`|Specify the end time to filter time-series objects (in milliseconds).|1539838510|
-|`limit`|Numeric value specifying the maximum number of objects to return. <br>(*Default: 1000*)|100|
 
 #### Request
 
@@ -854,25 +534,44 @@ curl -X POST \
     "relatedSchema": {
         "name": "_xdm.context.profile"
     },
-    "timeFilter": {
-        "startTime": 1537275882000
-    },
+    "identities": [
+        {
+            "relatedEntityId": "GkouAW-yD9aoRCPhRYROJ-TetAFW"
+        }
+        {
+            "relatedEntityId": "GkouAW-2u-7iWt5vQ9u2wm40JOZY"
+        }
+    ],
     "fields": [
         "endUserIDs",
         "placeContext.localTime",
         "placeContext.geo.countryCode"
     ],
-    "identities": [
-        {"relatedEntityId": "GkouAW-yD9aoRCPhRYROJ-TetAFW"}
-        {"relatedEntityId": "GkouAW-2u-7iWt5vQ9u2wm40JOZY"}
-    ],
+    
+    "timeFilter": {
+        "startTime": 11539838505
+        "endTime": 1539838510
+    },
     "limit": 10
 }'
 ```
 
+|Property|Description|
+|---|---|
+|schema.<span>name|***(REQUIRED)*** The XDM schema of the entity to retrieve|
+|relatedSchema.<span>name|If `schema.name` is "_xdm.context.experienceevent", this value must specify the schema for the profile entity that the time series events are related to.|
+|identities|***(REQUIRED)*** An array listing of profiles to retrieve associated time series events from. Each entry in the array is set in one of two ways: 1) using a fully qualified identity consisting of ID value and namespace or 2) providing an XID.|
+|fields|Isolates the data returned to a specified set of fields. Use this field to filter which schema field values are included in data retrieved.|personalEmail,person.name,person.gender|
+|mergePolicyId|Identifies the Merge Policy by which to govern the data returned. If one is not specified in the service call, your organization's default for that schema will be used. If no default Merge Policy has been configured, the default is no profile merge and no identity stitching.|
+|orderby|The sort order of retrieved experience events by timestamp, written as `(+/-)timestamp` with the default being `+timestamp`.|
+|timeFilter.startTime|Specify the start time to filter time-series objects (in milliseconds).|
+|timeFilter.endTime|Specify the end time to filter time-series objects (in milliseconds).|
+|limit|Numeric value specifying the maximum number of objects to return. (Default: 1000)|
+|withCA|Feature flag for enabling computed attributes for lookup. Default value is `false`.|
+
 #### Response
 
-A successful response returns a paginated list of time series events associated with the multiple profiles specified in the request. In the example response below, notice the first listed profile ("GkouAW-yD9aoRCPhRYROJ-TetAFW") provides a value for `_links.next.payload`. Using this payload in the request body of another API call to the same endpoint will retrieve the subsequent page of time series data for that profile. See the next section on [accessing subsequent pages](#access-a-subsequent-page-of-results-1) for more details.
+A successful response returns a paginated list of time series events associated with the multiple profiles specified in the request. 
 
 ```json
 {
@@ -1080,9 +779,13 @@ A successful response returns a paginated list of time series events associated 
 }`
 ```
 
-### Access a subsequent page of results
+In this example response, the first listed profile ("GkouAW-yD9aoRCPhRYROJ-TetAFW") provides a value for `_links.next.payload`, meaning that there are additional pages of results for this profile. See the following section on [accessing subsequent pages of results](#access-subsequent-pages-of-results) for details on how to access those additional results.
 
-Results are paginated when retrieving time series events. If there are subsequent pages of results for a particular profile, the response's `_links.next.payload` parameter for that profile will contain a payload object. Using this object as the payload for another API call to the same endpoint will retrieve the subsequent page of time series data for that profile.
+### Access subsequent pages of results
+
+When retrieving time series events there may be many results being returned, therefore the results are often paginated. If there are subsequent pages of results for a particular profile, the `_links.next.payload` value for that profile will contain a payload object. 
+
+Using this payload in the request body, you can perform an additional POST request to the `access/entities` endpoint to retrieve the subsequent page of time series data for that profile.
 
 ## Access time series events in multiple schema entities
 
@@ -1093,6 +796,8 @@ You can access multiple entities that are connected through a relationship descr
 ```http
 GET /access/entities?{QUERY_PARAMETERS}
 ```
+
+* `{QUERY_PARAMETERS}`: Parameters included in the request path to specify the data to access. A complete list of valid parameters is provided in the [query parameters](#query-parameters) section of the appendix.
 
 #### Request
 
@@ -1190,53 +895,42 @@ A successful response returns a paginated list of time series events associated 
 ```
 ### Access a subsequent page of results
 
-Results are paginated when retrieving time series events. If there are subsequent pages of results, the response's `_page.next` parameter will contain an ID. Additionally, the response's `_links.next.href` parameter provides a request URI for retrieving the subsequent page. 
+Results are paginated when retrieving time series events. If there are subsequent pages of results, the `_page.next` property will contain an ID. Additionally, the `_links.next.href` property provides a request URI for retrieving the subsequent page by making additional GET requests to the `access/entities` endpoint. 
 
 ## Access an exported segment
 
-You can access Profile data using criteria (or rules) by using the Segmentation Service. The Real-time Customer Profile API provides endpoints that allow you to create and test segment definitions, generate audience segments from those definitions, and export segments to persist in datasets. See the tutorial on [creating a segment using the Profile API](../creating_a_segment_tutorial/creating_a_segment_tutorial.md) for more information.
+You can access profile data that adheres to certain criteria (or rules) through Adobe Experience Platform Segmentation Service. You can use Experience Platform APIs to create and test segment definitions, generate audience segments from those definitions, and export segments to persist in datasets. See the tutorial on [creating a segment using APIs](../creating_a_segment_tutorial/creating_a_segment_tutorial.md) for more information.
 
 Once a segment has been created and exported, you can use the [Data Access API](../../../../../../acpdr/swagger-specs/data-access-api.yaml) to access the data using the returned `batchId` from when the segment was exported. For detailed steps on locating batch files and accessing their contents, see the [Data Access API tutorial](../data_access_tutorial/data_access_tutorial.md).
 
-## Ensure your requests are GDPR-compliant
+## Ensure data access requests are compliant
 
-Adobe Experience Platform Privacy Service allows you to ensure your data access requests are compliant with the European Union [General Data Protection Regulation (GDPR)](https://eugdpr.org/) by automating GDPR `access` and `delete` requests across Platform components. 
-
-For general information on how GDPR applies to Experience Platform, see the [GDPR on Experience Platform overview](../../gdpr/gdpr-on-platform-overview.md). For definitions to some of the GDPR terminology used below, visit the [GDPR terminology](../../gdpr/gdpr-terminology.md) glossary.
-
-The following workflow outlines how Privacy Service interacts with Platform components to ensure GDPR compliance:
-
-1. As part of good data hygiene, the data controller should curate and appropriately label all personal data that is ingested into Experience Platform. See the [Data Governance user guide](../../technical_overview/data_governance/dule_overview.md) for more information on working with data labels.
-2. When a data subject requests to access or delete their data, the data controller collects identities from the data subject, verifies that data, and submits it to Privacy Service.
-3. Privacy Service sends the request to Pipeline and confirms that it was accepted by returning a "processing" status.
-4. Privacy Service sends the request to Real-time Customer Profile.
-5. Profile either deletes all data for the given identity and all related identities, or gathers all uploaded file data associated with the identity.
-6. Profile sends the response back to Privacy Service, indicating the action and a status message of "complete" or "error".
-7. Privacy Service stores the response sent from Profile.
+Adobe Experience Platform Privacy Service allows you to ensure your data access requests are compliant with legislation regarding the storage, access, and deletion of customer data. To learn more about Privacy Service within Experience Platform, please begin by reading the [Privacy Service overview](../../technical_overview/privacy_service_overview/privacy_service_overview.md). 
 
 ## Next steps
 
-By following this tutorial, you have successfully accessed Real-time Customer Profile data fields, profiles, time-series events, and exported audience segments. To learn how to access other data resources stored in Platform, see the [Data Access API overview](../../technical_overview/data_access_architectural_overview/data_access_architectural_overview.md).
+By following this tutorial, you have successfully accessed Real-time Customer Profile data fields, profiles, and time-series events. To learn how to access other data resources stored in Platform, see the [Data Access overview](../../technical_overview/data_access_architectural_overview/data_access_architectural_overview.md).
 
 ## Appendix
 
-The following section provides supplemental information regarding accessing Profile data using the API.
+The following section provides supplemental information regarding accessing Profile data using the API. 
 
-### Request parameters
+### Query parameters
 
-The following parameters are used in the request path for calls to the `/access/entities` endpoint. They serve to identify the profile entity you wish to access and filter the data returned in the response. Required parameters are labeled, while the rest are optional.
+The following parameters are used in the path for GET requests to the `/access/entities` endpoint. They serve to identify the profile entity you wish to access and filter the data returned in the response. Required parameters are labeled, while the rest are optional.
 
 |Parameter|Description|Example|
 |---|---|---|
-|`schema.name`</br>**(REQUIRED)**|The XDM schema of the entity to retrieve|_xdm.context.experienceevent|
-|`relatedSchema.name`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the schema for the profile entity that the time series events are related to.|_xdm.context.profile|
-|`entityId`</br>**(REQUIRED)**|The ID of the entity. If the value of this parameter is not an XID, an identity namespace parameter must also be provided (see `entityIdNS` below).|5558525235|
-|`entityIdNS`|If `entityId` is not provided as an XID, this field must specify the identity namespace.|phone|
-|`relatedEntityId`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the related profile entity's identity namespace. This value follows the same rules as `entityId`.|69935279872410346619186588147492736556|
-|`relatedEntityIdNS`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the identity namespace for the entity specified in `relatedEntityId`. |CRMID|
-|`fields`|Filters the data returned in the API response. Use this field to specify which schema field values to include in data retrieved.|personalEmail,person.name,person.gender|
-|`mergePolicyId`|Identifies the Merge Policy by which to govern the data returned. If one is not specified in the service call, your organization's default for that schema will be used. If no default Merge Policy has been configured, the default is no profile merge and no identity stitching.|5aa6885fcf70a301dabdfa4a|
-|`orderBy`|Specifies the field by which to order results. For example, `orderBy=timestamp` or `orderBy=+timestamp` to sort by timestamp in ascending order, or `orderBy=-timestamp`, to sort in descending order. Omitting this value results in the default sorting of `timestamp` in ascending order.|
-|`timeFilter.startTime`|Specify the start time to filter time-series objects (in milliseconds).|1539838505|
-|`timeFilter.endTime`|Specify the end time to filter time-series objects (in milliseconds).|1539838510|
-|`limit`|Numeric value specifying the maximum number of objects to return. <br>**Default: 1000**|100|
+|`schema.name`</br>**(REQUIRED)**|The XDM schema of the entity to retrieve|schema.name=_xdm.context.experienceevent|
+|`relatedSchema.name`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the schema for the profile entity that the time series events are related to.|relatedSchema.name=_xdm.context.profile|
+|`entityId`</br>**(REQUIRED)**|The ID of the entity. If the value of this parameter is not an XID, an identity namespace parameter must also be provided (see `entityIdNS` below).|entityId=janedoe@example<span>.com|
+|`entityIdNS`|If `entityId` is not provided as an XID, this field must specify the identity namespace.|entityIdNE=email|
+|`relatedEntityId`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the related profile entity's identity namespace. This value follows the same rules as `entityId`.|relatedEntityId=69935279872410346619186588147492736556|
+|`relatedEntityIdNS`|If `schema.name` is "_xdm.context.experienceevent", this value must specify the identity namespace for the entity specified in `relatedEntityId`. |relatedEntityIdNS=CRMID|
+|`fields`|Filters the data returned in the response. Use this to specify which schema field values to include in data retrieved. For multiple fields, separate values by a comma with no spaces between|fields=personalEmail,person.<span>name,person.gender|
+|`mergePolicyId`|Identifies the Merge Policy by which to govern the data returned. If one is not specified in the call, your organization's default for that schema will be used. If no default Merge Policy has been configured, the default is no profile merge and no identity stitching.|mergePoilcyId=5aa6885fcf70a301dabdfa4a|
+|`orderBy`|The sort order of retrieved experience events by timestamp, written as `(+/-)timestamp` with the default being `+timestamp`.|orderby=-timestamp|
+|`startTime`|Specify the start time to filter time-series objects (in milliseconds).|startTime=1539838505|
+|`endTime`|Specify the end time to filter time-series objects (in milliseconds).|endTime=1539838510|
+|`limit`|Numeric value specifying the maximum number of objects to return. Default: 1000|limit=100|
+|`withCA`|Feature flag for enabling computed attributes for lookup. Default value is `false`.|withCA=true|
