@@ -10,7 +10,7 @@ This guide provides an overview of the following concepts related to Data Govern
 * [Data Usage Labeling and Enforcement (DULE)](#dule-framework)
 * [Data usage labels](#data-usage-labels)
 * [Data usage policies](#data-usage-policies)
-    * [How to create and work with data usage policies](#how-to-create-and-work-with-data-usage-policies)
+* [Policy enforcement](#policy-enforcement)
 * [Future releases](#future-releases)
 
 At the end of this guide you will find a table outlining key [Data Governance terminology](#data-governance-terminology) with definitions that will assist you when working with Data Governance concepts.
@@ -23,16 +23,18 @@ While data governance should be the responsibility of every individual in the or
 
 ![Data Governance Roles](dule_images/Data_Governance_roles.png "Essential Data Governance Roles")
 
-#### Data steward
+### Data steward
 
 Data stewards are the heart of data governance. This role is responsible for interpreting regulations, contractual restrictions, and policies, and applying them directly to the data. Informed by their understanding of these regulations, restrictions, and policies, the role of a data steward includes:
+
 * Reviewing data, datasets, and data samples to apply and manage metadata usage labeling.
 * Creating data policies and applying them to datasets and fields.
 * Communicating data policies to the organization.
 
-#### Marketer
+### Marketer
 
 Marketers are the end point of data governance. They request data from the data governance infrastructure created by data stewards, scientists, and engineers. Marketers encompass a number of different specialties under the marketing umbrella, including the following:
+
 * Marketing Analysts request data to enable understanding of customers, both as individuals and in groups (also known as segments).
 * Marketing Specialists and Experience Designers use data to design new customer experiences. 
 
@@ -43,9 +45,9 @@ Data Usage Labeling and Enforcement (DULE) is the core framework for Experience 
 
 There are three key elements to the DULE framework: Labels, Policies, and Enforcement.
 
-1. **Labels:** Classify data that reflects privacy-related considerations and contractual conditions to be compliant with regulations and organization policies.
-2. **Policies:** Describe what kind(s) of marketing actions are allowed or not allowed to be taken on specific data.
-3. **Enforcement:** Uses the policy framework to advise and enforce policies across different data access patterns. 
+1. **[Labels](#data-usage-labels):** Classify data that reflects privacy-related considerations and contractual conditions to be compliant with regulations and organization policies.
+2. **[Policies](#data-usage-policies):** Describe what kind(s) of marketing actions are allowed or not allowed to be taken on data that contains certain labels.
+3. **[Enforcement](#policy-enforcement):** Uses the policy framework to advise and enforce policies across different data usage patterns. 
 
 ## Data usage labels
 
@@ -68,28 +70,44 @@ See the tutorial on [working with data usage labels](../../tutorials/dule/dule_w
 
 ## Data usage policies
 
-In order for data usage labels to effectively support data compliance, data usage policies must be implemented. Data usage policies are rules that describe the kinds of marketing actions that you are allowed to, or restricted from, performing on data within Experience Platform.
+In order for data usage labels to effectively support data compliance, data usage policies must be implemented. Data usage policies are rules that restrict the kinds of marketing actions that you are allowed to perform on data that contains certain Governance labels.
 
-An example of a marketing action might be the desire to export a dataset to a third-party service. If there is a policy in place saying that specific types of data, such as Personally Identifiable Information (PII), cannot be exported and an "I" label (Identity data) has been applied to the dataset, you will receive a response from the Policy Service telling you that a data usage policy has been violated.
+An example of a marketing action might be the desire to export a dataset to a third-party service. If you attempt to export a dataset that has an "I" label (Identity data) applied to it, and there is a policy in place saying that data containing Personally Identifiable Information (PII) cannot be exported, you will receive a response from the Policy Service telling you that a data usage policy has been violated.
 
-### How to create and work with data usage policies
+### Creating and managing policies
 
-Once data usage labels have been applied, data stewards can create policies using the DULE Policy Service API.
-
-As a data steward, you can use the Policy Service API to manage and evaluate policies related to marketing actions being taken on data containing DULE labels. Using the API, you can create and update policies, determine the status of a policy, and work with marketing actions to evaluate whether a specific action violates a data usage policy.
+Once data usage labels have been applied, data stewards can create policies using the [DULE Policy Service API](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/dule-policy-service.yaml). As a data steward, you can use the API to manage and evaluate policies related to marketing actions being taken on data containing DULE labels. 
 
 Within the Policy Service API, all policies and marketing actions are referred to as either `core` or `custom` resources. `core` resources are defined and maintained by Adobe, whereas `custom` resources are created and maintained by individual customers. The `custom` resources are therefore unique and visible solely to the organization that created them.
 
-For more information on performing the key operations provided by the DULE Policy Service API, see the [Policy Service developer guide](dule_policy_service_developer_guide.md). For step-by-step instructions on working with DULE policies, see the tutorial on [creating and evaluating DULE policies](../../tutorials/dule/create_a_dule_policy_tutorial.md).
+See the tutorial on [creating a DULE policy](../../tutorials/dule/create_a_dule_policy_tutorial.md) for step-by-step instructions on working with the Policy Service API. For a comprehensive guide on performing the key operations provided by the API, see the [Policy Service developer guide](dule_policy_service_developer_guide.md).
+
+## Policy enforcement
+
+Once data usage labels have been applied to Platform datasets, and data usage policies have been defined for marketing actions against those labels, Governance capabilities allow you to enforce those policies and prevent data operations that constitute policy violations.
+
+There are two methods of policy enforcement provided by Data Governance features on Platform:
+
+* [API-based enforcement](#api-based-enforcement)
+* [Automatic enforcement](#automatic-enforcement)
+
+### API-based enforcement
+
+The Policy Service API provides endpoints that allow you to test marketing actions against datasets or arbitrary combinations of DULE labels in order to check if any policy violations occur. Based on the API response, you can then set up protocols within your experience application to appropriately enforce data usage policy compliance.
+
+See the tutorial on [API-based policy enforcement](../../tutorials/dule/policy-enforcement.md) for more information.
+
+### Automated enforcement
+
+Certain applications that are built on top of Experience Platform (such as Real-time Customer Data Platform) provide automatic enforcement for data usage policies. Each application maintains its own method of surfacing policy violations and providing steps for resolving issues. 
+
+Please consult the documentation for the Platform-based application you are using for more information on automatic data usage policy enforcement. For information on automatic policy enforcement in Real-time CDP, please refer to the [Real-time CDP Data Governance overview](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/privacy/data-governance-overview.html).
 
 ## Future releases
 
-Data Governance currently supports DULE labeling at two levels (dataset and field). Data Governance also supports the creation and management of data usage policies and marketing actions via the DULE Policy Service API.
-
-Subsequent releases will provide the following features:
+Subsequent releases of Data Governance will provide the following features:
 
 * Custom data usage labels: Create new labels and definitions based on your organization’s needs.
-* Policy enforcement: Use the policy framework to advise and enforce policies across different data access patterns.
 * Auditing: Monitor data access activities and identify and report on compliance issues.
 
 ## Next steps
