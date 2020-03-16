@@ -34,6 +34,7 @@ CRM systems provide data that can help build customer relationships, which in tu
 
 -   [Create a HubSpot source connector in the UI](../../tutorials/sources_tutorial/ui/crm/hubspot-tutorial.md)
 -   [Create a Microsoft Dynamics 365 or Salesforce source connector in the UI](../../tutorials/sources_tutorial/ui/crm/dynamics-salesforce-ui-tutorial.md)
+-   [Create a PayPal source connector in the UI](../../tutorials/sources_tutorial/ui/crm/paypal-tutorial.md)
 -   [Create a Salesforce Service Cloud source connector in the UI](../../tutorials/sources_tutorial/ui/crm/salesforce-service-cloud-tutorial.md)
 -   [Create a ServiceNow source connector in the UI](../../tutorials/sources_tutorial/ui/crm/servicenow-ui-tutorial.md)
 
