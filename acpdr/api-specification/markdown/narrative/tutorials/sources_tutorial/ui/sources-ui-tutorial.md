@@ -32,3 +32,4 @@ The following is a list of tutorials for creating connectors in the Platform UI:
 - [MariaDB connector](./databases/maria-db-ui-tutorial.md)
 - [Microsoft SQL Server connector](./databases/sql-server-ui-tutorial.md)
 - [MySQL connector](./databases/mysql-ui-tutorial.md)
+- [PostgreSQL connector](./databases/postgresql-tutorial.md)

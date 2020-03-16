@@ -47,6 +47,7 @@ Experience Platform provides support for ingesting data from a third-party datab
 -   [Create a MariaDB source connector in the UI](../../tutorials/sources_tutorial/ui/databases/google-big-query-ui-tutorial.md)
 -   [Create a Microsoft SQL Server source connector in the UI](../../tutorials/sources_tutorial/ui/databases/sql-server-ui-tutorial.md)
 -   [Create a MySQL source connector in the UI](../../tutorials/sources_tutorial/ui/databases/mysql-ui-tutorial.md)
+-   [Create a PostgreSQL source connector in the UI](../../tutorials/sources_tutorial/ui/databases/postgresql-tutorial.md)
 
 ## API tutorials
 

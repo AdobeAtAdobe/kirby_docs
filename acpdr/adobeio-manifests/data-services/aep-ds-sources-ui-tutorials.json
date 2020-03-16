@@ -97,6 +97,11 @@
                     "pages": [],
                     "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/mysql-ui-tutorial.md",
                     "title": "MySQL connector"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/postgresql-tutorial.md",
+                    "title": "PostgreSQL connector"
                 }
             ],
             "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/sources-ui-tutorial.md",
