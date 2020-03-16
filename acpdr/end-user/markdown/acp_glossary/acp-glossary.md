@@ -382,8 +382,8 @@ __Ingestion Schedule:__ Ingestion schedule provides time-based options when inge
 <a name="Input Feature"></a>
 __Input Feature:__ Input feature is specified in feature mapping and is used by a machine learning model to make predictions.
 
-<a name="Intelligence Services"></a>
-__Intelligence Services:__ Intelligence Services such as Attribution.ai and Customer.ai are machine learning, artificial intelligence based purpose-built models that require the Experience Platform to run and operate.
+<a name="Intelligent Services"></a>
+__Intelligent Services:__ Intelligent Services such as Attribution.ai and Customer.ai are machine learning, artificial intelligence based purpose-built models that require the Experience Platform to run and operate.
 
 <a name="Interest-Based Targeting or Personalization"></a>
 __Interest-Based Targeting or Personalization:__ Interest-based targeting, also known as personalization, occurs if the following three conditions are met: data collected on-site is used to make inferences about a user's interest, data is used in another context such as on another site or app (off-site), and if data is used to select which content or ads are served based on those inferences.
