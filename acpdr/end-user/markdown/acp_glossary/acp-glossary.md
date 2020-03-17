@@ -28,6 +28,9 @@ __Adobe Experience Platform:__ Adobe Experience Platform standardizes data and c
 <a name="Adobe Connectors"></a>
 __Adobe Connectors:__ Adobe Connectors are pre-configured connections created by Adobe to enable data to flow in and out of Experience Platform. Connectors include Microsoft Dynamics, Salesforce, Amazon S3, and Azure Blob.
 
+<a name="Adobe Intelligent Services"></a>
+__Adobe Intelligent Services:__ Adobe Sensei is the intelligence framework that powers Experience Platform. It also provides a set of AI services that empowers brands to enhance their ability to deliver real-time, personalized customer experiences.
+
 <a name="Adobe I/O"></a>
 __Adobe I/O:__ Adobe I/O is part of Experience Platform and provides access to everything developers need to integrate, extend, and customize Adobe Experience Platform including APIs, events, developer console, and helpful tooling.
 
@@ -54,6 +57,9 @@ __Artificial Intelligence:__ Artificial intelligence is a theory and development
 
 <a name="Attributes"></a>
 __Attributes:__ Attributes are specified characteristics that represent a profile.
+
+<a name="Attribution AI"></a>
+__Attribution AI:__ Attribution AI is an Adobe Sensei Service that delivers algorithmic multi-channel attribution capabilities across the entire customer lifecycle.
 
 <a name="Audience"></a>
 __Audience__: An audience is the resulting set of profiles that meet the criteria of a segment definition.
@@ -178,10 +184,6 @@ __Customer AI:__ Customer AI is an Adobe Sensei Service that enriches customer p
 <a name="Data Dictionary"></a>
 __Data Dictionary:__ In Experience Platform Launch, a data dictionary is a set of data elements defined within a property.
 
-
-<a name="Data Flow"></a>
-__Data Flow:__ In Real-time Customer Data Platform, data flow is a visual representation of source datasets that flow through Real-time Customer Profile to destinations. 
-
 <a name="Data Element"></a>
 __Data Element:__ In Experience Platform Launch, a data element is a pointer used within rules and extensions to point to a specific piece of data that exists on the client device.
 
@@ -196,6 +198,9 @@ __Data Stream:__ A data stream is a set or collection of messages which share th
 
 <a name="Dataset"></a>
 __Dataset:__ A dataset is a storage and management construct for a collection of data, typically a table, that contains schema (columns) and fields (rows).
+
+<a name="Data Flow"></a>
+__Dataset Flow:__ In Real-time Customer Data Platform, a dataset flow is a visual representation of source datasets that flow through Real-time Customer Profile to destinations. 
 
 <a name="Dataset ID"></a>
 __Dataset ID:__ An Adobe-generated identifier for an ingested dataset.
@@ -222,10 +227,13 @@ __Data Science Workspace:__ Data Science Workspace within Experience Platform en
 __Data Source:__ A data source is a user designated origin of data. Examples of a data source are a mobile app, profile and/or experience events, website profile events or a CRM.
 
 <a name="Data Steward"></a>
-__Data Steward:__ A data steward is a person or entity that provides safeguards for ensuring data governance labels are maintained to be compliance with regulations and corporate policies.
+__Data Steward:__ A data steward is the person responsible for the management, oversight, and enforcement of an organization's data assets. A data steward also ensures data governance policies are safeguarded and maintained to be compliant with government regulations and organization policies.
 
 <a name="Data Type"></a>
 __Data Type:__ Data type is a reusable object with properties in a hierarchical representation.
+
+<a name="Data Usage Labels"></a>
+__Data Usage Labels:__ Data usage labels provide users the ability to categorize data that reflects privacy-related considerations and contractual conditions to be compliant with regulations and corporate policies.
 
 <a name="Decision Event"></a>
 __Decision Event:__ A decision event is used to capture observations about the outcome and context of a decision activity. The decision event captures information about how the decision made, when it was occurring, what options were proposed (chosen) and what contextual state existed that either influenced the decision or could be observed during the decision process. The decision event also captures the proposition ID, a globally unique identifier that can be used to correlate the decision to other events.
@@ -260,6 +268,9 @@ __DULE:__ DULE is an acronym for *Data Usage Labeling and Enforcement*. DULE is 
 [Back to top](#adobe-experience-platform-glossary)
 
 ## E
+
+<a name="Error Diagnostics"></a>
+__Error Diagnostics:__ Error diagnostics enables the generation of detailed error messages for ingested batches. The Error threshold enables the configuration of the percentage of acceptable errors before the entire batch will fail.
 
 <a name="Eligible Offer"></a>
 __Eligible Offer:__ In the Decisioning Service, an eligible offer meets the constraints defined upstream that can be consistently offered to a profile.
@@ -328,6 +339,9 @@ __Frequency:__ Frequency determines how often a recurring scheduled Query Servic
 [Back to top](#adobe-experience-platform-glossary)
 
 ## G
+
+<a name="Geofence"></a>
+__Geofence:__ A geofence is a virtual geographic boundary, defined by GPS or RFID technology, that enables software to trigger a response when a mobile device enters or leaves a particular area.
 
 <a name="GDPR"></a>
 __GDPR:__ The General Data Protection Regulation (GDPR) is a legal framework that sets guidelines for the collection and processing of personal information of individuals within the European Union (EU). The GDPR sets out the principles for data management and the rights of the individual and covers all companies that deal with the data of EU citizens.
@@ -422,6 +436,9 @@ __Machine Learning Model:__ A machine learning model is an instance of a machine
 <a name="Mapping"></a>
 __Mapping:__ In Real-time Customer Data Platform, data mapping is the process of mapping source data fields to destination related target fields. 
 
+<a name="Marketing Action"></a>
+__Marketing Action:__ A marketing action, in the context of the data governance framework, is an action that an Experience Platform data consumer takes, for which there is a need to check for violations of data usage policies.
+
 <a name="Merge Method"></a>
 __Merge Method:__ A `merge method` is a merge policy option that enables prioritization of merging of data fragments. The merge method options are merge by dataset precedence or by dataset timestamp.
 
@@ -444,8 +461,8 @@ __Module:__ In Experience Platform Launch, a module is a snippet of executable J
 <a name="Non-production Sandbox"></a>
 __Non-production Sandbox:__ Non-production sandboxes are a form of data virtualization that allow you to isolate data from other sandboxes and are typically used for development experiments, testing, or trials. Non-production sandboxes can be reset and deleted.
 
-<a name="Notebook"></a>
-__Notebook:__ Notebooks are authored using *Jupyter Notebook* and contain analysis description, results, and can be run to perform data analysis.
+<a name="Notebooks"></a>
+__Notebooks:__ Notebooks are authored using *Jupyter Notebook* and contain analysis description, results, and can be run to perform data analysis.
 
 [Back to top](#adobe-experience-platform-glossary)
 
@@ -470,6 +487,9 @@ __Overwrite Save Strategy:__ `Overwrite` save strategy is an option for ingestin
 
 ## P
 
+<a name="Partial Ingestion"></a>
+__Partial ingestion:__ Partial ingestion enables ingestion of valid records of batch data within a specified error threshold. Error diagnostics for failed records can be downloaded or access in Monitoring.
+
 <a name="Parquet Files"></a>
 __Parquet Files:__ A parquet file is a columnar storage file format with complex nested data structures. Parquet files are required for adding data to populate a schema dataset.
 
@@ -478,6 +498,9 @@ __Personalized Offers:__ In the Decisioning Service, a personalized offer is a c
 
 <a name="Placements"></a>
 __Placements:__ In the Decisioning Service, a placement is the location and or context in which an offer appears for an end-user.
+
+<a name="Policy"></a>
+__Policy:__ A data usage policy is a rule that specifies marketing actions that are restricted based on the application of data usage labels on data in Experience Platform.
 
 <a name="Primary key"></a>
 __Primary Key:__ Primary key is a designation in a schema to uniquely identify all records.
@@ -623,8 +646,8 @@ __Sensei ML Framework:__ Sensei ML Framework is a unified machine learning frame
 <a name="Sensitive Data Labels"></a>
 __Sensitive Data Labels:__ Sensitive “S” labels are used to categorize data deemed sensitive, such as different types of behavioral or geographic data that you want marked as sensitive.
 
-<a name="Service"></a>
-__Service:__ In the machine learning context, a deployed service exposes functionality of an artificial intelligence, machine learning model or advanced algorithm through an API so that it can be consumed by other services or applications to create intelligent apps.
+<a name="Services"></a>
+__Services:__ A powerful framework to operationalize AI and ML services by leveraging Adobe Intelligent Services. Services deliver real-time, personalized customer experiences or operationalize custom intelligent services.
 
 <a name="S1 Data Label"></a>
 __S1 Data Label:__ `S1` data label is used to classify data specifying latitude and longitude that can be used to determine the precise location of a device.
@@ -664,6 +687,9 @@ __Streaming Segmentation:__ Streaming segmentation is an ongoing data selection 
 
 <a name="Symbol"></a>
 __Symbol:__ Symbol is an abbreviation of an identity namespace that can be used as a reference in APIs.
+
+<a name="System View"></a>
+__Symbol:__ System View is a visual representation of source datasets that flow through Real-time Customer Profile to destinations. 
 
 [Back to top](#adobe-experience-platform-glossary)
 
