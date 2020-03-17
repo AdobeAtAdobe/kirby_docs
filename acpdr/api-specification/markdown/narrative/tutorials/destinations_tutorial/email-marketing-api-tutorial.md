@@ -48,7 +48,8 @@ In order to make calls to Platform APIs, you must first complete the [authentica
 Resources in Experience Platform can be isolated to specific virtual sandboxes. In requests to Platform APIs, you can specify the name and ID of the sandbox that the operation will take place in. These are optional parameters.
 
 *   x-sandbox-name: `{SANDBOX_NAME}`
-*   x-sandbox-id: `{SANDBOX_ID}`
+
+> **Note:** For more information on sandboxes in Experience Platform, see the [sandbox overview documentation](../../technical_overview/sandboxes/sandboxes-overview.md).
 
 All requests that contain a payload (POST, PUT, PATCH) require an additional media type header:
 
@@ -110,7 +111,6 @@ curl --location --request GET 'https://platform.adobe.io/data/foundation/flowser
 --header 'x-gw-ims-org-id: {IMS_ORG}' \
 --header 'x-api-key: {API_KEY}' \
 --header 'x-sandbox-name: {SANDBOX_NAME}' \
---header 'x-sandbox-id: {SANDBOX_ID}' \
 --header 'Authorization: Bearer {ACCESS_TOKEN}'
 
 ```
@@ -180,13 +180,12 @@ curl --location --request POST 'https://platform.adobe.io/data/foundation/flowse
 --header 'x-api-key: {API_KEY}' \
 --header 'x-gw-ims-org-id: {IMS_ORG}' \
 --header 'x-sandbox-name: {SANDBOX_NAME} \
---header 'x-sandbox-id: {SANDBOX_ID}' \
 --header 'Content-Type: application/json' \
 --data-raw '{
             "name": "Base connection to Experience Platform",
             "description": "This call establishes the connection to Experience Platform data",
             "connectionSpec": {
-                "id": "{CONNECTION_SPEC}",
+                "id": "{CONNECTION_SPEC_ID}",
                 "version": "1.0"
             }
 }'
@@ -252,13 +251,12 @@ curl --location --request POST 'https://platform.adobe.io/data/foundation/flowse
 --header 'x-api-key: {API_KEY}' \
 --header 'x-gw-ims-org-id: {IMS_ORG}' \
 --header 'x-sandbox-name: {SANDBOX_NAME}' \
---header 'x-sandbox-id: {SANDBOX_ID}' \
 --header 'Content-Type: application/json' \
 --data-raw '{
             "name": "Connecting to Unified Profile Service",
             "description": "Optional",
             "connectionSpec": {
-                "id": "{CONNECTION_SPEC}",
+                "id": "{CONNECTION_SPEC_ID}",
                 "version": "1.0"
             },
             "baseConnectionId": "{BASE_CONNECTION_ID}",
@@ -343,13 +341,12 @@ curl --location --request POST 'https://platform.adobe.io/data/foundation/flowse
 --header 'x-api-key: {API_KEY}' \
 --header 'x-gw-ims-org-id: {IMS_ORG}' \
 --header 'x-sandbox-name: {SANDBOX_NAME}' \
---header 'x-sandbox-id: {SANDBOX_ID}' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "name": "S3 Connection for Adobe Campaign",
     "description": "your company's holiday campaign",
     "connectionSpec": {
-        "id": "{CONNECTION_SPEC}",
+        "id": "{_CONNECTION_SPEC_ID}",
         "version": "1.0"
     },
     "auth": {
@@ -493,7 +490,7 @@ POST /flows
 
 ```shell
 curl -X POST \
-'http://platform.adobe.io/data/foundation/flowservice/flows' \
+'https://platform.adobe.io/data/foundation/flowservice/flows' \
 -H 'Authorization: Bearer {ACCESS_TOKEN}' \
 -H 'x-api-key: {API_KEY}' \
 -H 'x-gw-ims-org-id: {IMS_ORG}' \
@@ -563,13 +560,12 @@ PATCH /flows
 
 ```
 
-curl --location --request PATCH 'http://platform.adobe.io/data/foundation/flowservice/flows/{DATAFLOW_ID}' \
+curl --location --request PATCH 'https://platform.adobe.io/data/foundation/flowservice/flows/{DATAFLOW_ID}' \
 --header 'Authorization: Bearer {ACCESS_TOKEN}' \
 --header 'x-api-key: {API_KEY}' \
 --header 'x-gw-ims-org-id: {IMS_ORG}' \
 --header 'Content-Type: application/json' \
 --header 'x-sandbox-name: {SANDBOX_NAME}' \
---header 'x-sandbox-id: {SANDBOX_ID}' \
 --header 'If-Match: "{ETAG}"' \
 --data-raw '[
     {
@@ -640,7 +636,7 @@ GET /flows
 
 ```
 
-curl --location --request PATCH 'http://platform.adobe.io/data/foundation/flowservice/flows/{DATAFLOW_ID}' \
+curl --location --request PATCH 'https://platform.adobe.io/data/foundation/flowservice/flows/{DATAFLOW_ID}' \
 --header 'Authorization: Bearer {ACCESS_TOKEN}' \
 --header 'x-api-key: {API_KEY}' \
 --header 'x-gw-ims-org-id: {IMS_ORG}' \
