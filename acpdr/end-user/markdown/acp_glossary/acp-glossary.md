@@ -250,9 +250,6 @@ __Delta Column:__ In Real-time Customer Data Platform, delta column enables sour
 <a name="Delta Save Strategy"></a>
 __Delta Save Strategy:__ `Delta save strategy` is an option for ingesting third-party data via a connection. The option allows the user to specify that new or changed rows of source data are ingested to Experience Platform. New rows are added to the end of the dataset and changed rows are updated in the dataset on Experience Platform.
 
-<a name="Display Name"></a>
-__Display Name:__ Display name is a user-friendly name of a field that is shown in the UI.
-
 <a name="Destination"></a>
 __Destination:__ In Real-time Customer Data Platform a destination is a general term for any system, such as an Adobe application, ad server, or ad network where an audience is activated and delivered.
 
@@ -261,6 +258,9 @@ __Destination Category:__ A destination category is a grouping of Real-time Cust
 
 <a name="Destination Catalog"></a>
 __Destination Catalog:__ A destination catalog is a list of available destinations in the Real-time Customer Data Platform.
+
+<a name="Display Name"></a>
+__Display Name:__ Display name is a user-friendly name of a field that is shown in the UI.
 
 <a name="DULE"></a>
 __DULE:__ DULE is an acronym for *Data Usage Labeling and Enforcement*. DULE is a key part of data governance and a collection of key features that allows for data usage labeling and applying data access policies for governance needs within an organization.
@@ -689,7 +689,7 @@ __Streaming Segmentation:__ Streaming segmentation is an ongoing data selection 
 __Symbol:__ Symbol is an abbreviation of an identity namespace that can be used as a reference in APIs.
 
 <a name="System View"></a>
-__Symbol:__ System View is a visual representation of source datasets that flow through Real-time Customer Profile to destinations. 
+__System View:__ System View is a visual representation of source datasets that flow through Real-time Customer Profile to destinations. 
 
 [Back to top](#adobe-experience-platform-glossary)
 
