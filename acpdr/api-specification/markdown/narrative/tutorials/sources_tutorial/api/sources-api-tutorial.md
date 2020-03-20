@@ -15,6 +15,7 @@ The following is a list of tutorials for creating connectors using the Flow Serv
 ## CRM
 
 - [Google AdWords connector](./crm/google-adwords-api-tutorial.md)
+- [HubSpot connector](./crm/hubspot-api-tutorial.md)
 - [Microsoft Dynamics connector](./crm/dynamics-api-tutorial.md)
 - [Salesforce connector](./crm/salesforce-api-tutorial.md)
 

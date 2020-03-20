@@ -18,9 +18,8 @@ The following sections provide additional information that you will need to know
 
 In order to explore your CRM system using Platform APIs, you must possess a valid base connection ID. If you do not already have a base connection for the CRM system you wish to work with, you can create one through the following tutorials:
 
-*   [Amazon Redshift](./amazon-redshift-api-tutorial.md)
 *   [Google AdWords](./google-adwords-api-tutorial.md)
-*   [Google BigQuery](./google-bigquery-api-tutorial.md)
+*   [HubSpot](./hubspot-api-tutorial.md)
 *   [Microsoft Dynamics](./blob-api-tutorial.md)
 *   [Salesforce](./s3-api-tutorial.md)
 *   [ServiceNow](./service-now-api-tutorial.md)
