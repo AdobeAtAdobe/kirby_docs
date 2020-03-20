@@ -76,8 +76,18 @@
       "pages":[
         {
           "pages":[],
-          "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md",
-          "title":"Getting started with streaming ingestion"
+          "path":"api-specification/markdown/narrative/technical_overview/streaming_ingest/creating_a_streaming_connection.md",
+          "title":"Create a streaming connection using the API"
+        },
+        {
+            "pages": [],
+            "path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_record_data.md",
+            "title": "Streaming record data"
+        },
+        {
+            "pages": [],
+            "path": "api-specification/markdown/narrative/technical_overview/streaming_ingest/streaming_time_series_data.md",
+            "title": "Streaming time series data"
         },
         {
             "pages": [],
