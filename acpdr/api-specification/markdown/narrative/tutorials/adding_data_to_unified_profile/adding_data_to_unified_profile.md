@@ -40,7 +40,7 @@ Once the dataset has been configured, you can start uploading your datafiles. Se
 
 ## Add data using streaming ingestion
 
-Any stream-ingested data that is compliant with a Profile-enabled XDM schema will automatically add or overwrite the appropriate record in Real-time Customer Profile. If more than one identity is supplied in the record, or time series data is consumed, those identities will be mapped in the identity graph without additional configuration. See the guide on [getting started with streaming ingestion APIs](../../technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md) for more details.
+Any stream-ingested data that is compliant with a Profile-enabled XDM schema will automatically add or overwrite the appropriate record in Real-time Customer Profile. If more than one identity is supplied in the record, or time series data is consumed, those identities will be mapped in the identity graph without additional configuration. See the guide on [getting started with streaming ingestion APIs](../../technical_overview/streaming_ingest/creating_a_streaming_connection.md) for more details.
 
 ## Confirm that the upload is successful
 

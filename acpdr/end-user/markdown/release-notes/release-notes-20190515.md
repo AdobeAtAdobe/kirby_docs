@@ -104,7 +104,7 @@ Streaming ingestion sends data to Experience Platform in real time from client a
 
 None.
 
-For product documentation, see [Getting Started with Adobe Experience Platform Streaming Ingestion APIs](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md).
+For product documentation, see [Getting Started with Adobe Experience Platform Streaming Ingestion APIs](https://www.adobe.io/apis/experienceplatform/home/data-ingestion/data-ingestion-services.html#!api-specification/markdown/narrative/technical_overview/streaming_ingest/creating_a_streaming_connection.md).
 
 ### Monitoring
 

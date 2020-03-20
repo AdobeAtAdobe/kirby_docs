@@ -105,7 +105,7 @@ You can use the [Experience Platform UI][platform-ui] to see more information on
 
 [Trouble Shooting Guide]: ../platform_faq_and_troubleshooting/platform_faq_and_troubleshooting.md
 [Authenticated Data Collection]: authenticated_data_collection.md
-[Getting Started With Streaming Ingestion]: getting_started_with_platform_streaming_ingestion.md 
+[Getting Started With Streaming Ingestion]: creating_a_streaming_connection.md
 [Monitoring Streaming Data Flows]: monitor-data-flows.md
 [Streaming Validation]: streaming_validation.md
 [Retrieving Failed Batches]: retrieving_failed_batches.md

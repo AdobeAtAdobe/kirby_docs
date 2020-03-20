@@ -10,7 +10,7 @@ Adobe Experience Platform enables you to drive coordinated, consistent, and rele
 
 With streaming ingestion, users can stream profile records and ExperienceEvents to Platform in seconds to help drive real-time personalization. All data sent to streaming ingestion APIs is automatically persisted in the Data Lake.
 
-Please read the [getting started guide](./getting_started_with_platform_streaming_ingestion.md) for more information.
+Please read the [create a streaming connection guide](./creating_a_streaming_connection.md) for more information.
 
 ### Stream to datasets
 

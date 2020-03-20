@@ -582,9 +582,9 @@ The following table shows status codes returned by successful and failed respons
 [data-ingestion-api-reference]: https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/ingest-api.yaml
 [data-access-overview]: ../../technical_overview/data_access_architectural_overview/data_access_architectural_overview.md
 [data-access-tutorial]: ../data_access_tutorial/data_access_tutorial.md
-[getting-started-stream-ingest]: ../../technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md
-[create-a-data-inlet]: ../../technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md#create-a-data-inlet
-[retrieve-a-data-inlet]: ../../technical_overview/streaming_ingest/getting_started_with_platform_streaming_ingestion.md#retrieve-your-data-inlet
+[getting-started-stream-ingest]: ../../technical_overview/streaming_ingest/creating_a_streaming_connection.md
+[create-a-data-inlet]: ../../technical_overview/streaming_ingest/creating_a_streaming_connection.md#create-a-connection
+[retrieve-a-data-inlet]: ../../technical_overview/streaming_ingest/creating_a_streaming_connection.md#get-data-collection-url
 [stream-to-dataset]: ../../technical_overview/streaming_ingest/streaming_to_datasets_in_adobe_experience_platform.md
 [authenticate-to-acp-tutorial]: ../authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md
 [catalog-service-listing-datasets]: ../../technical_overview/catalog_architectural_overview/catalog_architectural_overview.md#listing-objects

@@ -180,7 +180,7 @@ Since the previous ingested batch had an invalid date-time, the following valida
 
 ## Next steps
 
-After reading this tutorial, you have learned how to retrieve errors from failed batches. For more information about batch ingestion, please read the [batch ingestion developer guide](../ingest_architectural_overview/batch_data_ingestion_developer_guide.md). For more information about streaming ingestion, please read the [getting started with streaming ingestion guide](./getting_started_with_platform_streaming_ingestion.md).
+After reading this tutorial, you have learned how to retrieve errors from failed batches. For more information about batch ingestion, please read the [batch ingestion developer guide](../ingest_architectural_overview/batch_data_ingestion_developer_guide.md). For more information about streaming ingestion, please read the [creating a streaming connection tutorial](./creating_a_streaming_connection.md).
 
 ## Appendix
 
