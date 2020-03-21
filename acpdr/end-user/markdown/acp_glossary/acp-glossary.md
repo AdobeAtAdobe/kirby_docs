@@ -28,9 +28,6 @@ __Adobe Experience Platform:__ Adobe Experience Platform standardizes data and c
 <a name="Adobe Connectors"></a>
 __Adobe Connectors:__ Adobe Connectors are pre-configured connections created by Adobe to enable data to flow in and out of Experience Platform. Connectors include Microsoft Dynamics, Salesforce, Amazon S3, and Azure Blob.
 
-<a name="Adobe Intelligent Services"></a>
-__Adobe Intelligent Services:__ Adobe Sensei is the intelligence framework that powers Experience Platform. It also provides a set of AI services that empowers brands to enhance their ability to deliver real-time, personalized customer experiences.
-
 <a name="Adobe I/O"></a>
 __Adobe I/O:__ Adobe I/O is part of Experience Platform and provides access to everything developers need to integrate, extend, and customize Adobe Experience Platform including APIs, events, developer console, and helpful tooling.
 
