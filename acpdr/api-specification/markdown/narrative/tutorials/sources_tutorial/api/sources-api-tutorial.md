@@ -10,6 +10,7 @@ The following is a list of tutorials for creating connectors using the Flow Serv
 - [Azure Blob connector](./cloud-storages/blob-api-tutorial.md)
 - [Azure Data Lake Storage Gen2 connector](./cloud-storages/adls-gen2-api-tutorial.md)
 - [Google Cloud Storage connector](./cloud-storages/google-cloud-api-tutorial.md)
+- [Collect parquet data from a cloud storage source connector](./cloud-storages/parquet-ingestion-tutorial.md)
 - [SFTP connector](./cloud-storages/sftp-api-tutorial.md)
 
 ## CRM

@@ -166,4 +166,4 @@ A successful response returns details of the newly created base connection, incl
 
 ## Next steps
 
-By following this tutorial, you have created a Blob base connection using APIs and a unique ID was obtained as part of the response body. You can use this base connection ID in the next tutorial as you learn how to [explore cloud storages using the Flow Service API](./explore-cloud-storage-api-tutorial.md).
+By following this tutorial, you have created a Blob connection using APIs and a unique ID was obtained as part of the response body. You can use this connection ID to [explore cloud storages using the Flow Service API](./explore-cloud-storage-api-tutorial.md) or [ingest parquet data using the Flow Service API](./google-cloud-api-tutorial.md).

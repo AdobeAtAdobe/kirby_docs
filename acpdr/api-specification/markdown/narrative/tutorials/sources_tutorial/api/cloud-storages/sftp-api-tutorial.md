@@ -178,4 +178,4 @@ A successful response returns the unique identifier (`id`) of the newly created 
 
 ## Next steps
 
-By following this tutorial, you have created an SFTP base connection using the Flow Service API, and have obtained the connection's unique ID value. You can use this base connection ID in the next tutorial as you learn how to [explore cloud storages using the Flow Service API](./explore-cloud-storage-api-tutorial.md).
+By following this tutorial, you have created an SFTP connection using the Flow Service API, and have obtained the connection's unique ID value. You can use this connection ID to [explore cloud storages using the Flow Service API](./explore-cloud-storage-api-tutorial.md) or [ingest parquet data using the Flow Service API](./google-cloud-api-tutorial.md).

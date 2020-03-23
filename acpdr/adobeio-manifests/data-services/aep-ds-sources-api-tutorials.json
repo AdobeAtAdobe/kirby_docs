@@ -185,6 +185,13 @@
             "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/dataset-base-connection-tutorial.md",
             "title": "Create a dataset base connection using the Flow Service API",
             "description": ""
+        },
+        {    
+            "importedFileName": "parquet-ingestion-tutorial",
+            "pages": [],
+            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/cloud-storages/parquet-ingestion-tutorial.md",
+            "title": "Ingest parquet data from a third-party cloud storage using the Flow Service API",
+            "description": ""
         }
     ],
     "app2app_map": {
