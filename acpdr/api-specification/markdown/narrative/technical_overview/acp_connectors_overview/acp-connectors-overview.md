@@ -32,11 +32,15 @@ Cloud storage sources can bring your own data into Platform without the need to 
 
 CRM systems provide data that can help build customer relationships, which in turn, create loyalty and drive customer retention. Experience Platform provides support for ingesting CRM data from Microsoft Dynamics 365 and Salesforce. See the following related documents for more information:
 
--   [Create a HubSpot source connector in the UI](../../tutorials/sources_tutorial/ui/crm/hubspot-tutorial.md)
 -   [Create a Microsoft Dynamics 365 or Salesforce source connector in the UI](../../tutorials/sources_tutorial/ui/crm/dynamics-salesforce-ui-tutorial.md)
 -   [Create a PayPal source connector in the UI](../../tutorials/sources_tutorial/ui/crm/paypal-tutorial.md)
--   [Create a Salesforce Service Cloud source connector in the UI](../../tutorials/sources_tutorial/ui/crm/salesforce-service-cloud-tutorial.md)
--   [Create a ServiceNow source connector in the UI](../../tutorials/sources_tutorial/ui/crm/servicenow-ui-tutorial.md)
+
+### Customer Success (CS)
+
+Experience Platform provides support for ingesting data from a third-party customer success application. See the following related documents for more information:
+
+-   [Create a Salesforce Service Cloud source connector in the UI](../../tutorials/sources_tutorial/ui/customer-success/salesforce-service-cloud-tutorial.md)
+-   [Create a ServiceNow source connector in the UI](../../tutorials/sources_tutorial/ui/customer-success/servicenow-ui-tutorial.md)
 
 ### Database
 

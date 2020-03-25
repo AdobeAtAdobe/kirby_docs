@@ -19,12 +19,14 @@ The following is a list of tutorials for creating connectors in the Platform UI:
 
 ## CRM
 
-- [HubSpot connector](./crm/hubspot-tutorial.md)
 - [Microsoft Dynamics and Salesforce connector](./crm/dynamics-salesforce-ui-tutorial.md)
 - [PayPal connector](./crm/paypal-tutorial.md)
-- [Salesforce Service Cloud connector](./crm/salesforce-service-cloud-tutorial.md)
-- [ServiceNow connector](./crm/servicenow-ui-tutorial.md)
 
+## Customer Success
+
+- [Salesforce Service Cloud connector](./customer-success/salesforce-service-cloud-tutorial.md)
+- [ServiceNow connector](./customer-success/servicenow-ui-tutorial.md)
+  
 ## Databases
 
 - [Amazon Redshift connector](./databases/amazon-redshift-ui-tutorial.md)
