@@ -36,3 +36,7 @@ The following is a list of tutorials for creating connectors in the Platform UI:
 - [Microsoft SQL Server connector](./databases/sql-server-ui-tutorial.md)
 - [MySQL connector](./databases/mysql-ui-tutorial.md)
 - [PostgreSQL connector](./databases/postgresql-tutorial.md)
+
+## Marketing Automation
+
+- [HubSpot connector](./marketing-automation/hubspot-tutorial.md)

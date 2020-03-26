@@ -54,6 +54,12 @@ Experience Platform provides support for ingesting data from a third-party datab
 -   [Create a MySQL source connector in the UI](../../tutorials/sources_tutorial/ui/databases/mysql-ui-tutorial.md)
 -   [Create a PostgreSQL source connector in the UI](../../tutorials/sources_tutorial/ui/databases/postgresql-tutorial.md)
 
+### Marketing Automation
+
+Experience Platform provides support for ingesting data from a third-party marketing automation system. See the following related documents for more information on specific source connectors:
+
+-   [Create a HubSpot source connector in the UI](../../tutorials/sources_tutorial/ui/marketing-automation/hubspot-tutorial.md)
+
 ## API tutorials
 
 You can create source connectors using the Flow Service API. For more information, see the [sources API tutorial document](../../tutorials/sources_tutorial/api/sources-api-tutorial.md).
