@@ -40,7 +40,7 @@ info:
 host: platform.adobe.io
 basePath: /data/core/ups
 tags:
-  - name: Computed Attributes
+  - name: (Alpha) Computed Attributes
     description: Computed attributes enable a field value to be automatically computed based on other values, calculations, and expressions. Computed attributes functionality is in alpha and is not available to all users. Functionality is subject to change.
   - name: Entities
     description: An entity is an Experience Data Model (XDM) object whose attributes and related time-series events have been merged from various sources to form an individual profile.
@@ -75,7 +75,7 @@ paths:
   '/config/computedAttributes':
     get:
       tags:
-        - Computed Attributes
+        - (Alpha) Computed Attributes
       summary: Retrieve a list of computed attributes.
       description: >-
         **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.**
@@ -98,7 +98,7 @@ paths:
           description: Service Unavailable
     post:
       tags:
-        - Computed Attributes
+        - (Alpha) Computed Attributes
       summary: Create a computed attribute.
       description: >- 
         **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.**  
@@ -138,7 +138,7 @@ paths:
   '/config/computedAttributes/{ATTRIBUTE_ID}':
     get:
       tags:
-        - Computed Attributes
+        - (Alpha) Computed Attributes
       summary: Retrieve a specific computed attribute by its ID.
       description: >- 
         **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.** 
@@ -164,7 +164,7 @@ paths:
           description: Service Unavailable
     patch:
       tags:
-        - Computed Attributes
+        - (Alpha) Computed Attributes
       summary: Update a computed attribute by its ID.
       description: >- 
         **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.** 
@@ -189,7 +189,7 @@ paths:
           description: Service Unavailable
     delete:
       tags:
-        - Computed Attributes
+        - (Alpha) Computed Attributes
       summary: Delete a computed attribute by its ID.
       description: >- 
         **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.** 
