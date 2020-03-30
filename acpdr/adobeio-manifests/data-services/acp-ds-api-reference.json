@@ -62,6 +62,11 @@
     },
     {
       "pages": [],
+      "path": "acpdr/swagger-specs/segmentation.yaml",
+      "title": "Segmentation Service API"
+    },
+    {
+      "pages": [],
       "path": "acpdr/swagger-specs/id-service-api.yaml",
       "title": "Identity Service API"
     },

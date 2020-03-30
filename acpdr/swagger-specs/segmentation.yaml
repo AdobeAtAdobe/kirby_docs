@@ -1,0 +1,1857 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Segmentation Service API
+  description: >-
+    Adobe Experience Platform Segmentation Service allows you to build segments and generate audiences from your Real-time Customer Profile data. These segments are centrally configured and maintained on Platform, and are readily accessible by other Adobe applications.
+    
+    
+    The Segmentation Service API allows you to programmatically integrate the service's various functionalities into your experience application, providing RESTful endpoints for managing segment definitions, exports, schedules, and more.
+
+
+    Related overview documentation:
+      * [Segmentation Service overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/segmentation/segmentation-overview.md)
+      
+    Related tutorials:
+      * [Create a segment using the Segmentation Service API](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md)
+      * [Evaluate and access segment results](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/segmentation/evaluate_segment.md)
+
+    Visualize API calls with Postman (a free, third-party software):
+      * [Real-time Customer Profile API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Real-time%20Customer%20Profile%20API.postman_collection.json)
+      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
+      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
+
+    API paths:
+      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
+      * Base path for this API: /data/core/ups
+      * Example of a complete path: https://<span>platform.adobe.io/data/core/ups/segment/definitions
+      
+    Required headers:
+      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
+      * All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information.
+      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
+
+host: platform.adobe.io
+basePath: /data/core/ups
+tags:
+  - name: Estimates
+    description: Estimates provide statistical information on a segment definition, such as the projected audience size and confidence interval.
+  - name: Export jobs
+    description: Export jobs are asynchronous processes that are used to persist audience segment members to datasets.
+  - name: Previews
+    description: Previews provide paginated lists of qualifying profiles for a segment definition.
+  - name: PQL conversions
+    description: Convert Profile Query Language (PQL) formatting between `pql/json` and `pql/text`.
+  - name: Schedules
+    description: Create a recurring schedule to automatically run export jobs. A schedule can run at most once daily.
+  - name: Segment definitions
+    description: A segment definition includes a Profile Query Language (PQL) statement that defines which profiles will be part of an audience segment.
+  - name: Segment jobs
+    description: Segment jobs process previously established segment definitions to generate an audience segment.
+
+paths:
+  '/export/jobs':
+    get:
+      tags:
+        - Export jobs
+      summary: Retrieve a list of all export jobs.
+      description: ''
+      operationId: getScanJobsRoute
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - name: limit
+          in: query
+          description: Limit the number of export jobs returned in the list.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: Offset the page of results returned (ordered by created time of resource)
+          required: false
+          type: string
+        - name: status
+          in: query
+          description: Filter the export jobs returned by job status. Possible values are "NEW", "SUCCEEDED", and "FAILED".
+          required: false
+          type: string
+      responses:
+        '200':
+          description: List of export jobs returned
+          schema:
+            $ref: '#/definitions/ScanJobsPageResponse'
+        '403':
+          description: Forbidden
+        '503':
+          description: Service Unavailable
+    post:
+      tags:
+        - Export jobs
+      summary: Create a new export job.
+      description: ''
+      operationId: postScanJobRoute
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'
+        - name: x-profile-instance-id
+          in: header
+          description: Profile Instance ID
+          required: false
+          type: string
+        - in: body
+          name: body
+          description: >- 
+            * <strong>fields</strong> - [Optional] Column filters (comma-separated list of columns in dot notation). Limits the data fields to be included in the export to only those provided in this parameter. The same parameter is also available when creating a segment, therefore the fields in the segment may have already been filtered. Omitting this value will result in all fields being included in the exported data.
+            
+            * <strong>mergePolicy</strong> - [Optional] Specifies the merge policy to govern the exported data. Include this parameter when there are multiple segments being exported. Omitting this value will cause the Export Service to use the merge policy provided by the segmentId or snapshotName
+                * <strong>id</strong> - The ID of the merge policy.
+                * <strong>version</strong> - The specific version of the merge policy to use. Omitting this value will default to the most recent version.
+            * <strong>filter</strong> - [Optional] Specifies one or more of the following filters to apply to the segment before export.
+                * <strong>segments</strong> - [Optional] Specifies the segments to export. Omitting this value will result in all data from all profiles being exported. Accepts an array of segment objects, each containing the following fields:
+                    * <strong>segmentId</strong> - <strong>[Required if specifying segments]</strong> Segment ID for profiles to be exported.
+                    * <strong>segmentNs</strong> - [Optional] Segment namespace for the given segmentId.
+                    * <strong>status</strong> - [Optional] An array of strings providing a status filter for the `segmentID`. By default, `status` will have the value `["realized", "existing"]` which represents all profiles that fall into the segment at the current time. Possible values include: `"realized"`, `"existing"`, and `"exited"`.
+                * <strong>segmentQualificationTime</strong> - [Optional] Filter based on segment qualification time. The start time and/or end time can be provided.
+                    * <strong>startTime</strong> - [Optional] Segment qualification start time for a segment ID for a given status. It not provided, there will be no filter on the start time for a segment ID qualification. The timestamp must be provided in [RFC 3339](https://tools.ietf.org/html/rfc3339) format.
+                    * <strong>endTime</strong> - [Optional] Segment qualification end time for a segment ID for a given status. It not provided, there will be no filter on the end time for a segment ID qualification. The timestamp must be provided in [RFC 3339](https://tools.ietf.org/html/rfc3339) format.
+                * <strong>fromIngestTimestamp</strong> - [Optional] Filters the resulting profiles to those that have been updated after the provided timestamp. Value is provided in RFC 3339 format. Supports `greater_than` operand.
+                * <strong>emptyProfiles</strong> - [Optional] Boolean. Profiles can contain Profile records, ExperienceEvent records, or both. Profiles with no Profile records and only ExperienceEvent records are referred to as "emptyProfiles". To export all profiles in the Profile store, including the "emptyProfiles", set the value of "emptyProfiles" to `true`. If "emptyProfiles" is set to `false`, only profiles with Profile records in the store are exported. By default, if "emptyProfiles" attribute is not included, only profiles containing Profile records are exported.
+            * <strong>additionalFields</strong> - [Optional] Additional profile fields that need to be exported.
+                * <strong>eventList</strong> - Used if ExperienceEvents need to be exported with profiles.
+                    * <strong>fields</strong> - Comma-separated list of ExperienceEvent fields to be included in the export. If not provided, all ExperienceEvent fields are exported.
+                    * <strong>filter</strong> - Filters ExperienceEvents based on the parameters below. If not provided, all events corresponding to the resulting profiles will be exported.
+                        * <strong>fromIngestTimestamp</strong> - Filters ExperienceEvents to those that have been updated after the provided timestamp. This is not the event time itself but the ingestion time for the events. Value is provided in RFC 3339 format.
+            * <strong>destination</strong> - <strong>[Required]</strong> Destination information for the exported data.
+                * <strong>datasetId</strong> - <strong>[Required]</strong> The ID of the dataset where data is to be exported.
+                * <strong>segmentPerBatch</strong> [Optional] A Boolean value that, if not provided, defaults to false. A value of false exports all segment IDs into a single batch ID. A value of true exports one segment ID into one batch ID.
+            * <strong>schema.name</strong> - <strong>[Required]</strong> The name of the schema associated with the dataset where data is to be exported.
+          required: true
+          schema:
+            $ref: '#/definitions/ScanJobEntityRequest'
+      responses:
+        '200':
+          description: Export job successfully created
+          schema:
+            $ref: '#/definitions/ScanJobResponse'
+          headers:
+            X-Location:
+              type: string
+              description: HREF to the export job
+        '403':
+          description: Forbidden
+        '503':
+          description: Service Unavailable
+  '/export/jobs/{exportJobId}':
+    get:
+      tags:
+        - Export jobs
+      summary: Look up an export job by ID.
+      description: ''
+      operationId: getScanJobRoute
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - name: exportJobId
+          in: path
+          description: Export job ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Export job successfully Returned
+          schema:
+            $ref: '#/definitions/ScanJobResponse'
+        '403':
+          description: Forbidden
+        '404':
+          description: Export job not found
+        '503':
+          description: Service Unavailable
+    delete:
+      tags:
+        - Export jobs
+      summary: Cancel or delete an export job by ID.
+      description: ''
+      operationId: cancelScanJobRoute
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - name: exportJobId
+          in: path
+          description: Export job ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Export job cancelled successfully
+          schema:
+            $ref: '#/definitions/ExportMessageResponse'
+        '403':
+          description: Forbidden
+        '404':
+          description: Export job not found
+        '503':
+          description: Service Unavailable
+  '/segment/definitions':
+    get:
+      tags:
+      - Segment definitions
+      summary: Retrieve a list of segment definitions.
+      description: ''
+      operationId: getSegmentsRoute
+      produces:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - name: x-request-id
+          in: header
+          description: Unique ID per request
+          required: true
+          type: string
+          x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
+        - name: start
+          in: query
+          description: Page offset - As per created time of resource
+          required: false
+          type: integer
+          format: int64
+          x-example: 109103839
+        - name: limit
+          in: query
+          description: Page size
+          required: false
+          type: integer
+          x-example: 10
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          type: integer
+          x-example: 0
+        - name: sort
+          in: query
+          description: Sort parameters
+          required: false
+          type: string
+          x-example: sort=name:asc,internalId:desc
+      responses:
+        '200':
+          description: List of Profile segment definitions returned
+          schema:
+            "$ref": "#/definitions/SegmentDefinition"
+        '403':
+          description: Forbidden
+        '503':
+          description: Service unavailable
+    post:
+      tags:
+      - Segment definitions
+      summary: Create a new segment definition.
+      description: ''
+      operationId: postSegmentRoute
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'
+        - name: x-request-id
+          in: header
+          description: Unique ID per request
+          required: true
+          type: string
+          x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
+        - $ref: '#/parameters/segment-body'
+      responses:
+        '200':
+          description: Profile segment definition successfully posted
+          schema:
+            "$ref": "#/definitions/SegmentDefinition"
+          headers:
+            X-Location:
+              type: string
+              description: HRef to the Profile segment definition
+        '400':
+          description: Invalid profile segment
+        '403':
+          description: Forbidden
+        '422':
+          description: Profile segment definition already exists. Please do patch
+            to update.
+        '503':
+          description: Service unavailable
+  '/segment/definitions/{segmentId}':
+    get:
+      tags:
+      - Segment definitions
+      summary: Look up a segment definition by ID.
+      description: ''
+      operationId: getSegmentRoute
+      produces:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - name: x-request-id
+          in: header
+          description: Unique ID per request
+          required: true
+          type: string
+          x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
+        - $ref: '#/parameters/segmentId'
+      responses:
+        '200':
+          description: Profile segment definition successfully returned
+          schema:
+            "$ref": "#/definitions/SegmentDefinition"
+        '403':
+          description: Forbidden
+        '404':
+          description: Profile segment definition not found
+        '503':
+          description: Service unavailable
+    delete:
+      tags:
+      - Segment definitions
+      summary: Delete a segment definition by ID.
+      description: ''
+      operationId: deleteSegmentRoute
+      produces:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - name: x-request-id
+          in: header
+          description: Unique ID per request
+          required: true
+          type: string
+          x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
+        - $ref: '#/parameters/segmentId'
+      responses:
+        '200':
+          description: Profile segment definition deleted successfully
+          schema:
+            "$ref": "#/definitions/MessageResponse"
+        '403':
+          description: Forbidden
+        '503':
+          description: Service unavailable
+    patch:
+      tags:
+        - Segment definitions
+      summary: Overwrite a segment definition.
+      operationId: patchSegmentRoute
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'
+        - name: x-request-id
+          in: header
+          description: Unique ID per request
+          required: true
+          type: string
+          x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
+        - $ref: '#/parameters/segmentId'
+        - $ref: '#/parameters/segment-body'
+      responses:
+        '200':
+          description: Profile segment definition successfully updated
+          schema:
+            "$ref": "#/definitions/SegmentDefinition"
+          headers:
+            X-Location:
+              type: string
+              description: HREF to the segment definition
+        '400':
+          description: Invalid profile segment
+        '403':
+          description: Forbidden
+        '503':
+          description: Service unavailable
+  '/segment/conversion':
+    post:
+      tags:
+        - PQL conversions
+      summary: Convert PQL formatting between pql/text and pql/json.
+      operationId: postSegmentConversionRoute
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'
+        - name: x-request-id
+          in: header
+          description: Unique ID per request
+          required: true
+          type: string
+          x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
+        - $ref: '#/parameters/segment-body'
+      responses:
+        '200':
+          description: Profile segment definition successfully converted
+          schema:
+            "$ref": "#/definitions/SegmentDefinition"
+          headers:
+            X-Location:
+              type: string
+              description: HREF to the Profile segment definition
+        '400':
+          description: Invalid profile segment
+        '503':
+          description: Service unavailable
+  '/segment/jobs':
+    get:
+      tags:
+        - Segment jobs
+      summary: Retrieve a list of all segment job requests.
+      description: ''
+      operationId: get
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - name: x-request-id
+          in: header
+          description: Request ID
+          required: false
+          type: string
+          x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+        - name: snapshot.name
+          in: query
+          description: The snapshot name
+          required: false
+          type: string
+          x-example: inUS
+        - name: start
+          in: query
+          description: Page Offset - As per created Time of resource
+          required: false
+          type: integer
+          format: int64
+          x-example: 2
+        - name: limit
+          in: query
+          description: Page Size
+          required: false
+          type: integer
+          x-example: 10
+        - name: status
+          in: query
+          description: The job status
+          required: false
+          type: string
+          x-example: PROCESSING
+      responses:
+        '200':
+          description: List of segment job requests returned
+          schema:
+            $ref: '#/definitions/SegmentJob'
+        '403':
+          description: Forbidden
+        '500':
+          description: There was issue reading the segment job from DB
+        '503':
+          description: Service unavailable
+    post:
+      tags:
+        - Segment jobs
+      summary: Create a new segment job request.
+      operationId: postSJRRoute
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'        
+        - name: x-profile-instance-id
+          in: header
+          description: Profile Instance ID
+          required: true
+          type: string
+          x-example: ups
+        - name: x-request-id
+          in: header
+          description: Request ID
+          required: false
+          type: string
+          x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
+        - in: body
+          name: body
+          description: List of segment jobs. Each should be in Json format.
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SegmentJobRequest'
+      responses:
+        '200':
+          description: Segment job request successfully posted
+          schema:
+            $ref: '#/definitions/SegmentJob'
+        '400':
+          description: Please double check your post body
+        '403':
+          description: Forbidden
+        '429':
+          description: Too many segmentation jobs in processing at the moment. Please try again at a later time!
+        '500':
+          description: There was issue reading the segment job from DB
+        '503':
+          description: Service unavailable
+  '/segment/jobs/{segmentJobId}':
+    get:
+      tags:
+        - Segment jobs
+      summary: Look up a segment job request by ID.
+      description: ''
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/segmentJobId'
+        - $ref: '#/parameters/x-request-id'
+      responses:
+        '200':
+          description: Segment job request successfully returned
+          schema:
+            $ref: '#/definitions/SegmentJob'
+        '403':
+          description: Forbidden
+        '404':
+          description: Segment job request not found
+        '503':
+          description: Service unavailable
+    delete:
+      tags:
+        - Segment jobs
+      summary: Cancel or delete a segment job request by ID.
+      description: ''
+      operationId: cancel
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/segmentJobId'
+        - $ref: '#/parameters/x-request-id'
+
+      responses:
+        '200':
+          description: Segment job request has been marked for cancelling
+          schema:
+            $ref: '#/definitions/StandardResponse'
+        '403':
+          description: Forbidden
+        '404':
+          description: Segment job request not found
+        '503':
+          description: Service unavailable
+  '/preview':
+    post:
+      tags:
+      - "Previews"
+      summary: "Create a new preview job."
+      operationId: "postSessionlessPreviewRoute"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'
+        - in: "body"
+          name: "body"
+          description: >- 
+            `predicateExpression` - The predicate expression that is to be evaluated.
+            
+            `predicateType` - (Default: PQL) The only value that is available to use for this is PQL for now.
+            
+            `predicateModel` - (Default: xdm.model.profile) The model against which this predicate is to be evaluated. Please note that 'touchpoint' is not treated as model as it can be associated with any of the models like profile.
+            
+            `graphType` - The graph type that you want to get the cluster from. Possible values are "none" (perform no identity stitching) and "pdg" (perform identity stitching based on your private identity graph).
+          required: true
+          schema:
+            $ref: "#/definitions/PreviewQuerySessionlessRequest"
+      responses:
+        201:
+          description: "Profile Preview successfully posted"
+          schema:
+            $ref: "#/definitions/PreviewQueryResponse"
+          headers:
+            X-Location:
+              type: "string"
+              description: "HREF to the Profile Preview"
+        403:
+          description: "Forbidden"
+        503:
+          description: "Service unavailable"
+  '/preview/{previewId}':
+    get:
+      tags:
+      - "Previews"
+      summary: "Look up the results of a preview job by ID."
+      description: ""
+      operationId: "getSessionlessPreviewStatusRoute"
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/previewId'
+        - name: "offset"
+          in: "query"
+          description: "Page offset"
+          required: false
+          type: "string"
+          x-example: "offset=10200"
+        - name: "limit"
+          in: "query"
+          description: "How many entries should be present in a page. 1000 if not specified."
+          required: false
+          type: "integer"
+          x-example: 100
+      responses:
+        200:
+          description: "XDM model objects of given {jobId} successfully returned."
+          schema:
+            $ref: "#/definitions/EndCustomerEntityPageResponse"
+        403:
+          description: "You are forbidden to make this request."
+        404:
+          description: " Preview jobId {jobId} does not exist."
+        503:
+          description: "Service unavailable"
+    delete:
+      tags:
+      - "Previews"
+      summary: "Cancel or delete a preview job by ID."
+      operationId: "deleteSessionLessPreviewStatusRoute"
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/previewId'
+      responses:
+        200:
+          description: "Job successfully cancelled"
+          schema:
+            $ref: "#/definitions/MessageResponse"
+        403:
+          description: "You are forbidden to make this request."
+        404:
+          description: "Preview jobId {jobId} does not exist."
+        503:
+          description: "Service unavailable"
+  '/estimate/{previewId}':
+    get:
+      tags:
+      - "Estimates"
+      summary: "Look up the results of an estimate job by ID."
+      operationId: "getEstimateStatusRoute"
+      produces:
+      - "application/json"
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/previewId'      
+      responses:
+        200:
+          description: "Estimate successfully retrieved."
+          schema:
+            $ref: "#/definitions/EstimateResponse"
+        403:
+          description: "You are forbidden to make this request."
+        404:
+          description: "Preview ID {previewId} does not exist."
+        503:
+          description: "Service unavailable"
+  '/config/schedules':
+    get:
+      tags:
+      - Schedules
+      summary: Retrieve a list of schedules for your IMS Org
+      description: ''
+      operationId: getSchedules
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
+      - $ref: '#/parameters/x-request-id'
+      - $ref: '#/parameters/start'
+      - $ref: '#/parameters/limit'
+      responses:
+        '200':
+          description: Returns a list of schedules for IMS Org
+          schema:
+            $ref: '#/definitions/schedulesResponse'
+        '403':
+          description: Forbidden
+        '500':
+          description: There was issue reading the schedules from the database
+        '503':
+          description: Service Unavailable
+    post:
+      tags:
+      - Schedules
+      summary: Create a schedule, including specifying the time when the schedule should be triggered.
+      description: 'The scheduler is updated periodically (approximately every 30 minutes), so changes to a schedule may not go into effect immediately.'
+      operationId: createSchedule
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
+      - $ref: '#/parameters/content-type'
+      - $ref: '#/parameters/x-request-id' 
+      - in: body
+        name: body
+        description: >-
+          * **name**: **(Required)** The name of schedule. Must be a string.
+          * **type**: **(Required)** The job type in string format.  
+            * Supported types: `batch_segmentation` and `export`.
+          * **properties**: **(Required)** An object containing additional properties related to the schedule.
+            * **properties.segments**: **(Required when `type` equals `batch_segmentation`)** Using `["*"]` ensures all segments are included.
+          * **schedule**: **(Required)** A string containing the job schedule. Jobs can only be scheduled to run once a day, meaning you cannot schedule a job to run more than once during a 24 hour period. The example shown (`0 30 13 * * ?`) means the job is triggered every day at 13:30:00 UTC. For more information, please review the [cron expression format](http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html) documentation.
+          
+          * **state**: *(Optional)* String containing the schedule state. Available values: `active` and `inactive`. Default value is `inactive`.
+        required: true
+        schema:
+          "$ref": "#/definitions/scheduleCreate"
+      responses:
+        '200':
+          description: Schedule created successfully
+          schema:
+            $ref: '#/definitions/Schedule'
+        '400':
+          description: Invalid cron expression
+        '403':
+          description: Forbidden
+        '500':
+          description: There was issue reading schedules from database
+        '503':
+          description: Service Unavailable
+  '/config/schedules/{SCHEDULE_ID}':
+    get:
+      tags:
+      - Schedules
+      summary: Look up a schedule by its ID.
+      description: 'The scheduler is updated periodically (approximately every 30 minutes), so changes to a schedule may not go into effect immediately.'
+      operationId: getScheduleById
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
+      - $ref: '#/parameters/schedule-id'
+      - $ref: '#/parameters/x-request-id'
+      responses:
+        '200':
+          description: schedule successfully returned
+          schema:
+            $ref: '#/definitions/Schedule'
+        '403':
+          description: Forbidden
+        '404':
+          description: schedule not found
+        '503':
+          description: Service Unavailable
+    patch:
+      tags:
+      - Schedules
+      summary: Update a schedule, including changing the trigger time or enabling/disabling the schedule.
+      description: 'The scheduler is updated periodically (approximately every 30 minutes), so changes to a schedule may not go into effect immediately.'
+      operationId: updateSchedule
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
+      - $ref: '#/parameters/schedule-id'
+      - $ref: '#/parameters/x-request-id'
+      - in: body
+        name: body
+        description: Use JSON Patch formatting to update the schedule. Note:<span> You must use an "add" operation to add or update the given "path" with the given "value".
+        required: true
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/schedulePatchOperation'
+      responses:
+        '204':
+          description: (No Content) Schedule successfully updated.
+        '400':
+          description: Please double check your post body
+        '403':
+          description: Forbidden
+        '429':
+          description: Request rate too large!
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Service Unavailable
+    delete:
+      tags:
+      - Schedules
+      summary: Delete a schedule by its ID.
+      description: ''
+      operationId: deleteSchedule
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
+      - $ref: '#/parameters/schedule-id'
+      - $ref: '#/parameters/x-request-id'
+      responses:
+        '204':
+          description: (No Content) Schedule deleted successfully
+        '403':
+          description: Forbidden
+        '404':
+          description: Schedule not found
+        '503':
+          description: Service Unavailable
+definitions:
+  EstimateResponse:
+    type: "object"
+    required:
+    - "_links"
+    - "confidenceInterval"
+    - "estimatedSize"
+    - "profilesMatchedSoFar"
+    - "profilesReadSoFar"
+    - "standardError"
+    - "state"
+    - "totalRows"
+    properties:
+      estimatedSize:
+        type: "integer"
+        format: "int32"
+      standardError:
+        type: "integer"
+        format: "int32"
+      confidenceInterval:
+        type: "string"
+      profilesReadSoFar:
+        type: "integer"
+        format: "int32"
+      profilesMatchedSoFar:
+        type: "integer"
+        format: "int32"
+      totalRows:
+        type: "integer"
+        format: "int32"
+      state:
+        type: "string"
+      _links:
+        $ref: "#/definitions/PreviewLink"
+  PreviewLink:
+    type: "object"
+    required:
+    - "preview"
+    properties:
+      preview:
+        type: "string"
+  EndCustomerEntityPageResponse:
+    type: "object"
+    properties:
+      page:
+        description: "The page information of the current response entity."
+      link:
+        description: "The HREF links."
+      state:
+        type: "string"
+        description: "The execution state of the query."
+      results:
+        type: "array"
+        description: "The list of end customer entities."
+        items:
+          $ref: "#/definitions/PreviewSegmentsWrapperResponse"
+    description: "The end customer entity response, with current page information and next page link."
+  PreviewQueryResponse:
+    type: "object"
+    required:
+      - "previewExecutionId"
+      - "previewQueryId"
+      - "previewQueryStatus"
+      - "state"
+    properties:
+      previewQueryId:
+        type: "string"
+        example: "4a45e853-ac91-4bb7-a426-150937b6af5c"
+      state:
+        type: "string"
+        example: "RUNNING"
+      previewQueryStatus:
+        type: "string"
+        example: "RUNNING"
+      previewId:
+        type: "string"
+        example: "MDoyOjRhNDVlODUzLWFjOTEtNGJiNy1hNDI2LTE1MDkzN2I2YWY1Yzo0Mg"
+      previewExecutionId:
+        type: "integer"
+        format: "int32"
+        example: 42
+  PreviewQuerySessionlessRequest:
+    type: "object"
+    properties:
+      predicateExpression:
+        type: "string"
+        example: "xEvent.metrics.commerce.abandons.value > 0"
+      predicateType:
+        type: "string"
+        example: "pql/text"
+      predicateModel:
+        type: "string"
+        example: "_xdm.context.profile"
+      graphType:
+        type: "string"
+        example: "pdg"
+  PreviewSegmentsIndividualResponse:
+    type: "object"
+    properties:
+      objectId:
+        type: "string"
+        description: "Unique identifier of XDM Model object."
+      _href:
+        type: "string"
+        description: "Profile Access link to the contents of an XDM Object."
+  PreviewSegmentsWrapperResponse:
+    type: "object"
+    properties:
+      objectId:
+        type: "string"
+        description: "Unique identifier of XDM Model object."
+      _href:
+        type: "string"
+        description: "Profile Access link to the contents of an XDM Object."
+      relatedObjects:
+        type: "array"
+        description: "List of related objectIds."
+        items:
+          $ref: "#/definitions/PreviewSegmentsIndividualResponse"
+  ErrorResponse:
+    type: object
+    properties:
+      code:
+        type: string
+        example: 0080000018
+        description: batch segmentation job error code
+      msg:
+        type: string
+        example: 'com.microsoft.azure.documentdb.DocumentClientException: Message: {"Errors":["Request rate is large"]}'
+        description: batch segmentation job error message
+      callStack:
+        type: string
+        description: Call stack
+    description: Error response from the batch job
+  SegmentJob:
+    type: object
+    required:
+      - errors
+      - metrics
+      - segments
+    properties:
+      id:
+        type: string
+        example: 468eeefd-95a2-45a1-8bfc-b806dafce7ee
+        description: Segment job request ID
+      imsOrgId:
+        type: string
+        example: {IMG_ORG}
+        description: IMS Org ID
+      profileInstanceId:
+        type: string
+        example: {PROFILE_INSTANCE}
+        description: Profile instance ID
+      status:
+        type: string
+        example: PROCESSING
+        description: Job status
+        enum:
+          - NEW
+          - QUEUED
+          - PROCESSING
+          - CANCELLING
+          - CANCELLED
+          - FAILED
+          - SUCCEEDED
+      batchId:
+        type: string
+        example: 65e18145-a5e8-4993-94f3-c70fadaa1fef
+        description: 'ID of the batch.'
+      computeJobId:
+        type: integer
+        format: int64
+        example: 1
+        description: Compute job id
+      computeGatewayJobId:
+        type: string
+        example: c3505859-d256-45d0-a6f3-c25f8f8508f5
+        description: 'Compute gateway job ID, which can be use to get the job status from compute gateway API'
+      creationTime:
+        type: integer
+        format: int64
+        example: 1233456789000
+        description: 'Unix timestamp when the job is created, in milliseconds'
+      updateTime:
+        type: integer
+        format: int64
+        example: 1233456789000
+        description: 'Unix timestamp when the job is updated, in milliseconds'
+      segments:
+        type: array
+        items:
+          $ref: '#/definitions/SegmentInfo'
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/ErrorResponse'
+      metrics:
+        type: object
+        required:
+        - profileSegmentationTime
+        - totalTime
+        properties:
+          totalTime:
+            type: object
+            properties:
+              startTimeInMs:
+                type: number
+                example: 123456789000
+                description: Timestamp in milliseconds when the segment job request is made
+              endTimeInMs:
+                type: number
+                example: 123456799000
+                description: Timestamp in milliseconds when the segment job is completed
+              totalTimeInMs:
+                type: number
+                example: 10000
+                description: The time it takes for the segment job to complete in milliseconds
+            description: Total time metrics
+          profileSegmentationTime:
+            type: object
+            properties:
+              startTimeInMs:
+                type: number
+                example: 123456789000
+                description: Timestamp in milliseconds when the actual computation starts
+              endTimeInMs:
+                type: number
+                example: 123456799000
+                description: Timestamp in milliseconds when the computation is completed
+              totalTimeInMs:
+                type: number
+                example: 10000
+                description: Computation time in milliseconds
+            description: Actual computation time metrics
+          totalProfile:
+            type: integer
+            format: int64
+            example: 1233456789000
+            description: 'Total number of scanned profiles'
+          segmentedProfileCounter:
+            type: object
+            description: A map from segment IDs to the number of merged profiles in those segments.
+            additionalProperties:
+              type: number
+        description: Segment job request metrics
+      requestId:
+        type: string
+        example: cc3d3381-8682-41d4-93bd-566e378624d3
+        description: 'Request ID, which can be used to trace the request along multiple components'
+      modelName:
+        type: string
+        example: _xdm.context.profile
+        description: model name
+      _links:
+        type: object
+        description: Useful links to get the job status or cancel a submitted job.
+        additionalProperties:
+          type: string
+  Expression:
+    type: object
+    properties:
+      type:
+        type: string
+        example: PQL
+        description: expression type
+        enum:
+          - PQL
+          - ARL
+      format:
+        type: string
+        example: pql/text
+        description: expression format
+        enum:
+          - pql/text
+          - pql/json
+      value:
+        type: string
+        example: workAddress.country = "US"
+        description: PQL query string
+    description: 'Segment expression, part of a segment metadata response'
+  SegmentInfo:
+    type: object
+    required:
+      - segment
+      - snapshot
+    properties:
+      segmentId:
+        type: string
+        example: 7863c010-e092-41c8-ae5e-9e533186752e
+        description: Segment ID
+      segment:
+        type: object
+        required:
+        - expression
+        - mergePolicy
+        properties:
+          id:
+            type: string
+            example: 7863c010-e092-41c8-ae5e-9e533186752e
+            description: Segment ID
+          version:
+            type: integer
+            format: int32
+            example: 1
+            description: segment version
+          expression:
+            $ref: '#/definitions/Expression'
+          mergePolicy:
+            type: object
+            properties:
+              id:
+                type: string
+                example: ups-default
+                description: merge policy ID
+              version:
+                type: integer
+                format: int32
+                example: 1
+                description: merge policy version
+            description: 'merge policy, part of a segment meta data response'
+        description: Segment meta data in a segment job response
+      snapshot:
+        $ref: '#/definitions/SegmentSnapshot'
+    description: Segment Job Response
+  SegmentSnapshot:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        example: inUS
+        description: Snapshot name
+      ttlInDays:
+        type: integer
+        format: int32
+        example: 10
+        description: TTL in days
+    description: Snapshot has not been supported yet. Do not use!!!
+  StandardResponse:
+    type: object
+    properties:
+      code:
+        type: string
+        example: '200'
+        description: standard response code
+      message:
+        type: string
+        example: Segment job with ID '468eeefd-95a2-45a1-8bfc-b806dafce7ee' has been deleted
+        description: Response message
+    description: Standard Response
+  SegmentJobRequest:
+    type: object
+    required:
+      - segmentId
+    properties:
+      segmentId:
+        type: string
+        example: 7863c010-e092-41c8-ae5e-9e533186752e
+        description: Segment ID
+      snapshot:
+        $ref: '#/definitions/SegmentSnapshot'
+  SegmentDefinition:
+    type: object
+    required:
+    - expression
+    - name
+    - schema
+    - ttlInDays
+    properties:
+      id:
+        type: string
+      imsOrgId:
+        type: string
+        example: 1BD6382559DF0C130A49422D@AdobeOrg
+      name:
+        type: string
+        description: Unique name for the segment definition
+        example: People who ordered in the last 30 days
+      mergePolicyId:
+        type: string
+        example: 5ed35fd8-6eeb-4ad2-bed9-43e695b8ac0b
+      profileInstanceId:
+        type: string
+        example: ups
+      description:
+        type: string
+        example: Last 30 days
+      expression:
+        "$ref": "#/definitions/Expression"
+      schema:
+        "$ref": "#/definitions/SchemaClass"
+      payloadSchema:
+        type: string
+      ttlInDays:
+        type: integer
+        format: int32
+        example: 60
+      creationTime:
+        type: integer
+        format: int64
+      updateTime:
+        type: integer
+        format: int64
+      updateEpoch:
+        type: integer
+        format: int64
+  MessageResponse:
+    type: object
+    required:
+    - message
+    - status
+    properties:
+      status:
+        type: boolean
+      message:
+        type: string
+  AdditionalFields:
+    type: object
+    properties:
+      eventList:
+        description: Name of additional field to be exported
+        type: object
+        properties:
+          fields:
+            type: string
+            description: Fields filter for Event List
+          filter:
+            description: Filter values for exporting Event List.
+            type: object
+            properties:
+              fromIngestTimestamp:
+                type: string
+                example: '2018-01-01T00:00:00Z'
+                description: Filters experience events ingested after the given timestamp; RFC_3339 format
+    description: Additional fields that need to be exported
+  FeedbackMetrics:
+    type: object
+    properties:
+      startTimeInMs:
+        type: number
+        example: 123456789000
+        description: Start time in ms
+      endTimeInMs:
+        type: number
+        example: 123456799000
+        description: End time in ms
+      totalTimeInMs:
+        type: number
+        example: 10000
+        description: Total time in ms (End time - Start time)
+    description: Feedback Metrics
+  Filter:
+    type: object
+    properties:
+      segments:
+        type: array
+        description: Array of filter values for Export Job.
+        items:
+          type: object
+          properties:
+            segmentId:
+              type: string
+              example: 52c26d0d-45f2-47a2-ab30-ed06abc981ff
+              description: Segment Id.
+            segmentNs:
+              type: string
+              example: ups
+              description: Segment Namespace(default "ups" if not provided).
+            status:
+              type: array
+              items:
+                type: string
+                example: realized
+              description: Status filter for segmentIds, default- ["realized","existing"].
+          description: Segment values for filter.
+      segmentQualificationTime:
+        type: object
+        description: Timestamp filter(in RFC3339 format) for exporting when profiles entered or exited a segment.
+        properties:
+          startTime:
+            type: string
+            example: '2018-01-01T00:00:00Z'
+            description: Qualification start time filter.
+          endTime:
+            type: string
+            example: '2018-02-01T00:00:00Z'
+            description: Qualification end time filter.
+      fromIngestTimestamp:
+        type: string
+        example: '2018-01-01T00:00:00Z'
+        description: Filters profiles and experience events updated after the given timestamp; RFC_3339 format
+      emptyProfiles:
+        type: boolean
+        example: true
+        description: Boolean. Profiles can contain profile fragments, ExperienceEvent fragments, or both.Profiles with no profile fragments and only ExperienceEvent fragments are referred to as "emptyProfiles". To export all profiles in the profile store, including the "emptyProfiles", set the value of "emptyProfiles" to true. If "emptyProfiles" is set to false, only profiles with profile fragments in the store are exported. By default, if "emptyProfiles" attribute is not included, only profiles containing profile fragments are exported.
+    description: Array of filter values for Export Job to export Profiles.
+  MergePolicyObject:
+    type: object
+    properties:
+      id:
+        type: string
+        example: timestampOrdered-none-mp
+        description: Merge policy ID.
+      version:
+        type: number
+        example: 1
+        description: 'Version for the given merge policy ID; Default value: Latest.'
+    description: Merge policy ID and version.
+  ScanJobResponse:
+    type: object
+    properties:
+      id:
+        type: number
+        example: 100
+        description: Id of the export job
+      jobType:
+        type: string
+        example: BATCH
+        description: 'Job type: batch or streaming.'
+      destination:
+        description: Destination for Export Job results.
+        type: object
+        properties:
+          datasetId:
+            type: string
+            example: 5b7c86968f7b6501e21ba9df
+            description: Dataset Id of the destination.
+          segmentPerBatch:
+            type: boolean
+            example: false
+            description: false, exports all segment Ids into a single batch Id; true, exports one segment Id in one batch Id
+          batchId:
+            type: string
+            example: da5cfb4de32c4b93a09f7e37fa53ad52
+            description: Batch Id of the destination.
+          batches:
+            type: object
+            properties:
+              segmentId:
+                type: string
+                example: 52c26d0d-45f2-47a2-ab30-ed06abc981ff
+                description: Segment Id provided in filter in export job request payload
+              segmentNs:
+                type: string
+                example: ups
+                description: Segment Namespace
+              status:
+                type: array
+                items:
+                  type: string
+                  example: realized
+                description: Status filter for segmentIds, default- ["realized","existing"].
+              batchId:
+                type: string
+                example: da5cfb4de32c4b93a09f7e37fa53ad52
+                description: batch id for a particular segment id export
+            description: The object for multi-segment export feature and will only be returned when segmentPerBatch is marked as true. If segmentPerBatch is marked as false, batchId is returned in first level "batchId" field under "destination" object.
+      fields:
+        type: string
+        example: 'identities.id,personalEmail.address'
+        description: Column filters.
+      schema:
+        description: Schema name.
+        type: object
+        properties:
+          name:
+            type: string
+            example: _xdm.context.profile
+            description: Schema name.
+      imsOrgId:
+        type: string
+        example: 1BD6382559DF0C130A49422D@AdobeOrg
+        description: ImsOrgId provided.
+      status:
+        type: string
+        example: SUCCEEDED
+        description: NEW/PROCESSING/SUCCEEDED/FAILED.
+      filter:
+        $ref: '#/definitions/Filter'
+      additionalFields:
+        $ref: '#/definitions/AdditionalFields'
+      mergePolicy:
+        $ref: '#/definitions/MergePolicyObject'
+      profileInstanceId:
+        type: string
+        example: ups
+        description: Profile Instance Id provided.
+      errors:
+        type: array
+        description: Errors in case of failure
+        items:
+          type: object
+          properties:
+            code:
+              type: string
+              example: '0100000003'
+            msg:
+              type: string
+              example: Error in Export Job
+            callStack:
+              type: string
+              example: com.adobe.aep.unifiedprofile.common.logging.Logger
+      metrics:
+        description: Metrics for the job
+        type: object
+        properties:
+          totalTime:
+            $ref: '#/definitions/FeedbackMetrics'
+          profileExportTime:
+            $ref: '#/definitions/FeedbackMetrics'
+          aCPDatasetWriteTime:
+            $ref: '#/definitions/FeedbackMetrics'
+      computeGatewayJobId:
+        description: Compute Gateway job Id for Export and Push Job
+        type: object
+        properties:
+          exportJob:
+            type: string
+            example: f3058161-7349-4ca9-807d-212cee2c2e94
+            description: Compute Gateway job Id for Export Job
+          pushJob:
+            type: string
+            example: feaeca05-d137-4605-aa4e-21d19d801fc6
+            description: Compute Gateway job Id for Push Job
+      creationTime:
+        type: integer
+        format: int64
+        example: 1538615973895
+        description: The creation time of the job.
+      updateTime:
+        type: integer
+        format: int64
+        example: 1538616233239
+        description: The updated time for the job.
+      requestId:
+        type: string
+        example: d995479c-8a08-4240-903b-af469c67be1f
+        description: Tracing Id for the job.
+    description: The information after submitting a export job eg. job id.
+  ScanJobEntityRequest:
+    type: object
+    properties:
+      fields:
+        type: string
+        example: 'identities.id,personalEmail.address'
+        description: Column filters (comma separated dot notation of columns)
+      mergePolicy:
+        $ref: '#/definitions/MergePolicyObject'
+      filter:
+        $ref: '#/definitions/Filter'
+      additionalFields:
+        $ref: '#/definitions/AdditionalFields'
+      destination:
+        description: DatasetId where the exported data will be stored
+        type: object
+        properties:
+          datasetId:
+            type: string
+            example: 5b7c86968f7b6501e21ba9df
+            description: Dataset ID of the destination.
+      schema:
+        description: Schema name for the data
+        type: object
+        properties:
+          name:
+            type: string
+            example: _xdm.context.profile
+            description: Schema name.
+    description: Request for POST export job.
+  ScanJobsPageResponse:
+    type: object
+    properties:
+      records:
+        type: array
+        description: The list of Scan Job records.
+        items:
+          $ref: '#/definitions/ScanJobResponse'
+      page:
+        description: The page information of the current response entity.
+        type: object
+        properties:
+          sortField:
+            type: string
+            example: createdTime
+            description: The order records are sorted. By default is creation time.
+          sort:
+            type: string
+            example: desc
+            description: The sorting order. By default is descending order.
+          pageOffset:
+            type: string
+            example: '1540974701302_96'
+            description: The offset of the page. By default is the creation time and job id for the last record on this page.
+          pageSize:
+            type: integer
+            format: int32
+            example: 10
+            description: The total number of records of this page.
+      link:
+        description: The href links.
+        type: object
+        properties:
+          next:
+            type: string
+            description: The href link to the next page of the records. Empty if no more records.
+  ExportMessageResponse:
+    type: object
+    properties:
+      status:
+        type: boolean
+        example: true
+        description: Status of the request.
+      message:
+        type: string
+        example: Export job has been marked for cancelling
+        description: Message.
+    description: Response for cancel export job call
+  SchemaClass:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        example: _xdm.context.profile
+        description: schema class id
+    description: schema class
+  schedulesResponse:
+    type: object
+    required:
+    - _page
+    - children
+    properties:
+      _page:
+        $ref: '#/definitions/schedulesPage'
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/Schedule'
+  schedulesPage:
+    type: object
+    required:
+    - totalCount
+    - pageSize
+    properties:
+      totalCount:
+        type: number
+        example: 100
+        description: total number of schedules
+      pageSize:
+        type: number
+        example: 100
+        description: number of schedules per page
+      next:
+        type: string
+        example: 1
+        description: page offset
+  Schedule:
+    type: object
+    required:
+    - type
+    - name
+    - schedule
+    - properties
+    properties:
+      id:
+        type: string
+        example: 5e61e66e-e8b4-4a7b-8d41-70c74b0b981a
+        description: unique, read-only, system-generated schedule ID
+      name:
+        type: string
+        example: profile-default
+        description: schedule name
+      type:
+        type: string
+        enum: [batch_segmentation]
+        example: batch_segmentation
+        description: job type
+      schedule:
+        type: string
+        example: 0 0 1 * * ?
+        description: cron expression
+      state:
+        type: string
+        enum: [active, inactive]
+        example: inactive
+        description: schedule state. If the schedule is inactive, the job won't be triggered at the scheduled time.
+      properties:
+        type: object
+        required:
+        - segments
+        properties:
+          segments:
+            type: array
+            items:
+              type: string
+              example: '*'
+            description: this field is required if the job type is batch_segmentation. It holds a list of segment definitions which need to be evaluated at the scheduled time. Use `*` to evaluate all segments.
+        description: schedule properties
+      createEpoch:
+        type: integer
+        example: 1234567890
+        description: creation timestamp (unix timestamp in seconds)
+      updateEpoch:
+        type: integer
+        example: 1234567890
+        description: update timestamp (unix timestamp in seconds)
+    description: 'schedule entity'
+  scheduleCreate:
+    type: object
+    required:
+    - name
+    - type
+    - schedule
+    - properties
+    properties:
+      name:
+        type: string
+        example: profile-default
+        description: The name of the schedule being created.
+      type:
+        type: string
+        enum: [batch_segmentation]
+        example: batch_segmentation
+        description: The job type.
+      properties:
+        type: object
+        required:
+        - segments
+        properties:
+          segments:
+            type: array
+            items:
+              type: string
+              example: '*'
+            description: This field is required if the job type is batch_segmentation. It holds a list of segment definitions which need to be evaluated at the scheduled time. Use `*` to evaluate all segments.
+        description: schedule properties 
+      schedule:
+        type: string
+        example: 0 0 1 * * ?
+        description: A cron expression stating when the schedule should be triggered.
+      state:
+        type: string
+        enum: [active, inactive]
+        example: inactive
+        description: Schedule state. If schedule is inactive, it must be activated before it will be triggered.
+    description: 'Request body for creating a schedule'
+  schedulePatchOperation:
+    type: object
+    required:
+    - op
+    - path
+    - value
+    properties:
+      op:
+        type: string
+        example: add
+        description: op
+        enum:
+        - add
+      path:
+        type: string
+        example: /state
+        description: path of the attribute need to be updated
+      value:
+        type: string
+        example: active
+        description: the new value used to update the specified attribute
+    description: Patch operation
+parameters:
+  authorization:
+    name: Authorization
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
+    For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
+  x-gw-ims-org-id:
+    name: x-gw-ims-org-id
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
+  x-api-key:
+    name: x-api-key
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    required: true
+    type: string
+    in: header
+  content-type:
+    name: Content-Type
+    description: Type of content being sent in the body of the request. Should be 'application/json'.
+    required: true
+    type: string
+    in: header
+  segment-body: 
+    in: body
+    name: body
+    description: |-
+      `name` - Name of the segment which must be unique
+
+      `description` - Description of the segment
+
+      `expression` - PQL expression of type PQL, format pql/json or pql/text and value containing the actual query
+
+      `schema` - schema object with a name field
+
+      `ttlInDays` - number
+    required: true
+    schema:
+      $ref: '#/definitions/SegmentDefinition'
+  x-request-id:
+    name: x-request-id
+    in: header
+    description: Optional header that may be used for debugging purposes when investigating issues with a workflow. The same ID can be used to identify a single request to the service from a flow. A new ID should be created for each request.
+    required: false
+    type: string
+  eventTypeId:
+    name: eventTypeId
+    in: path
+    description: Event type ID.
+    required: true
+    type: string
+  x-sandbox-name:
+    name: x-sandbox-name
+    in: header
+    description: All resources in Experience Platform are isolated to specific virtual sandboxes. Requests to Platform APIs require a header that specifies the name of the sandbox in which the operation will take place.
+    required: true
+    type: string
+  segmentId:
+    name: segmentId
+    in: path
+    description: Segment Definition ID.
+    required: true
+    type: string
+    x-example: b9f6c339-f7f4-4141-b6c7-b562079da47c
+  segmentJobId:
+    name: segmentJobId
+    in: path
+    description: Segment job request ID.
+    required: true
+    type: string
+    x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
+  previewId:
+    name: "previewId"
+    in: "path"
+    description: "ID of the preview job."
+    required: true
+    type: "string"
+    x-example: "MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA==" 
+  start:      
+    name: start
+    in: query
+    description: Return results from a specific page offset. For example, `start=3`
+    required: false
+    type: integer
+  limit:  
+    name: limit
+    in: query
+    description: Limit response to a specific number of objects. Must be a positive number. For example, `limit=10`
+    required: false
+    type: integer
+  schedule-id:  
+    name: SCHEDULE_ID
+    in: path
+    description: The ID of the schedule against which the operation is being performed.
+    required: true
+    type: string
