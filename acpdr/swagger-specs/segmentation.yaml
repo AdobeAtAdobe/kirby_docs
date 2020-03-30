@@ -9,12 +9,8 @@ info:
     The Segmentation Service API allows you to programmatically integrate the service's various functionalities into your experience application, providing RESTful endpoints for managing segment definitions, exports, schedules, and more.
 
 
-    Related overview documentation:
-      * [Segmentation Service overview](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/segmentation/segmentation-overview.md)
-      
-    Related tutorials:
-      * [Create a segment using the Segmentation Service API](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/creating_a_segment_tutorial/creating_a_segment_tutorial.md)
-      * [Evaluate and access segment results](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/segmentation/evaluate_segment.md)
+    Related documentation:
+      * [Segmentation Service documentation](https://docs.adobe.com/content/help/en/experience-platform/segmentation/home.html)
 
     Visualize API calls with Postman (a free, third-party software):
       * [Real-time Customer Profile API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Real-time%20Customer%20Profile%20API.postman_collection.json)
@@ -27,8 +23,8 @@ info:
       * Example of a complete path: https://<span>platform.adobe.io/data/core/ups/segment/definitions
       
     Required headers:
-      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).
-      * All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information.
+      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
+      * All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
       * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
 
 host: platform.adobe.io
@@ -484,6 +480,18 @@ paths:
           required: false
           type: string
           x-example: PROCESSING
+        - name: sort
+          in: query
+          description: Used to order the segment jobs. Is written in the format [attributeName]:[desc|asc]
+          required: false 
+          type: string
+          x-example: creationTime:desc
+        - name: property
+          in: query
+          description: Used to get exact matches within an attribute in the segment job. Is written in the format [arrayTypeAttributeName]~[objectKey]==[value]
+          required: false 
+          type: string
+          x-example: segments~segmentId==workInCanada
       responses:
         '200':
           description: List of segment job requests returned
@@ -1130,6 +1138,20 @@ definitions:
             description: A map from segment IDs to the number of merged profiles in those segments.
             additionalProperties:
               type: number
+          segmentedProfileByNamespaceCounter:
+            type: object
+            description: Segmented profiles by namespace per segmentId.
+            additionalProperties:
+              type: object
+              additionalProperties:
+                type: number 
+          segmentedProfileByStatusCounter:
+            type: object
+            description: Segmented profiles by status per segmentId.
+            additionalProperties:
+              type: object
+              additionalProperties:
+                type: number 
         description: Segment job request metrics
       requestId:
         type: string
