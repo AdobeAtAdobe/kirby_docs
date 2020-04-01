@@ -154,6 +154,13 @@
             "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/profile-population.md",
             "title": "Activate inbound data for Profile population",
             "description": ""
+        },
+        {
+            "importedFileName": "monitor-accounts-and-dataset-flows-tutorial",
+            "pages": [],
+            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/accounts-and-dataset-flows.md",
+            "title": "Monitor accounts and dataset flows",
+            "description": ""
         }
     ],
     "app2app_map": {
