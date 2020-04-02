@@ -75,6 +75,11 @@
                 },
                 {
                     "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/database-nosql/azure-synapse-analytics-api-tutorial.md",
+                    "title": "Azure Synapse Analytics connector"
+                },
+                {
+                    "pages": [],
                     "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/database-nosql/google-bigquery-api-tutorial.md",
                     "title": "Google BigQuery connector"
                 },
