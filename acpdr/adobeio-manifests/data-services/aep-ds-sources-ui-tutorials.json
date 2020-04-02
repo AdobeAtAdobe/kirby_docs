@@ -35,6 +35,11 @@
                 },
                 {
                     "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/cloud-storages/amazon-s3-ui-tutorial.md",
+                    "title": "Azure Blob and Amazon S3 connector"
+                },
+                {
+                    "pages": [],
                     "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/cloud-storages/adls-gen2-ui-tutorial.md",
                     "title": "Azure Data Lake Storage Gen2 connector"
                 },
@@ -45,8 +50,8 @@
                 },
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/cloud-storages/amazon-s3-ui-tutorial.md",
-                    "title": "Azure Blob and Amazon S3 connector"
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/azure-table-storage-ui-tutorial.md",
+                    "title": "Azure Table Storage connector"
                 },
                 {
                     "pages": [],
@@ -65,28 +70,33 @@
                 },
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/crm/dynamics-salesforce-ui-tutorial.md",
-                    "title": "Microsoft Dynamics and Salesforce connector"
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/greenplum-ui-tutorial.md",
+                    "title": "GreenPlum connector"
                 },
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/crm/paypal-tutorial.md",
-                    "title": "PayPal connector"
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/hive-ui-tutorial.md",
+                    "title": "Hive connector"
                 },
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/customer-success/salesforce-service-cloud-tutorial.md",
-                    "title": "Salesforce Service Cloud connector"
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/vertica-ui-tutorial.md",
+                    "title": "HP Vertica connector"
                 },
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/customer-success/servicenow-ui-tutorial.md",
-                    "title": "ServiceNow connector"
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/marketing-automation/hubspot-tutorial.md",
+                    "title": "HubSpot connector"
                 },
                 {
                     "pages": [],
                     "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/maria-db-ui-tutorial.md",
                     "title": "Maria DB connector"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/crm/dynamics-salesforce-ui-tutorial.md",
+                    "title": "Microsoft Dynamics and Salesforce connector"
                 },
                 {
                     "pages": [],
@@ -100,13 +110,33 @@
                 },
                 {
                     "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/crm/paypal-tutorial.md",
+                    "title": "PayPal connector"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/phoenix-ui-tutorial.md",
+                    "title": "Phoenix connector"
+                },
+                {
+                    "pages": [],
                     "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/postgresql-tutorial.md",
                     "title": "PostgreSQL connector"
                 },
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/marketing-automation/hubspot-tutorial.md",
-                    "title": "HubSpot connector"
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/customer-success/salesforce-service-cloud-tutorial.md",
+                    "title": "Salesforce Service Cloud connector"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/customer-success/servicenow-ui-tutorial.md",
+                    "title": "ServiceNow connector"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/spark-ui-tutorial.md",
+                    "title": "Spark connector"
                 }
             ],
             "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/sources-ui-tutorial.md",

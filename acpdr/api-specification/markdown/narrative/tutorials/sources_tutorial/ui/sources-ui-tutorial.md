@@ -31,11 +31,17 @@ The following is a list of tutorials for creating connectors in the Platform UI:
 
 - [Amazon Redshift connector](./databases/amazon-redshift-ui-tutorial.md)
 - [Azure Synapse Analytics connector](./databases/azure-synapse-analytics-ui-tutorial.md)
+- [Azure Tables Storage connector](./databases/azure-table-storage-ui-tutorial.md)
 - [Google Big Query connector](./databases/google-big-query-ui-tutorial.md)
+- [GreenPlum connector](./databases/greenplum-ui-tutorial.md)
+- [Hive connector](./databases/hive-ui-tutorial.md)
+- [HP Vertica connector](./databases/vertica-ui-tutorial.md)
 - [MariaDB connector](./databases/maria-db-ui-tutorial.md)
 - [Microsoft SQL Server connector](./databases/sql-server-ui-tutorial.md)
 - [MySQL connector](./databases/mysql-ui-tutorial.md)
+- [Phoenix connector](./databases/phoenix-ui-tutorial.md)
 - [PostgreSQL connector](./databases/postgresql-tutorial.md)
+- [Spark connector](./databases/spark-ui-tutorial.md)
 
 ## Marketing Automation
 
