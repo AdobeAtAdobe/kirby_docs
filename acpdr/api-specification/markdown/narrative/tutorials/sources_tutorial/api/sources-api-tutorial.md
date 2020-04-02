@@ -30,6 +30,8 @@ The following is a list of tutorials for creating connectors using the Flow Serv
 - [Amazon Redshift connector](./database-nosql/amazon-redshift-api-tutorial.md)
 - [Azure Synapse Analytics connector](./database-nosql/azure-synapse-analytics-api-tutorial.md)
 - [Google BigQuery connector](./database-nosql/google-bigquery-api-tutorial.md)
+- [Hive connector](./database-nosql/hive-api-tutorial.md)
+- [HP Vertica connector](./database-nosql/hp-vertica-api-tutorial.md)
 - [MariaDB connector](./database-nosql/mariadb-api-tutorial.md)
 - [MySQL connector](./database-nosql/mysql-db-api-tutorial.md)
 - [PostgreSQL connector](./database-nosql/psql-api-tutorial.md)
