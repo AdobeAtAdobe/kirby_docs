@@ -31,7 +31,7 @@ Log in to <a href="https://platform.adobe.com" target="_blank">Adobe Experience 
 
 You can select the appropriate category from the catalog on the left-hand side of your screen. Alternatively, you can find the specific source you wish to work with using the search option.
 
-Under the *Customer Success* category, select **Azure Table Storage** to expose an information bar on the right-hand side of your screen. The information bar provides a brief description for the selected source as well as options to connect with the source or view its documentation. To create a new inbound connection, select **Connect source**.
+Under the *Databases* category, select **Azure Table Storage** to expose an information bar on the right-hand side of your screen. The information bar provides a brief description for the selected source as well as options to connect with the source or view its documentation. To create a new inbound connection, select **Connect source**.
 
 ![catalog](./images/ats/catalog.png)
 
@@ -41,7 +41,7 @@ The *Connect to Azure Table Storage* page appears. On this page, you can either 
 
 If you are using new credentials, select **New account**. On the input form that appears, provide the connection with a name, an optional description, and your ATS credentials. When finished, select **Connect** and then allow some time for the new account to establish.
 
-![connect](./images/ats/connect.png)
+![connect](./images/ats/new.png)
 
 ### Existing account
 

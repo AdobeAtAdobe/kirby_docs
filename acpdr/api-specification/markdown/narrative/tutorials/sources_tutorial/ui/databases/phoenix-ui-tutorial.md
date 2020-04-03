@@ -36,7 +36,7 @@ Log in to <a href="https://platform.adobe.com" target="_blank">Adobe Experience 
 
 You can select the appropriate category from the catalog on the left-hand side of your screen. Alternatively, you can find the specific source you wish to work with using the search option.
 
-Under the *Customer Success* category, select **Phoenix** to expose an information bar on the right-hand side of your screen. The information bar provides a brief description for the selected source as well as options to connect with the source or view its documentation. To create a new inbound connection, select **Connect source**.
+Under the *Databases* category, select **Phoenix** to expose an information bar on the right-hand side of your screen. The information bar provides a brief description for the selected source as well as options to connect with the source or view its documentation. To create a new inbound connection, select **Connect source**.
 
 ![catalog](./images/phoenix/catalog.png)
 
@@ -46,7 +46,7 @@ The *Connect to Phoenix* page appears. On this page, you can either use new cred
 
 If you are using new credentials, select **New account**. On the input form that appears, provide the connection with a name, an optional description, and your Phoenix credentials. When finished, select **Connect** and then allow some time for the new account to establish.
 
-![connect](./images/phoenix/connect.png)
+![connect](./images/phoenix/new.png)
 
 ### Existing account
 
