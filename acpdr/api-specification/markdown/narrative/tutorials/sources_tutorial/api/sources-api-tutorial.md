@@ -30,6 +30,7 @@ The following is a list of tutorials for creating connectors using the Flow Serv
 - [Amazon Redshift connector](./database-nosql/amazon-redshift-api-tutorial.md)
 - [Apache Spark on Azure HDInsights connector](./database-nosql/apache-spark-api-tutorial.md)
 - [Azure Synapse Analytics connector](./database-nosql/azure-synapse-analytics-api-tutorial.md)
+- [Azure Table Storage connector](./database-nosql/azure-table-storage-api-tutorial.md)
 - [Google BigQuery connector](./database-nosql/google-bigquery-api-tutorial.md)
 - [GreenPlum connector](./database-nosql/greenplum-api-tutorial.md)
 - [Hive connector](./database-nosql/hive-api-tutorial.md)
