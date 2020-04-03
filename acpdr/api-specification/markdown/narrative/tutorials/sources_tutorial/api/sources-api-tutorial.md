@@ -31,6 +31,7 @@ The following is a list of tutorials for creating connectors using the Flow Serv
 - [Apache Spark on Azure HDInsights connector](./database-nosql/apache-spark-api-tutorial.md)
 - [Azure Synapse Analytics connector](./database-nosql/azure-synapse-analytics-api-tutorial.md)
 - [Google BigQuery connector](./database-nosql/google-bigquery-api-tutorial.md)
+- [GreenPlum connector](./database-nosql/greenplum-api-tutorial.md)
 - [Hive connector](./database-nosql/hive-api-tutorial.md)
 - [HP Vertica connector](./database-nosql/hp-vertica-api-tutorial.md)
 - [MariaDB connector](./database-nosql/mariadb-api-tutorial.md)
