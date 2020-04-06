@@ -91,6 +91,7 @@ paths:
         - $ref: '#/parameters/queries_property'
         - $ref: '#/parameters/excludeSoftDeleted'
         - $ref: '#/parameters/excludeHidden'
+        - $ref: '#/parameters/isPrevLink'
 
       responses:
         200:
@@ -485,7 +486,7 @@ paths:
         operationId: "get_schedules_run_for_id"
         tags:
           - "Schedules"
-        summary: Lookup details of a query schedule run by ID.
+        summary: Retrieve details of a query schedule run by ID.
         produces:
           - application/json
         parameters:
@@ -524,7 +525,7 @@ paths:
         operationId: "cancel_schedule_run"
         tags:
           - "Schedules"
-        summary: Trigger an immediate run of a scheduled query by ID.
+        summary: Cancel a run of a scheduled query by ID.
         consumes:
           - application/json
         produces:
@@ -586,6 +587,7 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/User-Agent'
+        - $ref: '#/parameters/isPrevLink'
         - $ref: '#/parameters/queries_orderby'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/start'
@@ -637,13 +639,41 @@ paths:
           description: "Unauthorized"
         500:
           description: "Internal Server Error"
+  '/query-templates/count':
+    get:
+      operationId: "get_query_template_count"
+      tags:
+        - "Query-Templates"
+      summary: Get the count of the query templates.
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/x-request-id'
+        - $ref: '#/parameters/User-Agent'
+        - $ref: '#/parameters/template_count_property'
 
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/template_count'
+
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Not found"
+        500:
+          description: "Internal Server Error"      
   '/query-templates/{queryTemplateId}':
      get:
       operationId: "get_query_template"
       tags:
         - "Query-Templates"
-      summary: Lookup a query template by ID.
+      summary: Retrieve a query template by ID.
       produces:
         - application/json
       parameters:
@@ -750,25 +780,25 @@ paths:
 parameters:
   authorization:
     name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer " (for example, `Bearer {ACCESS_TOKEN}`). For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
-    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
   x-api-key:
     name: x-api-key
-    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the documentation covering making API calls in the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
   x-sandbox-name:
     name: x-sandbox-name
-    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information.'
+    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.'
     required: true
     type: string
     in: header
@@ -778,17 +808,34 @@ parameters:
     required: true
     type: string
     in: header
+  template_count_property:
+    name: property
+    description: "Comma-separated filters. Examples below are given with unsafe HTML characters for clarity, but all content MUST be HTML escaped.\n\n
+        \ Currently only userId is allowed in filtering count.\n\
+          Example: property=userId=={USER_ID}\n "
+    in: query
+    type: string
+    required: false
   template_property:
     name: property
     description: "Comma-separated filters.\n\n\
         \ List of properties that allow filtering:\n\
         \ name\n\
-        \ user id\n\n\
+        \ userId\n\n\
+        \ lastUpdatedBy\n\
         \ Supported operators:\n\
-          '==' (equal than)\n\n\
-       \ Example: name==my_template\n\n\ "
+          '~' (contains). This operator can only be used on the name property. \n
+          '==' (equal to). This operator can be used on both the userId and the lastUpdatedBy properties. \n\n\
+       \ Example: property=name~Sample query\n\n\  \n
+       \ Example: property=userId=={USER_ID}"
     in: query
     type: string
+    required: false
+  isPrevLink:
+    name: isPrevLink
+    description: "Field indicating if the URI is a previous link."
+    in: query
+    type: boolean
     required: false
   queries_orderby:
     name: orderby
@@ -829,10 +876,10 @@ parameters:
       List of supported operators:\n
       '>'  (greater than)\n
       '<'  (less than)\n
-      '>=' (greater or equal than)\n
-      '<=' (less or equal than)\n
-      '==' (equal than)\n
-      '!=' (not equal than)\n
+      '>=' (greater than or equal to)\n
+      '<=' (less than or equal to)\n
+      '==' (equal to)\n
+      '!=' (not equal to)\n
       '~' (contains)\n\n
       Examples with filters that support all operators:\n
           * Get query with match on id:\n
@@ -840,16 +887,20 @@ parameters:
           * Get me queries created after a timestamp, and with a specific state:\n
           created>=2017-04-05T13:30:00Z,state==IN_PROGRESS\n\n\
       Filtering is also allowed with limited operators on the following properties:\n
-      * the referenced_datasets and userId property. This filter only allows the '==' equal than operator, and up to 10 dataset ids can be included by using the '||' logical OR operator. \n
+      * the referenced_datasets and userId property. This filter only allows the '==' equal to operator, and up to 10 dataset ids can be included by using the '||' logical OR operator. \n
              Example: referenced_datasets==aabbcc||ddeeff\n
-      * the sql property. This filter only allows the '~' contains operator, and only one sql string WITHOUT COMMA (,) can be included.\n
+      * the SQL property. This filter only allows the '~' contains operator, and only one SQL string WITHOUT COMMA (,) can be included.\n
              Example: sql~SELECT c1\n
-      * the client property. This filter only allows the '==' equal than operator, and only one sql string WITHOUT COMMA (,) can be included.\n
+      * the templateId property: This filter only allows the '==' equal to operator, and only one template ID can be included. \n
+             Example: templateId=3e61c592-05de-422e-99be-24712c07fc29\n
+      * the templateName property: This filter only allows the '~' contains operator, and only one templateName can be included. \n
+             Example: templateName~sample-template-name \n
+      * the client property. This filter only allows the '==' equal to operator, and only one SQL string WITHOUT COMMA (,) can be included.\n
              Example: client==API\n
-      * the scheduleId and scheduleRunId properties. These filters only allow the '==' equal than operator.\n
+      * the scheduleId and scheduleRunId properties. These filters only allow the '==' equal to operator.\n
              Example: scheduleId==bWFudWFsX18yMDE4LTEwLTEyVDA0OjM2OjE5LjkzNzI2Nw==,scheduleRunId==manual__2018-10-12T05:11:40.816520\n\n
       Example of a complex search with multiple filters:\n
-          * Get me queries that utilize two specific datasets,submitted by a particular user, and that include the string 'SELECT c1' in the sql body: referenced_datasets==aabbcc||ddeeff,userId=1234@AdobeId,sql~SELECT c1"
+          * Get me queries that utilize two specific datasets,submitted by a particular user, and that include the string 'SELECT c1' in the SQL body: referenced_datasets==aabbcc||ddeeff,userId=1234@AdobeId,sql~SELECT c1"
     in: query
     type: string
     required: false
@@ -867,9 +918,9 @@ parameters:
           created>2017-04-05T13:30:00Z\n
 
       Filtering is also allowed with limited operators on the following properties:\n
-      * the templateId property. This filter only allows the '==' equal than operator. \n
+      * the templateId property. This filter only allows the '==' equal to operator. \n
              Example: templateId==123412354\n
-      * the userId property. This filter only allows the '==' equal than operator. \n
+      * the userId property. This filter only allows the '==' equal to operator. \n
              Example: userId==123412354\n"
     in: query
     type: string
@@ -885,11 +936,11 @@ parameters:
       '<'  (less than)\n
       state\n
       Supported operators:\n
-      '==' (equal than)\n
-      '!=' (not equal than)\n
+      '==' (equal to)\n
+      '!=' (not equal to)\n
       externalTrigger\n
       List of supported operators:\n
-      '==' (equal than)\n\n
+      '==' (equal to)\n\n
       Examples with filters that support all operators:\n
           * Get me  runs created after a timestamp:\n
           created>2017-04-05T13:30:00Z\n
@@ -944,7 +995,7 @@ definitions:
         type: string
         example: "SELECT $key from $key1 where $key > $key2;"
         description: Required. User can either use standard SQL (such as SELECT * from t1;) or parameter replacement. If using parameter replacement, the user must provide keys, such as "$key", in the SQL and pass the parameters as JSON key value pairs.
-      params:
+      queryParameters:
         type: object
         properties:
           key:
@@ -967,6 +1018,12 @@ definitions:
       description:
         type: string
         description: A comment on the query intent. Optional.
+      insertIntoParameters:
+        type: object
+        description: If this property is defined, then this query will be converted into an INSERT INTO query. Optional.
+        properties:
+          datasetName:
+            type: string
       ctasParameters:
         type: object
         description: If this property is defined, this query will be converted into a CTAS query. Optional.
@@ -1019,6 +1076,16 @@ definitions:
 
   query:
     type: object
+    required:
+      - id
+      - request
+      - isCTAS
+      - isInsertInto
+      - state
+      - created
+      - updated
+      - userId
+      - version
     properties:
       id:
         type: string
@@ -1030,7 +1097,10 @@ definitions:
           this property will be defined and will include the effective SQL.
       isCTAS:
         type: boolean
-        description: Whether the original sql matches the pattern of a CTAS query, or the query included a ctasDataset name that effectively turned the query into a CTAS.
+        description: Whether the original SQL matches the pattern of a CTAS query, or the query included a ctasDataset name that effectively turned the query into a CTAS.
+      isInsertInto:
+        type: boolean
+        description: Whether the original SQL matches the pattern of an INSERT INTO query or the query included a dataset name under insertIntoParameters which effectively turned the query into an INSERT INTO.
       state:
         type: string
         description: The current state of this query.
@@ -1057,12 +1127,18 @@ definitions:
         type: integer
         description: The total number of data rows returned in result set, or persisted in created dataset.
           Meaningful only when query is in SUCCESS state.
+      templateName:
+        type: string
+        description: The name of the query template if the query was created using a query template.
       userId:
         type: string
         description: The ID of the user who created this object.
       client:
         type: string
         description: A string that identifies the client application that generated this query.
+      copyURI:
+        type: string
+        description: If the query is a COPY with a state of SUCCESS, this field holds the URI where the data was written.
       errors:
         type: array
         description: ''
@@ -1074,12 +1150,14 @@ definitions:
         type: integer
         description: REST API version of this resource
 
-    required:
-      - query_status
-
   query_list:
     type: object
     description: List of queries
+    required:
+      - queries
+      - _page
+      - _links
+      - version
     properties:
       queries:
         type: array
@@ -1098,9 +1176,15 @@ definitions:
     properties:
       next:
         $ref: '#/definitions/next'
+      prev:
+        $ref: '#/definitions/prev'
 
   error:
     type: object
+    required:
+      - code
+      - message
+      - errorType
     properties:
       code:
         type: string
@@ -1214,7 +1298,14 @@ definitions:
 
   next:
     type: object
-    description: Pre-constructed URI for next page of results, if any.
+    description: Pre-constructed URI for the next page of results, if any exist.
+    properties:
+      href:
+        type: string
+
+  prev:
+    type: object
+    description: Pre-constructed URI for the previous page of results, if any exist.
     properties:
       href:
         type: string
@@ -1222,6 +1313,13 @@ definitions:
   connection_parameters:
     type: object
     description: Object containing the connection parameters
+    required:
+      - host
+      - port
+      - username
+      - token
+      - version
+      - dbName
     properties:
       host:
         type: string
@@ -1241,6 +1339,9 @@ definitions:
       version:
         type: integer
         description: REST API version of this resource
+      dbName:
+        type: string
+        description: Combination of the sandbox name and the database name.
 
   schedules_request:
     type: object
@@ -1257,12 +1358,7 @@ definitions:
         type: string
       maxActiveRuns:
         type: integer
-      timeout:
-        type: integer
-      email:
-        type: string
-      emailOnFailure:
-        type: boolean
+        description: "The number of parallel schedule runs allowed. The default value is 1."
 
   schedules_runs_by_id_links:
     type: object
@@ -1367,11 +1463,22 @@ definitions:
 
   schedules:
     type: object
+    required: 
+      - id
+      - userId
+      - state
+      - query
+      - schedule
+      - _links
     properties:
       id:
         type: string
       userId:
         type: string
+        description: The ID of the user that created the schedule.
+      updatedUserId:
+        type: string
+        description: The ID of the user who last updated the schedule.
       state:
         type: string
         description:
@@ -1397,16 +1504,14 @@ definitions:
       _links:
         $ref: '#/definitions/schedules_links'
 
-    required:
-      - id
-      - userId
-      - query
-      - schedule
-      - _links
-
   schedules_list:
     type: object
     description: List of schedules
+    required:
+      - schedules
+      - _page
+      - _links
+      - version
     properties:
       schedules:
         type: array
@@ -1422,6 +1527,13 @@ definitions:
 
   schedules_run:
     type: object
+    required:
+      - id
+      - created
+      - state
+      - externalTrigger
+      - version
+      - _links
     properties:
       id:
         type: string
@@ -1432,10 +1544,20 @@ definitions:
       externalTrigger:
         type: boolean
         description: States if the given run was triggered via a POST /schedules/{scheduleId}/runs
+      _links:
+        $ref: '#/definitions/schedules_runs_by_id_links'
+      version:
+        type: integer
+        description: REST API version of this resource
 
   schedules_run_list:
     type: object
     description: List of schedules runs
+    required:
+      - runsSchedules
+      - _page
+      - _links
+      - version
     properties:
       runsSchedules:
         type: array
@@ -1452,6 +1574,13 @@ definitions:
   schedules_run_details:
     type: object
     description: Schedule run details
+    required:
+      - created
+      - state
+      - id
+      - externalTrigger
+      - version
+      - _links
     properties:
       created:
         type: string
@@ -1493,6 +1622,8 @@ definitions:
 
   task_detail:
     type: object
+    required:
+      - states
     properties:
       duration:
         type: string
@@ -1519,15 +1650,29 @@ definitions:
         type: string
         description: "The task ID of this run."
 
+  template_count:
+    type: object
+    description: Total Query Template count Response.
+    properties:
+      totalCount:
+        type: integer
+        description: Total Template count.
+      version:
+        type: integer
+        description: REST API version of this resource
+
   query_template_def:
     type: object
     description: Description of Query template to submit.
+    required:
+      - sql
+      - name
     properties:
       sql:
         type: string
         example: "SELECT $key from $key1 where $key > $key2;"
         description: Required. User can either use standard SQL or parameter replacement. If using parameter replacement, the user must provide keys, such as "$key", in the SQL and pass the parameters as JSON key value pairs. The values that are passed in here will be the default parameters used in the template. If the user wishes to override these parameters, the user must override them in the POST request.
-      params:
+      queryParameters:
         type: object
         properties:
           key:
@@ -1547,6 +1692,13 @@ definitions:
   query_template:
     type: object
     description: Query Template Response.
+    required:
+      - id
+      - sql
+      - name
+      - updated
+      - lastUpdatedBy
+      - userId
     properties:
       id:
         type: string
@@ -1555,7 +1707,7 @@ definitions:
         type: string
         example: "SELECT $key from $key1 where $key > $key2;"
         description: Required. User can either use standard SQL or parameter replacement. If using parameter replacement, the user must provide keys, such as "$key", in the SQL and pass the parameters as JSON key value pairs.
-      params:
+      queryParameters:
         type: object
         properties:
           key:
@@ -1575,6 +1727,12 @@ definitions:
         type: string
         description: >-
           UTC time when query template was last updated.
+      lastUpdatedBy:
+        type: string
+        description: The ID of the user who last updated the template.
+      userId:
+        type: string
+        description: The ID of the user who created the template.
       _links:
         $ref: '#/definitions/query_template_links'
 
@@ -1633,6 +1791,8 @@ definitions:
     properties:
       next:
         $ref: '#/definitions/next'
+      prev:
+        $ref: '#/definitions/prev'
 
   query_template_delete:
     type: object
@@ -1646,6 +1806,10 @@ definitions:
 
   schedule_patch_operation:
     type: object
+    required:
+      - op
+      - path
+      - value
     properties:
       op:
         type: string
