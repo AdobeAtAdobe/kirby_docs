@@ -24,7 +24,7 @@ In order for Flow Service to connect with Hive, you must provide values for the 
 | `password` | The password corresponding to the user. |
 | `connectionSpec.id` | The unique identifier needed to create a connection. The connection specification ID for Hive is: `aac9bbd4-6c01-46ce-b47e-51c6f0f6db3f` |
 
-For more information about getting started refer to [this Hive document](https://docs.adobe.com/content/help/en/experience-platform/landing/troubleshooting.html#reading-example-api-calls).
+For more information about getting started refer to [this Hive document](https://cwiki.apache.org/confluence/display/Hive/Tutorial#Tutorial-GettingStarted).
 
 ### Reading sample API calls
 

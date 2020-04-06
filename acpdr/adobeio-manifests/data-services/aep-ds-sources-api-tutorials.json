@@ -94,11 +94,6 @@
                     "title": "Google BigQuery connector"
                 },
                 {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/database-nosql/greenplum-api-tutorial.md",
-                    "title": "GreenPlum connector"
-                },
-                {
                     "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/database-nosql/hive-api-tutorial.md",
                     "title": "Hive on Azure HDInsights connector"
                 },
@@ -131,6 +126,11 @@
                     "pages": [],
                     "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/database-nosql/sql-server-api-tutorial.md",
                     "title": "SQL Server connector"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/payments/paypal-api-tutorial.md",
+                    "title": "PayPal connector"
                 },
                 {
                     "pages": [],
@@ -186,6 +186,13 @@
             "description": ""
         },
         {
+            "importedFileName": "explore-payments-api-tutorial",
+            "pages": [],
+            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/payments/explore-payments-api-tutorial.md",
+            "title": "Explore a payments application using the Flow Service API",
+            "description": ""
+        },
+        {
             "importedFileName": "retrieve-cloud-storage-api-tutorial",
             "pages": [],
             "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/cloud-storages/retrieve-cloud-storage-api-tutorial.md",
@@ -211,6 +218,13 @@
             "pages": [],
             "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/customer-success/retrieve-cs-data-api-tutorial.md",
             "title": "Collect data from a Customer Success system through source connectors and APIs",
+            "description": ""
+        },
+        {
+            "importedFileName": "retrieve-payments-data-api-tutorial",
+            "pages": [],
+            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/payments/retrieve-payments-data-api-tutorial.md",
+            "title": "Collect data from a payments application through source connectors and APIs",
             "description": ""
         },
         {    

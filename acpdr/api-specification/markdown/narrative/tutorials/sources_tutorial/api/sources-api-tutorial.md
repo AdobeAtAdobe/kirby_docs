@@ -32,7 +32,6 @@ The following is a list of tutorials for creating connectors using the Flow Serv
 - [Azure Synapse Analytics connector](./database-nosql/azure-synapse-analytics-api-tutorial.md)
 - [Azure Table Storage connector](./database-nosql/azure-table-storage-api-tutorial.md)
 - [Google BigQuery connector](./database-nosql/google-bigquery-api-tutorial.md)
-- [GreenPlum connector](./database-nosql/greenplum-api-tutorial.md)
 - [Hive connector](./database-nosql/hive-api-tutorial.md)
 - [HP Vertica connector](./database-nosql/hp-vertica-api-tutorial.md)
 - [MariaDB connector](./database-nosql/mariadb-api-tutorial.md)
@@ -40,6 +39,10 @@ The following is a list of tutorials for creating connectors using the Flow Serv
 - [Phoenix connector](./database-nosql/phoenix-api-tutorial.md)
 - [PostgreSQL connector](./database-nosql/psql-api-tutorial.md)
 - [SQL Server connector](./database-nosql/sql-server-api-tutorial.md)
+
+## Payments
+
+- [PayPal connetor](./payments/paypal-api-tutorial.md)
 
 ## Legacy connectors
 
