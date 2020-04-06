@@ -482,7 +482,7 @@ paths:
         - $ref: '#/parameters/json-header'
       responses:
         '200':
-          description: 'Successful updation of user '
+          description: 'Successful update of the user '
           schema:
             $ref: '#/definitions/UserInfo'
         '404':
@@ -647,19 +647,19 @@ paths:
 parameters:
   authorization:
     name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer". For more information on how to obtain this value, visit the <a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md">authentication tutorial</a>.'
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer". For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
-    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the <a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md">authentication tutorial</a>.'
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
   x-api-key:
     name: x-api-key
-    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the <a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md">authentication tutorial</a>.'
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
@@ -845,7 +845,7 @@ definitions:
         type: string
         example: Invalid ID format
         description: A human-readable explanation specific to this occurrence of the problem.
-    description: 'An error object containing a problem detail, as defined by <a href="https://tools.ietf.org/html/rfc7807">RFC 7807 Problem Details for HTTP APIs</a>. The returned content-type is the <i>application/problem+json</i> media type. When present, this response contains machine-readable details pertaining to the error. Problem details include a <i>type</i>, which is a URI.'
+    description: 'An error object containing a problem detail, as defined by [RFC 7807 Problem Details for HTTP APIs](https://tools.ietf.org/html/rfc7807). The returned content-type is the <i>application/problem+json</i> media type. When present, this response contains machine-readable details pertaining to the error. Problem details include a <i>type</i>, which is a URI.'
   Product:
     type: object
     properties:

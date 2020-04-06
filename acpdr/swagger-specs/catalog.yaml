@@ -1563,7 +1563,7 @@ paths:
           description: >-
             Connectors currently have 2 categories: 1) standard: we are
             connecting to a known source with known data (ie. other companies
-            data stores) or 2) custom: a generaic connector to FTP or S3 etc.
+            data stores) or 2) custom: a generic connector to FTP or S3 etc.
             This query param can be used to filter all connectors by their
             category.
           required: false
@@ -1663,7 +1663,7 @@ paths:
                                   "type": "string"
                               },
                               "organizationUri": {
-                                  "description": "The Dynamics urganization URI",
+                                  "description": "The Dynamics organization URI",
                                   "type": "string"
                               },
                               "akvSecretPassword": {
@@ -1749,7 +1749,7 @@ paths:
                                   "type": "string"
                               },
                               "organizationUri": {
-                                  "description": "The Dynamics urganization URI",
+                                  "description": "The Dynamics organization URI",
                                   "type": "string"
                               },
                               "akvSecretPassword": {
@@ -2184,13 +2184,13 @@ paths:
         - name: batchId
           description: >-
             If wishing to write, the batchId used during writing. Required for
-            buliding a stage path.
+            building a stage path.
           required: false
           in: query
           type: string
       responses:
         '200':
-          description: Creadential object given dataSet.
+          description: Credential object given dataSet.
           schema:
             $ref: '#/definitions/dataSetCredentials'
         '400':
@@ -2626,7 +2626,7 @@ paths:
         - application/json
       responses:
         '200':
-          description: The DULE labels assocated with the dataset.
+          description: The DULE labels associated with the dataset.
           schema:
             $ref: '#/definitions/duleLabelResponse'
         '400':
@@ -4181,7 +4181,7 @@ paths:
 parameters:
   x-sandbox-name:
     name: x-sandbox-name
-    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information.'
+    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.'
     required: true
     type: string
     in: header
@@ -4293,19 +4293,19 @@ parameters:
     in: query
   authorization:
     name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer". For more information on how to obtain this value, visit the <a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md">authentication tutorial</a>.'
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer". For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
-    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the <a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md">authentication tutorial</a>.'
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
   x-api-key:
     name: x-api-key
-    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the <a href="https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md">authentication tutorial</a>.'
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
@@ -5772,7 +5772,7 @@ definitions:
         description: >-
           Connectors currently have 2 categories: 1) standard: we are connecting
           to a known source with known data (ie. other companies data stores) or
-          2) custom: a generaic connector to FTP or S3 etc.
+          2) custom: a generic connector to FTP or S3 etc.
         enum:
           - standard
           - custom
@@ -7629,7 +7629,7 @@ definitions:
                 type: object
                 description: >-
                   The presence of this attribute on a field indicates that
-                  it is used in the origin system for retrieveing 'deltas'
+                  it is used in the origin system for retrieving 'deltas'
                   of data
                 properties:
                   format:
@@ -8030,7 +8030,7 @@ definitions:
         description: Id contains full URL path for XDM schema.
       contentType:
         type: string
-        description: contentType rerpresents XDM schema version and type of schema.
+        description: contentType represents XDM schema version and type of schema.
   persistenceResponse:
     type: object
     description: >-
@@ -8073,7 +8073,7 @@ definitions:
     properties:
       datastream:
         type: object
-        description: This object represents strean persistence type for dataSets
+        description: This object represents stream persistence type for dataSets
         properties:
           source:
             type: string

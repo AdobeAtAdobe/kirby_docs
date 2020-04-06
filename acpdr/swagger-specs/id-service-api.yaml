@@ -16,7 +16,7 @@ info:
 
     API paths:
       * PLATFORM Gateway URL: https://<span>platform-{REGION}.adobe.io
-        * Information on <code>{REGION}</code> values can be found in the [Identity Service developer guide](https://www.adobe.io/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html#!api-specification/markdown/narrative/technical_overview/identity_services_architectural_overview/identity_services_api.md).
+        * Information on <code>{REGION}</code> values can be found in the [Identity Service developer guide](https://docs.adobe.com/content/help/en/experience-platform/identity/api/getting-started.html).
       * Base path for this API: /data/core/
       * Example of a complete path: https://<span>platform-va7.adobe.io/data/core/identity/cluster/members
 
@@ -1690,25 +1690,19 @@ parameters:
   authorization:
     name: Authorization
     description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
-    For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
-    description: 'The IMS Organization ID which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
   x-api-key:
     name: x-api-key
-    description: 'The API key which can be copied from your Experience Platform integration. For more information on how 
-    to obtain this value, visit the documentation covering making API calls in the 
-    [Adobe Experience Platform Overview](https://www.adobe.io/apis/experienceplatform/home/overview.html).'
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header

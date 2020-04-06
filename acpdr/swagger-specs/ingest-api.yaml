@@ -371,7 +371,7 @@ paths:
           description: "The ID of the created data inlet"
       responses:
         '207':
-          description: "MULTI-STATUS HTTP Code. The recipient needs to consult the contents of the multistatus response body for further information about the success or failure of the method execution."
+          description: "MULTI-STATUS HTTP Code. The recipient needs to consult the contents of the multi-status response body for further information about the success or failure of the method execution."
           schema:
             $ref: "#/definitions/BatchResponseDTO"
         '400':
@@ -574,7 +574,7 @@ paths:
       tags:
       - "Batch Ingestion"
       summary: "Operate on the identified file."
-      description: "Used to signal intialization and completion of the file that's uploaded in parts"
+      description: "Used to signal initialization and completion of the file that's uploaded in parts"
       operationId: "completeFileUpload"
       consumes:
       - "multipart/form-data"
@@ -735,7 +735,7 @@ paths:
           required: false
           type: "boolean"
           default: true
-          description: "The flag to indicate if the header is supplied in the dataset files. Currently headerless files
+          description: "The flag to indicate if the header is supplied in the dataset files. Currently header-less files
           aren't supported and the header flag should always be true. This is kept for future implementation"
         - name: "nrow"
           in: "query"
@@ -811,25 +811,25 @@ parameters:
   authorization:
     name: Authorization
     description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
-    For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
-    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
   x-api-key:
     name: x-api-key
-    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://www.adobe.io/apis/experienceplatform/home/tutorials/alltutorials.html#!api-specification/markdown/narrative/tutorials/authenticate_to_acp_tutorial/authenticate_to_acp_tutorial.md).'
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
   x-sandbox-name:
     name: x-sandbox-name
-    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://www.adobe.io/apis/experienceplatform/home/permissions-and-sandboxes/permissions-and-sandboxes.html#!api-specification/markdown/narrative/technical_overview/sandboxes/sandboxes-overview.md) for more information.'
+    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.'
     required: true
     type: string
     in: header
@@ -1388,7 +1388,7 @@ definitions:
         },
         "batchId": {
           "type": "string",
-          "description": "The uuid assigned to the batch messages"
+          "description": "The UUID assigned to the batch messages"
         },
         "receivedTimeMs": {
           "type": "integer",
