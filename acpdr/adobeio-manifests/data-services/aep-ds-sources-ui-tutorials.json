@@ -115,11 +115,6 @@
                 },
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/crm/paypal-tutorial.md",
-                    "title": "PayPal connector"
-                },
-                {
-                    "pages": [],
                     "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/phoenix-ui-tutorial.md",
                     "title": "Phoenix connector"
                 },
@@ -203,7 +198,7 @@
         {
             "importedFileName": "configure-protocols-dataflow-tutorial",
             "pages": [],
-            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/protocols/configure-protocols-dataflow-tutorial.md",
+            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/protocols/configure-protocols-dataflow.md",
             "title": "Configure a dataflow for a protocols source connector in the UI",
             "description": ""
         },                        
