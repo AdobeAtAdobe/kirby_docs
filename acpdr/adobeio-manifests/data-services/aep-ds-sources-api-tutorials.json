@@ -99,11 +99,6 @@
                 },
                 {
                     "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/database-nosql/hp-vertica-api-tutorial.md",
-                    "title": "HP Vertica connector"
-                },
-                {
-                    "pages": [],
                     "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/api/database-nosql/mariadb-api-tutorial.md",
                     "title": "MariaDB connector"
                 },

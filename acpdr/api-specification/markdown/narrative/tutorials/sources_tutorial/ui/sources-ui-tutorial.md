@@ -47,3 +47,7 @@ The following is a list of tutorials for creating connectors in the Platform UI:
 ## Payments
 
 - [PayPal connector](./payments/paypal-tutorial.md)
+
+## Protocols
+
+- [Generic OData connector](./protocols/odata-tutorial.md)
