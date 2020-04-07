@@ -20,7 +20,6 @@ The following is a list of tutorials for creating connectors in the Platform UI:
 ## CRM
 
 - [Microsoft Dynamics and Salesforce connector](./crm/dynamics-salesforce-ui-tutorial.md)
-- [PayPal connector](./crm/paypal-tutorial.md)
 
 ## Customer Success
 
@@ -44,3 +43,7 @@ The following is a list of tutorials for creating connectors in the Platform UI:
 ## Marketing Automation
 
 - [HubSpot connector](./marketing-automation/hubspot-tutorial.md)
+
+## Payments
+
+- [PayPal connector](./payments/paypal-tutorial.md)

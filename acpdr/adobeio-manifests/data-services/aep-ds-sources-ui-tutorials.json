@@ -70,6 +70,16 @@
                 },
                 {
                     "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/greenplum-ui-tutorial.md",
+                    "title": "GreenPlum connector"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/customer-success/salesforce-service-cloud-tutorial.md",
+                    "title": "Salesforce Service Cloud connector"
+                },
+                {
+                    "pages": [],
                     "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/hive-ui-tutorial.md",
                     "title": "Hive connector"
                 },
@@ -112,6 +122,16 @@
                     "pages": [],
                     "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/postgresql-tutorial.md",
                     "title": "PostgreSQL connector"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/marketing-automation/hubspot-tutorial.md",
+                    "title": "HubSpot connector"
+                },
+                {
+                    "pages": [],
+                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/payments/paypal-tutorial.md",
+                    "title": "PayPal connector"
                 },
                 {
                     "pages": [],
@@ -167,7 +187,14 @@
             "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/marketing-automation/configure-marketing-automation-dataflow-tutorial.md",
             "title": "Configure a dataflow for a marketing automation system source connector in the UI",
             "description": ""
-        },            
+        },
+        {
+            "importedFileName": "configure-payments-dataflow-tutorial",
+            "pages": [],
+            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/payments/configure-payments-dataflow-tutorial.md",
+            "title": "Configure a dataflow for a payments source connector in the UI",
+            "description": ""
+        },               
         {
             "importedFileName": "profile-population-tutorial",
             "pages": [],
