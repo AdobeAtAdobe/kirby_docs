@@ -42,7 +42,11 @@ The following is a list of tutorials for creating connectors using the Flow Serv
 
 ## Payments
 
-- [PayPal connetor](./payments/paypal-api-tutorial.md)
+- [PayPal connector](./payments/paypal-api-tutorial.md)
+
+## Protocols
+
+- [Generic OData connector](./protocols/odata-api-tutorial.md)
 
 ## Legacy connectors
 
