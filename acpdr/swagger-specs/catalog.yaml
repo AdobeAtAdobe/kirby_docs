@@ -184,7 +184,7 @@ paths:
       tags:
         - Accounts
       operationId: get_account_by_id
-      summary: Lookup an account by ID.
+      summary: Look up an account by ID.
       produces:
         - application/json
       responses:
@@ -820,7 +820,7 @@ paths:
       tags:
         - Batches
       operationId: get_batch_by_id
-      summary: Lookup a batch by ID.
+      summary: Look up a batch by ID.
       produces:
         - application/json
       parameters:
@@ -1081,7 +1081,7 @@ paths:
       tags:
         - Large documents
       operationId: get_largeDocument_by_id
-      summary: Lookup a large document by ID.
+      summary: Look up a large document by ID.
       produces:
         - application/json
       responses:
@@ -1107,8 +1107,6 @@ paths:
                               'foo': ['bar', 'foos', 'ball'],
                               'adobe/touchpoint/appliedTransformations': ['CLUSTERED:FOO']
                             },
-                            status: 'enabled',
-                            aspect: 'production',
                             requestStartDate: '1992-10-10 10:10:10',
                             basePath: fakeBasePath,
                             codeUrl: 'foo://bar/baz/fuzz.git'
@@ -1281,7 +1279,7 @@ paths:
       tags:
         - Connections
       operationId: get_connection_by_id
-      summary: Lookup a connection by ID.
+      summary: Look up a connection by ID.
       produces:
         - application/json
       responses:
@@ -1495,11 +1493,6 @@ paths:
                       "createdUser": "acp_foundation_catalog@AdobeID",
                       "updatedUser": "acp_foundation_catalog@AdobeID",
                       "namespace": "ACP",
-                      "contacts": [{
-                      "email": "someEmailId@something.com",
-                      "displayName": "dummyName",
-                      "isPrimary": true
-                      }],
                       "state": "DRAFT",
                       "tags": {
                           "foo": [
@@ -1512,8 +1505,6 @@ paths:
                           ]
                       },
                       "viewId": "5ab54170864cf0267448ead5",
-                      "aspect": "production",
-                      "status": "enabled",
                       "fields": [],
                       "basePath": "s3://bar/ball/baz",
                       "fileDescription": {
@@ -1701,7 +1692,7 @@ paths:
     get:
       tags:
         - Connectors
-      summary: Lookup a connector by ID.
+      summary: Look up a connector by ID.
       operationId: get_connector_by_id
       produces:
         - application/json
@@ -1904,14 +1895,8 @@ paths:
                       "updated": 1521828208046,
                       "createdClient": "acp_foundation_catalog",
                       "createdUser": "acp_foundation_catalog@AdobeID",
-                      "editableClientIds":["acp_foundation_catalog"],
                       "updatedUser": "acp_foundation_catalog@AdobeID",
                       "namespace": "ACP",
-                      "contacts": [{
-                      "email": "someEmailId@something.com",
-                      "displayName": "dummyName",
-                      "isPrimary": true
-                      }],
                       "state": "DRAFT",
                       "tags": {
                           "foo": [
@@ -1924,8 +1909,6 @@ paths:
                           ]
                       },
                       "viewId": "5ab54170864cf0267448ead5",
-                      "aspect": "production",
-                      "status": "enabled",
                       "fields": [],
                       "basePath": "s3://bar/ball/baz",
                       "fileDescription": {
@@ -1998,7 +1981,7 @@ paths:
     get:
       tags:
         - Datasets
-      summary: Lookup a dataset by ID.
+      summary: Look up a dataset by ID.
       operationId: get_data_set_by_id
       produces:
         - application/json
@@ -2031,14 +2014,8 @@ paths:
                       "updated": 1521828208046,
                       "createdClient": "acp_foundation_catalog",
                       "createdUser": "acp_foundation_catalog@AdobeID",
-                      "editableClientIds": ["acp_foundation_catalog"],
                       "updatedUser": "acp_foundation_catalog@AdobeID",
                       "namespace": "ACP",
-                      "contacts": [{
-                      "email": "someEmailId@something.com",
-                      "displayName": "dummyName",
-                      "isPrimary": true
-                      }],
                       "state":"DRAFT",
                       "tags": {
                           "foo": [
@@ -2051,8 +2028,6 @@ paths:
                           ]
                       },
                       "viewId": "5ab54170864cf0267448ead5",
-                      "aspect": "production",
-                      "status": "enabled",
                       "fields": [],
                       "basePath": "s3://bar/ball/baz",
                       "fileDescription": {
@@ -2243,11 +2218,7 @@ paths:
                       "version": "1.0.0",
                       "imsOrg": "4F3BB22C5631222A7F000101@AdobeOrg",
                       "dataSetId": "5ab540d0864cf0267448ead4",
-                      "aspect": "production",
-                      "status": "enabled",
-                      "editable": false,
                       "fields": [],
-                      "storageType": "s3",
                       "basePath": "s3://bar/ball/baz",
                       "fileDescription": {
                           "persisted": false
@@ -2334,7 +2305,7 @@ paths:
     get:
       tags:
         - Datasets
-      summary: Lookup a single view for a dataset, both specified by ID.
+      summary: Look up a single view for a dataset, both specified by ID.
       operationId: get_data_set_view_by_data_set_id_by_id
       produces:
         - application/json
@@ -2352,11 +2323,7 @@ paths:
                       "version": "1.0.0",
                       "imsOrg": "4F3BB22C5631222A7F000101@AdobeOrg",
                       "dataSetId": "5ab540d0864cf0267448ead4",
-                      "aspect": "production",
-                      "status": "enabled",
-                      "editable": false,
                       "fields": [],
-                      "storageType": "s3",
                       "basePath": "s3://bar/ball/baz",
                       "fileDescription": {
                           "persisted": false
@@ -2514,7 +2481,7 @@ paths:
     get:
       tags:
         - Datasets
-      summary: Lookup a file for a particular view of a dataset. The file, view, and dataset are specified by ID.
+      summary: Look up a file for a particular view of a dataset. The file, view, and dataset are specified by ID.
       operationId: get_data_set_file_by_data_set_id_and_data_set_view_id_by_id
       produces:
         - application/json
@@ -2616,36 +2583,6 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-  '/dataSets/{id}/dule':
-    parameters:
-      - $ref: '#/parameters/id'
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-name'
-      - $ref: '#/parameters/accept-encoding'
-    get:
-      tags:
-        - Datasets
-      summary: Retrieve the Data Usage and Enforcement (DULE) labels associated with a dataset specified by ID.
-      operationId: get_dule_labels
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: The DULE labels associated with the dataset.
-          schema:
-            $ref: '#/definitions/duleLabelResponse'
-        '400':
-          description: Bad request
-        '403':
-          description: Forbidden
-        '404':
-          description: Not found
-        '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
   /dataSetViews:
     parameters:
       - $ref: '#/parameters/authorization'
@@ -2685,33 +2622,6 @@ paths:
           required: false
           type: boolean
           in: query
-        - name: status
-          description: >-
-            Describes the current state of the view.  If a view is not enabled,
-            it should not be used by any process even when it is specified as a
-            dependency. Only one view of a given aspect should be enabled at any
-            time. For example, no DataSet should have more than one enabled
-            production or sandbox view. This query param allows filtering all
-            dataSetViews by their status field value.
-          required: false
-          type: string
-          in: query
-        - name: editable
-          description: >-
-            Determines whether or not this DataSetView definition should be
-            editable by the user.  Some documents are 'locked' and not available
-            for edit. This query param allows filtering all dataSetViews by
-            their status editable value.
-          required: false
-          type: boolean
-          in: query
-        - name: sdsVersion
-          description: >-
-            Filter by the semantic version of the SDS this view (and it's transforms) are
-            compatible with.
-          required: false
-          type: string
-          in: query
         - name: basePath
           description: >-
             Filter by the fully qualified base path for all dataset files associated with this
@@ -2722,24 +2632,6 @@ paths:
           in: query
         - name: saveStrategy
           description: Filter by the save strategy for this dataset.
-          required: false
-          type: string
-          in: query
-        - name: isCached
-          description: >-
-            Some dataset views are pre-cached in a high-speed lookup table for
-            faster access, this flag indicates if that has been done. This query param
-            allows filtering all dataSetViews by their isCached field value.
-          required: false
-          type: boolean
-          in: query
-        - name: aspect
-          description: >-
-            Aspect represents the particular perspective or target you're after
-            when viewing a dataset. Sandbox views are a version of the dataset
-            that's being used to iterate towards a final ETL job definition. The
-            production aspect is then used (by default). This query param allows
-            filtering all dataSetViews by their aspect field value.
           required: false
           type: string
           in: query
@@ -2767,11 +2659,7 @@ paths:
                       "version": "1.0.0",
                       "imsOrg": "4F3BB22C5631222A7F000101@AdobeOrg",
                       "dataSetId": "5ab540d0864cf0267448ead4",
-                      "aspect": "production",
-                      "status": "enabled",
-                      "editable": false,
                       "fields": [],
-                      "storageType": "s3",
                       "basePath": "s3://bar/ball/baz",
                       "fileDescription": {
                           "persisted": false
@@ -2853,7 +2741,7 @@ paths:
     get:
       tags:
         - Dataset views
-      summary: Lookup a dataset view by ID.
+      summary: Look up a dataset view by ID.
       operationId: get_data_set_view_by_id
       produces:
         - application/json
@@ -2879,11 +2767,7 @@ paths:
                       "version": "1.0.0",
                       "imsOrg": "4F3BB22C5631222A7F000101@AdobeOrg",
                       "dataSetId": "5ab540d0864cf0267448ead4",
-                      "aspect": "production",
-                      "status": "enabled",
-                      "editable": false,
                       "fields": [],
-                      "storageType": "s3",
                       "basePath": "s3://bar/ball/baz",
                       "fileDescription": {
                           "persisted": false
@@ -3097,11 +2981,7 @@ paths:
                       "version": "1.0.0",
                       "imsOrg": "4F3BB22C5631222A7F000101@AdobeOrg",
                       "dataSetId": "5ab540d0864cf0267448ead4",
-                      "aspect": "production",
-                      "status": "enabled",
-                      "editable": false,
                       "fields": [],
-                      "storageType": "s3",
                       "basePath": "s3://bar/ball/baz",
                       "fileDescription": {
                           "persisted": false
@@ -3216,7 +3096,7 @@ paths:
     get:
       tags:
         - Dataset files
-      summary: Lookup a dataset file by ID.
+      summary: Look up a dataset file by ID.
       operationId: get_data_set_file_by_id
       produces:
         - application/json
@@ -3573,7 +3453,7 @@ paths:
     get:
       tags:
         - Transforms
-      summary: Lookup a transform by ID.
+      summary: Look up a transform by ID.
       operationId: get_transform_by_id
       produces:
         - application/json
@@ -3762,8 +3642,6 @@ paths:
                           ]
                       },
                       "viewId": "5ab54170864cf0267448ead5",
-                      "aspect": "production",
-                      "status": "enabled",
                       "fields": [],
                       "basePath": "s3://bar/ball/baz",
                       "fileDescription": {
@@ -3881,8 +3759,6 @@ paths:
                           ]
                       },
                       "viewId": "5ab54170864cf0267448ead5",
-                      "aspect": "production",
-                      "status": "enabled",
                       "fields": [],
                       "basePath": "s3://bar/ball/baz",
                       "fileDescription": {
@@ -3953,7 +3829,7 @@ paths:
     get:
       tags:
         - Transforms
-      summary: Lookup an input dataset for a transform, both specified by ID.
+      summary: Look up an input dataset for a transform, both specified by ID.
       operationId: get_inputs_by_transform_id_and_data_set_id
       produces:
         - application/json
@@ -3997,8 +3873,6 @@ paths:
                           ]
                       },
                       "viewId": "5ab54170864cf0267448ead5",
-                      "aspect": "production",
-                      "status": "enabled",
                       "fields": [],
                       "basePath": "s3://bar/ball/baz",
                       "fileDescription": {
@@ -4064,7 +3938,7 @@ paths:
     get:
       tags:
         - Transforms
-      summary: Lookup an output dataset for a transform, both specified by ID.
+      summary: Look up an output dataset for a transform, both specified by ID.
       operationId: get_outputs_by_transform_id_and_data_set_id
       produces:
         - application/json
@@ -4102,8 +3976,6 @@ paths:
                           ]
                       },
                       "viewId": "5ab54170864cf0267448ead5",
-                      "aspect": "production",
-                      "status": "enabled",
                       "fields": [],
                       "basePath": "s3://bar/ball/baz",
                       "fileDescription": {
@@ -4360,62 +4232,17 @@ parameters:
     required: true
     in: path
     type: string
-  extensionNS:
-    name: extensionNS
-    description: The extension namespace.
-    required: true
-    in: path
-    type: string
   objectName:
     name: objectName
     description: Name of custom object.
     required: true
     in: path
     type: string
-  xdmExtensionPayload:
-    name: xdmExtensionPayload
-    description: The payload JSON that goes in the body of an XDM Extension POST request.
-    required: true
-    in: body
-    schema:
-      $ref: '#/definitions/xdmExtensionRequest'
-  descriptorPayload:
-    name: descriptorPayload
-    description: The descriptor payload JSON that goes in the body of the request.
-    required: true
-    in: body
-    schema:
-      $ref: '#/definitions/xdmDescriptor'
-  subSchemaPayload:
-    name: payload
-    description: The payload JSON that goes in the body of the request.
-    required: true
-    in: body
-    schema:
-      $ref: '#/definitions/subSchema'
   expansion:
     name: expansion
     description: Set to 'xdm' to expand XDM schema.
     in: query
     type: string
-  descriptorType:
-    name: descriptorType
-    description: Type of the descriptor objects (relationship, schema, identity) being requested.
-    in: query
-    type: string
-    required: false
-  sourceSchema:
-    name: sourceSchema
-    description: sourceSchema defined in the descriptor objects that are being requested.
-    in: query
-    type: string
-    required: false
-  destSchema:
-    name: destSchema
-    description: destSchema defined in the descriptor objects that are being requested.
-    in: query
-    type: string
-    required: false
   tagNamespace:
     name: tagNamespace
     description: Tag namespace or key as defined within a tag inside dataSet, batch or transform.
@@ -4799,22 +4626,6 @@ definitions:
           - "US-ASCII"
           - "UTF-8"
           - "ISO-8859-1"
-  containerFormat:
-    type: string
-    description: >-
-      (DEPRECATED) The Container format for all dataSetFiles associated with this
-      view.
-    enum:
-      - text
-      - sequence
-      - parquet
-  persisted:
-    type: boolean
-    description: >-
-      (DEPRECATED) Determines whether or not the view is persisted. If
-      this is false then the other fields in this object are redundant,
-      but may be used for identifying old data that was persisted
-      previously.
   format:
     type: string
     description: The file format for all dataSetFiles associated with this view. Required for CSV upload workflows, but optional in all other cases.
@@ -5015,22 +4826,9 @@ definitions:
         type: object
         description: These are arbitrary key/value pairs related to this Connection.
         properties: {}
-      dependencies:
-        type: array
-        items:
-          type: string
       imsOrg:
         type: string
         description: The owning IMS organization identifier.
-      contacts:
-        type: array
-        description: >-
-          A list of persons to be contacts for this connection. One should be
-          flagged as the primary contact/owner. This list is not meant to
-          reflect roles or permissions, but a communication channel for
-          operations related to this connection.
-        items:
-          $ref: '#/definitions/contacts'
       ingestStart:
         type: string
         description: Suggested date/time to start ingesting.
@@ -5131,103 +4929,6 @@ definitions:
           type: array
           items:
             type: string
-      dule:
-        type: object
-        description: DULE labels.
-        properties:
-          contracts:
-            type: array
-            description: 'What Contractual Considerations, if any, apply to this data?'
-            items:
-              enum:
-                - C1
-                - C2
-                - C3
-                - C4
-                - C5
-                - C6
-                - C7
-                - C8
-                - C9
-                - None
-              type: string
-          contract:
-            type: array
-            description: 'What Contractual Considerations, if any, apply to this data?'
-            items:
-              enum:
-                - C1
-                - C2
-                - C3
-                - C4
-                - C5
-                - C6
-                - C7
-                - C8
-                - C9
-                - None
-              type: string
-          identifiability:
-            type: array
-            description: >-
-              Should this data be treated as Indirectly Identifiable Data or
-              Directly Identifiable Data? (What is the level of
-              Identifiability?)
-            items:
-              enum:
-                - I1
-                - I2
-              type: string
-          identity:
-            type: array
-            description: >-
-              Should this data be treated as Indirectly Identifiable Data or
-              Directly Identifiable Data? (What is the level of
-              Identifiability?)
-            items:
-              enum:
-                - I1
-                - I2
-              type: string
-          loginState:
-            type: array
-            description: What is the Log-in State?
-            items:
-              enum:
-                - Identified
-                - Incognito
-                - Ambiguous
-                - Not Provided
-              type: string
-          specialTypes:
-            type: array
-            description: >-
-              Is this a special data type? (Relative to a regulated industry, or
-              distinct regulatory rules, e.g. GDPR Special data, health data, or
-              Financial data)
-            items:
-              enum:
-                - S1
-                - S2
-              type: string
-          sensitive:
-            type: array
-            description: >-
-              Is this a special data type? (Relative to a regulated industry, or
-              distinct regulatory rules, e.g. GDPR Special data, health data, or
-              Financial data)
-            items:
-              enum:
-                - S1
-                - S2
-              type: string
-          other:
-            type: string
-            description: Other information that may govern the use of this data.
-    required:
-      - connector
-      - name
-      - enabled
   connectionPatchRequest:
       type: object
       properties:
@@ -5256,22 +4957,9 @@ definitions:
           type: object
           description: These are arbitrary key/value pairs related to this Connection.
           properties: {}
-        dependencies:
-          type: array
-          items:
-            type: string
         imsOrg:
           type: string
           description: The owning IMS organization identifier.
-        contacts:
-          type: array
-          description: >-
-            A list of persons to be contacts for this connection. One should be
-            flagged as the primary contact/owner. This list is not meant to
-            reflect roles or permissions, but a communication channel for
-            operations related to this connection.
-          items:
-            $ref: '#/definitions/contacts'
         ingestStart:
           type: string
           description: Suggested date/time to start ingesting.
@@ -5372,99 +5060,6 @@ definitions:
             type: array
             items:
               type: string
-        dule:
-          type: object
-          description: DULE labels.
-          properties:
-            contracts:
-              type: array
-              description: 'What Contractual Considerations, if any, apply to this data?'
-              items:
-                enum:
-                  - C1
-                  - C2
-                  - C3
-                  - C4
-                  - C5
-                  - C6
-                  - C7
-                  - C8
-                  - C9
-                  - None
-                type: string
-            contract:
-              type: array
-              description: 'What Contractual Considerations, if any, apply to this data?'
-              items:
-                enum:
-                  - C1
-                  - C2
-                  - C3
-                  - C4
-                  - C5
-                  - C6
-                  - C7
-                  - C8
-                  - C9
-                  - None
-                type: string
-            identifiability:
-              type: array
-              description: >-
-                Should this data be treated as Indirectly Identifiable Data or
-                Directly Identifiable Data? (What is the level of
-                Identifiability?)
-              items:
-                enum:
-                  - I1
-                  - I2
-                type: string
-            identity:
-              type: array
-              description: >-
-                Should this data be treated as Indirectly Identifiable Data or
-                Directly Identifiable Data? (What is the level of
-                Identifiability?)
-              items:
-                enum:
-                  - I1
-                  - I2
-                type: string
-            loginState:
-              type: array
-              description: What is the Log-in State?
-              items:
-                enum:
-                  - Identified
-                  - Incognito
-                  - Ambiguous
-                  - Not Provided
-                type: string
-            specialTypes:
-              type: array
-              description: >-
-                Is this a special data type? (Relative to a regulated industry, or
-                distinct regulatory rules, e.g. GDPR Special data, health data, or
-                Financial data)
-              items:
-                enum:
-                  - S1
-                  - S2
-                type: string
-            sensitive:
-              type: array
-              description: >-
-                Is this a special data type? (Relative to a regulated industry, or
-                distinct regulatory rules, e.g. GDPR Special data, health data, or
-                Financial data)
-              items:
-                enum:
-                  - S1
-                  - S2
-                type: string
-            other:
-              type: string
-              description: Other information that may govern the use of this data.
   largeDocumentsResponse:
     type: object
     properties:
@@ -5543,23 +5138,9 @@ definitions:
         type: object
         description: These are arbitrary key/value pairs related to this Connection.
         properties: {}
-      dependencies:
-        type: array
-        description: ''
-        items:
-          type: string
       imsOrg:
         type: string
         description: The owning IMS organization identifier.
-      contacts:
-        type: array
-        description: >-
-          A list of persons to be contacts for this connection. One should be
-          flagged as the primary contact/owner. This list is not meant to
-          reflect roles or permissions, but a communication channel for
-          operations related to this connection.
-        items:
-          $ref: '#/definitions/contacts'
       ingestStart:
         type: string
         description: Suggested date/time to start ingesting.
@@ -5664,99 +5245,6 @@ definitions:
           type: array
           items:
             type: string
-      dule:
-        type: object
-        description: DULE labels.
-        properties:
-          contracts:
-            type: array
-            description: 'What Contractual Considerations, if any, apply to this data?'
-            items:
-              enum:
-                - C1
-                - C2
-                - C3
-                - C4
-                - C5
-                - C6
-                - C7
-                - C8
-                - C9
-                - None
-              type: string
-          contract:
-            type: array
-            description: 'What Contractual Considerations, if any, apply to this data?'
-            items:
-              enum:
-                - C1
-                - C2
-                - C3
-                - C4
-                - C5
-                - C6
-                - C7
-                - C8
-                - C9
-                - None
-              type: string
-          identifiability:
-            type: array
-            description: >-
-              Should this data be treated as Indirectly Identifiable Data or
-              Directly Identifiable Data? (What is the level of
-              Identifiability?)
-            items:
-              enum:
-                - I1
-                - I2
-              type: string
-          identity:
-            type: array
-            description: >-
-              Should this data be treated as Indirectly Identifiable Data or
-              Directly Identifiable Data? (What is the level of
-              Identifiability?)
-            items:
-              enum:
-                - I1
-                - I2
-              type: string
-          loginState:
-            type: array
-            description: What is the Log-in State?
-            items:
-              enum:
-                - Identified
-                - Incognito
-                - Ambiguous
-                - Not Provided
-              type: string
-          specialTypes:
-            type: array
-            description: >-
-              Is this a special data type? (Relative to a regulated industry, or
-              distinct regulatory rules, e.g. GDPR Special data, health data, or
-              Financial data)
-            items:
-              enum:
-                - S1
-                - S2
-              type: string
-          sensitive:
-            type: array
-            description: >-
-              Is this a special data type? (Relative to a regulated industry, or
-              distinct regulatory rules, e.g. GDPR Special data, health data, or
-              Financial data)
-            items:
-              enum:
-                - S1
-                - S2
-              type: string
-          other:
-            type: string
-            description: Other information that may govern the use of this data.
   connectorResponse:
     type: object
     properties:
@@ -5875,15 +5363,6 @@ definitions:
       description:
         type: string
         description: A longer text description of the DataSet.
-      contacts:
-        type: array
-        description: >-
-          A list of persons to be contacts for this dataset. One should be
-          flagged as the primary contact/owner. This list is not meant to
-          reflect roles or permissions, but a communication channel for
-          operations related to this dataset.
-        items:
-          $ref: '#/definitions/contacts'
       namespace:
         type: string
         description: >-
@@ -5967,53 +5446,13 @@ definitions:
       lastFailedBatch:
         type: string
         description: The ID of the last failed batch that has modified this data set (only modified by Siphon batch ingest).
-      aspect:
-        type: string
-        description: >-
-          Aspect represents the particular perspective or target you're after
-          when viewing a dataset. Sandbox views are a version of the dataset
-          that's being used to iterate towards a final ETL job definition. The
-          production aspect is then used (by default).
-        enum:
-          - production
-          - sandbox
       observableSchema:
         type: object
         description: >-
           observableSchema stores a JSON Schema object that is a valid subset (including the null case) of the XDM model specified by `schemaRef`.
-      editableClientIds:
-        type: array
-        description: >-
-          Whitelisted client ids that can modify the restricted fields of this dataset.
-        items:
-          type: string
-      status:
-        type: string
-        description: >-
-          Describes the current state of the view.  If a view is not enabled, it
-          should not be used by any process even when it is specified as a
-          dependency. Only one view of a given aspect should be enabled at any
-          time. For example, no DataSet should have more than one enabled
-          production or sandbox view.
-        enum:
-          - enabled
-          - disabled
       requestStartDate:
         type: string
         description: 'The oldest date and the time, when the data was last ingested'
-      editable:
-        type: boolean
-        description: >-
-          Determines whether or not this DataSetView definition should be
-          editable by the user.  Some documents are 'locked' and not available
-          for edit.
-      dependencies:
-        type: array
-        description: >-
-          An array of dependency objects. If a DataSetView is referenced in a
-          transform, data about that linkage should be found in this array.
-        items:
-          $ref: '#/definitions/dependencies'
       fields:
         type: array
         description: >-
@@ -6032,10 +5471,6 @@ definitions:
         type: object
         description: Metadata describing the dataset files associated with this DataSetView.
         properties:
-          persisted:
-            $ref: '#/definitions/persisted'
-          containerFormat:
-            $ref: '#/definitions/containerFormat'
           format:
             $ref: '#/definitions/format'
           delimiters:
@@ -6070,11 +5505,6 @@ definitions:
               - UTF-8
               - ISO-8859-1
               - ''
-      partitions:
-        type: array
-        description: ''
-        items:
-          type: string
       saveStrategy:
         type: string
         description: Denotes save strategy for this dataset.
@@ -6089,101 +5519,6 @@ definitions:
         $ref: '#/definitions/schemaMetadata'
       schemaRef:
         $ref: '#/definitions/schemaRef'
-      dule:
-        type: object
-        description: DULE labels.
-        properties:
-          contracts:
-            type: array
-            description: 'What Contractual Considerations, if any, apply to this data?'
-            items:
-              enum:
-                - C1
-                - C2
-                - C3
-                - C4
-                - C5
-                - C6
-                - C7
-                - C8
-                - C9
-                - None
-              type: string
-          contract:
-            type: array
-            description: 'What Contractual Considerations, if any, apply to this data?'
-            items:
-              enum:
-                - C1
-                - C2
-                - C3
-                - C4
-                - C5
-                - C6
-                - C7
-                - C8
-                - C9
-                - None
-              type: string
-          identifiability:
-            type: array
-            description: >-
-              Should this data be treated as Indirectly Identifiable Data or
-              Directly Identifiable Data? (What is the level of
-              Identifiability?)
-            items:
-              enum:
-                - I1
-                - I2
-              type: string
-          identity:
-            type: array
-            description: >-
-              Should this data be treated as Indirectly Identifiable Data or
-              Directly Identifiable Data? (What is the level of
-              Identifiability?)
-            items:
-              enum:
-                - I1
-                - I2
-              type: string
-          loginState:
-            type: array
-            description: What is the Log-in State?
-            items:
-              enum:
-                - Identified
-                - Incognito
-                - Ambiguous
-                - Not Provided
-              type: string
-          specialTypes:
-            type: array
-            description: >-
-              Is this a special data type? (Relative to a regulated industry, or
-              distinct regulatory rules, e.g. GDPR Special data, health data, or
-              Financial data)
-            items:
-              enum:
-                - S1
-                - S2
-              type: string
-          sensitive:
-            type: array
-            description: >-
-              Is this a special data type? (Relative to a regulated industry, or
-              distinct regulatory rules, e.g. GDPR Special data, health data, or
-              Financial data)
-            items:
-              enum:
-                - S1
-                - S2
-              type: string
-          persistence:
-                  $ref: '#/definitions/persistenceRequest'
-          other:
-            type: string
-            description: Other information that may govern the use of this data.
       dataSourceId:
         type: integer
         description: The Id of the datasource. It must be unique, along with it''s name.
@@ -6213,15 +5548,6 @@ definitions:
       description:
         type: string
         description: A longer text description of the DataSet.
-      contacts:
-        type: array
-        description: >-
-          A list of persons to be contacts for this dataset. One should be
-          flagged as the primary contact/owner. This list is not meant to
-          reflect roles or permissions, but a communication channel for
-          operations related to this dataset.
-        items:
-          $ref: '#/definitions/contacts'
       created:
         type: integer
         format: int64
@@ -6242,11 +5568,6 @@ definitions:
         type: string
         description: The ID of the user who created this object.
         readOnly: true
-      editableClientIds:
-            type: array
-            description: Whitelisted client ids that can modify the restricted fields of this dataset..
-            items:
-              type: string
       updatedUser:
         type: string
         description: The ID of the user who changed this object.
@@ -6276,47 +5597,13 @@ definitions:
       viewId:
         type: string
         description: The ID for associated DataSet view.
-      aspect:
-        type: string
-        description: >-
-          Aspect represents the particular perspective or target you're after
-          when viewing a dataset. Sandbox views are a version of the dataset
-          that's being used to iterate towards a final ETL job definition. The
-          production aspect is then used (by default).
-        enum:
-          - production
-          - sandbox
       observableSchema:
         type: object
         description: >-
           observableSchema stores a JSON Schema object that is a valid subset (including the null case) of the XDM model specified by `schemaRef`.
-      status:
-        type: string
-        description: >-
-          Describes the current state of the view.  If a view is not enabled, it
-          should not be used by any process even when it is specified as a
-          dependency. Only one view of a given aspect should be enabled at any
-          time. For example, no DataSet should have more than one enabled
-          production or sandbox view.
-        enum:
-          - enabled
-          - disabled
       requestStartDate:
         type: string
         description: 'The oldest date and the time, when the data was last ingested'
-      editable:
-        type: boolean
-        description: >-
-          Determines whether or not this DataSetView definition should be
-          editable by the user.  Some documents are 'locked' and not available
-          for edit.
-      dependencies:
-        type: array
-        description: >-
-          An array of dependency objects. If a DataSetView is referenced in a
-          transform, data about that linkage should be found in this array.
-        items:
-          $ref: '#/definitions/dependencies'
       fields:
         type: array
         description: >-
@@ -6335,10 +5622,6 @@ definitions:
         type: object
         description: Metadata describing the dataset files associated with this DataSetView.
         properties:
-          persisted:
-            $ref: '#/definitions/persisted'
-          containerFormat:
-            $ref: '#/definitions/containerFormat'
           format:
             $ref: '#/definitions/format'
           delimiters:
@@ -6373,11 +5656,6 @@ definitions:
               - UTF-8
               - ISO-8859-1
               - ''
-      partitions:
-        type: array
-        description: ''
-        items:
-          type: string
       saveStrategy:
         type: string
         description: Denotes save strategy for this dataset.
@@ -6385,9 +5663,6 @@ definitions:
           - append
           - overwrite
           - delta
-      createdXdmSchemaVersion:
-        type: string
-        description: The XDM version used when the dataSet was created using schemaRef.
       schema:
         type: string
         description: This is the uri for the XDM model
@@ -6457,99 +5732,6 @@ definitions:
       lastFailedBatch:
         type: string
         description: The ID of the last failed batch that has modified this data set (only modified by Siphon batch ingest).
-      dule:
-        type: object
-        description: DULE labels.
-        properties:
-          contracts:
-            type: array
-            description: 'What Contractual Considerations, if any, apply to this data?'
-            items:
-              enum:
-                - C1
-                - C2
-                - C3
-                - C4
-                - C5
-                - C6
-                - C7
-                - C8
-                - C9
-                - None
-              type: string
-          contract:
-            type: array
-            description: 'What Contractual Considerations, if any, apply to this data?'
-            items:
-              enum:
-                - C1
-                - C2
-                - C3
-                - C4
-                - C5
-                - C6
-                - C7
-                - C8
-                - C9
-                - None
-              type: string
-          identifiability:
-            type: array
-            description: >-
-              Should this data be treated as Indirectly Identifiable Data or
-              Directly Identifiable Data? (What is the level of
-              Identifiability?)
-            items:
-              enum:
-                - I1
-                - I2
-              type: string
-          identity:
-            type: array
-            description: >-
-              Should this data be treated as Indirectly Identifiable Data or
-              Directly Identifiable Data? (What is the level of
-              Identifiability?)
-            items:
-              enum:
-                - I1
-                - I2
-              type: string
-          loginState:
-            type: array
-            description: What is the Log-in State?
-            items:
-              enum:
-                - Identified
-                - Incognito
-                - Ambiguous
-                - Not Provided
-              type: string
-          specialTypes:
-            type: array
-            description: >-
-              Is this a special data type? (Relative to a regulated industry, or
-              distinct regulatory rules, e.g. GDPR Special data, health data, or
-              Financial data)
-            items:
-              enum:
-                - S1
-                - S2
-              type: string
-          sensitive:
-            type: array
-            description: >-
-              Is this a special data type? (Relative to a regulated industry, or
-              distinct regulatory rules, e.g. GDPR Special data, health data, or
-              Financial data)
-            items:
-              enum:
-                - S1
-                - S2
-              type: string
-          other:
-            type: string
-            description: Other information that may govern the use of this data.
       dataSourceId:
         type: integer
         description: The ID of the datasource. It must be unique, along with its name.
@@ -6563,55 +5745,15 @@ definitions:
         description: >-
           Foreign key to the owning DataSet. This attribute is immutable and
           cannot be updated using PUT or PATCH requests.
-      aspect:
-        type: string
-        description: >-
-          Aspect represents the particular perspective or target you're after
-          when viewing a dataset. Sandbox views are a version of the dataset
-          that's being used to iterate towards a final ETL job definition. The
-          production aspect is then used (by default). This attribute is
-          immutable and cannot be updated using PUT or PATCH requests.
-        enum:
-          - production
-          - sandbox
       observableSchema:
         type: object
         description: >-
           observableSchema stores a JSON Schema object that is a valid subset (including the null case) of the XDM model specified by `schemaRef`.
       schemaMetadata:
         $ref: '#/definitions/schemaMetadata'
-      status:
-        type: string
-        description: >-
-          Describes the current state of the view.  If a view is not enabled, it
-          should not be used by any process even when it is specified as a
-          dependency. Only one view of a given aspect should be enabled at any
-          time. For example, no DataSet should have more than one enabled
-          production or sandbox view.
-        enum:
-          - enabled
-          - disabled
       requestStartDate:
         type: string
         description: 'The oldest date and the time, when the data was last ingested'
-      editable:
-        type: boolean
-        description: >-
-          Determines whether or not this DataSetView definition should be
-          editable by the user.  Some documents are 'locked' and not available
-          for edit.
-      dependencies:
-        type: array
-        description: >-
-          An array of dependency objects. If a DataSetView is referenced in a
-          transform, data about that linkage should be found in this array.
-        items:
-          $ref: '#/definitions/dependencies'
-      sdsVersion:
-        type: string
-        description: >-
-          The semantic version of the SDS this view (and it's transforms) are
-          compatible with.
       fields:
         type: array
         description: >-
@@ -6620,15 +5762,6 @@ definitions:
           PUT or PATCH requests.
         items:
           $ref: '#/definitions/field'
-      storageType:
-        type: string
-        description: >-
-          Specifies the type of storage that applies to basePath. It is required
-          only when basePath is not empty.
-        enum:
-          - s3
-          - hdfs
-          - azure-blob
       basePath:
         type: string
         description: >-
@@ -6636,11 +5769,6 @@ definitions:
           view. For views cached in a database (HBase or Cassandra), supply a
           templatized DSN.
         readOnly: true
-      isCached:
-        type: boolean
-        description: >-
-          Some dataset views are pre-cached in a high-speed lookup table for
-          faster access, this flag indicates if that has been done.
       files:
         type: string
         description: >-
@@ -6652,10 +5780,6 @@ definitions:
           Metadata describing the dataset files associated with this dataset view.
           This attribute is immutable and cannot be updated using PUT or PATCH requests.
         properties:
-          persisted:
-            $ref: '#/definitions/persisted'
-          containerFormat:
-            $ref: '#/definitions/containerFormat'
           format:
             $ref: '#/definitions/format'
           delimiters:
@@ -6690,11 +5814,6 @@ definitions:
               - UTF-8
               - ISO-8859-1
               - ''
-      partitions:
-        type: array
-        description: ''
-        items:
-          type: string
       saveStrategy:
         type: string
         description: >-
@@ -6715,8 +5834,6 @@ definitions:
         $ref: '#/definitions/persistenceRequest'
     required:
       - dataSetId
-      - aspect
-      - status
   dataSetViewPatchRequest:
     type: object
     properties:
@@ -6725,55 +5842,15 @@ definitions:
         description: >-
           Foreign key to the owning DataSet. This attribute is immutable and
           cannot be updated using PUT or PATCH requests.
-      aspect:
-        type: string
-        description: >-
-          Aspect represents the particular perspective or target you're after
-          when viewing a dataset. Sandbox views are a version of the dataset
-          that's being used to iterate towards a final ETL job definition. The
-          production aspect is then used (by default). This attribute is
-          immutable and cannot be updated using PUT or PATCH requests.
-        enum:
-          - production
-          - sandbox
       observableSchema:
         type: object
         description: >-
           observableSchema stores a JSON Schema object that is a valid subset (including the null case) of the XDM model specified by `schemaRef`.
       schemaMetadata:
         $ref: '#/definitions/schemaMetadata'
-      status:
-        type: string
-        description: >-
-          Describes the current state of the view.  If a view is not enabled, it
-          should not be used by any process even when it is specified as a
-          dependency. Only one view of a given aspect should be enabled at any
-          time. For example, no DataSet should have more than one enabled
-          production or sandbox view.
-        enum:
-          - enabled
-          - disabled
       requestStartDate:
         type: string
         description: 'The oldest date and the time, when the data was last ingested'
-      editable:
-        type: boolean
-        description: >-
-          Determines whether or not this DataSetView definition should be
-          editable by the user.  Some documents are 'locked' and not available
-          for edit.
-      dependencies:
-        type: array
-        description: >-
-          An array of dependency objects. If a DataSetView is referenced in a
-          transform, data about that linkage should be found in this array.
-        items:
-          $ref: '#/definitions/dependencies'
-      sdsVersion:
-        type: string
-        description: >-
-          The semantic version of the SDS this view (and it's transforms) are
-          compatible with.
       fields:
         type: array
         description: >-
@@ -6782,15 +5859,6 @@ definitions:
           PUT or PATCH requests.
         items:
           $ref: '#/definitions/field'
-      storageType:
-        type: string
-        description: >-
-          Specifies the type of storage that applies to basePath. It is required
-          only when basePath is not empty.
-        enum:
-          - s3
-          - hdfs
-          - azure-blob
       basePath:
         type: string
         description: >-
@@ -6798,11 +5866,6 @@ definitions:
           view. For views cached in a database (HBase or Cassandra), supply a
           templatized DSN.
         readOnly: true
-      isCached:
-        type: boolean
-        description: >-
-          Some dataset views are pre-cached in a high-speed lookup table for
-          faster access, this flag indicates if that has been done.
       files:
         type: string
         description: >-
@@ -6814,10 +5877,6 @@ definitions:
           Metadata describing the dataset files associated with this dataset view.
           This attribute is immutable and cannot be updated using PUT or PATCH requests.
         properties:
-          persisted:
-            $ref: '#/definitions/persisted'
-          containerFormat:
-            $ref: '#/definitions/containerFormat'
           format:
             $ref: '#/definitions/format'
           delimiters:
@@ -6852,11 +5911,6 @@ definitions:
               - UTF-8
               - ISO-8859-1
               - ''
-      partitions:
-        type: array
-        description: ''
-        items:
-          type: string
       saveStrategy:
         type: string
         description: >-
@@ -6890,52 +5944,13 @@ definitions:
       dataSetId:
         type: string
         description: Foreign key to the owning DataSet.
-      aspect:
-        type: string
-        description: >-
-          Aspect represents the particular perspective or target you're after
-          when viewing a dataset. Sandbox views are a version of the dataset
-          that's being used to iterate towards a final ETL job definition. The
-          production aspect is then used (by default).
-        enum:
-          - production
-          - sandbox
       observableSchema:
         type: object
         description: >-
           observableSchema stores a JSON Schema object that is a valid subset (including the null case) of the XDM model specified by `schemaRef`.
-      status:
-        type: string
-        description: >-
-          Describes the current state of the view.  If a view is not enabled, it
-          should not be used by any process even when it is specified as a
-          dependency. Only one view of a given aspect should be enabled at any
-          time. For example, no DataSet should have more than one enabled
-          production or sandbox view.
-        enum:
-          - enabled
-          - disabled
       requestStartDate:
         type: string
         description: 'The oldest date and the time, when the data was last ingested'
-      editable:
-        type: boolean
-        description: >-
-          Determines whether or not this DataSetView definition should be
-          editable by the user.  Some documents are 'locked' and not available
-          for edit.
-      dependencies:
-        type: array
-        description: >-
-          An array of dependency objects. If a DataSetView is referenced in a
-          transform, data about that linkage should be found in this array.
-        items:
-          $ref: '#/definitions/dependencies'
-      sdsVersion:
-        type: string
-        description: >-
-          The semantic version of the SDS this view (and it's transforms) are
-          compatible with.
       fields:
         type: array
         description: >-
@@ -6943,15 +5958,6 @@ definitions:
           this view.
         items:
           $ref: '#/definitions/field'
-      storageType:
-        type: string
-        description: >-
-          Specifies the type of storage that applies to basePath. It is required
-          only when basePath is not empty.
-        enum:
-          - s3
-          - hdfs
-          - azure-blob
       basePath:
         type: string
         description: >-
@@ -6961,11 +5967,6 @@ definitions:
         readOnly: true
       persistence:
         $ref: '#/definitions/persistenceResponse'
-      isCached:
-        type: boolean
-        description: >-
-          Some dataset views are pre-cached in a high-speed lookup table for
-          faster access, this flag indicates if that has been done.
       files:
         type: string
         description: >-
@@ -6975,10 +5976,6 @@ definitions:
         type: object
         description: Metadata describing the dataset files associated with this DataSetView.
         properties:
-          persisted:
-            $ref: '#/definitions/persisted'
-          containerFormat:
-            $ref: '#/definitions/containerFormat'
           format:
             $ref: '#/definitions/format'
           delimiters:
@@ -7013,11 +6010,6 @@ definitions:
               - UTF-8
               - ISO-8859-1
               - ''
-      partitions:
-        type: array
-        description: ''
-        items:
-          type: string
       saveStrategy:
         type: string
         description: Denotes save strategy for this dataset.
@@ -7254,30 +6246,6 @@ definitions:
         type: string
       body:
         type: object
-  duleLabelResponse:
-    type: object
-    description: >-
-      Structure of the DULE label response that includes all labels associated
-      with a given dataset.
-    properties:
-      connection:
-        type: object
-        description: >-
-          If the dataset has a parent connection, the connection labels are
-          returned.
-      dataset:
-        type: object
-        description: The DULE labels on the dataset itself.
-      fields:
-        type: array
-        description: The DULE labels on the individual fields.
-        items:
-          type: object
-      schemaFields:
-        type: array
-        description: The DULE labels from the schemaMetadata.
-        items:
-          type: object
   transformRequest:
     type: object
     properties:
@@ -7421,81 +6389,6 @@ definitions:
           type: string
           description: An argument which is required to run transform entity.
           pattern: '^[.a-zA-Z0-9\-_$={} ]+$'
-  subSchema:
-        type: object
-        properties:
-          schema:
-            type: object
-            description: ''
-            properties: {}
-        required:
-          - schema
-  xdmExtensionRequest:
-    type: object
-    properties:
-      title:
-        type: string
-        description: ''
-      type:
-        type: string
-        description: ''
-      description:
-        type: string
-        description: ''
-      properties:
-        description: A Map(String, JsonSchemaBaseType) representing the fields in this XDM extension.
-        type: object
-        properties: {}
-    required:
-      - type
-      - description
-      - properties
-  xdmDescriptor:
-    type: object
-    properties:
-      '@type':
-        type: string
-        enum:
-          - xdm:descriptorOneToOne
-          - xdm:descriptorOneToMany
-          - xdm:descriptorManyToMany
-          - xdm:descriptorIdentity
-          - xdm:descriptorPrimaryKey
-          - xdm:descriptorInstantiable
-          - xdm:updatePolicy
-        example: string
-      'xdm:sourceSchema':
-        type: string
-        description: ''
-      'xdm:sourceProperty':
-        type: string
-        description: ''
-      'xdm:destSchema':
-        type: string
-        description: ''
-      'xdm:destProperty':
-        type: string
-        description: ''
-      'xdm:namespace':
-        type: string
-        description: ''
-      'xdm:property':
-        type: string
-        description: ''
-      'xdm:isPrimary':
-        type: string
-        description: ''
-      'xdm:updatePolicy':
-        type: string
-        enum:
-          - xdm:updateMerge
-          - xdm:updateReplace
-          - xdm:updateTimeSeries
-        example: string
-        description: ''
-    required:
-      - '@type'
-      - 'xdm:sourceSchema'
   errors:
     type: object
     properties:
@@ -7559,20 +6452,6 @@ definitions:
         type: object
         description: Contains metrics related to this dataset.
         additionalProperties: true
-  contacts:
-    type: object
-    properties:
-      email:
-        type: string
-        format: email
-      displayName:
-        type: string
-        description: Display name for this contact.
-      isPrimary:
-        type: boolean
-        description: >-
-          Indicates if this contact is (one of the) 'owners' or primary contacts
-          for this connection.
   documents:
     type: object
     properties:
@@ -7589,26 +6468,6 @@ definitions:
       link:
         type: string
         description: The full URI to this document.
-  dependencies:
-    type: object
-    properties:
-      dataSetId:
-        type: string
-        description: The ID of the dataset this view is dependent upon.
-      dataSetViewId:
-        type: string
-        description: The ID of the view this view is dependent upon.
-      type:
-        type: string
-        description: >-
-          The type dependency. Activity for views that generate rows needed to
-          be incorporated, and Lookup for views that provide metadata-like
-          lookups/additional columns.
-        enum:
-          - lookup
-          - activity
-          - snapshot-lookup
-          - snapshot-activity
   field:
     allOf:
       - $ref: '#/definitions/dataType'
@@ -7623,11 +6482,6 @@ definitions:
           description:
             type: string
             description: Field description.
-          definition:
-            type: object
-            description: >-
-              Deprecated - this field is currently a hack to support
-              non-csv data.  We need to natively support this type of data
           meta:
             type: object
             description: Metadata descriptions for each field.
@@ -7653,114 +6507,6 @@ definitions:
                     description: >-
                       The timezone that the data uses in the origin
                       system, uses the format from IANA in the tz_database
-          dule:
-            type: object
-            description: DULE labels.
-            properties:
-              contracts:
-                description: >-
-                  What Contractual Considerations, if any, apply to this
-                  data?
-                type: array
-                items:
-                  type: string
-                  enum:
-                    - C1
-                    - C2
-                    - C3
-                    - C4
-                    - C5
-                    - C6
-                    - C7
-                    - C8
-                    - C9
-                    - None
-              contract:
-                description: >-
-                  What Contractual Considerations, if any, apply to this
-                  data?
-                type: array
-                items:
-                  type: string
-                  enum:
-                    - C1
-                    - C2
-                    - C3
-                    - C4
-                    - C5
-                    - C6
-                    - C7
-                    - C8
-                    - C9
-                    - None
-              identifiability:
-                description: >-
-                  Should this data be treated as Indirectly Identifiable
-                  Data or Directly Identifiable Data? (What is the level
-                  of Identifiability?)
-                type: array
-                items:
-                  type: string
-                  enum:
-                    - I1
-                    - I2
-              identity:
-                description: >-
-                  Should this data be treated as Indirectly Identifiable
-                  Data or Directly Identifiable Data? (What is the level
-                  of Identifiability?)
-                type: array
-                items:
-                  type: string
-                  enum:
-                    - I1
-                    - I2
-              loginState:
-                description: What is the Log-in State?
-                type: array
-                items:
-                  type: string
-                  enum:
-                    - Identified
-                    - Incognito
-                    - Ambiguous
-                    - Not Provided
-              specialTypes:
-                description: >-
-                  Is this a special data type? (Relative to a regulated
-                  industry, or distinct regulatory rules, e.g. GDPR
-                  Special data, health data, or Financial data)
-                type: array
-                items:
-                  type: string
-                  enum:
-                    - S1
-                    - S2
-              sensitive:
-                description: >-
-                  Is this a special data type? (Relative to a regulated
-                  industry, or distinct regulatory rules, e.g. GDPR
-                  Special data, health data, or Financial data)
-                type: array
-                items:
-                  type: string
-                  enum:
-                    - S1
-                    - S2
-              other:
-                description: Other information that may govern the use of this data.
-                type: string
-          gdpr:
-            description: GDPR labels
-            type: array
-            items:
-              type: object
-              properties:
-                namespace:
-                  type: string
-                  description: >-
-                    The GDPR label for this column, indicating that this column may
-                    contain information subject to GDPR rules
   schemaMetadata:
     type: object
     description: >-
@@ -7795,104 +6541,6 @@ definitions:
             targetPath:
               type: string
               description: JSON Path of the field's alias.
-      dule:
-        type: array
-        description: DULE labels.
-        items:
-          type: object
-          properties:
-            path:
-              type: string
-              description: A JSON path expression pointing to the field that the dule labels are associated with.
-            contracts:
-              type: array
-              description: 'What Contractual Considerations, if any, apply to this data?'
-              items:
-                enum:
-                  - C1
-                  - C2
-                  - C3
-                  - C4
-                  - C5
-                  - C6
-                  - C7
-                  - C8
-                  - C9
-                  - None
-                type: string
-            contract:
-              type: array
-              description: 'What Contractual Considerations, if any, apply to this data?'
-              items:
-                enum:
-                  - C1
-                  - C2
-                  - C3
-                  - C4
-                  - C5
-                  - C6
-                  - C7
-                  - C8
-                  - C9
-                  - None
-                type: string
-            identifiability:
-              type: array
-              description: >-
-                Should this data be treated as Indirectly Identifiable Data or
-                Directly Identifiable Data? (What is the level of
-                Identifiability?)
-              items:
-                enum:
-                  - I1
-                  - I2
-                type: string
-            identity:
-              type: array
-              description: >-
-                Should this data be treated as Indirectly Identifiable Data or
-                Directly Identifiable Data? (What is the level of
-                Identifiability?)
-              items:
-                enum:
-                  - I1
-                  - I2
-                type: string
-            loginState:
-              type: array
-              description: What is the Log-in State?
-              items:
-                enum:
-                  - Identified
-                  - Incognito
-                  - Ambiguous
-                  - Not Provided
-                type: string
-            specialTypes:
-              type: array
-              description: >-
-                Is this a special data type? (Relative to a regulated industry, or
-                distinct regulatory rules, e.g. GDPR Special data, health data, or
-                Financial data)
-              items:
-                enum:
-                  - S1
-                  - S2
-                type: string
-            sensitive:
-              type: array
-              description: >-
-                Is this a special data type? (Relative to a regulated industry, or
-                distinct regulatory rules, e.g. GDPR Special data, health data, or
-                Financial data)
-              items:
-                enum:
-                  - S1
-                  - S2
-                type: string
-            other:
-              type: string
-              description: Other information that may govern the use of this data.
       gdpr:
         description: GDPR labels
         type: array
