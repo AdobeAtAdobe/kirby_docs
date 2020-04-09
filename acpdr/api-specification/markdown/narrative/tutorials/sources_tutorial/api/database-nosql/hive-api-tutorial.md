@@ -1,8 +1,8 @@
-# Connect to Hive using the Flow Service API
+# Connect to Apache Hive on Azure HDInsights using the Flow Service API
 
 Flow Service is used to collect and centralize customer data from various disparate sources within Adobe Experience Platform. The service provides a user interface and RESTful API from which all supported sources are connectable.
 
-This tutorial uses the Flow Service API to walk you through the steps to connect Apache Hive on Hive to Experience Platform.
+This tutorial uses the Flow Service API to walk you through the steps to connect Apache Hive on Azure HD Insights (hereinafter referred to as "Hive") to Experience Platform.
 
 ## Getting started
 

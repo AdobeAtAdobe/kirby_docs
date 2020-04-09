@@ -1,4 +1,4 @@
-# Connect to Apache Spark on Azure HDInsight using the Flow Service API
+# Connect to Apache Spark on Azure HDInsights using the Flow Service API
 
 Flow Service is used to collect and centralize customer data from various disparate sources within Adobe Experience Platform. The service provides a user interface and RESTful API from which all supported sources are connectable.
 

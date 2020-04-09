@@ -1,6 +1,6 @@
-# Create a Hive source connector in the UI
+# Create an Apache Hive on Azure HDInsights source connector in the UI
 
-Source connectors in Adobe Experience Platform provide the ability to ingest externally sourced data on a scheduled basis. This tutorial provides steps for creating a Hive source connector using the Platform user interface.
+Source connectors in Adobe Experience Platform provide the ability to ingest externally sourced data on a scheduled basis. This tutorial provides steps for creating an Apache Hive on Azure HDInsights source connector using the Platform user interface.
 
 ## Getting started
 
@@ -43,7 +43,7 @@ The *Connect to Hive* page appears. On this page, you can either use new credent
 
 If you are using new credentials, select **New account**. On the input form that appears, provide the connection with a name, an optional description, and your Hive credentials. When finished, select **Connect** and then allow some time for the new account to establish.
 
-![connect](./images/hive/new.png)
+![connect](./images/hive/connect.png)
 
 ### Existing account
 

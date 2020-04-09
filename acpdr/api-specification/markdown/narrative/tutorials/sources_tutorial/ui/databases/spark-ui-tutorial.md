@@ -1,6 +1,6 @@
-# Create a Spark source connector in the UI
+# Create an Apache Spark on Azure HDInsights source connector in the UI
 
-Source connectors in Adobe Experience Platform provide the ability to ingest externally sourced data on a scheduled basis. This tutorial provides steps for creating a Spark source connector using the Platform user interface.
+Source connectors in Adobe Experience Platform provide the ability to ingest externally sourced data on a scheduled basis. This tutorial provides steps for creating an Apache Spark on Azure HDInsights source connector using the Platform user interface.
 
 ## Getting started
 
