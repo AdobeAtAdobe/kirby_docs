@@ -1044,7 +1044,6 @@ paths:
         default:
           description: Unexpected error
     delete:
-      deprecated: true
       tags:
         - Batches
       summary: Delete a batch by ID.
