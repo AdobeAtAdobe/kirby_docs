@@ -1047,6 +1047,7 @@ paths:
       tags:
         - Batches
       summary: Delete a batch by ID.
+      deprecated: true
       operationId: delete_batch_by_id
       consumes:
         - application/json
