@@ -41,7 +41,7 @@ tags:
       of configurations. An instance is often use-case specific for a customer or client.
   - name: MLServices
     description: >-
-      TMLServices represent an MLInstance which has been published as a service.
+      An MLService is a published trained model that provides your organization with the ability to access and reuse previously developed models. A key feature of MLServices is the ability to automate training and scoring on a scheduled basis.
   - name: Experiments
     description: >-
       A data scientist conducts multiple experiments to arrive at a high-performing Model while training. This can include changing datasets, features, learning parameters, and hardware.
@@ -84,21 +84,21 @@ paths:
           schema:
             $ref: '#/definitions/EngineListing'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     post:
       tags:
         - Engines
@@ -185,25 +185,25 @@ paths:
           schema:
             $ref: '#/definitions/Engine'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '415':
-          $ref: '#/responses/415'
+          description: Unsupported Media Type. The server refuses to accept the request because the payload format is in an unsupported format. 
         '422':
-          $ref: '#/responses/422'
+          description: Unprocessable Entity. Client sent a correct request that contained invalid values for one or more parameters.
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
 
   /engines/dockerRegistry:
     parameters:
@@ -222,26 +222,26 @@ paths:
       produces:
         - application/vnd.adobe.platform.sensei+json;profile=enginesDockerRegistryInfo.v1.json
       responses:
-        200:
+        '200':
           description: Docker Registry Information
           schema:
             $ref: '#/definitions/EnginesDockerRegistryInfo'
-        400:
-          $ref: '#/responses/400'
-        401:
-          $ref: '#/responses/401'
-        403:
-          $ref: '#/responses/403'
-        406:
-          $ref: '#/responses/406'
-        500:
-          $ref: '#/responses/500'
-        502:
-          $ref: '#/responses/502'
-        503:
-          $ref: '#/responses/503'
-        504:
-          $ref: '#/responses/504'
+        '400':
+          description: Bad Request. The request is malformed.
+        '401':
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
+        '403':
+          description: Forbidden. That combination of arguments is not allowed.
+        '406':
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
+        '500':
+          description: Internal Server Error. This is an indicator of a server-side error.
+        '502':
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
+        '503':
+          description: Service Unavailable. This is an indicator of a potential server overload.
+        '504':
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
 
   /engines/{engineId}:
     parameters:
@@ -264,23 +264,23 @@ paths:
           schema:
             $ref: '#/definitions/Engine'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     put:
       tags:
         - Engines
@@ -314,23 +314,23 @@ paths:
           schema:
             $ref: '#/definitions/Engine'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     delete:
       tags:
         - Engines
@@ -346,23 +346,23 @@ paths:
           schema:
             $ref: '#/definitions/SenseiApiResponse'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
 
   /mlInstances:
     parameters:
@@ -390,21 +390,21 @@ paths:
           schema:
             $ref: '#/definitions/MLInstanceListing'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     post:
       tags:
         - MLInstances
@@ -439,25 +439,25 @@ paths:
           schema:
             $ref: '#/definitions/MLInstance'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '415':
-          $ref: '#/responses/415'
+          description: Unsupported Media Type. The server refuses to accept the request because the payload format is in an unsupported format. 
         '422':
-          $ref: '#/responses/422'
+          description: Unprocessable Entity. Client sent a correct request that contained invalid values for one or more parameters.
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     delete:
       tags:
         - MLInstances
@@ -479,17 +479,17 @@ paths:
           schema:
             $ref: '#/definitions/SenseiApiResponse'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '410':
-          $ref: '#/responses/410'
+          description: Resource gone. The requested resource has been permanently removed.
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
   '/mlInstances/{mlInstanceId}':
     parameters:
       - $ref: '#/parameters/authHeaderParam'
@@ -510,23 +510,23 @@ paths:
           schema:
             $ref: '#/definitions/MLInstance'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     put:
       tags:
         - MLInstances
@@ -555,23 +555,23 @@ paths:
           schema:
             $ref: '#/definitions/MLInstance'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     delete:
       tags:
         - MLInstances
@@ -586,23 +586,23 @@ paths:
           schema:
             $ref: '#/definitions/SenseiApiResponse'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
   /experiments:
     parameters:
       - $ref: '#/parameters/authHeaderParam'
@@ -629,21 +629,21 @@ paths:
           schema:
             $ref: '#/definitions/ExperimentListing'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     post:
       tags:
         - Experiments
@@ -677,25 +677,25 @@ paths:
           schema:
             $ref: '#/definitions/Experiment'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '415':
-          $ref: '#/responses/415'
+          description: Unsupported Media Type. The server refuses to accept the request because the payload format is in an unsupported format. 
         '422':
-          $ref: '#/responses/422'
+          description: Unprocessable Entity. Client sent a correct request that contained invalid values for one or more parameters.
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     delete:
       tags:
         - Experiments
@@ -717,17 +717,17 @@ paths:
           schema:
             $ref: '#/definitions/SenseiApiResponse'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '410':
-          $ref: '#/responses/410'
+          description: Resource gone. The requested resource has been permanently removed.
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
   '/experiments/{experimentId}':
     parameters:
       - $ref: '#/parameters/authHeaderParam'
@@ -749,23 +749,23 @@ paths:
           schema:
             $ref: '#/definitions/Experiment'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     put:
       tags:
         - Experiments
@@ -794,23 +794,23 @@ paths:
           schema:
             $ref: '#/definitions/Experiment'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     delete:
       tags:
         - Experiments
@@ -826,23 +826,23 @@ paths:
           schema:
             $ref: '#/definitions/SenseiApiResponse'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
   '/experiments/{experimentId}/runs':
     parameters:
       - $ref: '#/parameters/authHeaderParam'
@@ -870,21 +870,21 @@ paths:
           schema:
             $ref: '#/definitions/ExperimentRunListing'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     post:
       tags:
         - Experiments
@@ -922,25 +922,25 @@ paths:
           schema:
             $ref: '#/definitions/ExperimentRun'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '415':
-          $ref: '#/responses/415'
+          description: Unsupported Media Type. The server refuses to accept the request because the payload format is in an unsupported format. 
         '422':
-          $ref: '#/responses/422'
+          description: Unprocessable Entity. Client sent a correct request that contained invalid values for one or more parameters.
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
   '/experiments/{experimentId}/runs/{experimentRunId}':
     parameters:
       - $ref: '#/parameters/authHeaderParam'
@@ -964,23 +964,23 @@ paths:
           schema:
             $ref: '#/definitions/ExperimentRun'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
   '/experiments/{experimentId}/runs/{experimentRunId}/status':
     parameters:
       - $ref: '#/parameters/authHeaderParam'
@@ -1004,23 +1004,23 @@ paths:
           schema:
             $ref: '#/definitions/RunStatus'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
   /models:
     parameters:
       - $ref: '#/parameters/authHeaderParam'
@@ -1049,23 +1049,23 @@ paths:
           schema:
             $ref: '#/definitions/ModelListing'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     post:
       tags:
         - Models
@@ -1097,25 +1097,25 @@ paths:
           schema:
             $ref: '#/definitions/Model'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '415':
-          $ref: '#/responses/415'
+          description: Unsupported Media Type. The server refuses to accept the request because the payload format is in an unsupported format. 
         '422':
-          $ref: '#/responses/422'
+          description: Unprocessable Entity. Client sent a correct request that contained invalid values for one or more parameters.
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
   '/models/{modelId}':
     parameters:
       - $ref: '#/parameters/authHeaderParam'
@@ -1137,23 +1137,23 @@ paths:
           schema:
             $ref: '#/definitions/Model'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     put:
       tags:
         - Models
@@ -1183,23 +1183,23 @@ paths:
           schema:
             $ref: '#/definitions/Model'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     delete:
       tags:
         - Models
@@ -1215,23 +1215,23 @@ paths:
           schema:
             $ref: '#/definitions/SenseiApiResponse'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
   '/models/{modelId}/artifact':
     parameters:
       - $ref: '#/parameters/authHeaderParam'
@@ -1254,23 +1254,23 @@ paths:
             type: string
             format: binary
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
   '/models/{modelId}/transcodings':
     parameters:
       - $ref: '#/parameters/authHeaderParam'
@@ -1298,23 +1298,23 @@ paths:
           schema:
             $ref: '#/definitions/ModelTranscodingListing'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     post:
       tags:
         - Models
@@ -1349,25 +1349,25 @@ paths:
           schema:
             $ref: '#/definitions/ModelTranscoding'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '415':
-          $ref: '#/responses/415'
+          description: Unsupported Media Type. The server refuses to accept the request because the payload format is in an unsupported format. 
         '422':
-          $ref: '#/responses/422'
+          description: Unprocessable Entity. Client sent a correct request that contained invalid values for one or more parameters.
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
   '/models/{modelId}/transcodings/{modelTranscodingId}':
     parameters:
       - $ref: '#/parameters/authHeaderParam'
@@ -1391,23 +1391,23 @@ paths:
           schema:
             $ref: '#/definitions/ModelTranscoding'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
   /insights:
     parameters:
       - $ref: '#/parameters/authHeaderParam'
@@ -1434,21 +1434,21 @@ paths:
           schema:
             $ref: '#/definitions/InsightListing'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     post:
       tags:
         - Insights
@@ -1481,25 +1481,25 @@ paths:
           schema:
             $ref: '#/definitions/Insight'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '415':
-          $ref: '#/responses/415'
+          description: Unsupported Media Type. The server refuses to accept the request because the payload format is in an unsupported format. 
         '422':
-          $ref: '#/responses/422'
+          description: Unprocessable Entity. Client sent a correct request that contained invalid values for one or more parameters.
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
   '/insights/{insightId}':
     parameters:
       - $ref: '#/parameters/authHeaderParam'
@@ -1521,23 +1521,23 @@ paths:
           schema:
             $ref: '#/definitions/Insight'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
   '/insights/metrics':
     parameters:
       - $ref: '#/parameters/authHeaderParam'
@@ -1559,21 +1559,21 @@ paths:
           schema:
             $ref: '#/definitions/DefaultMetricsListing'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
   /mlServices:
     parameters:
       - $ref: '#/parameters/authHeaderParam'
@@ -1599,21 +1599,21 @@ paths:
           schema:
             $ref: '#/definitions/MLServiceListing'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     post:
       tags:
         - MLServices
@@ -1644,25 +1644,25 @@ paths:
           schema:
             $ref: '#/definitions/MLService'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '415':
-          $ref: '#/responses/415'
+          description: Unsupported Media Type. The server refuses to accept the request because the payload format is in an unsupported format. 
         '422':
-          $ref: '#/responses/422'
+          description: Unprocessable Entity. Client sent a correct request that contained invalid values for one or more parameters.
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     delete:
       tags:
         - MLServices
@@ -1684,17 +1684,17 @@ paths:
           schema:
             $ref: '#/definitions/SenseiApiResponse'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '410':
-          $ref: '#/responses/410'
+          description: Resource gone. The requested resource has been permanently removed.
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
   '/mlServices/{serviceId}':
     parameters:
       - $ref: '#/parameters/authHeaderParam'
@@ -1716,23 +1716,23 @@ paths:
           schema:
             $ref: '#/definitions/MLService'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     put:
       tags:
         - MLServices
@@ -1756,23 +1756,23 @@ paths:
           schema:
             $ref: '#/definitions/MLService'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
     delete:
       tags:
         - MLServices
@@ -1787,23 +1787,23 @@ paths:
           schema:
             $ref: '#/definitions/SenseiApiResponse'
         '400':
-          $ref: '#/responses/400'
+          description: Bad Request. The request is malformed.
         '401':
-          $ref: '#/responses/401'
+          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
         '403':
-          $ref: '#/responses/403'
+          description: Forbidden. That combination of arguments is not allowed.
         '404':
-          $ref: '#/responses/404'
+          description: Not Found. The resource the client is looking for isn't there.
         '406':
-          $ref: '#/responses/406'
+          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
         '500':
-          $ref: '#/responses/500'
+          description: Internal Server Error. This is an indicator of a server-side error.
         '502':
-          $ref: '#/responses/502'
+          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
         '503':
-          $ref: '#/responses/503'
+          description: Service Unavailable. This is an indicator of a potential server overload.
         '504':
-          $ref: '#/responses/504'
+          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
 
 parameters:
   xApiKey:
