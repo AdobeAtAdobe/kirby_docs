@@ -1,5 +1,7 @@
 # Connect to Google AdWords using the Flow Service API
 
+ ***WARNING: This documentation is no longer being maintained and may be outdated. Find up-to-date guides and tutorials in the new [Sources documentation](https://docs.adobe.com/content/help/en/experience-platform/sources/home.html) area.***
+ 
 Flow Service is used to collect and centralize customer data from various disparate sources within Adobe Experience Platform. The service provides a user interface and RESTful API from which all supported sources are connectable.
 
 This tutorial uses the Flow Service API to walk you through the steps to connect Experience Platform to Google AdWords (hereinafter referred to as "AdWords"), including showing you how to:
