@@ -277,7 +277,7 @@ paths:
           description: merge policy object
           required: true
           schema:
-            $ref: '#/definitions/MergePolicy'
+            $ref: '#/definitions/PostMergePolicy'
       responses:
         '200':
           description: Merge Policy successfully created
@@ -297,7 +297,7 @@ paths:
     get:
       tags:
         - Merge policies
-      summary: Lookup a merge policy by ID.
+      summary: Retrieve a merge policy by ID.
       description: ''
       operationId: getById
       produces:
@@ -448,11 +448,49 @@ paths:
           description: MergePolicy not found
         '503':
           description: Service Unavailable
+  '/config/mergePolicies/bulk-get':
+    post:
+      tags:
+        - Merge policies
+      summary: Retrieve multiple merge policies using multiple merge policy IDs
+      operationId: bulkGetMergePolicies
+      produces:
+      - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'
+        - name: body
+          in: body
+          description: An array of the merge policy IDs that you are trying to retrieve.
+          schema:
+            type: object
+            properties:
+              ids:
+                type: array
+                items:
+                  type: object
+                example: 
+                  - id: 10648288-cda5-11e8-a8d5-f2801f1b9fd1
+                  - id: 42d4a596-b1c6-46c0-994e-ca5ef1f85130
+      responses:
+        '207':
+          description: The details of each merge policy are returned. The sample response has been truncated to show only the details for the first merge policy.
+          schema:
+            type: object
+            properties:
+              results:
+                type: object
+                properties:
+                  "{MERGE_POLICY_ID}":
+                    $ref: '#/definitions/MergePolicy'      
   '/access/entities':
     get:
       tags:
         - Entities
-      summary: Lookup an entity by ID or namespace.
+      summary: Retrieve an entity by ID or namespace.
       produces:
         - application/json
       parameters:
@@ -572,7 +610,7 @@ paths:
     post:
       tags:
         - Entities
-      summary: Lookup multiple entities by IDs or namespaces.
+      summary: Retrieve multiple entities by IDs or namespaces.
       consumes:
         - application/json
       produces:
@@ -1013,7 +1051,7 @@ paths:
     get:
       tags:
         - Projection configurations
-      summary: Lookup an edge projection configuration by ID. The latest definition is returned.
+      summary: Retrieve an edge projection configuration by ID. The latest definition is returned.
       description: ''
       operationId: getProjectionConfiguration
       produces:
@@ -1384,7 +1422,7 @@ paths:
     get:
       tags:
         - Projection destinations
-      summary: Lookup an edge projection destination by ID. The latest definition is returned.
+      summary: Retrieve an edge projection destination by ID. The latest definition is returned.
       description: ''
       operationId: getProjectionDestination
       produces:
@@ -2450,20 +2488,16 @@ definitions:
         type: string
         example: K1JJRDpFaWc5QUwyZFgtMEpBQUFBQUFBQUFBPT0jUlQ6MSNUUkM6MiNGUEM6QWdFQUFBQVFBQWZBQUg0Ly9yL25PcmpmZndEZUR3QT0=
         description: page offset
-  MergePolicy:
+  PostMergePolicy:
     type: object
     required:
       - schema
       - identityGraph
       - attributeMerge
     properties:
-      id:
-        type: string
-        example: ups-default
-        description: macro id
       name:
         type: string
-        example: 5c48b93a53214114cf85e378
+        example: real-time-customer-profile-default
         description: merge policy name
       imsOrgId:
         type: string
@@ -2471,10 +2505,6 @@ definitions:
         description: ims org id
       schema:
         $ref: '#/definitions/SchemaClass'
-      version:
-        type: integer
-        example: 1
-        description: merge policy version
       default:
         type: boolean
         example: false
@@ -2487,6 +2517,21 @@ definitions:
         type: integer
         example: 1234567890
         description: update timestamp
+    description: 'merge policy'
+  MergePolicy:
+    type: object
+    allOf:
+      - properties:
+          id:
+            type: string
+            example: 10648288-cda5-11e8-a8d5-f2801f1b9fd1
+            description: merge policy id
+      - $ref: '#/definitions/PostMergePolicy'
+      - properties:
+          version:
+            type: integer
+            example: 1
+            description: merge policy version
     description: 'merge policy'
   SchemaClass:
     type: object
