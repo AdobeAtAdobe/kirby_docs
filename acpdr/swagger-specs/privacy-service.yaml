@@ -1,682 +1,447 @@
 swagger: '2.0'
 info:
   description: >-
-    Adobe Experience Platform Privacy Service provides a common, centralized facilitation of access/delete requests and opt-out-of-sale requests for private data. The service includes a UI for selecting and creating requests, a business layer that processes incoming and outgoing traffic, a data store for audit and logging information, and temporary storage for data retrieval while requests are pending or waiting to be viewed.
+    - Service description:
+      - Adobe Experience Platform Privacy Service provides a common, centralized facilitation of access/delete requests and opt-out-of-sale requests for private data. The service includes a UI for selecting and creating requests, a business layer that processes incoming and outgoing traffic, a data store for audit and logging information, and temporary storage for data retrieval while requests are pending or waiting to be viewed.
 
+    - Related documentation:
+      - [Privacy Service documentation](https://docs.adobe.com/content/help/en/experience-platform/privacy/home.html)
 
-    Related documentation:
-      * [Privacy Service documentation](https://docs.adobe.com/content/help/en/experience-platform/privacy/home.html)
+    - Visualize API calls with Postman (a free, third-party software):
+      - [Privacy Service API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Privacy%20Service%20API.postman_collection.json)
+      - [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
+      - [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
 
-    Visualize API calls with Postman (a free, third-party software):
-      * [Privacy Service API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Privacy%20Service%20API.postman_collection.json)
-      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
-      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
-
-    API paths:
-      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
-      * Base path for this API: /data/core/privacy/jobs
-      * Example of a complete path: https://<span>platform.adobe.io/data/core/privacy/jobs/ping
+    - API paths:
+      - PLATFORM Gateway URL: https://<span>platform.adobe.io/
+      - Base path for this API: /data/core/privacy
+      - Example of a complete path: https://<span>platform.adobe.io/data/core/privacy/jobs
     
-    Required headers:
-      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
-      * All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
-      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
-  
-
+    - Required headers:
+      - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
+      - All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
+      - All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
   version: '1.0'
   title: Privacy Service API
 host: platform.adobe.io
-basePath: /data/privacy/gdpr
+basePath: /data/core/privacy
 tags:
   - name: Privacy Jobs
-    description: "Retrieve and create access/delete requests, including child jobs for existing requests."
-  - name: Ping
-    description: "Check the processing status of access or delete requests by supplying a status code integer as a query parameter."
-  - name: Files
-    description: "View and upload files from various Adobe solutions for specified job requests."
-  - name: Products
-    description: "View details of Adobe products available within your organization's Privacy Service integrations."
-  - name: Users
-    description: "View, create, update, or delete users and their permissions within your organization's Privacy Service configuration."
-
+    description: "Privacy jobs process customer privacy requests, including access/delete and opt-out requests. Each privacy job is tracked under a specific regulation."
+  - name: Consent
+    description: "Certain regulations require explicit customer consent before their personal data can be collected."
+schemes:
+  - https
 paths:
-  /:
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
+  /consent:
+    post:
+      tags:
+        - Consent
+      summary: Process a customer consent request.
+      operationId: processCCPASalesConsent
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - in: body
+          name: body
+          description: 'The payload for a consent request must include an optOutOfSale property and a list of user IDs (categorized by namespace).'
+          required: false
+          schema:
+            $ref: '#/definitions/PrivacySaleConsentResource'
+      responses:
+        '202':
+          description: The consent request was accepted.
+        '400':
+          description: The request is incomplete or malformed.
+        '403':
+          description: You do not have access permissions for this endpoint.
+        '404':
+          description: The requested resource could not be found. Double-check that your ID values are accurate.
+        '500':
+          description: There was an internal server error. Try the request again in a few minutes, and contact Adobe Support if the problem persists.
+  /jobs:
     get:
       tags:
         - Privacy Jobs
-      summary: Retrieve details of all jobs for the current logged-in user.
-      description: ''
-      operationId: getStatus(all)
+      summary: List the details of all privacy jobs for your IMS Organization.
+      operationId: fetchAllJobs
+      produces:
+        - application/json
       parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - name: regulation
+          in: query
+          description: 'The privacy regulation to return jobs from.'
+          required: true
+          type: string
+          enum:
+            - gdpr
+            - ccpa
+            - pdpa_tha
+        - name: size
+          in: query
+          description: 'The number of jobs to return in the response body.'
+          required: false
+          type: integer
+          default: 25
+          format: int32
+        - name: page
+          in: query
+          description: 'Page index to return results from when the result count exceeds the limited defined by the size parameter.'
+          required: false
+          type: integer
+          default: 1
+          format: int32
+        - name: status
+          description: 'Filters jobs by processing status.'
+          in: query
+          required: false
+          type: string
+          enum:
+            - complete
+            - processing
+            - submitted
+            - error
         - name: fromDate
+          description: 'Limits results to those processed after a specified date. Accepts the format YYYY-MM-DD.'
           in: query
           required: false
           type: string
         - name: toDate
+          description: 'Limits results to those processed before a specified date. Accepts the format YYYY-MM-DD.'
           in: query
           required: false
           type: string
-        - name: data
+        - name: filterDate
+          description: 'Limits results to those processed on a specified date. Accepts the format YYYY-MM-DD.'
           in: query
           required: false
-          type: boolean
+          type: string
       responses:
         '200':
-          description: 'If found, The details of requested jobId is returned.'
+          description: A successful response returns a list of jobs under the provided regulation. Note that data for previously created jobs is only available for retrieval within 30 days of the job's completion date.
           schema:
-            $ref: '#/definitions/A%20GDPR%20Request%20model'
+            $ref: '#/definitions/PrivacyJobDetailsList'
         '400':
-          description: Bad Request. The request is malformed
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '401':
-          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
+          description: The request is incomplete or malformed.
         '403':
-          description: Forbidden. That combination of arguments is not allowed.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
+          description: You do not have access permissions for this endpoint.
         '404':
-          description: Not Found. The resource the client is looking for isn't there.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '405':
-          description: Method Not Allowed. Client sent a request using a HTTP method that the server doesn't support.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '406':
-          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '422':
-          description: Unprocessable Entity. Client sent a correct request that contained invalid values for one or more parameters.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
+          description: The requested resource could not be found. Double-check that your ID values are accurate.
         '500':
-          description: Internal Server Error. This is an indicator of a server-side error.
-        '502':
-          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
-        '503':
-          description: Service Unavailable. This is an indicator of a potential server overload.
-        '504':
-          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
+          description: There was an internal server error. Try the request again in a few minutes, and contact Adobe Support if the problem persists.
     post:
       tags:
         - Privacy Jobs
-      summary: Create an access or delete job request.
-      description: An authenticated user can submit requests to access or delete their privacy data.
-      operationId: handleExternalRequest
-      consumes: 
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: body
-          description: JSON file or valid JSON to submit requests
-          required: true
-          schema:
-            $ref: '#/definitions/A%20GDPR%20Request%20model'
-        - $ref: '#/parameters/json-header'
-      responses:
-        '200':
-          description: successful operation
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/A%20GDPR%20Response%20model'
-        '202':
-          description: GDPR requests created successfully
-          schema:
-            $ref: '#/definitions/ResponseEntity'
-        '400':
-          description: Bad Request. The request is malformed
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '401':
-          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '403':
-          description: Forbidden. That combination of arguments is not allowed.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '404':
-          description: Not Found. The resource the client is looking for isn't there.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '405':
-          description: Method Not Allowed. Client sent a request using a HTTP method that the server doesn't support.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '406':
-          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '422':
-          description: Unprocessable Entity. Client sent a correct request that contained invalid values for one or more parameters.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '500':
-          description: Internal Server Error. This is an indicator of a server-side error.
-        '502':
-          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
-        '503':
-          description: Service Unavailable. This is an indicator of a potential server overload.
-        '504':
-          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
-  /files/{jobId}:
-    parameters:
-      - name: jobId
-        in: path
-        description: ID of the job from which to retrieve or list files.
-        required: true
-        type: string
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-    get:
-      tags:
-        - Files
-      summary: Retrieve the files associated with a job by ID.
-      description: 'Returns list of files uploaded for {jobId}'
-      operationId: getJobFiles
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Successful list of files
-          schema:
-            $ref: '#/definitions/FileResponse'
-        '417':
-          description: Expectation Failed!! Validation failed
-        '500':
-          description: Internal server error
-        '503':
-          description: 'Exception Occurred!! '
-  "/files/{jobId}/{solutionName}":
-    parameters:
-      - name: jobId
-        in: path
-        description: jobId to upload the files
-        required: true
-        type: string
-      - name: solutionName
-        in: path
-        description: SolutionName
-        required: true
-        type: string
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-    post:
-      tags:
-        - Files
-      summary: Upload files to a job by ID.
-      description: Returns file upload status and error object.
-      operationId: postDataForCompletedJob
+      summary: Create a new privacy job.
+      operationId: createJob
       consumes:
-        - multipart/form-data
+        - application/json
       produces:
         - application/json
       parameters:
-        - name: file
-          in: formData
-          description: file
-          required: false
-          type: file
-        - $ref: '#/parameters/multipart-header'
-      responses:
-        '200':
-          description: Successful upload of files
-          schema:
-            $ref: '#/definitions/FileResponse'
-        '417':
-          description: Expectation Failed!! Validation failed
-        '500':
-          description: Internal server error
-        '503':
-          description: 'Exception Occurred!! '
-  /ping:
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-    get:
-      tags:
-        - Ping
-      summary: Retrieve the processing status of access or delete requests by status code.
-      description: The message is read from the properties
-      operationId: getProcessingStatus
-      parameters:
-        - name: status
-          in: query
-          required: true
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: successful operation
-          schema:
-            $ref: '#/definitions/Something'
-        '400':
-          description: Bad Request!!!
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '401':
-          description: Unauthorized!!!
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '403':
-          description: Forbidden!!!
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: 'Something went wrong, Internal Server Error'
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-  /products:
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-    get:
-      tags:
-        - Products
-      summary: Retrieve the details of all products.
-      description: Returns a complete list of all products with details.
-      operationId: getAllProducts
-      responses:
-        '200':
-          description: Successful retrieval of all product detail
-          schema:
-            $ref: '#/definitions/Product'
-        '404':
-          description: No Products found in the system
-        '417':
-          description: Expectation Failed!! Validation failed
-        '500':
-          description: Internal server error
-        '503':
-          description: 'Exception Occurred!! '
-  /products/{productName}:
-    parameters:
-      - name: productName
-        in: path
-        description: Product Name for details
-        required: true
-        type: string
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-    get:
-      tags:
-          - Products
-      summary: Lookup a product by name.
-      description: Returns details of a product.
-      operationId: getProductsByName
-      responses:
-        '200':
-          description: Successful retrieval of product details
-          schema:
-            $ref: '#/definitions/Product'
-        '404':
-          description: No Products found in the system
-        '417':
-          description: Expectation Failed!! Validation failed
-        '500':
-          description: Internal server error
-        '503':
-          description: 'Exception Occurred!! '
-  /userPrefs:
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-    get:
-      tags:
-        - Privacy Jobs
-      summary: Retrieve user preferences for the current logged-in user.
-      description: ''
-      operationId: getUserPreferences
-      responses:
-        '200':
-          description: 'If found, The details of requested jobId is returned.'
-          schema:
-            $ref: '#/definitions/A%20GDPR%20Request%20model'
-        '400':
-          description: Bad Request. The request is malformed
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '401':
-          description: Unauthorized. The request has not been applied because it lacks valid authentication credentials for the target resource.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '403':
-          description: Forbidden. That combination of arguments is not allowed.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '404':
-          description: Not Found. The resource the client is looking for isn't there.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '405':
-          description: Method Not Allowed. Client sent a request using a HTTP method that the server doesn't support.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '406':
-          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '422':
-          description: Unprocessable Entity. Client sent a correct request that contained invalid values for one or more parameters.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '500':
-          description: Internal Server Error. This is an indicator of a server-side error.
-        '502':
-          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
-        '503':
-          description: Service Unavailable. This is an indicator of a potential server overload.
-        '504':
-          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
-  /users:
-    parameters:
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-    get:
-      tags:
-        - Users
-      summary: Retrieve the details of all users.
-      description: Returns a complete list of all users with details.
-      operationId: getAllUsers
-      responses:
-        '200':
-          description: Successful retrieval of all user detail
-          schema:
-            $ref: '#/definitions/UserInfo'
-        '404':
-          description: No Users found in the system
-        '417':
-          description: Expectation Failed!! Validation failed
-        '500':
-          description: Internal server error
-        '503':
-          description: 'Exception Occurred!! '
-    post:
-      tags:
-        - Users
-      summary: Create a user as an admin for Privacy Service.
-      description: Returns added user json with status
-      operationId: createUser
-      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'
         - in: body
           name: body
-          description: User details to be added
           required: true
+          description: 'The payload for a privacy creation request must include company context information, a list of user IDs and namespaces, and a valid regulation code. See the [Privacy Service developer guide](https://docs-stg.corp.adobe.com/content/help/en/experience-platform/privacy/api/privacy-jobs.html) for more details on how to format privacy request payloads.'
           schema:
-            $ref: '#/definitions/UserInfo'
-        - $ref: "#/parameters/json-header"
+            $ref: '#/definitions/PrivacyJobRequestDetails'
       responses:
-        '200':
-          description: 'Successful creation of user '
-          schema:
-            $ref: '#/definitions/UserInfo'
-        '400':
-          description: User already exists in the system & can not be added
-        '417':
-          description: Expectation Failed!! Validation failed
-        '500':
-          description: Internal server error
-        '503':
-          description: 'Exception Occurred!! '
-  '/users/{userId}':
-    parameters:
-      - name: userId
-        in: path
-        description: User id for details
-        required: true
-        type: string
-        pattern: .+
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-    get:
-      tags:
-        - Users
-      summary: Lookup a user by ID.
-      description: Returns details of a user.
-      operationId: getUsersById
-      responses:
-        '200':
-          description: Successful retrieval of user details
-          schema:
-            $ref: '#/definitions/UserInfo'
-        '404':
-          description: No Users found in the system
-        '417':
-          description: Expectation Failed!! Validation failed
-        '500':
-          description: Internal server error
-        '503':
-          description: 'Exception Occurred!! '
-    put:
-      tags:
-        - Users
-      summary: Update the details of a user by ID.
-      description: Returns updated user json with status
-      operationId: updateUser
-      parameters:
-        - in: body
-          name: body
-          description: User Details to be updated
-          required: true
-          schema:
-            $ref: '#/definitions/UserInfo'
-        - $ref: '#/parameters/json-header'
-      responses:
-        '200':
-          description: 'Successful update of the user '
-          schema:
-            $ref: '#/definitions/UserInfo'
-        '404':
-          description: No user found in the system for update
-        '417':
-          description: Expectation Failed!! Validation failed
-        '500':
-          description: Internal server error
-        '503':
-          description: 'Exception Occurred!! '
-    delete:
-      tags:
-        - Users
-      summary: Delete a user by ID.
-      description: Returns deleted user json with status
-      operationId: deleteUser
-      responses:
-        '200':
-          description: 'Successful deletion of user '
-          schema:
-            $ref: '#/definitions/UserInfo'
-        '404':
-          description: No user found in the system for deletion
-        '417':
-          description: Expectation Failed!! Validation failed
-        '500':
-          description: Internal server error
-        '503':
-          description: 'Exception Occurred!! '
-  '/{jobId}':
-    parameters:
-      - name: jobId
-        in: path
-        description: jobId
-        required: true
-        type: string
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-    get:
-      tags:
-        - Privacy Jobs
-      summary: Lookup the details of a job by ID.
-      description: ''
-      operationId: getStatus
-      responses:
-        '200':
-          description: 'If found, The details of requested jobId is returned.'
-          schema:
-            $ref: '#/definitions/A%20GDPR%20Request%20model'
-        '400':
-          description: Bad Request. The request is malformed
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '401':
-          description: Unauthorized. The request has not been applied because it  lacks valid authentication credentials for the target resource.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '403':
-          description: Forbidden. That combination of arguments is not allowed.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '404':
-          description: Not Found. The resource the client is looking for isn't there.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '405':
-          description: Method Not Allowed. Client sent a request using a HTTP method that the server doesn't support.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '406':
-          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '422':
-          description: Unprocessable Entity. Client sent a correct request that contained invalid values for one or more parameters.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '500':
-          description: Internal Server Error. This is an indicator of a server-side error.
-        '502':
-          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
-        '503':
-          description: Service Unavailable. This is an indicator of a potential server overload.
-        '504':
-          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
-  '/{parentJobId}/child':
-    parameters:
-      - name: parentJobId
-        in: path
-        description: parentJobId
-        required: true
-        type: string
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-    post:
-      tags:
-        - Privacy Jobs
-      summary: Create a child job for an existing parent job by ID.
-      description: An authenticated user can submit requests for creating a child job for an existing parent job.
-      operationId: createChildJob
-      parameters:
-        - in: body
-          name: body
-          description: JSON file or valid JSON to submit requests
-          required: true
-          schema:
-            $ref: '#/definitions/ChildJobRequest'
-        - $ref: '#/parameters/json-header'
-      responses:
-        '200':
-          description: successful operation
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/A%20GDPR%20Response%20model'
         '202':
-          description: GDPR requests created successfully
+          description: The job was successfully created. The response body contains the details of the newly created privacy job.
           schema:
-            $ref: '#/definitions/ResponseEntity'
+            $ref: '#/definitions/PrivacyJobResponse'
         '400':
-          description: Bad Request. The request is malformed
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '401':
-          description: Unauthorized. The request has not been applied because it lacks valid authentication credentials for the target resource.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
+          description: The request is incomplete or malformed.
         '403':
-          description: Forbidden. That combination of arguments is not allowed.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
+          description: You do not have access permissions for this endpoint.
         '404':
-          description: Not Found. The resource the client is looking for isn't there.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '405':
-          description: Method Not Allowed. Client sent a request using a HTTP method that the server doesn't support.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '406':
-          description: Not Acceptable. Unacceptable content type. The caller sent an <b>Accept</b> header for a content type which does not exist on the server
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '417':
-          description: Request processing failed.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
-        '422':
-          description: Unprocessable Entity. Client sent a correct request that contained invalid values for one or more parameters.
-          schema:
-            $ref: '#/definitions/Problem%20Detail'
+          description: The requested resource could not be found. Double-check that your ID values are accurate.
         '500':
-          description: Internal Server Error. This is an indicator of a server-side error.
-        '502':
-          description: Bad Gateway. This is an indicator that the search back-end did not send a valid response.
-        '503':
-          description: Service Unavailable. This is an indicator of a potential server overload.
-        '504':
-          description: Gateway Timeout. This is an indicator that the search back-end did not complete a response within an allowed time period.
+          description: There was an internal server error. Try the request again in a few minutes, and contact Adobe Support if the problem persists.
+  /jobs/{JOB_ID}:
+    get:
+      tags:
+        - Privacy Jobs
+      summary: Retrieve the details of a job by ID.
+      operationId: fetchJobDetailsByJobId
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/job-id'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PrivacyJobDetails'
+        '400':
+          description: The request is incomplete or malformed.
+        '403':
+          description: You do not have access permissions for this endpoint.
+        '404':
+          description: The requested resource could not be found. Double-check that your ID values are accurate.
+        '500':
+          description: There was an internal server error. Try the request again in a few minutes, and contact Adobe Support if the problem persists.
+  /jobs/{JOB_ID}/child-job:
+    post:
+      tags:
+        - Privacy Jobs
+      summary: Create child job for an existing parent job.
+      operationId: createLinkedJob
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/job-id'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - in: body
+          name: body
+          description: 'The payload for a privacy creation request must include company context information, a list of user IDs and namespaces, and a valid regulation code. See the [Privacy Service developer guide](https://docs-stg.corp.adobe.com/content/help/en/experience-platform/privacy/api/privacy-jobs.html) for more details on how to format privacy request payloads.'
+          required: false
+          schema:
+            $ref: '#/definitions/PrivacyChildJobRequestDetails'
+      responses:
+        '202':
+          description: The child job was successfully created. The response body contains the details of the newly created privacy job.
+          schema:
+            $ref: '#/definitions/PrivacyJobResponse'
+        '400':
+          description: The request is incomplete or malformed.
+        '403':
+          description: You do not have access permissions for this endpoint.
+        '404':
+          description: The requested resource could not be found. Double-check that your ID values are accurate.
+        '500':
+          description: There was an internal server error. Try the request again in a few minutes, and contact Adobe Support if the problem persists.
 parameters:
+  job-id:
+    name: JOB_ID
+    description: The unique ID of a privacy job.
+    in: path
+    required: true
+    type: string
   authorization:
     name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer". For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
+    description: 'The access token provided after authorization in the format "Bearer {ACCESS_TOKEN}". See the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html) for steps on how to obtain this value.'
     required: true
     type: string
     in: header
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
-    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
+    description: 'Unique Identifier for your IMS Organization ({IMS_ORG}). See the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html) for steps on how to obtain this value.'
     required: true
     type: string
     in: header
   x-api-key:
     name: x-api-key
-    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
+    description: 'Your specific API key for your unique Platform configuration ({API_KEY}). See the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html) for steps on how to obtain this value.'
     required: true
     type: string
     in: header
-  json-header:
-    name: Content-Type
-    description: 'application/json'
+  x-sandbox-name:
+    name: x-sandbox-name
+    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.'
     required: true
     type: string
     in: header
-  multipart-header:
+  content-type:
     name: Content-Type
-    description: 'multipart/form-data'
+    description: The type of content being sent in the body of the request (eg. application/json).
     required: true
     type: string
     in: header
 definitions:
-  A CompanyContext model:
+  PrivacySaleConsentDetails:
+    type: object
+    properties:
+      nameSpace:
+        type: string
+      values:
+        type: array
+        uniqueItems: true
+        items:
+          type: string
+  PrivacySaleConsentResource:
+    type: object
+    properties:
+      optOutOfSale:
+        type: boolean
+      entities:
+        type: array
+        items:
+          $ref: '#/definitions/PrivacySaleConsentDetails'
+      requestId:
+        type: string
+      transactionId:
+        type: string
+      orgId:
+        type: string
+  JsonNode:
+    type: object
+    properties:
+      array:
+        type: boolean
+      'null':
+        type: boolean
+      number:
+        type: boolean
+      valueNode:
+        type: boolean
+      containerNode:
+        type: boolean
+      missingNode:
+        type: boolean
+      object:
+        type: boolean
+      nodeType:
+        type: string
+        enum:
+          - ARRAY
+          - BINARY
+          - BOOLEAN
+          - MISSING
+          - 'NULL'
+          - NUMBER
+          - OBJECT
+          - POJO
+          - STRING
+      pojo:
+        type: boolean
+      integralNumber:
+        type: boolean
+      floatingPointNumber:
+        type: boolean
+      short:
+        type: boolean
+      int:
+        type: boolean
+      long:
+        type: boolean
+      double:
+        type: boolean
+      bigDecimal:
+        type: boolean
+      bigInteger:
+        type: boolean
+      textual:
+        type: boolean
+      boolean:
+        type: boolean
+      binary:
+        type: boolean
+      float:
+        type: boolean
+  PrivacyJobDetails:
+    type: object
+    properties:
+      jobId:
+        type: string
+      requestId:
+        type: string
+      userKey:
+        type: string
+      action:
+        type: string
+        enum:
+          - access
+          - delete
+      status:
+        type: string
+      submittedBy:
+        type: string
+      qualifiedCount:
+        type: integer
+        format: int64
+      createdDate:
+        type: string
+        format: date-time
+      lastModifiedDate:
+        type: string
+        format: date-time
+      userIds:
+        type: array
+        items:
+          $ref: '#/definitions/PrivacyUserIdDetails'
+      productResponses:
+        type: array
+        items:
+          $ref: '#/definitions/PrivacyProductResponseDetails'
+      downloadUrl:
+        type: string
+      childJobs:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/definitions/PrivacyJobDetails'
+      regulation:
+        type: string
+  PrivacyProductJobResponse:
+    type: object
+    properties:
+      status:
+        type: string
+      results:
+        $ref: '#/definitions/JsonNode'
+      message:
+        type: string
+  PrivacyProductResponseDetails:
+    type: object
+    properties:
+      product:
+        type: string
+      retryCount:
+        type: integer
+        format: int32
+      processedDate:
+        type: string
+        format: date-time
+      productStatusResponse:
+        $ref: '#/definitions/PrivacyProductJobResponse'
+  PrivacyUserIdDetails:
+    type: object
+    properties:
+      namespace:
+        type: string
+      value:
+        type: string
+      type:
+        type: string
+      namespaceId:
+        type: integer
+        format: int32
+      isDeletedClientSide:
+        type: boolean
+  PrivacyJobDetailsList:
+    type: object
+    properties:
+      totalRecords:
+        type: integer
+        format: int64
+      jobDetails:
+        type: array
+        items:
+          $ref: '#/definitions/PrivacyJobDetails'
+  PrivacyCompanyContextDetails:
     type: object
     required:
       - namespace
@@ -686,70 +451,47 @@ definitions:
         type: string
       value:
         type: string
-  A GDPR Request model:
-    type: object
-    required:
-      - companyContexts
-      - users
-      - regulation
-    properties:
-      companyContexts:
-        type: array
-        items:
-          $ref: '#/definitions/A%20CompanyContext%20model'
-        maxItems: 2147483647
-        minItems: 1
-      users:
-        type: array
-        items:
-          $ref: '#/definitions/A%20model%20for%20Users'
-        maxItems: 2147483647
-        minItems: 1
-      include:
-        type: array
-        uniqueItems: true
-        items:
-          type: string
-      exclude:
-        type: array
-        uniqueItems: true
-        items:
-          type: string
-      expandIds:
-        type: boolean
-      priority:
-        type: string
-        enum: [low,normal]
-      analyticsDeleteMethod:
-        type: string
-        enum: [anonymize,purge]
-      regulation:
-        type: string
-        enum: [ccpa,gdpr]
-  A GDPR Response model:
+  PrivacyJobResponse:
     type: object
     properties:
+      requestId:
+        type: string
+      totalRecords:
+        type: integer
+        format: int64
       jobs:
         type: array
         uniqueItems: true
         items:
-          $ref: '#/definitions/JobDTO'
-      errors:
-        $ref: '#/definitions/Problem%20Detail'
-      meta:
-        $ref: '#/definitions/ServicePageResult'
-      requestStatus:
-        type: integer
-        format: int32
-      totalRecords:
-        type: integer
-        format: int64
-  A model for Users:
+          $ref: '#/definitions/PrivacyJobResponseDetails'
+      jobDetails:
+        type: array
+        items:
+          $ref: '#/definitions/PrivacyJobDetails'
+  PrivacyJobResponseCustomerDetails:
+    type: object
+    properties:
+      user:
+        $ref: '#/definitions/PrivacyUserDetails'
+      companyContexts:
+        type: array
+        items:
+          $ref: '#/definitions/PrivacyCompanyContextDetails'
+  PrivacyJobResponseDetails:
+    type: object
+    properties:
+      jobId:
+        type: string
+      customer:
+        $ref: '#/definitions/PrivacyJobResponseCustomerDetails'
+      rootJobId:
+        type: string
+  PrivacyUserDetails:
     type: object
     required:
-    - action
-    - key
-    - userIDs
+      - action
+      - key
+      - userIDs
     properties:
       key:
         type: string
@@ -763,21 +505,26 @@ definitions:
       userIDs:
         type: array
         items:
-          $ref: '#/definitions/UserId'
-        maxItems: 2147483647
+          $ref: '#/definitions/PrivacyUserIdDetails'
+        maxItems: 9
         minItems: 1
-  ChildJobRequest:
+  PrivacyJobRequestDetails:
     type: object
     required:
-    - include
-    - userIDs
+      - companyContexts
+      - include
+      - users
     properties:
-      parentJobId:
-        type: string
-      userIDs:
+      companyContexts:
         type: array
         items:
-          $ref: '#/definitions/UserIdDTO'
+          $ref: '#/definitions/PrivacyCompanyContextDetails'
+        maxItems: 2147483647
+        minItems: 1
+      users:
+        type: array
+        items:
+          $ref: '#/definitions/PrivacyUserDetails'
         maxItems: 2147483647
         minItems: 1
       include:
@@ -787,229 +534,42 @@ definitions:
           type: string
         maxItems: 2147483647
         minItems: 1
-  CustomerDTO:
-    type: object
-    properties:
-      user:
-        $ref: '#/definitions/A%20model%20for%20Users'
-      companyContexts:
-        type: array
-        items:
-          $ref: '#/definitions/A%20CompanyContext%20model'
-  ErrorResponse:
-    type: object
-    properties:
-      reason:
+      expandIds:
         type: string
-      message:
+        pattern: ^(true|false)$
+      analyticsDeleteMethod:
         type: string
-    xml:
-      name: error
-  FileResponse:
-    type: object
-    properties:
-      files:
-        type: array
-        items:
-          type: string
-      message:
+        pattern: ^(anonymize|purge)$
+      priority:
         type: string
-  JobDTO:
-    type: object
-    properties:
-      jobId:
-        type: string
-      customer:
-        $ref: '#/definitions/CustomerDTO'
+        pattern: ^(low|normal)$
       rootJobId:
         type: string
-  JsonApi:
+      region:
+        type: string
+      regulation:
+        type: string
+  PrivacyChildJobRequestDetails:
     type: object
-  Problem Detail:
-    type: object
+    required:
+      - include
+      - initiatedBy
+      - userIDs
     properties:
-      errorType:
+      parentJobId:
         type: string
-        example: 'https://mcloud.io/client-error'
-        description: A URI reference (RFC3986) that identifies the problem type.
-      errorCode:
-        type: integer
-        format: int32
-        example: 4xx
-        description: The HTTP status code generated by the server for this occurrence of the problem.
-      title:
-        type: string
-        example: Client side error
-        description: 'A short, human-readable summary of the problem type.'
-      detail:
-        type: string
-        example: Invalid ID format
-        description: A human-readable explanation specific to this occurrence of the problem.
-    description: 'An error object containing a problem detail, as defined by [RFC 7807 Problem Details for HTTP APIs](https://tools.ietf.org/html/rfc7807). The returned content-type is the <i>application/problem+json</i> media type. When present, this response contains machine-readable details pertaining to the error. Problem details include a <i>type</i>, which is a URI.'
-  Product:
-    type: object
-    properties:
-      productId:
-        type: integer
-        format: int32
-      productName:
-        type: string
-      inUse:
-        type: boolean
-        default: false
-      createdOn:
-        type: string
-        format: date-time
-      createdBy:
-        type: string
-      comments:
-        type: string
-      parentId:
-        type: integer
-        format: int32
-      responseThreshold:
-        type: integer
-        format: int32
-      statusCode:
-        type: string
-      statusMessage:
-        type: string
-  ResponseEntity:
-    type: object
-    properties:
-      headers:
-        type: object
-        additionalProperties:
-          type: array
-          items:
-            type: string
-      body:
-        type: object
-      statusCode:
-        type: string
-        enum:
-          - CONTINUE
-          - SWITCHING_PROTOCOLS
-          - PROCESSING
-          - CHECKPOINT
-          - OK
-          - CREATED
-          - ACCEPTED
-          - NON_AUTHORITATIVE_INFORMATION
-          - NO_CONTENT
-          - RESET_CONTENT
-          - PARTIAL_CONTENT
-          - MULTI_STATUS
-          - ALREADY_REPORTED
-          - IM_USED
-          - MULTIPLE_CHOICES
-          - MOVED_PERMANENTLY
-          - FOUND
-          - MOVED_TEMPORARILY
-          - SEE_OTHER
-          - NOT_MODIFIED
-          - USE_PROXY
-          - TEMPORARY_REDIRECT
-          - RESUME_INCOMPLETE
-          - BAD_REQUEST
-          - UNAUTHORIZED
-          - PAYMENT_REQUIRED
-          - FORBIDDEN
-          - NOT_FOUND
-          - METHOD_NOT_ALLOWED
-          - NOT_ACCEPTABLE
-          - PROXY_AUTHENTICATION_REQUIRED
-          - REQUEST_TIMEOUT
-          - CONFLICT
-          - GONE
-          - LENGTH_REQUIRED
-          - PRECONDITION_FAILED
-          - REQUEST_ENTITY_TOO_LARGE
-          - REQUEST_URI_TOO_LONG
-          - UNSUPPORTED_MEDIA_TYPE
-          - REQUESTED_RANGE_NOT_SATISFIABLE
-          - EXPECTATION_FAILED
-          - I_AM_A_TEAPOT
-          - INSUFFICIENT_SPACE_ON_RESOURCE
-          - METHOD_FAILURE
-          - DESTINATION_LOCKED
-          - UNPROCESSABLE_ENTITY
-          - LOCKED
-          - FAILED_DEPENDENCY
-          - UPGRADE_REQUIRED
-          - PRECONDITION_REQUIRED
-          - TOO_MANY_REQUESTS
-          - REQUEST_HEADER_FIELDS_TOO_LARGE
-          - INTERNAL_SERVER_ERROR
-          - NOT_IMPLEMENTED
-          - BAD_GATEWAY
-          - SERVICE_UNAVAILABLE
-          - GATEWAY_TIMEOUT
-          - HTTP_VERSION_NOT_SUPPORTED
-          - VARIANT_ALSO_NEGOTIATES
-          - INSUFFICIENT_STORAGE
-          - LOOP_DETECTED
-          - BANDWIDTH_LIMIT_EXCEEDED
-          - NOT_EXTENDED
-          - NETWORK_AUTHENTICATION_REQUIRED
-  ServicePageResult:
-    type: object
-    properties:
-      totalPages:
-        type: integer
-        format: int32
-      jsonapi:
-        $ref: '#/definitions/JsonApi'
-  Something:
-    type: object
-    properties:
-      message:
-        type: string
-        description: the message to say
-    description: Sample model for the documentation
-  UserId:
-    type: object
-    properties:
-      namespace:
-        type: string
-      value:
-        type: string
-      type:
-        type: string
-      namespaceId:
-        type: integer
-        format: int32
-      isDeletedClientSide:
-        type: boolean
-        default: false
-  UserIdDTO:
-    type: object
-    properties:
-      namespace:
-        type: string
-      value:
-        type: string
-      type:
-        type: string
-      namespaceId:
-        type: integer
-        format: int32
-      isDeletedClientSide:
-        type: boolean
-        default: false
-  UserInfo:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int64
-      userId:
-        type: string
-      role:
-        type: string
-      emailId:
-        type: string
-      statusCode:
-        type: string
-      statusMessage:
+      userIDs:
+        type: array
+        items:
+          $ref: '#/definitions/PrivacyUserIdDetails'
+        maxItems: 9
+        minItems: 1
+      include:
+        type: array
+        uniqueItems: true
+        items:
+          type: string
+        maxItems: 2147483647
+        minItems: 1
+      initiatedBy:
         type: string
