@@ -3,29 +3,28 @@ info:
   version: '1.0'
   title: Real-time Customer Profile API
   description: >-
-    Real-time Customer Profile enables you to drive coordinated, consistent, and relevant experiences for your customers no matter where or when they interact with your brand. Profile provides a holistic view of each individual customer that combines data from multiple channels, including online, offline, CRM, and third-party data.
-    
-    
-    The Real-time Customer Profile API allows you to programmatically integrate Profile's various functionalities into your service, providing RESTful endpoints for merge policy configuration, segmentation, edge projections, and more.
+    - Service description:
+      - Real-time Customer Profile enables you to drive coordinated, consistent, and relevant experiences for your customers no matter where or when they interact with your brand. Profile provides a holistic view of each individual customer that combines data from multiple channels, including online, offline, CRM, and third-party data.
+      - The Real-time Customer Profile API allows you to programmatically integrate Profile's various functionalities into your service, providing RESTful endpoints for merge policy configuration, segmentation, edge projections, and more.
 
 
-    Related documentation:
-      * [Real-time Customer Profile documentation](https://docs.adobe.com/content/help/en/experience-platform/profile/home.html)
+    - Related documentation:
+      - [Real-time Customer Profile documentation](https://docs.adobe.com/content/help/en/experience-platform/profile/home.html)
 
-    Visualize API calls with Postman (a free, third-party software):
-      * [Real-time Customer Profile API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Real-time%20Customer%20Profile%20API.postman_collection.json)
-      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
-      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
+    - Visualize API calls with Postman (a free, third-party software):
+      - [Real-time Customer Profile API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Real-time%20Customer%20Profile%20API.postman_collection.json)
+      - [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
+      - [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
 
-    API paths:
-      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
-      * Base path for this API: /data/core/ups
-      * Example of a complete path: https://<span>platform.adobe.io/data/core/ups/config/mergePolicies
+    - API paths:
+      - PLATFORM Gateway URL: https://<span>platform.adobe.io/
+      - Base path for this API: /data/core/ups
+      - Example of a complete path: https://<span>platform.adobe.io/data/core/ups/config/mergePolicies
       
-    Required headers:
-      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
-      * All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
-      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type`. Accepted values specific to each call are provided in the call parameters.
+    - Required headers:
+      - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
+      - All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
+      - All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type`. Accepted values specific to each call are provided in the call parameters.
 
 host: platform.adobe.io
 basePath: /data/core/ups
@@ -36,8 +35,6 @@ tags:
     description: An entity is an Experience Data Model (XDM) object whose attributes and related time-series events have been merged from various sources to form an individual profile.
   - name: Merge policies
     description: Merge policies are the rules that Platform uses to determine how data will be prioritized and what data will be combined to create an individual customer profile.
-  - name: Profile Search
-    description: Profile search enables you to find various Real-time Customer Profile metadata.
   - name: Profile System Jobs
     description: Profile System Jobs allow you to delete profile fragments for a given dataset or batch.
   - name: Projection configurations
@@ -725,160 +722,7 @@ paths:
         '500':
           description: Internal Server Error.
           schema:
-            $ref: '#/definitions/ResponseInternalErrorContext'
-  '/search/results/{schemaClass}':
-    get:
-      tags:
-        - Profile Search
-      summary: Retrieve a list of all full-text, indexed objects resulting from a search.
-      description: ''
-      operationId: queryNoNamespace
-      produces:
-        - application/json
-      parameters:
-        - name: schemaClass
-          in: path
-          description: Search source and results model
-          required: true
-          type: string
-          x-example: _xdm.context.segmentdefinition      
-        - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
-        - name: x-ups-search-version
-          in: header
-          description: Search API version drives how the search works
-          required: false
-          type: string
-          x-example: '1.0'
-        - name: s
-          in: query
-          description: Full text search query based on Lucene full text query syntax
-          required: false
-          type: string
-          x-example: name:test
-      responses:
-        '200':
-          description: List of search counts per namespace based on the query specified.
-          schema:
-            $ref: '#/definitions/_xdm.context.segmentdefinition-SearchResultsSummaryResponse'
-        '403':
-          description: Forbidden
-        '503':
-          description: Service Unavailable
-  '/search/results/{schemaClass}/{namespace}':
-    get:
-      tags:
-        - Profile Search
-      summary: Retrieve a list of all full-text, indexed objects resulting from a search within a spefied namespace.
-      description: ''
-      operationId: queryWithNamespace
-      produces:
-        - application/json
-      parameters:
-        - name: schemaClass
-          in: path
-          description: Search source and results model
-          required: true
-          type: string
-          x-example: _xdm.context.segmentdefinition
-        - name: namespace
-          in: path
-          description: namespace
-          required: true
-          type: string
-          x-example: AAMTraits
-        - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
-        - name: x-ups-search-version
-          in: header
-          description: Search API version drives how the search works
-          required: false
-          type: string
-          x-example: '1.0'
-        - name: s
-          in: query
-          description: Full text search query based on Lucene full text query syntax
-          required: false
-          type: string
-          x-example: name:test
-        - name: searchObjectId
-          in: query
-          description: The ID of the folder you want to search for extenal segments in.
-          required: false
-          type: string
-          x-example: fastMotorcyclesFolderid
-        - name: limit
-          in: query
-          description: The number of search results to return, 50 is max
-          required: false
-          type: number
-          x-example: 10
-        - name: page
-          in: query
-          description: The page offset, 0 is the first page.
-          required: false
-          type: number
-          x-example: 2
-      responses:
-        '200':
-          description: Paged list of search results, folders are shown first and then external segments.
-          schema:
-            $ref: '#/definitions/_xdm.context.segmentdefinition-SearchResultResponse'
-        '403':
-          description: Forbidden
-        '503':
-          description: Service Unavailable
-  '/search/structure/{schemaClass}/{namespace}':
-    get:
-      tags:
-        - Profile Search
-      summary: View the structural information associated with a searchObject
-      description: "This endpoint is used to show search object organization. It returns an array of folders that contain the search object, the first element of the array is the root folder and last element of the array is search object's parent folder."
-      operationId: showSearchObjectStructure
-      produces:
-        - application/json
-      parameters:
-        - name: schemaClass
-          in: path
-          description: Search source and results model
-          required: true
-          type: string
-          x-example: _xdm.context.segmentdefinition      
-        - name: namespace
-          in: path
-          description: namespace
-          required: true
-          type: string
-          x-example: AAMTraits
-        - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
-        - name: x-ups-search-version
-          in: header
-          description: Search API version drives how the search works
-          required: false
-          type: string
-          x-example: '1.0'
-        - name: searchObjectId
-          in: query
-          description: The ID of the external folder or segment for which you want to show the ancestry.
-          required: true
-          type: string
-          x-example: porshe911_id
-      responses:
-        '200':
-          description: Structural information associated with a searchObject.  This returns an array of folders that contain the search object, the first element of the array is the root folder and last element of the array is search object's parent folder.
-          schema:
-            $ref: '#/definitions/_xdm.context.segmentdefinition-SearchObjectStructureResponse'
-        '403':
-          description: Forbidden
-        '503':
-          description: Service Unavailable                    
+            $ref: '#/definitions/ResponseInternalErrorContext'                  
   '/config/projections':
     get:
       tags:
@@ -1804,165 +1648,7 @@ paths:
           description: Delete request (Profile System Job) not found
         '503':
           description: Service Unavailable
-definitions:
-  _xdm.context.segmentdefinition-SearchResultsSummaryResponse:
-    type: object
-    properties:
-      results:
-        type: array
-        description: List of namespaces and the number of search objects resulting from the search for each namespace.
-        items:
-          $ref: '#/definitions/_xdm.context.segmentdefinition-SearchResultsSummaryObject'
-        example: 
-         - name: 'AAMTraits'
-           count: 45
-         - name: 'AAMSegments'
-           count: 10
-         - name: 'SegmentsAISegments'
-           count: 3
-      status:
-        type: object
-        properties:
-          message:
-            type: string
-            description: Extra information about the search status.  Since search only fails with an HTTP error code in catastropic situations, this field will describe extra status information about the search.
-            example: "Success"
-  _xdm.context.segmentdefinition-SearchResultResponse:
-    type: object
-    properties: 
-      results:
-        type: array
-        description: List of namespaces and the number of search objects resulting from the search for each namespace.
-        items:
-          $ref: '#/definitions/_xdm.context.segmentdefinition-SearchResultResponseObject'
-      page:
-        $ref: '#/definitions/SearchResultsPageObject'
-      status:
-        type: object
-        properties:
-          message:
-            type: string
-            description: Extra information about the search status.  Since search only fails with an HTTP error code in catastropic situations, this field will describe extra status information about the search.
-            example: "Search system is not setup correctly."
-  _xdm.context.segmentdefinition-SearchObjectStructureResponse:
-    type: object
-    properties:
-      results:
-        type: array
-        description: List of folder IDs and names that contain the search object id specified in the {searchObjectId} parameter This list starts at the root folder and then traverses through the subfolders until it reaches the folder that contains the search object identified by the {namespace}/{searchObjectId} values in the URL path.
-        items:
-          $ref: '#/definitions/_xdm.context.segmentdefinition-SearchObjectStructureObject'
-        example:
-          - id: "carTraits"
-            label: "AAMTraits for Cars"
-            parentFolderId: "root"
-          - id: "fastCarsFolder"
-            label: "Fast Cars"
-            parentFolderId: "carTraits"
-          - id: "porsche"
-            label: "Porshe"
-            parentFolderId: "redCarsFolderId"
-      status:
-        type: object
-        properties:
-          message:
-            type: string
-            description: Extra information about the search status.  Since search only fails with an HTTP error code in catastropic situations, this field will describe extra status information about the search.
-            example: "Cannot find searchObjectId redcarsFolderId."
-  _xdm.context.segmentdefinition-SearchConfigureResponse:
-    type: object
-    properties:
-      'message':
-        type: string
-        description: The configuration response.  This process is non-blocking.  The call will simply notify the UPS Search Service that it needs to configure an Azure Search index for a single Cosmos databases, container and sandbox.
-        example: The request has been accepted for processing, but the processing has not been completed.
-  _xdm.context.segmentdefinition-SearchConfigurePostPayload:
-    type: object
-    properties:
-      databaseName:
-        type: string
-        example: ups_1BD6382559DF0C130A49422D@AdobeOrg_sg
-        description: Cosmos database instance the holds the container that houses the data we want indexed.
-      containerName:
-        type: string
-        example: _xdm.context.segmentdefintion
-        description: The container name contained in the databaseName that houses the data we want indexed.			
-  _xdm.context.segmentdefinition-SearchObjectStructureObject:
-    type: object
-    properties:
-      'id':
-        type: string
-        description: The ID of the searchable object
-      'label':
-        type: string
-        description: The folder name
-      'parentFolderId':
-        type: string
-        description: The ID of the parent folder
-  _xdm.context.segmentdefinition-SearchResultsSummaryObject:
-    type: object
-    properties:
-      namespace:
-        type: array
-        items:
-          type: object
-          properties:
-            name:
-              type: string
-            count:
-              type: number          
-  _xdm.context.segmentdefinition-SearchResultResponseObject:
-    type: object
-    properties:
-      id:
-        type: string
-        example: folder2
-        description: ID of the object that is indexed for full text search, this used with the namespace results in a unique identifier for the object.
-      base64EncodedSourceId:
-        type: string
-        example: REZrcUMyX3Vmb2xkZXIyLUFBTVNlZ21lbnRzQS01ZTBlMjU2MzQyYzI0ZjE4YWQyZDc1MDg1
-        description: The base64 encoded sourceId.  This value is the primary key used to identify the object in the search index.
-      sourceId:
-        description: The non base64 encode sourceId.  This value is the primary key used to identify the object in the source data.
-      isFolder:
-        type: boolean
-        example: true
-        description: true of false depending on whether the search object is a folder that contain other search objects or folders.
-      parentFolderId:
-        type: string
-        example: root
-        description: The ID of the folder that contains this search object or root if the object exists and the root level.  This ID, combined with the namespace, are a unique key in the full text search index.
-      name:
-        type: string
-        example: Segment that targets males age 45 to 50 living on the west coast
-        description: The name of the search object.
-      description:
-        type: string
-        example: Under development, targeting east coast millionaires that buy red cars.
-        description: A description attached to the search object.
-    description: An individual search result after issuing a full text search.        
-  SearchResultsPageObject:
-    type: object
-    properties:
-      totalCount:
-        type: number
-        example: 20323
-        description: The number of search objects found.
-      totalPages:
-        type: integer
-        format: int32
-        example: 100
-        description: The total number of pages resulting from your search.
-      pageOffset:
-        type: integer
-        format: int32
-        example: 0
-        description: The current page offset, 0 is the first page.
-      pageSize:
-        type: integer
-        format: int32
-        example: 10
-        description: The total number of search objects on this page.
+definitions:     
   listComputedAttributes:
     type: object
     properties:
@@ -2747,7 +2433,7 @@ parameters:
   x-sandbox-name:
     name: x-sandbox-name
     in: header
-    description: All resources in Experience Platform are isolated to specific virtual sandboxes. Requests to Platform APIs require a header that specifies the name of the sandbox in which the operation will take place.
+    description: All resources in Experience Platform are isolated to specific virtual sandboxes. Requests to Platform APIs require a header that specifies the name of the sandbox in which the operation will take place. See the [sandboxes overview](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
     required: true
     type: string
   x-profile-instance-id:  

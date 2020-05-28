@@ -39,6 +39,8 @@ tags:
     description: Segment definitions include a Profile Query Language (PQL) statement that defines which profiles will be part of an audience segment.
   - name: Segment jobs
     description: Segment jobs process previously established segment definitions to generate an audience segment.
+  - name: Segment search
+    description: Segment search allows users to search across multiple namespaces or get specific structural information about specified objects.
 
 paths:
   '/export/jobs':
@@ -57,19 +59,19 @@ paths:
         - name: limit
           in: query
           description: >- 
-            - Limit the number of export jobs returned in the list.
+            Limit the number of export jobs returned in the list.
           required: false
           type: integer
         - name: offset
           in: query
           description: >-
-            - Offset the page of results returned, ordered by created time of resource.
+            Offset the page of results returned, ordered by created time of resource.
           required: false
           type: string
         - name: status
           in: query
           description: >-
-            - Filter the export jobs returned by job status.
+            Filter the export jobs returned by job status.
           required: false
           type: string
           enum:
@@ -164,7 +166,7 @@ paths:
         - name: EXPORT_JOB_ID
           in: path
           description: >-
-            - The ID of the export job you want to retrieve.
+            The ID of the export job you want to retrieve.
           required: true
           type: string
       responses:
@@ -193,7 +195,7 @@ paths:
         - name: EXPORT_JOB_ID
           in: path
           description: >-
-            - The ID of the export job you want to cancel or delete.
+            The ID of the export job you want to cancel or delete.
           required: true
           type: string
       responses:
@@ -223,14 +225,14 @@ paths:
         - name: x-request-id
           in: header
           description: >-
-            - There needs to be one unique ID per request.
+            There needs to be one unique ID per request.
           required: true
           type: string
           x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
         - name: start
           in: query
           description: >-
-            - The page offset, as per created time of resource.
+            The page offset, as per created time of resource.
           required: false
           type: integer
           format: int64
@@ -238,21 +240,21 @@ paths:
         - name: limit
           in: query
           description: >-
-            - The maximum size of the page.
+            The maximum size of the page.
           required: false
           type: integer
           x-example: 10
         - name: page
           in: query
           description: >-
-            - The page number.
+            The page number.
           required: false
           type: integer
           x-example: 0
         - name: sort
           in: query
           description: >-
-            - The parameters used to sort the results.
+            The parameters used to sort the results.
           required: false
           type: string
           x-example: sort=name:asc,internalId:desc
@@ -283,7 +285,7 @@ paths:
         - name: x-request-id
           in: header
           description: >- 
-            - A unique ID must be used per request.
+            A unique ID must be used per request.
           required: true
           type: string
           x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
@@ -321,7 +323,7 @@ paths:
         - name: x-request-id
           in: header
           description: >-
-            - A unique ID must be used per request.
+            A unique ID must be used per request.
           required: true
           type: string
           x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
@@ -352,7 +354,7 @@ paths:
         - name: x-request-id
           in: header
           description: >-
-            - A unique ID must be used per request.
+            A unique ID must be used per request.
           required: true
           type: string
           x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
@@ -384,7 +386,7 @@ paths:
         - name: x-request-id
           in: header
           description: >-
-            - A unique ID must be used per request.
+            A unique ID must be used per request.
           required: true
           type: string
           x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
@@ -422,7 +424,7 @@ paths:
         - name: body
           in: body
           description: >-
-            - An array of the segment definition IDs that you are trying to retrieve.
+            An array of the segment definition IDs that you are trying to retrieve.
           schema:
             type: object
             properties:
@@ -434,7 +436,7 @@ paths:
                   - id: 54669488-03ab-4e0d-a694-37fe49e32be8
                   - id: c527dc3f-07fe-4b96-be4e-23f38e734ff8
       responses:
-        '200':
+        '207':
           description: The details of each segment definition are returned. The sample response has been truncated to show only the details for the first segment definition.
           schema:
             type: object
@@ -460,21 +462,21 @@ paths:
         - name: x-request-id
           in: header
           description: >-
-            - A unique ID must be used per request.
+            A unique ID must be used per request.
           required: false
           type: string
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
         - name: snapshot.name
           in: query
           description: >-
-            - The snapshot name.
+            The snapshot name.
           required: false
           type: string
           x-example: inUS
         - name: start
           in: query
           description: >- 
-            - The page offset, as per the created time of the resource.
+            The page offset, as per the created time of the resource.
           required: false
           type: integer
           format: int64
@@ -482,28 +484,28 @@ paths:
         - name: limit
           in: query
           description: >-
-            - The maximum number of segment jobs retrieved per page.
+            The maximum number of segment jobs retrieved per page.
           required: false
           type: integer
           x-example: 10
         - name: status
           in: query
           description: >- 
-            - The job status.
+            The job status.
           required: false
           type: string
           x-example: PROCESSING
         - name: sort
           in: query
           description: >-
-            - Used to order the segment jobs. Is written in the format [attributeName]:[desc|asc]
+            Used to order the segment jobs. Is written in the format [attributeName]:[desc|asc]
           required: false 
           type: string
           x-example: creationTime:desc
         - name: property
           in: query
           description: >-
-            - Used to get exact matches within an attribute in the segment job. Is written in the format [arrayTypeAttributeName]~[objectKey]==[value]
+            Used to get exact matches within an attribute in the segment job. Is written in the format [arrayTypeAttributeName]~[objectKey]==[value]
           required: false 
           type: string
           x-example: segments~segmentId==workInCanada
@@ -536,21 +538,21 @@ paths:
         - name: x-profile-instance-id
           in: header
           description: >- 
-            - The ID of the Profile Instance.
+            The ID of the Profile Instance.
           required: true
           type: string
           x-example: ups
         - name: x-request-id
           in: header
           description: >-
-            - Request ID
+            Request ID
           required: false
           type: string
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
         - in: body
           name: body
           description: >-
-            - List of segment jobs. Each should be in JSON format.
+            List of segment jobs. Each should be in JSON format.
           required: true
           schema:
             type: array
@@ -640,7 +642,7 @@ paths:
         - name: body
           in: body
           description: >-
-            - An array of the segment jobs IDs that you are trying to retrieve.
+            An array of the segment jobs IDs that you are trying to retrieve.
           schema:
             type: object
             properties:
@@ -652,7 +654,7 @@ paths:
                   - id: cc3419d3-0389-47f1-b174-fead6b3c830d
                   - id: c527dc3f-07fe-4b96-be4e-23f38e734ff8
       responses:
-        '200':
+        '207':
           description: The details of each segment jobs is returned. The sample response has been truncated to show only the details for the first segment job.
           schema:
             type: object
@@ -722,14 +724,14 @@ paths:
         - name: offset
           in: query
           description: >- 
-            - The offset of the page.
+            The offset of the page.
           required: false
           type: string
           x-example: offset=10200
         - name: limit
           in: query
           description: >- 
-            - The number of entries that should be present on a page. If not specified, this value will be 1000.
+            The number of entries that should be present on a page. If not specified, this value will be 1000.
           required: false
           type: integer
           x-example: 100
@@ -825,7 +827,7 @@ paths:
       - Schedules
       summary: Create a schedule, including specifying the time when the schedule should be triggered.
       description: >-
-        - The scheduler is updated periodically (approximately every 30 minutes), so changes to a schedule may not go into effect immediately.
+        The scheduler is updated periodically (approximately every 30 minutes), so changes to a schedule may not go into effect immediately.
       operationId: postSchedule
       consumes:
       - application/json
@@ -871,7 +873,7 @@ paths:
       - Schedules
       summary: Retrieve a schedule by its ID.
       description: >-
-        - The scheduler is updated periodically (approximately every 30 minutes), so changes to a schedule may not go into effect immediately.
+        The scheduler is updated periodically (approximately every 30 minutes), so changes to a schedule may not go into effect immediately.
       operationId: getScheduleById
       produces:
       - application/json
@@ -898,7 +900,7 @@ paths:
       - Schedules
       summary: Update a schedule, including changing the trigger time or enabling/disabling the schedule.
       description: >-
-        - The scheduler is updated periodically (approximately every 30 minutes), so changes to a schedule may not go into effect immediately.
+        The scheduler is updated periodically (approximately every 30 minutes), so changes to a schedule may not go into effect immediately.
       operationId: patchSchedule
       produces:
       - application/json
@@ -912,7 +914,7 @@ paths:
       - in: body
         name: body
         description: >-
-          - Use JSON Patch formatting to update the schedule. Note: You must use an "add" operation to add or update the given "path" with the given "value".
+          Use JSON Patch formatting to update the schedule. Note: You must use an "add" operation to add or update the given "path" with the given "value".
         required: true
         schema:
           type: array
@@ -954,6 +956,158 @@ paths:
           description: The schedule was not found.
         '503':
           description: The service is unavailable.
+  '/search/namespaces':
+      get:
+        tags:
+          - Segment search
+        summary: Retrieve a list of search count results, queried across all namespaces. 
+        operationId: queryNamespace
+        produces:
+          - application/json
+        parameters:
+          - name: schema.name
+            in: query
+            description: The schema class value associated with the search objects. Currently, only `_xdm.context.segmentdefinition` is supported.
+            required: true
+            type: string
+            x-example: _xdm.context.segmentdefinition
+          - $ref: '#/parameters/authorization'      
+          - $ref: '#/parameters/x-api-key'
+          - $ref: '#/parameters/x-gw-ims-org-id'
+          - name: x-ups-search-version
+            in: header
+            description: The version of the Search API used. The only supported version is `1.0`.
+            required: false
+            type: string
+            x-example: '1.0'
+          - $ref: '#/parameters/x-sandbox-name'
+          - name: s
+            in: query
+            description: The search query, based on the Lucene query syntax.
+            required: false
+            type: string
+            x-example: name:test
+        responses:
+          '200':
+            description: Retrieve a list of search counts, per namespace, based on the specified query.
+            schema:
+              $ref: '#/definitions/SearchNamespaceList'
+          '403':
+            description: Access is forbidden.
+          '503':
+            description: The service is unavailable.
+  '/search/entities':
+      get:
+        tags:
+          - Segment search
+        summary: Retrieve a list of all full text indexed objects contained within a namespace resulting from a search
+        operationId: queryEntity
+        produces:
+          - application/json
+        parameters:
+          - name: schemaClass
+            in: query
+            description: The schema class value associated with the search objects. Currently, only `_xdm.context.segmentdefinition` is supported.
+            required: true
+            type: string
+            x-example: _xdm.context.segmentdefinition
+          - name: namespace
+            in: query
+            description: The namespace you want to search within.
+            required: true
+            type: string
+            x-example: AAMTraits
+          - $ref: '#/parameters/authorization'      
+          - $ref: '#/parameters/x-api-key'
+          - $ref: '#/parameters/x-gw-ims-org-id'
+          - name: x-ups-search-version
+            in: header
+            description: The version of the Search API used. The only supported version is `1.0`.
+            required: false
+            type: string
+            x-example: '1.0'
+          - $ref: '#/parameters/x-sandbox-name'
+          - name: s
+            in: query
+            description: The search query, based on the [Lucene query syntax](https://docs.microsoft.com/en-us/azure/search/query-lucene-syntax).
+            required: false
+            type: string
+            x-example: name:test
+          - name: entityId
+            in: query
+            description: The ID of the folder you want to search for external segments in.
+            required: false
+            type: string
+            x-example: fastMotorcyclesFolderid
+          - name: limit
+            in: query
+            description: The number of search results to return per page. The maximum is 50.
+            required: false
+            type: number
+            x-example: 10
+          - name: page
+            in: query
+            description: The offset of the page. The first page starts at 0.
+            required: false
+            type: number
+            x-example: 2
+        responses:
+          '200':
+            description: A paginated list of search results. Folders are shown first, followed by external segments.
+            schema:
+              $ref: '#/definitions/SearchEntityList'
+          '403':
+            description: Access is forbidden.
+          '503':
+            description: The service is unavailable.
+  '/search/taxonomy':
+      get:
+        tags:
+          - Segment search
+        summary: Get the taxonomic information associated with a search object.
+        description: "Show the search object's organization"
+        operationId: showSearchObjectStructure
+        produces:
+          - application/json
+        parameters:
+          - name: schema.name
+            in: query
+            description: The name of the schema being searched.
+            required: true
+            type: string
+            x-example: _xdm.context.segmentdefinition      
+          - name: namespace
+            in: query
+            description: namespace
+            required: true
+            type: string
+            x-example: AAMTraits
+          - $ref: '#/parameters/authorization'      
+          - $ref: '#/parameters/x-api-key'
+          - $ref: '#/parameters/x-gw-ims-org-id'
+          - name: x-ups-search-version
+            in: header
+            description: The version of the Search API used.
+            required: false
+            type: string
+            x-example: '1.0'
+          - $ref: '#/parameters/x-sandbox-name'
+          - name: entityId
+            in: query
+            description: The ID of the object you want to get structural information about. 
+            required: true
+            type: string
+            x-example: porshe911_id
+        responses:
+          '200':
+            description: Taxonomic information associated with an entityId.  This returns an array of folders that contain the search object, the first element of the array is the root folder and last element of the array is search object's parent folder.
+            schema:
+              $ref: '#/definitions/TaxonomySearchObject'
+          '403':
+            description: Access is forbidden.
+          '503':
+            description: The service is unavailable.                    
+
 definitions:
   EstimateResponse:
     type: object
@@ -1856,32 +2010,180 @@ definitions:
         example: active
         description: The new value used to update the specified attribute.
     description: Patch operation
+  SearchNamespaceList:
+      type: object
+      properties:
+        namespaces:
+          type: array
+          description: A list of namespaces and the number of search objects resulting from the search for each namespace.
+          items:
+            $ref: '#/definitions/SearchNamespaceObject'
+          example: 
+           - name: 'AAMTraits'
+             count: 45
+           - name: 'AAMSegments'
+             count: 10
+           - name: 'SegmentsAISegments'
+             count: 3
+        status:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Extra information about the search status.
+              example: "Success"
+  SearchEntityList:
+    type: object
+    properties: 
+      entities:
+        type: array
+        description: A list of namespaces and the number of search objects resulting from the search for each entity.
+        items:
+          $ref: '#/definitions/SearchEntityObject'
+      page:
+        $ref: '#/definitions/SearchResultsPageObject'
+      status:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Extra information about the search status.
+            example: "Search system is not setup correctly."
+  TaxonomySearchObject:
+    type: object
+    properties:
+      taxonomy:
+        type: array
+        description: List of folder IDs and names. This list starts at the root folder and then traverses through the subfolders until it reaches the folder that contains the search object specified by the entityId.
+        items:
+          $ref: '#/definitions/TaxonomySearchValue'
+        example:
+          - id: "carTraits"
+            base64EncodedSourceId: "RFVGamdpRk1BZy01ZTY4MzBmYzM5N2I0NTE4YWFhMWEwOGY1"
+            name: "AAMTraits for Cars"
+            parentFolderId: "root"
+          - id: "fastCarsFolder"
+            base64EncodedSourceId: "RFVGZ01BLTVlNjgzMGZjMzk3YjQ1MThhYWExYTA4Zg2"
+            name: "Fast Cars"
+            parentFolderId: "carTraits"
+          - id: "porsche"
+            base64EncodedSourceId: "REFGZ01CLTVlNjczMGZjMzk3YjQ1MThhZGIxYTA4Zg=="
+            name: "Porshe"
+            parentFolderId: "redCarsFolderId"
+      status:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Extra information about the search status.
+            example: "Cannot find entityId redcarsFolderId."
+  TaxonomySearchValue:
+    type: object
+    properties:
+      'id':
+        type: string
+        description: The ID of the searchable object.
+      'base64EncodedSourceId':
+        type: string
+        description: The base64 encoded version of the source ID.
+      'name':
+        type: string
+        description: The name of the searchable object.
+      'parentFolderId':
+        type: string
+        description: The ID of the parent folder.
+  SearchNamespaceObject:
+    type: object
+    properties:
+      namespace:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The name of the namespace.
+            count:
+              type: number
+              description: The number of objects within the namespace.          
+  SearchEntityObject:
+    type: object
+    properties:
+      id:
+        type: string
+        example: folder2
+        description: The ID of the object that is indexed for full text search.
+      base64EncodedSourceId:
+        type: string
+        example: REZrcUMyX3Vmb2xkZXIyLUFBTVNlZ21lbnRzQS01ZTBlMjU2MzQyYzI0ZjE4YWQyZDc1MDg1
+        description: The base64 encoded version of the sourceId.
+      sourceId:
+        description: The non-base64 encoded version of the sourceId.
+      isFolder:
+        type: boolean
+        example: true
+        description: A boolean that shows whether or not the search object is a folder.
+      parentFolderId:
+        type: string
+        example: root
+        description: The ID of the folder that contains this search object or root if the object exists and the root level.
+      name:
+        type: string
+        example: Segment that targets males age 45 to 50 living on the west coast
+        description: The name of the search object.
+      description:
+        type: string
+        example: Under development, targeting east coast millionaires that buy red cars.
+        description: A description attached to the search object.
+    description: An individual search result after issuing a full text search.        
+  SearchResultsPageObject:
+    type: object
+    properties:
+      totalCount:
+        type: number
+        example: 20323
+        description: The number of search objects found.
+      totalPages:
+        type: integer
+        format: int32
+        example: 100
+        description: The total number of pages resulting from your search.
+      pageOffset:
+        type: integer
+        format: int32
+        example: 0
+        description: The current page offset. The first page has a value of 0.
+      pageSize:
+        type: integer
+        format: int32
+        example: 10
+        description: The total number of search objects on this page.
 parameters:
   authorization:
     name: Authorization
     description: >-
-      - The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
+      The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
     required: true
     type: string
     in: header
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
     description: >-
-      - The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
+      The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
     required: true
     type: string
     in: header
   x-api-key:
     name: x-api-key
     description: >-
-      - The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
+      The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
     required: true
     type: string
     in: header
   content-type:
     name: Content-Type
     description: >-
-      - The type of content being sent in the body of the request. Should be 'application/json'.
+      The type of content being sent in the body of the request. Should be 'application/json'.
     required: true
     type: string
     in: header
@@ -1905,28 +2207,28 @@ parameters:
     name: x-request-id
     in: header
     description: >- 
-      - An optional header that may be used for debugging purposes when investigating issues with a workflow. The same ID can be used to identify a single request to the service from a flow. A new ID should be created for each request.
+      An optional header that may be used for debugging purposes when investigating issues with a workflow. The same ID can be used to identify a single request to the service from a flow. A new ID should be created for each request.
     required: false
     type: string
   eventTypeId:
     name: eventTypeId
     in: path
     description: >-
-      - The ID of the event type.
+      The ID of the event type.
     required: true
     type: string
   x-sandbox-name:
     name: x-sandbox-name
     in: header
     description: >-
-      - All resources in Experience Platform are isolated to specific virtual sandboxes. Requests to Platform APIs require a header that specifies the name of the sandbox in which the operation will take place.
+      All resources in Experience Platform are isolated to specific virtual sandboxes. Requests to Platform APIs require a header that specifies the name of the sandbox in which the operation will take place. See the [sandboxes overview](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
     required: true
     type: string
   segmentId:
     name: SEGMENT_ID
     in: path
     description: >-
-      - The ID of the segment definition.
+      The ID of the segment definition.
     required: true
     type: string
     x-example: b9f6c339-f7f4-4141-b6c7-b562079da47c
@@ -1934,7 +2236,7 @@ parameters:
     name: SEGMENT_JOB_ID
     in: path
     description: >-
-      - The ID of the segment job request.
+      The ID of the segment job request.
     required: true
     type: string
     x-example: ca8fe8a8-0f38-478a-9905-fd515d1d2988
@@ -1942,7 +2244,7 @@ parameters:
     name: PREVIEW_ID
     in: path
     description: >-
-      - The ID of the preview job.
+      The ID of the preview job.
     required: true
     type: string
     x-example: MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA== 
@@ -1950,7 +2252,7 @@ parameters:
     name: ESTIMATE_ID
     in: path
     description: >-
-      - The ID of the estimate job.
+      The ID of the estimate job.
     required: true
     type: string
     x-example: MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA== 
@@ -1958,20 +2260,20 @@ parameters:
     name: start
     in: query
     description: >-
-      - Return results from a specific page offset. For example, `start=3`.
+      Return results from a specific page offset. For example, `start=3`.
     required: false
     type: integer
   limit:  
     name: limit
     in: query
     description: >-
-      - Limit response to a specific number of objects. Must be a positive number. For example, `limit=10`
+      Limit response to a specific number of objects. Must be a positive number. For example, `limit=10`
     required: false
     type: integer
   schedule-id:  
     name: SCHEDULE_ID
     in: path
     description: >-
-      - The ID of the schedule against which the operation is being performed.
+      The ID of the schedule against which the operation is being performed.
     required: true
     type: string
