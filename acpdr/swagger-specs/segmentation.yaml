@@ -2019,12 +2019,19 @@ definitions:
           items:
             $ref: '#/definitions/SearchNamespaceObject'
           example: 
-           - name: 'AAMTraits'
+           - namespace: 'AAMTraits'
+             displayName: 'AAMTraits'
              count: 45
-           - name: 'AAMSegments'
+           - namespace: 'AAMSegments'
+             displayName: 'AAMSegments'
              count: 10
-           - name: 'SegmentsAISegments'
+           - namespace: 'SegmentsAISegments'
+             displayName: 'SegmentsAISegments'
              count: 3
+        totalCount:
+          type: string
+          description: The total number of namespaces returned.
+          example: 3
         status:
           type: object
           properties:
