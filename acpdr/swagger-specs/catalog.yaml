@@ -1152,86 +1152,6 @@ paths:
           description: An internal server error has ocurred.
         default:
           description: An unexpected error has ocurred.
-  '/dataSets/{DATASET_ID}/labels':
-    parameters:
-      - name: DATASET_ID
-        in: path
-        type: string
-        required: true
-        description: >-
-          - The ID of the dataset.
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-name'
-      - $ref: '#/parameters/x-user-token'
-      - $ref: '#/parameters/accept-encoding'
-    get:
-      tags:
-        - Datasets
-      summary: Retrieve data enforcement labels for the specified dataset.
-      operationId: getDatasetLabels
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: The specified data enforcement labels were retrieved.
-          schema:
-            $ref: '#/definitions/getDULELabels' 
-    post:
-      tags:
-        - Datasets
-      summary: Create a new data enforcement label for the specified dataset.
-      operationId: postDatasetLabels
-      produces: 
-        - application/json
-      parameters:
-        - in: body
-          name: body
-          schema:
-            $ref: '#/definitions/DULELabel'
-      responses:
-        '201':
-          description: The data enforcement label was successfully created.
-          schema:
-            $ref: '#/definitions/DULELabel'
-        '409':
-          description: "A conflict error has ocurred."
-          schema:
-            $ref: '#/definitions/DULEConflictError'
-    put:
-      tags:
-        - Datasets
-      summary: Update the data enforcement labels for the specified dataset.
-      operationId: putDatasetLabels
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: body
-          schema:
-            $ref: '#/definitions/DULELabel'
-      responses:
-        '200':
-            description: "The data enforcement label was successfully updated."
-            schema:
-              $ref: '#/definitions/DULELabel'
-        '409':
-            description: "A conflict error has ocurred."
-            schema:
-              $ref: '#/definitions/DULEConflictError'
-
-    delete:
-      tags:
-        - Datasets
-      summary: Delete data enforcement labels for the specified dataset.
-      description: The deletion is a 'non-strict' delete. That is, the entity, all labels for the entity, and any associated references to the dataset as a child entity will be removed.
-      operationId: deleteDatasetLabels
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: "(No content) The data enforcement labels were successfully deleted."
   '/':        
     get:
       tags:
@@ -1555,20 +1475,6 @@ parameters:
       - batch
     required: true
 definitions:
-  availableDates:
-    description: >-
-      - Describes what date range of data is available in the Batch. Null if dates aren't relevant for data related to this Batch.
-    properties:
-      startDate:
-        type: integer
-        format: int64
-        description: >-
-          - The Unix timestamp (in seconds) for the oldest data available in this Batch.
-      endDate:
-        type: integer
-        format: int64
-        description: >-
-          - The Unix timestamp (in seconds) for the most recent data available in this Batch.
   batchRequest:
     type: object
     properties:
@@ -2380,86 +2286,6 @@ definitions:
           - The ID of the data source. It must be unique, along with its name.
       persistence:
         $ref: '#/definitions/persistenceResponse'
-  getDULELabels:
-    allOf:
-      - properties:
-          imsOrg:
-            type: string
-            example: "{IMS_ORG}"
-      - $ref: '#/definitions/DULELabel'
-  DULELabel:
-      type: object
-      properties:
-        labels:
-          type: array
-          items:
-            type: string
-            example: "C1, C2, C3, C4, C5"
-        optionalLabels:
-          type: array
-          items:
-            type: object
-            properties:
-              option:
-                type: object
-                properties:
-                  id: 
-                    type: string
-                    example: "https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}"
-                  contentType:
-                    type: string
-                    example: "application/vnd.adobe.xed-full+json;version=1"
-                  schemaPath:
-                    type: string
-                    example: "/properties/repositoryCreatedBy"
-              labels:
-                type: array
-                items:
-                  type: string
-                  example: "S1, S2"
-  DULEConflictError:
-    type: object
-    properties:
-      code:
-        type: string
-        example: "PES-409"
-      message:
-        type: string
-        example: "POST Failed"
-      violations:
-        type: array
-        items:
-          type: string
-          example: "Sample violation errors go here."
-      count:
-        type: number
-        example: 2
-
-  healthcheck:
-    type: object
-    properties:
-      status:
-        type: boolean
-  health-detailed:
-    type: object
-    properties:
-      status:
-        type: boolean
-      dependencies:
-        type: array
-        description: >-
-          - List of catalog dependencies and their health
-        items:
-          $ref: '#/definitions/health-dependencies'
-  health-dependencies:
-    type: object
-    properties:
-      service:
-        type: string
-      status:
-        type: boolean
-      duration:
-        type: integer
   serviceResources:
     type: object
     properties:
@@ -2547,25 +2373,6 @@ definitions:
         description: >-
           - Contains metrics related to this dataset.
         additionalProperties: true
-  documents:
-    type: object
-    properties:
-      name:
-        type: string
-        description: >-
-          - The display name for this reference document.
-      type:
-        type: string
-        description: >-
-          - The format for this document.
-        enum:
-          - pdf
-          - word
-          - html
-      link:
-        type: string
-        description: >-
-          - The full URI to this document.
   field:
     allOf:
       - $ref: '#/definitions/dataType'
@@ -2866,22 +2673,6 @@ definitions:
             type: string
             description: >-
               - This property represents the source of dataStream.
-      
-  persistenceRequest:
-    type: object
-    description: >-
-        - Persistence object holds meta data of different persistence type supported by a dataset.
-    properties:
-      datastream:
-        type: object
-        description: >-
-          - This object represents stream persistence type for dataSets
-        properties:
-          source:
-            type: string
-            description: >-
-              - This property represents the source of dataStream.
-     
 
   tagsResponse:
     properties:
