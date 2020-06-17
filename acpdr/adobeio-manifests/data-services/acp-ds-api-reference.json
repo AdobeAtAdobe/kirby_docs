@@ -41,6 +41,11 @@
       "title": "DULE Policy Service API"
     },
     {
+      "pages": [],
+      "path": "acpdr/swagger-specs/flow-service.yaml",
+      "title": "Flow Service API"
+    },
+    {
         "pages": [],
         "path": "acpdr/swagger-specs/id-service-api.yaml",
         "title": "Identity Service API"
