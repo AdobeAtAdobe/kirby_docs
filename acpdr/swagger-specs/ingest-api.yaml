@@ -2,31 +2,32 @@ swagger: '2.0'
 info:
   title: Data Ingestion API
   description: >-
-    Data Ingestion allows you to bring your data into Adobe Experience Platform through batch ingestion and streaming ingestion. Batch ingestion lets you import data in batch, from any number of datasources. Streaming ingestion lets users send data to Platform in real time from client and server-side devices.
+    - Data Ingestion allows you to bring your data into Adobe Experience Platform through batch ingestion and streaming ingestion. Batch ingestion lets you import data in batch, from any number of data sources. Streaming ingestion lets users send data to Platform in real time from client and server-side devices.
 
 
-    Related documentation:
-      * [Data ingestion documentation](https://docs.adobe.com/content/help/en/experience-platform/ingestion/home.html)
+    - Related documentation:
+      - [Data ingestion documentation](https://docs.adobe.com/content/help/en/experience-platform/ingestion/home.html)
 
-    Visualize API calls with Postman (a free, third-party software):
-      * [Data Ingestion Service API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Data%20Ingestion%20API.postman_collection.json)
-      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
-      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
+    - Visualize API calls with Postman (a free, third-party software):
+      - [Data Ingestion Service API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Data%20Ingestion%20API.postman_collection.json)
+      - [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
+      - [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
 
-    API paths:
-      * Base path for batch ingestion APIs: https://<span>platform.adobe.io/data/foundation/import
-      * Base path for streaming ingestion APIs:
-        * Data inlet management: https://<span>platform.adobe.io/data/core/edge
-        * Data collection: https://<span>dcs.adobedc.net/
-      * Example of a complete path for batch ingestion: https://<span>platform.adobe.io/data/foundation/import/batches
+    - API paths:
+      - Base path for batch ingestion APIs: https://<span>platform.adobe.io/data/foundation/import
+      - Base path for streaming ingestion APIs:
+        - Data inlet management: https://<span>platform.adobe.io/data/core/edge
+        - Data collection: https://<span>dcs.adobedc.net/
+      - Example of a complete path for batch ingestion: https://<span>platform.adobe.io/data/foundation/import/batches
      
-    Required headers:
-      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
-      * All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
-      * Requests with a payload in the request body (such as POST, PUT, and PATCH calls) may require the header `Content-Type`. Accepted values specific to each call are provided in the call parameters.  
+    - Required headers:
+      - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
+      - All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
+      - Requests with a payload in the request body (such as POST, PUT, and PATCH calls) may require the header `Content-Type`. Accepted values specific to each call are provided in the call parameters.  
 
   version: "1.0"
 basePath: /data/foundation/import
+
 host: platform.adobe.io
 consumes:
   - application/json
@@ -35,248 +36,17 @@ produces:
 
 tags:
 - name: "Batch Ingestion"
-  description: "Batch ingestion is used to ingest data into Experience Platform as batch files. For example, data being ingested can be the profile data from a flat file in a CRM sytem (for example: parquet, or JSON) or data that conforms to a known Experience Data Model (XDM) schema within the Schema Registry."
+  description: "Batch ingestion is used to ingest data into Experience Platform as batch files. For example, data being ingested can be the profile data from a flat file in a CRM system (for example: Parquet or JSON) or data that conforms to a known Experience Data Model (XDM) schema within the Schema Registry."
 - name: "Streaming Ingestion"
   description: "Streaming ingestion allows you to send data from client and server-side devices to Experience Platform in real-time. It drives Real-time Customer Profile creating personalized experiences."
-- name: "Data Inlets"
-  description: "Data Inlets are used in conjunction with streaming API calls to ingest record and time=series data for Real-time Customer Profile."
+
 paths:
-  '/inlet':
-    get:
-      tags:
-        - "Data Inlets"
-      summary: Get or Query inlets.
-      operationId: getInletsUsingGET
-      produces:
-        - application/json
-      parameters:
-        - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
-        - in: "header"
-          name: "Cache-Control"
-          required: false
-          type: string
-          enum:
-            - "no-cache"
-        - name: dataType
-          in: query
-          required: false
-          type: string
-          enum:
-            - raw
-            - xdm
-        - name: name
-          in: query
-          required: false
-          type: string
-          description: "The name you want to use for your data inlet."
-        - name: sourceId
-          in: query
-          required: false
-          type: string
-          description: "A meaningful identifier or name of the source sending the streaming data."
-        - name: status
-          in: query
-          required: false
-          type: string
-          enum:
-            - "active"
-            - "inactive"
-        - name: location
-          in: query
-          required: false
-          type: string
-          description: "Location of destination"
-        - name: authenticationRequired
-          in: query
-          required: false
-          type: boolean
-          description: "Having this set to true requires that calls carry an Authorization token when sending data to the inlet"
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/ResponseDTO'
-        '401':
-          description: "Unauthorized - Need to provide a valid bearer token."
-        '403':
-          description: "Forbidden error"
-        '500':
-          description: "Internal server error."
-      deprecated: false
-    post:
-      tags:
-        - "Data Inlets"
-      summary: Create inlet.
-      operationId: createInletUsingPOST
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/json-header'
-        - in: "header"
-          name: "Cache-Control"
-          required: false
-          type: string
-          enum:
-            - "no-cache"
-        - in: body
-          name: body
-          description: inlet
-          required: true
-          schema:
-            $ref: '#/definitions/InletDTO'
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/Inlet'
-        '400':
-          description: "Malformed Inlet Body."
-        '401':
-          description: "Unauthorized - Need to provide a valid bearer token."
-        '403':
-          description: "Forbidden error"
-        '409':
-          description: "Duplicate Resource Error. Inlet already exists."
-        '500':
-          description: "Internal server error."
-      deprecated: false
-  '/inlet/{id}':
-    get:
-      tags:
-        - "Data Inlets"
-      summary: Get inlet by ID.
-      operationId: getInletUsingGET
-      produces:
-        - application/json
-      parameters:
-        - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
-        - in: "header"
-          name: "Cache-Control"
-          required: false
-          type: string
-          enum:
-            - "no-cache"
-        - name: id
-          in: path
-          description: "The ID of the data inlet you want to retrieve."
-          required: true
-          type: string
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/Inlet'
-        '401':
-          description: "Unauthorized - Need to provide a valid bearer token."
-        '403':
-          description: "Forbidden error"
-        '404':
-          description: "Inlet with given inletId not found."
-        '500':
-          description: "Internal server error."
-      deprecated: false
-    put:
-      tags:
-        - "Data Inlets"
-      summary: Update inlet by ID.
-      operationId: updateInletUsingPUT
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/json-header'
-        - in: "header"
-          name: "Cache-Control"
-          required: false
-          type: string
-          enum:
-            - "no-cache"
-        - name: id
-          in: path
-          description: "The ID of the data inlet you want to update."
-          required: true
-          type: string
-        - in: body
-          name: body
-          description: inlet
-          required: true
-          schema:
-            $ref: '#/definitions/InletPUTDTO'
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/Inlet'
-        '400':
-          description: "Malformed inlet Body or inlet to be updated not found."
-        '401':
-          description: "Unauthorized - Need to provide a valid bearer token."
-        '403':
-          description: "Forbidden error"
-        '500':
-          description: "Internal server error."
-      deprecated: false
-    delete:
-      tags:
-        - "Data Inlets"
-      summary: Delete inlet by ID.
-      operationId: deleteInletUsingDELETE
-      produces:
-        - application/json
-      parameters:
-        - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
-        - in: "header"
-          name: "Cache-Control"
-          required: false
-          type: string
-          enum:
-            - "no-cache"
-        - name: id
-          in: path
-          description: "The ID of the data inlet you want to delete."
-          required: true
-          type: string
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/Inlet'
-        '401':
-          description: "Unauthorized - Need to provide a valid bearer token."
-        '403':
-          description: "Forbidden error"
-        '404':
-          description: "Inlet with given inletId not found."
-        '500':
-          description: "Internal server error."
-      deprecated: false
-  '/collection/{inletId}':
+  '/collection/{CONNECTION_ID}':
     post:
       tags:
       - "Streaming Ingestion"
-      summary: "Publish messages to Adobe Experience Platform using the inlet ID."
-      description: "This API is used by any mobile application, web application or a service to stream data into ACP. Data Collection service uses embedded inlet-id to retrieve associated metadata to process data and land it on a designated Pipeline topic for the downstream systems to consume."
-      operationId: "publishDCSMessageWithInletId"
+      summary: "Publish messages to Adobe Experience Platform using the streaming connection ID."
+      operationId: "postStreamingMessage"
       consumes:
       - "application/json"
       produces:
@@ -284,16 +54,9 @@ paths:
       parameters:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/json-header'
-        - in: "query"
-          name: "debug"
-          required: false
-          type: boolean
-          enum:
-            - "true"
-            - "false"
         - in: "body"
           name: "body"
-          description: "The message which is to be published."
+          description: "The data that you want to ingest to Platform."
           required: true
           schema:
             $ref: "#/definitions/streamingMessage"
@@ -304,46 +67,49 @@ paths:
           enum:
             - "no-cache"
         - in: "path"
-          name: "inletId"
+          name: "CONNECTION_ID"
           required: true
           type: string
-          description: "The ID of the created data inlet"
+          description: "The ID of the streaming connection you want to stream data to."
+        - in: "query"
+          name: "synchronousValidation"
+          required: false
+          type: boolean
+          enum:
+            - true
+            - false
       responses:
         '200':
-          description: "successful operation"
+          description: "Successful operation."
           schema:
             $ref: "#/definitions/StreamingIngestionResponse"
         '400':
           description: >-
             There was a problem with the request. See the response body for a
-            more specific error message
+            more specific error message.
         '401':
-          description: Unauthorized - Need to provide a valid bearer token
+          description: Unauthorized. The user needs to provide a valid bearer token.
         '403':
-          description: "Forbidden error"
+          description: Access is forbidden.
         '413':
-          description: Payload is larger than 1Mb
+          description: The payload is larger than 1 MB.
         '429':
-          description: Too many requests - Service is experiencing high loads"
+          description: Too many requests. The service is experiencing high loads.
         '500':
-          description: Internal server error
+          description: Internal server error.
         '503':
           description: >-
-            Service is not currently available. Clients should retry at least 3
-            times using an exponential back-off strategy
+            The service is currently unavailable. Clients should retry at least three times using an exponential back-off strategy.
           headers:
             Retry-After:
               type: integer
               description: Specifies number of seconds to retry after.
-  '/collection/batch/{inletId}':
+  '/collection/batch/{CONNECTION_ID}':
     post:
-      security:
-        - Bearer: []
       tags:
       - "Streaming Ingestion"
-      summary: "Publish messages to Experience Platform using the inlet ID."
-      description: "This API is used by any mobile application, web application or a service to stream data into ACP. Data Collection service uses embedded inlet-id to retrieve associated metadata to process data and land it on a designated Pipeline topic for the downstream systems to consume"
-      operationId: "publishDCSBatchMessageWithInletId"
+      summary: "Publish multiple messages to Experience Platform using the inlet ID."
+      operationId: "postBatchOfStreamingMessages"
       consumes:
       - "application/json"
       produces:
@@ -351,59 +117,55 @@ paths:
       parameters:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/json-header'
-        - in: "query"
-          name: "debug"
-          required: false
-          type: boolean
-          enum:
-            - "true"
-            - "false"
         - in: "body"
           name: "body"
-          description: "The message to be published in DCS."
+          description: "The data that you want to ingest to Platform."
           required: true
           schema:
             $ref: "#/definitions/BatchMessage"
         - in: "path"
-          name: "inletId"
+          name: "CONNECTION_ID"
           required: true
           type: string
-          description: "The ID of the created data inlet"
+          description: "The ID of the streaming connection you want to stream data to."
+        - in: "query"
+          name: "synchronousValidation"
+          required: false
+          type: boolean
+          enum:
+            - true
+            - false
       responses:
         '207':
-          description: "MULTI-STATUS HTTP Code. The recipient needs to consult the contents of the multi-status response body for further information about the success or failure of the method execution."
+          description: "A multi-status code. The recipient needs to consult the contents of the multi-status response body for further information about the success or failure of the method execution."
           schema:
             $ref: "#/definitions/BatchResponseDTO"
         '400':
           description: >-
             There was a problem with the request. See the response body for a
-            more specific error message
+            more specific error message.
         '401':
-          description: Unauthorized - Need to provide a valid bearer token
+          description: Unauthorized. The user needs to provide a valid bearer token.
         '403':
-          description: "Forbidden error"
+          description: Access is forbidden.
         '413':
-          description: Payload is larger than 1Mb
+          description: The payload is larger than 1 MB.
         '429':
-          description: Too many requests - Service is experiencing high loads"
+          description: Too many requests. The service is experiencing high loads.
         '500':
-          description: Internal server error
+          description: Internal server error.
         '503':
           description: >-
-            Service is not currently available. Clients should retry at least 3
-            times using an exponential back-off strategy
+            The service is currently unavailable. Clients should retry at least three times using an exponential back-off strategy.
           headers:
             Retry-After:
               type: integer
               description: Specifies number of seconds to retry after.
   /batches:
     post:
-      security:
-        - Bearer: []
       tags:
         - "Batch Ingestion"
-      summary: "Register a new batch in Catalog Service."
-      description: "Creates a new batch in Catalog Service as a first step to bulk data ingestion. The data is uploaded to this batch after which the batch is marked ready for triggering data registration in Catalog"
+      summary: "Create a new batch in Catalog Service."
       operationId: "createBatch"
       consumes:
         - "application/json"
@@ -423,33 +185,30 @@ paths:
             $ref: "#/definitions/IngestBatch"
       responses:
         201:
-          description: "Created"
+          description: "The batch was successfully created."
           schema:
             $ref: "#/definitions/Batch"
         400:
-          description: "Bad Request. The request is malformed."
+          description: "A bad request. The request is malformed."
         401:
-          description: "Unauthorized"
+          description: "Unauthorized. The user needs to provide a valid bearer token."
         414:
-          description: "URL length exceeds the allowed 2000 characters."
+          description: "The URL length exceeds the allowed 2000 characters."
         500:
           description: "Internal server error."
         503:
-          description: "Service Unavailable. The bulk ingest api or dependency is unavailable."
+          description: "The service is currently unavailable."
   /batches/{batchId}/datasets/{datasetId}/files/{filePath}:
     put:
-      security:
-      - Bearer: []
       tags:
       - "Batch Ingestion"
-      summary: "Upload file to a dataset in a batch."
-      description: "For a batch initialized by the bulk ingestion api, this endpoint lets you upload files under
-      datasets. Note that this puts the entire request stream as the file bytes under the path denoted by filePath
-      in the URL and is idempotent. Subsequent calls to this endpoint will replace the file existent on the referenced
-      path.
-      Note that due to gateway size and timeout limits, there is a size threshold(currently 512MB) beyond which the clients
-      must use the large file upload mechanism."
-      operationId: "uploadSimpleFile"
+      summary: "Upload a file to a dataset in a batch."
+      description: >-
+        For a batch initialized by the bulk ingestion API, this endpoint lets you upload files under datasets. This puts the entire request stream as the file bytes under the path denoted by the `filePath` in the URL and is idempotent. Subsequent calls to this endpoint will replace the file existent on the referenced path.
+
+        **Note:** Due to gateway size and timeout limits, there is a size threshold(currently 512MB) beyond which the clients must use the large file upload mechanism.
+
+      operationId: "uploadSmallFile"
       consumes:
       - "application/octet-stream"
       produces:
@@ -468,18 +227,17 @@ paths:
           in: "path"
           required: true
           type: "string"
-          description: "The ID of the batch data is being uploaded to"
+          description: "The ID of the batch that the data is being uploaded to."
         - name: "datasetId"
           in: "path"
           required: true
           type: "string"
-          description: "The ID of the dataset data is being uploaded to"
+          description: "The ID of the dataset that the data is being uploaded to."
         - name: "filePath"
           in: "path"
           required: true
           type: "string"
-          description: "The complete path of the file. Note that the directory structure denoted in this path is preserved
-          and can be used to denote partitions that the file data belongs to"
+          description: "The complete path of the file. **Note:** The directory structure denoted in this path is preserved and can be used to denote partitions that the file data belongs to"
       responses:
         200:
           description: "Ok"
@@ -490,21 +248,18 @@ paths:
         401:
           description: "Unauthorized. The IMS token provided is invalid."
         404:
-          description: "Batch or DataSet resource not found."
+          description: "The batch or dataset resource is not found."
         414:
-          description: "URL length exceeds the allowed 2000 characters."
+          description: "The URL length exceeds the allowed 2000 characters."
         415:
-          description: "Unsupported Media Type. The uploaded file media isn't supported."
+          description: "The uploaded file media type isn't supported."
         503:
           description: "Service Unavailable. The Push service or dependency is unavailable."
     patch:
-      security:
-      - Bearer: []
       tags:
       - "Batch Ingestion"
       summary: "Upload file part to a resumable file being uploaded to a batch dataset."
-      description: "Files larger than 512MB are uploaded in parts and this PATCH endpoint provides you a way
-      to upload a part of your large file that was initialized via the POST endpoint above"
+      description: "Files larger than 512MB are uploaded in parts. The PATCH endpoint provides you a way to upload a part of your large file that was initialized via the POST endpoint above."
       operationId: "uploadFilePart"
       consumes:
       - "multipart/form-data"
@@ -523,31 +278,30 @@ paths:
           in: "path"
           required: true
           type: "string"
-          description: "The ID of the batch data is being uploaded to"
+          description: "The ID of the batch that the data is being uploaded to."
         - name: "datasetId"
           in: "path"
           required: true
           type: "string"
-          description: "The ID of the dataset data is being uploaded to"
+          description: "The ID of the dataset that the data is being uploaded to."
         - name: "filePath"
           in: "path"
           required: true
           type: "string"
-          description: "The complete path of the file. Note that the directory structure denoted in this path is preserved
-          and can be used to denote partitions that the file data belongs to"
+          description: "The complete path of the file. **Note:** The directory structure denoted in this path is preserved and can be used to denote partitions that the file data belongs to."
         - name: "Content-Range"
           in: "header"
           required: true
           type: "string"
-          description: "The range of bytes of the file being uploaded with this request"
+          description: "The range of bytes of the file being uploaded with this request."
         - in: "formData"
           name: "file"
           type: "file"
           required: true
-          description: The content bytes for the file or file part being uploaded
+          description: The content bytes for the file or file part being uploaded.
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation."
           headers:
             Range:
               type: "string"
@@ -559,21 +313,19 @@ paths:
         401:
           description: "Unauthorized. The IMS token provided is invalid."
         404:
-          description: "Batch or DataSet or File resource not found."
+          description: "The batch, dataset, or file resource is not found."
         414:
-          description: "URL length exceeds the allowed 2000 characters."
+          description: "The URL length exceeds the allowed 2000 characters."
         415:
-          description: "Unsupported Media Type. The uploaded file media isn't supported."
+          description: "The uploaded file media type isn't supported."
         500:
           description: "Internal server error."
         503:
-          description: "Service Unavailable. The bulk ingest api or dependency is unavailable."
+          description: "The service is unavailable. The Bulk Ingest API or dependency is unavailable."
     post:
-      security:
-      - Bearer: []
       tags:
       - "Batch Ingestion"
-      summary: "Operate on the identified file."
+      summary: "Finish uploading a file to a dataset in a batch."
       description: "Used to signal initialization and completion of the file that's uploaded in parts"
       operationId: "completeFileUpload"
       consumes:
@@ -588,27 +340,26 @@ paths:
           in: "path"
           required: true
           type: "string"
-          description: "The ID of the batch data is being uploaded to"
+          description: "The ID of the batch that the data is being uploaded to."
         - name: "datasetId"
           in: "path"
           required: true
           type: "string"
-          description: "The ID of the dataset data is being uploaded to"
+          description: "The ID of the dataset that the data is being uploaded to."
         - name: "filePath"
           in: "path"
           required: true
           type: "string"
-          description: "The complete path of the file. Note that the directory structure denoted in this path is preserved
-          and can be used to denote partitions that the file data belongs to"
+          description: "The complete path of the file. **Note:** The directory structure denoted in this path is preserved and can be used to denote partitions that the file data belongs to."
         - name: "action"
           in: "query"
           required: true
           type: "string"
-          description: "The action to perform on the file with the supported values currently being INITIALIZE and COMPLETE"
+          description: 'The action to perform on the file. Currently, the supported values "INITIALIZE" and "COMPLETE".'
           enum: ["INITIALIZE", "COMPLETE"]
       responses:
         200:
-          description: "successful operation"
+          description: "A successful operation."
           schema:
             $ref: "#/definitions/File"
         400:
@@ -616,21 +367,18 @@ paths:
         401:
           description: "Unauthorized. The IMS token provided is invalid."
         404:
-          description: "Batch or DataSet or File resource not found."
+          description: "The batch, dataset, or file resource is not found."
         414:
-          description: "URL length exceeds the allowed 2000 characters."
+          description: "The URL length exceeds the allowed 2000 characters."
         500:
           description: "Internal server error."
         503:
-          description: "Service Unavailable. The bulk ingest api or dependency is unavailable."
+          description: "The service is unavailable. The Bulk Ingest API or dependency is unavailable."
     head:
-      security:
-      - Bearer: []
       tags:
       - "Batch Ingestion"
       summary: "Get the status of the chunked file uploaded so far."
-      description: "Files larger than 512MB are uploaded in parts and this HEAD endpoint provides you a way
-      get the byte range information received by the server so far."
+      description: "Files larger than 512MB are uploaded in parts. The HEAD endpoint provides a way to get the byte range information received by the server so far."
       operationId: "getChunkedFileStatus"
       parameters:
         - $ref: '#/parameters/authorization'
@@ -641,21 +389,20 @@ paths:
           in: "path"
           required: true
           type: "string"
-          description: "The ID of the batch data is being uploaded to"
+          description: "The ID of the batch that the data is being uploaded to."
         - name: "datasetId"
           in: "path"
           required: true
           type: "string"
-          description: "The ID of the dataset data is being uploaded to"
+          description: "The ID of the dataset that the data is being uploaded to."
         - name: "filePath"
           in: "path"
           required: true
           type: "string"
-          description: "The complete path of the file. Note that the directory structure denoted in this path is preserved
-          and can be used to denote partitions that the file data belongs to"
+          description: "The complete path of the file. **Note:** The directory structure denoted in this path is preserved and can be used to denote partitions that the file data belongs to."
       responses:
         200:
-          description: "successful operation"
+          description: "A successful operation."
           headers:
             Range:
               type: "string"
@@ -665,24 +412,21 @@ paths:
         401:
           description: "Unauthorized. The IMS token provided is invalid."
         404:
-          description: "Batch or DataSet or File resource not found."
+          description: "The batch, dataset, or file resource is not found."
         414:
           description: "URL length exceeds the allowed 2000 characters."
         415:
-          description: "Unsupported Media Type. The uploaded file media isn't supported."
+          description: "The uploaded file media type isn't supported."
         500:
           description: "Internal server error."
         503:
-          description: "Service Unavailable. The Push service or dependency is unavailable."
+          description: "The service is unavailable. The Push service or dependency is unavailable."
   /batches/{batchId}/datasets/{datasetId}/preview:
     get:
-      security:
-      - Bearer: []
       tags:
       - "Batch Ingestion"
       summary: "Generate a preview for a batch."
-      description: "Generates data preview for the files uploaded to the batch so far. The preview could be generated
-      for all the batch datasets collectively or per selected datasets"
+      description: "Generates a data preview for the files uploaded to the batch so far. The preview can be generated for all the batch datasets collectively or for the selected datasets."
       operationId: "getPreview"
       produces:
       - "application/json"
@@ -695,55 +439,54 @@ paths:
           in: "path"
           required: true
           type: "string"
-          description: "The ID of the batch data is being uploaded to"
+          description: "The ID of the batch that you are trying to preview."
         - name: "datasetId"
           in: "path"
           required: true
           type: "string"
-          description: "The ID of the dataset data is being uploaded to"
+          description: "The ID of the dataset that you are trying to preview."
         - name: "format"
           in: "query"
           required: true
           type: "string"
-          description: "The file format for the uploaded file"
+          description: "The file format for the uploaded file."
         - name: "delimiter"
           in: "query"
           required: false
           type: "string"
           default: ","
-          description: "The delimiter to use for parsing column values"
+          description: "The delimiter to use for parsing column values."
         - name: "quote"
           in: "query"
           required: false
           type: "string"
           default: "\""
-          description: "The quote value to use while parsing"
+          description: "The quote value to use while parsing data."
         - name: "escape"
           in: "query"
           required: false
           type: "string"
           default: "\\"
-          description: "The escape character to use while parsing"
+          description: "The escape character to use while parsing data."
         - name: "charset"
           in: "query"
           required: false
           type: "string"
           default: "UTF-8"
-          description: "The encoding to use for parsing"
+          description: "The encoding to use for parsing data."
         - name: "header"
           in: "query"
           required: false
           type: "boolean"
           default: true
-          description: "The flag to indicate if the header is supplied in the dataset files. Currently header-less files
-          aren't supported and the header flag should always be true. This is kept for future implementation"
+          description: "The flag to indicate if the header is supplied in the dataset files. Currently, header-less files aren't supported and the header flag should always be true. This is kept for future implementation."
         - name: "nrow"
           in: "query"
           required: false
           type: "integer"
           default: 0
           format: "int32"
-          description: "The number of rows to parse"
+          description: "The number of rows to parse."
       responses:
         200:
           description: "OK"
@@ -754,23 +497,21 @@ paths:
         401:
           description: "Unauthorized. The IMS token provided is invalid."
         404:
-          description: "Batch or DataSet resource not found."
+          description: "The batch or dataset resource is not found."
         414:
-          description: "URL length exceeds the allowed 2000 characters."
+          description: "The URL length exceeds the allowed 2000 characters."
         415:
-          description: "Unsupported Media Type. The uploaded file media isn't supported."
+          description: "The uploaded file media type isn't supported."
         500:
           description: "Internal server error."
         503:
-          description: "Service Unavailable. The bulk ingest api or dependency is unavailable."
+          description: "The service is unavailable. The Bulk Ingest API or dependency is unavailable."
   /batches/{batchId}:
     post:
-      security:
-      - Bearer: []
       tags:
       - "Batch Ingestion"
-      summary: "Complete batch."
-      description: "Complete the batch to trigger the downstream data promotion workflow"
+      summary: "Trigger a batch's promotion."
+      description: "Complete the batch to trigger the downstream data promotion workflow."
       operationId: "completeBatch"
       produces:
       - "application/json"
@@ -783,16 +524,16 @@ paths:
           in: "path"
           required: true
           type: "string"
-          description: "The ID of the batch that needs to be updated"
+          description: "The ID of the batch that needs to be completed."
         - name: "action"
           in: "query"
           required: true
           type: "string"
-          description: "The action to take on the Batch"
+          description: "The action to take on the batch."
           enum: ["COMPLETE", "ABORT","FAIL", "REVERT"]
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation."
           schema:
             $ref: "#/definitions/Batch"
         400:
@@ -800,18 +541,17 @@ paths:
         401:
           description: "Unauthorized. The IMS token provided is invalid."
         404:
-          description: "Batch not found."
+          description: "The batch is not found."
         414:
-          description: "URL length exceeds the allowed 2000 characters."
+          description: "The URL length exceeds the allowed 2000 characters."
         500:
           description: "Internal server error."
         503:
-          description: "Service Unavailable. The bulk ingest api or dependency is unavailable."
+          description: "The service is unavailable. The Bulk Ingest API or dependency is unavailable."
 parameters:
   authorization:
     name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
-    For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
@@ -845,7 +585,7 @@ definitions:
     properties:
       TENANT_ID:
         type: string
-        description: "This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Org."
+        description: "This ID is used to ensure that resources you create are namespaced properly and contained within your IMS Organization."
       SCHEMA_ID:
         type: string
         description: "The ID of the schema that is created."
@@ -854,11 +594,11 @@ definitions:
         description: "The version of the schema that is created."
       IMS_ORG_ID:
         type: string
-        description: "Your IMS organization ID can be found under the integration details in the Adobe I/O Console."
+        description: "Your IMS Organization ID can be found under the integration details in the Adobe I/O Console."
       DATASET_ID:
         type: string
         description: "The ID of the dataset that you want to publish to."
-    description: "Message to publish."
+    description: "The message to publish."
     example:
       header:
         schemaRef:
@@ -868,6 +608,7 @@ definitions:
         source:
           name: "GettingStarted"
         datasetId: "{DATASET_ID}"
+        createdAt: "1526283801869"
       body:
         xdmMeta:
           schemaRef:
@@ -879,7 +620,7 @@ definitions:
               firstName: Jane
               middleName: F
               lastName: Doe
-            birthDate: 1969-03-14
+            birthDate: "1969-03-14"
             gender: female
           workEmail:
             primary: true
@@ -941,17 +682,17 @@ definitions:
     properties:
       id:
         type: string
-        description: The batch identifier.
+        description: The ID of the batch.
       imsOrg:
         type: string
-        description: The owning IMS organization identifier.
+        description: The ID of the IMS Organization.
       created:
         type: integer
-        description: The Unix timestamp (in milliseconds) when this Batch was persisted.
+        description: The Unix timestamp (in milliseconds) when this batch was created.
         readOnly: true
       createdClient:
         type: string
-        description: The ID of the IMS client that created this Batch.
+        description: The ID of the IMS client that created this batch.
         readOnly: true
       createdUser:
         type: string
@@ -959,26 +700,24 @@ definitions:
         readOnly: true
       updatedUser:
         type: string
-        description: The ID of the user who changed this object.
+        description: The ID of the user who last changed this object.
         readOnly: true
       updated:
         type: integer
-        description: The Unix timestamp (in milliseconds) of last modification.
+        description: The Unix timestamp (in milliseconds) of the last update.
         readOnly: true
       started:
         type: integer
         description: >-
-          The Unix timestamp (in milliseconds) when the Batch processing action
+          The Unix timestamp (in milliseconds) when the batch processing action
           was started.
       completed:
         type: integer
         description: >-
-          The Unix timestamp (in milliseconds) when the Batch processing action
-          was completed. Completed - Started should yield the total processing
-          time.
+          The Unix timestamp (in milliseconds) when the batch processing action was completed. To get the total processing time, subtract Started from Completed.
       status:
         type: string
-        description: The current (mutable) status of this Batch.
+        description: The current (mutable) status of this batch.
         enum:
         - processing
         - active
@@ -991,11 +730,10 @@ definitions:
       recordCount:
         type: integer
         description: >-
-          The total number of data records (rows/documents) processed in this
-          Batch.
+          The total number of data records (rows/documents) processed in this batch.
       failedRecordCount:
         type: integer
-        description: The number of records that could not be processed in this Batch.
+        description: The number of records that could not be processed in this batch.
       errors:
         type: array
         description: ''
@@ -1003,51 +741,43 @@ definitions:
           $ref: '#/definitions/errors'
       size:
         type: integer
-        description: Number of bytes processed in this Batch.
+        description: Number of bytes processed in this batch.
       version:
         type: string
-        description: The Semantic version of the Batch. Updated when the Batch is modified.
+        description: The Semantic version of the batch. Updated when the batch is modified.
         readOnly: true
       availableDates:
         type: object
         description: >-
-          Describes what date range of data is available in the Batch. Null if
-          dates aren't relevant for data related to this Batch.
+          Describes what date range of data is available in the batch. This value is null if dates aren't relevant for data related to this batch.
         properties:
           startDate:
             type: integer
             description: >-
-              The Unix timestamp (in seconds) for the most recent data available
-              in this Batch.
+              The Unix timestamp (in seconds) for the most recent data available in this batch.
           endDate:
             type: integer
             description: >-
-              The Unix timestamp (in seconds) for the oldest data available in
-              this Batch.
+              The Unix timestamp (in seconds) for the oldest data available in this batch.
       relatedObjects:
         type: array
-        description: A list of the objects involved with this Batch.
+        description: A list of the objects involved with this batch.
         items:
           $ref: '#/definitions/relatedObjects'
       metrics:
         type: object
         description: >-
-          Contains metrics related to this Batch.  Metric names are determined
-          by the producer of the object since each Batch may want to record
-          metrics that are relevant to the process
+          Contains metrics related to this batch.  Metric names are determined by the producer of the object since each batch may want to record metrics that are relevant to the process.
         properties: {}
       tags:
         type: object
         description: >-
-          Tags are values associated with a particular object,  these are
-          generally used by external systems for marking an object in a way that
-          it understands.  Normally tags are not used for internal Catalog
-          business logic
+          Tags are values associated with a particular object. These are generally used by external systems for marking an object in a way that it understands. 
         properties: {}
       inputFormat:
         type: object
         description: >-
-          Meta-data describing the ingest format of the batch being ingested
+          Metadata describing the ingest format of the batch being ingested.
         properties:
           format:
             type: "string"
@@ -1073,28 +803,24 @@ definitions:
       code:
         type: string
         description: >-
-          An enumerated code that details the type of error encountered. This
-          value should be understandable by the reader and writer and eventually
-          allow for localized error message (and solution) descriptions.
+          An enumerated code that details the type of error encountered.
       rows:
         type: array
         description: >-
-          Indicates which rows exhibit this error. Could be a single number, or
-          a hyphen-delimited range.
+          Indicates which rows exhibit this error. Could be a single number, or a hyphen-delimited range.
         items:
           type: string
           description: Row or range of rows this error was encountered on.
       description:
         type: string
         description: >-
-          A human-readable description of the error. This message may be
-          transmitted to clients, but isn't meant for customer-facing UIS.
+          A human-readable description of the error.
   relatedObjects:
     type: object
     properties:
       type:
         type: string
-        description: The type of object processed in this Batch.
+        description: The type of object processed in this batch.
         enum:
         - batch
         - connection
@@ -1105,12 +831,10 @@ definitions:
         - transform
       id:
         type: string
-        description: ''
       tag:
         type: string
         description: >-
-          The name for the relation the specified object had with this Batch
-          operation. Examples: input, output, trigger, etc.
+          The name for the relation the specified object had with this batch operation. Examples: input, output, trigger, etc.
       status:
         type: string
         description: The current (mutable) status of this dataset.
@@ -1140,8 +864,7 @@ definitions:
         type: "string"
       externalId:
         description: >-
-          Client supplied batch identifier that is expected to be unique within an IMSOrg. Defaults to
-          BatchId if not specified.
+          Client supplied batch identifier that is expected to be unique within an IMS Organization. Defaults to Batch ID if not specified.
         type: "string"
       inputFormat:
         description: >-
@@ -1156,7 +879,7 @@ definitions:
             - csv
       replay:
         description:  >-
-          List of client supplied ids that identify the Batches that this new batch is replacing.
+          List of client supplied ids that identify the batches that this new batch is replacing.
         type: "object"
         properties:
           reason:
@@ -1187,131 +910,18 @@ definitions:
         description: "The ID of the previously created data inlet"
       xactionId:
         type: string
-        description: "The xactionID is a unique identifier generated server-side for the XDM record you just sent. This ID helps Adobe trace this record's lifecycle through various systems and with debugging"
+        description: "The xactionID is a unique identifier generated server-side for the XDM record you just sent. This ID helps Adobe trace this record's lifecycle through various systems and with debugging."
       receivedTimeMs:
         type: integer
         format: int32
-        description: "receivedTimeMs is a timestamp (epoch in milliseconds) that shows what time the request was received"
+        description: "receivedTimeMs is a timestamp (epoch in milliseconds) that shows what time the request was received."
     example:
       inletId: "{INLET_ID}"
       xactionId: "1532625558467:0001:13"
       receivedTimeMs: "1551307525735"
-  ResponseDTO:
-    type: "object"
-    properties:
-      items:
-        type: "array"
-        items:
-          type: "object"
-      total:
-        type: "integer"
-        format: int32
-    example:
-      items: [{
-        inletId: "{INLET_ID}",
-        imsOrg: "{IMS_ORG}",
-        sourceId: "website",
-        dataType: "xdm",
-        name: "My Data Inlet",
-        description: "Collects streaming data from my website",
-        authenticationRequired: false,
-        createdAt: "2018-10-05T00:00:00.000Z",
-        createdBy: "{API_KEY}",
-        modifiedAt: "2018-10-05T00:00:00.000Z",
-        modifiedBy: "{API_KEY}",
-        inletUrl: "https://dcs.adobedc.net/collection/{INLET_ID}"
-      }]
-      total: 1
-  Inlet:
-    type: object
-    properties:
-      authenticationRequired:
-        type: boolean
-      createdAt:
-        type: string
-        format: date-time
-      createdBy:
-        type: string
-      dataType:
-        type: string
-        enum:
-          - raw
-          - xdm
-      description:
-        type: string
-      imsOrg:
-        type: string
-      inletId:
-        type: string
-        description: Inlet ID
-      inletUrl:
-        type: string
-      modifiedAt:
-        type: string
-        format: date-time
-      modifiedBy:
-        type: string
-      name:
-        type: string
-      sourceId:
-        type: string
-      status:
-        type: string
-    example:
-      inletId: "{DATA_INLET_ID}"
-      imsOrg: "{IMS_ORG}"
-      sourceId: "website"
-      dataType: "xdm"
-      status: "active"
-      name: "My Data Inlet"
-      description: "Collects streaming data from my website"
-      authenticationRequired: false
-      createdAt: "2019-04-02T23:11:19.564Z"
-      createdBy: "{API_KEY}"
-      modifiedAt: "2019-04-02T23:11:19.564Z"
-      modifiedBy: "{API_KEY}"
-      inletUrl: "https://dcs.adobedc.net/collection/{DATA_INLET_ID}"
-    title: Inlet
-    description: Inlet details (response)
-  InletDTO:
-    type: object
-    properties:
-      authenticationRequired:
-        type: boolean
-      dataType:
-        type: string
-        enum:
-          - raw
-          - xdm
-      description:
-        type: string
-      name:
-        type: string
-      sourceId:
-        type: string
-    title: Inlet
-    description: Details for inlet creation
-  InletPUTDTO:
-    type: object
-    properties:
-      authenticationRequired:
-        type: boolean
-      dataType:
-        type: string
-        enum:
-          - raw
-          - xdm
-      description:
-        type: string
-      name:
-        type: string
-      sourceId:
-        type: string
-    title: Inlet
-    description: Details for inlet update
   BatchMessage:
     type: object
-    description: "Batch Message to be published to DCS"
+    description: "Batch message to be published to Platform."
     example:
       {
         messages: [
@@ -1335,7 +945,7 @@ definitions:
               }
              },
              xdmEntity: {
-              id_: "9af5adcc-db9c-4692-b826-65d3abe68c22",
+              _id: "9af5adcc-db9c-4692-b826-65d3abe68c22",
               timestamp: "2019-02-23T22:07:01Z",
               environment: {
                 browserDetails: {
@@ -1357,9 +967,9 @@ definitions:
                     priceTotal: 7.8
                 }
               ],
-              "commerce": {
-                "productViews": {
-                    "value": 1
+              commerce: {
+                productViews: {
+                    value: 1
                 }
               },
               "_experience": {
@@ -1380,19 +990,22 @@ definitions:
       }
   BatchResponseDTO:  {
       "type": "object",
-      "description": "Batch Message to be published to DCS",
+      "description": "Batch message to be published to Data Collection Services",
       "properties": {
         "inletId": {
           "type": "string",
-          "description": "Inlet where the message is to be published to"
+          "description": "Streaming connection where the message is to be published to.",
+          "example": "9b0cb233972f3b0092992284c7353f5eead496218e8441a79b25e9421ea127f5"
         },
         "batchId": {
           "type": "string",
-          "description": "The UUID assigned to the batch messages"
+          "description": "The UUID assigned to the batch messages.",
+          "example": "1565638336649:1750:244"
         },
         "receivedTimeMs": {
           "type": "integer",
-          "description": "Timestamp (millis) when DCS received the message"
+          "description": "Timestamp (milliseconds) when Data Collection Services received the message.",
+          "example": "1565638336705"
         },
         "responses": {
           "type": "array",
@@ -1405,11 +1018,12 @@ definitions:
     }
   BatchResponseMessage: {
     "type": "object",
-    "description": "Batch Response Message",
+    "description": "Batch Response message",
     "properties": {
       "xactionId": {
         "type": "string",
-        "description": "The uuid assigned to the message"
+        "description": "The UUID assigned to the message.",
+        "example": "1565650704337:2124:92:3"
       },
     }
   }
