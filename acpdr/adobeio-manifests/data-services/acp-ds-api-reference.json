@@ -37,6 +37,11 @@
     },
     {
       "pages": [],
+      "path": "acpdr/swagger-specs/dataset-service.yaml",
+      "title": "Dataset Service API"
+    },
+    {
+      "pages": [],
       "path": "acpdr/swagger-specs/dule-policy-service.yaml",
       "title": "DULE Policy Service API"
     },
