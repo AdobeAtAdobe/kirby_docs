@@ -3,33 +3,31 @@ info:
   version: "1.0.0"
   title: "Data Access API"
   description: >-
+    - Data Access facilitates the access and egress of data within Adobe Experience Platform. This includes, but not limited to, the following operations:
+      - Access and download dataset files under a batch
+      - Retrieve header information regarding files
+      - Parallel / resumable downloads using HTTP range headers
+      - Pagination support for directory listings
+      - List dataset files under a succeeded/failed batch
+      - Preview CSV and Parquet files
 
-    Data Access facilitates the access and egress of data within Adobe Experience Platform. This includes, but not limited to, the following operations:
-      * Access and download dataset files under a batch
-      * Retrieve header information regarding files
-      * Parallel / resumable downloads using HTTP range headers
-      * Pagination support for directory listings
-      * List dataset files under a succeeded/failed batch
-      * Preview CSV and Parquet files
+    - Related documentation:
+      - [Data Access documentation](https://docs.adobe.com/content/help/en/experience-platform/data-access/home.html)
 
+    - Visualize API calls with Postman (a free, third-party software):
+      - [Data Access API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Data%20Access%20API.postman_collection.json)
+      - [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
+      - [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
 
-    Related documentation:
-      * [Data Access documentation](https://docs.adobe.com/content/help/en/experience-platform/data-access/home.html)
-
-    Visualize API calls with Postman (a free, third-party software):
-      * [Data Access API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Data%20Access%20API.postman_collection.json)
-      * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
-      * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
-
-    API paths:
-      * PLATFORM Gateway URL: https://<span>platform.adobe.io/
-      * Base path for this API: /data/foundation/export
-      * Example of a complete path: https://<span>platform.adobe.io/data/foundation/export/batches/{batchId}/files
+    - API paths:
+      - PLATFORM Gateway URL: https://<span>platform.adobe.io/
+      - Base path for this API: /data/foundation/export
+      - Example of a complete path: https://<span>platform.adobe.io/data/foundation/export/batches/{batchId}/files
     
-    Required headers:
-      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
-      * All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
-      * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
+    - Required headers:
+      - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
+      - All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
+      - All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
 
 host: "platform.adobe.io"
 basePath: "/data/foundation/export"
@@ -48,225 +46,221 @@ paths:
       - name: "batchId"
         in: "path"
         required: true
-        description: "Batch ID"
+        description: "The batch ID."
         type: "string"
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
       - $ref: '#/parameters/x-sandbox-name'
     get:
-      operationId: "get-dataset-files-by-batchId"
+      operationId: "getDatasetFilesByBatchId"
       tags:
       - Data Access
-      summary: "Get dataset files under a batch."
-      description: "List all dataset files under a batch."
+      summary: "List all dataset files under a batch."
       parameters:
       - name: "start"
         in: "query"
         required: false
         type: "string"
-        description: "Paging parameter to specify start of new page. E.g, start=1"
+        description: "A paging parameter to specify start of new page. For example: `page=1`"
       - name: "limit"
         in: "query"
         required: false
         type: "string"
-        description: "Paging parameter to specify number of results per page. E.g, limit=10"
+        description: "A paging parameter to specify number of results per page. For example: `limit=10`"
       produces:
       - application/json
       responses:
         200:
-          description: "OK"
+          description: "The request was successful."
           schema:
             $ref: "#/definitions/dataSetFiles"
         401:
-          description: "Unauthorized"
+          description: "Access is unauthorized."
         500:
-          description: "Internal Server Error"
+          description: "An internal server error has ocurred."
   /batches/{batchId}/failed:
     parameters:
       - name: "batchId"
         in: "path"
         required: true
-        description: "Batch ID"
+        description: "The ID of the batch."
         type: "string"
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
       - $ref: '#/parameters/x-sandbox-name'
     get:
-      operationId: "get-failed-batch-by-batchId"
+      operationId: "getFailedBatchByBatchId"
       tags:
       - Data Access
-      summary: "Get dataset files under a failed batch."
-      description: "List all files under failed batch"
+      summary: "Lists all the dataset files under a failed batch."
       parameters:
       - name: "start"
         in: "query"
         required: false
         type: "string"
-        description: "Paging parameter to specify start of new page. E.g, start=1"
+        description: "A paging parameter to specify the start of a new page. For example: `start=1`"
       - name: "limit"
         in: "query"
         required: false
         type: "string"
-        description: "Paging parameter to specify number of results per page. E.g, limit=10"
+        description: "A paging parameter to specify the number of results per page. For example: `limit=10`"
       - name: "path"
-        type: "string"
-        description: "Full file name of file under partition identified by File Identifier. The contents of the file would be downloaded if this parameter is provided. E.g, profiles.csv"
         in: "query"
         required: false
+        type: "string"
+        description: "The full name of the file. The contents of the file would be downloaded if this parameter is provided. For example: `path=profiles.csv`"
       produces:
       - application/json
       responses:
         200:
-          description: "OK"
+          description: "The request was successful."
           schema:
             $ref: "#/definitions/files"
         401:
-          description: "Unauthorized"
+          description: "Access is unauthorized."
         500:
-          description: "Internal Server Error"
+          description: "An internal server error has ocurred."
   /files/{dataSetFileId}:
     parameters:
       - name: "dataSetFileId"
         in: "path"
         required: true
-        description: "File Identifier"
+        description: "The ID of the dataset file you are retrieving."
         type: "string"
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
       - $ref: '#/parameters/x-sandbox-name'
     head:
-      operationId: "get-dataset-file-operation"
+      operationId: "getDatasetFileOperation"
       tags:
       - Files
       summary: "Get headers regarding a file."
-      description: "Retrieves headers in response with a file's metadata. The response header will indicate information regarding the specified file."
       parameters:
       - name: "path"
         type: "string"
-        description: "Full file name of file under partition identified by File Identifier. E.g, profiles.csv"
         in: "query"
         required: true
+        description: "The full name of the file identified. For example: `path=profiles.csv`"
       responses:
         200:
-          description: "OK"
+          description: "The request was successful."
           headers:
-            Content-type:
-              description: "Content type of returned file  (E.g, application/csv)"
+            Content-Type:
+              description: "The Content-Type of the returned file. For example: `application/csv`"
               type: "string"
             Accept-Ranges:
-              description: "Unit of Range (E.g, bytes)"
+              description: "The unit of range for the file. For example: `bytes`"
               type: "string"
             Content-Length:
-              description: "Size of the file (bytes)"
+              description: "The size of the file in bytes."
               type: "integer"
         401:
-          description: "Unauthorized"
+          description: "Access is unauthorized."
         404:
-          description: "Not Found"
+          description: "The dataset file was not found."
         500:
-          description: "Internal Server Error"
+          description: "An internal server error has ocurred."
     get:
-      operationId: "get-dataset-file-data"
+      operationId: "getDatasetFileData"
       tags:
       - Files
-      summary: "Access / download a file."
-      description: |
-        Returns either a complete file, or a directory of chunked data that make up the file. The response contains a data array that may contain a single entry, or a list of files belonging to that directory.
+      summary: "Access or download a file."
+      description: >-
+        Returns either a complete file or a directory of chunked data that makes up the file. The response contains a data array that may contain a single entry or a list of files belonging to that directory.
       parameters:
       - name: "Range"
         in: "header"
         type: "string"
         required: false
-        description: "Range of bytes requested. E.g, Range: bytes=0-100000"
+        description: "The range of bytes requested. For example: `Range: bytes=0-100000`"
       - name: "start"
         in: "query"
         required: false
         type: "string"
-        description: "Paging parameter to specify start of new page. E.g, start=fileName.csv"
+        description: "A paging parameter to specify start of new page. For example: `start=fileName.csv`"
       - name: "limit"
         in: "query"
         required: false
         type: "integer"
-        description: "Paging parameter to specify number of results per page. E.g, limit=10"
+        description: "A paging parameter to specify number of results per page. For example: `limit=10`"
       - name: "path"
         type: "string"
-        description: "Full file name of file under partition identified by File Identifier. The contents of the file would be downloaded if this parameter is provided. E.g, profiles.csv"
-        in: "query"
         required: false
+        in: "query"
+        description: "The full name of the file. The contents of the file would be downloaded if this parameter is provided. For example: `path=profiles.csv`"
       produces:
       - application/json
       - application/octet-stream
       responses:
         200:
-          description: "OK"
+          description: "The request has succeeded."
           schema:
             $ref: "#/definitions/files"
         206:
-          description: "Partial Content"
+          description: "The request has succeeded, returning only partial content. The body will contain the requested range of data."
           headers:
             Content-Range:
-              description: "Range of bytes sent by the server. Can be different from what user requested. E.g, Content-Range: bytes 0-100/124000"
+              description: 'The range of bytes sent by the server. Can be different from what user requested. For example: `Content-Range: bytes 0-100/124000`'
               type: "string"
             Content-Length:
-              description: "Size of payload (bytes) in the response"
+              description: "The size of payload in the response in bytes."
               type: "integer"
 
         401:
-          description: "Unauthorized"
+          description: "Access is unauthorized."
         404:
-          description: "Not Found"
+          description: "The requested file was not found."
         500:
-          description: "Internal Server Error"
+          description: "An internal server error has ocurred."
   /datasets/{id}/preview:
     parameters:
       - name: "id"
         in: "path"
         required: true
-        description: "DataSet ID"
+        description: "The ID of the dataset you want to preview."
         type: "string"
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
       - $ref: '#/parameters/x-sandbox-name'
     get:
-      operationId: "get-preview-by-dataSetId"
+      operationId: "getPreviewByDatasetId"
       tags:
       - Preview
-      summary: "Preview files."
-      description: "Preview the first 100 rows of CSV or Parquet files"
+      summary: "Preview the first 100 rows of CSV or Parquet files."
       produces:
       - application/json
       responses:
         200:
-          description: "OK"
+          description: "The request has succeeded."
           schema:
             $ref: "#/definitions/preview"
         401:
-          description: "Unauthorized"
+          description: "Access is unauthorized."
         404:
-          description: "Not Found"
+          description: "The requested dataset was not found."
         500:
-          description: "Internal Server Error"
+          description: "An internal server error has ocurred."
 
 parameters:
   authorization:
     name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". For more information on how to obtain this value, see the [Authentication Tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". For more information on how to obtain this value, see the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
-    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, see the [Authentication Tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, see the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
   x-api-key:
     name: x-api-key
-    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, see the [Authentication Tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, see the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
     required: true
     type: string
     in: header
