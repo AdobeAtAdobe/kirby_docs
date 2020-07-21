@@ -155,7 +155,7 @@ paths:
         - in: body
           name: body
           required: true
-          description: 'The payload for a privacy creation request must include company context information, a list of user IDs and namespaces, and a valid regulation code. See the [Privacy Service developer guide](https://docs-stg.corp.adobe.com/content/help/en/experience-platform/privacy/api/privacy-jobs.html) for more details on how to format privacy request payloads.'
+          description: 'The payload for a privacy creation request must include company context information, a list of user IDs and namespaces, and a valid regulation code. See the [Privacy Service developer guide](https://docs.adobe.com/content/help/en/experience-platform/privacy/api/privacy-jobs.html) for more details on how to format privacy request payloads.'
           schema:
             $ref: '#/definitions/PrivacyJobRequestDetails'
       responses:
@@ -216,7 +216,7 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
         - in: body
           name: body
-          description: 'The payload for a privacy creation request must include company context information, a list of user IDs and namespaces, and a valid regulation code. See the [Privacy Service developer guide](https://docs-stg.corp.adobe.com/content/help/en/experience-platform/privacy/api/privacy-jobs.html) for more details on how to format privacy request payloads.'
+          description: 'The payload for a privacy creation request must include company context information, a list of user IDs and namespaces, and a valid regulation code. See the [Privacy Service developer guide](https://docs.adobe.com/content/help/en/experience-platform/privacy/api/privacy-jobs.html) for more details on how to format privacy request payloads.'
           required: false
           schema:
             $ref: '#/definitions/PrivacyChildJobRequestDetails'
