@@ -601,8 +601,6 @@ definitions:
           id: "https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}"
           contentType: "application/vnd.adobe.xed-full+json;version={SCHEMA_VERSION}"
         imsOrgId: "{IMS_ORG_ID}"
-        source:
-          name: "GettingStarted"
         datasetId: "{DATASET_ID}"
         createdAt: "1526283801869"
       body:
@@ -909,9 +907,6 @@ definitions:
                 contentType: "application/vnd.adobe.xed-full+json;version={SCHEMA_VERSION}"
               },
               imsOrgId: "{IMS_ORG_ID}",
-              source: {
-                name: "GettingStarted",
-              },
               datasetId: "{DATASET_ID}"
               },
             body: {
