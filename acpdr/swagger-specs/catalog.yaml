@@ -904,11 +904,6 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: requestDataSource
-          description: >-
-            - If set to true, a dataSource will automatically be created. Otherwise, you will need to pass a dataSourceId in the body.
-          type: string
-          in: query
         - name: dataSet
           description: >-
             - Information about the new dataset you are creating.
@@ -1029,11 +1024,6 @@ paths:
       parameters:
         - $ref: '#/parameters/if-match'
         - $ref: '#/parameters/if-none-match'
-        - name: requestDataSource
-          description: >-
-            - If set to true, a dataSource will automatically be created. Otherwise, you will need to pass a dataSourceId in the body.
-          type: string
-          in: query
         - name: dataSet
           description: Data set field(s) to be updated.
           required: true
