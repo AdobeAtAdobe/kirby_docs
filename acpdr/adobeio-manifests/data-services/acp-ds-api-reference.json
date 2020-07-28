@@ -42,11 +42,6 @@
     },
     {
       "pages": [],
-      "path": "acpdr/swagger-specs/dule-policy-service.yaml",
-      "title": "DULE Policy Service API"
-    },
-    {
-      "pages": [],
       "path": "acpdr/swagger-specs/flow-service.yaml",
       "title": "Flow Service API"
     },
@@ -69,6 +64,11 @@
         "pages": [],
         "path": "acpdr/swagger-specs/decisioning-ode.yaml",
         "title": "Offer Decision Service API"
+    },
+    {
+      "pages": [],
+      "path": "acpdr/swagger-specs/dule-policy-service.yaml",
+      "title": "Policy Service API"
     },
     {
       "pages": [],
