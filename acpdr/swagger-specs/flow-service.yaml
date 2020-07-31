@@ -4,9 +4,10 @@ info:
   title: Flow Service API
   description: >-
     - Service description:
-      - Adobe Experience Platform allows data to be ingested from external sources while providing you with the ability to structure, label, and enhance incoming data using Platform services. You can ingest data from a variety of sources such as Adobe applications, cloud-based storage, databases, and many others.
+      - Adobe Experience Platform allows data to be ingested from external sources while providing you with the ability to structure, label, and enhance incoming data using Platform services. You can ingest data from a variety of sources such as Adobe applications, cloud-based storages, databases, and many others. The Flow Service API is used to collect and centralize customer data from various disparate sources and is used to create and activate data to various destinations within Adobe Experience Platform. The service provides a RESTful API from which all supported sources are connectable.
     - Related documentation:
       - [Sources documentation](https://docs.adobe.com/content/help/en/experience-platform/sources/home.html#)
+      - [Destinations documentation](https://docs.adobe.com/content/help/en/experience-platform/rtcdp/destinations/destinations-overview.html)
 
     - Visualize API calls with Postman (a free, third-party software):
       - [Flow Service API Postman collection on GitHub](https://git.corp.adobe.com/experience-platform/flow-service/blob/master/postman/____Flow-Service____.postman_collection.json)
@@ -216,6 +217,37 @@ paths:
           description: OAuth token is missing.
         '503':
           description: The service is unavailable.
+  '/connections/{CONNECTION_ID}/delete':
+    delete:
+      tags:
+        - Connections
+      summary: Delete an existing connection by its ID.
+      operationId: deleteByConnectionId 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - name: CONNECTION_ID
+          in: path
+          description:
+            "The ID of the connection you wish to delete."
+          required: true
+          type: string
+      responses:
+        '204':
+          description: Connection successfully deleted.
+          examples:
+            application/json:
+              id: "f9377f50-607a-4818-b77f-50607a181860"
+              etag: "\"03004116-0000-0200-0000-5edfbf2d0000\""
+        '401':
+          description: OAuth token is missing.
+        '503':
+          description: The service is unavailable.
   /connectionSpecs:
     get:
       tags:
@@ -418,6 +450,37 @@ paths:
           description: OAuth token is missing.
         '503':
           description: The service is unavailable.
+  '/flows/{FLOW_ID}/delete':
+    delete:
+      tags:
+        - Flows
+      summary: Delete an existing flow by its ID.
+      operationId: deleteByFlowId 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - name: FLOW_ID
+          in: path
+          description:
+            "The ID of the flow you wish to delete."
+          required: true
+          type: string
+      responses:
+        '202':
+          description: Flow delete request accepted.
+          schema:
+            $ref: '#/definitions/FlowListResponse'
+        '204':
+          description: Flow successfully deleted.
+        '401':
+          description: OAuth token is missing.
+        '503':
+          description: The service is unavailable.
   /flowSpecs:
     get:
       tags:
@@ -584,7 +647,6 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
         - in: body
           name: body
           description: >-
@@ -639,7 +701,6 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
         - name: SOURCE_CONNECTION_ID
           in: path
           description:
@@ -649,6 +710,35 @@ paths:
       responses:
         '200':
           description: Returns details of specified source connection in JSON format.
+          schema:
+            $ref: '#/definitions/SourceConnectionsListResponse'
+        '401':
+          description: OAuth token is missing.
+        '503':
+          description: The service is unavailable.
+  '/sourceConnections/{SOURCE_CONNECTION_ID}/delete':
+    delete:
+      tags: 
+        - Source connections
+      summary: Delete an existing source connection by its ID.
+      operationId: deleteSourceConnectionById
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - name: SOURCE_CONNECTION_ID
+          in: path
+          description:
+            "The ID of the source connection you wish to delete."
+          required: true
+          type: string
+      responses:
+        '204':
+          description: The source connection was successfully deleted.
           schema:
             $ref: '#/definitions/SourceConnectionsListResponse'
         '401':
@@ -669,7 +759,6 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
         - in: body
           name: body
           description: >-
@@ -720,7 +809,6 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
         - name: TARGET_CONNECTION_ID
           in: path
           description:
@@ -730,6 +818,35 @@ paths:
       responses:
         '200':
           description: Returns details of specified target connection in JSON format.
+          schema:
+            $ref: '#/definitions/TargetConnectionsListResponse'
+        '401':
+          description: OAuth token is missing.
+        '503':
+          description: The service is unavailable.
+  '/targetConnections/{TARGET_CONNECTION_ID}/delete':
+    delete:
+      tags:
+        - Target connections
+      summary: Delete an existing target connection by its ID
+      operationId: deleteTargetConnectionsById
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - name: TARGET_CONNECTION_ID
+          in: path
+          description:
+            "The ID of the target connection you wish to delete."
+          required: true
+          type: string
+      responses:
+        '204':
+          description: The target connection was successfully deleted.
           schema:
             $ref: '#/definitions/TargetConnectionsListResponse'
         '401':
