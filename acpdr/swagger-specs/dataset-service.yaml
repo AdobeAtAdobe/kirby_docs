@@ -24,7 +24,7 @@ basePath: /data/foundation/dataset
 host: platform.adobe.io
 tags:
   - name: Datasets
-    description: A dataset is a storage and management construct for a collection of data, typically a table, that contains a schema (columns) and fields (rows). Data usage labels can be applied to entire datatsets or individual fields within those datasets in order to enforce usage restrictions.
+    description: A dataset is a storage and management construct for a collection of data, typically a table, that contains a schema (columns) and fields (rows). Data usage labels can be applied to entire datasets or individual fields within those datasets in order to enforce usage restrictions.
 produces:
   - application/json
 paths:
@@ -122,6 +122,7 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/If-Match'
       produces:
         - application/json
       responses:
@@ -174,7 +175,7 @@ parameters:
     in: header
     required: true
     description: >- 
-      The version of the dataset entity to compare against. If included in a PUT request, the call will only update the dataset entity if the version is still the same, preventing data collision. This value can be found in the "e-tag" header that is returned in the response for looking up a dataset in the [Catalog API](https://www.adobe.io/apis/experienceplatform/home/api-reference.html#!acpdr/swagger-specs/catalog.yaml).
+      The version of the dataset entity to compare against. As a requirement for all PUT and DELETE requests for dataset labels, the call will only update the dataset entity if the "If-Match" string matches that of the "etag" header that is returned in all responses from the Dataset Service API.
     type: string
 definitions:
   getDULELabels:
