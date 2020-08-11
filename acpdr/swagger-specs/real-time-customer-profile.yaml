@@ -5,11 +5,10 @@ info:
   description: >-
     - Service description:
       - Real-time Customer Profile enables you to drive coordinated, consistent, and relevant experiences for your customers no matter where or when they interact with your brand. Profile provides a holistic view of each individual customer that combines data from multiple channels, including online, offline, CRM, and third-party data.
-      - The Real-time Customer Profile API allows you to programmatically integrate Profile's various functionalities into your service, providing RESTful endpoints for merge policy configuration, segmentation, edge projections, and more.
-
 
     - Related documentation:
       - [Real-time Customer Profile documentation](https://docs.adobe.com/content/help/en/experience-platform/profile/home.html)
+      - [Profile API developer guide](https://docs.adobe.com/content/help/en/experience-platform/profile/api/overview.html)
 
     - Visualize API calls with Postman (a free, third-party software):
       - [Real-time Customer Profile API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Real-time%20Customer%20Profile%20API.postman_collection.json)
@@ -35,6 +34,8 @@ tags:
     description: An entity is an Experience Data Model (XDM) object whose attributes and related time-series events have been merged from various sources to form an individual profile.
   - name: Merge policies
     description: Merge policies are the rules that Platform uses to determine how data will be prioritized and what data will be combined to create an individual customer profile.
+  - name: Profile preview
+    description: Preview the latest sample job showing how many profile fragments and merged profiles are in the Profile store, as well as listing profile distribution by dataset and by identity namespace.
   - name: Profile System Jobs
     description: Profile System Jobs allow you to delete profile fragments for a given dataset or batch.
   - name: Projection configurations
@@ -1648,6 +1649,91 @@ paths:
           description: Delete request (Profile System Job) not found
         '503':
           description: Service Unavailable
+  '/previewsamplestatus':
+    get:
+      tags:
+        - Profile preview
+      summary: View the details for the last successful sample job that was run for the IMS Organization.
+      description: ''
+      operationId: previewSampleStatus
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name' 
+        - name: "x-model-name"
+          in: "header"
+          description: "Experience Data Model (XDM) class."
+          required: false
+          type: "string"
+          x-example: "_xdm.context.profile"
+      responses:
+        '200':
+          description: "Returns the details of the last successful sample that was run for the IMS Org."
+          schema:
+            $ref: '#/definitions/PreviewSampleStatusPageResponse'
+        '403':
+          description: "Forbidden"
+        '503':
+          description: "Service Unavailable"
+  '/previewsamplestatus/report/dataset':
+    get:
+      tags:
+        - Profile preview
+      summary: View a report showing the distribution of profiles by dataset.
+      description: ''
+      operationId: profileDatasetReport
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name' 
+        - name: "date"
+          in: "query"
+          description: "Specify the date of the report to be returned. If multiple reports were run on the date, the most recent report for that date will be returned. If a report does not exist for the specified date, a 404 error will be returned. If no date is specified, the most recent report will be returned. Format: YYYY-MM-DD. Example: date=2024-12-31"
+          required: false
+          type: "string"
+      responses:
+        '200':
+          description: "Returns a report showing profile distribution by dataset for the IMS Org."
+          schema:
+            $ref: '#/definitions/DatasetReportResponse'
+        '404':
+          description: "Dataset report does not exist for this date."
+        '503':
+          description: "Service Unavailable"
+  '/previewsamplestatus/report/namespace':
+    get:
+      tags:
+        - Profile preview
+      summary: View a report showing the distribution of profiles by namespace.
+      description: ''
+      operationId: profileNamespaceReport
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name' 
+        - name: "date"
+          in: "query"
+          description: "Specify the date of the report to be returned. If multiple reports were run on the date, the most recent report for that date will be returned. If a report does not exist for the specified date, a 404 error will be returned. If no date is specified, the most recent report will be returned. Format: YYYY-MM-DD. Example: date=2024-12-31"
+          required: false
+          type: "string"
+      responses:
+        '200':
+          description: "Returns a report showing profile distribution by namespace for the IMS Org."
+          schema:
+            $ref: '#/definitions/NamespaceReportResponse'
+        '404':
+          description: "Namespace report does not exist for this date."
+        '503':
+          description: "Service Unavailable"
 definitions:     
   listComputedAttributes:
     type: object
@@ -2357,6 +2443,158 @@ definitions:
         type: integer
         example: 1234567890
         description: update timestamp
+  PreviewSampleStatusPageResponse:
+    type: "object"
+    properties:
+      numRowsToRead:
+        type: "string"
+        description: "Total number of merged profiles in the sample."
+        example: "41003"
+      cosmosDocCount:
+        type: "string"
+        description: "Total document count in Cosmos."
+        example: "\"300803\""
+      totalFragmentCount:
+        type: "integer"
+        format: "int64"
+        description: "Total number of profile fragments in the profile store."
+        example: 57429
+      lastSuccessfulBatchTimestamp:
+        type: "string"
+        description: "Last successful batch ingestion timestamp."
+      streamingDriven:
+        type: "string"
+        description: "Deprecated field."
+      totalRows:
+        type: "string"
+        description: "Total number of merged profiles."
+        example: "51003"
+      lastBatchId:
+        type: "string"
+        description: "Last batch ingestion ID."
+      status:
+        type: "string"
+        description: "Status of last sample."
+        example: "TASK_FINISHED"
+      samplingRatio:
+        type: "number"
+        format: "double"
+        description: "Ratio of merged profiles sampled `numRowsToRead` to total merged profiles `totalRows` expressed as a percentage in decimal format."
+        example: 0.803933
+      mergeStrategy":
+        type: "string"
+        description: "Merge strategy used in last sample."
+        example: "timestampOrdered_auto"
+      lastSampledTimestamp:
+        type: "string"
+        description: "Last successful sample timestamp."
+        example: "2020-08-01 17:57:57.0"
+  DatasetReportResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        description: "The list of dataset objects."
+        items:
+          $ref: "#/definitions/DatasetDataResponse"
+      reportTimestamp:
+        type: "string"
+        description: "Date and time when the report was generated."
+        example: "2020-08-01T17:57:58.697"
+  DatasetDataResponse:
+    type: "object"
+    properties:
+      value:
+        type: "string"
+        description: "The `id` value for the dataset."
+        example: "5f160106be34361915754b9c"
+      fullIDsCount:
+        type: "integer"
+        format: "int64"
+        description: "Number of total merged profiles with this dataset ID."
+        example: 20988
+      fullIDsPercentage:
+        type: "number"
+        format: "double"
+        description: "The `fullIDsCount` as a percentage of total merged profiles expressed in decimal format."
+        example: 0.411505
+      sampleCount:
+        type: "integer"
+        format: "int64"
+        description: "Number of sampled merged profiles with this dataset ID."
+        example: 12577
+      samplePercentage:
+        type: "number"
+        format: "double"
+        description: "The `sampleCount` as a percentage of sampled merged profiles expressed in decimal format."
+        example: 0.306734
+      name:
+        type: "string"
+        description: "The name of the dataset, as provided during dataset creation."
+        example: "CRM Profiles"
+      description:
+        type: "string"
+        description: "The description of the dataset, as provided during dataset creation."
+        example: "Profiles from the CRM."
+      createdUser:
+        type: "string"
+        description: "The user ID of the user who created the dataset."
+        example: "{CREATED_USER}"
+      streamingIngestionEnabled:
+        type: "string"
+        description: "Whether the  dataset is enabled for streaming ingestion."
+        example: ""
+      reportTimestamp:
+        type: "string"
+        description: "The timestamp of the report. If a `date` parameter was provided during the request, the report returned is for the date provided. If no `date` parameter is provided, the most recent report is returned."
+        example: "2020-08-01T17:57:58.697"
+  NamespaceReportResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        description: "The list namespace objects."
+        items:
+          $ref: "#/definitions/NamespaceDataResponse"
+      reportTimestamp:
+        type: "string"
+        description: "Date and time when the report was generated."
+        example: "2020-08-01T17:57:58.697"
+  NamespaceDataResponse:
+    type: "object"
+    properties:
+      value:
+        type: "string"
+        description: "The `id` value for the namespace."
+        example: "6"
+      fullIDsCount:
+        type: "integer"
+        format: "int64"
+        description: "Number of total merged profiles with in this namespace."
+        example: 12631
+      fullIDsPercentage:
+        type: "number"
+        format: "double"
+        description: "The `fullIDsCount` as a percentage of total merged profiles expressed in decimal format."
+        example: 0.247652
+      sampleCount:
+        type: "integer"
+        format: "int64"
+        description: "Number of sampled merged profiles with in this namespace."
+        example: 12148
+      samplePercentage:
+        type: "number"
+        format: "double"
+        description: "The `sampleCount` as a percentage of sampled merged profiles expressed in decimal format."
+        example: 0.296271
+      code:
+        type: "string"
+        description: "The `code` for the namespace."
+        example: "Email"
+      reportTimestamp:
+        type: "string"
+        description: "The timestamp of the report. If a `date` parameter was provided during the request, the report returned is for the date provided. If no `date` parameter is provided, the most recent report is returned."
+        example: "2020-08-01T17:57:58.697"
 parameters:
   authorization:
     name: Authorization
