@@ -1663,12 +1663,6 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name' 
-        - name: "x-model-name"
-          in: "header"
-          description: "Experience Data Model (XDM) class."
-          required: false
-          type: "string"
-          x-example: "_xdm.context.profile"
       responses:
         '200':
           description: "Returns the details of the last successful sample that was run for the IMS Org."
