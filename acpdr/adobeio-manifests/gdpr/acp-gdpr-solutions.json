@@ -9,10 +9,10 @@
 	"publish_date": "18/05/2018",
 	"show_edit_github_banner": false,
 	"base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr/api-specification/markdown/narrative/gdpr",
-	"pages": [{
-			"pages": [],
-			"path": "use-cases/gdpr-accessing-and-deleting-data.md",
-			"title": "Accessing and Deleting Personal Data by a Data Subject"
-		}
+	"pages": [
+    {
+      "path": "api-specification/markdown/narrative/technical_overview/privacy_service_overview/privacy_service_overview.md",
+      "title": "Privacy Service overview"
+    }
   ]
 }
