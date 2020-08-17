@@ -1,223 +1,25 @@
 {
-    "name": "adobe_experience_platform_sources_ui_tutorials",
+    "name": "adobe_experience_platform_sources_api_tutorials",
     "version": "1.0.0",
-    "description": "Adobe Experience Platform Sources UI Tutorials",
-    "author": "Brian Lee - ens24257",
+    "description": "Adobe Experience Platform Sources API Tutorials",
+    "author": "Wendy Braun - ens28527",
     "view_type": "mdbook",
     "meta_keywords": "Tutorials, Adobe Experience Platform, Experience Platform, Platform, Connector, Data Access, Dataset, Data set, Creating a dataset, Creating a Connector, Data Ingestion, ingest data",
     "meta_description": "Adobe Experience Platform tutorials",
-    "publish_date": "21/01/2020",
+    "publish_date": "17/08/2020",
     "show_edit_github_banner": false,
     "base_path": "https://raw.githubusercontent.com/AdobeAtAdobe/kirby_docs/master/acpdr",
     "pages": [
         {
-            "importedFileName": "creating_a_connector_ui_tutorial",
-            "pages": [
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/adobe-applications/aam-ui-tutorial.md",
-                    "title": "Adobe Audience Manager connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/adobe-applications/adobe-analytics-ui-tutorial.md",
-                    "title": "Adobe Analytics connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/adobe-applications/customer-attributes-ui-tutorial.md",
-                    "title": "Customer attributes connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/amazon-redshift-ui-tutorial.md",
-                    "title": "Amazon Redshift connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/cloud-storages/amazon-s3-ui-tutorial.md",
-                    "title": "Azure Blob and Amazon S3 connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/cloud-storages/adls-gen2-ui-tutorial.md",
-                    "title": "Azure Data Lake Storage Gen2 connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/azure-synapse-analytics-ui-tutorial.md",
-                    "title": "Azure Synapse Analytics connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/azure-table-storage-ui-tutorial.md",
-                    "title": "Azure Table Storage connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/cloud-storages/ftp-sftp-ui-tutorial.md",
-                    "title": "FTP and SFTP connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/protocols/odata-tutorial.md",
-                    "title": "Generic OData connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/google-big-query-ui-tutorial.md",
-                    "title": "Google Big Query connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/cloud-storages/google-cloud-storage-ui-tutorial.md",
-                    "title": "Google Cloud Storage connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/greenplum-ui-tutorial.md",
-                    "title": "GreenPlum connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/customer-success/salesforce-service-cloud-tutorial.md",
-                    "title": "Salesforce Service Cloud connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/hive-ui-tutorial.md",
-                    "title": "Apache Hive on Azure HDInsights connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/marketing-automation/hubspot-tutorial.md",
-                    "title": "HubSpot connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/maria-db-ui-tutorial.md",
-                    "title": "Maria DB connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/crm/dynamics-salesforce-ui-tutorial.md",
-                    "title": "Microsoft Dynamics and Salesforce connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/sql-server-ui-tutorial.md",
-                    "title": "Microsoft SQL Server connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/mysql-ui-tutorial.md",
-                    "title": "MySQL connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/phoenix-ui-tutorial.md",
-                    "title": "Phoenix connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/postgresql-tutorial.md",
-                    "title": "PostgreSQL connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/marketing-automation/hubspot-tutorial.md",
-                    "title": "HubSpot connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/payments/paypal-tutorial.md",
-                    "title": "PayPal connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/customer-success/salesforce-service-cloud-tutorial.md",
-                    "title": "Salesforce Service Cloud connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/customer-success/servicenow-ui-tutorial.md",
-                    "title": "ServiceNow connector"
-                },
-                {
-                    "pages": [],
-                    "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/spark-ui-tutorial.md",
-                    "title": "Apache Spark on Azure HDInsights connector"
-                }
-            ],
+            "importedFileName": "sources-ui-tutorial",
+            "pages": [],
             "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/sources-ui-tutorial.md",
-            "title": "Create a source connector in the UI",
-            "description": "Set up, configure, and monitor source connectors using the user interface within Adobe Experience Platform."
-        },        
-        {
-            "importedFileName": "configure-cloud-storage-dataflow-tutorial",
-            "pages": [],
-            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/cloud-storages/configure-cloud-storage-dataflow-tutorial.md",
-            "title": "Configure a dataflow for a cloud storage source connector in the UI",
-            "description": ""
-        },        
-        {
-            "importedFileName": "configure-dataflow",
-            "pages": [],
-            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/databases/configure-dataflow.md",
-            "title": "Configure a dataflow for a database source connector in the UI",
-            "description": ""
-        },
-        {
-            "importedFileName": "configure-crm-dataflow-tutorial",
-            "pages": [],
-            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/crm/configure-crm-dataflow-tutorial.md",
-            "title": "Configure a dataflow for a CRM source connector in the UI",
-            "description": ""
-        },
-        {
-            "importedFileName": "configure-cs-dataflow-tutorial",
-            "pages": [],
-            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/customer-success/configure-cs-dataflow-tutorial.md",
-            "title": "Configure a dataflow for a customer success system source connector in the UI",
-            "description": ""
-        },
-        {
-            "importedFileName": "configure-marketing-automation-dataflow-tutorial",
-            "pages": [],
-            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/marketing-automation/configure-marketing-automation-dataflow-tutorial.md",
-            "title": "Configure a dataflow for a marketing automation system source connector in the UI",
-            "description": ""
-        },
-        {
-            "importedFileName": "configure-payments-dataflow-tutorial",
-            "pages": [],
-            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/payments/configure-payments-dataflow-tutorial.md",
-            "title": "Configure a dataflow for a payments source connector in the UI",
-            "description": ""
-        },
-        {
-            "importedFileName": "configure-protocols-dataflow-tutorial",
-            "pages": [],
-            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/protocols/configure-protocols-dataflow.md",
-            "title": "Configure a dataflow for a protocols source connector in the UI",
-            "description": ""
-        },                        
-        {
-            "importedFileName": "profile-population-tutorial",
-            "pages": [],
-            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/profile-population.md",
-            "title": "Activate inbound data for Profile population",
-            "description": ""
-        },
-        {
-            "importedFileName": "monitor-accounts-and-dataset-flows-tutorial",
-            "pages": [],
-            "path": "api-specification/markdown/narrative/tutorials/sources_tutorial/ui/accounts-and-dataset-flows.md",
-            "title": "Monitor accounts and dataset flows",
-            "description": ""
+            "title": "Sources documentation",
+            "description": "The documentation for Adobe Experience Platform Sources has moved."
         }
     ],
     "app2app_map": {
+        "api-specification/markdown/narrative/tutorials/schema_registry_api_tutorial/":"/apis/experienceplatform/home/xdm/xdmservices.html",
         "api-specification/markdown/narrative/technical_overview/segmentation/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
         "api-specification/markdown/narrative/technical_overview/unified_profile_architectural_overview/": "/apis/experienceplatform/home/profile-identity-segmentation/profile-identity-segmentation-services.html",
         "api-specification/markdown/narrative/technical_overview/data_access_architectural_overview/": "/apis/experienceplatform/home/services/allservices.html",
