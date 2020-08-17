@@ -959,7 +959,7 @@ parameters:
   includeDraftConstraintsQuery:
     name: includeDraft
     description: >-
-      If true, the system checks for policy violations among policies with `DRAFT` status as well as `ENABLED` status. Otherwise, only `ENABLED` policies are checked.
+      If true, the system checks for policy violations among policies with "DRAFT" status as well as "ENABLED" status. Otherwise, only "ENABLED" policies are checked.
     required: false
     type: boolean
     default: false
@@ -1698,7 +1698,7 @@ definitions:
         example: https://platform.adobe.io:443/data/foundation/dulepolicy/marketingActions/core/emailTargeting/constraints
       includeDraft:
         description: >-
-          If true, include checking for policy violations among policies with `DRAFT` status as well as `ENABLED` status. Otherwise, check only among `ENABLED` policies.
+          If true, the system checks for policy violations among policies with "DRAFT" status as well as "ENABLED" status. Otherwise, only "ENABLED" policies are checked.
         type: boolean
         default: false
       labels:
