@@ -353,7 +353,7 @@ paths:
           in: "query"
           required: true
           type: "string"
-          description: 'The action to perform on the file. Currently, the supported values are "INITIALIZE" and "COMPLETE". To begin initializing the file for upload, use the value "INITIALIZE" To mark the file as finished, use the value "COMPLETE".'
+          description: 'The action to perform on the file. Currently, the supported values are "INITIALIZE" and "COMPLETE". To begin initializing the file for upload, use the value "INITIALIZE". To mark the file as finished, use the value "COMPLETE".'
           enum: ["INITIALIZE", "COMPLETE"]
       responses:
         200:
@@ -375,7 +375,7 @@ paths:
     head:
       tags:
       - "Batch Ingestion"
-      summary: "Get the status of the large file uploaded so far."
+      summary: "Get the current status of the large file."
       description: "Files larger than 256MB are uploaded in parts. The HEAD endpoint provides a way to get the byte range information received by the server so far."
       operationId: "getLargeFileStatus"
       parameters:
