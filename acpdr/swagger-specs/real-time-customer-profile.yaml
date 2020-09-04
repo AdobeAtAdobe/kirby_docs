@@ -2444,6 +2444,16 @@ definitions:
         type: "string"
         description: "Total number of merged profiles in the sample."
         example: "41003"
+      sampleJobRunning:
+        type: object
+        description: "A boolean value that returns `true` when a sample job is in progress. Provides transparency into the latency that occurs from when a batch file is uploaded to when it is actually added to the Profile store."
+        properties:
+          status:
+            type: boolean
+            example: true
+          submissionTimestamp:
+            type: string
+            example: "2020-08-17 22:14:37.0"
       cosmosDocCount:
         type: "string"
         description: "Total document count in Cosmos."
