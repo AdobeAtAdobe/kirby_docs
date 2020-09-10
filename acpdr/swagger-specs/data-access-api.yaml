@@ -122,6 +122,50 @@ paths:
           description: "Access is unauthorized."
         500:
           description: "An internal server error has ocurred."
+  /batches/{batchId}/meta:
+    parameters:
+      - name: "batchId"
+        in: "path"
+        required: true
+        description: "The ID of the batch."
+        type: "string"
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
+      - name: "start"
+        in: "query"
+        required: false 
+        type: "string"
+        description: "A paging parameter to specify the start of a new page. For example: `start=1`"
+      - name: "limit"
+        in: "query"
+        required: false
+        type: "string"
+        description: "A paging parameter to specify the number of results per page. For example: `limit=10`"
+      - name: "path"
+        in: "query"
+        required: false
+        type: "string"
+        description: "The full name of the file. The contents of the file would be downloaded if this parameter is provided. For example: `path=row_error_samples.json`\nPossible values for this query include the following: \n - `row_errors`\n - `input_files`\n - `row_errors_sample.json`"
+    get:
+      tags: 
+      - Data Access
+      summary: "Get the meta files under a batch."
+      description: "Lists files under a batch's meta directory or download a specific file under it. The files under a batch's meta directory may include the following: \n - row_errors: A directory containing 0 or more files with parsing, conversion, and/or validation errors found at the row level.\n - input_files: A directory containing metadata for 1 or more input files submitted with the batch.\n - row_errors_sample.json: A root level file containing the sampled set of row errors for the UX."
+      produces:
+        - application/json
+      responses:
+        200:
+          description: "The request was successful."
+          schema:
+            $ref: "#/definitions/metadata"
+        401:
+          description: "Access is unauthorized."
+        404:
+          description: "The path is not found."
+        500:
+          description: "An internal service error has ocurred."
   /files/{dataSetFileId}:
     parameters:
       - name: "dataSetFileId"
@@ -198,7 +242,7 @@ paths:
         200:
           description: "The request has succeeded."
           schema:
-            $ref: "#/definitions/files"
+            $ref: "#/definitions/metadata"
         206:
           description: "The request has succeeded, returning only partial content. The body will contain the requested range of data."
           headers:
@@ -272,6 +316,14 @@ parameters:
     in: header
 
 definitions:
+
+  metadata:
+    type: "object"
+    properties:
+      path:
+        type: string
+        example: "F1.json"
+
   preview:
     type: "object"
     properties:
