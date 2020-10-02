@@ -21,11 +21,6 @@
       "title": "Catalog Service API"
     },
     {
-      "pages": [],
-      "path": "acpdr/swagger-specs/partner-connectors-api.yaml",
-      "title": "Connectors Service API"
-    },
-    {
         "pages": [],
         "path": "acpdr/swagger-specs/data-access-api.yaml",
         "title": "Data Access Service API"
