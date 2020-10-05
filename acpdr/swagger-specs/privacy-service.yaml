@@ -49,7 +49,7 @@ paths:
         - in: body
           name: body
           description: 'The payload for a consent request must include an optOutOfSale property and a list of user IDs (categorized by namespace).'
-          required: false
+          required: true
           schema:
             $ref: '#/definitions/PrivacySaleConsentResource'
       responses:
@@ -75,7 +75,6 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
         - name: regulation
           in: query
           description: 'The privacy regulation to return jobs from.'
@@ -124,6 +123,7 @@ paths:
           in: query
           required: false
           type: string
+        - $ref: '#/parameters/x-sandbox-name'
       responses:
         '200':
           description: A successful response returns a list of jobs under the provided regulation. Note that data for previously created jobs is only available for retrieval within 30 days of the job's completion date.
@@ -150,8 +150,8 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'
+        - $ref: '#/parameters/x-sandbox-name'
         - in: body
           name: body
           required: true
@@ -217,7 +217,7 @@ paths:
         - in: body
           name: body
           description: 'The payload for a privacy creation request must include company context information, a list of user IDs and namespaces, and a valid regulation code. See the [Privacy Service developer guide](https://docs.adobe.com/content/help/en/experience-platform/privacy/api/privacy-jobs.html) for more details on how to format privacy request payloads.'
-          required: false
+          required: true
           schema:
             $ref: '#/definitions/PrivacyChildJobRequestDetails'
       responses:
@@ -260,8 +260,8 @@ parameters:
     in: header
   x-sandbox-name:
     name: x-sandbox-name
-    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.'
-    required: true
+    description: 'The name of the Adobe Experience Platform sandbox in which the operation will take place. See the [sandboxes overview documentation](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.'
+    required: false
     type: string
     in: header
   content-type:
