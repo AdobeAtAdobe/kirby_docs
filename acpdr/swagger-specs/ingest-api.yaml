@@ -580,6 +580,11 @@ parameters:
 definitions:
   streamingMessage:
     type: "object"
+    required:
+      - SCHEMA_ID
+      - SCHEMA_VERSION
+      - IMS_ORG_ID
+      - DATASET_ID
     properties:
       TENANT_ID:
         type: string
@@ -596,6 +601,10 @@ definitions:
       DATASET_ID:
         type: string
         description: "The ID of the dataset that you want to publish to."
+      SOURCE_NAME:
+        type: string
+        description: "The optional name for your source. If this value is missing, the streaming message will automatically add the source ID from the streaming connection definition."
+
     description: "The message that you want to ingest."
     example:
       header:
@@ -605,6 +614,8 @@ definitions:
         imsOrgId: "{IMS_ORG_ID}"
         datasetId: "{DATASET_ID}"
         createdAt: "1526283801869"
+        source:
+          name: "{SOURCE_NAME}"
       body:
         xdmMeta:
           schemaRef:
