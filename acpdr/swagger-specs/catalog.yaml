@@ -168,24 +168,6 @@ paths:
           required: false
           type: string
           in: query
-        - name: dataSetFile
-          description: >-
-            - Filter on the ID of the dataset file.
-          required: false
-          type: string
-          in: query
-        - name: dataSetView
-          description: >-
-            - Filter on the ID of the dataset view.
-          required: false
-          type: string
-          in: query
-        - name: transform
-          description: >-
-            - Filter on the ID of the transform.
-          required: false
-          type: string
-          in: query
         - $ref: '#/parameters/orderBy'
         - $ref: '#/parameters/start'
         - $ref: '#/parameters/property'
@@ -457,18 +439,6 @@ paths:
         - name: dataSet
           description: >-
             - Filter on the ID of the dataset.
-          required: false
-          type: string
-          in: query
-        - name: dataSetFile
-          description: >- 
-            - Filter on the ID of the dataset file.
-          required: false
-          type: string
-          in: query
-        - name: dataSetView
-          description: >-
-            - Filter on the ID of the dataset view.
           required: false
           type: string
           in: query
@@ -823,18 +793,6 @@ paths:
           required: false 
           type: boolean
           in: query
-        - name: state
-          description: >-
-            - The state related to a dataset.
-          required: false
-          type: string
-          in: query
-        - name: namespace
-          description: >-
-            - A registered identifier from Platform.
-          required: false
-          type: string
-          in: query
         - $ref: '#/parameters/orderBy'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/start'
@@ -954,7 +912,7 @@ paths:
       parameters:
         - name: properties
           description: >-
-            - A comma separated whitelist of top-level object properties to be returned in the response. Used to cut down the number of properties and amount of data returned in the response bodies.
+            - A comma separated allowlist of top-level object properties to be returned in the response. Used to cut down the number of properties and amount of data returned in the response bodies.
           in: query
           type: string
           required: false
@@ -1262,7 +1220,7 @@ parameters:
   properties:
     name: properties
     description: >-
-        - A comma separated whitelist of top-level object properties to be returned in the response. Used to cut down the number of properties and amount of data returned in the response bodies.
+        - A comma separated allowlist of top-level object properties to be returned in the response. Used to cut down the number of properties and amount of data returned in the response bodies.
     in: query
     type: string
     required: false
@@ -1425,13 +1383,6 @@ parameters:
     description: >-
       - Set to verify the invalid versions of document to be modified by matching the updated date.
     in: header
-    type: string
-  namespace:
-    name: namespace
-    description: >-
-      - Filter by the base namespace ("model" or "core").
-    required: true
-    in: path
     type: string
   objectName:
     name: objectName
