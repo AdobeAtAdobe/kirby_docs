@@ -1,13 +1,13 @@
 swagger: "2.0"
 info:
   version: "1.0.0"
-  title: "Offer Decision Service API"
+  title: "Offer Decisioning API"
   description: >-
-    Adobe Experience Platform Decisioning Service provides the ability to programmatically and intelligently select the ‘Next Best Experience’ from a set of available options for a given individual, deliver them to any channel or application, and perform reporting and analysis on those experiences. The Offer Decision Service API includes an endpoint to filter out offers which are not approved, do not match the offer filter, or don’t have a representation for the placement referenced by the activity. It also allows you to run diagnostics and return a timestamp indicating when the offer catalog and/or activities were last updated, and a list of errors that occurred when doing so.
+    Offer Decisioning is an Application Service integrated with Adobe Experience Platform. It allows you to leverage Adobe Experience Platform to deliver the best offer and experience to your customers across all touch points at the right time.
 
 
     Related documentation:
-      * [Decisioning Service documentation](https://docs.adobe.com/content/help/en/experience-platform/decisioning/home.html)
+      * [Offer Decisioning documentation](https://docs.adobe.com/content/help/en/offer-decisioning/using/offer-decisioning-home.html)
 
     Visualize API calls with Postman (a free, third-party software):
       * [Offer Decision Service API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Offer%20Decision%20Service%20API.postman_collection.json)

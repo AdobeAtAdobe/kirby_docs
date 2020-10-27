@@ -2,12 +2,11 @@ swagger: "2.0"
 info:
   version: "1.0.0"
   title: "XDM Core Object Repository API"
-  description: >-
-    Experience Data Model (XDM) Core Object Repository is an event-driven repository for XDM instances, fully integrated with Adobe Experience Platform. XDM Core Object Repository is part of Decisioning Service, which provides the ability to programmatically and intelligently select the ‘Next Best Experience’ from a set of available options for a given individual, deliver them to any channel or application, and perform reporting and analysis on those experiences. Decisioning Service is controlled by a number of interrelated business objects. The XDM Core Object Repository API allows you to access and manage those business objects within the repository. 
-
+  description: >- 
+    Offer Decisioning is an Application Service integrated with Adobe Experience Platform. It allows you to leverage Adobe Experience Platform to deliver the best offer and experience to your customers across all touch points at the right time.
 
     Related documentation:
-      * [Decisioning Service documentation](https://docs.adobe.com/content/help/en/experience-platform/decisioning/home.html)
+      * [Offer Decisioning documentation](https://docs.adobe.com/content/help/en/offer-decisioning/using/offer-decisioning-home.html)
       
     Visualize API calls with Postman (a free, third-party software):
       * [XDM Core Object Repository API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/XDM%20Core%20Object%20Repository%20API.postman_collection.json)
