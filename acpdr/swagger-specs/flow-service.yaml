@@ -219,6 +219,50 @@ paths:
         '503':
           description: The service is unavailable.
   '/connections/{CONNECTION_ID}/':
+    patch:
+      tags:
+        - Connections
+      summary: Update the information of an existing connection.
+      operationId: patchConnection
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/if-match'
+        - name: CONNECTION_ID
+          in: path
+          description:
+            "The {CONNECTION_ID} you wish to update."
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: >-
+            - **op** - **(Required)** The operation call used to define the action needed to update the connection. Operations include `add`, `replace`, and `remove`.
+
+            - **path** - (Optional) The path of the parameter to be updated.
+
+            - **value** - **(Required)** The new value you want to update your parameter with.
+            
+          required: true
+          schema:
+            $ref: '#/definitions/PatchInstruction'
+      responses:
+        '200':
+          description: Connection successfully updated.
+          examples:
+            application/json:
+              id: "139f6a5f-a78b-4744-9f6a-5fa78bd74431"
+              etag: "\"3600e378-0000-0200-0000-5f40212f0000\""
+        '401':
+          description: OAuth token is missing.
+        '503':
+          description: The service is unavailable.
     delete:
       tags:
         - Connections
@@ -424,12 +468,12 @@ paths:
           description: OAuth token is missing.
         '503':
           description: The service is unavailable.
-  '/flows/{FLOW_ID}/runs':
-    get:
+
+    patch:
       tags:
         - Flows
-      summary: Retrieve run details of a flow by its ID.
-      operationId: getRunsByFlowId
+      summary: Update a flow.
+      operationId: patchFlow
       consumes:
         - application/json
       produces:
@@ -439,22 +483,39 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/if-match'
         - name: FLOW_ID
           in: path
           description:
             "The flow run entity with the corresponding ID."
           required: true
           type: string
+        - in: body
+          name: body
+          description: >-
+            - **op** - **(Required)** The operation call used to define the action needed to update the connection. Operations include `add`, `replace`, and `remove`.
+
+            - **path** - (Optional) The path of the parameter to be updated.
+
+            - **value** - **(Required)** The new value you want to update your parameter with.
+            
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PatchInstruction'
       responses:
         '200':
-          description: Returns details of specified run in JSON format.
+          description: The flow was successfully updated.
           schema:
-            $ref: '#/definitions/FlowRunsListResponse'
+            $ref: '#/definitions/CreateFlowResponse'
         '401':
           description: OAuth token is missing.
+        '403':
+          description: Access is forbidden.
         '503':
           description: The service is unavailable.
-  '/flows/{FLOW_ID}/':
+
     delete:
       tags:
         - Flows
@@ -724,7 +785,52 @@ paths:
           description: OAuth token is missing.
         '503':
           description: The service is unavailable.
-  '/sourceConnections/{SOURCE_CONNECTION_ID}/':
+          
+    patch:
+      tags:
+        - Source connections
+      summary: Update a source connection by its ID.
+      operationId: patchSourceConnectionById
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/if-match'
+        - name: SOURCE_CONNECTION_ID
+          in: path
+          description:
+            "The source connection ID is a unique identifier used to create a flow."
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: >-
+            - **op** - **(Required)** The operation call used to define the action needed to update the connection. Operations include `add`, `replace`, and `remove`.
+
+            - **path** - (Optional) The path of the parameter to be updated.
+
+            - **value** - **(Required)** The new value you want to update your parameter with.
+            
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PatchInstruction'
+      responses:
+        '200':
+          description: Returns updated source connection in JSON format.
+          schema:
+            $ref: '#/definitions/SourceConnectionsListResponse'
+        '401':
+          description: OAuth token is missing.
+        '503':
+          description: The service is unavailable.
+
     delete:
       tags: 
         - Source connections
@@ -834,7 +940,52 @@ paths:
           description: OAuth token is missing.
         '503':
           description: The service is unavailable.
-  '/targetConnections/{TARGET_CONNECTION_ID}/':
+          
+    patch:
+      tags:
+        - Target connections
+      summary: Update a target connection by its ID.
+      operationId: patchTargetConnectionById
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/if-match'
+        - name: TARGET_CONNECTION_ID
+          in: path
+          description:
+            "The target connection ID is a unique identifier used to create a flow."
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: >-
+            - **op** - **(Required)** The operation call used to define the action needed to update the connection. Operations include `add`, `replace`, and `remove`.
+
+            - **path** - (Optional) The path of the parameter to be updated.
+
+            - **value** - **(Required)** The new value you want to update your parameter with.
+            
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PatchInstruction'
+      responses:
+        '200':
+          description: Returns details of specified target connection in JSON format.
+          schema:
+            $ref: '#/definitions/TargetConnectionsListResponse'
+        '401':
+          description: OAuth token is missing.
+        '503':
+          description: The service is unavailable.
+
     delete:
       tags:
         - Target connections
@@ -1905,6 +2056,30 @@ definitions:
         type: integer
         format: int64
         description: "42"
+  PatchInstruction:
+    type: object
+    required:
+      - op
+      - path
+      - value
+    properties:
+      op:
+        type: string
+        example: "Add"
+        enum:
+          - ADD
+          - REPLACE
+          - REMOVE
+      path:
+        type: string
+        example: "/auth/params"
+      value:
+        type: object
+        properties:
+          description:
+            type: string
+            example: "A new description to provide further context on a specified connection or flow."
+            description: The new description value you want to add.
 parameters:
   authorization:
     name: Authorization
@@ -1988,3 +2163,9 @@ parameters:
     required: false
     type: boolean
     default: false
+  if-match:
+    name: if-match
+    in: query
+    description: "A header containing the etag value of the connection or flow to be updated."
+    required: true
+    type: string
