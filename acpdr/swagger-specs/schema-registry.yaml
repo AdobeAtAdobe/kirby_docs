@@ -978,7 +978,7 @@ paths:
           schema:
             $ref: '#/definitions/importExportPayload'
         '404':
-          description: No schema could be found for the specified `{SCHEMA_ID}`. Double-check that you are providing a valid `{SCHEMA_ID}` and are using the correct `{IMS_ORG}` and `{SANDBOX_NAME}` headers for that schema before trying again.
+          description: No schema could be found for the specified {SCHEMA_ID}. Double-check that you are providing a valid {SCHEMA_ID} and are using the correct {IMS_ORG} and {SANDBOX_NAME} headers for that schema before trying again.
           schema:
             $ref: '#/definitions/notFoundError'
   '/rpc/import':
@@ -1052,7 +1052,7 @@ paths:
               "xdm:tags":
                 - "https://ns.adobe.com/xdm/common/uri"
         '404':
-          description: No schema could be found for the specified `{SCHEMA_ID}`. Double-check that you are providing a valid `{SCHEMA_ID}` and are using the correct `{IMS_ORG}` and `{SANDBOX_NAME}` headers for that schema before trying again.
+          description: No schema could be found for the specified {SCHEMA_ID}. Double-check that you are providing a valid {SCHEMA_ID} and are using the correct {IMS_ORG} and {SANDBOX_NAME} headers for that schema before trying again.
           schema:
             $ref: '#/definitions/notFoundError'
         
