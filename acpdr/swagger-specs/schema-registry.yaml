@@ -37,12 +37,16 @@ tags:
     description: Classes define behavioral aspects of the data within the schema and describe the smallest number of common properties contained in all schemas that implement the same class.
   - name: "Mixins"
     description: A mixin is a reusable component that defines one or more fields to implement certain functions within a schema based on a compatible class.
-  - name: "Data Types"
+  - name: "Data types"
     description: Data types are used as reference field types in classes or schemas to define complex types. Data types may define multiple sub-fields providing a consistent multi-field structure.
   - name: "Descriptors"
     description: Schema descriptors are tenant-level metadata used to provide interpretive details on how data based on certain schemas may relate or interact with one another.
   - name: "Unions"
     description: Union views aggregate the fields of all schemas that implement the same class (such as ExperienceEvent or Profile) into a single schema. They are used by Real-time Customer Profile to merge data together to form a "single source of truth" for an individual.
+  - name: "Export/Import"
+    description: The Schema Registry API allows you to transfer and share XDM resources between sandboxes and IMS Organizations. For any schema, mixin, or data type, you can generate an export payload containing the structure of the resource and any dependent resources. This payload can then be used to import the resource into a destination sandbox and IMS Org.
+  - name: "Sample data"
+    description: You can generate sample data for any specified schema within the Schema Library. The response object returned can then be used as the source of dataset ingestion.
 consumes:
   - application/json
 produces:
@@ -580,7 +584,7 @@ paths:
   '/{CONTAINER_ID}/datatypes/':
     get:
       tags:
-      - "Data Types"
+      - "Data types"
       summary: List all data types in the specified container.
       produces:
         - application/json
@@ -608,7 +612,7 @@ paths:
           description: Unexpected error
     post:
       tags:
-      - "Data Types"
+      - "Data types"
       summary: Create a tenant-defined data type.
       consumes:
         - application/json
@@ -637,7 +641,7 @@ paths:
   '/{CONTAINER_ID}/datatypes/{$id}':
     get:
       tags:
-      - "Data Types"
+      - "Data types"
       parameters:
         - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/$id'
@@ -664,7 +668,7 @@ paths:
           description: Unexpected error
     patch:
       tags:
-      - "Data Types"
+      - "Data types"
       summary: Modify or update part of a tenant-defined data type.
       description: <p>The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update data types they have defined.</p><br/><p>For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).</p>
       consumes:
@@ -691,7 +695,7 @@ paths:
           description: Unexpected error
     put:
       tags:
-      - "Data Types"
+      - "Data types"
       summary: Replace a tenant-defined data type.
       description: <p>A PUT request is essentially re-writing the data type, therefore the request body must include all fields required to create (POST) a data type. This is especially useful when updating a lot of information in the data type at once.</p>
       operationId: replace_datatype
@@ -719,7 +723,7 @@ paths:
           description: Unexpected error
     delete:
       tags:
-      - "Data Types"
+      - "Data types"
       summary: Remove a tenant-defined data type from the registry.
       description: <p>Removing a data type is done through a DELETE request to the $id of the data type being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
       operationId: remove_datatype
@@ -952,6 +956,106 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
+  '/rpc/export/{RESOURCE_ID}':
+    get:
+      tags:
+      - "Export/Import"
+      summary: Retrieve an export payload for a specific resource in order to transfer it into a different sandbox or IMS Organization.
+      parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
+      - $ref: '#/parameters/accept'
+      - name: RESOURCE_ID
+        description: The meta:altId or URL-encoded $id value of the schema, mixin, or data type you want to export.
+        required: true
+        in: path
+        type: string
+      responses:
+        '200':
+          description: A successful response returns the details of the exported resource and its dependent mixins and data types. The contents of this payload can then be used as the request body in a POST /rpc/import call to import the resource to the desired sandbox or IMS Organization.
+          schema:
+            $ref: '#/definitions/importExportPayload'
+        '404':
+          description: No schema could be found for the specified `{SCHEMA_ID}`. Double-check that you are providing a valid `{SCHEMA_ID}` and are using the correct `{IMS_ORG}` and `{SANDBOX_NAME}` headers for that schema before trying again.
+          schema:
+            $ref: '#/definitions/notFoundError'
+  '/rpc/import':
+    post:
+      tags:
+      - "Export/Import"
+      summary: Use an export payload to import a resource into a different sandbox or IMS Organization.
+      parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - name: x-gw-ims-org-id
+        required: true
+        in: header
+        description: The unique ID ({IMS_ORG}) of the IMS Organization that you want to import the resource into.
+        type: string
+      - name: x-sandbox-name
+        required: true
+        in: header
+        type: string
+        description: The name of the sandbox that you want to import the resource into. See the [sandboxes overview documentation](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
+      - name: body
+        description: The payload returned by a GET /rpc/export/{RESOURCE_ID} call, indicating which schemas, mixins, and/or data types should be imported into the destination IMS Organization and sandbox.
+        in: body
+        schema:
+          $ref: '#/definitions/importExportPayload'
+      responses:
+        '200':
+          description: A successful response returns the details of the imported resource, with the appropriate {TENANT_ID} applied for the specified IMS Organization.
+          schema:
+            $ref: '#/definitions/importResponse'
+        '400':
+          description: The resources failed to import due to a conflict. In order to import XDM resources, their `$id` and `title` values must be unique within the destination IMS Org and sandbox. The error message will indicate which field contains the conflicting value. Change this value in the request payload before attempting the import again.
+          schema:
+            $ref: '#/definitions/importError'
+  '/rpc/sampledata/{SCHEMA_ID}':
+    get:
+      tags:
+      - "Sample data"
+      summary: Retrieve sample data for a schema by ID.
+      parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
+      - $ref: '#/parameters/accept'
+      - name: SCHEMA_ID
+        description: The meta:altId or URL-encoded $id value of the schema you want to generate sample data for.
+        required: true
+        in: path
+        type: string
+      responses:
+        '200':
+          description: A successful response returns a sample ingestion file, mapped to the structure of the specified schema.
+          schema:
+            type: object
+            example:
+              "@id": "/uri-reference"
+              "xdm:name": "Example Offer Name"
+              "xdm:representations":
+                - "xdm:channel": "https://ns.adobe.com/xdm/common/uri"
+                  "xdm:components":
+                    - "@type": "https://ns.adobe.com/experience/offer-management/content-component-text"
+                      "dc:format": "application/vnd.adobe.photoshop"
+                      "dc:language":
+                        - "\n"
+                      "repo:id": "urn:aaid:sc:US:6dc33479-13ca-4b19-b25d-c805eff8a69e"
+                      "repo:name": "Example Repo Name"
+                      "repo:resolveURL": "https://plaftform.adobe.io/resolveByPath?path=&quot;/mycorp/content/projectx/fragment/prod/herobanners/banner14.html3&quot;"
+                  "xdm:placement": "https://ns.adobe.com/xdm/common/uri"
+              "xdm:status": "draft"
+              "xdm:tags":
+                - "https://ns.adobe.com/xdm/common/uri"
+        '404':
+          description: No schema could be found for the specified `{SCHEMA_ID}`. Double-check that you are providing a valid `{SCHEMA_ID}` and are using the correct `{IMS_ORG}` and `{SANDBOX_NAME}` headers for that schema before trying again.
+          schema:
+            $ref: '#/definitions/notFoundError'
+        
 parameters:
   CONTAINER_ID:
     name: CONTAINER_ID
@@ -1468,7 +1572,7 @@ definitions:
           properties:
             $ref:
               type: string
-              example: 'https://ns.adobe.com/stardust/xdm/context/profile'
+              example: 'https://ns.adobe.com/{TENANT_ID}/xdm/context/profile'
       meta:altId:
         type: string
         example: '_{TENANT_ID}.schemas.274f17bc5807ff307a046bab1489fb18'
@@ -2427,3 +2531,158 @@ definitions:
       '@id':
         type: string
         example: '0fe5e262d27e986025bef6d33987002d64525efe'
+  importExportPayload:
+    type: object
+    example:
+      - "$id": "https://ns.adobe.com/<XDM_TENANTID_PLACEHOLDER>/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+        "meta:altId": "_<XDM_TENANTID_PLACEHOLDER>.mixins.443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+        "meta:resourceType": "mixins"
+        "version": "1.0"
+        "title": "Example mixin"
+        "type": "object"
+        "description": ""
+        "definitions":
+          "customFields":
+            "type": "object"
+            "properties":
+                "_<XDM_TENANTID_PLACEHOLDER>":
+                    "type": "object"
+                    "properties":
+                        "customerId":
+                            "title": "Customer ID"
+                            "description": ""
+                            "type": "string"
+                            "isRequired": false
+                            "meta:xdmType": "string"
+                    "meta:xdmType": "object"
+          "meta:xdmType": "object"
+        "allOf":
+          - "$ref": "#/definitions/customFields"
+            "type": "object"
+            "meta:xdmType": "object"
+        "meta:extensible": true
+        "meta:abstract": true
+        "meta:intendedToExtend": []
+        "meta:xdmType": "object"
+        "meta:sandboxId": "ff0f6870-c46d-11e9-8ca3-036939a64204"
+        "meta:sandboxType": "production"
+      - "$id": "https://ns.adobe.com/<XDM_TENANTID_PLACEHOLDER>/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117c80"
+        "meta:altId": "_<XDM_TENANTID_PLACEHOLDER>.schemas.20af3f1d4b175f27ba59529d1b51a0c79fc25df454117c80"
+        "meta:resourceType": "schemas"
+        "version": "1.1"
+        "title": "Example schema"
+        "type": "object"
+        "description": ""
+        "allOf":
+          - "$ref": "https://ns.adobe.com/xdm/context/profile"
+            "type": "object"
+            "meta:xdmType": "object"
+          - "$ref": "https://ns.adobe.com/<XDM_TENANTID_PLACEHOLDER>/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+            "type": "object"
+            "meta:xdmType": "object"
+        "meta:extensible": false
+        "meta:abstract": false
+        "meta:extends":
+          - "https://ns.adobe.com/<XDM_TENANTID_PLACEHOLDER>/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+          - "https://ns.adobe.com/xdm/common/auditable"
+          - "https://ns.adobe.com/xdm/data/record"
+          - "https://ns.adobe.com/xdm/context/profile"
+        "meta:xdmType": "object"
+        "meta:class": "https://ns.adobe.com/xdm/context/profile"
+        "meta:sandboxId": "ff0f6870-c46d-11e9-8ca3-036939a64204"
+        "meta:sandboxType": "production"
+  importResponse:
+    type: object
+    example:
+      - "$id": "https://ns.adobe.com/{TENANT_ID}/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+        "meta:altId": "_{TENANT_ID}.mixins.443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+        "meta:resourceType": "mixins"
+        "version": "1.0"
+        "title": "Example mixin"
+        "type": "object"
+        "description": ""
+        "definitions":
+          "customFields":
+            "type": "object"
+            "properties":
+                "_{TENANT_ID}":
+                    "type": "object"
+                    "properties":
+                        "customerId":
+                            "title": "Customer ID"
+                            "description": ""
+                            "type": "string"
+                            "isRequired": false
+                            "meta:xdmType": "string"
+                    "meta:xdmType": "object"
+          "meta:xdmType": "object"
+        "allOf":
+          - "$ref": "#/definitions/customFields"
+            "type": "object"
+            "meta:xdmType": "object"
+        "meta:extensible": true
+        "meta:abstract": true
+        "meta:intendedToExtend": []
+        "meta:xdmType": "object"
+        "meta:sandboxId": "ff0f6870-c46d-11e9-8ca3-036939a64204"
+        "meta:sandboxType": "production"
+      - "$id": "https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117c80"
+        "meta:altId": "_{TENANT_ID}.schemas.20af3f1d4b175f27ba59529d1b51a0c79fc25df454117c80"
+        "meta:resourceType": "schemas"
+        "version": "1.1"
+        "title": "Example schema"
+        "type": "object"
+        "description": ""
+        "allOf":
+          - "$ref": "https://ns.adobe.com/xdm/context/profile"
+            "type": "object"
+            "meta:xdmType": "object"
+          - "$ref": "https://ns.adobe.com/{TENANT_ID}/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+            "type": "object"
+            "meta:xdmType": "object"
+        "meta:extensible": false
+        "meta:abstract": false
+        "meta:extends":
+          - "https://ns.adobe.com/{TENANT_ID}/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+          - "https://ns.adobe.com/xdm/common/auditable"
+          - "https://ns.adobe.com/xdm/data/record"
+          - "https://ns.adobe.com/xdm/context/profile"
+        "meta:xdmType": "object"
+        "meta:class": "https://ns.adobe.com/xdm/context/profile"
+        "meta:sandboxId": "ff0f6870-c46d-11e9-8ca3-036939a64204"
+        "meta:sandboxType": "production"
+  customFields:
+    type: object
+    properties:
+      $ref:
+        type: string
+        example: '#/definitions/customFields'
+      "type":
+        type: string
+        example: "object"
+      "meta:xdmType":
+        type: string
+        example: "object"
+  importError:
+    type: object
+    example:
+      "type": "http://ns.adobe.com/aep/errors/XDM-3005-400"
+      "title": "Import Resource Failed"
+      "status": 400
+      "report":
+        "registryRequestId": "1c282c30-d6ca-40a3-a694-e914a12f249d"
+        "timestamp": "10-22-2020 06:33:12"
+        "detailed-message": "Failed to import resources. Error: Title must be unique. An object https://ns.adobe.com/{TENANT_ID}/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b already exists with the same title"
+        "sub-errors": []
+      "detail": "Failed to import resources. Error: Title must be unique. An object https://ns.adobe.com/{TENANT_ID}/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b already exists with the same title"
+  notFoundError:
+    type: object
+    example:
+      "type": "http://ns.adobe.com/aep/errors/XDM-1012-404"
+      "title": "Resource Not Found"
+      "status": 404
+      "report":
+        "registryRequestId": "a6773f98-f5ba-4e3e-8ff8-320136cc6c48"
+        "timestamp": "10-22-2020 06:42:13"
+        "detailed-message": "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      "detail": "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
