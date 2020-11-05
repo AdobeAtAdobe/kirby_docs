@@ -47,6 +47,8 @@ tags:
     description: The Schema Registry API allows you to transfer and share XDM resources between sandboxes and IMS Organizations. For any schema, mixin, or data type, you can generate an export payload containing the structure of the resource and any dependent resources. This payload can then be used to import the resource into a destination sandbox and IMS Org.
   - name: "Sample data"
     description: You can generate sample data for any specified schema within the Schema Library. The response object returned can then be used as the source of dataset ingestion.
+  - name: "Audit log"
+    description: The Schema Registry maintains a log of all the changes that have occurred to a resource (class, mixin, data type, or schema) between different updates.
 consumes:
   - application/json
 produces:
@@ -1055,7 +1057,53 @@ paths:
           description: No schema could be found for the specified {SCHEMA_ID}. Double-check that you are providing a valid {SCHEMA_ID} and are using the correct {IMS_ORG} and {SANDBOX_NAME} headers for that schema before trying again.
           schema:
             $ref: '#/definitions/notFoundError'
-        
+  '/rpc/auditlog/{RESOURCE_ID}':
+    get:
+      tags:
+      - "Audit log"
+      summary: Retrieve a chonological list of changes made to a resource specified by ID.
+      parameters:
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
+      - name: RESOURCE_ID
+        description: The meta:altId or URL-encoded $id value of the resource whose changes you wish to view.
+        in: path
+        required: true
+        type: string
+      responses:
+        '200':
+          description: A successful response returns an array of change logs for the specified resource. Each change object provides details on what action was performed to which field(s), the user that made the change, and a timestamp for when the change was committed.
+          schema:
+            type: object
+            example:
+              - "id": "https://ns.adobe.com/{TENANT_ID}/schemas/ef328f1f1c2eb9384fd4f704ce07e6ca0515cb477ed2c0e6"
+                "auditTrails":
+                  - "id": "https://ns.adobe.com/{TENANT_ID}/schemas/ef328f1f1c2eb9384fd4f704ce07e6ca0515cb477ed2c0e6"
+                    "xdmType": "schemas"
+                    "action": "add"
+                    "path": "/allOf/2"
+                    "value":
+                      "＄ref": "https://ns.adobe.com/xdm/context/profile-person-details"
+                      "type": "object"
+                      "meta:xdmType": "object"
+                "updatedUser": "{USER_ID}"
+                "imsOrg": "{IMS_ORG}"
+                "updated": 1604350775597
+                "clientId": "{CLIENT_ID}"
+              - "id": "https://ns.adobe.com/{TENANT_ID}/schemas/ef328f1f1c2eb9384fd4f704ce07e6ca0515cb477ed2c0e6"
+                "auditTrails":
+                  - "id": "https://ns.adobe.com/{TENANT_ID}/schemas/ef328f1f1c2eb9384fd4f704ce07e6ca0515cb477ed2c0e6"
+                    "xdmType": "schemas"
+                    "action": "update"
+                    "path": "/allOf/1/$ref"
+                    "value": "https://ns.adobe.com/xdm/context/profile-personal-details"
+                    "previousValue": "https://ns.adobe.com/xdm/context/profile-person-details"
+                "updatedUser": "{USER_ID}"
+                "imsOrg": "{IMS_ORG}"
+                "updated": 1604350676518
+                "clientId": "{CLIENT_ID}"
 parameters:
   CONTAINER_ID:
     name: CONTAINER_ID
