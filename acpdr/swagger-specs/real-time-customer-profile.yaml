@@ -568,6 +568,12 @@ paths:
           x-example: '-timestamp'
           required: false
           type: string
+        - name: property
+          description: >- 
+            Filter by the property value. Supported evaluators include =, !=, <, <=, >, >=. If more than one property filter is provided, it needs to be concatenated with `&`. Only a maximum of **three** properties are supported. When using URLs, they must be encoded. When using date filters, they must be encoded as a string in the format "yyyy-mm-dd" or "yyyymmdd". This query parameter is only supported for experience events.<br><br>Example: `property=web.webPageDetails.isHomepage=false&property=placeContext.localTime<="2020-07-20"`
+          x-example: 'property=web.webPageDetails.isHomepage=false&property=placeContext.localTime<="2020-07-20"' 
+          in: query
+          type: string
         - name: withCA
           in: query
           description: 'Feature flag for enabling computed attributes for lookup. Default: false'
