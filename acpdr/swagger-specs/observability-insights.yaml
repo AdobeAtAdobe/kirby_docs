@@ -351,7 +351,7 @@ parameters:
     maxItems: 6
     uniqueItems: true
     collectionFormat: multi
-    description: "Metrics you wish the API to return insights from. Refer to the documentation for a list of [accepted metrics](https://docs.adobe.com/content/help/en/experience-platform/observability/metrics.html)."
+    description: "Metrics you wish the API to return insights from. Refer to the documentation for a list of [accepted metrics](https://experienceleague.adobe.com/docs/experience-platform/observability/api/metrics.html?lang=en#available-metrics)."
     items:
       type: string
   id:
