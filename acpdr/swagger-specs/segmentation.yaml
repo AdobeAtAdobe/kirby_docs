@@ -104,7 +104,8 @@ paths:
         - $ref: '#/parameters/content-type'
         - name: x-profile-instance-id
           in: header
-          description: The ID of the profile instance.
+          description: >-
+            The ID of the profile instance. **Example**: `ups`
           required: false
           type: string
         - in: body
@@ -538,14 +539,14 @@ paths:
         - name: x-profile-instance-id
           in: header
           description: >- 
-            The ID of the Profile Instance.
-          required: true
+            The ID of the Profile Instance. **Example**: `ups`
+          required: false
           type: string
           x-example: ups
         - name: x-request-id
           in: header
           description: >-
-            Request ID
+            The request ID. **Example**: `q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA`
           required: false
           type: string
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
