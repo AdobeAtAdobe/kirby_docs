@@ -56,11 +56,6 @@
         "title": "Observability Insights API"
     },
     {
-        "pages": [],
-        "path": "acpdr/swagger-specs/decisioning-ode.yaml",
-        "title": "Offer Decision Service API"
-    },
-    {
       "pages": [],
       "path": "acpdr/swagger-specs/dule-policy-service.yaml",
       "title": "Policy Service API"
@@ -117,7 +112,6 @@
     "api-specification/markdown/narrative/technical_overview/observability_insights/": "apis/experienceplatform/home/services/observability.html",
     "api-specification/markdown/narrative/gdpr/": "/apis/experienceplatform/gdpr/docs/alldocs.html",
     "api-specification/markdown/narrative/technical_overview/query-service/overview": "/apis/cloudplatform/dataservices/query-service/overview.html",
-    "api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html",
-    "api-specification/markdown/narrative/technical_overview/decisioning-overview/":"/apis/experienceplatform/home/services/decisioning-service.html"
+    "api-specification/markdown/narrative/tutorials/": "/apis/experienceplatform/home/tutorials/alltutorials.html"
   }
 }
