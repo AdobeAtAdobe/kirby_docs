@@ -94,11 +94,6 @@
       "pages": [],
       "path": "acpdr/swagger-specs/sensei-ml-api.yaml",
       "title": "Sensei Machine Learning API"
-    },
-    {
-      "pages": [],
-      "path": "acpdr/swagger-specs/decisioning-repository.yaml",
-      "title": "XDM Core Object Repository API"
     }
   ],
   "app2app_map": {
