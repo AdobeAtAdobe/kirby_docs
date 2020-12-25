@@ -44,7 +44,7 @@ tags:
   - name: "Descriptors"
     description: Schema descriptors are tenant-level metadata used to provide interpretive details on how data based on certain schemas may relate or interact with one another.
   - name: "Unions"
-    description: Union views aggregate the fields of all schemas that implement the same class (such as ExperienceEvent or Profile) into a single schema. They are used by Real-time Customer Profile to merge data together to form a "single source of truth" for an individual.
+    description: Union schemas aggregate the fields of all schemas that implement the same class (such as ExperienceEvent or Profile) into a single schema. They are used by Real-time Customer Profile to merge data together to form a "single source of truth" for an individual.
   - name: "Export/Import"
     description: The Schema Registry API allows you to transfer and share XDM resources between sandboxes and IMS Organizations. For any schema, mixin, or data type, you can generate an export payload containing the structure of the resource and any dependent resources. This payload can then be used to import the resource into a destination sandbox and IMS Org.
   - name: "Sample data"
@@ -65,13 +65,13 @@ paths:
     get:
       tags:
       - "Stats"
-      summary: Return {TENANT_ID} and Schema Registry usage information.
+      summary: Retrieve your tenant ID and other usage information related to the Schema Registry.
       operationId: ims_org_stats
       produces:
         - application/json
       responses:
         '200':
-          description: JSON object containing {TENANT_ID} and Schema Registry usage information
+          description: A successful response returns your tenant ID and Schema Registry usage information.
           schema: 
             '$ref': '#/definitions/statsResponse'
         '400':
@@ -80,11 +80,11 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-  '/{CONTAINER_ID}/schemas/':
+  '/{CONTAINER_ID}/schemas':
     get:
       tags:
       - "Schemas"
-      summary: List all schemas within the specified container.
+      summary: Retrieve a list of schemas within the specified container.
       description: <p>You are able to view a list of all schemas within a container by performing a single GET request. To help filter results, the Schema Registry supports the use of query parameters when listing resources. The most common query parameters include:</br><ul><li>limit - Limit the number of resources returned. e.g. limit=5 will return only five resources in the list.</li><li>orderby - Sort results by a specific property. e.g. orderby=title will sort results by title ascending (A-Z). Adding a - before title (orderby=-title) will sort items by title descending (Z-A).</li><li>properties - Filter results on any top-level attributes. e.g. property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile returns only mixins that are compatible with the Profile class.</li><li>You may also use an ampersand (&) to combine query parameters.</li></ul></p><p>The response format depends on the Accept header sent in the request. The following Accept headers are available for this request:<br/><ul><li><strong>application/vnd.adobe.xed-id+json</strong> | Returns a short summary of each resource, generally the preferred header for listing.</li><li><strong>application/vnd.adobe.xed-full+json</strong> | Returns full JSON for each resource, with original $ref and allOf attributes included.</li></ul></p>
       operationId: list_all_schemas
       produces:
@@ -111,47 +111,19 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-    post:
-      tags:
-      - "Schemas"
-      summary: Create a new tenant-defined schema.
-      operationId: create_schema
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
-        - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/content-type'
-        - $ref: '#/parameters/createSchemaPayload'
-      responses:
-        '201':
-          description: Returns details of new schema, including $id, meta:altId, and version
-          schema: 
-            '$ref': '#/definitions/createSchemaResponse'
-        '400':
-          description: Bad request
-        '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
-  '/{CONTAINER_ID}/schemas/{$id}':
+  '/{CONTAINER_ID}/schemas/{SCHEMA_ID}':
     get:
       tags:
       - "Schemas"
       parameters:
       - $ref: '#/parameters/CONTAINER_ID'
-      - $ref: '#/parameters/$id'
+      - $ref: '#/parameters/SCHEMA_ID'
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept'
-      summary: Lookup a specific schema by its unique ID.
+      summary: Retrieve a schema within the specified container by ID.
       description: <p>The response format depends on the Accept header sent in the request. The following Accept headers are available for this request:<br/><ul><li><strong>application/vnd.adobe.xed+json; version={major version}</strong>  Raw with $ref and allOf, has titles, descriptions</li><li><strong>application/vnd.adobe.xed-full+json; version={major version}</strong> $refs and allOf resolved, has titles and descriptions</li><li><strong>application/vnd.adobe.xed-notext+json; version={major version}</strong> Raw with $ref and allOf, no titles or descriptions</li><li><strong>application/vnd.adobe.xed-full-notext+json; version={major version}</strong>  $refs and allOf resolved, no titles or descriptions</li><li><strong>application/vnd.adobe.xed-full-desc+json; version={major version}</strong> $refs and allOf resolved, descriptors included</li></ul></p><br/><p>A lookup request requires the resource 'major version' be included in the Accept header. When supplying the major version, the registry returns the latest minor version automatically.</p>
       operationId: lookup_schema
       produces:
@@ -171,10 +143,67 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-    patch:
+  '/tenant/schemas':
+    post:
       tags:
       - "Schemas"
-      summary: Modify or update part of a tenant-defined schema.
+      summary: Create a new custom schema.
+      operationId: create_schema
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'
+        - $ref: '#/parameters/createSchemaPayload'
+      responses:
+        '201':
+          description: Returns details of new schema, including $id, meta:altId, and version
+          schema: 
+            '$ref': '#/definitions/createSchemaResponse'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+  '/tenant/schemas/{SCHEMA_ID}':
+    put:
+      tags:
+      - "Schemas"
+      summary: Update a custom schema by ID.
+      description: <p>A PUT request essentially re-writes the schema, therefore the request body must include all fields required to create (POST) a schema. This is especially useful when updating a lot of information in the schema at once.</p>
+      operationId: replace_schema
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/CONTAINER_ID'
+        - $ref: '#/parameters/SCHEMA_ID'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'
+        - $ref: '#/parameters/replaceSchemaPayload'
+      responses:
+        '200':
+          description: Returns JSON schema with updated attributes
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+    patch:
+      tags:
+        - "Schemas"
+      summary: Update one or more attributes of a custom schema specified by ID.
       description: <p>The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update schemas they have defined.</p><br/><p>For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).</p>
       operationId: update_schema
       consumes:
@@ -183,7 +212,7 @@ paths:
         - application/json
       parameters:
         - $ref: '#/parameters/CONTAINER_ID'
-        - $ref: '#/parameters/$id'
+        - $ref: '#/parameters/SCHEMA_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
@@ -200,44 +229,16 @@ paths:
         '500':
           description: Internal server error
         default:
-          description: Unexpected error
-    put:
-      tags:
-      - "Schemas"
-      summary: Replace a tenant-defined schema.
-      description: <p>A PUT request essentially re-writes the schema, therefore the request body must include all fields required to create (POST) a schema. This is especially useful when updating a lot of information in the schema at once.</p>
-      operationId: replace_schema
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
-        - $ref: '#/parameters/$id'
-        - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/content-type'
-        - $ref: '#/parameters/replaceSchemaPayload'
-      responses:
-        '200':
-          description: Returns JSON schema with updated attributes
-        '400':
-          description: Bad request
-        '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: Unexpected error   
     delete:
       tags:
       - "Schemas"
-      summary: Remove a tenant-defined schema from the registry.
+      summary: Delete a custom schema by ID.
       description: <p>Remove an existing schema by performing a DELETE request to the $id of the schema being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
       operationId: remove_schema
       parameters:
         - $ref: '#/parameters/CONTAINER_ID'
-        - $ref: '#/parameters/$id'
+        - $ref: '#/parameters/SCHEMA_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
@@ -255,7 +256,7 @@ paths:
     get:
       tags:
         - "Behaviors"
-      summary: List all behaviors within the global container.
+      summary: Retrieve a list of behaviors.
       produces:
         - application/json
       parameters:
@@ -303,7 +304,7 @@ paths:
                   "detailed-message": "Unknown Accept header values supplied: */* - Valid Accept value would look like application/vnd.adobe.{xed|xdm}+json"
                   "sub-errors": []
               "detail": "Unknown Accept header values supplied: */* - Valid Accept value would look like application/vnd.adobe.{xed|xdm}+json"
-  '/global/behaviors/{$id}':
+  '/global/behaviors/{BEHAVIOR_ID}':
     get:
       tags:
         - "Behaviors"
@@ -311,16 +312,12 @@ paths:
       produces:
         - application/json
       parameters:
+        - $ref: '#/parameters/BEHAVIOR_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/accept'
-        - name: "$id"
-          description: The `meta:altId` or URL-encoded `$id` of the behavior you want to look up.
-          required: true
-          in: path
-          type: string
       responses:
         '200':
           description: Returns the details of the behavior specified in the request path.
@@ -375,11 +372,11 @@ paths:
                 detailed-message: 'Unknown Accept header values supplied: */* - Valid Accept value would look like application/vnd.adobe.{xed|xdm}+json; version=1 - Version should be specified in the Accept header value'
                 sub-errors: []
               detail: 'Unknown Accept header values supplied: */* - Valid Accept value would look like application/vnd.adobe.{xed|xdm}+json; version=1 - Version should be specified in the Accept header value'
-  '/{CONTAINER_ID}/mixins/':
+  '/{CONTAINER_ID}/mixins':
     get:
       tags:
       - "Mixins"
-      summary: List all mixins within the specified container.
+      summary: Retrieve a list of mixins within the specified container.
       operationId: list_all_mixins
       produces:
         - application/json
@@ -409,10 +406,40 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
+  '/{CONTAINER_ID}/mixins/{MIXIN_ID}':
+    get:
+      tags:
+      - "Mixins"
+      parameters:
+      - $ref: '#/parameters/CONTAINER_ID'
+      - $ref: '#/parameters/MIXIN_ID'
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
+      - $ref: '#/parameters/accept'
+      summary: Retrieve a mixin within the specified container by ID.
+      operationId: lookup_mixin
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Returns the details of the specific mixin
+          schema:
+            $ref: '#/definitions/lookupMixinResponse'
+        '404':
+          description: Not Found
+        '406':
+          description: Accept format/version not available
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+  '/tenant/mixins':
     post:
       tags:
       - "Mixins"
-      summary: Create a new tenant-defined mixin.
+      summary: Create a new custom mixin.
       operationId: create_mixin
       consumes:
         - application/json
@@ -437,67 +464,11 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-  '/{CONTAINER_ID}/mixins/{$id}':
-    get:
-      tags:
-      - "Mixins"
-      parameters:
-      - $ref: '#/parameters/CONTAINER_ID'
-      - $ref: '#/parameters/$id'
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-name'
-      - $ref: '#/parameters/accept'
-      summary: Lookup a specific mixin by its unique ID.
-      operationId: lookup_mixin
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Returns the details of the specific mixin
-          schema:
-            $ref: '#/definitions/lookupMixinResponse'
-        '404':
-          description: Not Found
-        '406':
-          description: Accept format/version not available
-        '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
-    patch:
-      tags:
-      - "Mixins"
-      summary: Modify or update part of a tenant-defined mixin.
-      description: <p>The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update mixins they have defined.</p><br/><p>For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).</p>
-      operationId: update_mixin
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
-        - $ref: '#/parameters/$id'
-        - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/content-type'
-        - $ref: '#/parameters/patchMixinPayload'
-      responses:
-        '200':
-          description: Returns the updated mixin in JSON format
-        '400':
-          description: Bad request
-        '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+  '/tenant/mixins/{MIXIN_ID}':
     put:
       tags:
       - "Mixins"
-      summary: Replace a tenant-defined mixin.
+      summary: Update a custom mixin by ID.
       description: <p>A PUT request is essentially re-writing the mixin, therefore the request body must include all fields required to create (POST) a mixin. This is especially useful when updating a lot of information in the mixin at once.</p>
       operationId: replace_mixin
       consumes:
@@ -506,7 +477,7 @@ paths:
         - application/json
       parameters:
         - $ref: '#/parameters/CONTAINER_ID'
-        - $ref: '#/parameters/$id'
+        - $ref: '#/parameters/MIXIN_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
@@ -522,15 +493,43 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
+    patch:
+      tags:
+      - "Mixins"
+      summary: Update one or more attributes of a custom mixin specified by ID.
+      description: <p>The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update mixins they have defined.</p><br/><p>For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).</p>
+      operationId: update_mixin
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/CONTAINER_ID'
+        - $ref: '#/parameters/MIXIN_ID'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'
+        - $ref: '#/parameters/patchMixinPayload'
+      responses:
+        '200':
+          description: Returns the updated mixin in JSON format
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
     delete:
       tags:
       - "Mixins"
-      summary: Remove a tenant-defined mixin from the registry.
+      summary: Delete a custom mixin by ID.
       description: <p>Remove an existing mixin through a DELETE request to the $id of the mixin being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
       operationId: remove_mixin
       parameters:
         - $ref: '#/parameters/CONTAINER_ID'
-        - $ref: '#/parameters/$id'
+        - $ref: '#/parameters/MIXIN_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
@@ -544,11 +543,11 @@ paths:
          description: Internal server error
         default:
           description: Unexpected error
-  '/{CONTAINER_ID}/classes/':
+  '/{CONTAINER_ID}/classes':
     get:
       tags:
       - "Classes"
-      summary: List all classes in the specified container.
+      summary: Retrieve a list of classes within the specified container.
       operationId: list_all_classes
       produces:
         - application/json
@@ -574,10 +573,40 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
+  '/{CONTAINER_ID}/classes/{CLASS_ID}':
+    get:
+      tags:
+      - "Classes"
+      parameters:
+        - $ref: '#/parameters/CONTAINER_ID'
+        - $ref: '#/parameters/CLASS_ID'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/accept'
+      summary: Retrieve a class within the specified container by ID.
+      operationId: lookup_class
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Returns the details of the class in JSON format
+          schema:
+            $ref: '#/definitions/lookupClassResponse'
+        '404':
+          description: Not Found
+        '406':
+          description: Accept format/version not available
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+  '/tenant/classes':
     post:
       tags:
       - "Classes"
-      summary: Create a tenant-defined class.
+      summary: Create a new custom class.
       operationId: create_class
       consumes:
         - application/json
@@ -601,68 +630,12 @@ paths:
         '500':
           description: Internal server error
         default:
-          description: Unexpected error
-  '/{CONTAINER_ID}/classes/{$id}':
-    get:
-      tags:
-      - "Classes"
-      parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
-        - $ref: '#/parameters/$id'
-        - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/accept'
-      summary: Lookup a specific class by its unique ID.
-      operationId: lookup_class
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Returns the details of the class in JSON format
-          schema:
-            $ref: '#/definitions/lookupClassResponse'
-        '404':
-          description: Not Found
-        '406':
-          description: Accept format/version not available
-        '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
-    patch:
-      tags:
-      - "Classes"
-      summary: Modify or update part of a tenant-defined class.
-      description: <p>The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update classes they have defined.</p><br/><p>For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).</p>
-      operationId: update_class
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
-        - $ref: '#/parameters/$id'
-        - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/content-type'
-        - $ref: '#/parameters/patchPayload'
-      responses:
-        '200':
-          description: Returns the updated class in JSON format
-        '400':
-          description: Bad request
-        '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: Unexpected error    
+  '/tenant/classes/{CLASS_ID}':
     put:
       tags:
       - "Classes"
-      summary: Replace a tenant-defined class.
+      summary: Update a custom class by ID.
       description: <p>A PUT request is essentially re-writing the class, therefore the request body must include all fields required to create (POST) a class. This is especially useful when updating a lot of information in the class at once.</p>
       operationId: replace_class
       consumes:
@@ -671,7 +644,7 @@ paths:
         - application/json
       parameters:
         - $ref: '#/parameters/CONTAINER_ID'
-        - $ref: '#/parameters/$id'
+        - $ref: '#/parameters/CLASS_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
@@ -687,15 +660,43 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
+    patch:
+      tags:
+      - "Classes"
+      summary: Update one or more attributes of a custom class specified by ID.
+      description: <p>The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update classes they have defined.</p><br/><p>For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).</p>
+      operationId: update_class
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/CONTAINER_ID'
+        - $ref: '#/parameters/CLASS_ID'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'
+        - $ref: '#/parameters/patchPayload'
+      responses:
+        '200':
+          description: Returns the updated class in JSON format
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
     delete:
       tags:
       - "Classes"
-      summary: Remove a tenant-defined class from the registry.
+      summary: Delete a custom class by ID.
       description: <p>Remove a class by performing a DELETE request to the $id of the class being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
       operationId: remove_class
       parameters:
         - $ref: '#/parameters/CONTAINER_ID'
-        - $ref: '#/parameters/$id'
+        - $ref: '#/parameters/CLASS_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
@@ -709,11 +710,11 @@ paths:
          description: Internal server error
         default:
           description: Unexpected error
-  '/{CONTAINER_ID}/datatypes/':
+  '/{CONTAINER_ID}/datatypes':
     get:
       tags:
       - "Data types"
-      summary: List all data types in the specified container.
+      summary: Retrieve a list of data types within the specified container.
       produces:
         - application/json
       parameters:
@@ -738,10 +739,39 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
+  '/{CONTAINER_ID}/datatypes/{DATA_TYPE_ID}':
+    get:
+      tags:
+      - "Data types"
+      parameters:
+        - $ref: '#/parameters/CONTAINER_ID'
+        - $ref: '#/parameters/DATA_TYPE_ID'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/accept'
+      summary: Retrieve a data type within the specified container by ID.
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Returns the details of the data type in JSON format
+          schema:
+            $ref: '#/definitions/lookupDataTypeResponse'
+        '404':
+          description: Not Found
+        '406':
+          description: Accept format/version not available
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+  '/tenant/datatypes':
     post:
       tags:
       - "Data types"
-      summary: Create a tenant-defined data type.
+      summary: Create a new custom data type.
       consumes:
         - application/json
       produces:
@@ -765,66 +795,12 @@ paths:
         '500':
           description: Internal server error
         default:
-          description: Unexpected error
-  '/{CONTAINER_ID}/datatypes/{$id}':
-    get:
-      tags:
-      - "Data types"
-      parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
-        - $ref: '#/parameters/$id'
-        - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/accept'
-      summary: Returns the datatype schema associated with the given identifier.
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Returns the details of the data type in JSON format
-          schema:
-            $ref: '#/definitions/lookupDataTypeResponse'
-        '404':
-          description: Not Found
-        '406':
-          description: Accept format/version not available
-        '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
-    patch:
-      tags:
-      - "Data types"
-      summary: Modify or update part of a tenant-defined data type.
-      description: <p>The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update data types they have defined.</p><br/><p>For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).</p>
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
-        - $ref: '#/parameters/$id'
-        - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/x-api-key'
-        - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/content-type'
-        - $ref: '#/parameters/patchDataTypePayload'
-      responses:
-        '200':
-          description: Returns the updated data type in JSON format.
-        '400':
-          description: Bad request
-        '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: Unexpected error  
+  '/tenant/datatypes/{DATA_TYPE_ID}':
     put:
       tags:
       - "Data types"
-      summary: Replace a tenant-defined data type.
+      summary: Update a custom data type by ID.
       description: <p>A PUT request is essentially re-writing the data type, therefore the request body must include all fields required to create (POST) a data type. This is especially useful when updating a lot of information in the data type at once.</p>
       operationId: replace_datatype
       consumes:
@@ -833,7 +809,7 @@ paths:
         - application/json
       parameters:
         - $ref: '#/parameters/CONTAINER_ID'
-        - $ref: '#/parameters/$id'
+        - $ref: '#/parameters/DATA_TYPE_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
@@ -849,15 +825,42 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
+    patch:
+      tags:
+      - "Data types"
+      summary: Update one or more attributes of a custom data type specified by ID.
+      description: <p>The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update data types they have defined.</p><br/><p>For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).</p>
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/CONTAINER_ID'
+        - $ref: '#/parameters/DATA_TYPE_ID'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'
+        - $ref: '#/parameters/patchDataTypePayload'
+      responses:
+        '200':
+          description: Returns the updated data type in JSON format.
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
     delete:
       tags:
       - "Data types"
-      summary: Remove a tenant-defined data type from the registry.
+      summary: Delete a custom class by ID.
       description: <p>Removing a data type is done through a DELETE request to the $id of the data type being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
       operationId: remove_datatype
       parameters:
         - $ref: '#/parameters/CONTAINER_ID'
-        - $ref: '#/parameters/$id'
+        - $ref: '#/parameters/DATA_TYPE_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
@@ -875,7 +878,7 @@ paths:
     get:
       tags:
       - "Descriptors"
-      summary: List all descriptors within the specified container, by type.
+      summary: Retrieve a list descriptors within the specified container, sorted by type.
       description: <p>Schemas define a static view of data entities, but do not provide specific details on how data based on these schemas (datasets, etc) may relate to one another. Adobe Experience Platform allows you to describe these relationships and other interpretive metadata about a schema using descriptors.</p><br/><p>Schema descriptors are tenant-level metadata, meaning they are unique to your IMS Organization and all descriptor operations take place in the tenant container.</p><br/><p>Each schema can have one or more schema descriptor entities applied to it. Each schema descriptor entity includes a descriptor '@type' and the 'sourceSchema' to which it applies. Once applied, these descriptors will apply to all datasets created using the schema.</p><br/><p>The Schema Registry supports the use of query parameters when listing descriptors. The most common query parameters include:</br><ul><li>property - Return only results that match the given property. e.g. property=@type==xdm:descriptorIdentity returns only descriptors with a '@type' of 'xdm:descriptorIdentity'.</li><li>limit - Limit the number of resources returned. e.g. limit=5 will return only five resources in the list.</li><li>You may also use an ampersand (&) to combine query parameters.</li></ul></p><p>Accept headers for descriptors include:<br/><table><thead><tr><th>Accept</th><th>Description</th></tr></thead><tbody><tr><td><strong>application/vnd.adobe.xdm-id+json</strong></td><td>Returns a list of descriptor IDs, grouped by their @type</td></tr><tr><td><strong>application/vnd.adobe.xdm-link+json</strong></td><td>Returns a list of descriptor API paths, grouped by their @type</td></tr><tr><td><strong>application/vnd.adobe.xdm+json</strong></td><td>Returns a list of descriptor objects, grouped by their @type</td></tr><tr><td><strong>application/vnd.adobe.xdm-v2{-id/-link}+json</strong></td><td>Including the -v2 option in any of the above Accept headers permits paging functionality, returning a results array with a _page attribute that can be used to request the next page if needed.</td></tr></tbody></table></p><br/><p>
       operationId: list_all_descriptors
       produces:
@@ -914,10 +917,39 @@ paths:
           description: Internal Server Error
         default:
           description: Unexpected Error
+  '/{CONTAINER_ID}/descriptors/{DESCRIPTOR_ID}':
+    get:
+      tags:
+      - "Descriptors"
+      summary: Retrieve a descriptor by within the specified container by ID.
+      description: <p>View the details of a specific descriptor by performing a lookup (GET) request using the @id of the descriptor. Descriptors are not versioned, therefore no Accept header is required in the lookup request.</p>
+      operationId: lookup_descriptor
+      produces:
+      - application/json
+      parameters:
+      - $ref: '#/parameters/CONTAINER_ID'
+      - $ref: '#/parameters/DESCRIPTOR_ID'
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
+
+      responses:
+        '200':
+          description: Returns details of individual descriptor in JSON format.
+          schema:
+            $ref: '#/definitions/lookupDescriptorResponse'
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+        default:
+          description: Unexpected Error
+  '/tenant/descriptors':
     post:
       tags:
       - "Descriptors"
-      summary: Create a new descriptor. Required fields in payload vary based on @type.
+      summary: Create a new descriptor.
       description: <p>Required fields for defining a descriptor vary based on the @type of the descriptor.</p>
       operationId: create_descriptor
       consumes:
@@ -944,39 +976,12 @@ paths:
         '500':
           description: Internal Server Error
         default:
-          description: Unexpected Error
-  '/{CONTAINER_ID}/descriptors/{@id}':
-    get:
-      tags:
-      - "Descriptors"
-      summary: Lookup specific descriptor by its @id.
-      description: <p>View the details of a specific descriptor by performing a lookup (GET) request using the @id of the descriptor. Descriptors are not versioned, therefore no Accept header is required in the lookup request.</p>
-      operationId: lookup_descriptor
-      produces:
-      - application/json
-      parameters:
-      - $ref: '#/parameters/CONTAINER_ID'
-      - $ref: '#/parameters/descriptorId'
-      - $ref: '#/parameters/authorization'
-      - $ref: '#/parameters/x-api-key'
-      - $ref: '#/parameters/x-gw-ims-org-id'
-      - $ref: '#/parameters/x-sandbox-name'
-
-      responses:
-        '200':
-          description: Returns details of individual descriptor in JSON format.
-          schema:
-            $ref: '#/definitions/lookupDescriptorResponse'
-        '404':
-          description: Not Found
-        '500':
-          description: Internal Server Error
-        default:
-          description: Unexpected Error
+          description: Unexpected Error  
+  '/tenant/descriptors/{DESCRIPTOR_ID}':
     put:
       tags:
       - "Descriptors"
-      summary: Update a descriptor. Required fields in payload vary based on @type.
+      summary: Update a descriptor by ID.
       description: <p>Update a descriptor by issuing a PUT request to the @id of the descriptor being updated.<br/><br/>This action is <em>re-writing</em> the existing descriptor, therefore the payload must include all descriptor fields that were required when the descriptor was defined.</p>
       operationId: update_descriptor
       consumes:
@@ -985,7 +990,7 @@ paths:
       - application/json
       parameters:
       - $ref: '#/parameters/CONTAINER_ID'
-      - $ref: '#/parameters/descriptorId'
+      - $ref: '#/parameters/DESCRIPTOR_ID'
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
@@ -1009,12 +1014,12 @@ paths:
     delete:
       tags:
       - "Descriptors"
-      summary: Remove a descriptor using its @id.
+      summary: Delete a descriptor by ID.
       description: <p>Remove a descriptor from the registry by issuing a DELETE request to the @id of the descriptor being removed.</p>
       operationId: remove_descriptor
       parameters:
       - $ref: '#/parameters/CONTAINER_ID'
-      - $ref: '#/parameters/descriptorId'
+      - $ref: '#/parameters/DESCRIPTOR_ID'
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
@@ -1030,12 +1035,12 @@ paths:
           description: Internal Server Error
         default:
 
-          description: Unexpected Error
+          description: Unexpected Error  
   '/tenant/unions':
     get:
       tags:
       - Unions
-      summary: Retrieve a list of union views.
+      summary: Retrieve a list of union schemas.
       parameters:
         - $ref: '#/parameters/acceptListing'
         - $ref: '#/parameters/authorization'
@@ -1057,18 +1062,18 @@ paths:
           description: Internal server error
         default:
           description: Unexpected error
-  '/tenant/unions/{$id}':
+  '/tenant/unions/{UNION_ID}':
     get:
       tags:
       - Unions
       parameters:
-      - $ref: '#/parameters/$id'
+      - $ref: '#/parameters/UNION_ID'
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept'
-      summary: Lookup a union view by ID.
+      summary: Retrieve a union schema by ID.
       responses:
         '200':
           description: Returns details for the specified union view in JSON format.
@@ -1237,6 +1242,49 @@ parameters:
     required: true
     in: path
     type: string
+  SCHEMA_ID:
+    name: SCHEMA_ID
+    description: The `meta:altId` or URL-encoded `$id` of the schema in question.
+    required: true
+    in: path
+    type: string
+  BEHAVIOR_ID:
+    name: BEHAVIOR_ID
+    description: The `meta:altId` or URL-encoded `$id` of the behavior in question.
+    required: true
+    in: path
+    type: string
+  CLASS_ID:
+    name: CLASS_ID
+    description: The `meta:altId` or URL-encoded `$id` of the class in question.
+    required: true
+    in: path
+    type: string
+  MIXIN_ID:
+    name: MIXIN_ID
+    description: The `meta:altId` or URL-encoded `$id` of the mixin in question.
+    required: true
+    in: path
+    type: string
+  DATA_TYPE_ID:
+    name: DATA_TYPE_ID
+    description: The `meta:altId` or URL-encoded `$id` of the data type in question.
+    required: true
+    in: path
+    type: string
+  DESCRIPTOR_ID:
+    name: DESCRIPTOR_ID
+    description: The unique ID (`@id`) of the descriptor in question.
+    required: true
+    in: path
+    type: string
+  UNION_ID:
+    name: UNION_ID
+    description: The `meta:altId` or URL-encoded `$id` of the union schema in question.
+    required: true
+    in: path
+    type: string
+  
   '$id':
     name: "$id"
     description: The resource meta:altId or URL encoded $id URI.
