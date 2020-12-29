@@ -7,7 +7,7 @@ info:
   
   
     Related documentation:
-      * [XDM documentation](https://docs.adobe.com/content/help/en/experience-platform/xdm/home.html)
+      * [XDM documentation](http://www.adobe.com/go/xdm-home-en)
 
     Visualize API calls with Postman (a free, third-party software):
       * [Schema Registry API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Schema%20Registry%20API.postman_collection.json)
@@ -20,9 +20,9 @@ info:
       * Example of a complete path for making a call to "/stats": https://<span>platform.adobe.io/data/foundation/schemaregistry/stats
     
     Required headers:
-      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
+      * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).
       * All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
-      * All GET requests to the Schema Registry require an `Accept` header to determine what data is returned by the system. See the [section on Accept headers](https://docs.adobe.com/content/help/en/experience-platform/xdm/api/getting-started.html#accept) in the Schema Registry developer guide for more information.
+      * All GET requests to the Schema Registry require an `Accept` header to determine what data is returned by the system. See the [section on Accept headers](https://experienceleague.adobe.com/docs/experience-platform/xdm/api/getting-started.html?lang=en#accept) in the Schema Registry developer guide for more information.
       * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
 
 
@@ -90,7 +90,7 @@ paths:
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
+        - $ref: '#/parameters/containerIdList'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
@@ -116,7 +116,7 @@ paths:
       tags:
       - "Schemas"
       parameters:
-      - $ref: '#/parameters/CONTAINER_ID'
+      - $ref: '#/parameters/containerIdLookup'
       - $ref: '#/parameters/SCHEMA_ID'
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
@@ -183,7 +183,6 @@ paths:
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/SCHEMA_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
@@ -211,7 +210,6 @@ paths:
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/SCHEMA_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
@@ -237,7 +235,6 @@ paths:
       description: <p>Remove an existing schema by performing a DELETE request to the $id of the schema being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
       operationId: remove_schema
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/SCHEMA_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
@@ -308,7 +305,7 @@ paths:
     get:
       tags:
         - "Behaviors"
-      summary: Look up a behavior by ID.
+      summary: Retrieve a behavior by ID.
       produces:
         - application/json
       parameters:
@@ -381,7 +378,7 @@ paths:
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
+        - $ref: '#/parameters/containerIdList'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
@@ -411,7 +408,7 @@ paths:
       tags:
       - "Mixins"
       parameters:
-      - $ref: '#/parameters/CONTAINER_ID'
+      - $ref: '#/parameters/containerIdLookup'
       - $ref: '#/parameters/MIXIN_ID'
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
@@ -446,7 +443,6 @@ paths:
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
@@ -476,7 +472,6 @@ paths:
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/MIXIN_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
@@ -504,7 +499,6 @@ paths:
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/MIXIN_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
@@ -528,7 +522,6 @@ paths:
       description: <p>Remove an existing mixin through a DELETE request to the $id of the mixin being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
       operationId: remove_mixin
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/MIXIN_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
@@ -552,7 +545,7 @@ paths:
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
+        - $ref: '#/parameters/containerIdList'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
@@ -578,7 +571,7 @@ paths:
       tags:
       - "Classes"
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
+        - $ref: '#/parameters/containerIdLookup'
         - $ref: '#/parameters/CLASS_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
@@ -613,7 +606,6 @@ paths:
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
@@ -643,7 +635,6 @@ paths:
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/CLASS_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
@@ -671,7 +662,6 @@ paths:
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/CLASS_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
@@ -695,7 +685,6 @@ paths:
       description: <p>Remove a class by performing a DELETE request to the $id of the class being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
       operationId: remove_class
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/CLASS_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
@@ -718,7 +707,7 @@ paths:
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
+        - $ref: '#/parameters/containerIdList'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
@@ -744,7 +733,7 @@ paths:
       tags:
       - "Data types"
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
+        - $ref: '#/parameters/containerIdLookup'
         - $ref: '#/parameters/DATA_TYPE_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
@@ -777,7 +766,6 @@ paths:
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
@@ -808,7 +796,6 @@ paths:
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/DATA_TYPE_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
@@ -835,7 +822,6 @@ paths:
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/DATA_TYPE_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
@@ -859,7 +845,6 @@ paths:
       description: <p>Removing a data type is done through a DELETE request to the $id of the data type being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
       operationId: remove_datatype
       parameters:
-        - $ref: '#/parameters/CONTAINER_ID'
         - $ref: '#/parameters/DATA_TYPE_ID'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
@@ -884,7 +869,7 @@ paths:
       produces:
       - application/json
       parameters:
-      - $ref: '#/parameters/CONTAINER_ID'
+      - $ref: '#/parameters/containerIdList'
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
@@ -927,7 +912,7 @@ paths:
       produces:
       - application/json
       parameters:
-      - $ref: '#/parameters/CONTAINER_ID'
+      - $ref: '#/parameters/containerIdLookup'
       - $ref: '#/parameters/DESCRIPTOR_ID'
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
@@ -957,7 +942,6 @@ paths:
       produces:
       - application/json
       parameters:
-      - $ref: '#/parameters/CONTAINER_ID'
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
@@ -989,7 +973,6 @@ paths:
       produces:
       - application/json
       parameters:
-      - $ref: '#/parameters/CONTAINER_ID'
       - $ref: '#/parameters/DESCRIPTOR_ID'
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
@@ -1018,7 +1001,6 @@ paths:
       description: <p>Remove a descriptor from the registry by issuing a DELETE request to the @id of the descriptor being removed.</p>
       operationId: remove_descriptor
       parameters:
-      - $ref: '#/parameters/CONTAINER_ID'
       - $ref: '#/parameters/DESCRIPTOR_ID'
       - $ref: '#/parameters/authorization'
       - $ref: '#/parameters/x-api-key'
@@ -1236,9 +1218,15 @@ paths:
                 "updated": 1604350676518
                 "clientId": "{CLIENT_ID}"
 parameters:
-  CONTAINER_ID:
+  containerIdList:
     name: CONTAINER_ID
-    description: Container ID (eg. tenant or global)
+    description: The name of the container that you want to list resources from. To list core resources provided by Adobe, use `global`. To list custom resources defined by your organization, use `tenant`.
+    required: true
+    in: path
+    type: string
+  containerIdLookup:
+    name: CONTAINER_ID
+    description: The name of the container that you want to retrieve a resource from. To retrieve a core resource provided by Adobe, use `global`. To retrieve a custom resource defined by your organization, use `tenant`.
     required: true
     in: path
     type: string
@@ -1284,40 +1272,27 @@ parameters:
     required: true
     in: path
     type: string
-  
-  '$id':
-    name: "$id"
-    description: The resource meta:altId or URL encoded $id URI.
-    required: true
-    in: path
-    type: string
-  descriptorId:
-    name: "@id"
-    description: Unique ID (@id) of the descriptor.
-    required: true
-    type: string
-    in: path
   authorization:
     name: Authorization
-    description: The access token provided after authorization in the format "Bearer {ACCESS_TOKEN}"
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
     required: true
     type: string
     in: header
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
-    description: Unique Identifier for your IMS Organization ({IMS_ORG})
+    description: 'The IMS Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
     required: true
     type: string
     in: header
   x-api-key:
     name: x-api-key
-    description: Your specific API key for your unique Platform configuration ({API_KEY})
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
     required: true
     type: string
     in: header
   x-sandbox-name:
     name: x-sandbox-name
-    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.'
+    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview](https://adobe.com/go/sandbox-overview-en) for more information.'
     required: true
     type: string
     in: header
