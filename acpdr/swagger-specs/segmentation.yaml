@@ -7,7 +7,7 @@ info:
         - Adobe Experience Platform Segmentation Service allows you to build segments and generate audiences from your Real-time Customer Profile data. These segments are centrally configured and maintained on Platform, and are readily accessible by other Adobe applications. The Segmentation Service API allows you to programmatically integrate the service's various functionalities into your experience application, providing RESTful endpoints for managing segment definitions, exports, schedules, and more.
 
     - Related documentation:
-        - [Segmentation Service documentation](https://docs.adobe.com/content/help/en/experience-platform/segmentation/home.html)
+        - [Segmentation Service documentation](https://www.adobe.com/go/segmentation-overview-en)
 
     - Visualize API calls with Postman (a free, third-party software):
         - [Real-time Customer Profile API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Real-time%20Customer%20Profile%20API.postman_collection.json)
@@ -20,8 +20,8 @@ info:
         - Example of a complete path: https://<span>platform.adobe.io/data/core/ups/segment/definitions
       
     - Required headers:
-        - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
-        - All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
+        - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.com/go/platform-api-authentication-en).
+        - All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://adobe.com/go/sandbox-overview-en) for more information.
         - All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
 
 host: platform.adobe.io
@@ -665,7 +665,6 @@ paths:
                 properties:
                   "{SEGMENT_ID}":
                     $ref: '#/definitions/SegmentJob'
-
   '/preview':
     post:
       tags:
@@ -1112,43 +1111,56 @@ paths:
 definitions:
   EstimateResponse:
     type: object
-    required:
-      - _links
-      - confidenceInterval
-      - estimatedSize
-      - profilesMatchedSoFar
-      - profilesReadSoFar
-      - standardError
-      - state
-      - totalRows
     properties:
       estimatedSize:
         type: integer
         format: int32
-        example: 45
+        example: 35935
+      numRowsToRead:
+        type: integer
+        format: int32
+        example: 35935
+      estimatedNamespaceDistribution:
+        type: array
+        items:
+          type: object
+          properties:
+            namespaceId:
+              type: string
+              example: "4"
+            profilesMatchedSoFar:
+              type: integer
+              example: 11986
+      state:
+        type: string
+        example: RESULT_READY
+      profilesReadSoFar:
+        type: integer
+        format: int32
+        example: 35935
       standardError:
         type: integer
         format: int32
         example: 0
-      confidenceInterval:
-        type: string
-        format: string
-        example: 95%
-      profilesReadSoFar:
-        type: integer
-        format: int32
-        example: 11037
+      error:
+        type: object
+        properties:
+          description:
+            type: string
+            example: ""
+          traceback:
+            type: string
+            example: ""
       profilesMatchedSoFar:
         type: integer
-        format: int32
-        example: 49
+        example: 12123
       totalRows:
         type: integer
         format: int32
         example: 35935
-      state:
+      confidenceInterval:
         type: string
-        example: RESULT_READY
+        example: 95%
       _links:
         $ref: "#/definitions/PreviewLink"
   PreviewLink:
@@ -1158,7 +1170,7 @@ definitions:
     properties:
       preview:
         type: string
-        example: https://platform.adobe.io/data/core/ups/preview?previewQueryId={QUERY_ID}
+        example: "https://platform.adobe.io/data/core/ups/preview/app-32be0328-3f31-4b64-8d84-acd0c4fbdad3/execution/0?previewQueryId={QUERY_ID}"
         description: The URI to get more information about the estimate.
   PreviewResponse:
     type: object
