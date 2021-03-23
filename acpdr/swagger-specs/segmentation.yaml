@@ -287,7 +287,7 @@ paths:
           in: header
           description: >- 
             A unique ID must be used per request.
-          required: true
+          required: false
           type: string
           x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
         - $ref: '#/parameters/segment-body'
@@ -447,6 +447,41 @@ paths:
                 properties:
                   "{SEGMENT_ID}":
                     $ref: '#/definitions/SegmentDefinition'
+  '/segment/conversion':
+    post:
+      tags:
+        - Segment definitions
+      summary: Converts a segment definition from pql/text to pql/json and vice versa.
+      operationId: convertSegmentDefinition
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'
+        - name: x-request-id
+          in: header
+          description: >- 
+            A unique ID must be used per request.
+          required: false
+          type: string
+          x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
+        - $ref: '#/parameters/segment-body'
+      responses:
+        '200':
+          description: The segment definition was successfully converted.
+          schema:
+            "$ref": "#/definitions/SegmentDefinition"
+        '400':
+          description: An invalid segment definition was posted.
+        '409':
+          description: Conflict. An entity with the specified ID already exists in the system.
+        '429':
+          description: Too many requests. Please try again in a few minutes.
+        '503':
+          description: The service is unavailable.
   '/segment/jobs':
     get:
       tags:
