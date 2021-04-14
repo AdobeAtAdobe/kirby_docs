@@ -6,7 +6,7 @@ info:
       - Data Ingestion allows you to bring your data into Adobe Experience Platform through batch ingestion and streaming ingestion. Batch ingestion lets you import data in batch, from any number of data sources. Streaming ingestion lets users send data to Platform in real time from client and server-side devices.
 
     - Related documentation:
-      - [Data ingestion documentation](https://docs.adobe.com/content/help/en/experience-platform/ingestion/home.html)
+      - [Data ingestion documentation](http://www.adobe.com/go/data-ingestion-overview-en)
 
     - Visualize API calls with Postman (a free, third-party software):
       - [Data Ingestion Service API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Data%20Ingestion%20API.postman_collection.json)
@@ -21,11 +21,11 @@ info:
       - Example of a complete path for batch ingestion: https://<span>platform.adobe.io/data/foundation/import/batches
      
     - Required headers:
-      - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
-      - All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
+      - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).
+      - All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://adobe.com/go/sandbox-overview-en) for more information.
       - Requests with a payload in the request body (such as POST, PUT, and PATCH calls) may require the header `Content-Type`. Accepted values specific to each call are provided in the call parameters.  
 
-version: "1.0"
+  version: "1.0"
 basePath: /data/foundation/import
 
 host: platform.adobe.io
@@ -549,25 +549,25 @@ paths:
 parameters:
   authorization:
     name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
     required: true
     type: string
     in: header
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
-    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
+    description: 'The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
     required: true
     type: string
     in: header
   x-api-key:
     name: x-api-key
-    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).'
+    description: 'The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
     required: true
     type: string
     in: header
   x-sandbox-name:
     name: x-sandbox-name
-    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.'
+    description: 'The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://adobe.com/go/sandbox-overview-en) for more information.'
     required: true
     type: string
     in: header

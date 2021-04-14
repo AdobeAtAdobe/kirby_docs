@@ -21,7 +21,7 @@ info:
     
     Required headers:
       * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).
-      * All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
+      * All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://adobe.com/go/sandbox-overview-en) for more information.
       * All GET requests to the Schema Registry require an `Accept` header to determine what data is returned by the system. See the [section on Accept headers](https://experienceleague.adobe.com/docs/experience-platform/xdm/api/getting-started.html?lang=en#accept) in the Schema Registry developer guide for more information.
       * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
 
@@ -1113,7 +1113,7 @@ paths:
         required: true
         in: header
         type: string
-        description: The name of the sandbox that you want to import the resource into. See the [sandboxes overview documentation](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
+        description: The name of the sandbox that you want to import the resource into. See the [sandboxes overview documentation](https://adobe.com/go/sandbox-overview-en) for more information.
       - name: body
         description: The payload returned by a GET /rpc/export/{RESOURCE_ID} call, indicating which schemas, mixins, and/or data types should be imported into the destination IMS Organization and sandbox.
         in: body

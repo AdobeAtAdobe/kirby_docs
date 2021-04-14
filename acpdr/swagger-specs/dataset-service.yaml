@@ -7,8 +7,8 @@ info:
         - The Dataset Service API provides several endpoints to help you manage data usage labels for existing datasets within the Data Lake. Data usage labels are part of Adobe Experience Platform Data Governance, which allows you to manage customer data and ensure compliance with regulations, restrictions, and policies applicable to data use. Dataset Service is separate from Catalog Service, which manages other dataset metadata.
 
     - Related documentation:
-        - [Data Governance documentation](https://docs.adobe.com/content/help/en/experience-platform/data-governance/home.html)
-        - [Catalog Service documentation](https://docs.adobe.com/content/help/en/experience-platform/catalog/home.html)
+        - [Data Governance documentation](http://www.adobe.com/go/data-governance-overview-en)
+        - [Catalog Service documentation](http://www.adobe.com/go/data-catalog-service-overview-en)
 
     - API paths:
         - PLATFORM Gateway URL: https://<span>platform.adobe.io/
@@ -16,8 +16,8 @@ info:
         - Example of a complete path: https://<span>platform.adobe.io/data/foundation/dataset/datasets/5abd49645591445e1ba04f87/labels
 
     - Required headers:
-        - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
-        - All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
+        - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).
+        - All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://adobe.com/go/sandbox-overview-en) for more information.
         - All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
 
 basePath: /data/foundation/dataset
@@ -132,28 +132,28 @@ parameters:
   x-sandbox-name:
     name: x-sandbox-name
     description: >-
-      The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://docs.adobe.com/content/help/en/experience-platform/sandbox/home.html) for more information.
+      The name of the sandbox in which the operation will take place. See the [sandboxes overview documentation](https://adobe.com/go/sandbox-overview-en) for more information.
     required: true
     type: string
     in: header
   authorization:
     name: Authorization
     description: >-
-      The access token which can be copied from your Experience Platform integration, prefixed with "Bearer". For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
+      The access token which can be copied from your Experience Platform integration, prefixed with "Bearer". For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).
     required: true
     type: string
     in: header
   x-gw-ims-org-id:
     name: x-gw-ims-org-id
     description: >-
-      The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
+      The Organization ID which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).
     required: true
     type: string
     in: header
   x-api-key:
     name: x-api-key
     description: >-
-      The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](https://docs.adobe.com/content/help/en/experience-platform/tutorials/authentication.html).
+      The API key which can be copied from your Experience Platform integration. For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).
     required: true
     type: string
     in: header
