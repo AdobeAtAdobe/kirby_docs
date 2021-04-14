@@ -7,7 +7,7 @@ info:
       * The Observability Insights API is used to collect and expose metrics data from various components of Observability. It listens to events broadcasting on the data pipeline and collects metrics on resources and statistics on data ingestion.
     
     * Related documentation:
-      * [Observability Insights documentation](https://docs.adobe.com/content/help/en/experience-platform/observability/home.html)
+      * [Observability Insights documentation](http://www.adobe.com/go/observability-overview-en)
 
     * Visualize API calls with Postman (a free, third-party software):
       * [Observability Insights API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Observability%20Insights.postman_collection.json)
