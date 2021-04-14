@@ -82,7 +82,7 @@ paths:
         **Note:** Computed attributes cannot be added to fields within Adobe-defined mixins, the field must be within the tenant namespace ({TENANT_ID}), meaning it must be a field that you define and add to a schema.
 
 
-        In order to successfully define a computed attribute field, the schema must be enabled for Profile and appear as part of the union schema for the class upon which the schema is based. For more information, see the [tutorial for configuring and accessing computed attributes](https://docs.adobe.com/content/help/en/experience-platform/profile/api/computed-attributes.html).
+        In order to successfully define a computed attribute field, the schema must be enabled for Profile and appear as part of the union schema for the class upon which the schema is based. For more information, see the [tutorial for configuring and accessing computed attributes](https://experienceleague.adobe.com/docs/experience-platform/profile/computed-attributes/ca-api.html).
       operationId: createComputedAttribute
       produces:
         - application/json
@@ -1558,7 +1558,7 @@ paths:
 
           **Note:** The reason you cannot delete batches for datasets based on record schemas is because record type dataset batches overwrite previous records and therefore cannot be "undone" or deleted. The way to remove the impact of erroneous batches for datasets based on record schemas is to re-ingest the batch with the correct data and it will overwrite the incorrect records. 
           
-          For more information on record and time series behavior, please review the section on XDM data behaviors in the [XDM System overview](https://docs.adobe.com/content/help/en/experience-platform/xdm/home.html).
+          For more information on record and time series behavior, please review the section on XDM data behaviors in the [XDM System overview](https://experienceleague.adobe.com/docs/experience-platform/xdm/home.html).
       operationId: createDeleteRequest
       produces:
         - application/json
@@ -2645,10 +2645,10 @@ parameters:
       * **name: (Required)** The name of the computed attribute field, as a string.
       
       * **path: (Required)** The path to the computed attributed field within a schema. This path is found within the 'properties' attribute of the schema, but it omits the layers of 'properties' when writing the path. It also omits the field name itself. For example, if the computed attribute path is a.b.c, the "name" is "c" and the "path" is "a.b".
-        * **{TENANT_ID}:** If you are unfamiliar with your tenant ID, please refer to the steps for finding your tenant ID in the [Schema Registry developer guide](https://docs.adobe.com/content/help/en/experience-platform/xdm/api/getting-started.html#know-your-tenant-id)
+        * **{TENANT_ID}:** If you are unfamiliar with your tenant ID, please refer to the steps for finding your tenant ID in the [Schema Registry developer guide](https://experienceleague.adobe.com/docs/experience-platform/xdm/api/getting-started.html?lang=en#know-your-tenant_id)
       * **description:** *(Optional)* A description of the computed attribute. This is especially useful once multiple computed attributes have been defined as it will help others within your IMS Organization to determine the correct computed attribute to use.
       
-      * **expression: (Required)** A valid Profile Query Language (PQL) expression. For more information on PQL and links to supported queries, please read the [PQL overview documentation](https://docs.adobe.com/content/help/en/experience-platform/segmentation/pql/overview.html).
+      * **expression: (Required)** A valid Profile Query Language (PQL) expression. For more information on PQL and links to supported queries, please read the [PQL overview documentation](https://experienceleague.adobe.com/docs/experience-platform/segmentation/pql/overview.html).
       
       * **schema.name: (Required)** The class upon which the schema containing the computed attribute field is based. For example, if the schema was based on the XDM ExperienceEvent class, the value would be '_xdm.context.experienceevent'.
     required: true
@@ -2666,7 +2666,7 @@ parameters:
       Use [JSON Patch formatting](http://jsonpatch.com/) to update the computed attribute.
       
       
-      The "value" must be a valid Profile Query Language (PQL) expression. For more information on PQL and links to supported queries, please read the [PQL overview documentation](https://docs.adobe.com/content/help/en/experience-platform/segmentation/pql/overview.html).
+      The "value" must be a valid Profile Query Language (PQL) expression. For more information on PQL and links to supported queries, please read the [PQL overview documentation](https://experienceleague.adobe.com/docs/experience-platform/segmentation/pql/overview.html).
     required: true
     in: body
     schema:

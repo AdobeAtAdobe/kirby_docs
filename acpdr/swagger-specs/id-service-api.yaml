@@ -16,7 +16,7 @@ info:
 
     API paths:
       * PLATFORM Gateway URL: https://<span>platform-{REGION}.adobe.io
-        * Information on <code>{REGION}</code> values can be found in the [Identity Service developer guide](https://docs.adobe.com/content/help/en/experience-platform/identity/api/getting-started.html).
+        * Information on <code>{REGION}</code> values can be found in the [Identity Service developer guide](https://experienceleague.adobe.com/docs/experience-platform/identity/api/getting-started.html).
       * Base path for this API: /data/core/
       * Example of a complete path: https://<span>platform-va7.adobe.io/data/core/identity/cluster/members
 
