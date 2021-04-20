@@ -52,11 +52,6 @@
       },
       {
           "pages": [],
-          "path": "acpdr/swagger-specs/mapping-service-api.yaml",
-          "title": "Mapping Service API"
-      },
-      {
-          "pages": [],
           "path": "acpdr/swagger-specs/observability-insights.yaml",
           "title": "Observability Insights API"
       },
