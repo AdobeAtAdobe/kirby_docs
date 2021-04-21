@@ -235,9 +235,9 @@ definitions:
   NotFoundError:
     type: object
     properties:
-      timeStamp:
+      timestamp:
         type: string
-        example: "2020-06-26T16:01:09.091Z"
+        example: "2021-04-21T19:56:46.551Z"
       status:
         type: string
         example: "NOT_FOUND"
@@ -249,7 +249,7 @@ definitions:
         example: "GET Entities Not Found"
       path:
         type: string
-        example: "/entities/AEP:dataset/b1e3c867e6d2600003d5b49"
+        example: "/entities/AEP:dataset:60105b5e1af43c18db857d69"
   DULEConflictError:
     type: object
     properties:
