@@ -105,6 +105,10 @@ paths:
             description: "The data usage labels were successfully updated."
             schema:
               $ref: '#/definitions/DULELabel'
+        '404':
+            description: "The labels entity was not found."
+            schema:
+              $ref: '#/definitions/NotFoundError'
         '409':
             description: "A data usage policy violation has ocurred."
             schema:
@@ -128,6 +132,8 @@ paths:
       responses:
         '200':
           description: "The data usage labels were successfully removed."
+        '403':
+          description: "The data usage labels cannot be deleted."
 parameters:
   x-sandbox-name:
     name: x-sandbox-name
