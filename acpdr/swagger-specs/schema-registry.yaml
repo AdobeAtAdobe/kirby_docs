@@ -67,7 +67,7 @@ paths:
       tags:
       - "Stats"
       summary: Retrieve your tenant ID and other usage information related to the Schema Registry.
-      operationId: ims_org_stats
+      operationId: imsOrgStats
       produces:
         - application/json
       responses:
@@ -123,7 +123,7 @@ paths:
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept'
       summary: Retrieve a field group within the specified container by ID.
-      operationId: lookup_field_group
+      operationId: lookupFieldGroup
       produces:
         - application/json
       responses:
@@ -134,7 +134,7 @@ paths:
         '404':
           description: The resource is not found.
         '406':
-          description: Accept format/version not available
+          description: The specified `Accept` format/version is not available for this resource.
         '500':
           description: An internal server error occurred.
   '/tenant/fieldgroups':
@@ -142,7 +142,7 @@ paths:
       tags:
       - "Field groups"
       summary: Create a new custom field group.
-      operationId: create_field_group
+      operationId: createFieldGroup
       consumes:
         - application/json
       produces:
@@ -168,8 +168,8 @@ paths:
       tags:
       - "Field groups"
       summary: Update a custom field group by ID.
-      description: <p>A PUT request is essentially re-writing the field group, therefore the request body must include all fields required to create (POST) a field group. This is especially useful when updating a lot of information in the field group at once.</p>
-      operationId: replace_field_group
+      description: A PUT request is essentially re-writing the field group, therefore the request body must include all fields required to create (POST) a field group. This is especially useful when updating a lot of information in the field group at once.
+      operationId: replaceFieldGroup
       consumes:
         - application/json
       produces:
@@ -199,8 +199,12 @@ paths:
       tags:
       - "Field groups"
       summary: Update one or more attributes of a custom field group by ID.
-      description: <p>The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow you to modify or update resources you have defined.</p><br/><p>For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).</p>
-      operationId: update_field_group
+      description: >-
+        The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow you to modify or update resources you have defined.
+        
+        
+        For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).
+      operationId: updateFieldGroup
       consumes:
         - application/json
       produces:
@@ -230,8 +234,12 @@ paths:
       tags:
       - "Field groups"
       summary: Delete a custom field group by ID.
-      description: <p>Remove an existing field group through a DELETE request to the $id of the field group being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
-      operationId: remove_field_group
+      description: >-
+        Remove an existing field group through a DELETE request to the $id of the field group being removed.
+        
+        
+        A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).
+      operationId: removeFieldGroup
       parameters:
         - name: FIELD_GROUP_ID
           description: The `meta:altId` or URL-encoded `$id` of the field group you want to delete.
@@ -254,8 +262,12 @@ paths:
       tags:
       - "Schemas"
       summary: Retrieve a list of schemas within the specified container.
-      description: <p>You are able to view a list of all schemas within a container by performing a single GET request. To help filter results, the Schema Registry supports the use of query parameters when listing resources.</p><p>The response format depends on the Accept header sent in the request. The following Accept headers are available for this request:<br/><ul><li><strong>application/vnd.adobe.xed-id+json</strong> | Returns a short summary of each resource, generally the preferred header for listing.</li><li><strong>application/vnd.adobe.xed+json</strong> | Returns full JSON for each resource, with original $ref and allOf attributes included.</li></ul></p>
-      operationId: list_all_schemas
+      description: >-
+        You are able to view a list of all schemas within a container by performing a single GET request. To help filter results, the Schema Registry supports the use of query parameters when listing resources.
+        
+        
+        The response format depends on the Accept header sent in the request. The following Accept headers are available for this request:<ul><li><strong>application/vnd.adobe.xed-id+json</strong> | Returns a short summary of each resource, generally the preferred header for listing.</li><li><strong>application/vnd.adobe.xed+json</strong> | Returns full JSON for each resource, with original $ref and allOf attributes included.</li></ul>
+      operationId: listAllSchemas
       produces:
         - application/json
       parameters:
@@ -291,8 +303,12 @@ paths:
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept'
       summary: Retrieve a schema within the specified container by ID.
-      description: <p>The response format depends on the Accept header sent in the request. The following Accept headers are available for this request:<br/><ul><li><strong>application/vnd.adobe.xed+json; version={major version}</strong>  Raw with $ref and allOf, has titles, descriptions</li><li><strong>application/vnd.adobe.xed-full+json; version={major version}</strong> $refs and allOf resolved, has titles and descriptions</li><li><strong>application/vnd.adobe.xed-notext+json; version={major version}</strong> Raw with $ref and allOf, no titles or descriptions</li><li><strong>application/vnd.adobe.xed-full-notext+json; version={major version}</strong>  $refs and allOf resolved, no titles or descriptions</li><li><strong>application/vnd.adobe.xed-full-desc+json; version={major version}</strong> $refs and allOf resolved, descriptors included</li></ul></p><br/><p>A lookup request requires the resource 'major version' be included in the Accept header. When supplying the major version, the registry returns the latest minor version automatically.</p>
-      operationId: lookup_schema
+      description: >-
+        The response format depends on the Accept header sent in the request. The following Accept headers are available for this request:<ul><li><strong>application/vnd.adobe.xed+json; version={major version}</strong>  Raw with $ref and allOf, has titles, descriptions</li><li><strong>application/vnd.adobe.xed-full+json; version={major version}</strong> $refs and allOf resolved, has titles and descriptions</li><li><strong>application/vnd.adobe.xed-notext+json; version={major version}</strong> Raw with $ref and allOf, no titles or descriptions</li><li><strong>application/vnd.adobe.xed-full-notext+json; version={major version}</strong>  $refs and allOf resolved, no titles or descriptions</li><li><strong>application/vnd.adobe.xed-full-desc+json; version={major version}</strong> $refs and allOf resolved, descriptors included</li></ul>
+        
+        
+        A lookup request requires the resource 'major version' be included in the Accept header. When supplying the major version, the registry returns the latest minor version automatically.</p>
+      operationId: lookupSchema
       produces:
         - application/json
       responses:
@@ -305,7 +321,7 @@ paths:
         '404':
           description: The resource is not found.
         '406':
-          description: Unknown Accept format
+          description: The specified `Accept` format/version is not available for this resource.
         '500':
           description: An internal server error occurred.
   '/tenant/schemas':
@@ -313,7 +329,7 @@ paths:
       tags:
       - "Schemas"
       summary: Create a new custom schema.
-      operationId: create_schema
+      operationId: createSchema
       consumes:
         - application/json
       produces:
@@ -339,8 +355,8 @@ paths:
       tags:
       - "Schemas"
       summary: Update a custom schema by ID.
-      description: <p>A PUT request essentially re-writes the schema, therefore the request body must include all fields required to create (POST) a schema. This is especially useful when updating a lot of information in the schema at once.</p>
-      operationId: replace_schema
+      description: A PUT request essentially re-writes the schema, therefore the request body must include all fields required to create (POST) a schema. This is especially useful when updating a lot of information in the schema at once.
+      operationId: replaceSchema
       consumes:
         - application/json
       produces:
@@ -364,8 +380,12 @@ paths:
       tags:
         - "Schemas"
       summary: Update one or more attributes of a custom schema specified by ID.
-      description: <p>The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update schemas they have defined.</p><br/><p>For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).</p>
-      operationId: update_schema
+      description: >-
+        The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update schemas they have defined.
+        
+        
+        For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).
+      operationId: updateSchema
       consumes:
         - application/json
       produces:
@@ -392,8 +412,12 @@ paths:
       tags:
       - "Schemas"
       summary: Delete a custom schema by ID.
-      description: <p>Remove an existing schema by performing a DELETE request to the $id of the schema being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
-      operationId: remove_schema
+      description: >-
+        Remove an existing schema by performing a DELETE request to the $id of the schema being removed.
+      
+      
+        A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).
+      operationId: removeSchema
       parameters:
         - $ref: '#/parameters/SCHEMA_ID'
         - $ref: '#/parameters/authorization'
@@ -533,7 +557,7 @@ paths:
       - "Mixins (deprecated)"
       summary: Retrieve a list of mixins within the specified container.
       deprecated: true
-      operationId: list_all_mixins
+      operationId: listAllMixins
       produces:
         - application/json
       parameters:
@@ -570,7 +594,7 @@ paths:
       - $ref: '#/parameters/accept'
       summary: Retrieve a mixin within the specified container by ID.
       deprecated: true
-      operationId: lookup_mixin
+      operationId: lookupMixin
       produces:
         - application/json
       responses:
@@ -581,7 +605,7 @@ paths:
         '404':
           description: The resource is not found.
         '406':
-          description: Accept format/version not available
+          description: The specified `Accept` format/version is not available for this resource.
         '500':
           description: An internal server error occurred.
   '/tenant/mixins':
@@ -590,7 +614,7 @@ paths:
       - "Mixins (deprecated)"
       summary: Create a new custom mixin.
       deprecated: true
-      operationId: create_mixin
+      operationId: createMixin
       consumes:
         - application/json
       produces:
@@ -617,8 +641,8 @@ paths:
       - "Mixins (deprecated)"
       summary: Update a custom mixin by ID.
       deprecated: true
-      description: <p>A PUT request is essentially re-writing the mixin, therefore the request body must include all fields required to create (POST) a mixin. This is especially useful when updating a lot of information in the mixin at once.</p>
-      operationId: replace_mixin
+      description: A PUT request is essentially re-writing the mixin, therefore the request body must include all fields required to create (POST) a mixin. This is especially useful when updating a lot of information in the mixin at once.
+      operationId: replaceMixin
       consumes:
         - application/json
       produces:
@@ -643,8 +667,12 @@ paths:
       - "Mixins (deprecated)"
       summary: Update one or more attributes of a custom mixin specified by ID.
       deprecated: true
-      description: <p>The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update mixins they have defined.</p><br/><p>For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).</p>
-      operationId: update_mixin
+      description: >-
+        The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update mixins they have defined.
+        
+        
+        For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).
+      operationId: updateMixin
       consumes:
         - application/json
       produces:
@@ -669,8 +697,12 @@ paths:
       - "Mixins (deprecated)"
       summary: Delete a custom mixin by ID.
       deprecated: true
-      description: <p>Remove an existing mixin through a DELETE request to the $id of the mixin being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
-      operationId: remove_mixin
+      description: >-
+        Remove an existing mixin through a DELETE request to the $id of the mixin being removed.
+        
+        
+        A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).
+      operationId: removeMixin
       parameters:
         - $ref: '#/parameters/MIXIN_ID'
         - $ref: '#/parameters/authorization'
@@ -689,7 +721,7 @@ paths:
       tags:
       - "Classes"
       summary: Retrieve a list of classes within the specified container.
-      operationId: list_all_classes
+      operationId: listAllClasses
       produces:
         - application/json
       parameters:
@@ -729,7 +761,7 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/accept'
       summary: Retrieve a class within the specified container by ID.
-      operationId: lookup_class
+      operationId: lookupClass
       produces:
         - application/json
       responses:
@@ -740,7 +772,7 @@ paths:
         '404':
           description: The resource is not found.
         '406':
-          description: Accept format/version not available
+          description: The specified `Accept` format/version is not available for this resource.
         '500':
           description: An internal server error occurred.
   '/tenant/classes':
@@ -748,7 +780,7 @@ paths:
       tags:
       - "Classes"
       summary: Create a new custom class.
-      operationId: create_class
+      operationId: createClass
       consumes:
         - application/json
       produces:
@@ -775,8 +807,8 @@ paths:
       tags:
       - "Classes"
       summary: Update a custom class by ID.
-      description: <p>A PUT request is essentially re-writing the class, therefore the request body must include all fields required to create (POST) a class. This is especially useful when updating a lot of information in the class at once.</p>
-      operationId: replace_class
+      description: A PUT request is essentially re-writing the class, therefore the request body must include all fields required to create (POST) a class. This is especially useful when updating a lot of information in the class at once.
+      operationId: replaceClass
       consumes:
         - application/json
       produces:
@@ -804,8 +836,12 @@ paths:
       tags:
       - "Classes"
       summary: Update one or more attributes of a custom class specified by ID.
-      description: <p>The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update classes they have defined.</p><br/><p>For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).</p>
-      operationId: update_class
+      description: >-
+        The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update classes they have defined.
+        
+        
+        For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).
+      operationId: updateClass
       consumes:
         - application/json
       produces:
@@ -833,8 +869,12 @@ paths:
       tags:
       - "Classes"
       summary: Delete a custom class by ID.
-      description: <p>Remove a class by performing a DELETE request to the $id of the class being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
-      operationId: remove_class
+      description: >-
+        Remove a class by performing a DELETE request to the $id of the class being removed.
+        
+        
+        A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).
+      operationId: removeClass
       parameters:
         - name: CLASS_ID
           description: The `meta:altId` or URL-encoded `$id` of the class you want to delete.
@@ -902,7 +942,7 @@ paths:
         '404':
           description: The resource is not found.
         '406':
-          description: Accept format/version not available
+          description: The specified `Accept` format/version is not available for this resource.
         '500':
           description: An internal server error occurred.
   '/tenant/datatypes':
@@ -936,8 +976,8 @@ paths:
       tags:
       - "Data types"
       summary: Update a custom data type by ID.
-      description: <p>A PUT request is essentially re-writing the data type, therefore the request body must include all fields required to create (POST) a data type. This is especially useful when updating a lot of information in the data type at once.</p>
-      operationId: replace_datatype
+      description: A PUT request is essentially re-writing the data type, therefore the request body must include all fields required to create (POST) a data type. This is especially useful when updating a lot of information in the data type at once.
+      operationId: replaceDatatype
       consumes:
         - application/json
       produces:
@@ -963,7 +1003,12 @@ paths:
       tags:
       - "Data types"
       summary: Update one or more attributes of a custom data type specified by ID.
-      description: <p>The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update data types they have defined.</p><br/><p>For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).</p>
+      description: >-
+      
+        The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update data types they have defined.
+        
+        
+        For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).
       consumes:
         - application/json
       produces:
@@ -989,8 +1034,12 @@ paths:
       tags:
       - "Data types"
       summary: Delete a custom class by ID.
-      description: <p>Removing a data type is done through a DELETE request to the $id of the data type being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
-      operationId: remove_datatype
+      description: >-
+        Removing a data type is done through a DELETE request to the $id of the data type being removed.
+        
+        
+        A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).
+      operationId: removeDatatype
       parameters:
         - $ref: '#/parameters/DATA_TYPE_ID'
         - $ref: '#/parameters/authorization'
@@ -1009,8 +1058,24 @@ paths:
       tags:
       - "Descriptors"
       summary: Retrieve a list descriptors within the specified container, sorted by type.
-      description: <p>Schemas define a static view of data entities, but do not provide specific details on how data based on these schemas (datasets, etc) may relate to one another. Adobe Experience Platform allows you to describe these relationships and other interpretive metadata about a schema using descriptors.</p><br/><p>Schema descriptors are tenant-level metadata, meaning they are unique to your IMS Organization and all descriptor operations take place in the tenant container.</p><br/><p>Each schema can have one or more schema descriptor entities applied to it. Each schema descriptor entity includes a descriptor '@type' and the 'sourceSchema' to which it applies. Once applied, these descriptors will apply to all datasets created using the schema.</p><br/><p>In order to help filter returned data, the Schema Registry supports the use of query parameters when listing descriptors.</p><p>Accept headers for descriptors include:<br/><table><thead><tr><th>Accept</th><th>Description</th></tr></thead><tbody><tr><td><strong>application/vnd.adobe.xdm-id+json</strong></td><td>Returns a list of descriptor IDs, grouped by their @type</td></tr><tr><td><strong>application/vnd.adobe.xdm-link+json</strong></td><td>Returns a list of descriptor API paths, grouped by their @type</td></tr><tr><td><strong>application/vnd.adobe.xdm+json</strong></td><td>Returns a list of descriptor objects, grouped by their @type</td></tr><tr><td><strong>application/vnd.adobe.xdm-v2{-id/-link}+json</strong></td><td>Including the -v2 option in any of the above Accept headers permits paging functionality, returning a results array with a _page attribute that can be used to request the next page if needed.</td></tr></tbody></table></p><br/><p>
-      operationId: list_all_descriptors
+      description: >-
+        Schemas define a static view of data entities, but do not provide specific details on how data based on these schemas (datasets, etc) may relate to one another. Adobe Experience Platform allows you to describe these relationships and other interpretive metadata about a schema using descriptors.
+        
+        
+        Schema descriptors are tenant-level metadata, meaning they are unique to your IMS Organization and all descriptor operations take place in the tenant container.
+        
+        
+        Each schema can have one or more schema descriptor entities applied to it. Each schema descriptor entity includes a descriptor '@type' and the 'sourceSchema' to which it applies. Once applied, these descriptors will apply to all datasets created using the schema.
+        
+        
+        In order to help filter returned data, the Schema Registry supports the use of query parameters when listing descriptors.
+        
+        
+        Accept headers for descriptors include:
+        
+        
+        <table><thead><tr><th>Accept</th><th>Description</th></tr></thead><tbody><tr><td><strong>application/vnd.adobe.xdm-id+json</strong></td><td>Returns a list of descriptor IDs, grouped by their @type</td></tr><tr><td><strong>application/vnd.adobe.xdm-link+json</strong></td><td>Returns a list of descriptor API paths, grouped by their @type</td></tr><tr><td><strong>application/vnd.adobe.xdm+json</strong></td><td>Returns a list of descriptor objects, grouped by their @type</td></tr><tr><td><strong>application/vnd.adobe.xdm-v2{-id/-link}+json</strong></td><td>Including the -v2 option in any of the above Accept headers permits paging functionality, returning a results array with a _page attribute that can be used to request the next page if needed.</td></tr></tbody></table>
+      operationId: listAllDescriptors
       produces:
       - application/json
       parameters:
@@ -1050,8 +1115,8 @@ paths:
       tags:
       - "Descriptors"
       summary: Retrieve a descriptor by within the specified container by ID.
-      description: <p>View the details of a specific descriptor by performing a lookup (GET) request using the @id of the descriptor. Descriptors are not versioned, therefore no Accept header is required in the lookup request.</p>
-      operationId: lookup_descriptor
+      description: View the details of a specific descriptor by performing a lookup (GET) request using the @id of the descriptor. Descriptors are not versioned, therefore no Accept header is required in the lookup request.
+      operationId: lookupDescriptor
       produces:
       - application/json
       parameters:
@@ -1075,8 +1140,8 @@ paths:
       tags:
       - "Descriptors"
       summary: Create a new descriptor.
-      description: <p>Required fields for defining a descriptor vary based on the @type of the descriptor.</p>
-      operationId: create_descriptor
+      description: Required fields for defining a descriptor vary based on the @type of the descriptor.
+      operationId: createDescriptor
       consumes:
       - application/json
       produces:
@@ -1105,8 +1170,13 @@ paths:
       tags:
       - "Descriptors"
       summary: Update a descriptor by ID.
-      description: <p>Update a descriptor by issuing a PUT request to the @id of the descriptor being updated.<br/><br/>This action is <em>re-writing</em> the existing descriptor, therefore the payload must include all descriptor fields that were required when the descriptor was defined.</p>
-      operationId: update_descriptor
+      description: >-
+      
+        Update a descriptor by issuing a PUT request to the @id of the descriptor being updated.
+        
+        
+        This action is **re-writing** the existing descriptor, therefore the payload must include all descriptor fields that were required when the descriptor was defined.
+      operationId: updateDescriptor
       consumes:
       - application/json
       produces:
@@ -1135,8 +1205,8 @@ paths:
       tags:
       - "Descriptors"
       summary: Delete a descriptor by ID.
-      description: <p>Remove a descriptor from the registry by issuing a DELETE request to the @id of the descriptor being removed.</p>
-      operationId: remove_descriptor
+      description: Remove a descriptor from the registry by issuing a DELETE request to the @id of the descriptor being removed.
+      operationId: removeDescriptor
       parameters:
       - $ref: '#/parameters/DESCRIPTOR_ID'
       - $ref: '#/parameters/authorization'
@@ -1198,7 +1268,7 @@ paths:
         '404':
           description: The resource is not found.
         '406':
-          description: Unknown Accept format
+          description: The specified `Accept` format/version is not available for this resource.
         '500':
           description: An internal server error occurred.
   '/rpc/export/{RESOURCE_ID}':
