@@ -8,7 +8,6 @@ info:
   
     Related documentation:
       * [XDM documentation](http://www.adobe.com/go/xdm-home-en)
-
     Visualize API calls with Postman (a free, third-party software):
       * [Schema Registry API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Schema%20Registry%20API.postman_collection.json)
       * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
@@ -22,7 +21,7 @@ info:
     Required headers:
       * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).
       * All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://adobe.com/go/sandbox-overview-en) for more information.
-      * All GET requests to the Schema Registry require an `Accept` header to determine what data is returned by the system. See the [section on Accept headers](https://experienceleague.adobe.com/docs/experience-platform/xdm/api/getting-started.html?lang=en#accept) in the Schema Registry developer guide for more information.
+      * All GET requests to the Schema Registry require an `Accept` header to determine what data is returned by the system. See the [section on `Accept` headers](https://experienceleague.adobe.com/docs/experience-platform/xdm/api/getting-started.html?lang=en#accept) in the Schema Registry developer guide for more information.
       * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
 
 
@@ -37,8 +36,8 @@ tags:
     description: Behaviors define the nature of data that a schema describes. Each XDM class must reference a specific behavior, which all schemas that employ that class will inherit. Schemas that inherit the "record" behavior provide information about the attributes of a subject, while those that inherit the "time-series" behavior provide a snapshot of the system at the time an action was taken by a record subject.
   - name: "Classes"
     description: Classes define behavioral aspects of the data within the schema and describe the smallest number of common properties contained in all schemas that implement the same class.
-  - name: "Mixins"
-    description: A mixin is a reusable component that defines one or more fields to implement certain functions within a schema based on a compatible class.
+  - name: "Field groups"
+    description: A field group is a reusable component that defines one or more fields to implement certain functions within a schema based on a compatible class.
   - name: "Data types"
     description: Data types are used as reference field types in classes or schemas to define complex types. Data types may define multiple sub-fields providing a consistent multi-field structure.
   - name: "Descriptors"
@@ -46,11 +45,13 @@ tags:
   - name: "Unions"
     description: Union schemas aggregate the fields of all schemas that implement the same class (such as ExperienceEvent or Profile) into a single schema. They are used by Real-time Customer Profile to merge data together to form a "single source of truth" for an individual.
   - name: "Export/Import"
-    description: The Schema Registry API allows you to transfer and share XDM resources between sandboxes and IMS Organizations. For any schema, mixin, or data type, you can generate an export payload containing the structure of the resource and any dependent resources. This payload can then be used to import the resource into a destination sandbox and IMS Org.
+    description: The Schema Registry API allows you to transfer and share XDM resources between sandboxes and IMS Organizations. For any schema, field group, or data type, you can generate an export payload containing the structure of the resource and any dependent resources. This payload can then be used to import the resource into a destination sandbox and IMS Org.
   - name: "Sample data"
     description: You can generate sample data for any specified schema within the Schema Library. The response object returned can then be used as the source of dataset ingestion.
   - name: "Audit log"
-    description: The Schema Registry maintains a log of all the changes that have occurred to a resource (class, mixin, data type, or schema) between different updates.
+    description: The Schema Registry maintains a log of all the changes that have occurred to a resource (class, field group, data type, or schema) between different updates.
+  - name: "Mixins (deprecated)"
+    description: '"Mixin" is the former term for a field group. The /mixins endpoints are deprecated and only maintained as legacy endpoints. For new implementations, please use the /fieldgroups endpoint instead.'
 consumes:
   - application/json
 produces:
@@ -66,7 +67,7 @@ paths:
       tags:
       - "Stats"
       summary: Retrieve your tenant ID and other usage information related to the Schema Registry.
-      operationId: ims_org_stats
+      operationId: imsOrgStats
       produces:
         - application/json
       responses:
@@ -75,18 +76,14 @@ paths:
           schema: 
             '$ref': '#/definitions/statsResponse'
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
-  '/{CONTAINER_ID}/schemas':
+          description: An internal server error occurred.
+  '/{CONTAINER_ID}/fieldgroups':
     get:
       tags:
-      - "Schemas"
-      summary: Retrieve a list of schemas within the specified container.
-      description: <p>You are able to view a list of all schemas within a container by performing a single GET request. To help filter results, the Schema Registry supports the use of query parameters when listing resources. The most common query parameters include:</br><ul><li>limit - Limit the number of resources returned. e.g. limit=5 will return only five resources in the list.</li><li>orderby - Sort results by a specific property. e.g. orderby=title will sort results by title ascending (A-Z). Adding a - before title (orderby=-title) will sort items by title descending (Z-A).</li><li>properties - Filter results on any top-level attributes. e.g. property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile returns only mixins that are compatible with the Profile class.</li><li>You may also use an ampersand (&) to combine query parameters.</li></ul></p><p>The response format depends on the Accept header sent in the request. The following Accept headers are available for this request:<br/><ul><li><strong>application/vnd.adobe.xed-id+json</strong> | Returns a short summary of each resource, generally the preferred header for listing.</li><li><strong>application/vnd.adobe.xed+json</strong> | Returns full JSON for each resource, with original $ref and allOf attributes included.</li></ul></p>
-      operationId: list_all_schemas
+      - "Field groups"
+      summary: Retrieve a list of field groups within the specified container.
       produces:
         - application/json
       parameters:
@@ -96,21 +93,203 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/acceptListing'
-        - $ref: '#/parameters/properties'
+        - $ref: '#/parameters/property'
         - $ref: '#/parameters/orderBy'
         - $ref: '#/parameters/start'
         - $ref: '#/parameters/limit'
       responses:
         '200':
-          description: Returns a list of all schemas in the container with format dependent on the Accept header
+          description: A successful response returns all field groups in the specified container.
+          schema:
+            $ref: '#/definitions/listFieldGroupsResponse'
+        '400':
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
+        '500':
+          description: An internal server error occurred.
+  '/{CONTAINER_ID}/fieldgroups/{FIELD_GROUP_ID}':
+    get:
+      tags:
+      - "Field groups"
+      parameters:
+      - $ref: '#/parameters/containerIdLookup'
+      - name: FIELD_GROUP_ID
+        description: The `meta:altId` or URL-encoded `$id` of the field group you want to look up.
+        required: true
+        in: path
+        type: string
+      - $ref: '#/parameters/authorization'
+      - $ref: '#/parameters/x-api-key'
+      - $ref: '#/parameters/x-gw-ims-org-id'
+      - $ref: '#/parameters/x-sandbox-name'
+      - $ref: '#/parameters/accept'
+      summary: Retrieve a field group within the specified container by ID.
+      operationId: lookupFieldGroup
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: A successful response returns the details of the field group.
+          schema:
+            $ref: '#/definitions/lookupFieldGroupResponse'
+        '404':
+          description: The resource is not found.
+        '406':
+          description: The specified `Accept` format/version is not available for this resource.
+        '500':
+          description: An internal server error occurred.
+  '/tenant/fieldgroups':
+    post:
+      tags:
+      - "Field groups"
+      summary: Create a new custom field group.
+      operationId: createFieldGroup
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'        
+        - $ref: '#/parameters/fieldGroupPayload'
+      responses:
+        '201':
+          description: A successful response returns the details of the field group.
+          schema:
+            $ref: '#/definitions/createFieldGroupResponse'
+        '400':
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
+        '500':
+          description: An internal server error occurred.
+  '/tenant/fieldgroups/{FIELD_GROUP_ID}':
+    put:
+      tags:
+      - "Field groups"
+      summary: Update a custom field group by ID.
+      description: A PUT request is essentially re-writing the field group, therefore the request body must include all fields required to create (POST) a field group. This is especially useful when updating a lot of information in the field group at once.
+      operationId: replaceFieldGroup
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: FIELD_GROUP_ID
+          description: The `meta:altId` or URL-encoded `$id` of the field group you want to update.
+          required: true
+          in: path
+          type: string
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'
+        - $ref: '#/parameters/replaceFieldGroupPayload'
+      responses:
+        '200':
+          description: A successful response returns the details of the updated field group.
+          schema:
+            $ref: '#/definitions/updateFieldGroupResponse'
+        '400':
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
+        '500':
+          description: An internal server error occurred.
+    patch:
+      tags:
+      - "Field groups"
+      summary: Update one or more attributes of a custom field group by ID.
+      description: >-
+        The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow you to modify or update resources you have defined.
+        
+        
+        For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).
+      operationId: updateFieldGroup
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: FIELD_GROUP_ID
+          description: The `meta:altId` or URL-encoded `$id` of the field group you want to update.
+          required: true
+          in: path
+          type: string
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/content-type'
+        - $ref: '#/parameters/patchFieldGroupPayload'
+      responses:
+        '200':
+          description: A successful response returns the details of the updated field group.
+          schema:
+            $ref: '#/definitions/patchFieldGroupResponse'
+        '400':
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
+        '500':
+          description: An internal server error occurred.
+    delete:
+      tags:
+      - "Field groups"
+      summary: Delete a custom field group by ID.
+      description: >-
+        Remove an existing field group through a DELETE request to the `$id` of the field group being removed.
+        
+        
+        A successful deletion returns an empty response body and HTTP status 204 (No Content).
+      operationId: removeFieldGroup
+      parameters:
+        - name: FIELD_GROUP_ID
+          description: The `meta:altId` or URL-encoded `$id` of the field group you want to delete.
+          required: true
+          in: path
+          type: string
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+      responses:
+        '204':
+          description: A successful response returns an empty response body and HTTP status 204 (No Content), indicating that the field group has been deleted.
+        '404':
+          description: The resource is not found.
+        '500':
+         description: An internal server error occurred.
+  '/{CONTAINER_ID}/schemas':
+    get:
+      tags:
+      - "Schemas"
+      summary: Retrieve a list of schemas within the specified container.
+      description: >-
+        You are able to view a list of all schemas within a container by performing a single GET request. To help filter results, the Schema Registry supports the use of query parameters when listing resources.
+        
+        
+        The response format depends on the `Accept` header sent in the request. The following `Accept` headers are available for this request:<ul><li>`application/vnd.adobe.xed-id+json`: Returns a short summary of each resource, generally the preferred header for listing.</li><li>`application/vnd.adobe.xed+json`: Returns full JSON for each resource, with the original `$ref` and `allOf` attributes included.</li></ul>
+      operationId: listAllSchemas
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/containerIdList'
+        - $ref: '#/parameters/authorization'
+        - $ref: '#/parameters/x-api-key'
+        - $ref: '#/parameters/x-gw-ims-org-id'
+        - $ref: '#/parameters/x-sandbox-name'
+        - $ref: '#/parameters/acceptListing'
+        - $ref: '#/parameters/property'
+        - $ref: '#/parameters/orderBy'
+        - $ref: '#/parameters/start'
+        - $ref: '#/parameters/limit'
+      responses:
+        '200':
+          description: A successful response returns a list of all schemas in the container with format dependent on the `Accept` header.
           schema:
             $ref: '#/definitions/listSchemasResponse'
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
   '/{CONTAINER_ID}/schemas/{SCHEMA_ID}':
     get:
       tags:
@@ -124,31 +303,33 @@ paths:
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept'
       summary: Retrieve a schema within the specified container by ID.
-      description: <p>The response format depends on the Accept header sent in the request. The following Accept headers are available for this request:<br/><ul><li><strong>application/vnd.adobe.xed+json; version={major version}</strong>  Raw with $ref and allOf, has titles, descriptions</li><li><strong>application/vnd.adobe.xed-full+json; version={major version}</strong> $refs and allOf resolved, has titles and descriptions</li><li><strong>application/vnd.adobe.xed-notext+json; version={major version}</strong> Raw with $ref and allOf, no titles or descriptions</li><li><strong>application/vnd.adobe.xed-full-notext+json; version={major version}</strong>  $refs and allOf resolved, no titles or descriptions</li><li><strong>application/vnd.adobe.xed-full-desc+json; version={major version}</strong> $refs and allOf resolved, descriptors included</li></ul></p><br/><p>A lookup request requires the resource 'major version' be included in the Accept header. When supplying the major version, the registry returns the latest minor version automatically.</p>
-      operationId: lookup_schema
+      description: >-
+        The response format depends on the `Accept` header sent in the request. The following `Accept` headers are available for this request:<ul><li>`application/vnd.adobe.xed+json; version=1`:  Raw with `$ref` and `allOf` included. Has titles and descriptions.</li><li>`application/vnd.adobe.xed-full+json; version=1`: `$ref` and `allOf` included. Has titles and descriptions.</li><li>`application/vnd.adobe.xed-notext+json; version=1`: Raw with `$ref` and `allOf` included, but with no titles or descriptions</li><li>`application/vnd.adobe.xed-full-notext+json; version=1`:  `$ref` and `allOf` are resolved, with no titles or descriptions.</li><li>`application/vnd.adobe.xed-full-desc+json; version=1`: `$ref` and `allOf` are resolved, with descriptions included.</li></ul>
+        
+        
+        A lookup request requires the resource's major version be included in the `Accept` header. When supplying the major version, the registry returns the latest minor version automatically.
+      operationId: lookupSchema
       produces:
         - application/json
       responses:
         '200':
-          description: Returns details for specified schema in JSON format
+          description: A successful response returns the details of the schema.
           schema:
             $ref: '#/definitions/lookupSchemaResponse'
         '400':
-          description: Bad Request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '404':
-          description: Not Found
+          description: The resource is not found.
         '406':
-          description: Unknown Accept format
+          description: The specified `Accept` format/version is not available for this resource.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
   '/tenant/schemas':
     post:
       tags:
       - "Schemas"
       summary: Create a new custom schema.
-      operationId: create_schema
+      operationId: createSchema
       consumes:
         - application/json
       produces:
@@ -162,22 +343,20 @@ paths:
         - $ref: '#/parameters/createSchemaPayload'
       responses:
         '201':
-          description: Returns details of new schema, including $id, meta:altId, and version
+          description: A successful response returns the details of the newly created schema.
           schema: 
             '$ref': '#/definitions/createSchemaResponse'
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
   '/tenant/schemas/{SCHEMA_ID}':
     put:
       tags:
       - "Schemas"
       summary: Update a custom schema by ID.
-      description: <p>A PUT request essentially re-writes the schema, therefore the request body must include all fields required to create (POST) a schema. This is especially useful when updating a lot of information in the schema at once.</p>
-      operationId: replace_schema
+      description: A PUT request essentially re-writes the schema, therefore the request body must include all fields required to create (POST) a schema. This is especially useful when updating a lot of information in the schema at once.
+      operationId: replaceSchema
       consumes:
         - application/json
       produces:
@@ -192,19 +371,21 @@ paths:
         - $ref: '#/parameters/replaceSchemaPayload'
       responses:
         '200':
-          description: Returns JSON schema with updated attributes
+          description: A successful response returns JSON schema with updated attributes.
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
     patch:
       tags:
         - "Schemas"
       summary: Update one or more attributes of a custom schema specified by ID.
-      description: <p>The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update schemas they have defined.</p><br/><p>For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).</p>
-      operationId: update_schema
+      description: >-
+        The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update schemas they have defined.
+        
+        
+        For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).
+      operationId: updateSchema
       consumes:
         - application/json
       produces:
@@ -219,21 +400,24 @@ paths:
         - $ref: '#/parameters/patchPayload'
       responses:
         '200':
-          description: Returns JSON schema with updated attributes
+          description: A successful response returns JSON schema with updated attributes.
           schema:
             $ref: '#/definitions/patchSchemaResponse'
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error   
+          description: An internal server error occurred.
+   
     delete:
       tags:
       - "Schemas"
       summary: Delete a custom schema by ID.
-      description: <p>Remove an existing schema by performing a DELETE request to the $id of the schema being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
-      operationId: remove_schema
+      description: >-
+        Remove an existing schema by performing a DELETE request to the `$id` of the schema being removed.
+      
+      
+        A successful deletion returns an empty response body and HTTP status 204 (No Content).
+      operationId: removeSchema
       parameters:
         - $ref: '#/parameters/SCHEMA_ID'
         - $ref: '#/parameters/authorization'
@@ -242,13 +426,11 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
       responses:
         '204':
-          description: Returns an empty response body and HTTP Status 204 (No Content)
+          description: A successful response returns an empty response body and HTTP status 204 (No Content), indicating that the schema has been deleted.
         '404':
-          description: Not found
+          description: The resource is not found.
         '500':
-         description: Internal server error
-        default:
-          description: Unexpected error
+         description: An internal server error occurred.
   '/global/behaviors':
     get:
       tags:
@@ -264,7 +446,7 @@ paths:
         - $ref: '#/parameters/acceptListing'
       responses:
         '200':
-          description: Returns all behaviors in the global container.
+          description: A successful response returns all behaviors in the global container.
           schema:
             type: object
             example:
@@ -288,7 +470,7 @@ paths:
               "_links":
                 "next": null
         '400':
-          description: Accept header is invalid or missing. Ensure that you are providing a valid accept header for a listing call with no version suppied (e.g. application/vnd.adobe.xed-id+json) before trying again.
+          description: The `Accept` header is invalid or missing. Ensure that you are providing a valid `Accept` header for a listing call with no version supplied (e.g. `application/vnd.adobe.xed-id+json`) before trying again.
           schema:
             type: object
             example:
@@ -317,7 +499,7 @@ paths:
         - $ref: '#/parameters/accept'
       responses:
         '200':
-          description: Returns the details of the behavior specified in the request path.
+          description: A successful response returns the details of the behavior specified in the request path.
           schema:
             type: object
             example:
@@ -338,11 +520,11 @@ paths:
                       description: A unique identifier for the record.
                       'meta:xdmType': string
                       'meta:xdmField': '@id'
-              allOf:
+              'allOf':
                 - '$ref': '#/definitions/record'
                   type: object
                   'meta:xdmType': object
-                - '$ref': 'https://ns.adobe.com/xdm/common/extensible#/definitions/@context'
+                - '$ref': 'https://ns.adobe.com/xdm/common/extensible%23/definitions/@context'
                   type: object
                   'meta:xdmType': object
               'meta:extensible': true
@@ -356,7 +538,7 @@ paths:
                 eTag: 2cc114a54949a9668fe2ad046ccece59192e1bfa28f14e5ac7c893acb7820ba2
                 'meta:globalLibVersion': 1.16.4
         '400':
-          description: Accept header is invalid or missing. Ensure that you are providing a valid accept header for a lookup call including a version number (e.g. application/vnd.adobe.xed+json;version=1) before trying again.
+          description: The `Accept` header is invalid or missing. Ensure that you are providing a valid accept header for a lookup call including a version number (e.g. `application/vnd.adobe.xed+json;version=1`) before trying again.
           schema:
             type: object
             example:
@@ -372,9 +554,10 @@ paths:
   '/{CONTAINER_ID}/mixins':
     get:
       tags:
-      - "Mixins"
+      - "Mixins (deprecated)"
       summary: Retrieve a list of mixins within the specified container.
-      operationId: list_all_mixins
+      deprecated: true
+      operationId: listAllMixins
       produces:
         - application/json
       parameters:
@@ -384,29 +567,23 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/acceptListing'
-        - $ref: '#/parameters/properties'
+        - $ref: '#/parameters/property'
         - $ref: '#/parameters/orderBy'
         - $ref: '#/parameters/start'
         - $ref: '#/parameters/limit'
       responses:
         '200':
-          description: Returns all mixins in the specified container
+          description: A successful response returns all mixins in the specified container.
           schema:
-            $ref: '#/definitions/listMixinsResponse'
-          headers:
-            Location:
-              type: string
-              description: The URI of the newly created resource
+            $ref: '#/definitions/listFieldGroupsResponse'
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
   '/{CONTAINER_ID}/mixins/{MIXIN_ID}':
     get:
       tags:
-      - "Mixins"
+      - "Mixins (deprecated)"
       parameters:
       - $ref: '#/parameters/containerIdLookup'
       - $ref: '#/parameters/MIXIN_ID'
@@ -416,28 +593,28 @@ paths:
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept'
       summary: Retrieve a mixin within the specified container by ID.
-      operationId: lookup_mixin
+      deprecated: true
+      operationId: lookupMixin
       produces:
         - application/json
       responses:
         '200':
-          description: Returns the details of the specific mixin
+          description: A successful response returns the details of the mixin.
           schema:
-            $ref: '#/definitions/lookupMixinResponse'
+            $ref: '#/definitions/lookupFieldGroupResponse'
         '404':
-          description: Not Found
+          description: The resource is not found.
         '406':
-          description: Accept format/version not available
+          description: The specified `Accept` format/version is not available for this resource.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
   '/tenant/mixins':
     post:
       tags:
-      - "Mixins"
+      - "Mixins (deprecated)"
       summary: Create a new custom mixin.
-      operationId: create_mixin
+      deprecated: true
+      operationId: createMixin
       consumes:
         - application/json
       produces:
@@ -448,25 +625,24 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'        
-        - $ref: '#/parameters/mixinPayload'
+        - $ref: '#/parameters/fieldGroupPayload'
       responses:
         '201':
-          description: Returns details of the mixin, including $id, meta:altId, and version
+          description: A successful response returns the details of the mixin.
           schema:
-            $ref: '#/definitions/createMixinResponse'
+            $ref: '#/definitions/createFieldGroupResponse'
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
   '/tenant/mixins/{MIXIN_ID}':
     put:
       tags:
-      - "Mixins"
+      - "Mixins (deprecated)"
       summary: Update a custom mixin by ID.
-      description: <p>A PUT request is essentially re-writing the mixin, therefore the request body must include all fields required to create (POST) a mixin. This is especially useful when updating a lot of information in the mixin at once.</p>
-      operationId: replace_mixin
+      deprecated: true
+      description: A PUT request is essentially re-writing the mixin, therefore the request body must include all fields required to create (POST) a mixin. This is especially useful when updating a lot of information in the mixin at once.
+      operationId: replaceMixin
       consumes:
         - application/json
       produces:
@@ -478,22 +654,25 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'
-        - $ref: '#/parameters/replaceMixinPayload'
+        - $ref: '#/parameters/replaceFieldGroupPayload'
       responses:
         '200':
-          description: Returns the updated mixin in JSON format
+          description: A successful response returns the details of the updated mixin.
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
     patch:
       tags:
-      - "Mixins"
+      - "Mixins (deprecated)"
       summary: Update one or more attributes of a custom mixin specified by ID.
-      description: <p>The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update mixins they have defined.</p><br/><p>For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).</p>
-      operationId: update_mixin
+      deprecated: true
+      description: >-
+        The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update mixins they have defined.
+        
+        
+        For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).
+      operationId: updateMixin
       consumes:
         - application/json
       produces:
@@ -505,22 +684,25 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/content-type'
-        - $ref: '#/parameters/patchMixinPayload'
+        - $ref: '#/parameters/patchFieldGroupPayload'
       responses:
         '200':
-          description: Returns the updated mixin in JSON format
+          description: A successful response returns the details of the updated mixin.
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
     delete:
       tags:
-      - "Mixins"
+      - "Mixins (deprecated)"
       summary: Delete a custom mixin by ID.
-      description: <p>Remove an existing mixin through a DELETE request to the $id of the mixin being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
-      operationId: remove_mixin
+      deprecated: true
+      description: >-
+        Remove an existing mixin through a DELETE request to the `$id` of the mixin being removed.
+        
+        
+        A successful deletion returns an empty response body and HTTP status 204 (No Content).
+      operationId: removeMixin
       parameters:
         - $ref: '#/parameters/MIXIN_ID'
         - $ref: '#/parameters/authorization'
@@ -529,19 +711,17 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
       responses:
         '204':
-          description: Returns an empty response body and HTTP Status 204 (No Content)
+          description: A successful response returns an empty response body and HTTP status 204 (No Content), indicating that the mixin has been deleted.
         '404':
-          description: Not found
+          description: The resource is not found.
         '500':
-         description: Internal server error
-        default:
-          description: Unexpected error
+         description: An internal server error occurred.
   '/{CONTAINER_ID}/classes':
     get:
       tags:
       - "Classes"
       summary: Retrieve a list of classes within the specified container.
-      operationId: list_all_classes
+      operationId: listAllClasses
       produces:
         - application/json
       parameters:
@@ -551,56 +731,56 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/acceptListing'
-        - $ref: '#/parameters/properties'
+        - $ref: '#/parameters/property'
         - $ref: '#/parameters/orderBy'
         - $ref: '#/parameters/start'
         - $ref: '#/parameters/limit'
       responses:
         '200':
-          description: Returns a list of all classes in the container with format dependent on the Accept header
+          description: A successful response returns a list of all classes in the container.
           schema:
             $ref: '#/definitions/listClassesResponse'
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
   '/{CONTAINER_ID}/classes/{CLASS_ID}':
     get:
       tags:
       - "Classes"
       parameters:
         - $ref: '#/parameters/containerIdLookup'
-        - $ref: '#/parameters/CLASS_ID'
+        - name: CLASS_ID
+          description: The `meta:altId` or URL-encoded `$id` of the class you want to look up.
+          required: true
+          in: path
+          type: string
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/accept'
       summary: Retrieve a class within the specified container by ID.
-      operationId: lookup_class
+      operationId: lookupClass
       produces:
         - application/json
       responses:
         '200':
-          description: Returns the details of the class in JSON format
+          description: A successful response returns the details of the class.
           schema:
             $ref: '#/definitions/lookupClassResponse'
         '404':
-          description: Not Found
+          description: The resource is not found.
         '406':
-          description: Accept format/version not available
+          description: The specified `Accept` format/version is not available for this resource.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
   '/tenant/classes':
     post:
       tags:
       - "Classes"
       summary: Create a new custom class.
-      operationId: create_class
+      operationId: createClass
       consumes:
         - application/json
       produces:
@@ -614,28 +794,31 @@ paths:
         - $ref: '#/parameters/createClassPayload'
       responses:
         '201':
-          description: Returns details of the newly created class, including $id, meta:altId, and version
+          description: A successful response returns the details of the newly created class.
           schema: 
             '$ref': '#/definitions/createClassResponse'
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error    
+          description: An internal server error occurred.
+    
   '/tenant/classes/{CLASS_ID}':
     put:
       tags:
       - "Classes"
       summary: Update a custom class by ID.
-      description: <p>A PUT request is essentially re-writing the class, therefore the request body must include all fields required to create (POST) a class. This is especially useful when updating a lot of information in the class at once.</p>
-      operationId: replace_class
+      description: A PUT request is essentially re-writing the class, therefore the request body must include all fields required to create (POST) a class. This is especially useful when updating a lot of information in the class at once.
+      operationId: replaceClass
       consumes:
         - application/json
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/CLASS_ID'
+        - name: CLASS_ID
+          description: The `meta:altId` or URL-encoded `$id` of the class you want to update.
+          required: true
+          in: path
+          type: string
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
@@ -644,25 +827,31 @@ paths:
         - $ref: '#/parameters/replaceClassPayload'
       responses:
         '200':
-          description: Returns the updated class in JSON format
+          description: A successful response returns the details of the updated class.
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
     patch:
       tags:
       - "Classes"
       summary: Update one or more attributes of a custom class specified by ID.
-      description: <p>The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update classes they have defined.</p><br/><p>For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).</p>
-      operationId: update_class
+      description: >-
+        The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update classes they have defined.
+        
+        
+        For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).
+      operationId: updateClass
       consumes:
         - application/json
       produces:
         - application/json
       parameters:
-        - $ref: '#/parameters/CLASS_ID'
+        - name: CLASS_ID
+          description: The `meta:altId` or URL-encoded `$id` of the class you want to update.
+          required: true
+          in: path
+          type: string
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
@@ -671,34 +860,38 @@ paths:
         - $ref: '#/parameters/patchPayload'
       responses:
         '200':
-          description: Returns the updated class in JSON format
+          description: A successful response returns the the details of the updated class.
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
     delete:
       tags:
       - "Classes"
       summary: Delete a custom class by ID.
-      description: <p>Remove a class by performing a DELETE request to the $id of the class being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
-      operationId: remove_class
+      description: >-
+        Remove a class by performing a DELETE request to the `$id` of the class being removed.
+        
+        
+        A successful deletion returns an empty response body and HTTP status 204 (No Content).
+      operationId: removeClass
       parameters:
-        - $ref: '#/parameters/CLASS_ID'
+        - name: CLASS_ID
+          description: The `meta:altId` or URL-encoded `$id` of the class you want to delete.
+          required: true
+          in: path
+          type: string
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
         '204':
-          description: Returns an empty response body and HTTP Status 204 (No Content)
+          description: A successful response returns an empty response body and HTTP status 204 (No Content), indicating that the resource has been deleted.
         '404':
-          description: Not found
+          description: The resource is not found.
         '500':
-         description: Internal server error
-        default:
-          description: Unexpected error
+         description: An internal server error occurred.
   '/{CONTAINER_ID}/datatypes':
     get:
       tags:
@@ -713,21 +906,19 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/acceptListing'
         - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/properties'
+        - $ref: '#/parameters/property'
         - $ref: '#/parameters/orderBy'
         - $ref: '#/parameters/start'
         - $ref: '#/parameters/limit'
       responses:
         '200':
-          description: Returns a list of all data types in the specified container
+          description: A successful response returns a list of all data types in the specified container.
           schema:
             $ref: '#/definitions/listDataTypesResponse'
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
   '/{CONTAINER_ID}/datatypes/{DATA_TYPE_ID}':
     get:
       tags:
@@ -745,17 +936,15 @@ paths:
         - application/json
       responses:
         '200':
-          description: Returns the details of the data type in JSON format
+          description: A successful response returns the details of the data type.
           schema:
             $ref: '#/definitions/lookupDataTypeResponse'
         '404':
-          description: Not Found
+          description: The resource is not found.
         '406':
-          description: Accept format/version not available
+          description: The specified `Accept` format/version is not available for this resource.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
   '/tenant/datatypes':
     post:
       tags:
@@ -775,22 +964,20 @@ paths:
         - $ref: '#/parameters/createDataTypePayload'
       responses:
         '201':
-          description: Returns details of the newly created data type, including $id, meta:altId, and version.
+          description: A successful response returns the details of the newly created data type.
           schema: 
             '$ref': '#/definitions/createDataTypeResponse'
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error  
+          description: An internal server error occurred.
   '/tenant/datatypes/{DATA_TYPE_ID}':
     put:
       tags:
       - "Data types"
       summary: Update a custom data type by ID.
-      description: <p>A PUT request is essentially re-writing the data type, therefore the request body must include all fields required to create (POST) a data type. This is especially useful when updating a lot of information in the data type at once.</p>
-      operationId: replace_datatype
+      description: A PUT request is essentially re-writing the data type, therefore the request body must include all fields required to create (POST) a data type. This is especially useful when updating a lot of information in the data type at once.
+      operationId: replaceDatatype
       consumes:
         - application/json
       produces:
@@ -805,18 +992,23 @@ paths:
         - $ref: '#/parameters/replaceDataTypePayload'
       responses:
         '200':
-          description: Returns the updated data type in JSON format
+          description: A successful response returns the details of the updated data type.
+          schema: 
+            '$ref': '#/definitions/putDataTypeResponse'
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
     patch:
       tags:
       - "Data types"
       summary: Update one or more attributes of a custom data type specified by ID.
-      description: <p>The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update data types they have defined.</p><br/><p>For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).</p>
+      description: >-
+      
+        The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update data types they have defined.
+        
+        
+        For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).
       consumes:
         - application/json
       produces:
@@ -831,19 +1023,23 @@ paths:
         - $ref: '#/parameters/patchDataTypePayload'
       responses:
         '200':
-          description: Returns the updated data type in JSON format.
+          description: A successful response returns the details of the updated data type.
+          schema: 
+            '$ref': '#/definitions/patchDataTypeResponse'
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
     delete:
       tags:
       - "Data types"
       summary: Delete a custom class by ID.
-      description: <p>Removing a data type is done through a DELETE request to the $id of the data type being removed.</p><br/><p>A successful deletion returns an empty response body and HTTP Status Code 204 (No-content).</p>
-      operationId: remove_datatype
+      description: >-
+        Removing a data type is done through a DELETE request to the `$id` of the data type being removed.
+        
+        
+        A successful deletion returns an empty response body and HTTP status 204 (No Content).
+      operationId: removeDatatype
       parameters:
         - $ref: '#/parameters/DATA_TYPE_ID'
         - $ref: '#/parameters/authorization'
@@ -852,20 +1048,34 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
       responses:
         '204':
-          description: Returns an empty response body and HTTP Status 204 (No Content)
+          description: A successful response returns an empty response body and HTTP status 204 (No Content), indicating that the class has been deleted.
         '404':
-          description: Not found
+          description: The resource is not found.
         '500':
-         description: Internal server error
-        default:
-          description: Unexpected error
+         description: An internal server error occurred.
   '/{CONTAINER_ID}/descriptors':
     get:
       tags:
       - "Descriptors"
       summary: Retrieve a list descriptors within the specified container, sorted by type.
-      description: <p>Schemas define a static view of data entities, but do not provide specific details on how data based on these schemas (datasets, etc) may relate to one another. Adobe Experience Platform allows you to describe these relationships and other interpretive metadata about a schema using descriptors.</p><br/><p>Schema descriptors are tenant-level metadata, meaning they are unique to your IMS Organization and all descriptor operations take place in the tenant container.</p><br/><p>Each schema can have one or more schema descriptor entities applied to it. Each schema descriptor entity includes a descriptor '@type' and the 'sourceSchema' to which it applies. Once applied, these descriptors will apply to all datasets created using the schema.</p><br/><p>The Schema Registry supports the use of query parameters when listing descriptors. The most common query parameters include:</br><ul><li>property - Return only results that match the given property. e.g. property=@type==xdm:descriptorIdentity returns only descriptors with a '@type' of 'xdm:descriptorIdentity'.</li><li>limit - Limit the number of resources returned. e.g. limit=5 will return only five resources in the list.</li><li>You may also use an ampersand (&) to combine query parameters.</li></ul></p><p>Accept headers for descriptors include:<br/><table><thead><tr><th>Accept</th><th>Description</th></tr></thead><tbody><tr><td><strong>application/vnd.adobe.xdm-id+json</strong></td><td>Returns a list of descriptor IDs, grouped by their @type</td></tr><tr><td><strong>application/vnd.adobe.xdm-link+json</strong></td><td>Returns a list of descriptor API paths, grouped by their @type</td></tr><tr><td><strong>application/vnd.adobe.xdm+json</strong></td><td>Returns a list of descriptor objects, grouped by their @type</td></tr><tr><td><strong>application/vnd.adobe.xdm-v2{-id/-link}+json</strong></td><td>Including the -v2 option in any of the above Accept headers permits paging functionality, returning a results array with a _page attribute that can be used to request the next page if needed.</td></tr></tbody></table></p><br/><p>
-      operationId: list_all_descriptors
+      description: >-
+        Schemas define a static view of data entities, but do not provide specific details on how data based on these schemas (datasets) may relate to one another. Adobe Experience Platform allows you to describe these relationships and other interpretive metadata about a schema through the use of descriptors.
+        
+        
+        Descriptors are tenant-level metadata for schemas, meaning they are unique to your IMS Organization and all descriptor operations take place in the `tenant` container.
+        
+        
+        Each schema can have one or more schema descriptor entities applied to it. Each schema descriptor entity includes a descriptor '@type' and the 'sourceSchema' to which it applies. Once applied, these descriptors will apply to all datasets created using the schema.
+        
+        
+        In order to help filter returned data, the Schema Registry supports the use of query parameters when listing descriptors.
+        
+        
+        `Accept` headers for descriptors include:
+        
+        
+        <table><thead><tr><th>`Accept`</th><th>Description</th></tr></thead><tbody><tr><td>`application/vnd.adobe.xdm-id+json`</td><td>Returns a list of descriptor IDs, grouped by their `@type`.</td></tr><tr><td>`application/vnd.adobe.xdm-link+json`</td><td>Returns a list of descriptor API paths, grouped by their `@type`.</td></tr><tr><td>`application/vnd.adobe.xdm+json`</td><td>Returns a list of descriptor objects, grouped by their `@type`.</td></tr><tr><td>`application/vnd.adobe.xdm-v2{-id/-link}+json`</td><td>Including the `-v2` option in any of the above `Accept` headers permits paging functionality, returning a results array with a `_page` attribute that can be used to request the next page if needed.</td></tr></tbody></table>
+      operationId: listAllDescriptors
       produces:
       - application/json
       parameters:
@@ -875,40 +1085,38 @@ paths:
       - $ref: '#/parameters/x-gw-ims-org-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/acceptDescriptors'
-      - $ref: '#/parameters/properties'
+      - $ref: '#/parameters/property'
       - name: orderby
-        description: Sort response by specified fields separated by "," and/or prefix field with "-" for descending order. Used by the v2 option of the API, as indicated by the Accept header.
+        description: Sort response by specified fields separated by "," and/or prefix field with "-" for descending order. Used by the v2 option of the API, as indicated by the `Accept` header.
         required: false
         in: query
         type: string
       - name: limit
-        description: Specify a limit for the number of response results to be displayed (must be between 0 and 500). Used by the v2 option of the API, as indicated by the Accept header.
+        description: Specify a limit for the number of response results to be displayed (must be between 0 and 500). Used by the v2 option of the API, as indicated by the `Accept` header.
         required: false
         in: query
         type: number
       - name: start
-        description: The start value of the first orderBy field. Start value matches values in orderBy field (eg. strings or integers). Used by the v2 option of the API, as indicated by the Accept header.
+        description: The start value of the first orderBy field. Start value matches values in orderBy field (eg. strings or integers). Used by the v2 option of the API, as indicated by the `Accept` header.
         required: false
         in: query
         type: string
       responses:
         '200':
-          description: Returns a list of all existing descriptors, separated by type
+          description: A successful response returns a list of all existing descriptors, separated by type.
           schema:
             $ref: '#/definitions/listDescriptorsResponse'
         '404':
-          description: Not Found
+          description: The resource is not found.
         '500':
-          description: Internal Server Error
-        default:
-          description: Unexpected Error
+          description: An internal server error occurred.
   '/{CONTAINER_ID}/descriptors/{DESCRIPTOR_ID}':
     get:
       tags:
       - "Descriptors"
       summary: Retrieve a descriptor by within the specified container by ID.
-      description: <p>View the details of a specific descriptor by performing a lookup (GET) request using the @id of the descriptor. Descriptors are not versioned, therefore no Accept header is required in the lookup request.</p>
-      operationId: lookup_descriptor
+      description: View the details of a specific descriptor by performing a lookup (GET) request using the `@id` of the descriptor. Descriptors are not versioned, therefore no `Accept` header is required in the lookup request.
+      operationId: lookupDescriptor
       produces:
       - application/json
       parameters:
@@ -918,25 +1126,22 @@ paths:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
       - $ref: '#/parameters/x-sandbox-name'
-
       responses:
         '200':
-          description: Returns details of individual descriptor in JSON format.
+          description: A successful response returns the details of the descriptor.
           schema:
             $ref: '#/definitions/lookupDescriptorResponse'
         '404':
-          description: Not Found
+          description: The resource is not found.
         '500':
-          description: Internal Server Error
-        default:
-          description: Unexpected Error
+          description: An internal server error occurred.
   '/tenant/descriptors':
     post:
       tags:
       - "Descriptors"
       summary: Create a new descriptor.
-      description: <p>Required fields for defining a descriptor vary based on the @type of the descriptor.</p>
-      operationId: create_descriptor
+      description: Required fields for defining a descriptor vary based on the `@type` of the descriptor.
+      operationId: createDescriptor
       consumes:
       - application/json
       produces:
@@ -950,24 +1155,28 @@ paths:
       - $ref: '#/parameters/descriptorPayload'
       responses:
         '201':
-          description: Returns the details of the newly created descriptor, including the read-only, system-generated @id
+          description: A successful response returns the details of the newly created descriptor.
           schema:
             $ref: '#/definitions/createDescriptorResponse'
         '400':
-          description: Bad Request Error
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '403':
           description: Forbidden
         '500':
-          description: Internal Server Error
-        default:
-          description: Unexpected Error  
+          description: An internal server error occurred.
+  
   '/tenant/descriptors/{DESCRIPTOR_ID}':
     put:
       tags:
       - "Descriptors"
       summary: Update a descriptor by ID.
-      description: <p>Update a descriptor by issuing a PUT request to the @id of the descriptor being updated.<br/><br/>This action is <em>re-writing</em> the existing descriptor, therefore the payload must include all descriptor fields that were required when the descriptor was defined.</p>
-      operationId: update_descriptor
+      description: >-
+      
+        Update a descriptor by issuing a PUT request to the `@id` of the descriptor being updated.
+        
+        
+        This action is **re-writing** the existing descriptor, therefore the payload must include all descriptor fields that were required when the descriptor was defined.
+      operationId: updateDescriptor
       consumes:
       - application/json
       produces:
@@ -982,24 +1191,22 @@ paths:
       - $ref: '#/parameters/descriptorPayload'
       responses:
         '201':
-          description: 'Returns @id of the updated descriptor'
+          description: A successful response returns the `@id` of the updated descriptor.
           examples:
             application/json:
               "@id": "0fe5e262d27e986025bef6d33987002d64525efe"
         '400':
-          description: Bad Request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '403':
           description: Forbidden
         '500':
-          description: Internal Server Error
-        default:
-          description: Unexpected Error
+          description: An internal server error occurred.
     delete:
       tags:
       - "Descriptors"
       summary: Delete a descriptor by ID.
-      description: <p>Remove a descriptor from the registry by issuing a DELETE request to the @id of the descriptor being removed.</p>
-      operationId: remove_descriptor
+      description: Remove a descriptor from the registry by issuing a DELETE request to the `@id` of the descriptor being removed.
+      operationId: removeDescriptor
       parameters:
       - $ref: '#/parameters/DESCRIPTOR_ID'
       - $ref: '#/parameters/authorization'
@@ -1008,16 +1215,13 @@ paths:
       - $ref: '#/parameters/x-sandbox-name'
       responses:
         '204':
-          description: Returns an empty response body and HTTP Status 204 (No Content)
+          description: A successful response returns an empty response body and HTTP status 204 (No Content), indicating that the descriptor has been deleted.
         '403':
           description: Forbidden
         '404':
-          description: Not Found
+          description: The resource is not found.
         '500':
-          description: Internal Server Error
-        default:
-
-          description: Unexpected Error  
+          description: An internal server error occurred.
   '/tenant/unions':
     get:
       tags:
@@ -1029,21 +1233,19 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/properties'
+        - $ref: '#/parameters/property'
         - $ref: '#/parameters/orderBy'
         - $ref: '#/parameters/start'
         - $ref: '#/parameters/limit'
       responses:
         '200':
-          description: Returns a list of all union schemas with format dependent on the Accept header
+          description: A successful response returns a list of all union schemas with format dependent on the `Accept` header.
           schema:
             $ref: '#/definitions/listUnionsResponse'
         '400':
-          description: Bad request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
   '/tenant/unions/{UNION_ID}':
     get:
       tags:
@@ -1058,19 +1260,17 @@ paths:
       summary: Retrieve a union schema by ID.
       responses:
         '200':
-          description: Returns details for the specified union view in JSON format.
+          description: A successful response returns the details of the union.
           schema:
             $ref: '#/definitions/lookupUnionResponse'
         '400':
-          description: Bad Request
+          description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '404':
-          description: Not Found
+          description: The resource is not found.
         '406':
-          description: Unknown Accept format
+          description: The specified `Accept` format/version is not available for this resource.
         '500':
-          description: Internal server error
-        default:
-          description: Unexpected error
+          description: An internal server error occurred.
   '/rpc/export/{RESOURCE_ID}':
     get:
       tags:
@@ -1083,13 +1283,13 @@ paths:
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept'
       - name: RESOURCE_ID
-        description: The meta:altId or URL-encoded $id value of the schema, mixin, or data type you want to export.
+        description: The `meta:altId` or URL-encoded `$id` value of the schema, field group, or data type you want to export.
         required: true
         in: path
         type: string
       responses:
         '200':
-          description: A successful response returns the details of the exported resource and its dependent mixins and data types. The contents of this payload can then be used as the request body in a POST /rpc/import call to import the resource to the desired sandbox or IMS Organization.
+          description: A successful response returns the details of the exported resource and its dependent field groups and data types. The contents of this payload can then be used as the request body in a POST `/rpc/import` call to import the resource to the desired sandbox or IMS Organization.
           schema:
             $ref: '#/definitions/importExportPayload'
         '404':
@@ -1115,13 +1315,13 @@ paths:
         type: string
         description: The name of the sandbox that you want to import the resource into. See the [sandboxes overview documentation](https://adobe.com/go/sandbox-overview-en) for more information.
       - name: body
-        description: The payload returned by a GET /rpc/export/{RESOURCE_ID} call, indicating which schemas, mixins, and/or data types should be imported into the destination IMS Organization and sandbox.
+        description: The payload returned by a GET `/rpc/export/{RESOURCE_ID}` call, indicating which schemas, field groups, and/or data types should be imported into the destination IMS Organization and sandbox.
         in: body
         schema:
           $ref: '#/definitions/importExportPayload'
       responses:
         '200':
-          description: A successful response returns the details of the imported resource, with the appropriate {TENANT_ID} applied for the specified IMS Organization.
+          description: A successful response returns the details of the imported resource, with the appropriate `{TENANT_ID}` applied for the specified IMS Organization.
           schema:
             $ref: '#/definitions/importResponse'
         '400':
@@ -1140,7 +1340,7 @@ paths:
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/accept'
       - name: SCHEMA_ID
-        description: The meta:altId or URL-encoded $id value of the schema you want to generate sample data for.
+        description: The `meta:altId` or URL-encoded `$id` value of the schema you want to generate sample data for.
         required: true
         in: path
         type: string
@@ -1181,7 +1381,7 @@ paths:
       - $ref: '#/parameters/x-gw-ims-org-id'
       - $ref: '#/parameters/x-sandbox-name'
       - name: RESOURCE_ID
-        description: The meta:altId or URL-encoded $id value of the resource whose changes you wish to view.
+        description: The `meta:altId` or URL-encoded `$id` value of the resource whose changes you wish to view.
         in: path
         required: true
         type: string
@@ -1316,31 +1516,31 @@ parameters:
     in: header
   acceptDescriptors:
     name: Accept
-    description: Descriptors require unique Accept headers using 'xdm' instead of 'xed' (eg. application/vnd.adobe.xdm-id+json)
+    description: Descriptors require unique `Accept` headers using 'xdm' instead of 'xed' (eg. application/vnd.adobe.xdm-id+json)
     required: true
     type: string
     in: header
-  properties:
-    name: properties
-    description: A comma separated list of top-level object properties to be returned in the response. Used to cut down the amount of data returned in the response body.
+  property:
+    name: property
+    description: A comma-separated list of top-level object properties to be returned in the response. For example, `property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile` returns only field groups that are compatible with the XDM Individual Profile class.
     in: query
     type: string
     required: false
   orderBy:
     name: orderby
-    description: Sort response by specified fields separated by "," and/or prefix field with "-" for descending order.
+    description: Sort the listed resources by specified fields. For example `orderby=title` sorts results by title in ascending order (A-Z). Adding a `-` before the field name (`orderby=-title`) sorts items in descending order (Z-A). Multiple fields can also be included to denote primary and secondary sort orders (for example, `orderby=title,description`).
     required: false
     in: query
     type: string
   limit:
     name: limit
-    description: Specify a limit for the number of response results to be displayed (must be between 0 and 500).
+    description: Limit the number of resources returned. For example, `limit=5` returns only five resources in the list. Must be between `0` and `500`.
     required: false
     in: query
     type: number
   start:
     name: start
-    description: The start value of the first orderBy field. Start value matches values in orderBy field (eg. strings or integers) 
+    description: Offset the start of returned results by a given amount. For example `start=5` skips the first four resources that would otherwise be returned in a response, starting on the fifth resource instaed. If an `orderby` parameter has been included in the path, the resources are sorted first before they are offset.
     required: false
     in: query
     type: string
@@ -1351,55 +1551,55 @@ parameters:
     in: body
     schema:
       '$ref': '#/definitions/patchSchema'
-  patchMixinPayload:
+  patchFieldGroupPayload:
     name: payload
     description: The JSON Patch payload that goes into the body of the request.
     required: true
     in: body
     schema:
-      $ref: '#/definitions/patchMixin'
+      $ref: '#/definitions/patchFieldGroup'
   createSchemaPayload:
     name: payload
-    description: The JSON payload must include an 'allOf' attribute referencing the $id of the base class the schema will implement.
+    description: The JSON payload must include an `allOf` attribute referencing the `$id` of the base class the schema will implement.
     required: true
     in: body
     schema:
       "$ref": '#/definitions/createSchema'
   replaceSchemaPayload:
     name: payload
-    description: The JSON payload must include all of the fields that were originally required for creating the schema, however this time with updated values. This includes an 'allOf' attribute referencing the $id of the class the schema will implement.
+    description: The JSON payload must include all of the fields that were originally required for creating the schema, but with updated values. This includes an `allOf` attribute referencing the `$id` of the class the schema will implement.
     required: true
     in: body
     schema:
       "$ref": '#/definitions/replaceSchema'
   createClassPayload:
     name: payload
-    description: The JSON payload must include an 'allOf' attribute referencing either 'https://ns.adobe.com/xdm/data/record' or 'https://ns.adobe.com/xdm/data/time-series'. This value represents the data behavior upon which the class is based. The payload may optionally include mixins or custom fields that will be included each time the class is used.
+    description: The JSON payload must include an `allOf` attribute referencing either 'https://ns.adobe.com/xdm/data/record' or 'https://ns.adobe.com/xdm/data/time-series'. This value represents the data behavior upon which the class is based. The payload may optionally include field groups or custom fields that will be included each time the class is used.
     required: true
     in: body
     schema:
       "$ref": '#/definitions/createClass'
   replaceClassPayload:
     name: payload
-    description: The JSON payload must include all of the fields that were originally required for creating the class, however this time with updated values. This includes an 'allOf' attribute referencing the behavior of the class.
+    description: The JSON payload must include all of the fields that were originally required for creating the class, but with updated values. This includes an `allOf` attribute referencing the behavior of the class.
     required: true
     in: body
     schema:
       "$ref": '#/definitions/replaceClass'
-  mixinPayload:
+  fieldGroupPayload:
     name: payload
-    description: The JSON payload must include a 'meta:intendedToExtend' field listing the '$id' of the class(es) with which the mixin is compatible.
+    description: The JSON payload must include a 'meta:intendedToExtend' field listing the '$id' of the class(es) with which the field group is compatible.
     required: true
     in: body
     schema:
-      $ref: '#/definitions/createMixin'
-  replaceMixinPayload:
+      $ref: '#/definitions/createFieldGroup'
+  replaceFieldGroupPayload:
     name: payload
-    description: The JSON payload must include all of the fields that were originally required for creating the mixin, however this time with updated values. This includes an 'allOf' attribute referencing the $id of the class the schema will implement.
+    description: The JSON payload must include all of the fields that were originally required for creating the field group, but with updated values. This includes an `allOf` attribute referencing the `$id` of the class the schema will implement.
     required: true
     in: body
     schema:
-      "$ref": '#/definitions/replaceMixin'
+      "$ref": '#/definitions/replaceFieldGroup'
   createDataTypePayload:
     name: payload
     description: Defining a data type does not require `meta:extends` or `meta:intendedToExtend` fields, nor do fields need to be nested to avoid collisions.
@@ -1416,7 +1616,7 @@ parameters:
       $ref: '#/definitions/patchDataType'
   replaceDataTypePayload:
     name: payload
-    description: The JSON payload must include all of the fields that were originally required for creating the data type, however this time with updated values.
+    description: The JSON payload must include all of the fields that were originally required for creating the data type, but with updated values.
     required: true
     in: body
     schema:
@@ -1446,7 +1646,7 @@ definitions:
           schemas:
             type: integer
             example: 4
-          mixins:
+          fieldgroups:
             type: integer
             example: 3
           datatypes:
@@ -1994,7 +2194,7 @@ definitions:
       - title
       - description
       - allOf
-  listMixinsResponse:
+  listFieldGroupsResponse:
     type: object
     properties:
       results:
@@ -2004,17 +2204,17 @@ definitions:
           properties:
             title:
               type: string
-              example: Loyalty Program Mixin
+              example: Loyalty Program Field Group
             $id:
               type: string
-              example: 'https://ns.adobe.com/{TENANT_ID}/mixins/bce6c11bbe4ad4155dd940c15dfe74e1'
+              example: 'https://ns.adobe.com/{TENANT_ID}/fieldgroups/bce6c11bbe4ad4155dd940c15dfe74e1'
             meta:altId:
               type: string
-              example: '_{TENANT_ID}.mixins.bce6c11bbe4ad4155dd940c15dfe74e1'
+              example: '_{TENANT_ID}.fieldgroups.bce6c11bbe4ad4155dd940c15dfe74e1'
             version:
               type: string
               example: '1.0'
-  createMixin:
+  createFieldGroup:
     type: object
     properties:
       type:
@@ -2025,7 +2225,7 @@ definitions:
         example: Loyalty Details
       description:
         type: string
-        example: "Loyalty Program Mixin to describe members of the Loyalty Program."
+        example: "Field group to describe members of the Loyalty Program."
       meta:intendedToExtend:
         type: array
         items:
@@ -2033,11 +2233,11 @@ definitions:
           example: 'https://ns.adobe.com/xdm/context/profile'
       definitions:
         type: object
-        description: Attributes of the mixin, nested under 'properties' and {TENANT_ID}
+        description: Attributes of the field group, nested under `properties` and  `_{TENANT_ID}`.
         properties:
           loyalty:
             type: object
-            description: Nested structure under which to include mixin properties. For example, in a Loyalty mixin, the namespace could be 'loyalty'.
+            description: Nested structure under which to include field group properties. For example, in a Loyalty field group, the namespace could be `loyalty`.
             properties:
               properties:
                 type: object
@@ -2071,7 +2271,81 @@ definitions:
             $ref:
               type: string
               example: '#/definitions/loyalty'
-  createMixinResponse:          
+  patchFieldGroupResponse:
+    type: object
+    example:
+      type: object
+      title: Loyalty Details
+      description: Field group to describe members of the Loyalty Program.
+      'meta:intendedToExtend':
+        - 'https://ns.adobe.com/xdm/context/profile'
+      definitions:
+        loyalty:
+          "properties":
+            "_{TENANT_ID}":
+              "type": "object"
+              "properties":
+                "loyaltyLevel":
+                  "title": "Loyalty Level"
+                  "description": "Member level within the loyalty program."
+                  "type": "string"
+                "memberSince":
+                  "title": "Member Since"
+                  "type": "string"
+                  "format": "date"
+                  "description": "Date member joined loyalty program."
+      allOf:
+        - '$ref': '#/definitions/loyalty'
+      'meta:abstract': true
+      'meta:extensible': true
+      'meta:containerId': tenant
+      imsOrg: '{IMS_ORG}'
+      $id: 'https://ns.adobe.com/{TENANT_ID}/fieldgroups/477bb01d7125b015b4feba7bccc2e599'
+      'meta:altId': '_{TENANT_ID}.fieldgroups.477bb01d7125b015b4feba7bccc2e599'
+      version: '1.0'
+      'meta:xdmType': object
+      'meta:resourceType': fieldgroups
+      'meta:registryMetadata':
+        'repo:createDate': 1552668061906
+        'repo:lastModifiedDate': 1552668061906
+        'xdm:createdClientId': '{CREATED_CLIENT}'
+        'xdm:repositoryCreatedBy': '{CREATED_BY}'
+  updateFieldGroupResponse:
+    type: object
+    example:
+      type: object
+      title: Loyalty Details
+      description: Field group to describe members of the Loyalty Program.
+      'meta:intendedToExtend':
+        - 'https://ns.adobe.com/xdm/context/profile'
+      definitions:
+        loyalty:
+          "properties":
+            "_{TENANT_ID}":
+              "type": "object"
+              "properties":
+                "loyaltyLevel":
+                  "title": "Loyalty Level"
+                  "description": "Member level within the loyalty program."
+                  "type": "string"
+      allOf:
+        - '$ref': '#/definitions/loyalty'
+      'meta:abstract': true
+      'meta:extensible': true
+      'meta:containerId': tenant
+      imsOrg: '{IMS_ORG}'
+      $id: 'https://ns.adobe.com/{TENANT_ID}/fieldgroups/477bb01d7125b015b4feba7bccc2e599'
+      'meta:altId': '_{TENANT_ID}.fieldgroups.477bb01d7125b015b4feba7bccc2e599'
+      version: '1.0'
+      'meta:xdmType': object
+      'meta:resourceType': fieldgroups
+      'meta:registryMetadata':
+        'repo:createDate': 1552668061906
+        'repo:lastModifiedDate': 1552668061906
+        'xdm:createdClientId': '{CREATED_CLIENT}'
+        'xdm:repositoryCreatedBy': '{CREATED_BY}'
+    
+  createFieldGroupResponse:          
     type: object
     properties:
       type:
@@ -2082,7 +2356,7 @@ definitions:
         example: Loyalty Details
       description:
         type: string
-        example: "Loyalty Program Mixin to describe members of the Loyalty Program."
+        example: "Field group to describe members of the Loyalty Program."
       meta:intendedToExtend:
         type: array
         items:
@@ -2090,11 +2364,11 @@ definitions:
           example: 'https://ns.adobe.com/xdm/context/profile'
       definitions:
         type: object
-        description: Attributes of the mixin, nested under 'properties' and {TENANT_ID}
+        description: Attributes of the field group, nested under `properties` and  `_{TENANT_ID}`.
         properties:
           loyalty:
             type: object
-            description: Nested structure under which to include mixin properties. For example, in a Loyalty mixin, the namespace could be 'loyalty'.
+            description: Nested structure under which to include field group properties. For example, in a Loyalty field group, the namespace could be `loyalty`.
             properties:
               properties:
                 type: object
@@ -2142,10 +2416,10 @@ definitions:
         example: '{IMS_ORG}'
       $id:
         type: string
-        example: 'https://ns.adobe.com/{TENANT_ID}/mixins/477bb01d7125b015b4feba7bccc2e599'
+        example: 'https://ns.adobe.com/{TENANT_ID}/fieldgroups/477bb01d7125b015b4feba7bccc2e599'
       meta:altId: 
         type: string
-        example: '_{TENANT_ID}.mixins.477bb01d7125b015b4feba7bccc2e599'
+        example: '_{TENANT_ID}.fieldgroups.477bb01d7125b015b4feba7bccc2e599'
       version:
         type: string
         example: '1.0'
@@ -2154,7 +2428,7 @@ definitions:
         example: object
       meta:resourceType:
         type: string
-        example: mixins
+        example: fieldgroups
       meta:registryMetadata:
         type: object
         properties:
@@ -2170,18 +2444,60 @@ definitions:
           xdm:repositoryCreatedBy: 
             type: string
             example: '{CREATED_BY}'
-  lookupMixinResponse:
+  lookupFieldGroupResponse:
     type: object
+    example:
+      $id: 'https://ns.adobe.com/xdm/context/profile-person-details'
+      'meta:altId': _xdm.context.profile-person-details
+      'meta:resourceType': fieldgroups
+      version: 1.22.3
+      title: Demographic Details
+      type: object
+      description: 'Demographic information such as name, gender, and birth date of an individual.'
+      definitions:
+        profile-person-details:
+          properties:
+            person:
+              title: Person
+              $ref: 'https://ns.adobe.com/xdm/context/person'
+              description: 'An individual actor, contact, or owner.'
+              type: object
+              'meta:xdmType': object
+              'meta:xdmField': 'xdm:person'
+      allOf:
+        - $ref: 'https://ns.adobe.com/xdm/common/extensible%23/definitions/@context'
+          type: object
+          'meta:xdmType': object
+        - $ref: '#/definitions/profile-person-details'
+          type: object
+          'meta:xdmType': object
+      'meta:extensible': true
+      'meta:abstract': true
+      'meta:intendedToExtend':
+        - 'https://ns.adobe.com/xdm/context/profile'
+      'meta:xdmType': object
+      'meta:status': stable
+      $schema: 'http://json-schema.org/draft-06/schema#'
+      'meta:registryMetadata':
+        'repo:createdDate': 1620758109174
+        'repo:lastModifiedDate': 1620758109174
+        eTag: f5b20a7edefab1c4b1a86fbd4de91570b57d36b9f2c6deb3225a18d14fafce3b
+        'meta:globalLibVersion': 1.22.3
+        'meta:usageCount': 29
+      'meta:tags':
+        industry:
+          - all
+      'meta:createdDate': '2020-08-10'
     properties:
       type:
         type: string
         example: object
       title:
         type: string
-        example: Loyalty Mixin
+        example: Loyalty Field Group
       description: 
         type: string
-        example: Loyalty Program Mixin to describe members of the Loyalty Program.
+        example: Field group to describe members of the Loyalty Program.
       meta:extensible:
         type: boolean
       meta:abstract:
@@ -2202,20 +2518,20 @@ definitions:
         description: All of the attributes of the schema are found under properties.
       meta:altId:
         type: string
-        example: '_{TENANT_ID}.mixins.477bb01d7125b015b4feba7bccc2e599'
+        example: '_{TENANT_ID}.fieldgroups.477bb01d7125b015b4feba7bccc2e599'
       $id: 
         type: string
-        example: 'https://ns.adobe.com/{TENANT_ID}/mixins/477bb01d7125b015b4feba7bccc2e599'
+        example: 'https://ns.adobe.com/{TENANT_ID}/fieldgroups/477bb01d7125b015b4feba7bccc2e599'
       version:
         type: string
         example: '1.0'
       meta:resourceType:
         type: string
-        example: mixins
+        example: fieldgroups
       meta:registryMetadata:
         type: object
-        description: Various metadata related to the mixin.
-  patchMixin:
+        description: Various metadata related to the field group.
+  patchFieldGroup:
     type: array
     items:
       type: object
@@ -2232,7 +2548,7 @@ definitions:
           description: Required elements vary depending on type of 'value' (eg. string, integer, object, etc.)
           type: object
           example: {"title": "Member Since", "type": "string", "format": "date", "description": "Date loyalty member joined loyalty program."}
-  replaceMixin:
+  replaceFieldGroup:
     type: object
     properties:
       type:
@@ -2243,7 +2559,7 @@ definitions:
         example: Loyalty Details
       description:
         type: string
-        example: "Loyalty Program Mixin to describe members of the Loyalty Program."
+        example: "Field group to describe members of the Loyalty Program."
       meta:intendedToExtend:
         type: array
         items:
@@ -2251,11 +2567,11 @@ definitions:
           example: 'https://ns.adobe.com/xdm/context/profile'
       definitions:
         type: object
-        description: Attributes of the mixin, nested under 'properties' and {TENANT_ID}
+        description: Attributes of the field group, nested under `properties` and  `_{TENANT_ID}`.
         properties:
           loyalty:
             type: object
-            description: Nested structure under which to include mixin properties. For example, in a Loyalty mixin, the namespace could be 'loyalty'.
+            description: Nested structure under which to include field group properties. For example, in a Loyalty field group, the namespace could be `loyalty`.
             properties:
               properties:
                 type: object
@@ -2353,6 +2669,71 @@ definitions:
       - type
       - title
       - description
+  patchDataTypeResponse:
+    type: object
+    example:
+      type: object
+      title: New Data Type
+      description: Description of the data type.
+      properties:
+        field1:
+          title: Field 1
+          description: Description of Field 1.
+          type: string
+        field2:
+          title: Field 2
+          description: Description of Field 2.
+          type: integer
+        field3:
+          "title": "Field 3"
+          "type": "string"
+          "format": "date"
+          "description": "Description of Field 3."
+      'meta:abstract': true
+      'meta:extensible': true
+      'meta:containerId': tenant
+      imsOrg: '{IMS_ORG}'
+      $id: 'https://ns.adobe.com/{TENANT_ID}/datatypes/24c643f618647344606222c494bd0102'
+      'meta:altId': '_{TENANT_ID}.datatypes.24c643f618647344606222c494bd0102'
+      version: '1.0'
+      'meta:xdmType': object
+      'meta:resourceType': datatypes
+      'meta:registryMetadata':
+        'repo:createDate': 1552668061906
+        'repo:lastModifiedDate': 1552668061906
+        'xdm:createdClientId': '{CREATED_CLIENT}'
+        'xdm:repositoryCreatedBy': '{CREATED_BY}'
+  putDataTypeResponse:
+    type: object
+    example:
+      type: object
+      title: New Data Type
+      description: Description of the data type.
+      properties:
+        field1:
+          title: Field 1
+          description: New description of Field 1.
+          type: integer
+        field5:
+          title: New Field 5
+          description: Description of Field 5.
+          type: string
+          format: date
+      'meta:abstract': true
+      'meta:extensible': true
+      'meta:containerId': tenant
+      imsOrg: '{IMS_ORG}'
+      $id: 'https://ns.adobe.com/{TENANT_ID}/datatypes/24c643f618647344606222c494bd0102'
+      'meta:altId': '_{TENANT_ID}.datatypes.24c643f618647344606222c494bd0102'
+      version: '1.0'
+      'meta:xdmType': object
+      'meta:resourceType': datatypes
+      'meta:registryMetadata':
+        'repo:createDate': 1552668061906
+        'repo:lastModifiedDate': 1552668061906
+        'xdm:createdClientId': '{CREATED_CLIENT}'
+        'xdm:repositoryCreatedBy': '{CREATED_BY}'
+      
   createDataTypeResponse:
     type: object
     properties:
@@ -2731,11 +3112,11 @@ definitions:
   importExportPayload:
     type: object
     example:
-      - "$id": "https://ns.adobe.com/<XDM_TENANTID_PLACEHOLDER>/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
-        "meta:altId": "_<XDM_TENANTID_PLACEHOLDER>.mixins.443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
-        "meta:resourceType": "mixins"
+      - "$id": "https://ns.adobe.com/<XDM_TENANTID_PLACEHOLDER>/fieldgroups/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+        "meta:altId": "_<XDM_TENANTID_PLACEHOLDER>.fieldgroups.443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+        "meta:resourceType": "fieldgroups"
         "version": "1.0"
-        "title": "Example mixin"
+        "title": "Example field group"
         "type": "object"
         "description": ""
         "definitions":
@@ -2774,13 +3155,13 @@ definitions:
           - "$ref": "https://ns.adobe.com/xdm/context/profile"
             "type": "object"
             "meta:xdmType": "object"
-          - "$ref": "https://ns.adobe.com/<XDM_TENANTID_PLACEHOLDER>/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+          - "$ref": "https://ns.adobe.com/<XDM_TENANTID_PLACEHOLDER>/fieldgroups/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
             "type": "object"
             "meta:xdmType": "object"
         "meta:extensible": false
         "meta:abstract": false
         "meta:extends":
-          - "https://ns.adobe.com/<XDM_TENANTID_PLACEHOLDER>/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+          - "https://ns.adobe.com/<XDM_TENANTID_PLACEHOLDER>/fieldgroups/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
           - "https://ns.adobe.com/xdm/common/auditable"
           - "https://ns.adobe.com/xdm/data/record"
           - "https://ns.adobe.com/xdm/context/profile"
@@ -2791,11 +3172,11 @@ definitions:
   importResponse:
     type: object
     example:
-      - "$id": "https://ns.adobe.com/{TENANT_ID}/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
-        "meta:altId": "_{TENANT_ID}.mixins.443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
-        "meta:resourceType": "mixins"
+      - "$id": "https://ns.adobe.com/{TENANT_ID}/fieldgroups/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+        "meta:altId": "_{TENANT_ID}.fieldgroups.443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+        "meta:resourceType": "fieldgroups"
         "version": "1.0"
-        "title": "Example mixin"
+        "title": "Example field group"
         "type": "object"
         "description": ""
         "definitions":
@@ -2834,13 +3215,13 @@ definitions:
           - "$ref": "https://ns.adobe.com/xdm/context/profile"
             "type": "object"
             "meta:xdmType": "object"
-          - "$ref": "https://ns.adobe.com/{TENANT_ID}/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+          - "$ref": "https://ns.adobe.com/{TENANT_ID}/fieldgroups/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
             "type": "object"
             "meta:xdmType": "object"
         "meta:extensible": false
         "meta:abstract": false
         "meta:extends":
-          - "https://ns.adobe.com/{TENANT_ID}/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+          - "https://ns.adobe.com/{TENANT_ID}/fieldgroups/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
           - "https://ns.adobe.com/xdm/common/auditable"
           - "https://ns.adobe.com/xdm/data/record"
           - "https://ns.adobe.com/xdm/context/profile"
@@ -2869,9 +3250,9 @@ definitions:
       "report":
         "registryRequestId": "1c282c30-d6ca-40a3-a694-e914a12f249d"
         "timestamp": "10-22-2020 06:33:12"
-        "detailed-message": "Failed to import resources. Error: Title must be unique. An object https://ns.adobe.com/{TENANT_ID}/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b already exists with the same title"
+        "detailed-message": "Failed to import resources. Error: Title must be unique. An object https://ns.adobe.com/{TENANT_ID}/fieldgroups/443fe51457047d958f4a97853e64e0eca93ef34d7990583b already exists with the same title"
         "sub-errors": []
-      "detail": "Failed to import resources. Error: Title must be unique. An object https://ns.adobe.com/{TENANT_ID}/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b already exists with the same title"
+      "detail": "Failed to import resources. Error: Title must be unique. An object https://ns.adobe.com/{TENANT_ID}/fieldgroups/443fe51457047d958f4a97853e64e0eca93ef34d7990583b already exists with the same title"
   notFoundError:
     type: object
     example:
@@ -2883,3 +3264,12 @@ definitions:
         "timestamp": "10-22-2020 06:42:13"
         "detailed-message": "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
       "detail": "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+  record:
+    type: string
+    example: "#/definitions/record"
+  loyalty:
+    type: string
+    example: "#/definitions/loyalty"
+  profile-person-details:
+    type: string
+    example: '#/definitions/profile-person-details'
