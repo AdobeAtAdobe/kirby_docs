@@ -307,7 +307,7 @@ paths:
         The response format depends on the `Accept` header sent in the request. The following `Accept` headers are available for this request:<ul><li>`application/vnd.adobe.xed+json; version=1`:  Raw with `$ref` and `allOf` included. Has titles and descriptions.</li><li>`application/vnd.adobe.xed-full+json; version=1`: `$ref` and `allOf` included. Has titles and descriptions.</li><li>`application/vnd.adobe.xed-notext+json; version=1`: Raw with `$ref` and `allOf` included, but with no titles or descriptions</li><li>`application/vnd.adobe.xed-full-notext+json; version=1`:  `$ref` and `allOf` are resolved, with no titles or descriptions.</li><li>`application/vnd.adobe.xed-full-desc+json; version=1`: `$ref` and `allOf` are resolved, with descriptions included.</li></ul>
         
         
-        A lookup request requires the resource 'major version' be included in the `Accept` header. When supplying the major version, the registry returns the latest minor version automatically.</p>
+        A lookup request requires the resource's major version be included in the `Accept` header. When supplying the major version, the registry returns the latest minor version automatically.
       operationId: lookupSchema
       produces:
         - application/json
@@ -470,7 +470,7 @@ paths:
               "_links":
                 "next": null
         '400':
-          description: The `Accept` header is invalid or missing. Ensure that you are providing a valid accept header for a listing call with no version supplied (e.g. application/vnd.adobe.xed-id+json) before trying again.
+          description: The `Accept` header is invalid or missing. Ensure that you are providing a valid `Accept` header for a listing call with no version supplied (e.g. `application/vnd.adobe.xed-id+json`) before trying again.
           schema:
             type: object
             example:
@@ -1115,7 +1115,7 @@ paths:
       tags:
       - "Descriptors"
       summary: Retrieve a descriptor by within the specified container by ID.
-      description: View the details of a specific descriptor by performing a lookup (GET) request using the @id of the descriptor. Descriptors are not versioned, therefore no `Accept` header is required in the lookup request.
+      description: View the details of a specific descriptor by performing a lookup (GET) request using the `@id` of the descriptor. Descriptors are not versioned, therefore no `Accept` header is required in the lookup request.
       operationId: lookupDescriptor
       produces:
       - application/json
@@ -1140,7 +1140,7 @@ paths:
       tags:
       - "Descriptors"
       summary: Create a new descriptor.
-      description: Required fields for defining a descriptor vary based on the @type of the descriptor.
+      description: Required fields for defining a descriptor vary based on the `@type` of the descriptor.
       operationId: createDescriptor
       consumes:
       - application/json
@@ -1172,7 +1172,7 @@ paths:
       summary: Update a descriptor by ID.
       description: >-
       
-        Update a descriptor by issuing a PUT request to the @id of the descriptor being updated.
+        Update a descriptor by issuing a PUT request to the `@id` of the descriptor being updated.
         
         
         This action is **re-writing** the existing descriptor, therefore the payload must include all descriptor fields that were required when the descriptor was defined.
@@ -1205,7 +1205,7 @@ paths:
       tags:
       - "Descriptors"
       summary: Delete a descriptor by ID.
-      description: Remove a descriptor from the registry by issuing a DELETE request to the @id of the descriptor being removed.
+      description: Remove a descriptor from the registry by issuing a DELETE request to the `@id` of the descriptor being removed.
       operationId: removeDescriptor
       parameters:
       - $ref: '#/parameters/DESCRIPTOR_ID'
