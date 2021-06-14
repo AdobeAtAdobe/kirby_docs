@@ -72,6 +72,11 @@
       },
       {
         "pages": [],
+        "path": "acpdr/swagger-specs/reactor.yaml",
+        "title": "Reactor API"
+      },
+      {
+        "pages": [],
         "path": "acpdr/swagger-specs/real-time-customer-profile.yaml",
         "title": "Real-time Customer Profile API"
       },
