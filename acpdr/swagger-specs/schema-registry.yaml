@@ -1648,7 +1648,7 @@ definitions:
           schemas:
             type: integer
             example: 4
-          fieldgroups:
+          mixins:
             type: integer
             example: 3
           datatypes:
@@ -2209,10 +2209,10 @@ definitions:
               example: Loyalty Program Field Group
             $id:
               type: string
-              example: 'https://ns.adobe.com/{TENANT_ID}/fieldgroups/bce6c11bbe4ad4155dd940c15dfe74e1'
+              example: 'https://ns.adobe.com/{TENANT_ID}/mixins/bce6c11bbe4ad4155dd940c15dfe74e1'
             meta:altId:
               type: string
-              example: '_{TENANT_ID}.fieldgroups.bce6c11bbe4ad4155dd940c15dfe74e1'
+              example: '_{TENANT_ID}.mixins.bce6c11bbe4ad4155dd940c15dfe74e1'
             version:
               type: string
               example: '1.0'
@@ -2302,11 +2302,11 @@ definitions:
       'meta:extensible': true
       'meta:containerId': tenant
       imsOrg: '{IMS_ORG}'
-      $id: 'https://ns.adobe.com/{TENANT_ID}/fieldgroups/477bb01d7125b015b4feba7bccc2e599'
-      'meta:altId': '_{TENANT_ID}.fieldgroups.477bb01d7125b015b4feba7bccc2e599'
+      $id: 'https://ns.adobe.com/{TENANT_ID}/mixins/477bb01d7125b015b4feba7bccc2e599'
+      'meta:altId': '_{TENANT_ID}.mixins.477bb01d7125b015b4feba7bccc2e599'
       version: '1.0'
       'meta:xdmType': object
-      'meta:resourceType': fieldgroups
+      'meta:resourceType': mixins
       'meta:registryMetadata':
         'repo:createDate': 1552668061906
         'repo:lastModifiedDate': 1552668061906
@@ -2336,11 +2336,11 @@ definitions:
       'meta:extensible': true
       'meta:containerId': tenant
       imsOrg: '{IMS_ORG}'
-      $id: 'https://ns.adobe.com/{TENANT_ID}/fieldgroups/477bb01d7125b015b4feba7bccc2e599'
-      'meta:altId': '_{TENANT_ID}.fieldgroups.477bb01d7125b015b4feba7bccc2e599'
+      $id: 'https://ns.adobe.com/{TENANT_ID}/mixins/477bb01d7125b015b4feba7bccc2e599'
+      'meta:altId': '_{TENANT_ID}.mixins.477bb01d7125b015b4feba7bccc2e599'
       version: '1.0'
       'meta:xdmType': object
-      'meta:resourceType': fieldgroups
+      'meta:resourceType': mixins
       'meta:registryMetadata':
         'repo:createDate': 1552668061906
         'repo:lastModifiedDate': 1552668061906
@@ -2418,10 +2418,10 @@ definitions:
         example: '{IMS_ORG}'
       $id:
         type: string
-        example: 'https://ns.adobe.com/{TENANT_ID}/fieldgroups/477bb01d7125b015b4feba7bccc2e599'
+        example: 'https://ns.adobe.com/{TENANT_ID}/mixins/477bb01d7125b015b4feba7bccc2e599'
       meta:altId: 
         type: string
-        example: '_{TENANT_ID}.fieldgroups.477bb01d7125b015b4feba7bccc2e599'
+        example: '_{TENANT_ID}.mixins.477bb01d7125b015b4feba7bccc2e599'
       version:
         type: string
         example: '1.0'
@@ -2430,7 +2430,7 @@ definitions:
         example: object
       meta:resourceType:
         type: string
-        example: fieldgroups
+        example: mixins
       meta:registryMetadata:
         type: object
         properties:
@@ -2451,7 +2451,7 @@ definitions:
     example:
       $id: 'https://ns.adobe.com/xdm/context/profile-person-details'
       'meta:altId': _xdm.context.profile-person-details
-      'meta:resourceType': fieldgroups
+      'meta:resourceType': mixins
       version: 1.22.3
       title: Demographic Details
       type: object
@@ -2520,16 +2520,16 @@ definitions:
         description: All of the attributes of the schema are found under properties.
       meta:altId:
         type: string
-        example: '_{TENANT_ID}.fieldgroups.477bb01d7125b015b4feba7bccc2e599'
+        example: '_{TENANT_ID}.mixins.477bb01d7125b015b4feba7bccc2e599'
       $id: 
         type: string
-        example: 'https://ns.adobe.com/{TENANT_ID}/fieldgroups/477bb01d7125b015b4feba7bccc2e599'
+        example: 'https://ns.adobe.com/{TENANT_ID}/mixins/477bb01d7125b015b4feba7bccc2e599'
       version:
         type: string
         example: '1.0'
       meta:resourceType:
         type: string
-        example: fieldgroups
+        example: mixins
       meta:registryMetadata:
         type: object
         description: Various metadata related to the field group.
@@ -3114,9 +3114,9 @@ definitions:
   importExportPayload:
     type: object
     example:
-      - "$id": "https://ns.adobe.com/<XDM_TENANTID_PLACEHOLDER>/fieldgroups/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
-        "meta:altId": "_<XDM_TENANTID_PLACEHOLDER>.fieldgroups.443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
-        "meta:resourceType": "fieldgroups"
+      - "$id": "https://ns.adobe.com/<XDM_TENANTID_PLACEHOLDER>/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+        "meta:altId": "_<XDM_TENANTID_PLACEHOLDER>.mixins.443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+        "meta:resourceType": "mixins"
         "version": "1.0"
         "title": "Example field group"
         "type": "object"
@@ -3157,13 +3157,13 @@ definitions:
           - "$ref": "https://ns.adobe.com/xdm/context/profile"
             "type": "object"
             "meta:xdmType": "object"
-          - "$ref": "https://ns.adobe.com/<XDM_TENANTID_PLACEHOLDER>/fieldgroups/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+          - "$ref": "https://ns.adobe.com/<XDM_TENANTID_PLACEHOLDER>/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
             "type": "object"
             "meta:xdmType": "object"
         "meta:extensible": false
         "meta:abstract": false
         "meta:extends":
-          - "https://ns.adobe.com/<XDM_TENANTID_PLACEHOLDER>/fieldgroups/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+          - "https://ns.adobe.com/<XDM_TENANTID_PLACEHOLDER>/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
           - "https://ns.adobe.com/xdm/common/auditable"
           - "https://ns.adobe.com/xdm/data/record"
           - "https://ns.adobe.com/xdm/context/profile"
@@ -3174,9 +3174,9 @@ definitions:
   importResponse:
     type: object
     example:
-      - "$id": "https://ns.adobe.com/{TENANT_ID}/fieldgroups/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
-        "meta:altId": "_{TENANT_ID}.fieldgroups.443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
-        "meta:resourceType": "fieldgroups"
+      - "$id": "https://ns.adobe.com/{TENANT_ID}/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+        "meta:altId": "_{TENANT_ID}.mixins.443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+        "meta:resourceType": "mixins"
         "version": "1.0"
         "title": "Example field group"
         "type": "object"
@@ -3217,13 +3217,13 @@ definitions:
           - "$ref": "https://ns.adobe.com/xdm/context/profile"
             "type": "object"
             "meta:xdmType": "object"
-          - "$ref": "https://ns.adobe.com/{TENANT_ID}/fieldgroups/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+          - "$ref": "https://ns.adobe.com/{TENANT_ID}/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
             "type": "object"
             "meta:xdmType": "object"
         "meta:extensible": false
         "meta:abstract": false
         "meta:extends":
-          - "https://ns.adobe.com/{TENANT_ID}/fieldgroups/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
+          - "https://ns.adobe.com/{TENANT_ID}/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b"
           - "https://ns.adobe.com/xdm/common/auditable"
           - "https://ns.adobe.com/xdm/data/record"
           - "https://ns.adobe.com/xdm/context/profile"
@@ -3252,9 +3252,9 @@ definitions:
       "report":
         "registryRequestId": "1c282c30-d6ca-40a3-a694-e914a12f249d"
         "timestamp": "10-22-2020 06:33:12"
-        "detailed-message": "Failed to import resources. Error: Title must be unique. An object https://ns.adobe.com/{TENANT_ID}/fieldgroups/443fe51457047d958f4a97853e64e0eca93ef34d7990583b already exists with the same title"
+        "detailed-message": "Failed to import resources. Error: Title must be unique. An object https://ns.adobe.com/{TENANT_ID}/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b already exists with the same title"
         "sub-errors": []
-      "detail": "Failed to import resources. Error: Title must be unique. An object https://ns.adobe.com/{TENANT_ID}/fieldgroups/443fe51457047d958f4a97853e64e0eca93ef34d7990583b already exists with the same title"
+      "detail": "Failed to import resources. Error: Title must be unique. An object https://ns.adobe.com/{TENANT_ID}/mixins/443fe51457047d958f4a97853e64e0eca93ef34d7990583b already exists with the same title"
   notFoundError:
     type: object
     example:
