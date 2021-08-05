@@ -30,7 +30,7 @@ paths:
       tags:
       - Audit events
       summary: Retrieve a list of audit events.
-      operationId: getAuditLogsUsingGET
+      operationId: getAuditLogs
       produces:
       - application/json
       parameters:
@@ -49,7 +49,7 @@ paths:
           format: int32
         - name: start
           in: query
-          description: A pointer to the first item in the search results to return.
+          description: A pointer to the first item for the returned search results.
           required: false
           type: integer
           format: int32
@@ -84,9 +84,9 @@ paths:
         - $ref: '#/parameters/property'
       responses:
         '204':
-          description: A successful response that doesn't generate any results returns HTTP status 204 (No Content).
+          description: The request was successful but no results were found.
         '307':
-          description: A successful response that generates results returns HTTP status 307 (Temporary Redirect). A link to the exported CSV file is provided in the `Location` response header.
+          description: The request was successful and the results have been generated into a CSV file for export. A link to the export file is provided in the `Location` response header.
         '400':
           description: The request was malformed. Ensure that you are including all required headers before trying again.
         '404':
@@ -134,8 +134,7 @@ parameters:
     in: header
     name: x-request-id
     type: string
-    description: A tracing ID associated with the request. If one is not provided
-      on the request, the server generates one automatically.
+    description: A tracing ID associated with the request. If one is not provided on the request, the server generates one automatically.
     required: false
 definitions:
   AbstractAuditLog:
