@@ -53,7 +53,7 @@ paths:
       - "application/json"
       parameters:
         - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/json-header'
+        - $ref: '#/parameters/json-smile-header'
         - in: "body"
           name: "body"
           description: "The data that you want to ingest to Platform."
@@ -114,7 +114,7 @@ paths:
       - "application/json"
       parameters:
         - $ref: '#/parameters/authorization'
-        - $ref: '#/parameters/json-header'
+        - $ref: '#/parameters/json-smile-header'
         - in: "body"
           name: "body"
           description: "The data that you want to ingest to Platform."
@@ -574,6 +574,15 @@ parameters:
   json-header:
     name: Content-Type
     description: 'application/json'
+    required: true
+    type: string
+    in: header
+  json-smile-header:
+    name: Content-Type
+    description: 'The media type being sent in the request payload. For JSON formatted payloads the value must be set to application/json. The endpoint also accepts payloads encoded in Smile format, which requires the value to be set to application/x-jackson-smile.'
+    enum:
+      - 'application/json'
+      - 'application/x-jackson-smile'
     required: true
     type: string
     in: header
