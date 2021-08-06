@@ -837,50 +837,148 @@
                  "description": "A successful response returns the details of the behavior specified in the request path.",
                  "schema": {
                     "type": "object",
-                    "example": {
-                       "$id": "https://ns.adobe.com/xdm/data/record",
-                       "meta:altId": "_xdm.data.record",
-                       "meta:resourceType": "behaviors",
-                       "version": "1.16.4",
-                       "title": "Record Schema",
-                       "type": "object",
-                       "description": "Used to indicate the behavior of record data semantic when composed into data schemas.",
+                    "properties": {
+                       "$id": {
+                          "type": "string",
+                          "example": "https://ns.adobe.com/xdm/data/record"
+                       },
+                       "meta:altId": {
+                          "type": "string",
+                          "example": "_xdm.data.record"
+                       },
+                       "meta:resourceType": {
+                          "type": "string",
+                          "example": "behaviors"
+                       },
+                       "version": {
+                          "type": "string",
+                          "example": "1.16.4"
+                       },
+                       "title": {
+                          "type": "string",
+                          "example": "Record Schema"
+                       },
+                       "type": {
+                          "type": "string",
+                          "example": "object"
+                       },
+                       "description": {
+                          "type": "string",
+                          "example": "Used to indicate the behavior of record data semantic when composed into data schemas."
+                       },
                        "definitions": {
-                          "record": {
-                             "properties": {
-                                "_id": {
-                                   "title": "Identifier",
-                                   "type": "string",
-                                   "format": "uri-reference",
-                                   "description": "A unique identifier for the record.",
-                                   "meta:xdmType": "string",
-                                   "meta:xdmField": "@id"
+                          "type": "object",
+                          "properties": {
+                             "record": {
+                                "type": "object",
+                                "properties": {
+                                   "properties": {
+                                      "type": "object",
+                                      "properties": {
+                                         "_id": {
+                                            "type": "object",
+                                            "properties": {
+                                               "title": {
+                                                  "type": "string",
+                                                  "example": "Identifier"
+                                               },
+                                               "type": {
+                                                  "type": "string",
+                                                  "example": "string"
+                                               },
+                                               "format": {
+                                                  "type": "string",
+                                                  "example": "uri-reference"
+                                               },
+                                               "description": {
+                                                  "type": "string",
+                                                  "example": "A unique identifier for the record."
+                                               },
+                                               "meta:xdmType": {
+                                                  "type": "string",
+                                                  "example": "string"
+                                               },
+                                               "meta:xdmField": {
+                                                  "type": "string",
+                                                  "example": "@id"
+                                               }
+                                            }
+                                         }
+                                      }
+                                   }
                                 }
                              }
                           }
                        },
-                       "allOf": [
-                          {
-                             "$ref": "#/definitions/record",
+                       "allOf": {
+                          "type": "array",
+                          "items": {
                              "type": "object",
-                             "meta:xdmType": "object"
-                          },
-                          {
-                             "$ref": "https://ns.adobe.com/xdm/common/extensible%23/definitions/@context",
-                             "type": "object",
-                             "meta:xdmType": "object"
+                             "properties": {
+                                "$ref": {
+                                   "type": "string"
+                                },
+                                "type": {
+                                   "type": "string"
+                                },
+                                "meta:xdmType": {
+                                   "type": "string"
+                                }
+                             },
+                             "example": [
+                                {
+                                   "$ref": "#/definitions/record",
+                                   "type": "object",
+                                   "meta:xdmType": "object"
+                                },
+                                {
+                                   "$ref": "https://ns.adobe.com/xdm/common/extensible%23/definitions/@context",
+                                   "type": "object",
+                                   "meta:xdmType": "object"
+                                }
+                             ]
                           }
-                       ],
-                       "meta:extensible": true,
-                       "meta:abstract": true,
-                       "meta:xdmType": "object",
-                       "meta:status": "stable",
-                       "$schema": "http://json-schema.org/draft-06/schema#",
+                       },
+                       "meta:extensible": {
+                          "type": "boolean",
+                          "example": true
+                       },
+                       "meta:abstract": {
+                          "type": "boolean",
+                          "example": true
+                       },
+                       "meta:xdmType": {
+                          "type": "string",
+                          "example": "object"
+                       },
+                       "meta:status": {
+                          "type": "string",
+                          "example": "stable"
+                       },
+                       "$schema": {
+                          "type": "string",
+                          "example": "http://json-schema.org/draft-06/schema#"
+                       },
                        "meta:registryMetadata": {
-                          "repo:createdDate": 1606266789446,
-                          "repo:lastModifiedDate": 1606266789446,
-                          "eTag": "2cc114a54949a9668fe2ad046ccece59192e1bfa28f14e5ac7c893acb7820ba2",
-                          "meta:globalLibVersion": "1.16.4"
+                          "type": "object",
+                          "properties": {
+                             "repo:createdDate": {
+                                "type": "integer",
+                                "example": 1606266789446
+                             },
+                             "repo:lastModifiedDate": {
+                                "type": "integer",
+                                "example": 1606266789446
+                             },
+                             "eTag": {
+                                "type": "string",
+                                "example": "2cc114a54949a9668fe2ad046ccece59192e1bfa28f14e5ac7c893acb7820ba2"
+                             },
+                             "meta:globalLibVersion": {
+                                "type": "string",
+                                "example": "1.16.4"
+                             }
+                          }
                        }
                     }
                  }
