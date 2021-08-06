@@ -3829,119 +3829,179 @@
      },
      "lookupFieldGroupResponse": {
         "type": "object",
-        "example": {
-           "$id": "https://ns.adobe.com/xdm/context/profile-person-details",
-           "meta:altId": "_xdm.context.profile-person-details",
-           "meta:resourceType": "mixins",
-           "version": "1.22.3",
-           "title": "Demographic Details",
-           "type": "object",
-           "description": "Demographic information such as name, gender, and birth date of an individual.",
-           "definitions": {
-              "profile-person-details": {
-                 "properties": {
-                    "person": {
-                       "title": "Person",
-                       "$ref": "https://ns.adobe.com/xdm/context/person",
-                       "description": "An individual actor, contact, or owner.",
-                       "type": "object",
-                       "meta:xdmType": "object",
-                       "meta:xdmField": "xdm:person"
-                    }
-                 }
-              }
-           },
-           "allOf": [
-              {
-                 "$ref": "https://ns.adobe.com/xdm/common/extensible%23/definitions/@context",
-                 "type": "object",
-                 "meta:xdmType": "object"
-              },
-              {
-                 "$ref": "#/definitions/profile-person-details",
-                 "type": "object",
-                 "meta:xdmType": "object"
-              }
-           ],
-           "meta:extensible": true,
-           "meta:abstract": true,
-           "meta:intendedToExtend": [
-              "https://ns.adobe.com/xdm/context/profile"
-           ],
-           "meta:xdmType": "object",
-           "meta:status": "stable",
-           "$schema": "http://json-schema.org/draft-06/schema#",
-           "meta:registryMetadata": {
-              "repo:createdDate": 1620758109174,
-              "repo:lastModifiedDate": 1620758109174,
-              "eTag": "f5b20a7edefab1c4b1a86fbd4de91570b57d36b9f2c6deb3225a18d14fafce3b",
-              "meta:globalLibVersion": "1.22.3",
-              "meta:usageCount": 29
-           },
-           "meta:tags": {
-              "industry": [
-                 "all"
-              ]
-           },
-           "meta:createdDate": "2020-08-10"
-        },
         "properties": {
-           "type": {
+           "$id": {
               "type": "string",
-              "example": "object"
-           },
-           "title": {
-              "type": "string",
-              "example": "Loyalty Field Group"
-           },
-           "description": {
-              "type": "string",
-              "example": "Field group to describe members of the Loyalty Program."
-           },
-           "meta:extensible": {
-              "type": "boolean"
-           },
-           "meta:abstract": {
-              "type": "boolean"
-           },
-           "meta:containerId": {
-              "type": "string",
-              "example": "tenant"
-           },
-           "imsOrg": {
-              "type": "string",
-              "example": "6A12345CA8D350A49413A@AdobeOrg"
-           },
-           "meta:intendedToExtend": {
-              "type": "array",
-              "items": {
-                 "type": "string",
-                 "example": "https://ns.adobe.com/xdm/context/profile"
-              }
-           },
-           "properties": {
-              "type": "object",
-              "description": "All of the attributes of the schema are found under properties."
+              "example": "https://ns.adobe.com/xdm/context/profile-person-details"
            },
            "meta:altId": {
               "type": "string",
-              "example": "_{TENANT_ID}.mixins.477bb01d7125b015b4feba7bccc2e599"
-           },
-           "$id": {
-              "type": "string",
-              "example": "https://ns.adobe.com/{TENANT_ID}/mixins/477bb01d7125b015b4feba7bccc2e599"
-           },
-           "version": {
-              "type": "string",
-              "example": "1.0"
+              "example": "_xdm.context.profile-person-details"
            },
            "meta:resourceType": {
               "type": "string",
               "example": "mixins"
            },
+           "version": {
+              "type": "string",
+              "example": "1.22.3"
+           },
+           "title": {
+              "type": "string",
+              "example": "Demographic Details"
+           },
+           "type": {
+              "type": "string",
+              "example": "object"
+           },
+           "description": {
+              "type": "string",
+              "example": "Demographic information such as name, gender, and birth date of an individual."
+           },
+           "definitions": {
+              "type": "object",
+              "properties": {
+                 "profile-person-details": {
+                    "type": "object",
+                    "properties": {
+                       "properties": {
+                          "type": "object",
+                          "properties": {
+                             "person": {
+                                "type": "object",
+                                "properties": {
+                                   "title": {
+                                      "type": "string",
+                                      "example": "Person"
+                                   },
+                                   "$ref": {
+                                      "type": "string",
+                                      "example": "https://ns.adobe.com/xdm/context/person"
+                                   },
+                                   "description": {
+                                      "type": "string",
+                                      "example": "An individual actor, contact, or owner."
+                                   },
+                                   "type": {
+                                      "type": "string",
+                                      "example": "object"
+                                   },
+                                   "meta:xdmType": {
+                                      "type": "string",
+                                      "example": "object"
+                                   },
+                                   "meta:xdmField": {
+                                      "type": "string",
+                                      "example": "xdm:person"
+                                   }
+                                }
+                             }
+                          }
+                       }
+                    }
+                 }
+              }
+           },
+           "allOf": {
+              "type": "array",
+              "items": {
+                 "type": "object",
+                 "properties": {
+                    "$ref": {
+                       "type": "string"
+                    },
+                    "type": {
+                       "type": "string"
+                    },
+                    "meta:xdmType": {
+                       "type": "string"
+                    }
+                 }
+              },
+              "example": [
+                 {
+                    "$ref": "https://ns.adobe.com/xdm/common/extensible%23/definitions/@context",
+                    "type": "object",
+                    "meta:xdmType": "object"
+                 },
+                 {
+                    "$ref": "#/definitions/profile-person-details",
+                    "type": "object",
+                    "meta:xdmType": "object"
+                 }
+              ]
+           },
+           "meta:extensible": {
+              "type": "boolean",
+              "example": true
+           },
+           "meta:abstract": {
+              "type": "boolean",
+              "example": true
+           },
+           "meta:intendedToExtend": {
+              "type": "array",
+              "items": {
+                 "type": "string"
+              },
+              "example": [
+                 "https://ns.adobe.com/xdm/context/profile"
+              ]
+           },
+           "meta:xdmType": {
+              "type": "string",
+              "example": "object"
+           },
+           "meta:status": {
+              "type": "string",
+              "example": "stable"
+           },
+           "$schema": {
+              "type": "string",
+              "example": "http://json-schema.org/draft-06/schema#"
+           },
            "meta:registryMetadata": {
               "type": "object",
-              "description": "Various metadata related to the field group."
+              "properties": {
+                 "repo:createdDate": {
+                    "type": "integer",
+                    "example": 1620758109174
+                 },
+                 "repo:lastModifiedDate": {
+                    "type": "integer",
+                    "example": 1620758109174
+                 },
+                 "eTag": {
+                    "type": "string",
+                    "example": "f5b20a7edefab1c4b1a86fbd4de91570b57d36b9f2c6deb3225a18d14fafce3b"
+                 },
+                 "meta:globalLibVersion": {
+                    "type": "string",
+                    "example": "1.22.3"
+                 },
+                 "meta:usageCount": {
+                    "type": "integer",
+                    "example": 29
+                 }
+              }
+           },
+           "meta:tags": {
+              "type": "object",
+              "properties": {
+                 "industry": {
+                    "type": "array",
+                    "items": {
+                       "type": "string"
+                    },
+                    "example": [
+                       "all"
+                    ]
+                 }
+              }
+           },
+           "meta:createdDate": {
+              "type": "string",
+              "example": "2020-08-10"
            }
         }
      },
