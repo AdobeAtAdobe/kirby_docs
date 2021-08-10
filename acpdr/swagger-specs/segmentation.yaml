@@ -1568,6 +1568,27 @@ definitions:
         "$ref": "#/definitions/Expression"
       schema:
         "$ref": "#/definitions/SchemaClass"
+      evaluationInfo:
+        type: object
+        properties:
+          batch:
+            type: object
+            properties:
+              enabled:
+                type: boolean
+                example: true 
+          continuous: 
+            type: object
+            properties:
+              enable:
+                type: boolean
+                example: false 
+          synchronous:
+            type: object
+            properties:
+              enable:
+                type: boolean
+                example: false 
       payloadSchema:
         type: string
       ttlInDays:
