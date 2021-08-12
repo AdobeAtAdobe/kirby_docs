@@ -72,10 +72,19 @@ paths:
           type: string
           description: "The ID of the streaming connection you want to stream data to."
         - in: "query"
-          name: "synchronousValidation"
+          name: "syncValidation"
           required: false
           type: boolean
-          description: "An optional query parameter, intended for development purposes. If set to `true`, it can be used for immediate feedback to determine if the request was successfully sent. By default, this value is set to `false`."
+          description: "An optional query parameter, intended for development purposes. If set to `true`, it can be used for immediate feedback to determine if the request was successfully sent. By default, this value is set to `false`.\n\n Please note that requests using this query parameter are __limited__ to 60 requests per minute, per CONNECTION_ID."
+          enum:
+            - true
+            - false
+        - in: "query"
+          name: "synchronousValidation"
+          required: false
+          deprecated: true
+          type: boolean
+          description: "This query parameter is __deprecated__ and will be removed in a future release. Please use `syncValidation` instead."
           enum:
             - true
             - false
