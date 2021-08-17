@@ -16,6 +16,11 @@
           "title": "Access Control API"
       },
       {
+          "pages": [],
+          "path": "acpdr/swagger-specs/audit-query.yaml",
+          "title": "Audit Query API"
+      },
+      {
         "pages": [],
         "path": "acpdr/swagger-specs/catalog.yaml",
         "title": "Catalog Service API"
