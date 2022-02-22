@@ -16,14 +16,14 @@ info:
 
     - API paths:
         - PLATFORM Gateway URL: https://<span>platform.adobe.io/
-        - Base path for this API: /data/foundation/sandbox-management
+        - Base path for this API: /data/foundation
         - Example of a complete path: https://<span>platform.adobe.io/data/foundation/sandbox-management/sandboxes
 
     - Required headers:
         - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).
         - All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://adobe.com/go/sandbox-overview-en) for more information.
         - All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
-basePath: /data/foundation/sandbox-management/
+basePath: /data/foundation
 host: platform.adobe.io
 tags:
   - name: Admin operations
@@ -31,7 +31,7 @@ tags:
   - name: User operations
     description: Sandbox operations available to all users.
 paths:
-  /:
+  /sandbox-management/:
     get:
       tags:
         - User operations
@@ -58,7 +58,7 @@ paths:
           description: Not found
         500:
           description: Internal server error
-  /sandboxTypes:
+  /sandbox-management/sandboxTypes:
     get:
       tags:
         - Admin operations
@@ -84,7 +84,7 @@ paths:
           description: Not found
         500:
           description: Internal server error
-  /sandboxes:
+  /sandbox-management/sandboxes:
     get:
       tags:
         - Admin operations
@@ -145,7 +145,7 @@ paths:
           description: Conflict
         500:
           description: Internal server error
-  /sandboxes/{sandboxName}:
+  /sandbox-management/sandboxes/{sandboxName}:
     get:
       tags:
         - Admin operations
