@@ -2,24 +2,24 @@ swagger: '2.0'
 info:
   version: '1.0'
   title: Schema Registry API
-  description: >- 
+  description: >-
     * Service description:
       * The Schema Registry API is used to access the Schema Library within Adobe Experience Platform. The registry provides a user interface and RESTful API from which all available library resources are accessible.
-  
-  
+
+
     * Related documentation:
       * [XDM documentation](http://www.adobe.com/go/xdm-home-en)
-    
+
     * Visualize API calls with Postman (a free, third-party software):
       * [Schema Registry API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Schema%20Registry%20API.postman_collection.json)
       * [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
       * [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
-  
+
     * API paths:
       * PLATFORM Gateway URL: https://<span>platform.adobe.io
       * Base path for this API: /data/foundation/schemaregistry
       * Example of a complete path for making a call to "/stats": https://<span>platform.adobe.io/data/foundation/schemaregistry/stats
-    
+
     * Required headers:
       * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).
       * All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://adobe.com/go/sandbox-overview-en) for more information.
@@ -75,7 +75,7 @@ paths:
       responses:
         '200':
           description: A successful response returns your tenant ID and Schema Registry usage information.
-          schema: 
+          schema:
             '$ref': '#/definitions/statsResponse'
         '400':
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
@@ -154,7 +154,7 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/content-type'        
+        - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/fieldGroupPayload'
       responses:
         '201':
@@ -203,8 +203,8 @@ paths:
       summary: Update one or more attributes of a custom field group by ID.
       description: >-
         The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow you to modify or update resources you have defined.
-        
-        
+
+
         For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).
       operationId: updateFieldGroup
       consumes:
@@ -238,8 +238,8 @@ paths:
       summary: Delete a custom field group by ID.
       description: >-
         Remove an existing field group through a DELETE request to the `$id` of the field group being removed.
-        
-        
+
+
         A successful deletion returns an empty response body and HTTP status 204 (No Content).
       operationId: removeFieldGroup
       parameters:
@@ -266,8 +266,8 @@ paths:
       summary: Retrieve a list of schemas within the specified container.
       description: >-
         You are able to view a list of all schemas within a container by performing a single GET request. To help filter results, the Schema Registry supports the use of query parameters when listing resources.
-        
-        
+
+
         The response format depends on the `Accept` header sent in the request. The following `Accept` headers are available for this request:<ul><li>`application/vnd.adobe.xed-id+json`: Returns a short summary of each resource, generally the preferred header for listing.</li><li>`application/vnd.adobe.xed+json`: Returns full JSON for each resource, with the original `$ref` and `allOf` attributes included.</li></ul>
       operationId: listAllSchemas
       produces:
@@ -307,8 +307,8 @@ paths:
       summary: Retrieve a schema within the specified container by ID.
       description: >-
         The response format depends on the `Accept` header sent in the request. The following `Accept` headers are available for this request:<ul><li>`application/vnd.adobe.xed+json; version=1`:  Raw with `$ref` and `allOf` included. Has titles and descriptions.</li><li>`application/vnd.adobe.xed-full+json; version=1`: `$ref` and `allOf` included. Has titles and descriptions.</li><li>`application/vnd.adobe.xed-notext+json; version=1`: Raw with `$ref` and `allOf` included, but with no titles or descriptions</li><li>`application/vnd.adobe.xed-full-notext+json; version=1`:  `$ref` and `allOf` are resolved, with no titles or descriptions.</li><li>`application/vnd.adobe.xed-full-desc+json; version=1`: `$ref` and `allOf` are resolved, with descriptions included.</li></ul>
-        
-        
+
+
         A lookup request requires the resource's major version be included in the `Accept` header. When supplying the major version, the registry returns the latest minor version automatically.
       operationId: lookupSchema
       produces:
@@ -346,7 +346,7 @@ paths:
       responses:
         '201':
           description: A successful response returns the details of the newly created schema.
-          schema: 
+          schema:
             '$ref': '#/definitions/createSchemaResponse'
         '400':
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
@@ -384,8 +384,8 @@ paths:
       summary: Update one or more attributes of a custom schema specified by ID.
       description: >-
         The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update schemas they have defined.
-        
-        
+
+
         For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).
       operationId: updateSchema
       consumes:
@@ -409,15 +409,15 @@ paths:
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
           description: An internal server error occurred.
-   
+
     delete:
       tags:
       - "Schemas"
       summary: Delete a custom schema by ID.
       description: >-
         Remove an existing schema by performing a DELETE request to the `$id` of the schema being removed.
-      
-      
+
+
         A successful deletion returns an empty response body and HTTP status 204 (No Content).
       operationId: removeSchema
       parameters:
@@ -626,7 +626,7 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/content-type'        
+        - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/fieldGroupPayload'
       responses:
         '201':
@@ -671,8 +671,8 @@ paths:
       deprecated: true
       description: >-
         The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update mixins they have defined.
-        
-        
+
+
         For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).
       operationId: updateMixin
       consumes:
@@ -701,8 +701,8 @@ paths:
       deprecated: true
       description: >-
         Remove an existing mixin through a DELETE request to the `$id` of the mixin being removed.
-        
-        
+
+
         A successful deletion returns an empty response body and HTTP status 204 (No Content).
       operationId: removeMixin
       parameters:
@@ -797,13 +797,13 @@ paths:
       responses:
         '201':
           description: A successful response returns the details of the newly created class.
-          schema: 
+          schema:
             '$ref': '#/definitions/createClassResponse'
         '400':
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
           description: An internal server error occurred.
-    
+
   '/tenant/classes/{CLASS_ID}':
     put:
       tags:
@@ -840,8 +840,8 @@ paths:
       summary: Update one or more attributes of a custom class specified by ID.
       description: >-
         The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update classes they have defined.
-        
-        
+
+
         For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).
       operationId: updateClass
       consumes:
@@ -873,8 +873,8 @@ paths:
       summary: Delete a custom class by ID.
       description: >-
         Remove a class by performing a DELETE request to the `$id` of the class being removed.
-        
-        
+
+
         A successful deletion returns an empty response body and HTTP status 204 (No Content).
       operationId: removeClass
       parameters:
@@ -967,7 +967,7 @@ paths:
       responses:
         '201':
           description: A successful response returns the details of the newly created data type.
-          schema: 
+          schema:
             '$ref': '#/definitions/createDataTypeResponse'
         '400':
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
@@ -995,7 +995,7 @@ paths:
       responses:
         '200':
           description: A successful response returns the details of the updated data type.
-          schema: 
+          schema:
             '$ref': '#/definitions/putDataTypeResponse'
         '400':
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
@@ -1006,10 +1006,10 @@ paths:
       - "Data types"
       summary: Update one or more attributes of a custom data type specified by ID.
       description: >-
-      
+
         The Schema Registry supports all standard JSON Patch operations, including add, remove, and replace, to allow users to modify or update data types they have defined.
-        
-        
+
+
         For more information on JSON Patch, including all available operations, read [the official JSON Patch documentation](http://jsonpatch.com).
       consumes:
         - application/json
@@ -1026,7 +1026,7 @@ paths:
       responses:
         '200':
           description: A successful response returns the details of the updated data type.
-          schema: 
+          schema:
             '$ref': '#/definitions/patchDataTypeResponse'
         '400':
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
@@ -1038,8 +1038,8 @@ paths:
       summary: Delete a custom class by ID.
       description: >-
         Removing a data type is done through a DELETE request to the `$id` of the data type being removed.
-        
-        
+
+
         A successful deletion returns an empty response body and HTTP status 204 (No Content).
       operationId: removeDatatype
       parameters:
@@ -1062,20 +1062,20 @@ paths:
       summary: Retrieve a list descriptors within the specified container, sorted by type.
       description: >-
         Schemas define a static view of data entities, but do not provide specific details on how data based on these schemas (datasets) may relate to one another. Adobe Experience Platform allows you to describe these relationships and other interpretive metadata about a schema through the use of descriptors.
-        
-        
+
+
         Descriptors are tenant-level metadata for schemas, meaning they are unique to your IMS Organization and all descriptor operations take place in the `tenant` container.
-        
-        
+
+
         Each schema can have one or more schema descriptor entities applied to it. Each schema descriptor entity includes a descriptor '@type' and the 'sourceSchema' to which it applies. Once applied, these descriptors will apply to all datasets created using the schema.
-        
-        
+
+
         In order to help filter returned data, the Schema Registry supports the use of query parameters when listing descriptors.
-        
-        
+
+
         `Accept` headers for descriptors include:
-        
-        
+
+
         <table><thead><tr><th>`Accept`</th><th>Description</th></tr></thead><tbody><tr><td>`application/vnd.adobe.xdm-id+json`</td><td>Returns a list of descriptor IDs, grouped by their `@type`.</td></tr><tr><td>`application/vnd.adobe.xdm-link+json`</td><td>Returns a list of descriptor API paths, grouped by their `@type`.</td></tr><tr><td>`application/vnd.adobe.xdm+json`</td><td>Returns a list of descriptor objects, grouped by their `@type`.</td></tr><tr><td>`application/vnd.adobe.xdm-v2{-id/-link}+json`</td><td>Including the `-v2` option in any of the above `Accept` headers permits paging functionality, returning a results array with a `_page` attribute that can be used to request the next page if needed.</td></tr></tbody></table>
       operationId: listAllDescriptors
       produces:
@@ -1166,17 +1166,17 @@ paths:
           description: Forbidden
         '500':
           description: An internal server error occurred.
-  
+
   '/tenant/descriptors/{DESCRIPTOR_ID}':
     put:
       tags:
       - "Descriptors"
       summary: Update a descriptor by ID.
       description: >-
-      
+
         Update a descriptor by issuing a PUT request to the `@id` of the descriptor being updated.
-        
-        
+
+
         This action is **re-writing** the existing descriptor, therefore the payload must include all descriptor fields that were required when the descriptor was defined.
       operationId: updateDescriptor
       consumes:
@@ -1669,16 +1669,16 @@ definitions:
         type: array
         description: Array of objects containing details of recently updated resources.
         items:
-          type: object   
+          type: object
       classUsage:
         type: object
         properties:
-          'https://ns.adobe.com/xdm/context/profile': 
+          'https://ns.adobe.com/xdm/context/profile':
             type: array
             items:
               type: object
               properties:
-                $id: 
+                $id:
                   type: string
                   example: 'https://ns.adobe.com/{TENANT_ID}/schemas/274f17bc5807ff307a046bab1489fb18'
                 title:
@@ -1783,7 +1783,7 @@ definitions:
         example: false
       meta:extends:
         type: array
-        items: 
+        items:
           type: string
           example: https://ns.adobe.com/xdm/context/profile
       meta:containerId:
@@ -1795,7 +1795,7 @@ definitions:
       $id:
         type: string
         example: https://ns.adobe.com/{TENANT_ID}/schemas/fbc52b243d04b5d4f41eaa72a8ba58be
-      meta:altId: 
+      meta:altId:
         type: string
         example: "_{TENANT_ID}.schemas.fbc52b243d04b5d4f41eaa72a8ba58be"
       version:
@@ -1819,7 +1819,7 @@ definitions:
           xdm:createdClientId:
             type: string
             example: '{CREATED_CLIENT}'
-          xdm:repositoryCreatedBy: 
+          xdm:repositoryCreatedBy:
             type: string
             example: '{CREATED_BY}'
   lookupSchemaResponse:
@@ -1831,7 +1831,7 @@ definitions:
       title:
         type: string
         example: Tenant Data Schema
-      description: 
+      description:
         type: string
         example: Schema for tenant-specific data
       meta:extensible:
@@ -1857,7 +1857,7 @@ definitions:
       meta:altId:
         type: string
         example: '_{TENANT_ID}.schemas.274f17bc5807ff307a046bab1489fb18'
-      $id: 
+      $id:
         type: string
         example: 'https://ns.adobe.com/{TENANT_ID}/schemas/274f17bc5807ff307a046bab1489fb18'
       version:
@@ -1878,7 +1878,7 @@ definitions:
       title:
         type: string
         example: Tenant Data Schema
-      description: 
+      description:
         type: string
         example: Schema for tenant-specific data
       meta:extensible:
@@ -1904,7 +1904,7 @@ definitions:
       meta:altId:
         type: string
         example: '_{TENANT_ID}.schemas.274f17bc5807ff307a046bab1489fb18__union'
-      $id: 
+      $id:
         type: string
         example: 'https://ns.adobe.com/{TENANT_ID}/schemas/274f17bc5807ff307a046bab1489fb18__union'
       version:
@@ -1939,7 +1939,7 @@ definitions:
       title:
         type: string
         example: Tenant Data Schema
-      description: 
+      description:
         type: string
         example: Schema for tenant-specific data
       meta:immutableTags:
@@ -1975,7 +1975,7 @@ definitions:
       meta:altId:
         type: string
         example: '_{TENANT_ID}.schemas.274f17bc5807ff307a046bab1489fb18'
-      $id: 
+      $id:
         type: string
         example: 'https://ns.adobe.com/{TENANT_ID}/schemas/274f17bc5807ff307a046bab1489fb18'
       version:
@@ -2085,7 +2085,7 @@ definitions:
         example: true
       meta:extends:
         type: array
-        items: 
+        items:
           type: string
           example: https://ns.adobe.com/xdm/data/record
       meta:containerId:
@@ -2097,7 +2097,7 @@ definitions:
       $id:
         type: string
         example: 'https://ns.adobe.com/{TENANT_ID}/classes/12345b243d04b5d4f41eaa72a8ba58be'
-      meta:altId: 
+      meta:altId:
         type: string
         example: "_{TENANT_ID}.classes.12345b243d04b5d4f41eaa72a8ba58be"
       version:
@@ -2121,7 +2121,7 @@ definitions:
           xdm:createdClientId:
             type: string
             example: '{CREATED_CLIENT}'
-          xdm:repositoryCreatedBy: 
+          xdm:repositoryCreatedBy:
             type: string
             example: '{CREATED_BY}'
   lookupClassResponse:
@@ -2133,7 +2133,7 @@ definitions:
       title:
         type: string
         example: Tenant Class
-      description: 
+      description:
         type: string
         example: Description of tenant-defined class.
       meta:extensible:
@@ -2159,7 +2159,7 @@ definitions:
       meta:altId:
         type: string
         example: '_{TENANT_ID}.classes.7bc5807ff307a046bab1489fb1812345'
-      $id: 
+      $id:
         type: string
         example: 'https://ns.adobe.com/{TENANT_ID}/classes/7bc5807ff307a046bab1489fb1812345'
       version:
@@ -2236,35 +2236,7 @@ definitions:
       definitions:
         type: object
         description: Attributes of the field group, nested under `properties` and  `_{TENANT_ID}`.
-        properties:
-          loyalty:
-            type: object
-            description: Nested structure under which to include field group properties. For example, in a Loyalty field group, the namespace could be `loyalty`.
-            properties:
-              properties:
-                type: object
-                properties:
-                  '_{TENANT_ID}':
-                    type: object
-                    properties:
-                      type:
-                        type: string
-                        example: object
-                      properties:
-                        type: object
-                        properties:
-                          loyaltyId:
-                            type: object
-                            properties:
-                              title:
-                                type: string
-                                example: loyaltyId
-                              type:
-                                type: string
-                                example: string
-                              description:
-                                type: string
-                                example: Unique loyalty identifier.
+        additionalProperties: true
       allOf:
         type: array
         items:
@@ -2346,8 +2318,8 @@ definitions:
         'repo:lastModifiedDate': 1552668061906
         'xdm:createdClientId': '{CREATED_CLIENT}'
         'xdm:repositoryCreatedBy': '{CREATED_BY}'
-    
-  createFieldGroupResponse:          
+
+  createFieldGroupResponse:
     type: object
     properties:
       type:
@@ -2419,7 +2391,7 @@ definitions:
       $id:
         type: string
         example: 'https://ns.adobe.com/{TENANT_ID}/mixins/477bb01d7125b015b4feba7bccc2e599'
-      meta:altId: 
+      meta:altId:
         type: string
         example: '_{TENANT_ID}.mixins.477bb01d7125b015b4feba7bccc2e599'
       version:
@@ -2443,7 +2415,7 @@ definitions:
           xdm:createdClientId:
             type: string
             example: '{CREATED_CLIENT}'
-          xdm:repositoryCreatedBy: 
+          xdm:repositoryCreatedBy:
             type: string
             example: '{CREATED_BY}'
   lookupFieldGroupResponse:
@@ -2497,7 +2469,7 @@ definitions:
       title:
         type: string
         example: Loyalty Field Group
-      description: 
+      description:
         type: string
         example: Field group to describe members of the Loyalty Program.
       meta:extensible:
@@ -2521,7 +2493,7 @@ definitions:
       meta:altId:
         type: string
         example: '_{TENANT_ID}.mixins.477bb01d7125b015b4feba7bccc2e599'
-      $id: 
+      $id:
         type: string
         example: 'https://ns.adobe.com/{TENANT_ID}/mixins/477bb01d7125b015b4feba7bccc2e599'
       version:
@@ -2599,7 +2571,7 @@ definitions:
                               type:
                                 type: string
                                 example: string
-                              
+
       allOf:
         type: array
         items:
@@ -2735,7 +2707,7 @@ definitions:
         'repo:lastModifiedDate': 1552668061906
         'xdm:createdClientId': '{CREATED_CLIENT}'
         'xdm:repositoryCreatedBy': '{CREATED_BY}'
-      
+
   createDataTypeResponse:
     type: object
     properties:
@@ -2790,7 +2762,7 @@ definitions:
       $id:
         type: string
         example: 'https://ns.adobe.com/{TENANT_ID}/datatypes/24c643f618647344606222c494bd0102'
-      meta:altId: 
+      meta:altId:
         type: string
         example: "_{TENANT_ID}.datatypes.24c643f618647344606222c494bd0102"
       version:
@@ -2814,7 +2786,7 @@ definitions:
           xdm:createdClientId:
             type: string
             example: '{CREATED_CLIENT}'
-          xdm:repositoryCreatedBy: 
+          xdm:repositoryCreatedBy:
             type: string
             example: '{CREATED_BY}'
   lookupDataTypeResponse:
@@ -2871,7 +2843,7 @@ definitions:
       $id:
         type: string
         example: 'https://ns.adobe.com/{TENANT_ID}/datatypes/24c643f618647344606222c494bd0102'
-      meta:altId: 
+      meta:altId:
         type: string
         example: "_{TENANT_ID}.datatypes.24c643f618647344606222c494bd0102"
       version:
@@ -2895,7 +2867,7 @@ definitions:
           xdm:createdClientId:
             type: string
             example: '{CREATED_CLIENT}'
-          xdm:repositoryCreatedBy: 
+          xdm:repositoryCreatedBy:
             type: string
             example: '{CREATED_BY}'
   patchDataType:
@@ -2978,7 +2950,7 @@ definitions:
         type: array
         items:
           type: string
-          example: 'cb509fd6f8ab6304e346905441a34b58a0cd481a'   
+          example: 'cb509fd6f8ab6304e346905441a34b58a0cd481a'
   lookupDescriptorResponse:
     type: object
     properties:
@@ -3006,7 +2978,7 @@ definitions:
         example: Phone
       'xdm:property':
         type: string
-        enum: 
+        enum:
         - xdm:id
         - xdm:code
         example: 'xdm:code'
@@ -3064,7 +3036,7 @@ definitions:
         example: Email
       'xdm:property':
         type: string
-        enum: 
+        enum:
         - xdm:id
         - xdm:code
         example: 'xdm:code'
@@ -3098,7 +3070,7 @@ definitions:
         example: Email
       'xdm:property':
         type: string
-        enum: 
+        enum:
         - xdm:id
         - xdm:code
         example: 'xdm:code'
