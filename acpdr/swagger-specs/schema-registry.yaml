@@ -1671,22 +1671,33 @@ definitions:
         items:
           type: object
       classUsage:
-        type: object
-        properties:
-          'https://ns.adobe.com/xdm/context/profile':
-            type: array
-            items:
-              type: object
-              properties:
-                $id:
-                  type: string
-                  example: 'https://ns.adobe.com/{TENANT_ID}/schemas/274f17bc5807ff307a046bab1489fb18'
-                title:
-                  type: string
-                  example: Tenant Data Schema
-                description:
-                  type: string
-                  example: Schema for tenant-specific data.
+        type: array
+        items:
+          type: object
+          properties:
+            $id:
+              type: string
+              example: 'https://ns.adobe.com/{TENANT_ID}/schemas/274f17bc5807ff307a046bab1489fb18'
+            title:
+              type: string
+              example: Some Custom Class Name
+            numberOfSchemas:
+              type: integer
+              example: 4
+            schemas:
+              type: array
+              items:
+                type: object
+                properties:
+                  $id:
+                    type: string
+                    example: 'https://ns.adobe.com/{TENANT_ID}/schemas/274f17bc5807ff307a046bab1489fb18'
+                  title:
+                    type: string
+                    example: Tenant Data Schema
+                  description:
+                    type: string
+                    example: Schema for tenant-specific data.
   listSchemasResponse:
     type: object
     properties:
