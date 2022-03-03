@@ -5,9 +5,9 @@ info:
   description: >-
     - Service description:
         - Catalog is the system of record for data location and lineage within Adobe Experience Platform. Catalog Service does not contain the actual files or directories that contain the data. Instead, it holds the metadata and description of those files and directories.
-    
+
         - Catalog acts as a metadata store or "catalog" where you can find information about your data within Experience Platform.
-  
+
         - You can use Catalog to answer the following questions: Where is my data located? At what stage of processing is this data? What systems or processes have acted on my data? What errors occurred during processing? If successful, how much data was processed?
 
 
@@ -37,10 +37,10 @@ tags:
   - name: Batched requests
     description: Batched requests allow users to supply an array of objects in the request payload, representing what would normally be individual requests.
   - name: Datasets
-    description: Datasets are the building blocks for data transformation and tracking in Catalog Service. 
+    description: Datasets are the building blocks for data transformation and tracking in Catalog Service.
   - name: Tags
-    description: Tags are used to attach information to an object and then be used later to retrieve the object. 
-  
+    description: Tags are used to attach information to an object and then be used later to retrieve the object.
+
 produces:
   - application/json
 paths:
@@ -316,8 +316,8 @@ paths:
   '/batches/uniques/{FIELD}':
     parameters:
       - name: FIELD
-        description: >- 
-          - Field to get unique values for. **Note:** This endpoint will be deprecated soon. 
+        description: >-
+          - Field to get unique values for. **Note:** This endpoint will be deprecated soon.
         required: true
         type: string
         in: path
@@ -431,7 +431,7 @@ paths:
           type: string
           in: query
         - name: connector
-          description: >- 
+          description: >-
             - Filter on the ID of the connector.
           required: false
           type: string
@@ -478,7 +478,7 @@ paths:
         description: >-
           - The ID of the batch you are performing the operation on.
         in: path
-        required: true 
+        required: true
         type: string
       - $ref: '#/parameters/id'
       - $ref: '#/parameters/authorization'
@@ -790,7 +790,7 @@ paths:
         - name: enableErrorDiagnostics
           description: >-
             - A field that provides the ability to opt in to generating diagnostic files for the errors while ingesting data.
-          required: false 
+          required: false
           type: boolean
           in: query
         - $ref: '#/parameters/orderBy'
@@ -894,7 +894,7 @@ paths:
       - name: DATASET_ID
         description: >-
           - The ID of the dataset.
-        required: true 
+        required: true
         type: string
         in: path
       - $ref: '#/parameters/authorization'
@@ -1058,6 +1058,8 @@ paths:
               type: string
         '400':
           description: A bad request.
+        '404':
+          description: Not found.
         '403':
           description: Access is forbidden.
         '500':
@@ -1100,7 +1102,7 @@ paths:
           description: An internal server error has ocurred.
         default:
           description: An unexpected error has ocurred.
-  '/':        
+  '/':
     get:
       tags:
         - Batched requests
@@ -1137,7 +1139,7 @@ paths:
       parameters:
         - name: resources
           description: >-
-            The relative path of the resource. 
+            The relative path of the resource.
           required: true
           in: body
           schema:
@@ -1212,7 +1214,7 @@ parameters:
     in: header
   schemaRef:
       name: id
-      description: >- 
+      description: >-
         - The schema in URI (https://ns.adobe.com/xdm/context/profile, https://ns.adobe.com/customer/imsOrg/extensionNS/objectName) or meta:altId (_xdm.context.profile, _customer.extensionNS.objectName) or original XDM ID format (context/profile, _customer/extensionNS/objectName).
       required: false
       in: query
@@ -1289,7 +1291,7 @@ parameters:
     format: int64
   createdBefore:
     name: createdBefore
-    description: >- 
+    description: >-
       - Exclusively filter records created before this timestamp.
     required: false
     in: query
@@ -1305,14 +1307,14 @@ parameters:
     in: query
   createdClient:
     name: createdClient
-    description: >- 
+    description: >-
       - Filter by the ID of the IMS client that created this object.
     required: false
     type: string
     in: query
   createdUser:
     name: createdUser
-    description: >- 
+    description: >-
       - Filter by the ID of the user who created this object.
     required: false
     type: string
@@ -1443,7 +1445,7 @@ definitions:
             type: array
             items:
               type: string
-              description: >- 
+              description: >-
                 - One or more Batch Identifiers that this replay is replacing.
           reason:
             type: string
@@ -1645,7 +1647,7 @@ definitions:
       - Metadata describing the INGEST format of the data being loaded (e.g. Parquet, CSV, JSON).
     properties:
       format:
-        description: >- 
+        description: >-
           - The file format for data being submitted in the Batch.
         enum:
           - "csv"
@@ -1660,7 +1662,7 @@ definitions:
           - Character used to separate fields.
         type: string
       quote:
-        description: >- 
+        description: >-
           - Character used to quote fields that contains spaces, tabs, and/or delimiter characters.
         type: string
       escape:
@@ -1672,7 +1674,7 @@ definitions:
           - Character/string used to indicate a null value. Any value matching this string will be set as nulls in Data Lake.
         type: string
       header:
-        description: >- 
+        description: >-
           - True if input files are expected to have a header row.
         type: string
       charset:
@@ -1708,12 +1710,12 @@ definitions:
         readOnly: true
       createdClient:
         type: string
-        description: >- 
+        description: >-
           - The ID of the IMS client that created this Batch.
         readOnly: true
       createdUser:
         type: string
-        description: >- 
+        description: >-
           - The ID of the user who created this object.
         readOnly: true
       updatedUser:
@@ -1792,7 +1794,7 @@ definitions:
           - deleted
       failedBatchLocation:
         type: string
-        description: >- 
+        description: >-
           - When a batch status is failed, the URI at which to retrieve the batch
       recordCount:
         type: integer
@@ -1915,7 +1917,7 @@ definitions:
           failedRowCount:
             type: integer
             format: int64
-            description: >- 
+            description: >-
               - Rows that failed processing.
           rowCount:
             type: integer
@@ -1942,7 +1944,7 @@ definitions:
           - observableSchema stores a JSON Schema object that is a valid subset (including the null case) of the XDM model specified by `schemaRef`.
       requestStartDate:
         type: string
-        description: >- 
+        description: >-
           - The oldest date and the time, when the data was last ingested
       fields:
         type: array
@@ -1957,14 +1959,14 @@ definitions:
         readOnly: true
       fileDescription:
         type: object
-        description: >- 
+        description: >-
           - Metadata describing the dataset files associated with this DataSetView.
         properties:
           format:
             $ref: '#/definitions/format'
           delimiters:
             type: array
-            description: >- 
+            description: >-
               - Characters used to separate fields.
             items:
               type: string
@@ -1989,7 +1991,7 @@ definitions:
             description: ''
           charset:
             type: string
-            description: >- 
+            description: >-
               - The character encoding of the files.
             enum:
               - US-ASCII
@@ -1998,7 +2000,7 @@ definitions:
               - ''
       schema:
         type: string
-        description: >- 
+        description: >-
           - This is the uri for the XDM model
       schemaMetadata:
         $ref: '#/definitions/schemaMetadata'
@@ -2006,7 +2008,7 @@ definitions:
         $ref: '#/definitions/schemaRef'
       dataSourceId:
         type: integer
-        description: >- 
+        description: >-
           - The Id of the datasource. It must be unique, along with it''s name.
   dataSetResponse:
     type: object
@@ -2034,7 +2036,7 @@ definitions:
           - A descriptive, human-readable name for this DataSet.
       description:
         type: string
-        description: >-   
+        description: >-
           - A longer text description of the DataSet.
       created:
         type: integer
@@ -2050,7 +2052,7 @@ definitions:
         readOnly: true
       createdClient:
         type: string
-        description: >- 
+        description: >-
           - The ID of the IMS client that created this Batch.
         readOnly: true
       createdUser:
@@ -2096,7 +2098,7 @@ definitions:
           - observableSchema stores a JSON Schema object that is a valid subset (including the null case) of the XDM model specified by `schemaRef`.
       requestStartDate:
         type: string
-        description: >- 
+        description: >-
           - The oldest date and the time, when the data was last ingested.
       fields:
         type: array
@@ -2111,7 +2113,7 @@ definitions:
         readOnly: true
       fileDescription:
         type: object
-        description: >- 
+        description: >-
           - Metadata describing the dataset files associated with this DataSetView.
         properties:
           format:
@@ -2427,7 +2429,7 @@ definitions:
                 - Marks this field as a join key into other datasets.
       delta:
         type: array
-        description: >- 
+        description: >-
           - The presence of this attribute on a field indicates that it is used in the origin system for retrieving 'deltas' of data.
         items:
           type: object
@@ -2446,7 +2448,7 @@ definitions:
                 - The timezone that the data uses in the origin system, uses the format from IANA in the tz_database.
       contentAttributes:
         type: array
-        description: >- 
+        description: >-
           - This attribute gives information the columns. For eg. if the field is hidden, temporarily empty etc.
         items:
           type: object
@@ -2461,7 +2463,7 @@ definitions:
                 - This field stores the information about the specific column for eg.EMPTY_PERMANENT.
   credentials:
     type: object
-    description: >- 
+    description: >-
       - Credentials.
     properties:
       clientKey:
