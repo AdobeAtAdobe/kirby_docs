@@ -2286,6 +2286,75 @@ definitions:
         'xdm:repositoryCreatedBy': '{CREATED_BY}'
   updateFieldGroupResponse:
     type: object
+    properties:
+      type:
+        type: string
+        example: object
+      title:
+        type: string
+        example: Loyalty Details
+      description:
+        type: string
+        example: "Field group to describe members of the Loyalty Program."
+      meta:intendedToExtend:
+        type: array
+        items:
+          type: string
+          example: 'https://ns.adobe.com/xdm/context/profile'
+      definitions:
+        type: object
+        description: Attributes of the field group, nested under `properties` and  `_{TENANT_ID}`.
+        additionalProperties: true
+      allOf:
+        type: array
+        items:
+          type: object
+          properties:
+            $ref:
+              type: string
+              example: '#/definitions/loyalty'
+      meta:abstract:
+        type: boolean
+        example: true
+      meta:extensible:
+        type: boolean
+        example: true
+      meta:containerId:
+        type: string
+        example: tenant
+      imsOrg:
+        type: string
+        example: '{IMS_ORG}'
+      $id:
+        type: string
+        example: 'https://ns.adobe.com/{TENANT_ID}/mixins/477bb01d7125b015b4feba7bccc2e599'
+      meta:altId:
+        type: string
+        example: '_{TENANT_ID}.mixins.477bb01d7125b015b4feba7bccc2e599'
+      version:
+        type: string
+        example: '1.0'
+      meta:xdmType:
+        type: string
+        example: object
+      meta:resourceType:
+        type: string
+        example: mixins
+      meta:registryMetadata:
+        type: object
+        properties:
+          repo:createDate:
+            type: integer
+            example: 1552668061906
+          repo:lastModifiedDate:
+            type: integer
+            example: 1552668061906
+          xdm:createdClientId:
+            type: string
+            example: '{CREATED_CLIENT}'
+          xdm:repositoryCreatedBy:
+            type: string
+            example: '{CREATED_BY}'
     example:
       type: object
       title: Loyalty Details
