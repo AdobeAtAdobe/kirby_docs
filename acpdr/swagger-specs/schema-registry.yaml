@@ -126,8 +126,6 @@ paths:
       - $ref: '#/parameters/accept'
       summary: Retrieve a field group within the specified container by ID.
       operationId: lookupFieldGroup
-      produces:
-        - application/vnd.adobe.xed-id+json
       responses:
         '200':
           description: A successful response returns the details of the field group.
@@ -1504,24 +1502,28 @@ parameters:
     required: true
     type: string
     in: header
+    default: application/json
   accept:
     name: Accept
     description: The desired response format (eg. application/vnd.adobe.xed-full+json; version=1). "Version" is required.
     required: true
     type: string
     in: header
+    default: application/vnd.adobe.xed-full+json; version=1
   acceptListing:
     name: Accept
     description: The desired response format (eg. application/vnd.adobe.xed-id+json). Do not include "version".
     required: true
     type: string
     in: header
+    default: application/vnd.adobe.xed-id+json
   acceptDescriptors:
     name: Accept
     description: Descriptors require unique `Accept` headers using 'xdm' instead of 'xed' (eg. application/vnd.adobe.xdm-id+json)
     required: true
     type: string
     in: header
+    default: application/vnd.adobe.xdm-id+json
   property:
     name: property
     description: A comma-separated list of top-level object properties to be returned in the response. For example, `property=meta:intendedToExtend==https://ns.adobe.com/xdm/context/profile` returns only field groups that are compatible with the XDM Individual Profile class.
