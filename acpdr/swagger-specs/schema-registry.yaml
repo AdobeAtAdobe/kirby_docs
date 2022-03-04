@@ -127,7 +127,7 @@ paths:
       summary: Retrieve a field group within the specified container by ID.
       operationId: lookupFieldGroup
       produces:
-        - application/vnd.adobe.xed-full+json; version=1
+        - application/json
       responses:
         '200':
           description: A successful response returns the details of the field group.
@@ -312,7 +312,7 @@ paths:
         A lookup request requires the resource's major version be included in the `Accept` header. When supplying the major version, the registry returns the latest minor version automatically.
       operationId: lookupSchema
       produces:
-        - application/vnd.adobe.xed-full+json; version=1
+        - application/json
       responses:
         '200':
           description: A successful response returns the details of the schema.
