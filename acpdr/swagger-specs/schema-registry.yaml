@@ -127,7 +127,7 @@ paths:
       summary: Retrieve a field group within the specified container by ID.
       operationId: lookupFieldGroup
       produces:
-        - application/vnd.adobe.xed-full+json;version=1
+        - application/vnd.adobe.xed-id+json
       responses:
         '200':
           description: A successful response returns the details of the field group.
