@@ -597,33 +597,36 @@ parameters:
     in: header
 definitions:
   streamingMessage:
-    type: "object"
-    required:
-      - SCHEMA_ID
-      - SCHEMA_VERSION
-      - IMS_ORG_ID
-      - DATASET_ID
+    type: object
     properties:
-      TENANT_ID:
-        type: string
-        description: "This ID is used to ensure that resources you create are properly namespaced and contained within your IMS Organization."
-      SCHEMA_ID:
-        type: string
-        description: "The ID of the schema that is created."
-      SCHEMA_VERSION:
-        type: string
-        description: "The version of the schema that is created."
-      IMS_ORG_ID:
-        type: string
-        description: "Your IMS Organization ID can be found under the integration details in the Adobe Developer Console."
-      DATASET_ID:
-        type: string
-        description: "The ID of the dataset that you want to publish to."
-      SOURCE_NAME:
-        type: string
-        description: "The optional name for your source. If this value is missing, the streaming message will automatically add the source ID from the streaming connection definition."
-
-    description: "The message that you want to ingest."
+      header:
+        type: object
+        properties:
+          schemaRef:
+            "$ref": "#/definitions/SchemaReference"
+          imsOrgId:
+            type: "string"
+            description: "Unique Identifier for your IMS Organization ({IMS_ORG})"
+          datasetId:
+            type: "string"
+            description: "The ID of the dataset that you want to publish to."
+          source:
+            type: object
+            properties:
+              name:
+                type: "string"
+                description: "The optional name for your source. If this value is missing, the streaming message will automatically add the source ID from the streaming connection definition."
+      body:
+        type: object
+        properties:
+          xdmMeta:
+            type: object
+            properties:
+              schemaRef:
+                "$ref": "#/definitions/SchemaReference"
+          xdmEntity:
+            type: object
+            additionalProperties: true
     example:
       header:
         schemaRef:
@@ -652,6 +655,14 @@ definitions:
             address: janedoe@example.com
             type: work
             status: active
+  SchemaReference:
+    type: object
+    properties:
+      contentType:
+        type: string
+      id:
+        type: string
+    title: SchemaReference
   File:
     type: "object"
     properties:
@@ -926,7 +937,9 @@ definitions:
       xactionId: "1532625558467:0001:13"
       receivedTimeMs: "1551307525735"
   BatchMessage:
-    type: object
+    type: array
+    items:
+      $ref: "#/definitions/streamingMessage"
     description: "The batch message to be published to Platform."
     example:
       {
