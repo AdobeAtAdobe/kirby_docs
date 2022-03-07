@@ -19,11 +19,11 @@ info:
         - Data inlet management: https://<span>platform.adobe.io/data/core/edge
         - Data collection: https://<span>dcs.adobedc.net/
       - Example of a complete path for batch ingestion: https://<span>platform.adobe.io/data/foundation/import/batches
-     
+
     - Required headers:
       - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).
       - All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://adobe.com/go/sandbox-overview-en) for more information.
-      - Requests with a payload in the request body (such as POST, PUT, and PATCH calls) may require the header `Content-Type`. Accepted values specific to each call are provided in the call parameters.  
+      - Requests with a payload in the request body (such as POST, PUT, and PATCH calls) may require the header `Content-Type`. Accepted values specific to each call are provided in the call parameters.
 
   version: "1.0"
 basePath: /data/foundation/import
@@ -787,7 +787,7 @@ definitions:
         properties: {}
       tags:
         type: object
-        description: Tags are values associated with a particular object. These are generally used by external systems for marking an object in a way that it understands. 
+        description: Tags are values associated with a particular object. These are generally used by external systems for marking an object in a way that it understands.
         properties: {}
       inputFormat:
         type: object
@@ -883,7 +883,7 @@ definitions:
         properties:
           format:
             type: "string"
-            enum: 
+            enum:
             - JSON
             - Parquet
             - CSV
@@ -955,7 +955,7 @@ definitions:
               timestamp: "2019-02-23T22:07:01Z",
               environment: {
                 browserDetails: {
-                  userAgent: "Mozilla\/5.0 (Windows NT 5.1) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/29.0.1547.57 Safari\/537.36 OPR\/16.0.1196.62",
+                  userAgent: Mozilla\/5.0 (Windows NT 5.1) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/29.0.1547.57 Safari\/537.36 OPR\/16.0.1196.62,
                   acceptLanguage: "en-US",
                   cookiesEnabled: "true",
                   javaScriptVersion: "1.6",
