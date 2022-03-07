@@ -937,9 +937,12 @@ definitions:
       xactionId: "1532625558467:0001:13"
       receivedTimeMs: "1551307525735"
   BatchMessage:
-    type: array
-    items:
-      $ref: "#/definitions/streamingMessage"
+    type: object
+    properties:
+      messages:
+        type: array
+        items:
+          $ref: "#/definitions/streamingMessage"
     description: "The batch message to be published to Platform."
     example:
       {
