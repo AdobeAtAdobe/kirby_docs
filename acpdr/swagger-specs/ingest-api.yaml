@@ -156,6 +156,8 @@ paths:
           description: Access is unauthorized. The user needs to provide a valid bearer token.
         '403':
           description: Access is forbidden.
+        '404':
+          description: Can't find connection or inlet.
         '413':
           description: The payload is larger than 1 MB.
         '429':
