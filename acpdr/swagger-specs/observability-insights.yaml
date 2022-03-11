@@ -5,7 +5,7 @@ info:
   description: >-
     * Service description:
       * The Observability Insights API is used to collect and expose metrics data from various components of Observability. It listens to events broadcasting on the data pipeline and collects metrics on resources and statistics on data ingestion.
-    
+
     * Related documentation:
       * [Observability Insights documentation](http://www.adobe.com/go/observability-overview-en)
 
@@ -23,8 +23,8 @@ info:
       * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).
       * All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://adobe.com/go/sandbox-overview-en) for more information.
       * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
-  
-    
+
+
   version: "1.0.0"
 basePath: /data/infrastructure/observability/insights
 host: platform.adobe.io
@@ -51,6 +51,10 @@ paths:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/dateRange'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "A successful response returns information on the metrics specified in the request path."
           schema:
@@ -77,8 +81,12 @@ paths:
           in: body
           schema:
             $ref: "#/definitions/metricsRequest"
-          
+
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "A successful response returns information on the metrics specified in the request payload."
           schema:
@@ -86,8 +94,8 @@ paths:
             properties:
               metricResponses:
                 $ref: "#/definitions/metricsResponses"
-      
-      
+
+
 definitions:
   metricsRequest:
     type: "object"
@@ -144,7 +152,7 @@ definitions:
         example: "dataSetId"
       value:
         type: string
-        example: "5edcfb2fbb642119194c7d94|5eddb21420f516191b7a8dad" 
+        example: "5edcfb2fbb642119194c7d94|5eddb21420f516191b7a8dad"
       groupBy:
         type: boolean
         example: true
@@ -288,7 +296,7 @@ definitions:
     example: null
   400error:
     type: object
-    allOf: 
+    allOf:
       - $ref: '#/definitions/observability.insights.error'
     example:
       errorCode: "OBS-4002"
@@ -310,6 +318,33 @@ definitions:
       details:
         type: "string"
         description: "A human-readable explanation specific to this occurrence of the problem."
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true
 parameters:
   x-api-key:
     name: x-api-key
@@ -331,8 +366,8 @@ parameters:
     in: header
   authorization:
     name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
-    For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ".
+      For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
     required: true
     type: string
     in: header

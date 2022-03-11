@@ -3,7 +3,7 @@ info:
   description: >-
     - Service description:
       - Data Prep allows data engineers to map, transform, and validate data to and from Experience Data Model (XDM). The Data Prep API lets you programatically create mapping sets and functions, allowing you to transform your data between source and destination schemas.
-    
+
     - Related documentation:
       - [Data Prep documentation](https://experienceleague.adobe.com/docs/experience-platform/data-prep/home.html)
 
@@ -11,7 +11,7 @@ info:
       - Platform Gateway URL: https://<spam>platform.adobe.io/
       - Base path for this API: /data/foundation/conversation
       - Example of a complete path: https://<span>platform.adobe.io/data/foundation/conversion/languages/el/functions
-    
+
     - Required headers:
         - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.com/go/platform-api-authentication-en).
         - All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://adobe.com/go/sandbox-overview-en) for more information.
@@ -49,6 +49,10 @@ paths:
           schema:
             "$ref": "#/definitions/ValidationRequest"
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the validation status of the expression.
           schema:
@@ -60,12 +64,20 @@ paths:
                 "error": "none"
               }
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An invalid expression was posted.
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request was unauthorized. Please provide a valid authorization header and try again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
       deprecated: false
   "/languages/el/functions":
@@ -82,6 +94,10 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns a list of all the available mapping-set functions. **Note:** The following response has been truncated for space.
           schema:
@@ -125,12 +141,20 @@ paths:
                   }
               ]
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An invalid request was posted.
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request was unauthorized. Please provide a valid authorization header and try again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
       deprecated: false
   "/languages/el/operators":
@@ -147,6 +171,10 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns a list of all the valid operators. **Note:** The following response has been truncated for space.
           schema:
@@ -193,12 +221,20 @@ paths:
                   }
               ]
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An invalid request was posted.
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request was unauthorized. Please provide a valid authorization header and try again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
       deprecated: false
   "/mappingSets":
@@ -246,20 +282,32 @@ paths:
         - name: expandSchema
           in: query
           description: Determines whether the full output schema is returned as part of the response.
-          required: false 
+          required: false
           type: boolean
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns a list of all the mapping sets.
           schema:
             "$ref": "#/definitions/MapperSetPage"
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An invalid request was posted.
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request was unauthorized. Please provide a valid authorization header and try again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
       deprecated: false
     post:
@@ -284,12 +332,16 @@ paths:
           schema:
             "$ref": "#/definitions/MappingSet"
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns information about your newly created mapping set.
           schema:
             "$ref": "#/definitions/SimpleRepresentation"
           examples:
-            application/json: 
+            application/json:
               {
                 "id": "e7c80e4c0d8f4a98a7d400b4e178b635",
                 "version": 0,
@@ -299,12 +351,20 @@ paths:
                 "modifiedBy": "{MODIFIED_BY}"
               }
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An invalid mapping set was requested.
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request was unauthorized. Please provide a valid authorization header and try again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
       deprecated: false
   "/mappingSets/validate":
@@ -330,6 +390,10 @@ paths:
           schema:
             "$ref": "#/definitions/MappingSet"
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the validation information for the proposed mapping set.
           schema:
@@ -353,12 +417,20 @@ paths:
                 ]
             }
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An invalid mapping set was requested.
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request was unauthorized. Please provide a valid authorization header and try again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
       deprecated: false
   "/mappingSets/preview":
@@ -384,17 +456,29 @@ paths:
           schema:
             "$ref": "#/definitions/PreviewRequest"
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns a preview of your mapped data.
           schema:
             "$ref": "#/definitions/PreviewResponse"
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An invalid request was sent.
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request was unauthorized. Please provide a valid authorization header and try again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
       deprecated: false
   "/mappingSets/{MAPPING_SET_ID}":
@@ -430,17 +514,29 @@ paths:
           default: 0
           format: int32
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns information about the specified mapping set.
           schema:
             "$ref": "#/definitions/MappingSet"
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An invalid request was sent.
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request was unauthorized. Please provide a valid authorization header and try again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
       deprecated: false
     put:
@@ -470,17 +566,29 @@ paths:
           schema:
             "$ref": "#/definitions/MappingSet"
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns detailed information about your newly updated mapping set.
           schema:
             "$ref": "#/definitions/MappingSet"
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An invalid request was sent.
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request was unauthorized. Please provide a valid authorization header and try again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
       deprecated: false
   "/mappingSets/{MAPPING_SET_ID}/mappings":
@@ -494,7 +602,7 @@ paths:
       parameters:
         - name: MAPPING_SET_ID
           in: path
-          description: The ID of the mapping set you are retrieving mappings for. 
+          description: The ID of the mapping set you are retrieving mappings for.
           required: true
           type: string
           x-example: 7c80e4c0d8f4a98a7d400b4e178b635
@@ -503,17 +611,29 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns all the mappings for the specified mapping set.
           schema:
             "$ref": "#/definitions/MappingOperation"
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An invalid request was sent.
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request was unauthorized. Please provide a valid authorization header and try again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
       deprecated: false
   "/mappingSets/{MAPPING_SET_ID}/mappings/{MAPPING_ID}":
@@ -542,17 +662,29 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns information about the specific mapping.
           schema:
             "$ref": "#/definitions/MappingOperation"
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An invalid request was sent.
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request was unauthorized. Please provide a valid authorization header and try again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
       deprecated: false
 definitions:
@@ -687,7 +819,7 @@ definitions:
         format: date-time
       xdmVersion:
         type: string
-    title: JsonSchema    
+    title: JsonSchema
   SchemaRepresentation:
     type: object
     properties:
@@ -881,7 +1013,7 @@ definitions:
       tags:
         type: array
         items:
-          "$ref": "#/definitions/Tags"        
+          "$ref": "#/definitions/Tags"
     title: MappingSet
     example:
       mappings:
@@ -903,7 +1035,7 @@ definitions:
             "source": "lastName",
             "destination": "person.name.lastName"
         }]
-      outputSchema: 
+      outputSchema:
         {
           "schemaRef": {
             "id": "https://ns.adobe.com/{TENANT_ID}/schemas/89abc189258b1cb1a816d8f2b2341a6d98000ed8f4008305",
@@ -937,7 +1069,7 @@ definitions:
       expressionAttributes:
         type: array
         items:
-          type: string        
+          type: string
       version:
         type: integer
         format: int32
@@ -956,8 +1088,8 @@ definitions:
       sourceType: "text/x.schema-path"
       source: "firstName"
       destination: "person.name.firstName"
-      identity: false 
-      primaryIdentity: false 
+      identity: false
+      primaryIdentity: false
       matchScore: 0.0
       functionVersion: 1
       sourceAttribute: "firstName"
@@ -1035,7 +1167,7 @@ definitions:
         items:
           "$ref": "#/definitions/MappingSet"
     title: MapperSetPage
-    example: 
+    example:
       data:
         {
           "id": "428beb15b4864daaaa9dc3f005448005",
@@ -1097,6 +1229,33 @@ definitions:
         items:
           type: string
     title: Tags
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true
 parameters:
   authorization:
     name: Authorization
@@ -1107,9 +1266,9 @@ parameters:
     in: header
   content-type:
     name: Content-Type
-    description: >- 
+    description: >-
       The type of content being sent in the body of the request. This value generally is `application/json`.
-    required: true 
+    required: true
     type: string
     in: header
   x-gw-ims-org-id:

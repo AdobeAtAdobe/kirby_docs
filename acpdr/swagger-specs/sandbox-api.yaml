@@ -46,17 +46,29 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-user-token'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A list of sandboxes with matching criteria.
           schema:
             $ref: '#/definitions/GetSandboxesUserResponse'
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Bad request
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Internal server error
   /sandbox-management/sandboxTypes:
     get:
@@ -72,17 +84,29 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: List of supported sandbox types
           schema:
             $ref: '#/definitions/ListSandboxTypesResponse'
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Bad request
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Internal server error
   /sandbox-management/sandboxes:
     get:
@@ -103,17 +127,29 @@ paths:
         - $ref: '#/parameters/property'
         - $ref: '#/parameters/orderBy'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: OK
           schema:
             $ref: "#/definitions/GetSandboxesSystemResponse"
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Bad request
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Internal server error
     post:
       tags:
@@ -133,17 +169,27 @@ paths:
         - $ref: '#/parameters/x-user-token'
         - $ref: '#/parameters/sandboxPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         202:
           description: Request accepted
           schema:
             $ref: '#/definitions/CreateSandboxResponse'
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Bad request
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         409:
           description: Conflict
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Internal server error
   /sandbox-management/sandboxes/{sandboxName}:
     get:
@@ -163,17 +209,29 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-user-token'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: OK
           schema:
             $ref: '#/definitions/GetSandboxResponse'
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Bad request
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Internal server error
     delete:
       tags:
@@ -192,6 +250,10 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-user-token'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         202:
           description: request accepted
           schema:
@@ -201,12 +263,20 @@ paths:
               description: Url to check status of the request
               type: string
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Bad request
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Internal server error
     put:
       tags:
@@ -232,6 +302,10 @@ paths:
           schema:
             $ref: '#/definitions/ResetSandboxPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         202:
           description: Request accepted
           headers:
@@ -239,12 +313,20 @@ paths:
               description: URL to check status of the request
               type: string
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Bad request
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Internal server error
     patch:
       tags:
@@ -270,17 +352,29 @@ paths:
           schema:
             $ref: '#/definitions/PatchSandboxPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: OK
           schema:
             $ref: '#/definitions/GetSandboxResponse'
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Bad request
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Internal server error
 
 parameters:
@@ -664,3 +758,30 @@ definitions:
       region:
         type: string
         example: VA7
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true

@@ -60,6 +60,10 @@ paths:
         - $ref: '#/parameters/startQuery'
         - $ref: '#/parameters/limitQuery'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns a list of core labels.
           schema:
@@ -77,6 +81,10 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the retrieved core label.
           schema:
@@ -101,6 +109,10 @@ paths:
         - $ref: '#/parameters/startQuery'
         - $ref: '#/parameters/limitQuery'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A list of custom labels.
           schema:
@@ -123,11 +135,17 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: A successful response returns the details of the retrieved custom label.
           schema:
             $ref: '#/definitions/CustomLabelsResponse'
         '404':
+
           description: No custom label was found for the given name.
           schema:
             $ref: '#/definitions/CustomNotFoundError'
@@ -149,6 +167,11 @@ paths:
           schema:
             $ref: '#/definitions/LabelsRequest'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: If the label name indicated by the request path exists in the system, the existing entity is updated. A successful response returns details of the label, indicating the label was successfully updated.
           schema:
@@ -158,6 +181,7 @@ paths:
           schema:
             $ref: '#/definitions/CustomLabelsResponse'
         '400':
+
           description: >-
             There was an error regarding the fields sent in the request payload. This occurs if either of the required fields ("name" or "category") are missing or malformed.
           schema:
@@ -180,6 +204,11 @@ paths:
       tags:
         - Policies
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: A successful response returns all core policies.
           schema:
@@ -201,11 +230,17 @@ paths:
       tags:
         - Policies
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: A successful response returns the details of the retrieved policy.
           schema:
             $ref: '#/definitions/CorePolicyResponse'
         '404':
+
           description: No policy was found for the given ID.
           schema:
             $ref: '#/definitions/CorePolicyNotFound'
@@ -227,6 +262,11 @@ paths:
         - $ref: '#/parameters/labelsQuery'
         - $ref: '#/parameters/marketingActionQuery'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: A successful response returns a list of custom policies.
           schema:
@@ -249,11 +289,17 @@ paths:
           schema:
             $ref: '#/definitions/PolicyRequest'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '201':
           description: A successful response returns the details of newly created policy.
           schema:
             $ref: '#/definitions/CustomPolicyResponse'
         '400':
+
           description: One or more of the required fields in the request body were either missing or malformed.
           schema:
             $ref: '#/definitions/CreatePolicyError'
@@ -274,11 +320,17 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: A successful response returns details of the retrieved custom policy.
           schema:
             $ref: '#/definitions/PolicyResponse'
         '404':
+
           description: No policy was found for the given ID.
           schema:
             $ref: '#/definitions/CustomPolicyNotFound'
@@ -305,15 +357,22 @@ paths:
           schema:
             $ref: '#/definitions/PolicyRequest'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: A successful response returns details of the updated policy.
           schema:
             $ref: '#/definitions/PolicyResponse'
         '400':
+
           description: One or more of the required fields in the request body were either missing or malformed.
           schema:
             $ref: '#/definitions/CreatePolicyError'
         '404':
+
           description: No policy was found for the given ID.
           schema:
             $ref: '#/definitions/CustomPolicyNotFound'
@@ -340,15 +399,22 @@ paths:
           schema:
             $ref: '#/definitions/PolicyPatchRequest'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: A successful response returns the details of updated policy.
           schema:
             $ref: '#/definitions/PolicyPatchResponse'
         '400':
+
           description: One or more of the required fields in the request body were either missing or malformed.
           schema:
             $ref: '#/definitions/CreatePolicyError'
         '404':
+
           description: No policy was found for the given ID.
           schema:
             $ref: '#/definitions/CustomPolicyNotFound'
@@ -368,9 +434,15 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: A successful response returns HTTP Status 200 (OK) with an empty body, indicating the entity was deleted.
         '404':
+
           description: No policy was found for the given ID.
           schema:
             $ref: '#/definitions/CustomPolicyNotFound'
@@ -390,6 +462,11 @@ paths:
         - $ref: '#/parameters/startQuery'
         - $ref: '#/parameters/limitQuery'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: A successful response returns a list of core marketing actions.
           schema:
@@ -411,11 +488,17 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: A successful response returns the details of the retrieved marketing action.
           schema:
             $ref: '#/definitions/CoreMarketingActionResponse'
         '404':
+
           description: No marketing action was found for the given name.
           schema:
             $ref: '#/definitions/CoreMarketingActionNotFound'
@@ -424,8 +507,8 @@ paths:
       summary: Evaluate a core marketing action for policy violations based on data usage labels.
       description: >-
         This call returns a set of constraints that would govern an attempt to perform the given marketing action on a hypothetical source of data containing specific data usage labels.
-        
-        
+
+
         You can also evaluate a marketing action based on the labels contained in an actual dataset in your data stores. See the POST method for this endpoint for more information.
       operationId: getCoreMarketingActionConstraints
       tags:
@@ -443,12 +526,18 @@ paths:
         - $ref: '#/parameters/labelsConstraintsQuery'
         - $ref: '#/parameters/includeDraftConstraintsQuery'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: >-
             A successful response returns the constraints on attempting to perform this marketing action on data bearing the given set of data usage labels, including the set of policies that would be violated.
           schema:
             $ref: '#/definitions/CoreLabelsConstraints'
         '404':
+
           description: No marketing action was found for the given name.
           schema:
             $ref: '#/definitions/CoreMarketingActionNotFound'
@@ -456,8 +545,8 @@ paths:
       summary: Evaluate a core marketing action for policy violations based on datasets and/or fields.
       description: >-
         This call returns a set of constraints that would govern an attempt to perform the given marketing action on an existing data source in Platform. The source data (typically a dataset) is specified by the "entityType" and "entityId" of the elements in the request body. In the case of a dataset entity, a set of fields may also be specified in the "entityMeta" to indicate that only those fields from that dataset should be used in the evaluation. The returned constraints take the form of a set of policies that would be violated by attempting the marketing action on the dataset(s) and/or field(s).
-        
-        
+
+
         You can also evaluate a marketing action based on a defined set of usage labels instead of testing against an actual data source. See the GET method for this endpoint for more information.
       operationId: postCoreMarketingActionConstraints
       tags:
@@ -483,16 +572,23 @@ paths:
             items:
               $ref: '#/definitions/EntityLabelRequest'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: >-
             A successful response returns the constraints on attempting to perform this marketing action on the given set of datasets and/or fields, including the set of policies that would be violated.
           schema:
             $ref: '#/definitions/CoreDatasetConstraintResponse'
         '400':
+
           description: One or more of the required fields in the request body were either missing or malformed.
           schema:
             $ref: '#/definitions/MarketingActionConstraintsError'
         '404':
+
           description: No marketing action was found for the given name.
           schema:
             $ref: '#/definitions/CoreMarketingActionNotFound'
@@ -512,6 +608,11 @@ paths:
         - $ref: '#/parameters/startQuery'
         - $ref: '#/parameters/limitQuery'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: A successful response returns a list of custom marketing actions.
           schema:
@@ -533,11 +634,17 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: A successful response returns the details of the marketing action.
           schema:
             $ref: '#/definitions/MarketingActionResponse'
         '404':
+
           description: No marketing action was found for the given name.
           schema:
             $ref: '#/definitions/CustomMarketingActionNotFound'
@@ -564,6 +671,11 @@ paths:
           schema:
             $ref: '#/definitions/MarketingActionRequest'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: If the marketing action name indicated by the request path exists in the system, the existing entity is updated. A successful response returns details of the marketing action, indicating the entity was successfully updated.
           schema:
@@ -573,6 +685,7 @@ paths:
           schema:
             $ref: '#/definitions/MarketingActionResponse'
         '400':
+
           description: >-
              There was an error regarding the fields sent in the request payload. This occurs if the required "name" field is missing or malformed.
           schema:
@@ -593,9 +706,15 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: A successful response returns an empty body, indicating the entity was deleted.
         '404':
+
           description: No marketing action was found for the given name.
           schema:
             $ref: '#/definitions/CustomMarketingActionNotFound'
@@ -604,8 +723,8 @@ paths:
       summary: Evaluate a custom marketing action for policy violations based on data usage labels.
       description: >-
         This call returns a set of constraints that would govern an attempt to perform the given marketing action on a hypothetical source of data containing specific data usage labels.
-        
-        
+
+
         You can also evaluate a marketing action based on the labels contained in an actual dataset in your data stores. See the POST method for this endpoint for more information.
       operationId: getCustomMarketingActionConstraints
       tags:
@@ -623,12 +742,18 @@ paths:
         - $ref: '#/parameters/labelsConstraintsQuery'
         - $ref: '#/parameters/includeDraftConstraintsQuery'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: >-
             A successful response returns the constraints on attempting to perform this marketing action on data bearing the given set of data usage labels, including the set of policies that would be violated.
           schema:
             $ref: '#/definitions/CustomLabelsConstraints'
         '404':
+
           description: No marketing action was found for the given name.
           schema:
             $ref: '#/definitions/CustomMarketingActionNotFound'
@@ -636,8 +761,8 @@ paths:
       summary: Evaluate a marketing action for policy violations based on datasets and/or fields.
       description: >-
         This call returns a set of constraints that would govern an attempt to perform the given marketing action on an existing data source in Platform. The source data (typically a dataset) is specified by the "entityType" and "entityId" of the elements in the request body. In the case of a dataset entity, a set of fields may also be specified in the "entityMeta" to indicate that only those fields from that dataset should be used in the evaluation. The returned constraints take the form of a set of policies that would be violated by attempting the marketing action on the dataset(s) and/or field(s).
-        
-        
+
+
         You can also evaluate a marketing action based on a defined set of usage labels instead of testing against an actual data source. See the GET method for this endpoint for more information.
       operationId: postCustomMarketingActionConstraints
       tags:
@@ -663,16 +788,23 @@ paths:
             items:
               $ref: '#/definitions/EntityLabelRequest'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: >-
             A successful response returns the constraints on attempting to perform this marketing action on the given set of datasets and/or fields, including the set of policies that would be violated.
           schema:
             $ref: '#/definitions/CustomDatasetConstraintResponse'
         '400':
+
           description: A bad request; see response body for details
           schema:
             $ref: '#/definitions/Error'
         '404':
+
           description: No marketing action was found for the given name
           schema:
             $ref: '#/definitions/Error'
@@ -691,12 +823,12 @@ paths:
         - name: body
           description: >-
             An array of policy evaluation jobs to perform in bulk. Each job must evaluate based on one of the following:
-            
+
             * A set of labels
-            
+
             * A list of datasets and/or fields within those datasets
-            
-            
+
+
             To evaluate a marketing action based on both labels and datasets, you must include two separate jobs for that action: one that includes a **labels** array, and one that contains an **entityList** array.
           required: true
           in: body
@@ -717,6 +849,11 @@ paths:
                       fields:
                         - address
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: 'A successful response returns an array of evaluation results; one for each policy evaluation job sent in the request.'
           schema:
@@ -768,7 +905,7 @@ paths:
                       deny:
                         label: 'C1'
                         operator: 'AND'
-                        operands: 
+                        operands:
                             - label: 'C1'
                             - label: 'C3'
                       id: '76131228-7654-11e8-adc0-fa7ae01bbebc'
@@ -782,8 +919,9 @@ paths:
                       _links:
                         self:
                           href: './76131228-7654-11e8-adc0-fa7ae01bbebc'
-                  
+
         '400':
+
           description: One or more of the required fields in the request body were either missing or malformed. This error typically occurs when one of the evaluation jobs in the payload contains both a **labels** array and an **entityList** array.
           schema:
             $ref: '#/definitions/MarketingActionConstraintsError'
@@ -803,6 +941,11 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: A list of enabled core policy IDs
           schema:
@@ -824,11 +967,17 @@ paths:
           schema:
             $ref: '#/definitions/EnabledCorePoliciesRequest'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: List of enabled core policies was successfully updated
           schema:
             $ref: '#/definitions/EnabledCorePoliciesResponse'
         '400':
+
           description: >-
             The request payload was malformed, or one of the provided policy IDs were not found.
           schema:
@@ -859,8 +1008,8 @@ parameters:
     in: header
   authorization:
     name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
-    For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ".
+      For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
     required: true
     type: string
     in: header
@@ -885,7 +1034,7 @@ parameters:
   propertyQuery:
     name: property
     description: >-
-      Filters responses based on whether a specific property exists, or whose value passes a conditional expression (e.g. "?property=name==C1"). Only the "name" property is supported for core resources. For custom resources, additional supported property values include "status", "created", "createdClient", "createdUser", "updated", "updatedClient", and "updatedUser". 
+      Filters responses based on whether a specific property exists, or whose value passes a conditional expression (e.g. "?property=name==C1"). Only the "name" property is supported for core resources. For custom resources, additional supported property values include "status", "created", "createdClient", "createdUser", "updated", "updatedClient", and "updatedUser".
     required: false
     type: string
     in: query
@@ -902,7 +1051,7 @@ parameters:
   startQuery:
     name: start
     description: >-
-      Indicates the pagination value for the returned list. This value should be obtained from a previous call's '_page.next' property. Should be omitted for a first page of results. 
+      Indicates the pagination value for the returned list. This value should be obtained from a previous call's '_page.next' property. Should be omitted for a first page of results.
     type: string
     in: query
   limitQuery:
@@ -1103,7 +1252,7 @@ definitions:
     allOf:
       - $ref: '#/definitions/PolicyRequest'
     properties:
-      name: 
+      name:
         example: 'Restrict email targeting'
       status:
         example: ENABLED
@@ -1351,7 +1500,7 @@ definitions:
         items:
           type: string
       discoveredLabels:
-        description: Found in constraints POST responses only. The list of data usage labels discovered for the entity. 
+        description: Found in constraints POST responses only. The list of data usage labels discovered for the entity.
         type: array
         items:
           $ref: '#/definitions/DiscoveredLabels'
@@ -1380,7 +1529,7 @@ definitions:
         items:
           $ref: '#/definitions/CustomPolicyResponse'
       marketingActionRefs:
-        example: 
+        example:
           - https://platform.adobe.io:443/data/foundation/dulepolicy/marketingActions/custom/analyticsDB
   CoreDatasetConstraintResponse:
     allOf:
@@ -1388,7 +1537,7 @@ definitions:
       - $ref: '#/definitions/CustomDatasetConstraints'
     properties:
       marketingActionRefs:
-        example: 
+        example:
           - https://platform.adobe.io:443/data/foundation/dulepolicy/marketingActions/core/emailTargeting
   CustomDatasetConstraintResponse:
     allOf:
@@ -1856,3 +2005,31 @@ definitions:
       schemaPath:
         type: string
         example: "/properties/person/properties/name/properties/fullName"
+
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true

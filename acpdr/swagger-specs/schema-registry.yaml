@@ -73,13 +73,21 @@ paths:
       produces:
         - application/json
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns your tenant ID and Schema Registry usage information.
           schema:
             '$ref': '#/definitions/statsResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/{CONTAINER_ID}/fieldgroups':
     get:
@@ -100,13 +108,21 @@ paths:
         - $ref: '#/parameters/start'
         - $ref: '#/parameters/limit'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns all field groups in the specified container.
           schema:
             $ref: '#/definitions/listFieldGroupsResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/{CONTAINER_ID}/fieldgroups/{FIELD_GROUP_ID}':
     get:
@@ -129,15 +145,25 @@ paths:
       produces:
         - application/json
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the field group.
           schema:
             $ref: '#/definitions/lookupFieldGroupResponse'
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The resource is not found.
         '406':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The specified `Accept` format/version is not available for this resource.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/tenant/fieldgroups':
     post:
@@ -157,13 +183,21 @@ paths:
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/fieldGroupPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '201':
           description: A successful response returns the details of the field group.
           schema:
             $ref: '#/definitions/createFieldGroupResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/tenant/fieldgroups/{FIELD_GROUP_ID}':
     put:
@@ -189,13 +223,21 @@ paths:
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/replaceFieldGroupPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the updated field group.
           schema:
             $ref: '#/definitions/updateFieldGroupResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
     patch:
       tags:
@@ -224,13 +266,21 @@ paths:
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/patchFieldGroupPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the updated field group.
           schema:
             $ref: '#/definitions/patchFieldGroupResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
     delete:
       tags:
@@ -253,12 +303,20 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '204':
           description: A successful response returns an empty response body and HTTP status 204 (No Content), indicating that the field group has been deleted.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The resource is not found.
         '500':
-         description: An internal server error occurred.
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: An internal server error occurred.
   '/{CONTAINER_ID}/schemas':
     get:
       tags:
@@ -284,13 +342,21 @@ paths:
         - $ref: '#/parameters/start'
         - $ref: '#/parameters/limit'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns a list of all schemas in the container with format dependent on the `Accept` header.
           schema:
             $ref: '#/definitions/listSchemasResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/{CONTAINER_ID}/schemas/{SCHEMA_ID}':
     get:
@@ -314,17 +380,29 @@ paths:
       produces:
         - application/json
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the schema.
           schema:
             $ref: '#/definitions/lookupSchemaResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The resource is not found.
         '406':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The specified `Accept` format/version is not available for this resource.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/tenant/schemas':
     post:
@@ -344,13 +422,21 @@ paths:
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/createSchemaPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '201':
           description: A successful response returns the details of the newly created schema.
           schema:
             '$ref': '#/definitions/createSchemaResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/tenant/schemas/{SCHEMA_ID}':
     put:
@@ -372,11 +458,19 @@ paths:
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/replaceSchemaPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns JSON schema with updated attributes.
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
     patch:
       tags:
@@ -401,13 +495,21 @@ paths:
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/patchPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns JSON schema with updated attributes.
           schema:
             $ref: '#/definitions/patchSchemaResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
 
     delete:
@@ -427,12 +529,20 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '204':
           description: A successful response returns an empty response body and HTTP status 204 (No Content), indicating that the schema has been deleted.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The resource is not found.
         '500':
-         description: An internal server error occurred.
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: An internal server error occurred.
   '/global/behaviors':
     get:
       tags:
@@ -447,6 +557,10 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/acceptListing'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns all behaviors in the global container.
           schema:
@@ -500,6 +614,10 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/accept'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the behavior specified in the request path.
           schema:
@@ -574,13 +692,21 @@ paths:
         - $ref: '#/parameters/start'
         - $ref: '#/parameters/limit'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns all mixins in the specified container.
           schema:
             $ref: '#/definitions/listFieldGroupsResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/{CONTAINER_ID}/mixins/{MIXIN_ID}':
     get:
@@ -600,15 +726,25 @@ paths:
       produces:
         - application/json
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the mixin.
           schema:
             $ref: '#/definitions/lookupFieldGroupResponse'
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The resource is not found.
         '406':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The specified `Accept` format/version is not available for this resource.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/tenant/mixins':
     post:
@@ -629,13 +765,21 @@ paths:
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/fieldGroupPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '201':
           description: A successful response returns the details of the mixin.
           schema:
             $ref: '#/definitions/createFieldGroupResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/tenant/mixins/{MIXIN_ID}':
     put:
@@ -658,11 +802,19 @@ paths:
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/replaceFieldGroupPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the updated mixin.
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
     patch:
       tags:
@@ -688,11 +840,19 @@ paths:
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/patchFieldGroupPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the updated mixin.
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
     delete:
       tags:
@@ -712,12 +872,20 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '204':
           description: A successful response returns an empty response body and HTTP status 204 (No Content), indicating that the mixin has been deleted.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The resource is not found.
         '500':
-         description: An internal server error occurred.
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: An internal server error occurred.
   '/{CONTAINER_ID}/classes':
     get:
       tags:
@@ -738,13 +906,21 @@ paths:
         - $ref: '#/parameters/start'
         - $ref: '#/parameters/limit'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns a list of all classes in the container.
           schema:
             $ref: '#/definitions/listClassesResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/{CONTAINER_ID}/classes/{CLASS_ID}':
     get:
@@ -767,15 +943,25 @@ paths:
       produces:
         - application/json
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the class.
           schema:
             $ref: '#/definitions/lookupClassResponse'
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The resource is not found.
         '406':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The specified `Accept` format/version is not available for this resource.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/tenant/classes':
     post:
@@ -795,13 +981,21 @@ paths:
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/createClassPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '201':
           description: A successful response returns the details of the newly created class.
           schema:
             '$ref': '#/definitions/createClassResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
 
   '/tenant/classes/{CLASS_ID}':
@@ -828,11 +1022,19 @@ paths:
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/replaceClassPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the updated class.
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
     patch:
       tags:
@@ -861,11 +1063,19 @@ paths:
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/patchPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the the details of the updated class.
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
     delete:
       tags:
@@ -888,12 +1098,20 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '204':
           description: A successful response returns an empty response body and HTTP status 204 (No Content), indicating that the resource has been deleted.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The resource is not found.
         '500':
-         description: An internal server error occurred.
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: An internal server error occurred.
   '/{CONTAINER_ID}/datatypes':
     get:
       tags:
@@ -913,13 +1131,21 @@ paths:
         - $ref: '#/parameters/start'
         - $ref: '#/parameters/limit'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns a list of all data types in the specified container.
           schema:
             $ref: '#/definitions/listDataTypesResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/{CONTAINER_ID}/datatypes/{DATA_TYPE_ID}':
     get:
@@ -937,15 +1163,25 @@ paths:
       produces:
         - application/json
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the data type.
           schema:
             $ref: '#/definitions/lookupDataTypeResponse'
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The resource is not found.
         '406':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The specified `Accept` format/version is not available for this resource.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/tenant/datatypes':
     post:
@@ -965,13 +1201,21 @@ paths:
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/createDataTypePayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '201':
           description: A successful response returns the details of the newly created data type.
           schema:
             '$ref': '#/definitions/createDataTypeResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/tenant/datatypes/{DATA_TYPE_ID}':
     put:
@@ -993,13 +1237,21 @@ paths:
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/replaceDataTypePayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the updated data type.
           schema:
             '$ref': '#/definitions/putDataTypeResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
     patch:
       tags:
@@ -1024,13 +1276,21 @@ paths:
         - $ref: '#/parameters/content-type'
         - $ref: '#/parameters/patchDataTypePayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the updated data type.
           schema:
             '$ref': '#/definitions/patchDataTypeResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
     delete:
       tags:
@@ -1049,12 +1309,20 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '204':
           description: A successful response returns an empty response body and HTTP status 204 (No Content), indicating that the class has been deleted.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The resource is not found.
         '500':
-         description: An internal server error occurred.
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: An internal server error occurred.
   '/{CONTAINER_ID}/descriptors':
     get:
       tags:
@@ -1104,13 +1372,21 @@ paths:
         in: query
         type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns a list of all existing descriptors, separated by type.
           schema:
             $ref: '#/definitions/listDescriptorsResponse'
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The resource is not found.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/{CONTAINER_ID}/descriptors/{DESCRIPTOR_ID}':
     get:
@@ -1129,13 +1405,21 @@ paths:
       - $ref: '#/parameters/x-gw-ims-org-id'
       - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the descriptor.
           schema:
             $ref: '#/definitions/lookupDescriptorResponse'
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The resource is not found.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/tenant/descriptors':
     post:
@@ -1156,15 +1440,25 @@ paths:
       - $ref: '#/parameters/content-type'
       - $ref: '#/parameters/descriptorPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '201':
           description: A successful response returns the details of the newly created descriptor.
           schema:
             $ref: '#/definitions/createDescriptorResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
 
   '/tenant/descriptors/{DESCRIPTOR_ID}':
@@ -1192,16 +1486,26 @@ paths:
       - $ref: '#/parameters/content-type'
       - $ref: '#/parameters/descriptorPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '201':
           description: A successful response returns the `@id` of the updated descriptor.
           examples:
             application/json:
               "@id": "0fe5e262d27e986025bef6d33987002d64525efe"
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
     delete:
       tags:
@@ -1216,13 +1520,23 @@ paths:
       - $ref: '#/parameters/x-gw-ims-org-id'
       - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '204':
           description: A successful response returns an empty response body and HTTP status 204 (No Content), indicating that the descriptor has been deleted.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The resource is not found.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/tenant/unions':
     get:
@@ -1240,13 +1554,21 @@ paths:
         - $ref: '#/parameters/start'
         - $ref: '#/parameters/limit'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns a list of all union schemas with format dependent on the `Accept` header.
           schema:
             $ref: '#/definitions/listUnionsResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/tenant/unions/{UNION_ID}':
     get:
@@ -1261,17 +1583,29 @@ paths:
       - $ref: '#/parameters/accept'
       summary: Retrieve a union schema by ID.
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the union.
           schema:
             $ref: '#/definitions/lookupUnionResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request payload was incorrectly formatted. Check your payload formatting before trying again.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The resource is not found.
         '406':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The specified `Accept` format/version is not available for this resource.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error occurred.
   '/rpc/export/{RESOURCE_ID}':
     get:
@@ -1290,6 +1624,10 @@ paths:
         in: path
         type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the exported resource and its dependent field groups and data types. The contents of this payload can then be used as the request body in a POST `/rpc/import` call to import the resource to the desired sandbox or IMS Organization.
           schema:
@@ -1322,6 +1660,10 @@ paths:
         schema:
           $ref: '#/definitions/importExportPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the imported resource, with the appropriate `{TENANT_ID}` applied for the specified IMS Organization.
           schema:
@@ -1347,6 +1689,10 @@ paths:
         in: path
         type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns a sample ingestion file, mapped to the structure of the specified schema.
           schema:
@@ -1388,6 +1734,10 @@ paths:
         required: true
         type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns an array of change logs for the specified resource. Each change object provides details on what action was performed to which field(s), the user that made the change, and a timestamp for when the change was committed.
           schema:
@@ -3274,3 +3624,30 @@ definitions:
   profile-person-details:
     type: string
     example: '#/definitions/profile-person-details'
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true

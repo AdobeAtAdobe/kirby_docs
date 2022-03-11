@@ -46,13 +46,21 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: Successful operation
           schema:
             $ref: '#/definitions/referenceResponse'
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Bad request
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Internal server error
   /acl/effective-policies:
     post:
@@ -82,6 +90,10 @@ paths:
                 - "/resource-types/schema"
                 - "/permissions/manage-schemas"
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "Successful operation"
           schema:
@@ -102,11 +114,12 @@ paths:
                     "delete",
                     "*"
                   ]
+
 parameters:
   authorization:
     name: Authorization
     description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ".
-    For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
+      For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
     required: true
     type: string
     in: header
@@ -135,6 +148,33 @@ parameters:
     type: string
     in: header
 definitions:
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true
   referenceResponse:
     type: object
     properties:

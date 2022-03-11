@@ -23,7 +23,7 @@ info:
       - PLATFORM Gateway URL: https://<span>platform.adobe.io/
       - Base path for this API: /data/foundation/export
       - Example of a complete path: https://<span>platform.adobe.io/data/foundation/export/batches/{batchId}/files
-    
+
     - Required headers:
       - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).
       - All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://adobe.com/go/sandbox-overview-en) for more information.
@@ -71,13 +71,21 @@ paths:
       produces:
       - application/json
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "The request was successful."
           schema:
             $ref: "#/definitions/dataSetFiles"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   /batches/{batchId}/failed:
     parameters:
@@ -114,13 +122,21 @@ paths:
       produces:
       - application/json
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "The request was successful."
           schema:
             $ref: "#/definitions/files"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   /batches/{batchId}/meta:
     parameters:
@@ -135,7 +151,7 @@ paths:
       - $ref: '#/parameters/x-sandbox-name'
       - name: "start"
         in: "query"
-        required: false 
+        required: false
         type: "string"
         description: "A paging parameter to specify the start of a new page. For example: `start=1`"
       - name: "limit"
@@ -149,22 +165,32 @@ paths:
         type: "string"
         description: "The full name of the file. The contents of the file would be downloaded if this parameter is provided. For example: `path=row_error_samples.json`\nPossible values for this query include the following: \n - `row_errors`\n - `input_files`\n - `row_errors_sample.json`"
     get:
-      tags: 
+      tags:
       - Data Access
       summary: "Get the meta files under a batch."
       description: "Lists files under a batch's meta directory or download a specific file under it. The files under a batch's meta directory may include the following: \n - row_errors: A directory containing 0 or more files with parsing, conversion, and/or validation errors found at the row level.\n - input_files: A directory containing metadata for 1 or more input files submitted with the batch.\n - row_errors_sample.json: A root level file containing the sampled set of row errors for the UX."
       produces:
         - application/json
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "The request was successful."
           schema:
             $ref: "#/definitions/metadata"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The path is not found."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal service error has ocurred."
   /files/{dataSetFileId}:
     parameters:
@@ -189,6 +215,10 @@ paths:
         required: true
         description: "The full name of the file identified. For example: `path=profiles.csv`"
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "The request was successful."
           headers:
@@ -202,10 +232,16 @@ paths:
               description: "The size of the file in bytes."
               type: "integer"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The dataset file was not found."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     get:
       operationId: "getDatasetFileData"
@@ -239,6 +275,10 @@ paths:
       - application/json
       - application/octet-stream
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "The request has succeeded."
           schema:
@@ -254,10 +294,16 @@ paths:
               type: "integer"
 
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The requested file was not found."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   /datasets/{id}/preview:
     parameters:
@@ -278,17 +324,26 @@ paths:
       produces:
       - application/json
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "The request has succeeded."
           schema:
             $ref: "#/definitions/preview"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The requested dataset was not found."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
-
 parameters:
   authorization:
     name: Authorization
@@ -316,7 +371,33 @@ parameters:
     in: header
 
 definitions:
-
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true
   metadata:
     type: "object"
     properties:

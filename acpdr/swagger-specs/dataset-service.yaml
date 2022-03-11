@@ -43,6 +43,10 @@ paths:
       produces:
         - application/json
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: The data usage labels for the specified dataset were retrieved.
           schema:
@@ -56,7 +60,7 @@ paths:
         - Datasets
       summary: Add data usage labels to a specified dataset, and/or specific fields within that dataset.
       operationId: postDatasetLabels
-      produces: 
+      produces:
         - application/json
       parameters:
         - $ref: '#/parameters/DATASET_ID'
@@ -69,6 +73,10 @@ paths:
           schema:
             $ref: '#/definitions/DULELabel'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '201':
           description: The data usage labels were successfully added.
           schema:
@@ -101,11 +109,17 @@ paths:
           schema:
             $ref: '#/definitions/DULELabel'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
             description: "The data usage labels were successfully updated."
             schema:
               $ref: '#/definitions/DULELabel'
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
             description: "The labels entity was not found."
             schema:
               $ref: '#/definitions/NotFoundError'
@@ -130,9 +144,15 @@ paths:
       produces:
         - application/json
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: "The data usage labels were successfully removed."
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The data usage labels cannot be deleted."
 parameters:
   x-sandbox-name:
@@ -180,7 +200,7 @@ parameters:
     name: If-Match
     in: header
     required: true
-    description: >- 
+    description: >-
       The version of the dataset entity to compare against. As a requirement for all PUT and DELETE requests for dataset labels, the call will only update the dataset entity if the "If-Match" string matches that of the "etag" header that is returned in all responses from the Dataset Service API.
     type: string
 definitions:
@@ -206,7 +226,7 @@ definitions:
               option:
                 type: object
                 properties:
-                  id: 
+                  id:
                     type: string
                     example: "https://ns.adobe.com/{TENANT_ID}/schemas/{SCHEMA_ID}"
                   contentType:
@@ -280,7 +300,7 @@ definitions:
         example: "/dulepolicy/marketingActions/core/g72cbgy644bsgc3becbba1e197fa25c1e/constraints"
       entities:
         type: array
-        items: 
+        items:
           $ref: '#/definitions/DULELabel'
       violatedPolicies:
         type: array
@@ -314,7 +334,7 @@ definitions:
         example: "AND"
       operands:
         type: array
-        items: 
+        items:
           type: string
           example: [{ "label": "C1" }, { "label": "C2"}]
       imsOrg:
@@ -357,3 +377,30 @@ definitions:
           href:
             type: string
             example: "https://platform.adobe.io/data/foundation/dulepolicy/policies/custom/5db3393907d49f198b8f0e6a"
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true

@@ -89,23 +89,37 @@ paths:
             - true
             - false
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: "The data was successfully ingested."
           schema:
             $ref: "#/definitions/StreamingIngestionResponse"
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: There was a problem with the request. See the response body for a more specific error message.
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is unauthorized. The user needs to provide a valid bearer token.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '413':
           description: The payload is larger than 1 MB.
         '429':
           description: Too many requests. The service is experiencing high loads.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is currently unavailable. Clients should retry at least three times using an exponential back-off strategy.
           headers:
             Retry-After:
@@ -144,27 +158,43 @@ paths:
             - true
             - false
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '207':
           description: "A multi-status code. The recipient needs to consult the contents of the multi-status response body for further information about the success or failure of the method execution."
           schema:
             $ref: "#/definitions/BatchResponseDTO"
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: >-
             There was a problem with the request. See the response body for a
             more specific error message.
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is unauthorized. The user needs to provide a valid bearer token.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Can't find connection or inlet.
         '413':
           description: The payload is larger than 1 MB.
         '429':
           description: Too many requests. The service is experiencing high loads.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has occurred.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is currently unavailable. Clients should retry at least three times using an exponential back-off strategy.
           headers:
             Retry-After:
@@ -193,19 +223,31 @@ paths:
           schema:
             $ref: "#/definitions/IngestBatch"
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         201:
           description: "The batch was successfully created."
           schema:
             $ref: "#/definitions/Batch"
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "A bad request. The request is malformed."
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized. The user needs to provide a valid bearer token."
         414:
           description: "The URL length exceeds the allowed 2000 characters."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has occurred."
         503:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The service is currently unavailable."
   /batches/{batchId}/datasets/{datasetId}/files/{filePath}:
     put:
@@ -248,21 +290,33 @@ paths:
           type: "string"
           description: "The location where the file will be uploaded to, on the Adobe side. **Note:** The directory structure denoted in this path is preserved and can be used to denote partitions that the file data belongs to."
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "The file was successfully updated."
         201:
           description: "The file was successfully created."
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The request is malformed."
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized. The IMS token provided is invalid."
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The batch or dataset resource is not found."
         414:
           description: "The URL length exceeds the allowed 2000 characters."
         415:
           description: "The uploaded file media type isn't supported."
         503:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The service is unavailable."
     patch:
       tags:
@@ -309,6 +363,10 @@ paths:
           required: true
           description: The content bytes for the file or file part being uploaded.
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "The file was successfully uploaded."
           headers:
@@ -318,18 +376,28 @@ paths:
           schema:
             $ref: "#/definitions/File"
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The request is malformed."
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized. The IMS token provided is invalid."
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The batch, dataset, or file resource is not found."
         414:
           description: "The URL length exceeds the allowed 2000 characters."
         415:
           description: "The uploaded file media type isn't supported."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has occurred."
         503:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The service is unavailable."
     post:
       tags:
@@ -367,21 +435,35 @@ paths:
           description: 'The action to perform on the file. Currently, the supported values are "INITIALIZE" and "COMPLETE". To begin initializing the file for upload, use the value "INITIALIZE". To mark the file as finished, use the value "COMPLETE".'
           enum: ["INITIALIZE", "COMPLETE"]
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "The file is now finished uploading."
           schema:
             $ref: "#/definitions/File"
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The request is malformed."
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized. The IMS token provided is invalid."
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The batch, dataset, or file resource is not found."
         414:
           description: "The URL length exceeds the allowed 2000 characters."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has occurred."
         503:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The service is unavailable."
     head:
       tags:
@@ -410,6 +492,10 @@ paths:
           type: "string"
           description: "The location of the file you want to retrieve status information about, on the Adobe side. **Note:** The directory structure denoted in this path is preserved and can be used to denote partitions that the file data belongs to."
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "The status information was successfully returned."
           headers:
@@ -417,18 +503,28 @@ paths:
               type: "string"
               description: "bytes 0-512000000"
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The request is malformed."
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized. The IMS token provided is invalid."
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The batch, dataset, or file resource is not found."
         414:
           description: "URL length exceeds the allowed 2000 characters."
         415:
           description: "The uploaded file media type isn't supported."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has occurred."
         503:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The service is unavailable."
   /batches/{batchId}/datasets/{datasetId}/preview:
     get:
@@ -497,23 +593,37 @@ paths:
           format: "int32"
           description: "The number of rows to parse."
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "The preview for the batch was successfully generated."
           schema:
             $ref: "#/definitions/PreviewResponse"
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The request is malformed."
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized. The IMS token provided is invalid."
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The batch or dataset resource is not found."
         414:
           description: "The URL length exceeds the allowed 2000 characters."
         415:
           description: "The uploaded file media type isn't supported."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has occurred."
         503:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The service is unavailable."
   /batches/{batchId}:
     post:
@@ -541,22 +651,37 @@ paths:
           description: "The action to take on the batch. To signal that it's completed, use 'COMPLETE'."
           enum: ["COMPLETE", "ABORT","FAIL", "REVERT"]
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "The batch has been successfully promoted."
           schema:
             $ref: "#/definitions/Batch"
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The request is malformed."
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized. The IMS token provided is invalid."
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The batch is not found."
         414:
           description: "The URL length exceeds the allowed 2000 characters."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has occurred."
         503:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "The service is unavailable."
+
 parameters:
   authorization:
     name: Authorization
@@ -1048,3 +1173,31 @@ definitions:
       },
     }
   }
+
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true

@@ -63,15 +63,25 @@ paths:
         - $ref: '#/parameters/continuationToken'
         - $ref: '#/parameters/count'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Returns a list of connections in JSON format.
           schema:
             $ref: '#/definitions/ConnectionListResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
     post:
       tags:
@@ -106,6 +116,10 @@ paths:
           schema:
             $ref: '#/definitions/CreateConnectionRequest'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '201':
           description: Returns new base connection ID and etag.
           examples:
@@ -119,8 +133,12 @@ paths:
           schema:
             $ref: '#/definitions/CreateConnectionResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/connections/{CONNECTION_ID}':
     get:
@@ -144,15 +162,25 @@ paths:
           required: true
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Returns details for specified base connection in JSON format
           schema:
             $ref: '#/definitions/ConnectionListResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/connections/{CONNECTION_ID}/test':
     get:
@@ -176,15 +204,25 @@ paths:
           required: true
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Returns connection status of specified connection ID.
           schema:
             $ref: '#/definitions/TestConnectionResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/connections/{CONNECTION_ID}/explore':
     get:
@@ -208,6 +246,10 @@ paths:
           required: true
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Returns file structure of specified connection ID, including details regarding type, name, path and if file can be previewed or fetched.
           examples:
@@ -221,10 +263,16 @@ paths:
           schema:
             $ref: '#/definitions/ExploreConnectionResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/connections/{CONNECTION_ID}/':
     patch:
@@ -261,6 +309,10 @@ paths:
           schema:
             $ref: '#/definitions/PatchInstruction'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Connection successfully updated.
           examples:
@@ -268,8 +320,12 @@ paths:
               id: "139f6a5f-a78b-4744-9f6a-5fa78bd74431"
               etag: "\"3600e378-0000-0200-0000-5f40212f0000\""
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
     delete:
       tags:
@@ -292,6 +348,10 @@ paths:
           required: true
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '204':
           description: Connection successfully deleted.
           examples:
@@ -299,10 +359,16 @@ paths:
               id: "f9377f50-607a-4818-b77f-50607a181860"
               etag: "\"03004116-0000-0200-0000-5edfbf2d0000\""
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   /connectionSpecs:
     get:
@@ -321,15 +387,25 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/property'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Returns a list of connection specifications in JSON format.
           schema:
             $ref: '#/definitions/ConnectionSpecResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/connectionSpecs/{CONNECTION_SPEC_ID}':
     get:
@@ -352,15 +428,25 @@ paths:
           required: true
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Returns details of specified connection specification in JSON format.
           schema:
             $ref: '#/definitions/ConnectionSpecResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Problem accessing /connectionSpecs/{CONNECTION_ID}
   /flows:
     get:
@@ -383,17 +469,29 @@ paths:
         - $ref: '#/parameters/continuationToken'
         - $ref: '#/parameters/count'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Returns a list of flows in JSON format.
           schema:
             $ref: '#/definitions/FlowListResponse'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Header=[x-sandbox-id] not allowed with user token.
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
     post:
       tags:
@@ -439,6 +537,10 @@ paths:
           schema:
             $ref: '#/definitions/CreateFlowRequest'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '201':
           description: Returns new flow ID and etag.
           examples:
@@ -451,8 +553,12 @@ paths:
           schema:
             $ref: '#/definitions/CreateFlowResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/flows/{FLOW_ID}':
     get:
@@ -476,15 +582,25 @@ paths:
           required: true
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Returns details of specified flow in JSON format.
           schema:
             $ref: '#/definitions/FlowListResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
 
     patch:
@@ -523,15 +639,25 @@ paths:
             items:
               $ref: '#/definitions/PatchInstruction'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: The flow was successfully updated.
           schema:
             $ref: '#/definitions/CreateFlowResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
 
     delete:
@@ -555,6 +681,10 @@ paths:
           required: true
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '202':
           description: Flow delete request accepted.
           schema:
@@ -562,10 +692,16 @@ paths:
         '204':
           description: Flow successfully deleted.
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   /flowSpecs:
     get:
@@ -584,15 +720,25 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/property'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Returns a list of flow specifications in JSON format.
           schema:
             $ref: '#/definitions/FlowSpecResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/flowSpecs/{FLOW_SPEC_ID}':
     get:
@@ -616,15 +762,25 @@ paths:
           required: true
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Returns details of specified flow specification in JSON format.
           schema:
             $ref: '#/definitions/FlowSpecResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   /runs:
     get:
@@ -647,15 +803,25 @@ paths:
         - $ref: '#/parameters/continuationToken'
         - $ref: '#/parameters/count'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Returns a list of runs in JSON format.
           schema:
             $ref: '#/definitions/FlowRunsListResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
     post:
       tags:
@@ -681,6 +847,10 @@ paths:
           schema:
             $ref: '#/definitions/CreateFlowRunRequest'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '201':
           description: Returns new run ID and etag.
           examples:
@@ -693,8 +863,12 @@ paths:
           schema:
             $ref: '#/definitions/CreateFlowRunResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/runs/{RUN_ID}':
     get:
@@ -718,15 +892,25 @@ paths:
           required: true
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Returns details of specified run in JSON format.
           schema:
             $ref: '#/definitions/FlowRunsListResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   /sourceConnections:
     post:
@@ -767,6 +951,10 @@ paths:
           schema:
             $ref: '#/definitions/CreateSourceConnectionRequest'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '201':
           description: Returns new source connection ID and etag.
           examples:
@@ -780,8 +968,12 @@ paths:
           schema:
             $ref: '#/definitions/CreateSourceConnectionResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/sourceConnections/{SOURCE_CONNECTION_ID}':
     get:
@@ -805,15 +997,25 @@ paths:
           required: true
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Returns details of specified source connection in JSON format.
           schema:
             $ref: '#/definitions/SourceConnectionsListResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
 
     patch:
@@ -852,13 +1054,21 @@ paths:
             items:
               $ref: '#/definitions/PatchInstruction'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Returns updated source connection in JSON format.
           schema:
             $ref: '#/definitions/SourceConnectionsListResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
 
     delete:
@@ -882,15 +1092,25 @@ paths:
           required: true
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '204':
           description: The source connection was successfully deleted.
           schema:
             $ref: '#/definitions/SourceConnectionsListResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   /targetConnections:
     post:
@@ -928,6 +1148,10 @@ paths:
           schema:
             $ref: '#/definitions/CreateTargetConnectionRequest'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '201':
           description: Returns new target connection ID and etag.
           examples:
@@ -940,8 +1164,12 @@ paths:
           schema:
             $ref: '#/definitions/CreateTargetConnectionResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/targetConnections/{TARGET_CONNECTION_ID}':
     get:
@@ -964,15 +1192,25 @@ paths:
           required: true
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Returns details of specified target connection in JSON format.
           schema:
             $ref: '#/definitions/TargetConnectionsListResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
 
     patch:
@@ -1011,13 +1249,21 @@ paths:
             items:
               $ref: '#/definitions/PatchInstruction'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Returns details of specified target connection in JSON format.
           schema:
             $ref: '#/definitions/TargetConnectionsListResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
 
     delete:
@@ -1041,15 +1287,25 @@ paths:
           required: true
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '204':
           description: The target connection was successfully deleted.
           schema:
             $ref: '#/definitions/TargetConnectionsListResponse'
         '401':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: OAuth token is missing.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not Found
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
 definitions:
   AuthInfoDTO:
@@ -2104,6 +2360,33 @@ definitions:
             type: string
             example: "A new description to provide further context on a specified connection or flow."
             description: The new description value you want to add.
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true
 parameters:
   authorization:
     name: Authorization

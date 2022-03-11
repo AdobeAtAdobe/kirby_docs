@@ -173,6 +173,10 @@ paths:
         - $ref: '#/parameters/property'
         - $ref: '#/parameters/properties'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A list of the batch responses is returned.
           schema:
@@ -267,15 +271,22 @@ paths:
                   }
               }
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: A bad request.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The batch responses were not found.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
     post:
       tags:
         - Batches
@@ -295,6 +306,10 @@ paths:
             $ref: '#/definitions/batchRequest'
         - $ref: '#/parameters/json-header'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '201':
           description: 'Array[ @/batches/batchId ]'
           schema:
@@ -306,13 +321,18 @@ paths:
               type: string
               description: The URI of the newly created batch.
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The batch is invalid.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
   '/batches/uniques/{FIELD}':
     parameters:
       - name: FIELD
@@ -453,6 +473,10 @@ paths:
         - $ref: '#/parameters/property'
         - $ref: '#/parameters/properties'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A list of unique values for a batch.
           schema:
@@ -463,15 +487,22 @@ paths:
             application/json:
               ["5911f88ae2f4bf657c5a8cb5", "5911f88ae2f4bf657c5a8cb4", "5911f88ae2f4bf657c5a8cb3"]
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: A bad request has been submitted.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The batch is not found.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
   '/batches/{BATCH_ID}':
     parameters:
       - name: BATCH_ID
@@ -501,6 +532,10 @@ paths:
           type: boolean
           in: query
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: The batch object for the specified batch ID is returned.
           schema:
@@ -595,15 +630,22 @@ paths:
                   }
               }
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: A bad request.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The specified batch was not found.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
     post:
       tags:
         - Batches
@@ -623,6 +665,10 @@ paths:
             $ref: '#/definitions/batchRequest'
         - $ref: '#/parameters/json-header'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '201':
           description: 'Array[ @/batches/batchId ]'
           schema:
@@ -634,13 +680,18 @@ paths:
               type: string
               description: The URI of the newly created resource.
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: A bad request.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
     put:
       tags:
         - Batches
@@ -662,6 +713,10 @@ paths:
             $ref: '#/definitions/batchRequest'
         - $ref: '#/parameters/json-header'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: 'Array[ @/batches/batchId ]'
           schema:
@@ -669,15 +724,22 @@ paths:
             items:
               type: string
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: A bad request.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
     patch:
       tags:
         - Batches
@@ -699,6 +761,10 @@ paths:
         - $ref: '#/parameters/json-header'
         - $ref: '#/parameters/if-none-match'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: 'Array[ @/batches/batchId ]'
           schema:
@@ -706,15 +772,22 @@ paths:
             items:
               type: string
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: A bad request.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The specified batch was not found.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
     delete:
       tags:
         - Batches
@@ -726,6 +799,10 @@ paths:
       produces:
         - application/json
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: 'Array[ @/batches/batchId ]'
           schema:
@@ -733,15 +810,22 @@ paths:
             items:
               type: string
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: A bad request.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The batch was not found.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
   /dataSets:
     parameters:
       - $ref: '#/parameters/authorization'
@@ -800,6 +884,10 @@ paths:
         - $ref: '#/parameters/properties'
         - $ref: '#/parameters/tags'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A list of datasets is returned.
           schema:
@@ -843,15 +931,22 @@ paths:
                   }
               }
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: A bad request.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The datasets are not found.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
     post:
       tags:
         - Datasets
@@ -871,6 +966,10 @@ paths:
             $ref: '#/definitions/dataSetRequest'
         - $ref: '#/parameters/json-header'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '201':
           description: The dataset has been successfully created.
           schema:
@@ -882,13 +981,18 @@ paths:
               type: string
               description: The URI of the newly created resource
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: A bad request.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
   '/dataSets/{DATASET_ID}':
     parameters:
       - name: DATASET_ID
@@ -917,6 +1021,10 @@ paths:
           type: string
           required: false
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: The dataset for the specified dataset ID is returned.
           schema:
@@ -961,15 +1069,22 @@ paths:
                   }
               }
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: A bad request.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The dataset was not found.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
     put:
       tags:
         - Datasets
@@ -990,6 +1105,10 @@ paths:
             $ref: '#/definitions/dataSetRequest'
         - $ref: '#/parameters/json-header'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: 'Array[ @/dataSets/dataSetId ]'
           schema:
@@ -997,13 +1116,18 @@ paths:
             items:
               type: string
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: A bad request.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
     patch:
       tags:
         - Datasets
@@ -1024,6 +1148,10 @@ paths:
             $ref: '#/definitions/dataSetRequest'
         - $ref: '#/parameters/json-header'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: 'Array[ @/dataSets/dataSetId ]'
           schema:
@@ -1031,15 +1159,22 @@ paths:
             items:
               type: string
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: A bad request.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
     delete:
       tags:
         - Datasets
@@ -1050,6 +1185,10 @@ paths:
       produces:
         - application/json
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: 'Array[ @/dataSets/dataSetId ]'
           schema:
@@ -1057,15 +1196,22 @@ paths:
             items:
               type: string
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: A bad request.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
   '/dataSets/{id}/credentials':
     parameters:
       - $ref: '#/parameters/id'
@@ -1090,18 +1236,27 @@ paths:
           in: query
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Credential object given dataSet.
           schema:
             $ref: '#/definitions/dataSetCredentials'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: A bad request.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
   '/':
     get:
       tags:
@@ -1117,16 +1272,23 @@ paths:
         - $ref: '#/parameters/property'
         - $ref: '#/parameters/properties'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: serviceResources
           schema:
             $ref: '#/definitions/serviceResources'
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
     post:
       tags:
         - Batched requests
@@ -1148,6 +1310,10 @@ paths:
               $ref: '#/definitions/resourceItem'
         - $ref: '#/parameters/json-header'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '201':
           description: 'Array[ @/resource/resourceId ]'
           schema:
@@ -1159,13 +1325,18 @@ paths:
               type: string
               description: The URI of the newly created resource
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: A bad request.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
   '/tags/{tagNamespace}':
     parameters:
       - $ref: '#/parameters/tagNamespace'
@@ -1182,6 +1353,10 @@ paths:
       produces:
         - application/json
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: Returns aggregated tagValues for given namespace.
           schema:
@@ -1197,13 +1372,18 @@ paths:
                 "adobe/pqs/databases": ["baz", "bat", "foo", "bar"]
               }
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: A bad request.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: not found
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An internal server error has ocurred.
-        default:
-          description: An unexpected error has ocurred.
+
 parameters:
   x-sandbox-name:
     name: x-sandbox-name
@@ -1418,6 +1598,33 @@ parameters:
       - batch
     required: true
 definitions:
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true
   batchRequest:
     type: object
     properties:
@@ -2633,3 +2840,30 @@ definitions:
           type: string
         description: >-
           - Array of aggregated values for input tagNamespace
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true

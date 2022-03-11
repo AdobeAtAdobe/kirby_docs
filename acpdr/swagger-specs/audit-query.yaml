@@ -59,13 +59,21 @@ paths:
           required: false
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns a list of audit events that match the request query.
           schema:
             $ref: "#/definitions/CollectionModel"
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request was malformed. Ensure that you are including all required headers before trying again.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The resource was not found.
   "/audit/export":
     get:
@@ -83,19 +91,27 @@ paths:
         - $ref: '#/parameters/x-request-id'
         - $ref: '#/parameters/property'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '204':
           description: The request was successful but no results were found.
         '307':
           description: The request was successful and the results have been generated into a CSV file for export. A link to the export file is provided in the `Location` response header.
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request was malformed. Ensure that you are including all required headers before trying again.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The resource was not found.
 parameters:
   authorization:
     name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
-    For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ".
+      For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
     required: true
     type: string
     in: header
@@ -122,8 +138,8 @@ parameters:
     in: query
     description: >-
       You can filter list results by including a `property` query parameter. The value must be an array that contains one or more of a comma-separated list of properties. For example: `?property=action==create,assetType==Sandbox`.
-      
-      
+
+
       The properties that can be used for filtering are `timestamp`, `status`, `action`, `user`, and `assetType`.
     required: false
     type: array
@@ -137,6 +153,33 @@ parameters:
     description: A tracing ID associated with the request. If one is not provided on the request, the server generates one automatically.
     required: false
 definitions:
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true
   AbstractAuditLog:
     type: object
     properties:
