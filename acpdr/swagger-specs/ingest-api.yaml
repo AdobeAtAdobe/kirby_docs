@@ -274,6 +274,11 @@ paths:
           required: true
           type: string
           in: header
+        - in: formData
+          name: body
+          type: file
+          description: Contents of the file.
+          x-mimetype: application/octet-stream
         - name: "batchId"
           in: "path"
           required: true
