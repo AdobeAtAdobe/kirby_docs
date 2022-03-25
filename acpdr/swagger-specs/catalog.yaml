@@ -2299,10 +2299,6 @@ definitions:
         type: string
         description: >-
           - The ID for associated DataSet view.
-      id:
-        type: string
-        description: >-
-          - The ID for the DataSet.
       observableSchema:
         type: object
         description: >-
