@@ -2,18 +2,18 @@ swagger: '2.0'
 info:
   version: '1.0'
   title: Reactor API
-  description: >- 
+  description: >-
     The Reactor API is used to programmatically manage resources and develop tag extensions in Adobe Experience Platform.
-  
-  
+
+
     Related documentation:
       * [Tags overview and UI documentation](https://adobe.com/go/launch_help_en)
       * [Reactor API documentation](https://adobe.com/go/reactor-api-overview)
-  
+
     API paths:
       * Reactor Gateway URL: https://<span>reactor.adobe.io
       * Example of a complete path for making a call to "/properties": https://<span>reactor.adobe.io/properties
-    
+
     Required headers:
       * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](http://www.adobe.com/go/launch-authentication-en).
       * All GET requests to the Reactor API require an `Accept` header to determine what data is returned by the system. In most cases, this value will be "application/vnd.api+json;revision=#" (where "#" is the revision number of the resource you want to retrieve, e.g. "1").
@@ -53,7 +53,7 @@ tags:
   - name: "Profiles"
     description: A profile represents a tags user. Platform does not maintain its own database of users and permissions, it instead relies on Adobe IDs managed by Adobe’s company-wide Identity Management System (IMS). A profile contains all the information about the logged-in user, including all the Adobe Orgs to which they belong, the product profiles they belong to within each Org, and the rights they have from each product profile.
   - name: "Search"
-    description: The search endpoint provides a way to find resources matching a desired criteria, expressed as a query. All queries are scoped to your current company and accessible properties. 
+    description: The search endpoint provides a way to find resources matching a desired criteria, expressed as a query. All queries are scoped to your current company and accessible properties.
 consumes:
   - application/vnd.api+json;revision=1
 produces:
@@ -77,6 +77,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of companies, including their IDs and attributes.
           schema:
@@ -153,8 +157,12 @@ paths:
                   "total_pages": 1
                   "total_count": 2
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/companies/{COMPANY_ID}':
     get:
@@ -174,6 +182,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the company.
           schema:
@@ -213,8 +225,12 @@ paths:
                       - "manage_properties"
                       - "manage_app_configurations"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/companies/{COMPANY_ID}/properties':
     get:
@@ -242,6 +258,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array, listing the properties belonging to the specified company.
           schema:
@@ -373,8 +393,12 @@ paths:
                   "total_pages": 1
                   "total_count": 2
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -404,6 +428,10 @@ paths:
                   "platform": "web"
                 "type": "properties"
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         201:
           description: A successful response returns the details of the newly created property.
           schema:
@@ -469,8 +497,12 @@ paths:
                     - "manage_extensions"
                     - "publish"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/companies/{COMPANY_ID}/app_configurations':
     get:
@@ -498,6 +530,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array, listing the app configurations belonging to the specified company.
           schema:
@@ -531,8 +567,12 @@ paths:
                   "total_pages": 1
                   "total_count": 3
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -568,6 +608,10 @@ paths:
                     "teamId": "team_id"
                 "type": "app_configurations"
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         201:
           description: A successful response returns the details of the newly created app configuration.
           schema:
@@ -594,8 +638,12 @@ paths:
                   "company": "https://reactor.adobe.io/companies/CO2bf094214ffd4785bb4bcf88c952a7c1"
                   "self": "https://reactor.adobe.io/app_configurations/AC40c339ab80d24c958b90d67b698602eb"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/properties/{PROPERTY_ID}':
     get:
@@ -615,6 +663,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the property.
           schema:
@@ -680,8 +732,12 @@ paths:
                     - "manage_extensions"
                     - "publish"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     patch:
       tags:
@@ -690,9 +746,9 @@ paths:
       description: >-
         **Note**:
 
-        
+
         When updating a property, its ID must be provided in both the request path and the request payload, as shown in the example below. These IDs must match in order for the call to be successful.
-        
+
 
         The following attributes can be edited for a property:
 
@@ -735,6 +791,10 @@ paths:
               "id": "PR541dbb24bad54dceb04710d7a9e7a740"
               "type": "properties"
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the updated property.
           schema:
@@ -800,8 +860,12 @@ paths:
                     - "manage_extensions"
                     - "publish"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     delete:
       tags:
@@ -817,11 +881,19 @@ paths:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         204:
           description: A successful response returns HTTP status 204 (No Content).
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/app_configurations/{CONFIG_ID}':
     get:
@@ -841,6 +913,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the app configuration.
           schema:
@@ -868,8 +944,12 @@ paths:
                   "company": "https://reactor.adobe.io/companies/CO2bf094214ffd4785bb4bcf88c952a7c1"
                   "self": "https://reactor.adobe.io/app_configurations/AC40c339ab80d24c958b90d67b698602eb"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     patch:
       tags:
@@ -898,6 +978,10 @@ paths:
               "id": "AC40c339ab80d24c958b90d67b698602eb"
               "type": "app_configurations"
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the updated app configuration.
           schema:
@@ -924,8 +1008,12 @@ paths:
                   "company": "https://reactor.adobe.io/companies/CO2bf094214ffd4785bb4bcf88c952a7c1"
                   "self": "https://reactor.adobe.io/app_configurations/AC40c339ab80d24c958b90d67b698602eb"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     delete:
       tags:
@@ -941,11 +1029,19 @@ paths:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         204:
           description: A successful response returns HTTP status 204 (No Content).
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/app_configurations/{CONFIG_ID}/company':
     get:
@@ -962,6 +1058,10 @@ paths:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the company that owns the app configuration.
           schema:
@@ -1001,9 +1101,13 @@ paths:
                       - "manage_properties"
                       - "manage_app_configurations"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
-          description: "An internal server error has ocurred." 
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: "An internal server error has ocurred."
   '/properties/{PROPERTY_ID}/company':
     get:
       tags:
@@ -1019,6 +1123,10 @@ paths:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the company that owns the property.
           schema:
@@ -1058,8 +1166,12 @@ paths:
                       - "manage_properties"
                       - "manage_app_configurations"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/properties/{PROPERTY_ID}/callbacks':
     get:
@@ -1082,11 +1194,15 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of callbacks belonging to the specified property.
           schema:
             example:
-              "data": 
+              "data":
                 - "id": "CB26edef8d709243579589107bcda034da"
                   "type": "callbacks"
                   "attributes":
@@ -1113,8 +1229,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -1145,6 +1265,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         201:
           description: A successful response returns the details of the newly created callback.
           schema:
@@ -1169,8 +1293,12 @@ paths:
                   "property": "https://reactor.adobe.io/properties/PR5e22de986a7c4070965e7546b2bb108d"
                   "self": "https://reactor.adobe.io/callbacks/CB32d8f23d5ee548278d32076af4c442a0"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/properties/{PROPERTY_ID}/data_elements':
     get:
@@ -1199,6 +1327,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of data elements belonging to the specified property.
           schema:
@@ -1278,8 +1410,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -1315,6 +1451,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         201:
           description: A successful response returns the details of the newly created data element.
           schema:
@@ -1387,9 +1527,13 @@ paths:
                 "meta":
                   "latest_revision_number": 0
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
-          description: "An internal server error has ocurred." 
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: "An internal server error has ocurred."
   '/properties/{PROPERTY_ID}/environments':
     get:
       tags:
@@ -1414,6 +1558,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of environments belonging to the specified property.
           schema:
@@ -1476,8 +1624,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -1512,6 +1664,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         201:
           description: A successful response returns the details of the newly created environment.
           schema:
@@ -1567,8 +1723,12 @@ paths:
                 "meta":
                   "archive_encrypted": false
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/properties/{PROPERTY_ID}/extensions':
     get:
@@ -1599,6 +1759,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of extensions belonging to the specified property.
           schema:
@@ -1671,8 +1835,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -1705,6 +1873,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         201:
           description: A successful response returns the details of the newly created extension.
           schema:
@@ -1770,9 +1942,13 @@ paths:
                 "meta":
                   "latest_revision_number": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
-          description: "An internal server error has ocurred."    
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: "An internal server error has ocurred."
   '/properties/{PROPERTY_ID}/hosts':
     get:
       tags:
@@ -1802,6 +1978,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of hosts belonging to the specified property.
           schema:
@@ -1837,8 +2017,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -1873,6 +2057,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         201:
           description: A successful response returns the details of the newly created host.
           schema:
@@ -1901,9 +2089,13 @@ paths:
                   "property": "https://reactor.adobe.io/properties/PRb25a704c0b7c4562835ccdf96d3afd31"
                   "self": "https://reactor.adobe.io/hosts/HT69bfe634dead4a9a8c659f5d4d94cecd"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
-          description: "An internal server error has ocurred."    
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: "An internal server error has ocurred."
   '/properties/{PROPERTY_ID}/libraries':
     get:
       tags:
@@ -1928,6 +2120,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of libraries belonging to the specified property.
           schema:
@@ -1991,8 +2187,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -2021,6 +2221,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         201:
           description: A successful response returns the details of the newly created library.
           schema:
@@ -2077,8 +2281,12 @@ paths:
                   "build_status": null
                   "build_required_detail": "No build found since last state change"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/properties/{PROPERTY_ID}/rules':
     get:
@@ -2108,6 +2316,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of rules belonging to the specified property.
           schema:
@@ -2166,8 +2378,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -2196,6 +2412,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         201:
           description: A successful response returns the details of the newly created rule.
           schema:
@@ -2247,8 +2467,12 @@ paths:
                 "meta":
                   "latest_revision_number": 0
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/callbacks/{CALLBACK_ID}':
     get:
@@ -2268,6 +2492,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the callback.
           schema:
@@ -2292,8 +2520,12 @@ paths:
                   "property": "https://reactor.adobe.io/properties/PRb513bbab52114573ac87f9848eea6ead"
                   "self": "https://reactor.adobe.io/callbacks/CBeef389cee8d84e69acef8665e4dcbef6"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     patch:
       tags:
@@ -2302,13 +2534,13 @@ paths:
       description: >-
         **Note**:
 
-        
+
         When updating a callback, its ID must be provided in both the request path and the request payload, as shown in the example below. These IDs must match in order for the call to be successful.
 
 
         When updating an app configuration, its ID must be provided in both the request path and the request payload, as shown in the example below. These IDs must match in order for the call to be successful.
 
-        
+
         The following attributes are editable for a callback:
 
         * `url`
@@ -2341,6 +2573,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the updated callback.
           schema:
@@ -2366,8 +2602,12 @@ paths:
                   "property": "https://reactor.adobe.io/properties/PR0a8ef3ca31dc456a8566e9288960bd79"
                   "self": "https://reactor.adobe.io/callbacks/CB4310904d415549888cc9e31ebe1e1e45"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     delete:
       tags:
@@ -2385,11 +2625,19 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         204:
           description: A successful response returns HTTP status 204 (No Content).
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/data_elements/{DATA_ELEMENT_ID}':
     get:
@@ -2409,6 +2657,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the data element.
           schema:
@@ -2481,8 +2733,12 @@ paths:
                 "meta":
                   "latest_revision_number": 0
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     patch:
       tags:
@@ -2491,30 +2747,30 @@ paths:
       description: >-
         **Note**:
 
-        
+
         Revising a data element creates a new revision of the data element which is assigned its own ID. The original data element may be discovered via the origin link. Revising a data element is achieved by supplying a `meta` attribute containing an `action` property with the value `revise` (`"action": "revise"`). Excluding this property will update the current revision of the data element without creating a new one.
 
 
         When updating a data element, its ID must be provided in both the request path and the request payload, as shown in the example below. These IDs must match in order for the call to be successful.
-        
+
 
         Attributes to be updated must be included in the `attributes` object in the payload. Editable attributes for a data element include the following:
-        
+
         * `clean_text`
-        
+
 
         * `default_value`
-        
+
         * `delegate_descriptor_id`
-        
+
         * `enabled`
-        
+
         * `force_lower_case`
-        
+
         * `name`
-        
+
         * `settings`
-        
+
         * `storage_duration`
       parameters:
         - name: DATA_ELEMENT_ID
@@ -2541,6 +2797,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the updated data element or its new revision.
           schema:
@@ -2612,8 +2872,12 @@ paths:
                 "meta":
                   "latest_revision_number": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/environments/{ENVIRONMENT_ID}':
     get:
@@ -2633,6 +2897,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the environment.
           schema:
@@ -2688,8 +2956,12 @@ paths:
                 "meta":
                   "archive_encrypted": false
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     patch:
       tags:
@@ -2698,22 +2970,22 @@ paths:
       description: >-
         **Note**:
 
-        
+
         When updating or revising a rule, its ID must be provided in both the request path and the request payload, as shown in the example below. These IDs must match in order for the call to be successful.
 
-        
+
         Attributes to be updated must be included in the `attributes` object in the payload. Editable attributes for an environment include the following:
-        
+
 
         * `archive`
-        
+
 
         * `archive_passphrase`
-        
+
         * `include_debug_library`
-        
+
         * `name`
-        
+
         * `path`
       parameters:
         - name: ENVIRONMENT_ID
@@ -2738,6 +3010,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the updated environment.
           schema:
@@ -2793,9 +3069,13 @@ paths:
                 "meta":
                   "archive_encrypted": false
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
-          description: "An internal server error has ocurred."  
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: "An internal server error has ocurred."
     delete:
       tags:
         - Environments
@@ -2812,13 +3092,21 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         204:
           description: A successful response returns HTTP status 204 (No Content).
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
-  '/environments/{ENVIRONMENT_ID}/builds':  
+  '/environments/{ENVIRONMENT_ID}/builds':
     get:
       tags:
         - Environments
@@ -2836,6 +3124,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of builds that use the specified environment.
           schema:
@@ -2893,8 +3185,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/environments/{ENVIRONMENT_ID}/host':
     get:
@@ -2914,6 +3210,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the environment's associated host.
           schema:
@@ -2942,8 +3242,12 @@ paths:
                   "property": "https://reactor.adobe.io/properties/PR50586546f7764fc59997342b8ff7647c"
                   "self": "https://reactor.adobe.io/hosts/HT621241cf4fbb4f7da5b6415ee1b15ac0"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/environments/{ENVIRONMENT_ID}/relationships/host':
     get:
@@ -2963,6 +3267,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the host relationship for the specified environment.
           schema:
@@ -2974,8 +3282,12 @@ paths:
                 "related": "https://reactor.adobe.io/environments/ENd9e6690785d14805b046d7d0fafab23a/host"
                 "self": "https://reactor.adobe.io/environments/ENd9e6690785d14805b046d7d0fafab23a/relationships/host"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/environments/{ENVIRONMENT_ID}/library':
     get:
@@ -2995,6 +3307,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the environment's associated library.
           schema:
@@ -3054,8 +3370,12 @@ paths:
                   "build_status": null
                   "build_required_detail": "No build found since last state change"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/environments/{ENVIRONMENT_ID}/property':
     get:
@@ -3075,6 +3395,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the environment's associated property.
           schema:
@@ -3140,8 +3464,12 @@ paths:
                     - "manage_extensions"
                     - "publish"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/extension_packages':
     get:
@@ -3160,10 +3488,14 @@ paths:
         - $ref: '#/parameters/status'
         - $ref: '#/parameters/platform'
         - $ref: '#/parameters/version'
-        
+
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of extension packages, including their IDs and attributes.
           schema:
@@ -3243,8 +3575,12 @@ paths:
                   "total_pages": 1
                   "total_count": 8
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -3261,12 +3597,16 @@ paths:
           required: true
           description: The extension package archive file.
           type: file
-      
+
       consumes:
-      - multipart/form-data    
+      - multipart/form-data
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         201:
           description: A successful response returns the details of the newly created extension package.
           schema:
@@ -3301,8 +3641,12 @@ paths:
                 "links":
                   "self": "https://reactor.adobe.io/extension_packages/EP10bb503178694d73bc0cd84387b82172"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/extension_packages/{EXTENSION_PACKAGE_ID}':
     get:
@@ -3322,6 +3666,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the extension package.
           schema:
@@ -3563,8 +3911,12 @@ paths:
                 "links":
                   "self": "https://reactor.adobe.io/extension_packages/EP75db2452065b44e2b8a38ca883ce369a"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -3586,12 +3938,16 @@ paths:
           required: true
           description: The extension package archive file.
           type: file
-      
+
       consumes:
-      - multipart/form-data    
+      - multipart/form-data
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the updated extension package.
           schema:
@@ -3626,8 +3982,12 @@ paths:
                 "links":
                   "self": "https://reactor.adobe.io/extension_packages/EP0393ce01ac3540acb78f103d8e58a5a0"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     patch:
       tags:
@@ -3638,11 +3998,11 @@ paths:
 
 
         Once you have completed testing your extension package you can release it privately. This makes it available to any property within your company. After you have released privately, you can begin the public release process by filling out the [Public Release Request Form](https://adobe.allegiancetech.com/cgi-bin/qwebcorporate.dll?idx=7DRB5U).
-          
+
 
         A private release is achieved by supplying an `action` with a value of `release_private` in the JSON payload's `meta` object.
-        
-        
+
+
         To discontinue a package, you must supply an `attributes` object in the payload, containing a `discontinued` property with a value of `true`.
 
 
@@ -3671,6 +4031,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the updated extension package.
           schema:
@@ -3912,9 +4276,13 @@ paths:
                 "links":
                   "self": "https://reactor.adobe.io/extension_packages/EP75db2452065b44e2b8a38ca883ce369a"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
-          description: "An internal server error has ocurred."  
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: "An internal server error has ocurred."
   '/extension_packages/{EXTENSION_PACKAGE_ID}/versions':
     get:
       tags:
@@ -3933,6 +4301,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns a list of each version of the extension package.
           schema:
@@ -4181,8 +4553,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/extensions/{EXTENSION_ID}':
     get:
@@ -4202,6 +4578,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the extension.
           schema:
@@ -4267,8 +4647,12 @@ paths:
                 "meta":
                   "latest_revision_number": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     patch:
       tags:
@@ -4309,6 +4693,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the new revision for the extension.
           schema:
@@ -4374,9 +4762,13 @@ paths:
                 "meta":
                   "latest_revision_number": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
-          description: "An internal server error has ocurred."  
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: "An internal server error has ocurred."
     delete:
       tags:
         - Extensions
@@ -4393,11 +4785,19 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         204:
           description: A successful response returns HTTP status 204 (No Content).
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/extensions/{EXTENSION_ID}/extension_package':
     get:
@@ -4417,6 +4817,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the extension package associated with the specified extension.
           schema:
@@ -4658,8 +5062,12 @@ paths:
                 "links":
                   "self": "https://reactor.adobe.io/extension_packages/EP75db2452065b44e2b8a38ca883ce369a"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/extensions/{EXTENSION_ID}/libraries':
     get:
@@ -4679,6 +5087,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of libraries that are attached to the specified extension.
           schema:
@@ -4742,8 +5154,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/extensions/{EXTENSION_ID}/property':
     get:
@@ -4763,6 +5179,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the specified extension's property.
           schema:
@@ -4828,8 +5248,12 @@ paths:
                     - "manage_extensions"
                     - "publish"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/extensions/{EXTENSION_ID}/origin':
     get:
@@ -4849,6 +5273,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the specified extension's origin.
           schema:
@@ -4914,8 +5342,12 @@ paths:
                 "meta":
                   "latest_revision_number": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/extensions/{EXTENSION_ID}/revisions':
     get:
@@ -4935,6 +5367,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of revisions for the specified extension.
           schema:
@@ -5066,8 +5502,12 @@ paths:
                   "total_pages": 1
                   "total_count": 2
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/hosts/{HOST_ID}':
     get:
@@ -5087,6 +5527,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the host.
           schema:
@@ -5115,8 +5559,12 @@ paths:
                   "property": "https://reactor.adobe.io/properties/PRd7cf174259f34057b5c435ef873a79bf"
                   "self": "https://reactor.adobe.io/hosts/HT5d90148e72224224aac9bc0b01498b84"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     patch:
       tags:
@@ -5128,47 +5576,47 @@ paths:
 
         When updating or revising a rule, its ID must be provided in both the request path and the request payload, as shown in the example below. These IDs must match in order for the call to be successful.
 
-        
+
         The following attributes can be edited for a host:
-        
+
          * `encrypted_private_key`
-        
+
 
         * `string`
-        
+
         * `optional`
-        
+
         * `name`
-        
+
         * `string`
-        
+
         * `optional`
-        
+
         * `path`
-        
+
         * `string`
-        
+
         * `optional`
-        
+
         * `port`
-        
+
         * `integer`
-        
+
         * `optional`
-        
+
         * `server`
-        
+
         * `string`
-        
+
         * `optional`
-        
+
         * `type_of`
-        
+
         * `string`
-        
+
         * `optional`
-        
-        * `username`     
+
+        * `username`
       parameters:
         - name: HOST_ID
           in: "path"
@@ -5192,6 +5640,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the updated host.
           schema:
@@ -5220,9 +5672,13 @@ paths:
                   "property": "https://reactor.adobe.io/properties/PR8f240526f7b54a4dbd46965e79519fde"
                   "self": "https://reactor.adobe.io/hosts/HTb14e136a6fe147459b298a4645d2a6f5"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
-          description: "An internal server error has ocurred."  
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: "An internal server error has ocurred."
     delete:
       tags:
         - Hosts
@@ -5239,11 +5695,19 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         204:
           description: A successful response returns HTTP status 204 (No Content).
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/hosts/{HOST_ID}/property':
     get:
@@ -5263,6 +5727,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the property that owns the host.
           schema:
@@ -5328,8 +5796,12 @@ paths:
                     - "manage_extensions"
                     - "publish"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/libraries/{LIBRARY_ID}':
     get:
@@ -5349,6 +5821,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the library.
           schema:
@@ -5405,13 +5881,17 @@ paths:
                   "build_status": null
                   "build_required_detail": "No build found since last state change"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     patch:
       tags:
         - Libraries
-      summary: "Update a library by ID."  
+      summary: "Update a library by ID."
       description: >-
         **Note**:
 
@@ -5425,7 +5905,7 @@ paths:
         To transition the library between states, the payload must include a `meta` object, containing a single `action` property whose value represents the specific transition action. The available actions for a library depend on its current publishing state. See the API guide on [transitioning a library](https://developer.adobelaunch.com/api/reference/1.0/libraries/transition/) for details on the available actions for each library state.
 
 
-        When updating a library, its ID must be provided in both the request path and the request payload, as shown in the example below. These IDs must match in order for the call to be successful.        
+        When updating a library, its ID must be provided in both the request path and the request payload, as shown in the example below. These IDs must match in order for the call to be successful.
       parameters:
         - name: LIBRARY_ID
           in: "path"
@@ -5451,6 +5931,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the updated library library.
           schema:
@@ -5509,9 +5993,13 @@ paths:
                   "build_status": null
                   "build_required_detail": "No build found since last state change"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
-          description: "An internal server error has ocurred."  
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: "An internal server error has ocurred."
     delete:
       tags:
         - Libraries
@@ -5528,11 +6016,19 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         204:
           description: A successful response returns HTTP status 204 (No Content).
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/libraries/{LIBRARY_ID}/property':
     get:
@@ -5552,6 +6048,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the property associated with the specified library.
           schema:
@@ -5617,8 +6117,12 @@ paths:
                     - "manage_extensions"
                     - "publish"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/libraries/{LIBRARY_ID}/builds':
     get:
@@ -5643,6 +6147,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of builds belonging to the specified library.
           schema:
@@ -5700,8 +6208,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -5721,6 +6233,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         201:
           description: A successful response returns the details of the newly created build.
           schema:
@@ -5771,8 +6287,12 @@ paths:
                   "archive": false
                   "host_type_of": "akamai"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/libraries/{LIBRARY_ID}/environment':
     get:
@@ -5792,6 +6312,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the environment associated with the specified library.
           schema:
@@ -5849,8 +6373,12 @@ paths:
                 "meta":
                   "archive_encrypted": false
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/libraries/{LIBRARY_ID}/upstream_library':
     get:
@@ -5870,6 +6398,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the upstream library.
           schema:
@@ -5928,8 +6460,12 @@ paths:
                   "build_status": null
                   "build_required_detail": "No build found since last state change"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/libraries/{LIBRARY_ID}/data_elements':
     get:
@@ -5949,6 +6485,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of data elements related to the specified library.
           schema:
@@ -6028,8 +6568,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/libraries/{LIBRARY_ID}/relationships/data_elements':
     get:
@@ -6049,6 +6593,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of data element relationships attached to the specified library.
           schema:
@@ -6060,8 +6608,12 @@ paths:
                 "related": "https://reactor.adobe.io/libraries/LB4743967474414e538557b41d3b47fb20/data_elements"
                 "self": "https://reactor.adobe.io/libraries/LB4743967474414e538557b41d3b47fb20/relationships/data_elements"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -6072,8 +6624,8 @@ paths:
 
 
         * `id`: The ID of the data element that you want to add.
-        
-        
+
+
         * `type`: Must be set to "data_elements".
       parameters:
         - name: LIBRARY_ID
@@ -6096,6 +6648,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the newly created relationship.
           schema:
@@ -6107,8 +6663,12 @@ paths:
                 "related": "https://reactor.adobe.io/libraries/LB09eca17e012842b49466506f419283a7/data_elements"
                 "self": "https://reactor.adobe.io/libraries/LB09eca17e012842b49466506f419283a7/relationships/data_elements"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     patch:
       tags:
@@ -6119,8 +6679,8 @@ paths:
 
 
         * `id`: The ID of the data element that you want to include in the library.
-        
-        
+
+
         * `type`: Must be set to "data_elements".
       parameters:
         - name: LIBRARY_ID
@@ -6143,6 +6703,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the updated relationship.
           schema:
@@ -6154,8 +6718,12 @@ paths:
                 "related": "https://reactor.adobe.io/libraries/LBdfaf4cd8affe40fea0e7f267652df6db/data_elements"
                 "self": "https://reactor.adobe.io/libraries/LBdfaf4cd8affe40fea0e7f267652df6db/relationships/data_elements"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     delete:
       tags:
@@ -6182,6 +6750,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the removed relationship.
           schema:
@@ -6193,8 +6765,12 @@ paths:
                 "related": "https://reactor.adobe.io/libraries/LBdfaf4cd8affe40fea0e7f267652df6db/data_elements"
                 "self": "https://reactor.adobe.io/libraries/LBdfaf4cd8affe40fea0e7f267652df6db/relationships/data_elements"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/libraries/{LIBRARY_ID}/relationships/environment':
     get:
@@ -6214,6 +6790,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the environment relationship attached to the specified library.
           schema:
@@ -6225,8 +6805,12 @@ paths:
                 "related": "https://reactor.adobe.io/libraries/LB85b4873543034b5e93f5248645d22806/environment"
                 "self": "https://reactor.adobe.io/libraries/LB85b4873543034b5e93f5248645d22806/relationships/environment"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     patch:
       tags:
@@ -6253,6 +6837,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the established relationship.
           schema:
@@ -6264,8 +6852,12 @@ paths:
                 "related": "https://reactor.adobe.io/libraries/LBdd2f55e9c3bb4ce0a582a0b0c586a6f5/environment"
                 "self": "https://reactor.adobe.io/libraries/LBdd2f55e9c3bb4ce0a582a0b0c586a6f5/relationships/environment"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     delete:
       tags:
@@ -6284,6 +6876,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the removed relationship.
           schema:
@@ -6293,8 +6889,12 @@ paths:
                 "self": "https://reactor.adobe.io/libraries/LBe3a53b394dad4e8381317ecda26b96be/relationships/environment"
                 "related": "https://reactor.adobe.io/libraries/LBe3a53b394dad4e8381317ecda26b96be/environment"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/libraries/{LIBRARY_ID}/extensions':
     get:
@@ -6314,6 +6914,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of extensions associated with the specified library.
           schema:
@@ -6386,8 +6990,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/libraries/{LIBRARY_ID}/relationships/extensions':
     get:
@@ -6407,6 +7015,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns a list of extension relationship objects attached to the specified library.
           schema:
@@ -6418,8 +7030,12 @@ paths:
                 "related": "https://reactor.adobe.io/libraries/LB8939966ac6214d4bb604d06726a7e8b3/extensions"
                 "self": "https://reactor.adobe.io/libraries/LB8939966ac6214d4bb604d06726a7e8b3/relationships/extensions"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -6430,8 +7046,8 @@ paths:
 
 
         * `id`: The ID of the extension that you want to include in the library.
-        
-        
+
+
         * `type`: Must be set to "extensions".
       parameters:
         - name: LIBRARY_ID
@@ -6454,6 +7070,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns a list of extension relationships attached to the library, including those just added.
           schema:
@@ -6465,8 +7085,12 @@ paths:
                 "related": "https://reactor.adobe.io/libraries/LBce8f03e3b0704cad8689dcfd0a9cd57e/extensions"
                 "self": "https://reactor.adobe.io/libraries/LBce8f03e3b0704cad8689dcfd0a9cd57e/relationships/extensions"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     patch:
       tags:
@@ -6477,8 +7101,8 @@ paths:
 
 
         * `id`: The ID of the extension that you want to include in the library.
-        
-        
+
+
         * `type`: Must be set to "extensions".
       parameters:
         - name: LIBRARY_ID
@@ -6501,6 +7125,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns a list of the library's replaced extensions.
           schema:
@@ -6512,8 +7140,12 @@ paths:
                 "related": "https://reactor.adobe.io/libraries/LBdbc7c49ac8f040bc9576db26b127444d/extensions"
                 "self": "https://reactor.adobe.io/libraries/LBdbc7c49ac8f040bc9576db26b127444d/relationships/extensions"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     delete:
       tags:
@@ -6532,6 +7164,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the updated list of extensions for the library.
           schema:
@@ -6541,8 +7177,12 @@ paths:
                 "related": "https://reactor.adobe.io/libraries/LB6692d815328148a38e01c6acf6302f8b/extensions"
                 "self": "https://reactor.adobe.io/libraries/LB6692d815328148a38e01c6acf6302f8b/relationships/extensions"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/libraries/{LIBRARY_ID}/rules':
     get:
@@ -6562,6 +7202,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of rules associated with the specified library.
           schema:
@@ -6620,8 +7264,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/libraries/{LIBRARY_ID}/relationships/rules':
     get:
@@ -6641,6 +7289,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns a list of rule relationship objects attached to the specified library.
           schema:
@@ -6652,8 +7304,12 @@ paths:
                 "related": "https://reactor.adobe.io/libraries/LB001b2bb35a774102bef9c75fc964de01/rules"
                 "self": "https://reactor.adobe.io/libraries/LB001b2bb35a774102bef9c75fc964de01/relationships/rules"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -6664,8 +7320,8 @@ paths:
 
 
         * `id`: The ID of the rule that you want to include in the library.
-        
-        
+
+
         * `type`: Must be set to "rules".
       parameters:
         - name: LIBRARY_ID
@@ -6688,6 +7344,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns a list of rule relationships attached to the library, including those just added.
           schema:
@@ -6699,8 +7359,12 @@ paths:
                 "related": "https://reactor.adobe.io/libraries/LB40cfb51ac87647a1a09672a3e7a0f677/rules"
                 "self": "https://reactor.adobe.io/libraries/LB40cfb51ac87647a1a09672a3e7a0f677/relationships/rules"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     patch:
       tags:
@@ -6711,8 +7375,8 @@ paths:
 
 
         * `id`: The ID of the rule that you want to include in the library.
-        
-        
+
+
         * `type`: Must be set to "rules".
       parameters:
         - name: LIBRARY_ID
@@ -6735,6 +7399,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns a list of the library's replaced rules.
           schema:
@@ -6746,8 +7414,12 @@ paths:
                 "related": "https://reactor.adobe.io/libraries/LB874f21e6ea0d4e6a972a5409b4d38635/rules"
                 "self": "https://reactor.adobe.io/libraries/LB874f21e6ea0d4e6a972a5409b4d38635/relationships/rules"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     delete:
       tags:
@@ -6774,6 +7446,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the updated list of rules for the library.
           schema:
@@ -6783,8 +7459,12 @@ paths:
                 "related": "https://reactor.adobe.io/libraries/LBbde5759742844fe59458ca0c988ecd61/rules"
                 "self": "https://reactor.adobe.io/libraries/LBbde5759742844fe59458ca0c988ecd61/relationships/rules"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/builds/{BUILD_ID}':
     get:
@@ -6804,6 +7484,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the build.
           schema:
@@ -6854,8 +7538,12 @@ paths:
                   "archive": false
                   "host_type_of": "akamai"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     patch:
       tags:
@@ -6886,6 +7574,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the build.
           schema:
@@ -6936,8 +7628,12 @@ paths:
                   "archive": false
                   "host_type_of": "akamai"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/rules/{RULE_ID}':
     get:
@@ -6957,6 +7653,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the rule.
           schema:
@@ -7008,27 +7708,31 @@ paths:
                 "meta":
                   "latest_revision_number": 0
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     patch:
       tags:
         - Rules
-      summary: "Update or revise a rule by ID." 
+      summary: "Update or revise a rule by ID."
       description: >-
         **Note**:
 
-        
+
         Revising a rule creates a new revision of the rule which is assigned its own ID. The original rule may be discovered via the origin link. Revising a rule is achieved by supplying a `meta` attribute containing an `action` property with the value `revise` (`"action": "revise"`). Excluding this property will update the current revision of the rule without creating a new one.
-        
+
 
         When updating or revising a rule, its ID must be provided in both the request path and the request payload, as shown in the example below. These IDs must match in order for the call to be successful.
 
 
         Attributes to be updated must be included in the `attributes` object in the payload. Editable attributes for a rule include the following:
-        
+
         * `enabled`
-        
+
 
         * `name`
       parameters:
@@ -7054,6 +7758,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the new revision for the rule.
           schema:
@@ -7105,9 +7813,13 @@ paths:
                 "meta":
                   "latest_revision_number": 0
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
-          description: "An internal server error has ocurred."  
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: "An internal server error has ocurred."
     delete:
       tags:
         - Rules
@@ -7124,11 +7836,19 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         204:
           description: A successful response returns HTTP status 204 (No Content).
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/rules/{RULE_ID}/rule_components':
     get:
@@ -7159,6 +7879,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns a list of rule components attached to the rule.
           schema:
@@ -7234,8 +7958,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -7279,6 +8007,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         201:
           description: A successful response returns the details of the newly created rule component.
           schema:
@@ -7347,8 +8079,12 @@ paths:
                 "meta":
                   "latest_revision_number": 0
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/rules/{RULE_ID}/libraries':
     get:
@@ -7368,6 +8104,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of libraries related to the specified rule.
           schema:
@@ -7431,8 +8171,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/rules/{RULE_ID}/property':
     get:
@@ -7452,6 +8196,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the specified rule's property.
           schema:
@@ -7517,8 +8265,12 @@ paths:
                     - "manage_extensions"
                     - "publish"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/rules/{RULE_ID}/origin':
     get:
@@ -7538,6 +8290,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the specified rule's origin.
           schema:
@@ -7589,8 +8345,12 @@ paths:
                 "meta":
                   "latest_revision_number": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/rules/{RULE_ID}/revisions':
     get:
@@ -7610,6 +8370,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of revisions for the specified rule.
           schema:
@@ -7713,8 +8477,12 @@ paths:
                   "total_pages": 1
                   "total_count": 2
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/rules/{RULE_ID}/rule_component_notes':
     get:
@@ -7739,6 +8507,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns a list of notes attached to the rule components of the specified rule.
           schema:
@@ -7769,8 +8541,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/rule_components/{RULE_COMPONENT_ID}':
     get:
@@ -7790,6 +8566,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the rule component.
           schema:
@@ -7858,17 +8638,21 @@ paths:
                 "meta":
                   "latest_revision_number": 0
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
-          description: "An internal server error has ocurred."    
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: "An internal server error has ocurred."
     patch:
       tags:
         - Rule components
-      summary: "Update a rule component by ID." 
+      summary: "Update a rule component by ID."
       description: >-
         **Note**:
 
-        
+
         Updating a rule component will also update the parent rule's `updated_at` timestamp.
 
 
@@ -7878,29 +8662,29 @@ paths:
         The following attributes can be updated for an existing rule component:
 
         * `delay_next`
-        
-        
+
+
         * `delegate_descriptor_id`
-        
-        
+
+
         * `extension_id`
-        
-        
+
+
         * `name`
-        
-        
+
+
         * `negate`
-        
-        
+
+
         * `order`
-        
-        
+
+
         * `rule_order`
-        
-        
+
+
         * `settings`
-        
-        
+
+
         * `timeout`
       parameters:
         - name: RULE_COMPONENT_ID
@@ -7925,6 +8709,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the new revision for the rule component.
           schema:
@@ -7993,9 +8781,13 @@ paths:
                 "meta":
                   "latest_revision_number": 0
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
-          description: "An internal server error has ocurred."  
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: "An internal server error has ocurred."
     delete:
       tags:
         - Rule components
@@ -8012,12 +8804,20 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         204:
           description: A successful response returns HTTP status 204 (No Content).
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
-          description: "An internal server error has ocurred."   
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: "An internal server error has ocurred."
   '/rule_components/{RULE_COMPONENT_ID}/extension':
     get:
       tags:
@@ -8039,6 +8839,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the extension that provides the rule component.
           schema:
@@ -8104,9 +8908,13 @@ paths:
                 "meta":
                   "latest_revision_number": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
-          description: "An internal server error has ocurred." 
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: "An internal server error has ocurred."
   '/rule_components/{RULE_COMPONENT_ID}/origin':
     get:
       tags:
@@ -8128,6 +8936,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the rule component's origin.
           schema:
@@ -8196,9 +9008,13 @@ paths:
                 "meta":
                   "latest_revision_number": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
-          description: "An internal server error has ocurred."  
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: "An internal server error has ocurred."
   '/rule_components/{RULE_COMPONENT_ID}/rules':
     get:
       tags:
@@ -8220,6 +9036,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns a list of related rules attached the rule component.
           schema:
@@ -8271,9 +9091,13 @@ paths:
                   "meta":
                     "latest_revision_number": 0
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
-          description: "An internal server error has ocurred." 
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: "An internal server error has ocurred."
   '/notes/{NOTE_ID}':
     get:
       tags:
@@ -8292,6 +9116,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the note.
           schema:
@@ -8315,8 +9143,12 @@ paths:
                   "resource": "https://reactor.adobe.io/properties/PR4537ac6f1f204ffd864ec47c4b27c2e8"
                   "self": "https://reactor.adobe.io/notes/NT550b7a17ab304d49ba289a2978d673e5"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/properties/{PROPERTY_ID}/notes':
     get:
@@ -8340,6 +9172,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of notes belonging to the specified property.
           schema:
@@ -8370,8 +9206,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -8400,6 +9240,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the newly created note.
           schema:
@@ -8423,8 +9267,12 @@ paths:
                   "resource": "https://reactor.adobe.io/properties/PR4537ac6f1f204ffd864ec47c4b27c2e8"
                   "self": "https://reactor.adobe.io/notes/NT550b7a17ab304d49ba289a2978d673e5"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/data_elements/{DATA_ELEMENT_ID}/notes':
     get:
@@ -8444,6 +9292,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of notes belonging to the specified data element.
           schema:
@@ -8473,9 +9325,13 @@ paths:
                   "prev_page": null
                   "total_pages": 1
                   "total_count": 1
-        400:  
+        400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -8504,6 +9360,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the newly created note.
           schema:
@@ -8527,8 +9387,12 @@ paths:
                   "resource": "https://reactor.adobe.io/properties/PR4537ac6f1f204ffd864ec47c4b27c2e8"
                   "self": "https://reactor.adobe.io/notes/NT550b7a17ab304d49ba289a2978d673e5"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/extensions/{EXTENSION_ID}/notes':
     get:
@@ -8549,6 +9413,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of notes that are attached to the specified extension.
           schema:
@@ -8579,8 +9447,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -8609,6 +9481,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the newly created note.
           schema:
@@ -8632,8 +9508,12 @@ paths:
                   "resource": "https://reactor.adobe.io/extensions/EX585c96824669496b8de14706e617fd0a"
                   "self": "https://reactor.adobe.io/notes/NTe8876c73d5124fb79cb39985f7c04a98"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/libraries/{LIBRARY_ID}/notes':
     get:
@@ -8657,6 +9537,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns a list of notes attached the library.
           schema:
@@ -8687,8 +9571,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -8717,6 +9605,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the newly created note.
           schema:
@@ -8740,8 +9632,12 @@ paths:
                   "resource": "https://reactor.adobe.io/libraries/LB76ad8640b51e43899f6e2175b7a22022"
                   "self": "https://reactor.adobe.io/notes/NTf4895245b3f54c3f8f9cdf1efe88baae"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/rules/{RULE_ID}/notes':
     get:
@@ -8765,6 +9661,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns a list of notes attached the rule.
           schema:
@@ -8795,8 +9695,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -8825,6 +9729,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the newly created note.
           schema:
@@ -8848,8 +9756,12 @@ paths:
                   "resource": "https://reactor.adobe.io/rules/RL6c7e8c1a07e442c8ad83347dd07bb11c"
                   "self": "https://reactor.adobe.io/notes/NT26a79c1d7cfa4bbc9175d05b578af8aa"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/rule_components/{RULE_COMPONENT_ID}/notes':
     get:
@@ -8873,6 +9785,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns a list of notes attached the rule component.
           schema:
@@ -8903,8 +9819,12 @@ paths:
                   "total_pages": 1
                   "total_count": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
     post:
       tags:
@@ -8933,6 +9853,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the newly created note.
           schema:
@@ -8956,8 +9880,12 @@ paths:
                   "resource": "https://reactor.adobe.io/rule_components/RC7320d11d52ed4c38972e44f7ca2d30cc"
                   "self": "https://reactor.adobe.io/notes/NT8415f74c21104d30ab0e75e5ae167351"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/audit_events':
     get:
@@ -8975,6 +9903,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns an array of audit events, including their IDs and attributes.
           schema:
@@ -9042,8 +9974,12 @@ paths:
                   "total_pages": 1
                   "total_count": 2
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/audit_events/{EVENT_ID}':
     get:
@@ -9063,6 +9999,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the audit event.
           schema:
@@ -9098,8 +10038,12 @@ paths:
                 "meta":
                   "property_name": "Kessel Example Property"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/profile':
     get:
@@ -9114,6 +10058,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the details of the profile.
           schema:
@@ -9174,8 +10122,12 @@ paths:
                   "rights":
                     - "manage_companies"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
   '/search':
     post:
@@ -9201,6 +10153,10 @@ paths:
       produces:
       - application/vnd.api+json;revision=1
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A successful response returns the results of the search query.
           schema:
@@ -9263,9 +10219,41 @@ paths:
               "meta":
                 "total_hits": 1
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Access is unauthorized."
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "An internal server error has ocurred."
+definitions:
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true
 parameters:
   authorization:
     name: Authorization

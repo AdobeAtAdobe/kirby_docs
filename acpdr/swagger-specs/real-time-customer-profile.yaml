@@ -19,7 +19,7 @@ info:
       - PLATFORM Gateway URL: https://<span>platform.adobe.io/
       - Base path for this API: /data/core/ups
       - Example of a complete path: https://<span>platform.adobe.io/data/core/ups/config/mergePolicies
-      
+
     - Required headers:
       - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).
       - All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://adobe.com/go/sandbox-overview-en) for more information.
@@ -58,24 +58,31 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name' 
+        - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: Returns a list of computed attributes
           schema:
             $ref: '#/definitions/listComputedAttributes'
         '500':
+
           description: Internal Server Error
         '503':
+
           description: Service Unavailable
     post:
       tags:
         - (Alpha) Computed Attributes
       summary: Create a computed attribute.
-      description: >- 
-        **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.**  
-        
-        
+      description: >-
+        **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.**
+
+
         In order to configure a computed attribute, you first need to identify the field that will hold the computed attribute value. This field can be created using a mixin to add a new field to an existing schema, or by selecting a field that you have already defined within a schema.
 
 
@@ -93,27 +100,35 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/createComputedAttribute'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: Returns the details of the newly created computed attribute
           schema:
             $ref: '#/definitions/computedAttributeResponse'
         '400':
-          description: >- 
+
+          description: >-
             Bad Request. Common examples include:
               * "Function with the same name already exists for the specified schema or definedOn"
               * "Could not lookup schema of the computed attribute for the provided path"
               * "Return schema of the expression is not same as the schema of the computed attribute in the XDM schema".
         '500':
+
           description: Internal Server Error
         '503':
+
           description: Service Unavailable
   '/config/computedAttributes/{ATTRIBUTE_ID}':
     get:
       tags:
         - (Alpha) Computed Attributes
       summary: Retrieve a specific computed attribute by its ID.
-      description: >- 
-        **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.** 
+      description: >-
+        **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.**
       operationId: lookupComputedAttribute
       produces:
         - application/json
@@ -122,24 +137,32 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name' 
+        - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: Returns the details of the computed attribute
           schema:
             $ref: '#/definitions/computedAttributeResponse'
         '404':
+
           description: Computed attribute not found
         '500':
+
           description: Internal Server Error
         '503':
+
           description: Service Unavailable
     patch:
       tags:
         - (Alpha) Computed Attributes
       summary: Update a computed attribute by its ID.
-      description: >- 
-        **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.** 
+      description: >-
+        **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.**
       operationId: updateComputedAttribute
       produces:
         - application/json
@@ -148,23 +171,31 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name' 
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/computedAttributeUpdate'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '204':
           description: Returns HTTP Status 204 (No Content) and an empty response body
         '404':
+
           description: Computed attribute not found
         '500':
+
           description: Internal Server Error
         '503':
+
           description: Service Unavailable
     delete:
       tags:
         - (Alpha) Computed Attributes
       summary: Delete a computed attribute by its ID.
-      description: >- 
-        **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.** 
+      description: >-
+        **Warning: Computed attributes functionality is currently in alpha and is not available to all users. Functionality is subject to change.**
       operationId: deleteComputedAttribute
       produces:
         - application/json
@@ -173,17 +204,26 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name' 
+        - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: Returns HTTP Status 200 (OK) and an empty response body
         '404':
+
           description: Computed attribute not found
         '422':
+
           description: Cannot perform delete as some other functions are dependent on this function.
         '500':
+
           description: Internal Server Error
         '503':
+
           description: Service Unavailable
   '/config/mergePolicies':
     get:
@@ -198,7 +238,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name'      
+        - $ref: '#/parameters/x-sandbox-name'
         - name: x-request-id
           in: header
           description: Request Id
@@ -236,13 +276,20 @@ paths:
           type: boolean
           x-example: true
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: List of merge policies returned
           schema:
             $ref: '#/definitions/MergePoliciesResponse'
         '500':
+
           description: Internal Server Error
         '503':
+
           description: Service Unavailable
     post:
       tags:
@@ -257,7 +304,7 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/content-type'           
+        - $ref: '#/parameters/content-type'
         - name: x-profile-instance-id
           in: header
           description: Profile Instance ID
@@ -277,19 +324,28 @@ paths:
           schema:
             $ref: '#/definitions/PostMergePolicy'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: Merge Policy successfully created
           schema:
             $ref: '#/definitions/MergePolicy'
         '400':
+
           description: Please double check your post body
         '403':
+
           description: Forbidden
         '429':
           description: Request rate too large!
         '500':
+
           description: Internal Server Error
         '503':
+
           description: Service Unavailable
   '/config/mergePolicies/{mergePolicyId}':
     get:
@@ -313,15 +369,23 @@ paths:
           type: string
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: MergePolicy successfully returned
           schema:
             $ref: '#/definitions/MergePolicy'
         '403':
+
           description: Forbidden
         '404':
+
           description: MergePolicy not found
         '503':
+
           description: Service Unavailable
     put:
       tags:
@@ -356,19 +420,28 @@ paths:
           schema:
             $ref: '#/definitions/MergePolicy'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: Merge Policy successfully updated
           schema:
             $ref: '#/definitions/MergePolicy'
         '400':
+
           description: Please double check your post body
         '403':
+
           description: Forbidden
         '429':
           description: Request rate too large!
         '500':
+
           description: Internal Server Error
         '503':
+
           description: Service Unavailable
     patch:
       tags:
@@ -405,17 +478,26 @@ paths:
           items:
             $ref: '#/definitions/PatchOperation'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: Merge Policy successfully updated
         '400':
+
           description: Please double check your post body
         '403':
+
           description: Forbidden
         '429':
           description: Request rate too large!
         '500':
+
           description: Internal Server Error
         '503':
+
           description: Service Unavailable
     delete:
       tags:
@@ -438,13 +520,21 @@ paths:
           type: string
           x-example: q0gf6caRuRtX2s5khaN1Zgd1OoEXcPJA
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: Merge Policy deleted successfully
         '403':
+
           description: Forbidden
         '404':
+
           description: MergePolicy not found
         '503':
+
           description: Service Unavailable
   '/config/mergePolicies/bulk-get':
     post:
@@ -470,10 +560,15 @@ paths:
                 type: array
                 items:
                   type: object
-                example: 
+                example:
                   - id: 10648288-cda5-11e8-a8d5-f2801f1b9fd1
                   - id: 42d4a596-b1c6-46c0-994e-ca5ef1f85130
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '207':
           description: The details of each merge policy are returned. The sample response has been truncated to show only the details for the first merge policy.
           schema:
@@ -483,7 +578,7 @@ paths:
                 type: object
                 properties:
                   "{MERGE_POLICY_ID}":
-                    $ref: '#/definitions/MergePolicy'      
+                    $ref: '#/definitions/MergePolicy'
   '/access/entities':
     get:
       tags:
@@ -569,9 +664,9 @@ paths:
           required: false
           type: string
         - name: property
-          description: >- 
+          description: >-
             Filter by the property value. Supported evaluators include =, !=, <, <=, >, >=. If more than one property filter is provided, it needs to be concatenated with `&`. Only a maximum of **three** properties are supported. When using URLs, they must be encoded. When using date filters, they must be encoded as a string in the format "yyyy-mm-dd" or "yyyymmdd". This query parameter is only supported for experience events.<br><br>Example: `property=web.webPageDetails.isHomepage=false&property=placeContext.localTime<="2020-07-20"`
-          x-example: 'property=web.webPageDetails.isHomepage=false&property=placeContext.localTime<="2020-07-20"' 
+          x-example: 'property=web.webPageDetails.isHomepage=false&property=placeContext.localTime<="2020-07-20"'
           in: query
           type: string
         - name: withCA
@@ -581,23 +676,31 @@ paths:
           required: false
           type: boolean
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: XDM object(s) successfully returned.
           schema:
             $ref: '#/definitions/GetXDMObjectResponseEntity'
         '400':
+
           description: Bad Request.
           schema:
             $ref: '#/definitions/ResponseErrorContext'
         '422':
+
           description: Syntax is correct but Profile Access is not able to process your request.
           schema:
             $ref: '#/definitions/ResponseErrorContext'
         '403':
+
           description: Forbidden.
           schema:
             $ref: '#/definitions/ForbiddenError'
         '404':
+
           description: XDM objects not found.
           schema:
             $ref: '#/definitions/NotFoundError'
@@ -608,6 +711,7 @@ paths:
             items:
               $ref: '#/definitions/TooManyRequestError'
         '500':
+
           description: Internal Server Error.
           schema:
             $ref: '#/definitions/ResponseInternalErrorContext'
@@ -624,7 +728,7 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/content-type'        
+        - $ref: '#/parameters/content-type'
         - in: body
           name: body
           description: XDM objects to be created. Each object should be in JSON format.
@@ -632,6 +736,11 @@ paths:
           schema:
             $ref: '#/definitions/PostRequestBodyEntity'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: XDM objects successfully returned.
           schema:
@@ -643,14 +752,17 @@ paths:
             items:
               $ref: '#/definitions/ErrorResponseById'
         '400':
+
           description: Bad Request.
           schema:
             $ref: '#/definitions/ResponseErrorContext'
         '403':
+
           description: Forbidden.
           schema:
             $ref: '#/definitions/ForbiddenError'
         '404':
+
           description: XDM objects not found
           schema:
             $ref: '#/definitions/NotFoundError'
@@ -661,6 +773,7 @@ paths:
             items:
               $ref: '#/definitions/TooManyRequestError'
         '500':
+
           description: Internal Server Error.
           schema:
             $ref: '#/definitions/ResponseInternalErrorContext'
@@ -700,6 +813,11 @@ paths:
           type: string
           x-example: '963d71a1-9875-4aea-a52b-c5c7a2504cae'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '202':
           description: Accepted
         '207':
@@ -709,14 +827,17 @@ paths:
             items:
               $ref: '#/definitions/ErrorResponseById'
         '400':
+
           description: BadRequest
           schema:
             $ref: '#/definitions/ResponseErrorContext'
         '403':
+
           description: Forbidden
           schema:
             $ref: '#/definitions/ForbiddenError'
         '404':
+
           description: Not Found
           schema:
             $ref: '#/definitions/NotFoundError'
@@ -727,9 +848,10 @@ paths:
             items:
               $ref: '#/definitions/TooManyRequestError'
         '500':
+
           description: Internal Server Error.
           schema:
-            $ref: '#/definitions/ResponseInternalErrorContext'                  
+            $ref: '#/definitions/ResponseInternalErrorContext'
   '/config/projections':
     get:
       tags:
@@ -740,10 +862,10 @@ paths:
       produces:
         - application/vnd.adobe.platform.projectionConfigList+json; version=1
       parameters:
-        - $ref: '#/parameters/authorization'        
+        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/x-api-key'      
+        - $ref: '#/parameters/x-api-key'
         - name: x-gw-ims-authorization
           in: header
           description: Gateway IMS service token.
@@ -775,19 +897,27 @@ paths:
           type: string
           x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: The edge projection configuration is returned.
           schema:
             $ref: '#/definitions/ProjectionConfigurationList'
         '400':
+
           description: The request is malformed.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '401':
+
           description: The request has not been applied because it lacks valid authentication credentials for the target resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '403':
+
           description: The requester is not authorized to access the resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
@@ -796,20 +926,26 @@ paths:
           schema:
             $ref: '#/definitions/ProblemDetail'
         '406':
+
           description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '422':
+
           description: Client sent a correct request that contained invalid values for one or more parameters.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '500':
+
           description: This is an indicator of a server-side error.
         '502':
+
           description: This is an indicator that the back-end service did not send a valid response.
         '503':
+
           description: This is an indicator of a potential server overload.
         '504':
+
           description: This is an indicator that the back-end service did not complete a response within an allowed time period.
     post:
       tags:
@@ -822,10 +958,10 @@ paths:
       produces:
         - application/vnd.adobe.platform.projectionConfig+json; version=1
       parameters:
-        - $ref: '#/parameters/authorization'        
+        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/x-api-key'  
+        - $ref: '#/parameters/x-api-key'
         - name: schemaName
           in: query
           description: XDM schema name
@@ -858,19 +994,27 @@ paths:
           type: string
           x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '201':
           description: Creation was successful.
           schema:
             $ref: '#/definitions/ProjectionConfig'
         '400':
+
           description: The request is malformed.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '401':
+
           description: The request has not been applied because it lacks valid authentication credentials for the target resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '403':
+
           description: The requester is not authorized to access the resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
@@ -879,6 +1023,7 @@ paths:
           schema:
             $ref: '#/definitions/ProblemDetail'
         '406':
+
           description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
           schema:
             $ref: '#/definitions/ProblemDetail'
@@ -887,16 +1032,21 @@ paths:
           schema:
             $ref: '#/definitions/ProblemDetail'
         '422':
+
           description: Client sent a correct request that contained invalid values for one or more parameters.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '500':
+
           description: This is an indicator of a server-side error.
         '502':
+
           description: This is an indicator that the back-end service did not send a valid response.
         '503':
+
           description: This is an indicator of a potential server overload.
         '504':
+
           description: This is an indicator that the back-end service did not complete a response within an allowed time period.
   '/config/projections/{projectionid}':
     get:
@@ -908,7 +1058,7 @@ paths:
       produces:
         - application/vnd.adobe.platform.projectionConfig+json; version=1
       parameters:
-        - $ref: '#/parameters/authorization'        
+        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-api-key'
@@ -936,23 +1086,32 @@ paths:
           type: string
           x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: The edge projection configuration is returned.
           schema:
             $ref: '#/definitions/ProjectionConfig'
         '400':
+
           description: The request is malformed.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '401':
+
           description: The request has not been applied because it lacks valid authentication credentials for the target resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '403':
+
           description: The requester is not authorized to access the resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '404':
+
           description: The edge projection configuration has not yet been created.
           schema:
             $ref: '#/definitions/ProblemDetail'
@@ -961,20 +1120,26 @@ paths:
           schema:
             $ref: '#/definitions/ProblemDetail'
         '406':
+
           description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '422':
+
           description: Client sent a correct request that contained invalid values for one or more parameters.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '500':
+
           description: This is an indicator of a server-side error.
         '502':
+
           description: This is an indicator that the back-end service did not send a valid response.
         '503':
+
           description: This is an indicator of a potential server overload.
         '504':
+
           description: This is an indicator that the back-end service did not complete a response within an allowed time period.
     put:
       tags:
@@ -987,10 +1152,10 @@ paths:
       produces:
         - application/vnd.adobe.platform.projectionConfig+json; version=1
       parameters:
-        - $ref: '#/parameters/authorization'        
+        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/x-api-key'      
+        - $ref: '#/parameters/x-api-key'
         - name: projectionid
           in: path
           required: true
@@ -1006,7 +1171,7 @@ paths:
           name: body
           required: false
           schema:
-            $ref: '#/definitions/InputProjectionConfig'          
+            $ref: '#/definitions/InputProjectionConfig'
         - name: x-user-token
           in: header
           description: User access token.
@@ -1020,23 +1185,32 @@ paths:
           type: string
           x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: Update was successful.
           schema:
             $ref: '#/definitions/ProjectionConfig'
         '400':
+
           description: The request is malformed.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '401':
+
           description: The request has not been applied because it lacks valid authentication credentials for the target resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '403':
+
           description: The requester is not authorized to access the resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '404':
+
           description: Projection config not found.
           schema:
             $ref: '#/definitions/ProblemDetail'
@@ -1045,20 +1219,26 @@ paths:
           schema:
             $ref: '#/definitions/ProblemDetail'
         '406':
+
           description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '422':
+
           description: Client sent a correct request that contained invalid values for one or more parameters.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '500':
+
           description: This is an indicator of a server-side error.
         '502':
+
           description: This is an indicator that the back-end service did not send a valid response.
         '503':
+
           description: This is an indicator of a potential server overload.
         '504':
+
           description: This is an indicator that the back-end service did not complete a response within an allowed time period.
     delete:
       tags:
@@ -1067,10 +1247,10 @@ paths:
       description: 'API response is immediate, but the actual changes to the projections on the edges take place asynchronously. Eventually, the result is that the profile data for the given customer will be wiped from all edges.'
       operationId: deleteProjectionConfiguration
       parameters:
-        - $ref: '#/parameters/authorization'        
+        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/x-api-key'      
+        - $ref: '#/parameters/x-api-key'
         - name: projectionid
           in: path
           required: true
@@ -1095,21 +1275,30 @@ paths:
           type: string
           x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '204':
           description: The edge projection configuration is successfully deleted.
         '400':
+
           description: The request is malformed.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '401':
+
           description: The request has not been applied because it lacks valid authentication credentials for the target resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '403':
+
           description: The requester is not authorized to access the resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '404':
+
           description: The edge projection configuration has not yet been created.
           schema:
             $ref: '#/definitions/ProblemDetail'
@@ -1118,20 +1307,26 @@ paths:
           schema:
             $ref: '#/definitions/ProblemDetail'
         '406':
+
           description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '422':
+
           description: Client sent a correct request that contained invalid values for one or more parameters.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '500':
+
           description: This is an indicator of a server-side error.
         '502':
+
           description: This is an indicator that the back-end service did not send a valid response.
         '503':
+
           description: This is an indicator of a potential server overload.
         '504':
+
           description: This is an indicator that the back-end service did not complete a response within an allowed time period.
   '/config/destinations':
     get:
@@ -1142,29 +1337,38 @@ paths:
       produces:
         - application/vnd.adobe.platform.projectionDestinationList+json; version=1
       parameters:
-        - $ref: '#/parameters/authorization'        
+        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/x-api-key' 
+        - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-request-id'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: The projection destination is returned.
           schema:
             $ref: '#/definitions/ProjectionDestinationRepresentation'
         '400':
+
           description: The request is malformed.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '401':
+
           description: The request has not been applied because it lacks valid authentication credentials for the target resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '403':
+
           description: The requester is not authorized to access the resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '404':
+
           description: The projection destination has not yet been created.
           schema:
             $ref: '#/definitions/ProblemDetail'
@@ -1173,20 +1377,26 @@ paths:
           schema:
             $ref: '#/definitions/ProblemDetail'
         '406':
+
           description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '422':
+
           description: Client sent a correct request that contained invalid values for one or more parameters.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '500':
+
           description: This is an indicator of a server-side error.
         '502':
+
           description: This is an indicator that the back-end service did not send a valid response.
         '503':
+
           description: This is an indicator of a potential server overload.
         '504':
+
           description: This is an indicator that the back-end service did not complete a response within an allowed time period.
     post:
       tags:
@@ -1199,10 +1409,10 @@ paths:
       produces:
         - application/vnd.adobe.platform.projectionDestination+json; version=1
       parameters:
-        - $ref: '#/parameters/authorization'        
+        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/x-api-key' 
+        - $ref: '#/parameters/x-api-key'
         - name: x-gw-ims-authorization
           in: header
           description: Gateway IMS service token.
@@ -1215,7 +1425,7 @@ paths:
           schema:
             $ref: '#/definitions/InputProjectionDestination'
           x-examples:
-            type: EDGE          
+            type: EDGE
         - name: x-user-token
           in: header
           description: User access token.
@@ -1229,19 +1439,27 @@ paths:
           type: string
           x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '201':
           description: Creation was successful.
           schema:
             $ref: '#/definitions/ProjectionDestinationRepresentation'
         '400':
+
           description: The request is malformed.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '401':
+
           description: The request has not been applied because it lacks valid authentication credentials for the target resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '403':
+
           description: The requester is not authorized to access the resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
@@ -1250,6 +1468,7 @@ paths:
           schema:
             $ref: '#/definitions/ProblemDetail'
         '406':
+
           description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
           schema:
             $ref: '#/definitions/ProblemDetail'
@@ -1258,16 +1477,21 @@ paths:
           schema:
             $ref: '#/definitions/ProblemDetail'
         '422':
+
           description: Client sent a correct request that contained invalid values for one or more parameters.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '500':
+
           description: This is an indicator of a server-side error.
         '502':
+
           description: This is an indicator that the back-end service did not send a valid response.
         '503':
+
           description: This is an indicator of a potential server overload.
         '504':
+
           description: This is an indicator that the back-end service did not complete a response within an allowed time period.
   '/config/destinations/{destinationId}':
     get:
@@ -1279,10 +1503,10 @@ paths:
       produces:
         - application/vnd.adobe.platform.projectionDestination+json; version=1
       parameters:
-        - $ref: '#/parameters/authorization'        
+        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/x-api-key' 
+        - $ref: '#/parameters/x-api-key'
         - name: destinationId
           in: path
           required: true
@@ -1307,23 +1531,32 @@ paths:
           type: string
           x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: The projection destination is returned.
           schema:
             $ref: '#/definitions/ProjectionDestinationRepresentation'
         '400':
+
           description: The request is malformed.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '401':
+
           description: The request has not been applied because it lacks valid authentication credentials for the target resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '403':
+
           description: The requester is not authorized to access the resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '404':
+
           description: The projection destination has not yet been created.
           schema:
             $ref: '#/definitions/ProblemDetail'
@@ -1332,20 +1565,26 @@ paths:
           schema:
             $ref: '#/definitions/ProblemDetail'
         '406':
+
           description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '422':
+
           description: Client sent a correct request that contained invalid values for one or more parameters.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '500':
+
           description: This is an indicator of a server-side error.
         '502':
+
           description: This is an indicator that the back-end service did not send a valid response.
         '503':
+
           description: This is an indicator of a potential server overload.
         '504':
+
           description: This is an indicator that the back-end service did not complete a response within an allowed time period.
     put:
       tags:
@@ -1358,10 +1597,10 @@ paths:
       produces:
         - application/vnd.adobe.platform.projectionDestination+json; version=1
       parameters:
-        - $ref: '#/parameters/authorization'        
+        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/x-api-key' 
+        - $ref: '#/parameters/x-api-key'
         - name: destinationId
           in: path
           required: true
@@ -1391,23 +1630,32 @@ paths:
           type: string
           x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: Update was successful.
           schema:
             $ref: '#/definitions/ProjectionDestinationRepresentation'
         '400':
+
           description: The request is malformed.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '401':
+
           description: The request has not been applied because it lacks valid authentication credentials for the target resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '403':
+
           description: The requester is not authorized to access the resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '404':
+
           description: Projection destination not found.
           schema:
             $ref: '#/definitions/ProblemDetail'
@@ -1416,20 +1664,26 @@ paths:
           schema:
             $ref: '#/definitions/ProblemDetail'
         '406':
+
           description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '422':
+
           description: Client sent a correct request that contained invalid values for one or more parameters.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '500':
+
           description: This is an indicator of a server-side error.
         '502':
+
           description: This is an indicator that the back-end service did not send a valid response.
         '503':
+
           description: This is an indicator of a potential server overload.
         '504':
+
           description: This is an indicator that the back-end service did not complete a response within an allowed time period.
     delete:
       tags:
@@ -1438,10 +1692,10 @@ paths:
       description: 'API response is immediate, but the actual changes to the projections on the edges take place asynchronously. Eventually, the result is that the profile data for the given customer will be wiped from all edges.'
       operationId: deleteProjectionDestination
       parameters:
-        - $ref: '#/parameters/authorization'        
+        - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/x-api-key' 
+        - $ref: '#/parameters/x-api-key'
         - name: destinationId
           in: path
           required: true
@@ -1466,21 +1720,30 @@ paths:
           type: string
           x-example: d41ee840-0a10-4393-ab55-12fa54cb6172
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '204':
           description: The edge projection destination is successfully deleted.
         '400':
+
           description: The request is malformed.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '401':
+
           description: The request has not been applied because it lacks valid authentication credentials for the target resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '403':
+
           description: The requester is not authorized to access the resource.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '404':
+
           description: The edge projection destination has not yet been created.
           schema:
             $ref: '#/definitions/ProblemDetail'
@@ -1489,6 +1752,7 @@ paths:
           schema:
             $ref: '#/definitions/ProblemDetail'
         '406':
+
           description: Unacceptable content type. Client sent an Accept header for a content type which does not exist on the server.
           schema:
             $ref: '#/definitions/ProblemDetail'
@@ -1497,16 +1761,21 @@ paths:
           schema:
             $ref: '#/definitions/ProblemDetail'
         '422':
+
           description: Client sent a correct request that contained invalid values for one or more parameters.
           schema:
             $ref: '#/definitions/ProblemDetail'
         '500':
+
           description: This is an indicator of a server-side error.
         '502':
+
           description: This is an indicator that the back-end service did not send a valid response.
         '503':
+
           description: This is an indicator of a potential server overload.
         '504':
+
           description: This is an indicator that the back-end service did not complete a response within an allowed time period.
   '/system/jobs':
     get:
@@ -1521,7 +1790,7 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name' 
+        - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/start'
         - $ref: '#/parameters/limit'
         - name: page
@@ -1535,15 +1804,23 @@ paths:
           required: false
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: Returns a list of all delete requests (Profile System Jobs) defined by your organization.
           schema:
             "$ref": "#/definitions/ProfileSystemJobsResponse"
         '403':
+
           description: Forbidden
         '503':
+
           description: Service Unavailable
         '500':
+
           description: Internal Server Error
     post:
       tags:
@@ -1551,13 +1828,13 @@ paths:
       summary: Create a delete request (Profile System Job)
       description: >-
         Initiating a new delete request is done through a POST request to the `/systems/jobs` endpoint, where the ID of the dataset or batch to be deleted is provided in the body of the request.
-        
-          In order to delete a dataset, the dataset ID must be included in the body of the POST request. This action will delete ALL data for a given dataset. Experience Platform allows you to delete datasets based on both record and time series schemas.
-          
-          In order to delete a batch, the batch ID must be included in the body of the POST request. Please be advised that you cannot delete batches for datasets based on record schemas. Only batches for datasets based on time series schemas may be deleted. 
 
-          **Note:** The reason you cannot delete batches for datasets based on record schemas is because record type dataset batches overwrite previous records and therefore cannot be "undone" or deleted. The way to remove the impact of erroneous batches for datasets based on record schemas is to re-ingest the batch with the correct data and it will overwrite the incorrect records. 
-          
+          In order to delete a dataset, the dataset ID must be included in the body of the POST request. This action will delete ALL data for a given dataset. Experience Platform allows you to delete datasets based on both record and time series schemas.
+
+          In order to delete a batch, the batch ID must be included in the body of the POST request. Please be advised that you cannot delete batches for datasets based on record schemas. Only batches for datasets based on time series schemas may be deleted.
+
+          **Note:** The reason you cannot delete batches for datasets based on record schemas is because record type dataset batches overwrite previous records and therefore cannot be "undone" or deleted. The way to remove the impact of erroneous batches for datasets based on record schemas is to re-ingest the batch with the correct data and it will overwrite the incorrect records.
+
           For more information on record and time series behavior, please review the section on XDM data behaviors in the [XDM System overview](https://experienceleague.adobe.com/docs/experience-platform/xdm/home.html).
       operationId: createDeleteRequest
       produces:
@@ -1572,9 +1849,9 @@ paths:
           in: body
           description: >-
             A JSON object containing the ID of the dataset or batch to be deleted.
-            
+
             **Example for batch ID:**
-            
+
             <pre>{
               "batchId": "8d075b5a178e48389126b9289dcfd0ac"
             }</pre>
@@ -1582,19 +1859,29 @@ paths:
           schema:
               "$ref": "#/definitions/XdmDataJobPostBodyWithDataSetId"
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: Delete request (Profile System Job) successfully created
           schema:
             "$ref": "#/definitions/ProfileSystemJob"
         '400':
+
           description: Invalid delete request (Profile System Job)
         '403':
+
           description: Forbidden
         '422':
+
           description: Delete request (Profile System Job) Definition already exists.
         '503':
+
           description: Service Unavailable
         '500':
+
           description: Internal Server Error
   '/system/jobs/{ID}':
     get:
@@ -1616,17 +1903,26 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: Returns the details of a specific delete request (Profile System Job).
           schema:
             $ref: '#/definitions/ProfileSystemJob'
         '403':
+
           description: Forbidden
         '404':
+
           description: Delete request (Profile System Job) not found
         '500':
+
           description: Internal Server Error
         '503':
+
           description: Service Unavailable
     delete:
       tags:
@@ -1647,13 +1943,21 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: If removal is successful, returns HTTP Status 200 (OK) and an empty response body.
         '403':
+
           description: Forbidden
         '404':
+
           description: Delete request (Profile System Job) not found
         '503':
+
           description: Service Unavailable
   '/previewsamplestatus':
     get:
@@ -1668,15 +1972,22 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name' 
+        - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: "Returns the details of the last successful sample that was run for the IMS Org."
           schema:
             $ref: '#/definitions/PreviewSampleStatusPageResponse'
         '403':
+
           description: "Forbidden"
         '503':
+
           description: "Service Unavailable"
   '/previewsamplestatus/report/dataset':
     get:
@@ -1691,20 +2002,27 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name' 
+        - $ref: '#/parameters/x-sandbox-name'
         - name: "date"
           in: "query"
           description: "Specify the date of the report to be returned. If multiple reports were run on the date, the most recent report for that date will be returned. If a report does not exist for the specified date, a 404 error will be returned. If no date is specified, the most recent report will be returned. Format: YYYY-MM-DD. Example: date=2024-12-31"
           required: false
           type: "string"
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: "Returns a report showing profile distribution by dataset for the IMS Org."
           schema:
             $ref: '#/definitions/DatasetReportResponse'
         '404':
+
           description: "Dataset report does not exist for this date."
         '503':
+
           description: "Service Unavailable"
   '/previewsamplestatus/report/namespace':
     get:
@@ -1719,22 +2037,29 @@ paths:
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
-        - $ref: '#/parameters/x-sandbox-name' 
+        - $ref: '#/parameters/x-sandbox-name'
         - name: "date"
           in: "query"
           description: "Specify the date of the report to be returned. If multiple reports were run on the date, the most recent report for that date will be returned. If a report does not exist for the specified date, a 404 error will be returned. If no date is specified, the most recent report will be returned. Format: YYYY-MM-DD. Example: date=2024-12-31"
           required: false
           type: "string"
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
         '200':
           description: "Returns a report showing profile distribution by namespace for the IMS Org."
           schema:
             $ref: '#/definitions/NamespaceReportResponse'
         '404':
+
           description: "Namespace report does not exist for this date."
         '503':
+
           description: "Service Unavailable"
-definitions:     
+definitions:
   listComputedAttributes:
     type: object
     properties:
@@ -1744,7 +2069,7 @@ definitions:
           totalCount:
             type: integer
             example: 1
-          pageSize: 
+          pageSize:
             type: integer
             example: 1
       children:
@@ -1804,16 +2129,16 @@ definitions:
       sandbox:
         type: object
         properties:
-          sandboxId: 
+          sandboxId:
             type: string
             example: "ff0f6870-c46d-11e9-8ca3-036939a64204"
-          sandboxName: 
+          sandboxName:
             type: string
             example: "prod"
-          type: 
+          type:
             type: string
             example: "production"
-          default: 
+          default:
             type: boolean
             example: true
       name:
@@ -1855,41 +2180,41 @@ definitions:
           "meta:xdmType":
             type: string
             example: string
-      definedOn: 
+      definedOn:
         type: array
         items:
           type: object
           properties:
-            "meta:resourceType": 
+            "meta:resourceType":
               type: string
               example: "unions"
             "meta:containerId":
               type: string
               example: "tenant"
-            "$ref": 
+            "$ref":
               type: string
               example: "https://ns.adobe.com/xdm/context/profile__union"
       encodedDefinedOn:
         type: string
         example: "?\b?VR)JMS?R?())(????+?KL?OJ?K???H??O??+I?(?/(?O??I??/????S?8{?E:"
-      dependencies: 
+      dependencies:
         type: array
         items:
           type: string
-      dependents: 
+      dependents:
         type: array
         items:
           type: string
-      active: 
+      active:
         type: boolean
         example: true
-      type: 
+      type:
         type: string
         example: "ComputedAttribute"
-      createEpoch: 
+      createEpoch:
         type: integer
         example: 1572555223
-      updateEpoch: 
+      updateEpoch:
         type: integer
         example: 1572555225
   updateComputedAttribute:
@@ -2199,7 +2524,7 @@ definitions:
         properties:
           name:
             type: string
-            example: '_xdm.context.profile'  
+            example: '_xdm.context.profile'
       fields:
         description: 'Fields for the model object. By default, all fields will be fetched. Separated by comma.'
         type: array
@@ -2398,7 +2723,7 @@ definitions:
       dataSetId:
         type: string
         example: "5cf212ed73fbff145365d15d"
-        description: dataSetId      
+        description: dataSetId
   ProfileSystemJob:
     type: object
     properties:
@@ -2610,11 +2935,38 @@ definitions:
         type: "string"
         description: "The timestamp of the report. If a `date` parameter was provided during the request, the report returned is for the date provided. If no `date` parameter is provided, the most recent report is returned."
         example: "2020-08-01T17:57:58.697"
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true
 parameters:
   authorization:
     name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
-    For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ".
+      For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
     required: true
     type: string
     in: header
@@ -2641,15 +2993,15 @@ parameters:
     name: body
     description: >-
       A JSON object containing the details of the computed attribute being created.
-      
+
       * **name: (Required)** The name of the computed attribute field, as a string.
-      
+
       * **path: (Required)** The path to the computed attributed field within a schema. This path is found within the 'properties' attribute of the schema, but it omits the layers of 'properties' when writing the path. It also omits the field name itself. For example, if the computed attribute path is a.b.c, the "name" is "c" and the "path" is "a.b".
         * **{TENANT_ID}:** If you are unfamiliar with your tenant ID, please refer to the steps for finding your tenant ID in the [Schema Registry developer guide](https://experienceleague.adobe.com/docs/experience-platform/xdm/api/getting-started.html?lang=en#know-your-tenant_id)
       * **description:** *(Optional)* A description of the computed attribute. This is especially useful once multiple computed attributes have been defined as it will help others within your IMS Organization to determine the correct computed attribute to use.
-      
+
       * **expression: (Required)** A valid Profile Query Language (PQL) expression. For more information on PQL and links to supported queries, please read the [PQL overview documentation](https://experienceleague.adobe.com/docs/experience-platform/segmentation/pql/overview.html).
-      
+
       * **schema.name: (Required)** The class upon which the schema containing the computed attribute field is based. For example, if the schema was based on the XDM ExperienceEvent class, the value would be '_xdm.context.experienceevent'.
     required: true
     schema:
@@ -2664,8 +3016,8 @@ parameters:
     name: body
     description: >-
       Use [JSON Patch formatting](http://jsonpatch.com/) to update the computed attribute.
-      
-      
+
+
       The "value" must be a valid Profile Query Language (PQL) expression. For more information on PQL and links to supported queries, please read the [PQL overview documentation](https://experienceleague.adobe.com/docs/experience-platform/segmentation/pql/overview.html).
     required: true
     in: body
@@ -2689,7 +3041,7 @@ parameters:
     description: All resources in Experience Platform are isolated to specific virtual sandboxes. Requests to Platform APIs require a header that specifies the name of the sandbox in which the operation will take place. See the [sandboxes overview](https://adobe.com/go/sandbox-overview-en) for more information.
     required: true
     type: string
-  x-profile-instance-id:  
+  x-profile-instance-id:
     name: x-profile-instance-id
     in: header
     description: Profile instance ID.
@@ -2709,13 +3061,13 @@ parameters:
     description: Macro ID. For example, `ca8fe8a8-0f38-478a-9905-fd515d1d2988`
     required: true
     type: string
-  start:      
+  start:
     name: start
     in: query
     description: Return results from a specific page offset. For example, `start=3`
     required: false
     type: integer
-  limit:  
+  limit:
     name: limit
     in: query
     description: Limit response to a specific number of objects. Must be a positive number. For example, `limit=10`

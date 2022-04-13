@@ -5,7 +5,7 @@ info:
   description: >-
     - Service description:
         - Adobe Experience Platform provides virtual sandbox environments which provide isolation and access control for Platform integrations. Sandboxes can be used for application lifecycle management, project management, and building customized development ecosystems.
-    
+
     - Related documentation:
         - [Sandbox documentation](https://adobe.com/go/sandbox-overview-en)
 
@@ -13,24 +13,25 @@ info:
         - [Sandbox API Postman collection on GitHub](https://github.com/adobe/experience-platform-postman-samples/blob/master/apis/experience-platform/Sandbox%20API.postman_collection.json)
         - [Video guide for creating the Postman environment](https://video.tv.adobe.com/v/28832)
         - [Steps for importing environments and collections in Postman](https://learning.getpostman.com/docs/postman/collection_runs/using_environments_in_collection_runs/)
-    
+
     - API paths:
         - PLATFORM Gateway URL: https://<span>platform.adobe.io/
-        - Base path for this API: /data/foundation/sandbox-management
+        - Base path for this API: /data/foundation
         - Example of a complete path: https://<span>platform.adobe.io/data/foundation/sandbox-management/sandboxes
-    
+
     - Required headers:
         - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).
         - All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://adobe.com/go/sandbox-overview-en) for more information.
         - All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
-    
+basePath: /data/foundation
+host: platform.adobe.io
 tags:
   - name: Admin operations
     description: Sandbox operations available only to admins. Sandbox admin privileges are managed through the [Adobe Admin Console](https://adminconsole.adobe.com).
   - name: User operations
     description: Sandbox operations available to all users.
 paths:
-  /:
+  /sandbox-management/:
     get:
       tags:
         - User operations
@@ -45,19 +46,31 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-user-token'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: A list of sandboxes with matching criteria.
           schema:
             $ref: '#/definitions/GetSandboxesUserResponse'
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Bad request
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Internal server error
-  /sandboxTypes:
+  /sandbox-management/sandboxTypes:
     get:
       tags:
         - Admin operations
@@ -71,19 +84,31 @@ paths:
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: List of supported sandbox types
           schema:
             $ref: '#/definitions/ListSandboxTypesResponse'
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Bad request
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Internal server error
-  /sandboxes:
+  /sandbox-management/sandboxes:
     get:
       tags:
         - Admin operations
@@ -102,17 +127,29 @@ paths:
         - $ref: '#/parameters/property'
         - $ref: '#/parameters/orderBy'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: OK
           schema:
             $ref: "#/definitions/GetSandboxesSystemResponse"
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Bad request
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Internal server error
     post:
       tags:
@@ -132,19 +169,29 @@ paths:
         - $ref: '#/parameters/x-user-token'
         - $ref: '#/parameters/sandboxPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         202:
           description: Request accepted
           schema:
             $ref: '#/definitions/CreateSandboxResponse'
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Bad request
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         409:
           description: Conflict
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Internal server error
-  /sandboxes/{sandboxName}:
+  /sandbox-management/sandboxes/{sandboxName}:
     get:
       tags:
         - Admin operations
@@ -162,17 +209,29 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-user-token'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: OK
           schema:
             $ref: '#/definitions/GetSandboxResponse'
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Bad request
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Internal server error
     delete:
       tags:
@@ -191,6 +250,10 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/x-user-token'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         202:
           description: request accepted
           schema:
@@ -200,12 +263,20 @@ paths:
               description: Url to check status of the request
               type: string
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Bad request
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Internal server error
     put:
       tags:
@@ -231,6 +302,10 @@ paths:
           schema:
             $ref: '#/definitions/ResetSandboxPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         202:
           description: Request accepted
           headers:
@@ -238,12 +313,20 @@ paths:
               description: URL to check status of the request
               type: string
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Bad request
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Internal server error
     patch:
       tags:
@@ -269,17 +352,29 @@ paths:
           schema:
             $ref: '#/definitions/PatchSandboxPayload'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: OK
           schema:
             $ref: '#/definitions/GetSandboxResponse'
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Bad request
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Forbidden
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Not found
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Internal server error
 
 parameters:
@@ -663,3 +758,30 @@ definitions:
       region:
         type: string
         example: VA7
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true

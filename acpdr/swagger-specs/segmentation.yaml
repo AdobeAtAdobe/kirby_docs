@@ -18,7 +18,7 @@ info:
         - PLATFORM Gateway URL: https://<span>platform.adobe.io/
         - Base path for this API: /data/core/ups
         - Example of a complete path: https://<span>platform.adobe.io/data/core/ups/segment/definitions
-      
+
     - Required headers:
         - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](https://www.adobe.com/go/platform-api-authentication-en).
         - All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://adobe.com/go/sandbox-overview-en) for more information.
@@ -58,7 +58,7 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
         - name: limit
           in: query
-          description: >- 
+          description: >-
             Limit the number of export jobs returned in the list.
           required: false
           type: integer
@@ -79,13 +79,21 @@ paths:
             - SUCCEEDED
             - FAILED
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A list of the export jobs returned.
           schema:
             $ref: '#/definitions/GetExportJobsResponse'
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
     post:
       tags:
@@ -110,7 +118,7 @@ paths:
           type: string
         - in: body
           name: body
-          description: >- 
+          description: >-
             - **fields** - [Optional] Column filters (comma-separated list of columns in dot notation). Limits the data fields to be included in the export to only those provided in this parameter. The same parameter is also available when creating a segment, therefore the fields in the segment may have already been filtered. Omitting this value will result in all fields being included in the exported data.
 
             - **mergePolicy** - [Optional] Specifies the merge policy to govern the exported data. Include this parameter when there are multiple segments being exported. Omitting this value will cause the Export Service to use the merge policy provided by the segmentId or snapshotName.
@@ -139,6 +147,10 @@ paths:
           schema:
             $ref: '#/definitions/CreateExportJobRequest'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: The export job has been  successfully created.
           schema:
@@ -148,8 +160,12 @@ paths:
               type: string
               description: The HREF of the export job.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/export/jobs/{EXPORT_JOB_ID}':
     get:
@@ -171,15 +187,25 @@ paths:
           required: true
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: The export job successfully retrieved.
           schema:
             $ref: '#/definitions/ExportJobResponse'
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The export job was not found.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
     delete:
       tags:
@@ -200,15 +226,25 @@ paths:
           required: true
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: The export job was successfully cancelled.
           schema:
             $ref: '#/definitions/CancelExportJobResponse'
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The export job was not found.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/segment/definitions':
     get:
@@ -260,13 +296,21 @@ paths:
           type: string
           x-example: sort=name:asc,internalId:desc
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A list of Profile segment definitions is returned.
           schema:
             "$ref": "#/definitions/SegmentDefinition"
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
     post:
       tags:
@@ -285,13 +329,17 @@ paths:
         - $ref: '#/parameters/content-type'
         - name: x-request-id
           in: header
-          description: >- 
+          description: >-
             A unique ID must be used per request.
           required: false
           type: string
           x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
         - $ref: '#/parameters/segment-body'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: The segment definition was successfully posted.
           schema:
@@ -301,12 +349,20 @@ paths:
               type: string
               description: The URL of the segment definition.
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An invalid segment definition was posted.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '422':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The segment definition already exists. In order to update a segment definition, use the PATCH operation instead.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/segment/definitions/{SEGMENT_ID}':
     get:
@@ -330,15 +386,25 @@ paths:
           x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
         - $ref: '#/parameters/segmentId'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: The segment definition was successfully returned.
           schema:
             "$ref": "#/definitions/SegmentDefinition"
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The segment definition was not found.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
     delete:
       tags:
@@ -361,13 +427,21 @@ paths:
           x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
         - $ref: '#/parameters/segmentId'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: The segment definition was successfully deleted.
           schema:
             "$ref": "#/definitions/MessageResponse"
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
     patch:
       tags:
@@ -394,6 +468,10 @@ paths:
         - $ref: '#/parameters/segmentId'
         - $ref: '#/parameters/segment-body'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: The segment definition was successfully updated.
           schema:
@@ -403,10 +481,16 @@ paths:
               type: string
               description: HREF to the segment definition
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The segment definition is invalid.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/segment/definitions/bulk-get':
     post:
@@ -433,10 +517,14 @@ paths:
                 type: array
                 items:
                   type: object
-                example: 
+                example:
                   - id: 54669488-03ab-4e0d-a694-37fe49e32be8
                   - id: c527dc3f-07fe-4b96-be4e-23f38e734ff8
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '207':
           description: The details of each segment definition are returned. The sample response has been truncated to show only the details for the first segment definition.
           schema:
@@ -463,24 +551,32 @@ paths:
         - $ref: '#/parameters/content-type'
         - name: x-request-id
           in: header
-          description: >- 
+          description: >-
             A unique ID must be used per request.
           required: false
           type: string
           x-example: jRot0Q3pgFi2lmLecebqHGTfnApAwVnQ
         - $ref: '#/parameters/segment-body'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: The segment definition was successfully converted.
           schema:
             "$ref": "#/definitions/SegmentDefinition"
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: An invalid segment definition was posted.
         '409':
           description: Conflict. An entity with the specified ID already exists in the system.
         '429':
           description: Too many requests. Please try again in a few minutes.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/segment/jobs':
     get:
@@ -511,7 +607,7 @@ paths:
           x-example: inUS
         - name: start
           in: query
-          description: >- 
+          description: >-
             The page offset, as per the created time of the resource.
           required: false
           type: integer
@@ -526,7 +622,7 @@ paths:
           x-example: 10
         - name: status
           in: query
-          description: >- 
+          description: >-
             The job status.
           required: false
           type: string
@@ -535,26 +631,36 @@ paths:
           in: query
           description: >-
             Used to order the segment jobs. Is written in the format [attributeName]:[desc|asc]
-          required: false 
+          required: false
           type: string
           x-example: creationTime:desc
         - name: property
           in: query
           description: >-
             Used to get exact matches within an attribute in the segment job. Is written in the format [arrayTypeAttributeName]~[objectKey]==[value]
-          required: false 
+          required: false
           type: string
           x-example: segments~segmentId==workInCanada
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A list of the segment jobs returned.
           schema:
             $ref: '#/definitions/SegmentJob'
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: There was an issue reading the segment job.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
     post:
       tags:
@@ -570,10 +676,10 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/content-type'        
+        - $ref: '#/parameters/content-type'
         - name: x-profile-instance-id
           in: header
-          description: >- 
+          description: >-
             The ID of the Profile Instance. **Example**: `ups`
           required: false
           type: string
@@ -595,19 +701,31 @@ paths:
             items:
               $ref: '#/definitions/SegmentJobRequest'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: The segment job request was successfully posted.
           schema:
             $ref: '#/definitions/SegmentJob'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The segment job request could not be posted. Double check your request body content.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '429':
           description: There are too many segmentation jobs in processing at the moment. Try again at a later time.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: There was an issue reading the segment job.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/segment/jobs/{SEGMENT_JOB_ID}':
     get:
@@ -625,15 +743,25 @@ paths:
         - $ref: '#/parameters/segmentJobId'
         - $ref: '#/parameters/x-request-id'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: The segment job request was successfully retrieved.
           schema:
             $ref: '#/definitions/SegmentJob'
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The segment job request was not found.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
     delete:
       tags:
@@ -651,15 +779,25 @@ paths:
         - $ref: '#/parameters/x-request-id'
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: The segment job request has been marked for cancellation.
           schema:
             $ref: '#/definitions/CancelSegmentJobResponse'
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The segment job request was not found.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/segment/jobs/bulk-get':
     post:
@@ -686,10 +824,14 @@ paths:
                 type: array
                 items:
                   type: object
-                example: 
+                example:
                   - id: cc3419d3-0389-47f1-b174-fead6b3c830d
                   - id: c527dc3f-07fe-4b96-be4e-23f38e734ff8
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '207':
           description: The details of each segment jobs is returned. The sample response has been truncated to show only the details for the first segment job.
           schema:
@@ -718,18 +860,22 @@ paths:
         - $ref: '#/parameters/content-type'
         - in: body
           name: body
-          description: >- 
-            - **predicateExpression**: The predicate expression that is to be evaluated. 
-            
+          description: >-
+            - **predicateExpression**: The predicate expression that is to be evaluated.
+
             - **predicateType**: (Default: PQL) The only value that is available to use for this is PQL for now.
-            
+
             - **predicateModel**: (Default: xdm.model.profile) The model against which this predicate is to be evaluated. Please note that 'touchpoint' is not treated as model as it can be associated with any of the models like profile.
-            
+
             - **graphType**: The graph type that you want to get the cluster from. Possible values are "none" (perform no identity stitching) and "pdg" (perform identity stitching based on your private identity graph).
           required: true
           schema:
             $ref: "#/definitions/CreatePreviewRequest"
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         201:
           description: The preview job was successfully posted.
           schema:
@@ -739,8 +885,12 @@ paths:
               type: string
               description: The HREF to the profile preview.
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         503:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/preview/{PREVIEW_ID}':
     get:
@@ -758,28 +908,38 @@ paths:
         - $ref: '#/parameters/previewId'
         - name: offset
           in: query
-          description: >- 
+          description: >-
             The offset of the page.
           required: false
           type: string
           x-example: offset=10200
         - name: limit
           in: query
-          description: >- 
+          description: >-
             The number of entries that should be present on a page. If not specified, this value will be 1000.
           required: false
           type: integer
           x-example: 100
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: The results of the preview job have been successfully retrieved.
           schema:
             $ref: "#/definitions/PreviewResponse"
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The preview job was not found.
         503:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
     delete:
       tags:
@@ -795,15 +955,25 @@ paths:
         - $ref: '#/parameters/x-sandbox-name'
         - $ref: '#/parameters/previewId'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: The preview job was successfully cancelled.
           schema:
             $ref: "#/definitions/MessageResponse"
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The preview job was not found.
         503:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/estimate/{ESTIMATE_ID}':
     get:
@@ -818,17 +988,27 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/estimateId'      
+        - $ref: '#/parameters/estimateId'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: The estimate job was successfully retrieved.
           schema:
             $ref: "#/definitions/EstimateResponse"
         403:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The estimate job was not found.
         503:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/config/schedules':
     get:
@@ -847,15 +1027,25 @@ paths:
       - $ref: '#/parameters/start'
       - $ref: '#/parameters/limit'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A list of schedules is returned.
           schema:
             $ref: '#/definitions/SchedulesResponse'
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: There was an issue reading the schedules.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
     post:
       tags:
@@ -874,12 +1064,12 @@ paths:
       - $ref: '#/parameters/x-gw-ims-org-id'
       - $ref: '#/parameters/x-sandbox-name'
       - $ref: '#/parameters/content-type'
-      - $ref: '#/parameters/x-request-id' 
+      - $ref: '#/parameters/x-request-id'
       - in: body
         name: body
         description: >-
           - **name**: **(Required)** The name of schedule. Must be a string.
-          - **type**: **(Required)** The job type in string format.  
+          - **type**: **(Required)** The job type in string format.
             - Supported types: `batch_segmentation` and `export`.
           - **properties**: **(Required)** An object containing additional properties related to the schedule.
             - **properties.segments**: **(Required when `type` equals `batch_segmentation`)** Using `["*"]` ensures all segments are included.
@@ -890,17 +1080,29 @@ paths:
         schema:
           "$ref": "#/definitions/ScheduleCreate"
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: The schedule was successfully created.
           schema:
             $ref: '#/definitions/Schedule'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The schedule posted is invalid.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: There was an issue reading schedules.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/config/schedules/{SCHEDULE_ID}':
     get:
@@ -920,15 +1122,25 @@ paths:
       - $ref: '#/parameters/schedule-id'
       - $ref: '#/parameters/x-request-id'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: The schedule was successfully returned.
           schema:
             $ref: '#/definitions/Schedule'
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The schedule was not found.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
     patch:
       tags:
@@ -956,17 +1168,29 @@ paths:
           items:
             $ref: '#/definitions/schedulePatchOperation'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '204':
           description: (No content) The schedule was successfully updated.
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The schedule is invalid.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '429':
           description: There are too many schedule update requests processing at the moment. Try again at a later time.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: There was an issue reading the schedule.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
     delete:
       tags:
@@ -983,19 +1207,29 @@ paths:
       - $ref: '#/parameters/schedule-id'
       - $ref: '#/parameters/x-request-id'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '204':
           description: (No content) The schedule was deleted successfully deleted.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: Access is forbidden.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The schedule was not found.
         '503':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The service is unavailable.
   '/search/namespaces':
       get:
         tags:
           - Segment search
-        summary: Retrieve a list of search count results, queried across all namespaces. 
+        summary: Retrieve a list of search count results, queried across all namespaces.
         operationId: queryNamespace
         produces:
           - application/json
@@ -1006,7 +1240,7 @@ paths:
             required: true
             type: string
             x-example: _xdm.context.segmentdefinition
-          - $ref: '#/parameters/authorization'      
+          - $ref: '#/parameters/authorization'
           - $ref: '#/parameters/x-api-key'
           - $ref: '#/parameters/x-gw-ims-org-id'
           - name: x-ups-search-version
@@ -1023,13 +1257,21 @@ paths:
             type: string
             x-example: name:test
         responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           '200':
             description: Retrieve a list of search counts, per namespace, based on the specified query.
             schema:
               $ref: '#/definitions/SearchNamespaceList'
           '403':
+            schema:
+              $ref: '#/definitions/ErrorResponse'
             description: Access is forbidden.
           '503':
+            schema:
+              $ref: '#/definitions/ErrorResponse'
             description: The service is unavailable.
   '/search/entities':
       get:
@@ -1052,7 +1294,7 @@ paths:
             required: true
             type: string
             x-example: AAMTraits
-          - $ref: '#/parameters/authorization'      
+          - $ref: '#/parameters/authorization'
           - $ref: '#/parameters/x-api-key'
           - $ref: '#/parameters/x-gw-ims-org-id'
           - name: x-ups-search-version
@@ -1087,13 +1329,21 @@ paths:
             type: number
             x-example: 2
         responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           '200':
             description: A paginated list of search results. Folders are shown first, followed by external segments.
             schema:
               $ref: '#/definitions/SearchEntityList'
           '403':
+            schema:
+              $ref: '#/definitions/ErrorResponse'
             description: Access is forbidden.
           '503':
+            schema:
+              $ref: '#/definitions/ErrorResponse'
             description: The service is unavailable.
   '/search/taxonomy':
       get:
@@ -1110,14 +1360,14 @@ paths:
             description: The name of the schema being searched.
             required: true
             type: string
-            x-example: _xdm.context.segmentdefinition      
+            x-example: _xdm.context.segmentdefinition
           - name: namespace
             in: query
             description: namespace
             required: true
             type: string
             x-example: AAMTraits
-          - $ref: '#/parameters/authorization'      
+          - $ref: '#/parameters/authorization'
           - $ref: '#/parameters/x-api-key'
           - $ref: '#/parameters/x-gw-ims-org-id'
           - name: x-ups-search-version
@@ -1129,19 +1379,27 @@ paths:
           - $ref: '#/parameters/x-sandbox-name'
           - name: entityId
             in: query
-            description: The ID of the object you want to get structural information about. 
+            description: The ID of the object you want to get structural information about.
             required: true
             type: string
             x-example: porshe911_id
         responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           '200':
             description: Taxonomic information associated with an entityId.  This returns an array of folders that contain the search object, the first element of the array is the root folder and last element of the array is search object's parent folder.
             schema:
               $ref: '#/definitions/TaxonomySearchObject'
           '403':
+            schema:
+              $ref: '#/definitions/ErrorResponse'
             description: Access is forbidden.
           '503':
-            description: The service is unavailable.                    
+            schema:
+              $ref: '#/definitions/ErrorResponse'
+            description: The service is unavailable.
 
 definitions:
   EstimateResponse:
@@ -1270,9 +1528,9 @@ definitions:
       graphType:
         type: string
         example: pdg
-        enum: 
+        enum:
           - pdg
-          - none 
+          - none
         description: The graph type that you want to get the cluster from. If the value is "pdg", identity stitching will be done based on your private identity graph. If the value is "none", no identity stitching will be done.
   IndividualPreview:
     type: object
@@ -1428,14 +1686,14 @@ definitions:
             additionalProperties:
               type: object
               additionalProperties:
-                type: number 
+                type: number
           segmentedProfileByStatusCounter:
             type: object
             description: The number of segmented profiles by status per segment ID.
             additionalProperties:
               type: object
               additionalProperties:
-                type: number 
+                type: number
         description: Information about the segment job.
       requestId:
         type: string
@@ -1576,19 +1834,19 @@ definitions:
             properties:
               enabled:
                 type: boolean
-                example: true 
-          continuous: 
+                example: true
+          continuous:
             type: object
             properties:
               enable:
                 type: boolean
-                example: false 
+                example: false
           synchronous:
             type: object
             properties:
               enable:
                 type: boolean
-                example: false 
+                example: false
       payloadSchema:
         type: string
       ttlInDays:
@@ -2046,7 +2304,7 @@ definitions:
               type: string
               example: '*'
             description: This field is required if the job type is batch_segmentation. It holds a list of segment definitions which need to be evaluated at the scheduled time. Use `*` to evaluate all segments.
-        description: schedule properties 
+        description: schedule properties
       schedule:
         type: string
         example: 0 0 1 * * ?
@@ -2087,7 +2345,7 @@ definitions:
           description: A list of namespaces and the number of search objects resulting from the search for each namespace.
           items:
             $ref: '#/definitions/SearchNamespaceObject'
-          example: 
+          example:
            - namespace: 'AAMTraits'
              displayName: 'AAMTraits'
              count: 45
@@ -2110,7 +2368,7 @@ definitions:
               example: "Success"
   SearchEntityList:
     type: object
-    properties: 
+    properties:
       entities:
         type: array
         description: A list of namespaces and the number of search objects resulting from the search for each entity.
@@ -2181,7 +2439,7 @@ definitions:
               description: The name of the namespace.
             count:
               type: number
-              description: The number of objects within the namespace.          
+              description: The number of objects within the namespace.
   SearchEntityObject:
     type: object
     properties:
@@ -2211,7 +2469,7 @@ definitions:
         type: string
         example: Under development, targeting east coast millionaires that buy red cars.
         description: A description attached to the search object.
-    description: An individual search result after issuing a full text search.        
+    description: An individual search result after issuing a full text search.
   SearchResultsPageObject:
     type: object
     properties:
@@ -2234,6 +2492,33 @@ definitions:
         format: int32
         example: 10
         description: The total number of search objects on this page.
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true
 parameters:
   authorization:
     name: Authorization
@@ -2263,18 +2548,18 @@ parameters:
     required: true
     type: string
     in: header
-  segment-body: 
+  segment-body:
     in: body
     name: body
     description: >-
       - **name**: The name of the segment. This value must be unique.
 
       - **description**: A description of the segment.
-      
+
       - **expression**: The PQL expression of the segment. Contains the PQL type, format, as well as the value of the PQL query.
-      
+
       - **schema**: - The schema class for the segment.
-      
+
       - **ttlInDays**: - A value representing the time to live.
     required: true
     schema:
@@ -2282,7 +2567,7 @@ parameters:
   x-request-id:
     name: x-request-id
     in: header
-    description: >- 
+    description: >-
       An optional header that may be used for debugging purposes when investigating issues with a workflow. The same ID can be used to identify a single request to the service from a flow. A new ID should be created for each request.
     required: false
     type: string
@@ -2323,7 +2608,7 @@ parameters:
       The ID of the preview job.
     required: true
     type: string
-    x-example: MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA== 
+    x-example: MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA==
   estimateId:
     name: ESTIMATE_ID
     in: path
@@ -2331,22 +2616,22 @@ parameters:
       The ID of the estimate job.
     required: true
     type: string
-    x-example: MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA== 
-  start:      
+    x-example: MDowOjZkNDQ1NDhjLTQ5YmQtNDI5Mi1hNzMxLTU1NjU4ZGU1MThmNzo0MA==
+  start:
     name: start
     in: query
     description: >-
       Return results from a specific page offset. For example, `start=3`.
     required: false
     type: integer
-  limit:  
+  limit:
     name: limit
     in: query
     description: >-
       Limit response to a specific number of objects. Must be a positive number. For example, `limit=10`
     required: false
     type: integer
-  schedule-id:  
+  schedule-id:
     name: SCHEDULE_ID
     in: path
     description: >-

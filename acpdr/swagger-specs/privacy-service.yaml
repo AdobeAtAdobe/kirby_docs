@@ -16,7 +16,7 @@ info:
       - PLATFORM Gateway URL: https://<span>platform.adobe.io/
       - Base path for this API: /data/core/privacy
       - Example of a complete path: https://<span>platform.adobe.io/data/core/privacy/jobs
-    
+
     - Required headers:
       - All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the guide on [getting started with the Privacy Service API](http://www.adobe.com/go/privacy-getting-started-en).
       - All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
@@ -51,15 +51,27 @@ paths:
           schema:
             $ref: '#/definitions/PrivacySaleConsentResource'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '202':
           description: A successful response returns returns HTTP status 202 (Accepted) with no payload, indicating that the request was accepted by Privacy Service and is undergoing processing.
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request is incomplete or malformed.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: You do not have access permissions for this endpoint.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The requested resource could not be found. Double-check that your ID values are accurate.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: There was an internal server error. Try the request again in a few minutes, and contact Adobe Support if the problem persists.
   /jobs:
     get:
@@ -124,17 +136,29 @@ paths:
           required: false
           type: string
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns a list of jobs under the provided regulation. Note that data for previously created jobs is only available for retrieval within 30 days of the job's completion date.
           schema:
             $ref: '#/definitions/PrivacyJobDetailsList'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request is incomplete or malformed.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: You do not have access permissions for this endpoint.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The requested resource could not be found. Double-check that your ID values are accurate.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: There was an internal server error. Try the request again in a few minutes, and contact Adobe Support if the problem persists.
     post:
       tags:
@@ -157,17 +181,29 @@ paths:
           schema:
             $ref: '#/definitions/PrivacyJobRequestDetails'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '202':
           description: The jobs were successfully created. The response body contains the details of the newly created privacy jobs.
           schema:
             $ref: '#/definitions/PrivacyJobCreateList'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request is incomplete or malformed.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: You do not have access permissions for this endpoint.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The requested resource could not be found. Double-check that your ID values are accurate.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: There was an internal server error. Try the request again in a few minutes, and contact Adobe Support if the problem persists.
   /jobs/{JOB_ID}:
     get:
@@ -183,17 +219,29 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         '200':
           description: A successful response returns the details of the privacy job.
           schema:
             $ref: '#/definitions/PrivacyJobDetails'
         '400':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The request is incomplete or malformed.
         '403':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: You do not have access permissions for this endpoint.
         '404':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: The requested resource could not be found. Double-check that your ID values are accurate.
         '500':
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: There was an internal server error. Try the request again in a few minutes, and contact Adobe Support if the problem persists.
 parameters:
   job-id:
@@ -227,6 +275,33 @@ parameters:
     type: string
     in: header
 definitions:
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true
   PrivacySaleConsentDetails:
     type: object
     properties:

@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   version: "1.0"
   title: Query Service API
-  description: >- 
+  description: >-
     Experience Query Service gives you the ability to use standard SQL to query data on Adobe Experience Platform to support many different use cases. It is a serverless tool which allows you to join any datasets in Experience Data Lake and capture the query results as a new dataset for use in reporting, Data Science Workspace, or for ingestion into Real-time Customer Profile.
 
 
@@ -18,18 +18,18 @@ info:
       * PLATFORM Gateway URL: https://<span>platform.adobe.io/
       * Base path for this API: /data/foundation/query
       * Example of a complete path: https://<span>platform.adobe.io/data/foundation/query/queries
-    
+
     Required headers:
       * All calls require the headers `Authorization`, `x-gw-ims-org-id`, and `x-api-key`. For more information on how to obtain these values, see the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).
       * All resources in Experience Platform are isolated to specific virtual sandboxes. All requests to Platform APIs require the header `x-sandbox-name` whose value is the all-lowercase name of the sandbox the operation will take place in (for example, "prod"). See the [sandboxes overview](https://adobe.com/go/sandbox-overview-en) for more information.
       * All requests with a payload in the request body (such as POST, PUT, and PATCH calls) must include the header `Content-Type` with a value of `application/json`.
-  
+
 host: platform.adobe.io
 basePath: /data/foundation/query
 
 tags:
   - name: "Queries"
-    description: Queries let you use standard SQL to query data in Adobe Experience Platform. For example, you can join any number of datasets in Experience Data Lake and capture the results as a new dataset.  
+    description: Queries let you use standard SQL to query data in Adobe Experience Platform. For example, you can join any number of datasets in Experience Data Lake and capture the results as a new dataset.
   - name: "Connections"
     description: Retrieves connection parameters for the interactive interface.
   - name: "Schedules"
@@ -59,14 +59,22 @@ paths:
       - $ref: '#/parameters/x-request-id'
       - $ref: '#/parameters/User-Agent'
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "Connection Parameters Response for interactive interface"
           schema:
             $ref: '#/definitions/connection_parameters'
 
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Internal Server Error"
 
 
@@ -94,16 +102,26 @@ paths:
         - $ref: '#/parameters/isPrevLink'
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "Query List Response"
           schema:
             $ref: '#/definitions/query_list'
 
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Not Found"
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Internal Server Error"
 
     post:
@@ -131,15 +149,25 @@ paths:
             $ref: '#/definitions/query_def'
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         202:
           description: Query status
           schema:
             $ref: '#/definitions/query'
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Bad Request. The payload may be malformed, or the SQL statement has been found to be syntactically incorrect."
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Internal Server Error"
 
   '/queries/{queryid}':
@@ -165,16 +193,26 @@ paths:
           type: string
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: Query status
           schema:
             $ref: '#/definitions/query'
 
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Query not found"
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Internal Server Error"
 
     patch:
@@ -215,15 +253,25 @@ paths:
         - $ref: '#/parameters/json-header'
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         202:
           description: "Query termination request submitted successfully"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Not found"
         409:
           description: "Query termination request failed because the job might already have terminated"
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Internal Server Error"
 
   /schedules:
@@ -247,15 +295,25 @@ paths:
         - $ref: '#/parameters/User-Agent'
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "Schedules List Response"
           schema:
             $ref: '#/definitions/schedules_list'
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Not Found"
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Internal Server Error"
 
     post:
@@ -283,15 +341,25 @@ paths:
                $ref: '#/definitions/schedules_create_request'
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         202:
           description: Schedules Response
           schema:
             $ref: '#/definitions/schedules'
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Bad Request. The payload may be malformed, or the SQL statement has been found to be syntactically incorrect."
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Internal Server Error"
 
   '/schedules/{schedulesId}':
@@ -317,15 +385,25 @@ paths:
           type: string
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: Schedules Response
           schema:
             $ref: '#/definitions/schedules'
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Query not found"
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Internal Server Error"
 
     patch:
@@ -364,15 +442,27 @@ paths:
                   $ref: '#/definitions/schedule_patch_operation'
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         202:
           description: "Request to patch accepted"
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Schedule already in the state request OR Schedule is in Inactive state. Please try after sometime."
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Not Found"
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Internal Server Error"
 
     delete:
@@ -397,15 +487,27 @@ paths:
           type: string
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         202:
           description: "Schedule deleted successfully"
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Please disable the schedule before requesting delete operation OR There are active run(s) for this schedule, please wait for completion before requesting delete operation"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Not Found"
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Internal Server Error"
 
   '/schedules/{schedulesId}/runs':
@@ -435,15 +537,25 @@ paths:
           type: string
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: Schedules Run Response
           schema:
             $ref: '#/definitions/schedules_run_list'
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Not Found"
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Internal Server Error"
 
     post:
@@ -470,15 +582,27 @@ paths:
           type: string
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         202:
           description: "Request to trigger run of a scheduled query accepted"
         400:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Schedule is disabled. Immediate run cannot be triggered"
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Not Found"
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Internal Server Error"
 
   '/schedules/{schedulesId}/runs/{runId}':
@@ -510,16 +634,26 @@ paths:
             type: string
 
         responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           200:
             description: Schedules Run Response
             schema:
               $ref: '#/definitions/schedules_run_details'
           401:
+            schema:
+              $ref: '#/definitions/ErrorResponse'
             description: "Unauthorized"
           404:
+            schema:
+              $ref: '#/definitions/ErrorResponse'
             description: "Not Found"
           500:
-            description: "Internal Server Error"
+            schema:
+              $ref: '#/definitions/ErrorResponse'
+              description: "Internal Server Error"
 
       patch:
         operationId: "cancel_schedule_run"
@@ -563,14 +697,24 @@ paths:
                     - cancel
 
         responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           202:
             description: "Request to cancel run of a scheduled query accepted"
           401:
-            description: "Unauthorized"
+            schema:
+              $ref: '#/definitions/ErrorResponse'
+              description: "Unauthorized"
           404:
-            description: "Not Found"
+            schema:
+              $ref: '#/definitions/ErrorResponse'
+              description: "Not Found"
           500:
-            description: "Internal Server Error"
+            schema:
+              $ref: '#/definitions/ErrorResponse'
+              description: "Internal Server Error"
 
   /query-templates:
     get:
@@ -594,16 +738,26 @@ paths:
         - $ref: '#/parameters/template_property'
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: "Success"
           schema:
             $ref: '#/definitions/query_template_list'
 
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Not Found"
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Internal Server Error"
 
     post:
@@ -631,13 +785,21 @@ paths:
                $ref: '#/definitions/query_template_def'
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         202:
           description: Success
           schema:
             $ref: '#/definitions/query_template'
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Internal Server Error"
   '/query-templates/count':
     get:
@@ -657,17 +819,27 @@ paths:
         - $ref: '#/parameters/template_count_property'
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: Success
           schema:
             $ref: '#/definitions/template_count'
 
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Not found"
         500:
-          description: "Internal Server Error"      
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          description: "Internal Server Error"
   '/query-templates/{queryTemplateId}':
      get:
       operationId: "get_query_template"
@@ -691,16 +863,26 @@ paths:
           type: string
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         200:
           description: Success
           schema:
             $ref: '#/definitions/query_template'
 
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Not found"
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Internal Server Error"
      put:
       operationId: "update_query_template"
@@ -733,13 +915,21 @@ paths:
                $ref: '#/definitions/query_template_def'
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         202:
           description: Success
           schema:
             $ref: '#/definitions/query_template'
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Internal Server Error"
      delete:
       operationId: "delete_query_template"
@@ -763,20 +953,27 @@ paths:
           type: string
 
       responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
         202:
           description: Query Template Delete
           schema:
             $ref: '#/definitions/query_template_delete'
 
         401:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Unauthorized"
         404:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Not found"
         500:
+          schema:
+            $ref: '#/definitions/ErrorResponse'
           description: "Internal Server Error"
-
-
-
 parameters:
   authorization:
     name: Authorization
@@ -981,6 +1178,33 @@ parameters:
     description: "type of the client making HTTP API request"
 
 definitions:
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true
   query_def:
     type: object
     description: Definition of a query to be submitted
@@ -1208,7 +1432,7 @@ definitions:
           href:
             type: string
             description: "URI to call to soft-delete this query. Soft-deleting stops returning this query on
-            GET /queries, but it does not delete it from the system."
+              GET /queries, but it does not delete it from the system."
           method:
             type: string
             description: the HTTP method to use
@@ -1463,7 +1687,7 @@ definitions:
 
   schedules:
     type: object
-    required: 
+    required:
       - id
       - userId
       - state

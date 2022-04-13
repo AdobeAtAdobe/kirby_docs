@@ -4,7 +4,7 @@ info:
   version: '1.0'
   description: >-
     Delivering relevant digital experiences requires having a complete understanding of your customer. This is made more difficult when your customer data is fragmented across disparate systems, causing each individual customer to appear to have multiple "identities". Adobe Experience Platform Identity Service provides a RESTful API to help you to gain a better view of your customers and their behavior. By bridging identities across devices and systems, you are better able to deliver impactful, personal digital experiences in real-time.
-    
+
 
     Related documentation:
       * [Identity Service documentation](http://www.adobe.com/go/identity-overview-en)
@@ -85,6 +85,9 @@ paths:
           type: string
           default: application/vnd.adobe.identity+json;version=1.2
       responses:
+        default:
+          description: Unexpected error
+
         '200':
           description: OK
           schema:
@@ -103,6 +106,7 @@ paths:
               type: string
               default: no-cache
         '400':
+
           description: Bad Request from the client
           schema:
             type: object
@@ -127,6 +131,7 @@ paths:
               default: no-cache
 
         '401':
+
           description: IMS token is missing required scope.
           schema:
             type: object
@@ -164,6 +169,7 @@ paths:
                 type: string
                 example:  Request rate is large. Please try again later.
         '500':
+
           description: Unexpected Internal application error
           schema:
             type: object
@@ -200,7 +206,7 @@ paths:
           description: namespace id
           required: false
           type: integer
-          default: '411'
+          default: 411
         - name: namespace
           in: query
           description: namespace code
@@ -232,6 +238,9 @@ paths:
           type: string
           default: application/vnd.adobe.identity+json;version=1.2
       responses:
+        default:
+          description: Unexpected error
+
         '200':
           examples:
             value:
@@ -255,6 +264,7 @@ paths:
               type: string
               default: no-cache
         '400':
+
           description: Bad Request from the client
           schema:
             type: object
@@ -278,6 +288,7 @@ paths:
               type: string
               default: no-cache
         '401':
+
           description: IMS token is missing required scope.
           schema:
             type: object
@@ -315,6 +326,7 @@ paths:
                 type: string
                 example:  Request rate is large. Please try again later.
         '500':
+
           description: Unexpected Internal application error
           schema:
             type: object
@@ -365,6 +377,9 @@ paths:
             items:
               $ref: '#/definitions/ListOfIdentity'
       responses:
+        default:
+          description: Unexpected error
+
         '200':
           examples:
             value:
@@ -390,6 +405,7 @@ paths:
               type: string
               default: no-cache
         '400':
+
           description: Bad Request from the client
           schema:
             type: object
@@ -413,6 +429,7 @@ paths:
               type: string
               default: no-cache
         '401':
+
           description: IMS token is missing required scope.
           schema:
             type: object
@@ -450,6 +467,7 @@ paths:
                 type: string
                 example:  Request rate is large. Please try again later.
         '500':
+
           description: Unexpected Internal application error
           schema:
             type: object
@@ -498,7 +516,7 @@ paths:
           description: namespace id
           required: false
           type: integer
-          default: '411'
+          default: 411
         - name: namespace
           in: query
           description: namespace code
@@ -518,6 +536,9 @@ paths:
           type: string
           default: Private Graph
       responses:
+        default:
+          description: Unexpected error
+
         '200':
           examples:
             value:
@@ -545,6 +566,7 @@ paths:
               type: string
               default: no-cache
         '400':
+
           description: Bad Request from the client
           schema:
             type: object
@@ -568,6 +590,7 @@ paths:
               type: string
               default: no-cache
         '401':
+
           description: IMS token is missing required scope.
           schema:
             type: object
@@ -605,6 +628,7 @@ paths:
                 type: string
                 example:  Request rate is large. Please try again later.
         '500':
+
           description: Unexpected Internal application error
           schema:
             type: object
@@ -653,6 +677,9 @@ paths:
           schema:
             $ref: '#/definitions/ListOfIdentity'
       responses:
+        default:
+          description: Unexpected error
+
         '200':
           examples:
             value:
@@ -684,6 +711,7 @@ paths:
               type: string
               default: no-cache
         '400':
+
           description: Bad Request from the client
           schema:
             type: object
@@ -707,6 +735,7 @@ paths:
               type: string
               default: no-cache
         '401':
+
           description: IMS token is missing required scope.
           schema:
             type: object
@@ -744,6 +773,7 @@ paths:
                 type: string
                 example:  Request rate is large. Please try again later.
         '500':
+
           description: Unexpected Internal application error
           schema:
             type: object
@@ -757,7 +787,7 @@ paths:
               description:
                 type: string
                 example:  An unexpected internal error occurred in the server. This might indicate a problem with the request, or might indicate a problem in the server side code.
-  /identity/mapping:  
+  /identity/mapping:
     get:
       tags:
         - Mappings
@@ -812,6 +842,9 @@ paths:
           type: integer
           default: 411
       responses:
+        default:
+          description: Unexpected error
+
         '200':
           examples:
             value:
@@ -838,6 +871,7 @@ paths:
               type: string
               default: no-cache
         '400':
+
           description: Bad Request from the client
           schema:
             type: object
@@ -861,6 +895,7 @@ paths:
               type: string
               default: no-cache
         '401':
+
           description: IMS token is missing required scope.
           schema:
             type: object
@@ -898,6 +933,7 @@ paths:
                 type: string
                 example:  Request rate is large. Please try again later.
         '500':
+
           description: Unexpected Internal application error
           schema:
             type: object
@@ -945,6 +981,9 @@ paths:
           schema:
             $ref: '#/definitions/ListOfMappings'
       responses:
+        default:
+          description: Unexpected error
+
         '200':
           examples:
             value:
@@ -978,6 +1017,7 @@ paths:
               type: string
               default: no-cache
         '400':
+
           description: Bad Request from the client
           schema:
             type: object
@@ -1001,6 +1041,7 @@ paths:
               type: string
               default: no-cache
         '401':
+
           description: IMS token is missing required scope.
           schema:
             type: object
@@ -1038,6 +1079,7 @@ paths:
                 type: string
                 example:  Request rate is large. Please try again later.
         '500':
+
           description: Unexpected Internal application error
           schema:
             type: object
@@ -1052,6 +1094,7 @@ paths:
                 type: string
                 example:  An unexpected internal error occurred in the server. This might indicate a problem with the request, or might indicate a problem in the server side code.
         '503':
+
           description: The service is unavailable
           schema:
             $ref: '#/definitions/ServiceErrorStatus'
@@ -1068,11 +1111,15 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
       responses:
+        default:
+          description: Unexpected error
+
         '200':
           description: Returns a list of all ID namespaces as an array with individual objects containing the details for each namespace.
           schema:
             $ref: '#/definitions/listNamespaces'
         '401':
+
           description: Authentication failure for invalid IMS token.
           schema:
             type: object
@@ -1099,6 +1146,7 @@ paths:
                     type: string
                     example: Authorization failed - Missing product context acp for given IMS token.
         '500':
+
           description: Internal server error
           schema:
             type: object
@@ -1140,11 +1188,15 @@ paths:
       summary: Create a new identity namespace.
       operationId: CreateNameSpace
       responses:
+        default:
+          description: Unexpected error
+
         '200':
           description: Identity namespace created successfully. Returns details of newly created identity namespace.
           schema:
             $ref: '#/definitions/Namespace'
         '400':
+
           description: Creation of namespace failed because of data-issue.
           schema:
             type: object
@@ -1171,6 +1223,7 @@ paths:
                     type: string
                     example: INVALID_REQUEST_PARAMS
         '401':
+
           description: Authentication failure for invalid IMS token.
           schema:
             type: object
@@ -1223,6 +1276,7 @@ paths:
                     type: string
                     example: INTEGRATION_CODE_EXISTS
         '500':
+
           description: Internal server error
           schema:
             type: object
@@ -1262,11 +1316,15 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
       responses:
+        default:
+          description: Unexpected error
+
         '200':
           description: OK
           schema:
             $ref: '#/definitions/Namespace'
         '401':
+
           description: Authentication failure for invalid IMS token.
           schema:
             type: object
@@ -1293,6 +1351,7 @@ paths:
                     type: string
                     example: Authorization failed - Missing product context acp for given IMS token.
         '404':
+
           description: Namespace does not exist or it is not available for the given imsorg
           schema:
             type: object
@@ -1322,6 +1381,7 @@ paths:
                     type: string
                     example: NAMESPACE_NOT_FOUND
         '500':
+
           description: Internal server error
           schema:
             type: object
@@ -1369,6 +1429,9 @@ paths:
       produces:
         - application/json
       responses:
+        default:
+          description: Unexpected error
+
         '200':
           description: Returns the details of the updated identity namespace. ID should match the ID sent in the request path.
           schema:
@@ -1376,6 +1439,7 @@ paths:
             items:
               $ref: '#/definitions/updateNamespace'
         '400':
+
           description: Invalid request to update the namespace.
           schema:
             type: object
@@ -1405,6 +1469,7 @@ paths:
                     type: string
                     example: INVALID_REQUEST_PARAMS
         '401':
+
           description: Authentication failure for invalid IMS token.
           schema:
             type: object
@@ -1431,6 +1496,7 @@ paths:
                     type: string
                     example: Authorization failed - Missing product context acp for given IMS token.
         '404':
+
           description: Namespace does not exist or it is not available for the given imsorg
           schema:
             type: object
@@ -1460,6 +1526,7 @@ paths:
                     type: string
                     example: NAMESPACE_NOT_FOUND
         '500':
+
           description: Internal server error
           schema:
             type: object
@@ -1499,11 +1566,15 @@ paths:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
       responses:
+        default:
+          description: Unexpected error
+
         '200':
-          description: Returns a list of all namespaces shared by the IMS Org, or all owned namespaces if the IMS Org sent in the path matches the IMS Org sent in the header. 
+          description: Returns a list of all namespaces shared by the IMS Org, or all owned namespaces if the IMS Org sent in the path matches the IMS Org sent in the header.
           schema:
             $ref: '#/definitions/listNamespaces'
         '400':
+
           description: Invalid IMS Org in request
           schema:
             type: object
@@ -1533,6 +1604,7 @@ paths:
                     type: string
                     example: 'INVALID_REQUEST_PARAMS'
         '401':
+
           description: Authentication failure for invalid IMS token.
           schema:
             type: object
@@ -1559,6 +1631,7 @@ paths:
                     type: string
                     example: Authorization failed - Missing product context acp for given IMS token.
         '500':
+
           description: Internal server error
           schema:
             type: object
@@ -1599,6 +1672,9 @@ paths:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
       responses:
+        default:
+          description: Unexpected error
+
         '200':
           description: Returns the details of a specific identity namespace that is owned by the IMS Org sent in the request path, only if that namespace ID is accessible to the IMS Org sent in the request header.
           schema:
@@ -1606,6 +1682,7 @@ paths:
             items:
               $ref: '#/definitions/Namespace'
         '401':
+
           description: Authentication failure for invalid IMS token.
           schema:
             type: object
@@ -1632,6 +1709,7 @@ paths:
                     type: string
                     example: Authorization failed - Missing product context acp for given IMS token.
         '404':
+
           description: Namespace does not exist or it is not available for the given imsorg
           schema:
             type: object
@@ -1661,6 +1739,7 @@ paths:
                     type: string
                     example: NAMESPACE_NOT_FOUND
         '500':
+
           description: Internal server error
           schema:
             type: object
@@ -1686,11 +1765,38 @@ paths:
                   message:
                     type: string
                     example: Internal server error occurred. Please try at a later time.
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: '2019-05-10T22:24:54.914'
+      type:
+        type: string
+        example: 'http://ns.adobe.com/adobecloud/problem/namespacevalidation'
+      status:
+        type: integer
+        example: 404
+      error:
+        type: string
+        example: NAMESPACE_NOT_FOUND
+      detail:
+        type: string
+        example: "Requested resource https://ns.adobe.com/{TENANT_ID}/schemas/20af3f1d4b175f27ba59529d1b51a0c79fc25df454117 with version 1 is not found"
+      description:
+        type: string
+        example: Namespace id not found for given IMS Org 09A55EBC5639E6017F000101@AdobeOrg
+      title:
+        type: string
+        example: Namespace validation
+      report:
+        type: object
+        additionalProperties: true
 parameters:
   authorization:
     name: Authorization
-    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ". 
-    For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
+    description: 'The access token which can be copied from your Experience Platform integration, prefixed with "Bearer ".
+      For more information on how to obtain this value, visit the [authentication tutorial](http://www.adobe.com/go/platform-api-authentication-en).'
     required: true
     type: string
     in: header
@@ -1728,15 +1834,15 @@ parameters:
     in: body
     required: true
     name: body
-    description: >- 
+    description: >-
       JSON object containing the details of the namespace to be created.
-      
-      * **name:** **(Required)** A friendly name (or "Display Name") for the namespace.  
-      
+
+      * **name:** **(Required)** A friendly name (or "Display Name") for the namespace.
+
       * **code:** **(Required)** Known as the "Identity symbol" in the user interface, the "code" is a single word descriptor for the namespace being created. Must be unique. May contain only letters and numbers.
-      
+
       * **idType:** **(Required)** The "type" of namespace being created. Must be one of the following values: Cookie, Cross-device, Device, Email, Mobile, Non-people, or Phone.
-      
+
       * **description:** *(Optional)* A description for the namespace. This is especially useful when multiple namespaces have been defined for your organization.
     schema:
         $ref: '#/definitions/namespaceCreate'
