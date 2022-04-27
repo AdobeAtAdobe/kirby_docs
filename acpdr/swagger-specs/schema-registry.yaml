@@ -2231,6 +2231,11 @@ definitions:
       meta:resourceType:
         type: string
         example: schemas
+      meta:immutableTags:
+        type: array
+        items:
+          type: string
+          example: union
       meta:registryMetadata:
         type: object
         description: Various metadata related to the schema.
