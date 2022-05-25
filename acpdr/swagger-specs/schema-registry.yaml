@@ -102,7 +102,7 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/acceptListing'
+        - $ref: '#/parameters/acceptFullListing'
         - $ref: '#/parameters/property'
         - $ref: '#/parameters/orderBy'
         - $ref: '#/parameters/start'
@@ -336,7 +336,7 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/acceptListing'
+        - $ref: '#/parameters/acceptFullListing'
         - $ref: '#/parameters/property'
         - $ref: '#/parameters/orderBy'
         - $ref: '#/parameters/start'
@@ -900,7 +900,7 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/acceptListing'
+        - $ref: '#/parameters/acceptFullListing'
         - $ref: '#/parameters/property'
         - $ref: '#/parameters/orderBy'
         - $ref: '#/parameters/start'
@@ -1124,7 +1124,7 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/acceptListing'
+        - $ref: '#/parameters/acceptFullListing'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/property'
         - $ref: '#/parameters/orderBy'
@@ -1869,6 +1869,13 @@ parameters:
     type: string
     in: header
     default: application/vnd.adobe.xed-id+json
+  acceptFullListing:
+    name: Accept
+    description: The desired response format (eg. application/vnd.adobe.xed-full-hidden+json). Do not include "version".
+    required: true
+    type: string
+    in: header
+    default: application/vnd.adobe.xed-full-hidden+json
   acceptDescriptors:
     name: Accept
     description: Descriptors require unique `Accept` headers using 'xdm' instead of 'xed' (eg. application/vnd.adobe.xdm-id+json)
@@ -2058,20 +2065,7 @@ definitions:
       results:
         type: array
         items:
-          type: object
-          properties:
-            title:
-              type: string
-              example: Tenant Data Schema
-            $id:
-              type: string
-              example: 'https://ns.adobe.com/{TENANT_ID}/schemas/274f17bc5807ff307a046bab1489fb18'
-            meta:altId:
-              type: string
-              example: '_{TENANT_ID}.schemas.274f17bc5807ff307a046bab1489fb18'
-            version:
-              type: string
-              example: '1.1'
+          $ref: '#/definitions/lookupSchemaResponse'
   listUnionsResponse:
     type: object
     properties:
@@ -2388,20 +2382,7 @@ definitions:
       results:
         type: array
         items:
-          type: object
-          properties:
-            title:
-              type: string
-              example: Tenant Class
-            $id:
-              type: string
-              example: 'https://ns.adobe.com/{TENANT_ID}/classes/123457bc5807ff307a046bab1489fb18'
-            meta:altId:
-              type: string
-              example: '_{TENANT_ID}.classes.123457bc5807ff307a046bab1489fb18'
-            version:
-              type: string
-              example: '1.4'
+          $ref: '#/definitions/lookupClassResponse'
   createClass:
     type: object
     properties:
@@ -2572,20 +2553,7 @@ definitions:
       results:
         type: array
         items:
-          type: object
-          properties:
-            title:
-              type: string
-              example: Loyalty Program Field Group
-            $id:
-              type: string
-              example: 'https://ns.adobe.com/{TENANT_ID}/mixins/bce6c11bbe4ad4155dd940c15dfe74e1'
-            meta:altId:
-              type: string
-              example: '_{TENANT_ID}.mixins.bce6c11bbe4ad4155dd940c15dfe74e1'
-            version:
-              type: string
-              example: '1.0'
+          $ref: '#/definitions/lookupFieldGroupResponse'
   createFieldGroup:
     type: object
     properties:
@@ -2968,20 +2936,7 @@ definitions:
       results:
         type: array
         items:
-          type: object
-          properties:
-            title:
-              type: string
-              example: Tenant Data Type
-            $id:
-              type: string
-              example: 'https://ns.adobe.com/{TENANT_ID}/datatypes/f307a046bab1489fb18274f17bc5807f'
-            meta:altId:
-              type: string
-              example: '_{TENANT_ID}.datatypes.f307a046bab1489fb18274f17bc5807f'
-            version:
-              type: string
-              example: '1.0'
+          $ref: '#/definitions/lookupDataTypeResponse'
   createDataType:
     type: object
     properties:
