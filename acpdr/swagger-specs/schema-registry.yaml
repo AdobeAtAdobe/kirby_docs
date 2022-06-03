@@ -102,7 +102,7 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/acceptFullListing'
+        - $ref: '#/parameters/acceptListing'
         - $ref: '#/parameters/property'
         - $ref: '#/parameters/orderBy'
         - $ref: '#/parameters/start'
@@ -336,7 +336,7 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/acceptFullListing'
+        - $ref: '#/parameters/acceptListing'
         - $ref: '#/parameters/property'
         - $ref: '#/parameters/orderBy'
         - $ref: '#/parameters/start'
@@ -369,7 +369,7 @@ paths:
       - $ref: '#/parameters/x-api-key'
       - $ref: '#/parameters/x-gw-ims-org-id'
       - $ref: '#/parameters/x-sandbox-name'
-      - $ref: '#/parameters/accept'
+      - $ref: '#/parameters/acceptFull'
       summary: Retrieve a schema within the specified container by ID.
       description: >-
         The response format depends on the `Accept` header sent in the request. The following `Accept` headers are available for this request:<ul><li>`application/vnd.adobe.xed+json; version=1`:  Raw with `$ref` and `allOf` included. Has titles and descriptions.</li><li>`application/vnd.adobe.xed-full+json; version=1`: `$ref` and `allOf` included. Has titles and descriptions.</li><li>`application/vnd.adobe.xed-notext+json; version=1`: Raw with `$ref` and `allOf` included, but with no titles or descriptions</li><li>`application/vnd.adobe.xed-full-notext+json; version=1`:  `$ref` and `allOf` are resolved, with no titles or descriptions.</li><li>`application/vnd.adobe.xed-full-desc+json; version=1`: `$ref` and `allOf` are resolved, with descriptions included.</li></ul>
@@ -900,7 +900,7 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/acceptFullListing'
+        - $ref: '#/parameters/acceptListing'
         - $ref: '#/parameters/property'
         - $ref: '#/parameters/orderBy'
         - $ref: '#/parameters/start'
@@ -937,7 +937,7 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/accept'
+        - $ref: '#/parameters/acceptFull'
       summary: Retrieve a class within the specified container by ID.
       operationId: lookupClass
       produces:
@@ -1124,7 +1124,7 @@ paths:
         - $ref: '#/parameters/x-api-key'
         - $ref: '#/parameters/x-gw-ims-org-id'
         - $ref: '#/parameters/x-sandbox-name'
-        - $ref: '#/parameters/acceptFullListing'
+        - $ref: '#/parameters/acceptListing'
         - $ref: '#/parameters/authorization'
         - $ref: '#/parameters/property'
         - $ref: '#/parameters/orderBy'
@@ -1857,6 +1857,13 @@ parameters:
     default: application/json
   accept:
     name: Accept
+    description: The desired response format (eg. application/vnd.adobe.xed+json; version=1). "Version" is required.
+    required: true
+    type: string
+    in: header
+    default: application/vnd.adobe.xed+json; version=1
+  acceptFull:
+    name: Accept
     description: The desired response format (eg. application/vnd.adobe.xed-full+json; version=1). "Version" is required.
     required: true
     type: string
@@ -1864,11 +1871,11 @@ parameters:
     default: application/vnd.adobe.xed-full+json; version=1
   acceptListing:
     name: Accept
-    description: The desired response format (eg. application/vnd.adobe.xed-id+json). Do not include "version".
+    description: The desired response format (eg. application/vnd.adobe.xed+json). Do not include "version".
     required: true
     type: string
     in: header
-    default: application/vnd.adobe.xed-id+json
+    default: application/vnd.adobe.xed+json
   acceptFullListing:
     name: Accept
     description: The desired response format (eg. application/vnd.adobe.xed-full-hidden+json). Do not include "version".
@@ -1876,6 +1883,13 @@ parameters:
     type: string
     in: header
     default: application/vnd.adobe.xed-full-hidden+json
+  acceptListingIdOnly:
+    name: Accept
+    description: The desired response format (eg. application/vnd.adobe.xed-id+json). Do not include "version".
+    required: true
+    type: string
+    in: header
+    default: application/vnd.adobe.xed-id+json
   acceptDescriptors:
     name: Accept
     description: Descriptors require unique `Accept` headers using 'xdm' instead of 'xed' (eg. application/vnd.adobe.xdm-id+json)
@@ -2212,7 +2226,16 @@ definitions:
           example: https://ns.adobe.com/xdm/context/profile
       properties:
         type: object
-        description: All of the attributes of the schema are found under properties.
+        description: properties field only present if we are doing a lookup on a specific schema. All of the attributes of the schema are found under properties.
+      allOf:
+        description: allOf field only present when we are listing schemas.
+        type: array
+        items:
+          type: object
+          properties:
+            "$ref":
+              type: string
+              example: https://ns.adobe.com/xdm/data/record
       meta:altId:
         type: string
         example: '_{TENANT_ID}.schemas.274f17bc5807ff307a046bab1489fb18'
@@ -2506,7 +2529,16 @@ definitions:
           example: https://ns.adobe.com/xdm/data/record
       properties:
         type: object
-        description: All of the attributes of the schema are found under properties.
+        description: properties field only present if we are doing a lookup on a specific class. All of the attributes of the schema are found under properties.
+      allOf:
+        description: allOf field only present when we are listing classes.
+        type: array
+        items:
+          type: object
+          properties:
+            "$ref":
+              type: string
+              example: https://ns.adobe.com/xdm/data/record
       meta:altId:
         type: string
         example: '_{TENANT_ID}.classes.7bc5807ff307a046bab1489fb1812345'
@@ -2866,7 +2898,7 @@ definitions:
         items:
           type: string
           example: https://ns.adobe.com/xdm/context/profile
-      properties:
+      definitions:
         type: object
         description: All of the attributes of the schema are found under properties.
       meta:altId:
