@@ -26,8 +26,8 @@ info:
       - Requests with a payload in the request body (such as POST, PUT, and PATCH calls) may require the header `Content-Type`. Accepted values specific to each call are provided in the call parameters.  
 
   version: "1.0"
-basePath: /data/foundation/import
 
+basePath: /data/foundation/import
 host: platform.adobe.io
 consumes:
   - application/json
@@ -601,6 +601,9 @@ definitions:
       DATASET_ID:
         type: string
         description: "The ID of the dataset that you want to publish to."
+      FLOW_ID:
+        type: string
+        description: "The ID of the dataflow that you want to use. It is possible to have multiple dataflows for the same dataset."
       SOURCE_NAME:
         type: string
         description: "The optional name for your source. If this value is missing, the streaming message will automatically add the source ID from the streaming connection definition."
@@ -613,6 +616,7 @@ definitions:
           contentType: "application/vnd.adobe.xed-full+json;version={SCHEMA_VERSION}"
         imsOrgId: "{IMS_ORG_ID}"
         datasetId: "{DATASET_ID}"
+        flowId: "{FLOW_ID}"
         createdAt: "1526283801869"
         source:
           name: "{SOURCE_NAME}"
